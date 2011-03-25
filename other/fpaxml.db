@@ -1,0 +1,263 @@
+<Registration>
+	<Registration Details>
+                <reglastlogindate>
+                <regregdate>
+                <regrenewaldue>
+                <regmemword>
+                <regvisitcount>
+                <regpwd>
+                <regemail>
+                <regmenutype>
+                <reg_id>
+                <regdefaultmenu>
+                <regusername>
+                <regcountstartdate>
+                <regcompanyname>
+                <regmembership>
+                <regactive>
+                <regdefaultrows>
+                <regactivecode>
+                <regoptin>
+	</Registration Details>
+	<Company>
+		<Company Details>
+                        <comexpid>
+                        <comlastmodified>
+                        <comnextpr>
+                        <comvatcontrol>
+                        <comaddress>
+                        <comfree>
+                        <comvatreminder>
+                        <comvatqstart>
+                        <comnextpi>
+                        <id>
+                        <reg_id>
+                        <comnocheques>
+                        <comvatscheme>
+                        <comnextsi>
+                        <comuplds>
+                        <comtel>
+                        <comsuppt>
+                        <comhmrc>
+                        <comstmts>
+                        <comstmtmsg>
+                        <comyearendreminder>
+                        <comemail>
+                        <comcompleted>
+                        <comvatmsgdue>
+                        <comno_ads>
+                        <comemailmsg>
+                        <comregno>
+                        <comyearendmsgdue>
+                        <compt_logo>
+                        <comoptin>
+                        <comnexttxn>
+                        <comvatno>
+                        <comrecstats>
+                        <comrep_invs>
+                        <combusiness>
+                        <comvatduein>
+                        <compostcode>
+                        <comname>
+                        <compaystats>
+                        <comacccompleted>
+                        <comcontact>
+                        <comyearend>
+                        <comlogo>
+		</Company Details>
+		<Accounts>
+			<Account>
+				<Account Details>
+	                                <accshort>
+        	                        <acctswift>
+                	                <accsort>
+                        	        <acct_id>
+                                	<id>
+	                                <accname>
+        	                        <acctype>
+                	                <accacctno>
+				</Account Details>a
+				<Statements>
+					<Statement Details>
+        	                                <staclosedate>
+                	                        <acct_id>
+                        	                <acc_id>
+                                	        <staclosebal>
+                                        	<stanotxns>
+	                                        <staopenbal>
+        	                                <id>
+                	                        <stastmtno>
+                        	                <staopendate>
+					</Statement Details>
+				</Statements>
+			</Account>
+		</Accounts>
+		<VAT Returns>
+			<VAT Return>
+				<VAT Return Details>
+                                        <perbox7>
+                                        <perstatus>
+                                        <perbox1>
+                                        <perenddate>
+                                        <perstartdate>
+                                        <perbox8>
+                                        <perbox5>
+                                        <perbox2>
+                                        <id>
+                                        <percompleted>
+                                        <acct_id>
+                                        <perquarter>
+                                        <perfiled>
+                                        <perbox3>
+                                        <perbox4>
+                                        <perbox9>
+                                        <perstatusdate>
+                                        <perduedate>
+                                        <perbox6>
+				</VAT Return Detail>
+				<VAT Return Payment>
+                                        <stmt_id>
+                                        <txnmethod>
+                                        <txndate>
+                                        <txnyearend>
+                                        <txnamount>
+                                        <acct_id>
+                                        <txnremarks>
+                                        <txntxntype>
+                                        <txnselected>
+                                        <txntxnno>
+                                        <txnbanked>
+                                        <link_id>
+                                        <txncreated>
+                                        <txncusname>
+                                        <id>
+				</VAT Return Payment>
+			<VAT Return>
+		<VAT Returns>
+		<Customers>
+			<Customer>
+				<Customer Details>
+                                <cussupplier>
+                                <cusbalance>
+                                <cusdefcoa>
+                                <cusacctno>
+                                <cusaddress>
+                                <cusdefpaymethod>
+                                <cusbank>
+                                <custerms>
+                                <cusemail>
+                                <id>
+                                <cuscontact>
+                                <cusremarks>
+                                <cusregion>
+                                <acct_id>
+                                <cusdefvatrate>
+                                <cusstmtmsg>
+                                <cusemailmsg>
+                                <custel>
+                                <cuscredit>
+                                <cusname>
+                                <cussortcode>
+                                <cussales>
+                                <cuslimit>
+                                <cuspostcode>
+                                <cusnextstmtdate>
+                                <cusdefpo>
+				</Customer Details>
+				<Invoices>
+					<Invoice>
+						<Invoice Header Details>
+                                                <invstatuscode>
+                                                <invcuscontact>
+                                                <invitemcount>
+                                                <invcusregion>
+                                                <invtype>
+                                                <invvat>
+                                                <id>
+                                                <invcusref>
+                                                <invaccumstart>
+                                                <invyearend>
+                                                <invcusname>
+                                                <acct_id>
+                                                <invrepeat>
+                                                <invitems>
+                                                <invcusterms>
+                                                <invinvoiceno>
+                                                <invpaiddate>
+                                                <invdesc>
+                                                <invduedate>
+                                                <invcoa>
+                                                <invstatus>
+                                                <invrepeatnext>
+                                                <invaccumtot>
+                                                <invpaidvat>
+                                                <invcusemail>
+                                                <invcuspostcode>
+                                                <invrepeatfreq>
+                                                <invremarks>
+                                                <invfpflag>
+                                                <invcreated>
+                                                <invcusaddr>
+                                                <invstatusdate>
+                                                <invnextinvdate>
+                                                <cus_id>
+                                                <invpaid>
+                                                <invprintdate>
+                                                <invtotal>
+						</Invoice Header Details>
+						<Invoice Line Items>
+							<Invoice Line Item Detail>
+                                                                <itmqty>
+                                                                <itmnomcode>
+                                                                <itmdesc>
+                                                                <inv_id>
+                                                                <itmvat>
+                                                                <acct_id>
+                                                                <itmtype>
+                                                                <itmvatrate>
+                                                                <id>
+                                                                <itmdate>
+                                                                <itmtotal>
+									<vataccrual quarter (for standard VAT scheme)>
+							</Invoice Line Item Detail>
+						</Invoice Line Items>
+					</Invoice>
+				</Invoices>
+				<Transactions>
+					<Transaction>
+						<Transaction Details>
+        	                                <stmt_id>
+                	                        <txnmethod>
+                        	                <txndate>
+                                	        <txnyearend>
+                                        	<txnamount>
+		                                        <acct_id>
+        	                                <txnremarks>
+                	                        <txntxntype>
+                        	                <txnselected>
+                                	        <txntxnno>
+                                        	<txnbanked>
+		                                        <link_id>
+        	                                <txncreated>
+                	                        <txncusname>
+                        	                <id>
+						</Transaction Details>
+						<Transaction Invoice Allocations>
+							<Transaction Invoice Allocation>
+                                                        <inv_id>
+                                                        <itmethod>
+                                                        <itinvoiceno>
+                                                        <txn_id>
+                                                        <acct_id>
+                                                        <itdate>
+                                                        <itnet>
+                                                        <ittxnno>
+                                                        <id>
+                                                        <itvat>
+								<vataccrual quarter (for Cash VAT scheme)>
+							</Transaction Invoice Allocation>
+						<Transaction Invoice Allocations>
+					</Transaction>
+				</Transactions>
+			<Customer>
+		<Customers>
