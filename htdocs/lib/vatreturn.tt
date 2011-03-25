@@ -1,0 +1,100 @@
+<div class="main">
+<form action="/cgi-bin/fpa/vatreturn2.pl" method="post" name="form1" id="form1">
+  <input type="hidden" name="id" id="x_id" value="[%- vatreturn.id -%]"/>
+  <input type="hidden" name="qstart" id="qstart" value="[%- vatreturn.dispstart -%]"/>
+  <input type="hidden" name="qend" id="qend" value="[%- vatreturn.dispend -%]"/>
+  <table width="660" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td><h1>VAT Return</h1></td>
+      <td style="text-align:right;padding-top:15px;" nowrap="nowrap"><h2>[%- vatreturn.dispstart -%] to [%- vatreturn.dispend; -%]</h2></td>
+    </tr>
+  </table>
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="formtable vattable">
+    <tr class="hilite" onclick="location.href='/cgi-bin/fpa/hmrc_drill_down.pl?vattotal=[%- vatreturn.perbox1 -%]&boxno=box1&vrid=[%- vatreturn.id -%]';">
+      <td><label>VAT due in this period on <b>sales</b> and other outputs (Box 1):</label></td>
+      <td><span><input name="perbox1" type="text" id="perbox1" value="[%- vatreturn.perbox1 OR "0" | format('%1.2f') -%]" onchange="calc_val(this);"[%- IF vatreturn.id > 0 -%] readonly="readonly"[%- END -%]/></span></td>
+    </tr>
+    <tr class="hilite" onclick="location.href='/cgi-bin/fpa/hmrc_drill_down.pl?vattotal=[%- vatreturn.perbox2 -%]&boxno=box2&vrid=[%- vatreturn.id -%]';">
+      <td><label>VAT due in this period on <b>acquisitions</b> from other <b>EC<br/>Member States</b> (Box 2):</label></td>
+      <td><span><input name="perbox2" type="text" id="perbox2" value="[%- vatreturn.perbox2 OR "0" | format('%1.2f') -%]" onchange="calc_val(this);"[%- IF vatreturn.id > 0 -%] readonly="readonly"[%- END -%]/></span></td>
+    </tr>
+    <tr>
+      <td><label>Total VAT due <b>(the sum of boxed 1 and 2) (Box 3):</label></td>
+      <td><b><span id="box3">[%- IF vatreturn.perbox1 == '0.00' AND vatreturn.perbox2 == '0.00' -%]Calculated Value[%- ELSE; vatreturn.perbox3 | format('%1.2f'); END -%]</span></b></td>
+    </tr>
+    <tr class="hilite" onclick="location.href='/cgi-bin/fpa/hmrc_drill_down.pl?vattotal=[%- vatreturn.perbox4 -%]&boxno=box4&vrid=[%- vatreturn.id -%]';">
+      <td><label>VAT reclaimed in this period on <b>purchases</b> and other inputs<br/>includingacquisitions from the EC (Box 4):</label></td>
+      <td><span><input name="perbox4" type="text" id="perbox4" value="[%- vatreturn.perbox4  OR "0" | remove('-') | format('%1.2f') -%]" onchange="calc_val(this);"[%- IF vatreturn.id > 0 -%] readonly="readonly"[%- END -%]/></span></td>
+    </tr>
+    <tr class="hilite" onclick="location.href='/cgi-bin/fpa/hmrc_drill_down.pl?vattotal=[%- vatreturn.perbox5 -%]&boxno=box5&vrid=[%- vatreturn.id -%]';">
+      <td><label>Net VAT to be paid to HM Revenue &amp; Customs or reclaimed<br/>by you <b>(Difference between boxes 3 and 4)</b> (Box 5):</label></td>
+      <td><b><span id="box5">[%- IF vatreturn.perbox1 == '0.00' AND vatreturn.perbox4 == '0.00' -%]Calculated Value[%- ELSE; vatreturn.perbox5 | format('%1.2f'); END -%]</span></b></td>
+    </tr>
+    <tr class="hilite" onclick="location.href='/cgi-bin/fpa/hmrc_drill_down.pl?vattotal=[%- vatreturn.perbox6 -%]&boxno=box6&vrid=[%- vatreturn.id -%]';">
+      <td><label>Total value of <b>sales</b> and all other outputs excluding any<br/>VAT. <b>Include your box 8 figure</b> (Box 6):</label></td>
+      <td><span><input name="perbox6" type="text" id="perbox6" value="[%- vatreturn.perbox6 OR "0" | format('%d') -%]" onchange="calc_val(this);"[%- IF vatreturn.id > 0 -%] readonly="readonly"[%- END -%]/></span><br/><span class="vatgrey">Whole pounds only</span></td>
+    </tr>
+    <tr class="hilite" onclick="location.href='/cgi-bin/fpa/hmrc_drill_down.pl?vattotal=[%- vatreturn.perbox7 -%]&boxno=box7&vrid=[%- vatreturn.id -%]';">
+      <td><label>Total value of <b>purchases</b> and all other inputs excluding any<br/>VAT. <b>Include your box 9 figure</b> (Box 7):</label></td>
+      <td><span><input name="perbox7" type="text" id="perbox7" value="[%- vatreturn.perbox7 OR "0" | format('%d') -%]" onchange="calc_val(this);"[%- IF vatreturn.id > 0 -%] readonly="readonly"[%- END -%]/></span><br/><span class="vatgrey">Whole pounds only</span></td>
+    </tr>
+    <tr>
+      <td><label>Total value of all <b>supplies</b> of goods and related costs,<br/>excluding any VAT, from other <b>EC Member States</b> (Box 8):</label></td>
+      <td><span><input name="perbox8" type="text" id="perbox8" value="[%- vatreturn.perbox8 OR "0" | format('%d') -%]" onchange="calc_val(this);"[%- IF vatreturn.id > 0 -%] readonly="readonly"[%- END -%]/></span><br/><span class="vatgrey">Whole pounds only</span></td>
+    </tr>
+    <tr>
+      <td><label>Total value of all <b>acquisitions</b> of goods and related costs<br/> excluding any VAT, from other <b>EC Member States</b> (Box 9):</label></td>
+      <td><span><input type="text" name="perbox9" id="perbox9" value="[%- vatreturn.perbox9 OR "0" | format('%d') -%]" onchange="calc_val(this);"[%- IF vatreturn.id > 0 -%] readonly="readonly"[%- END -%]/></span><br/><span class="vatgrey">Whole pounds only</span></td>
+    </tr>
+  </table><br/>
+  <h3 style="font-weight:bold;">Notes</h3>
+  <table width="500" cellspacing="8" cellpadding="0" border="0" style="font-weight:normal;border:1px solid #484848;">
+    <tr>
+      <td width="150">Complete &amp; Close<br/>(Status = 'Completed')</td>
+      <td style="text-align:center;" width="20">-</td>
+      <td width="330">Select this tab to finalise your VAT return.&nbsp;&nbsp;This is what WILL be sent to HMRC.</td>
+    </tr>
+    <tr>
+      <td width="150">Mark as Filed<br/>(Status = 'Filed')</td>
+      <td style="text-align:center;" width="20">-</td>
+      <td width="330">Select this tab once the figures HAVE BEEN sent to HMRC.&nbsp;&nbsp;Only once this tab has been selected will the VAT amount owed/due be displayed on the Current Account Reconciliation screen.</td>
+    </tr>
+    <tr>
+      <td width="150">(Status = 'Paid')</td>
+      <td style="text-align:center;" width="20">-</td>
+      <td width="330">This VAT return will be given a 'Paid' status once the amount to/from HMRC has been reconciled.</td>
+    </tr>
+  </table>
+</div>
+<div id="sidebar">
+  <ul> 
+[% IF vatreturn.perstatus == 'save' -%]
+    <li>
+      <div>
+          <input type="submit" name="save" id="close" value="Complete &amp; Close"/>
+      </div>
+    </li>
+[% END; UNLESS vatreturn.perstatus == 'Filed' OR vatreturn.perstatus == 'Paid' -%]
+    <li>
+      <div>
+          <input type="submit" name="save" id="file" value="Mark as Filed"/>
+      </div>
+    </li>
+[% END; IF vatreturn.perstatus == 'save' -%]
+    <li>
+      <div>
+          <input type="reset" name="reset" id="reset" value="Start Again"/>
+      </div>
+    </li>
+[% END -%]
+    <li>
+      <div>
+          <input type="submit" name="save" id="list" value="List VAT Entries"/>
+      </div>
+    </li>
+  </ul>   
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+  </div>
+</div>
+</form>

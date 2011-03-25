@@ -1,0 +1,221 @@
+<form action="/cgi-bin/fpa/save_purchase.pl" method="post" name="form1" id="form1">
+<div class="main">
+[% USE date(format = '%d-%b-%y') %]
+<input type="hidden" name="cus_id" id="x_cus_id" value="[% cus.id -%]"/>
+<input type="hidden" name="id" id="id" value=""/>
+<input type="hidden" name="invitemcount" id="invitemcount" value="0"/>
+<input type="hidden" name="invitems" id="invitems" value=""/>
+<input type="hidden" name="invtotal" id="invtotal" value=""/>
+[% UNLESS cookie.VAT == "N" -%]<input type="hidden" name="invvat" id="invvat" value=""/>[%- END -%]
+<input type="hidden" name="item_tt" id="item_tt" value=""/>
+<input type="hidden" name="invstatus" id="invstatus" value="Draft"/>
+<div class="status">New <span class="invtext">Purchase Invoice</span></div>
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="formtable">
+[% UNLESS cus.id AND cus.id > 0 -%]
+    <tr id="selcus">
+      <td><label>Select Supplier</label></td>
+      <td colspan="2"><input type="text" name="srch" id="srch"/></td>
+      <td>&nbsp;</td>
+      <input type="hidden" name="searchtype" id="searchtype" value="Supplier">
+    </tr>
+[% END -%]
+    <tr>
+      <td nowrap="nowrap"><label>Company Name</label></td>
+      <td><input title="Company Name" name="invcusname" type="text" id="x_invcusname" size="20" value="[% cus.cusname -%]" class="mandatory"/></td>
+      <td nowrap="nowrap"><label>Purchase Invoice Type</label></td>
+      <td>
+        <select name="invtype" id="invtype" size="1">
+          <option value="P" selected="selected">Purchase Invoice</option>
+          <option value="R">Purchase Refund</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align:top;" rowspan="3"><label>Address</label></td>
+      <td rowspan="3" style="vertical-align:top;"><textarea title="Address" name="invcusaddr" id="x_invcusaddr" cols="20" rows="3">[%- cus.cusaddress -%]</textarea></td>
+      <td style="vertical-align:top;padding-top:9px;"><label><span class="invtext">Purchase Invoice</span> Date</label></td>
+      <td style="vertical-align:top;"><input type="text" name="invprintdate" id="x_invprintdate" readonly="readonly" size="9" value="[%- date.format -%]"/></td>
+    </tr>
+    <tr>
+      <td style="vertical-align:top;"><label><span class="invtext">Purchase Invoice</span> Number</label></td>
+      <td style="vertical-align:top;color:#800000;">(System Generated)</td>
+    </tr>
+    <tr>
+      <td><label>Supplier Reference</label></td>
+      <td><input title="Supplier Reference" name="invcusref" type="text" id="invcusref"/></td>
+    </tr>
+    <tr>
+      <td><label>Post Code</label></td>
+      <td><input title="Post Code" name="invcuspostcode" type="text" id="x_invcuspostcode" value="[%- cus.cuspostcode -%]" size="10"/></td>
+      <td><label>Expenses Category</label></td>
+      <td><span><select title="Expenses Category" name="invcoa" id="invcoa">
+  [% FOREACH coa IN coas -%]
+          <option value="[%- coa.coanominalcode -%]" [%- IF coa.coanominalcode == cus.cusdefcoa -%] selected="selected" [% END -%] >[%- coa.coadesc -%]</option>
+  [% END -%]
+        </select></span>
+      </td>
+    </tr>
+    <tr>
+      <td><label>Region</label></td>
+      <td><select title="Region" name="invcusregion" id="x_invcusregion">
+          <option value="UK" [% IF cus.cusregion == 'UK' -%] selected="selected" [% END -%] >UK</option>
+          <option value="EU" [% IF cus.cusregion == 'EU' -%] selected="selected" [% END -%] >EU (other than UK)</option>
+          <option value="NEU" [% IF cus.cusregion == 'NEU' -%] selected="selected" [% END -%] >Non-EU</option>
+        </select>
+      </td>
+      <td colspan="2">&nbsp;</td>
+    </tr>
+    <tr>
+      <td><label>Contact Name</label></td>
+      <td><input title="Contact Name" name="invcuscontact" type="text" id="x_invcuscontact" value="[% cus.cuscontact -%]" size="20"/></td>
+      <td><label>Email</label></td>
+      <td><input title="Email Address" name="invcusemail" type="text" id="x_invcusemail" value="[% cus.cusemail -%]" size="20"/></td>
+    </tr>
+    <tr>
+      <td><label>Paid in Full?</label></td>
+      <td colspan="3"><input type="radio" name="invfpflag" id="fpn" value="N" checked="checked" onclick="$('#fp_type').css('visibility','hidden');"/>&nbsp;No&nbsp;&nbsp;<input type="radio" name="invfpflag" id="fpy" value="Y" onclick="$('#fp_type').css('visibility','visible');"/>&nbsp;&nbsp;Yes<span id="fp_type" style="visibility:hidden;">&nbsp;&nbsp;
+        <select name="txnmethod" id="txnmethod" size="1">
+          <option value="1300" selected="selected">Cash</option>
+          <option value="1310">Cheque</option>
+          <option value="1200">Bank Transfer</option>
+          <option value="2010">Credit Card</option>
+        </select>
+      </td>
+    </tr>  
+    <tr>
+      <td colspan="4"><center><hr style="border-bottom:1px solid #233930;width:95%;"/></center></td>
+    </tr>
+    <tr>
+      <td colspan="4">
+        <table border="0" cellpadding="0" cellspacing="0" width="660">
+          <tr>
+            <td>
+              <table width="560" border="0" cellpadding="0" cellspacing="0" class="datatable">
+                <tr>
+                  <th>Description</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+[% UNLESS cookie.VAT == "N" -%]
+                  <th>VAT Rate</th>
+[% END -%]
+                </tr>
+                <tr>
+[% IF cookie.VAT == "N" -%]
+                  <td rowspan="2"><textarea name="desc" id="desc" cols="40" rows="2"></textarea></td>
+[% ELSE -%]
+                  <td rowspan="2"><textarea name="desc" id="desc" cols="30" rows="2"></textarea></td>
+[% END -%] 
+                  <td style="vertical-align:top;"><input name="price" id="price" type="text" size="5"  onblur="check_currency(this);"/></td>
+                  <td style="vertical-align:top;"><input name="qty" id="qty" type="text" size="4"  onblur="check_int(this);"/></td>
+[% UNLESS cookie.VAT == "N" -%]
+                  <td style="vertical-align:top;">
+                    <select name="vat" id="sel_vat">
+  [% INCLUDE vatrates -%]
+                    </select>
+                  </td>
+[% END -%]
+                </tr>
+                <tr>
+                  <td colspan="3" nowrap="nowrap">
+                    <table width="100%" border="0" cellpadding="0" cellspacing="0" id="splits" style="display:none;">
+                      <tr>
+                        <td>Net:<input type="text" name="splittotal" id="splittotal" size="6"/></td>
+                        <td>Vat:<input type="text" name="splitvat" id="splitvat" size="4"/></td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <td>
+              <a href="#" onclick="add_row();"><img src="/icons/add_button_over.jpg" alt="Add" title="Add Line Item"/></a>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4">
+        <div style="width:630px;height:120px;overflow:auto;" id="div_html">
+          <table width="610" border="0" cellpadding="0" cellspacing="0" id="itmtbl" class="items">
+            <tbody><tr>
+[% IF cookie.VAT == "N" -%]
+              <th width="350">Description</th>
+[% ELSE -%]
+              <th width="280">Description</th>
+[% END -%]
+              <th width="50" style="text-align:right;">Unit<br/>Price</th>
+              <th width="30" style="text-align:right;">Qty</th>
+              <th width="50" style="text-align:right;">Sub<br/>Total</th>
+[% UNLESS cookie.VAT == "N" -%]
+              <th width="30" style="text-align:center;">VAT<br/>Rate</th>
+              <th width="40" style="text-align:right;">VAT<br/>Amt</th>
+[% END -%]
+              <th width="60" style="text-align:right;">Total</th>
+              <th width="70" style="text-align:center;">Edit</th>
+            </tr></tbody><tbody id="items">
+            <tr>
+              <td colspan="8" style="font-style:italic;">You have not yet added any line items.</td>
+            </tr>
+            <tr>
+              <td colspan="8">&nbsp;</td>
+            </tr>
+          </table>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2" rowspan="3">Remarks<br/><textarea name="invremarks" id="invremarks" cols="30" rows="2"></textarea></td>
+        <td style="text-align:right;"><strong>Sub Total : </strong></td>
+        <td id="st" style="text-align:right;padding-right:40px;"></td>
+      </tr>
+      <tr>
+[% IF cookie.VAT == "N" -%]
+        <td colspan="2">&nbsp;</td>
+[% ELSE -%]
+        <td style="text-align:right;"><strong>VAT : </strong></td>
+        <td id="vt" style="text-align:right;padding-right:40px;"></td>
+[% END -%]
+      </tr>
+      <tr>
+        <td style="text-align:right;"><strong><span class="invtext">Purchase Invoice</span> Total : </strong></td>
+        <td id="tt" style="text-align:right;padding-right:40px;"></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+</div>
+<div id="sidebar">
+  <ul>    
+    <li>
+      <div>
+        <input type="submit" name="submit" id="save" value="Save"/>
+      </div>  
+    </li>   
+    <li>
+      <div>
+        <input type="submit" name="submit" id="print" value="Print"/>
+      </div>  
+    </li>   
+    <li>    
+      <div>
+        <a href="/cgi-bin/fpa/new_purchase.pl?[%- cus.id -%]">
+          &nbsp;Start Again
+        </a>
+      </div>  
+    </li>   
+    <li>
+      <div>
+        <a href="#" onclick="goto_list();">
+          Purchase Invoice List
+        </a>
+      </div>
+    </li>
+  </ul>   
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+  </div>
+</form>
+</div>
+

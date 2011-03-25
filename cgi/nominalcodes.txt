@@ -1,0 +1,25 @@
+1000	Fixed Assets	Assets	Balance Sheet
+1100	Debtors	Assets	Balance Sheet
+1200	Bank Current	Assets	Balance Sheet
+1210	Bank Deposit	Assets	Balance Sheet
+1300	Cash	Assets	Balance Sheet
+1310	Cheques	Assets	Balance Sheet
+1400	VAT Input	Assets	Balance Sheet
+1500	Other Current Assets	Assets	Balance Sheet
+2000	Creditors	Liabilities	Balance Sheet
+2010	Credit Card	Liabilities	Balance Sheet
+2100	VAT Output	Liabilities	Balance Sheet
+2200	Other Current Liability	Liabilities	Balance Sheet
+2300	Long Term Liability	Liabilities	Balance Sheet
+3000	Share Capital	Capital	Balance Sheet
+3100	Retained Earnings	Capital	Balance Sheet
+4000	UK Sales	Income	P & L
+4100	EU Sales	Income	P & L
+4200	Export Sales	Income	P & L
+4300	Other Income	Income	P & L
+5000	Cost of Sales	Expenses	P & L
+6000	Other Expenses	Expenses	P & L
+7000	Fixed Overheads	Expenses	P & L
+7500	Wages	Expenses	P & L
+7600	Payroll Taxes	Expenses	P & L
+8000	Bad Debts	Expenses	P & L

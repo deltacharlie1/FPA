@@ -1,0 +1,7 @@
+[% IF cookie.NO_ADS == '1' -%]
+<div style="width:5px;height:600px;"></div>
+[% ELSE; USE DBI('dbi:mysql:fpa') -%]
+[% FOREACH advert = DBI.query('select id,href,img from adverts order by shows limit 1') -%]
+<a href='[%- advert.href -%]'><img border=0 src='/adimages/[%- advert.img -%]'></a>
+  [% uid = advert.id; sts = DBI.do("UPDATE adverts set shows=shows+1 where id=$uid") -%]
+[% END; END -%]

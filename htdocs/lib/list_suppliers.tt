@@ -1,0 +1,38 @@
+<div class="main">
+<h1>List of Suppliers</h1>
+[% INCLUDE address_select.tt -%]
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="listing">
+    <tr>
+      <th>Name</th>
+      <th>Post Code</th>
+      <th>Contact</th>
+      <th>Owed</th>
+      <th>Actions</th>
+    </tr>
+[% class = [ "even","odd" ] -%]
+[%- FOREACH entry IN entries -%]
+  [%- ndx = loop.count % 2 -%]
+    <tr class="[%- class.$ndx -%]">
+      <td onclick="location.href='/cgi-bin/fpa/list_supplier_purchases.pl?[%- entry.id -%]';">[%- entry.cusname | truncate(30) -%]</td>
+      <td onclick="location.href='/cgi-bin/fpa/list_supplier_purchases.pl?[%- entry.id -%]';">[%- entry.cuspostcode | remove("\n.*") -%]</td>
+      <td onclick="location.href='/cgi-bin/fpa/list_supplier_purchases.pl?[%- entry.id -%]';">[%- entry.cuscontact -%]</td>
+      <td onclick="location.href='/cgi-bin/fpa/list_supplier_purchases.pl?[%- entry.id -%]';">[%- 0 - entry.cusbalance | format('%1.2f') -%]</td>
+      <td style="text-align:center;" nowrap="nowrap"><img src="/icons/invoice.png" title="Raise Purchase Order" onclick="location.href='/cgi-bin/fpa/new_purchase.pl?[%- entry.id -%]';"></td>
+    </tr>
+[%- END -%]
+  </table>
+</div>
+<div id="sidebar">
+  <ul>
+    <li>
+      <div>
+        <a href="/cgi-bin/fpa/add_address.pl?S">
+         Add New Supplier 
+        </a>
+      </div>
+    </li>
+  </ul>
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+  </div>
+</div>

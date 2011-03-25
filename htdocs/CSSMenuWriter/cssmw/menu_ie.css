@@ -1,0 +1,84 @@
+ul#cssmw {
+  cursor: default;
+  list-style-type: none;
+  margin: 0 0 0 0;
+  padding: 0 0 0 0;
+}
+ul#cssmw ul {
+  cursor: default;
+  list-style-type: none;
+  margin: 0 0 0 0;
+  padding: 0 0 0 0;
+}
+ul#cssmw ul li {
+  background-image: none;
+  border-bottom: solid 1px black;
+  float: none;
+  margin-bottom: -1px;
+}
+ul#cssmw li {
+  zoom:1;
+  background-image: none;
+  border-bottom: solid 1px black;
+  float: left;
+  margin-bottom: -1px;
+  padding: 0 0 0 0;
+  position: relative;
+  white-space: nowrap;
+  z-index: 100;
+}
+ul#cssmw li ul {
+  display: none;
+  top: 0;
+}
+ul#cssmw li.hover ul {
+  display: block;
+  position: absolute;
+}
+
+ul#cssmw li.current ul {
+  position: absolute;
+}
+ul#cssmw li {
+  zoom:1;
+  background-image: none;
+}
+ul#cssmw li a {
+  background-color: #679a5c;
+  background-image: none;
+  background-position: 95% 50%;
+  background-repeat: no-repeat;
+  border-bottom: dotted 1px #92B876;
+  color: #FFFFFF;
+  display: block;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  height: 20px;
+  line-height: 20px;
+  margin: 0 0 0 0;
+  padding: 5px 20px 5px 10px;
+  text-decoration: none;
+  text-transform: lowercase;
+}
+ul#cssmw li * a {
+  height: auto;
+  width: auto;
+}
+ul#cssmw li span * a {
+  height: auto;
+  width: auto;
+}
+ul#cssmw li.hover a {
+  background-color: #578557;
+  border-bottom: dotted 1px #92B876;
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+ul#cssmw li.current a.current {
+  background-color: #578557;
+  border-bottom: dotted 1px #92B876;
+  color: #FFFFFF;
+  text-decoration: none;
+}

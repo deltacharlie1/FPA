@@ -1,0 +1,160 @@
+<form action="/cgi-bin/fpa/add_address2.pl" method="post" name="form1" id="form1" autocomplete="off">
+<input type="hidden" name="custype" id="custype" value="[%- custype -%]"/>
+<input type="hidden" name="id" id="id" value="[% cus.id -%]"/>
+<input type="hidden" name="ignore_action" id="ignore_action" value="Save"/>
+<div class="main">
+<h1>[%- IF custype == "C" -%]Customer[%- ELSE -%]Supplier[%- END -%] Details</h1>
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="formtable">
+    <tr>
+      <td colspan="2">&nbsp;</td>
+    </tr>
+    <tr>
+      <td><label>Company Name</label></td>
+      <td nowrap><span><input title="Company Name" name="cusname" type="text" id="cusname" size="40" value="[%- cus.cusname -%]" class="mandatory"/></span></td>
+    </tr>
+    <tr>
+      <td style="vertical-align:top;"><label>Address</label></td>
+      <td><span><textarea title="Address" name="cusaddress" id="cusaddress" cols="30" rows="3">[%- cus.cusaddress -%]</textarea></span></td>
+    </tr>
+    <tr>
+      <td><label>Post Code</label></td>
+      <td><span><input title="Post Code" name="cuspostcode" type="text" id="cuspostcode" value="[%- cus.cuspostcode -%]" size="10"/></span></td>
+    </tr>
+    <tr>
+      <td><label>Region</label></td>
+      <td><span><select title="Region" name="cusregion" id="cusregion">
+          <option value="UK" [%- IF cus.cusregion == 'UK' -%] selected="selected" [%- END -%] >UK</option>
+          <option value="EU" [%- IF cus.cusregion == 'EU' -%] selected="selected" [%- END -%] >EU (other than UK)</option>
+          <option value="NEU" [%- IF cus.cusregion == 'NEU' -%] selected="selected" [%- END -%] >Non-EU</option>
+        </select></span>
+      </td>
+    </tr>
+    <tr>
+      <td><label>Telephone Number</label></td>
+      <td><span><input title="Telephone No" name="custel" type="text" id="custel" value="[%- cus.custel -%]" size="20"/></span></td>
+    </tr>
+    <tr>
+      <td><label>Contact Name</label></td>
+      <td><span><input title="Contact Name" name="cuscontact" type="text" id="cuscontact" value="[%- cus.cuscontact -%]" size="40"/></span></td>
+    </tr>
+    <tr>
+      <td><label>Contact Email Address</label></td>
+      <td><span><input title="Contact Email" name="cusemail" type="text" id="cusemail" value="[%- cus.cusemail -%]" size="40"/></span></td>
+    </tr>
+    <tr>
+      <td><label>Terms of Business</label></td>
+      <td><span><select title="Terms of Business" name="custerms" id="custerms">
+          <option value="" [%- IF cus.custerms == '' -%] selected="selected" [%- END -%] >--  Please Select  --</option>
+          <option value="N" [%- IF cus.custerms == 'N' -%] selected="selected" [%- END -%] >Due Now</option>
+          <option value="I" [%- IF cus.custerms == 'I' -%] selected="selected" [%- END -%] >With Invoice</option>
+          <option value="7" [%- IF cus.custerms == '7' -%] selected="selected" [%- END -%] >7 Days</option>
+          <option value="14" [%- IF cus.custerms == '14' -%] selected="selected" [%- END -%] >14 Days</option>
+          <option value="28" [%- IF cus.custerms == '28' -%] selected="selected" [%- END -%] >28 Days</option>
+          <option value="30" [%- IF cus.custerms == '30' -%] selected="selected" [%- END -%] >30 Days</option>
+          <option value="60" [%- IF cus.custerms == '60' -%] selected="selected" [%- END -%] >60 Days</option>
+          <option value="90" [%- IF cus.custerms == '90' -%] selected="selected" [%- END -%] >90 Days</option>
+          <option value="120" [%- IF cus.custerms == '120' -%] selected="selected" [%- END -%] >120 Days</option>
+          <option value="COD" [%- IF cus.custerms == 'COD' -%] selected="selected" [%- END -%] >Cash on Delivery (COD)</option>
+        </select></span>
+      </td>
+    </tr>
+[% IF custype == "C" -%]
+    <tr>
+      <td><label>Default Purchase Order No</label></td>
+      <td><input title="Default Purchase Order No" name="cusdefpo" type="text" id="cusdefpo" size="20" value="[% cus.cusdefpo -%]"/></td>
+    </tr>
+[% ELSE -%]
+    <tr>
+      <td><label>Default Expenses Category</label></td>
+      <td><span><select title="Expenses Category" name="cusdefcoa" id="cusdefpaycoa">
+  [% FOREACH coa IN coas -%]
+          <option value="[%- coa.coanominalcode -%]" [%- IF coa.coanominalcode == cus.cusdefcoa -%] selected="selected" [% END -%] >[%- coa.coadesc -%]</option>
+  [% END -%]
+        </select></span>
+      </td>
+    </tr>
+[% END -%]
+    <tr>
+      <td><label>Default Payment Method</label></td>
+      <td><span><select title="Payment Method" name="cusdefpaymethod" id="cusdefpaymethod">
+          <option value="1310" [%- IF cus.cusdefpaymethod == '1310' -%] selected="selected" [% END -%] >Cheque</option>
+          <option value="1300" [%- IF cus.cusdefpaymethod == '1300' -%] selected="selected" [% END -%] >Cash</option>
+          <option value="1200" [%- IF cus.cusdefpaymethod == '1200' -%] selected="selected" [% END -%] >Bank Transfer</option>
+        </select></span>
+      </td>
+    </tr>
+[% UNLESS cookie.VAT == "N" -%]
+    <tr>
+      <td><label>Default VAT Rate</label></td>
+      <td>
+        <select name="cusdefvatrate" id="cusdefvatrate">
+[% INCLUDE vatrates -%]
+        </select>
+      </td>
+    </tr>
+[% END -%]
+    <tr>
+      <td><label>Bank Name</label></td>
+      <td><input title="Bank Name" name="cusbank" type="text" id="cusbank" size="30" value="[%- cus.cusbank -%]"/></td>
+    </tr>
+    <tr>
+      <td><label>Bank Sort Code</label></td>
+      <td><span><input title="Sort Code" name="cussortcode" type="text" id="cussortcode" size="8" value="[%- cus.cussortcode- %]"/></span></td>
+    </tr>
+    <tr>
+      <td><label>Bank Account Number</label></td>
+      <td><span><input title="Account No" name="cusacctno" type="text" id="cusacctno" size="8" value="[%- cus.cusacctno -%]"/></span></td>
+    </tr>
+    <tr>
+      <td><label>Current Balance</label></td>
+      <td>[%- cus.cusbalance -%]</td>
+    </tr>
+    <tr>
+      <td><label>Credit Limit</label></td>
+      <td><span><input title="Credit Limit" name="cuslimit" id="cuslimit" type="text" size="10" value="[%- cus.cuslimit -%]" class="currency"/></span></td>
+    </tr>
+    <tr>
+      <td><label>Relationship</label></td>
+      <td><input title="Sales Customer" name="cussales" id="cussales" type="checkbox" value="Y" [%- IF cus.cussales OR custype == "C" -%] checked="checked"[%- END -%]/> Sales Customer&nbsp;&nbsp;<input title="Supplier" name="cussupplier" id="cussupplier" type="checkbox" value="Y" [%- IF cus.cussupplier OR custype == "S" -%] value="Y" checked="checked"[%- END -%]/> Supplier</td>
+    </tr>
+    <tr>
+      <td style="vertical-align:top;"><label>Remarks</label></td>
+      <td><span><textarea title="Remarks" name="cusremarks" id="cusremarks" cols="30" rows="2">[%- cus.cusremarks -%]</textarea></span></td>
+    </tr>
+    <tr>
+      <td style="vertical-align:top;"><label>Default Email Message</label></td>
+      <td><span><textarea title="Default Email Message" name="cusemailmsg" id="cusemailmsg" cols="30" rows="2">[%- cus.cusemailmsg -%]</textarea></span></td>
+    </tr>
+    <tr>
+      <td style="vertical-align:top;"><label>Default Statement Message</label></td>
+      <td><span><textarea title="Default Statement Message" name="cusstmtmsg" id="cusstmtmsg" cols="30" rows="2">[%- cus.cusstmtmsg -%]</textarea></span></td>
+    </tr>
+    <tr>
+[% IF custype == "C" and cookie.STMTS == "1" -%]
+    <tr>
+      <td><label>Automatic Statements</label></td>
+      <td><input type="radio" name="cusautostmts" id="cusautostmtsy" value="Y" [%- IF cus.cusautostmts == 'Y' -%]checked="checked"[%- END -%]/> Yes&nbsp;&nbsp;<input type="radio" name="cusautostmts" id="cusautostmtsn" value='N' [%- IF cus.cusautostmts == 'N' -%]checked="checked"[%- END -%]/> No</td>
+    </tr>
+[% END -%]
+      <td colspan="2">&nbsp;</td>
+    </tr>
+  </table>
+</div>
+<div id="sidebar">
+  <ul>  
+    <li>
+      <div>
+        <input type="submit" name="save" id="save" value="Save Details"/>
+      </div>
+    </li>
+    <li>
+      <div>
+          <input type="reset" name="reset" id="reset" value="Start Again"/>
+      </div>
+    </li>
+  </ul>   
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+  </div>
+</div>
+</form>

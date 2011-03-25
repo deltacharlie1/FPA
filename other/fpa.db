@@ -1,0 +1,518 @@
+#  Schema for FreePlus Accounts
+
+#  Registrations - holds the registration (and login) details for each FPA client
+
+drop table if exists registrations;
+create table registrations (
+  reg_id int unsigned auto_increment comment 'Account Identifier' primary key,
+  regusername varchar(250) not null default '' comment 'Registered Users Name',
+  regcompanyname varchar(250) not null default '' comment 'Registered Users Company Name',
+  regemail varchar(250) not null unique comment 'Email address, used as long id',
+  regpwd varchar(50) not null comment '(Encrypted using password function) Password (6-20 chars)',
+  regmemword varchar(100) not null comment 'Memorable word (6-100 chars)',
+  regmembership varchar(50) not null default '1' comment 'Membership level an array of flags to denote additional options',
+  regactive char(3) not null default 'P' comment 'Flag to denote whether this account is fully active.  Values are P, C',
+  regactivecode varchar(250) comment 'SHA activation code for Pending registrations',
+  regregdate datetime comment 'Date of Initial Registration',
+  regrenewaldue datetime not null default '2036-12-31 23:59:59' comment 'Running renewal date.  Initially set for Free user',
+  reglastlogindate datetime comment 'Date of last login.  Used to determine whether this is a dormant account',
+  regvisitcount int not null default 0 comment 'Count of the number of logins',
+  regcountstartdate datetime comment 'Date that visit counter was reset',
+  regdefaultmenu varchar(250) not null default 'dashboard.pl' comment ' The defualt initial screen displayed',
+  regdefaultrows char(5) not null default '30' comment 'Default number of rows to show for listings',
+  regmenutype char(1) not null default 'F' comment ' menu type to use - F - Full, S - Simple',
+  regoptin char(1) not null default 'Y' comment 'opt in flag for emails and newsletter values ar Y/N',
+  index (regemail)
+);
+
+#  Registration to Company mapping for those with multi companies and multiple users who access a single company
+ 
+drop table if exists reg_coms;
+create table reg_coms (
+  id int unsigned auto_increment primary key,
+  reg1_id int unsigned comment 'id of the registrant',
+  reg2_id int unsigned comment 'registration id of the company, ie who registered the company',
+  com_id int unsigned comment 'id of the company',
+  comname varchar(250) not null default '',
+  mlgrate varchar(20) not null comment 'Mileage rate in pence used by this user',
+  mlgaccum varchar(20) not null comment 'running total of miles claimed for',
+  mlgvattype varchar(20) not null comment 'car type, used to calculate the VAT claim',
+  mlgdefmenu varchar(100) not null default 'dashboard.pl' comment 'Default menu',
+  index reg1 (reg1_id),
+  index reg2 (reg2_id),
+  index reg3 (com_id)
+);
+
+drop table if exists companies;
+create table companies (
+  id int unsigned auto_increment primary key,
+  reg_id int unsigned comment 'Registration No of this of user registering company',
+  comname varchar(250) not null default '' comment 'Company Name',
+  comregno varchar(250) not null default '' comment 'Company Registration No',
+  comaddress varchar(1000) not null default '' comment 'Address',
+  compostcode varchar(100) not null default ''comment 'Post Code',
+  comtel varchar(250) not null default '' comment 'Telephone number',
+  comlogo blob comment 'Company Logo',
+  combusiness varchar(250) not null default '' comment 'Type of Business',
+  comcontact varchar(250) not null default '' comment 'company contact name',
+  comemail varchar(250) not null default '' comment 'Company email Address',
+  comyearend varchar(100) not null default '0' comment 'Company Year End month',
+  comnextsi varchar(80) not null default '100001' comment 'Next Sales Invoice No',
+  comnextpi varchar(80) not null default '500001' comment 'Next Purchase Invoice No',
+  comnextpr varchar(80) not null default '100001' comment 'Next Proforma Invoice No',
+  comnexttxn varchar(80) not null default '1'comment 'Next Transaction Number',
+  comvatscheme varchar(10) not null default 'N' comment 'VAT scheme, can be one of N - None, C - Cash, S - Standard',
+  comvatno varchar(250) not null default '' comment 'Company VAT Registration No',
+  comvatcontrol decimal(20,2) not null comment 'VAT control total actually owed to/from HMRC',
+  comvatduein char(1) not null default '0' comment 'VAT Quarter End',
+  comvatqstart date not null default '2010-01-01' comment 'Date that quarter starts for next VAT return',
+  comvatmsgdue date not null comment 'Date of next VAT reminder message',
+  comnocheques decimal(5,0) not null default '0' comment 'Total no of cheques currently held',
+  comlastmodified timestamp comment 'Date time record last modified',
+  comyearendmsgdue date not null comment 'Date next yearend message due',
+  comyearendreminder char(1) not null default '' comment 'Reminder flag that year end has not yet been done',
+  comvatreminder char(1) not null default '' comment 'flag to denote that reminder has been set (is reset once VAT return Filed)',
+  comcompleted char(1) not null default '' comment 'Flag to denote that Company Setup have been completed',
+  comacccompleted char(1) not null comment 'Flag to denote that opening balances have been added',
+  comrecstats varchar(5000) not null default '' comment 'Field to hold ; delimited monthly sales stats',
+  compaystats varchar(3000) not null default '' comment 'field to hold ; delimited monthly purchase stats',
+  comoptin char(1) not null default 'Y' comment 'Flag to denote that the user has opted in to emails',
+  comexpid int unsigned comment 'id of Expenses /customer/',
+  comemailmsg varchar(5000) not null default '' comment 'Default email meesage',
+  comstmtmsg varchar(5000) not null default '' comment 'Default stmt meesage',
+  comdocsdir varchar(200) not null default '' comment 'Documents directory',
+  comfree date not null default '2100-01-01' comment 'Access to free system (note extended date)',
+  comno_ads date not null default '2010-01-01' comment 'Suppress Adverts',
+  comrep_invs date not null default '2010-01-01' comment 'Allow repeat invoices',
+  comstmts date not null default '2010-01-01' comment 'Allow Statements',
+  comuplds int unsigned not null default 1048576 comment 'Remaining Upload capacity',
+  compt_logo date not null default '2010-01-01' comment 'Allow Logo',
+  comhmrc date not null default '2010-01-01' comment 'Allow auto-update of HMRC VAT',
+  comsuppt int unsigned not null default 0 comment 'Remaining Support credits',
+  comadd_user int(10) unsigned not null default 0 comment 'number of new users that may be added',
+  index (reg_id)
+);
+
+drop table if exists accounts;
+create table accounts (
+  id int unsigned auto_increment primary key,
+  acct_id varchar(50) not null default '' comment 'reg_id + com_id as in 123+456',
+  acctype varchar(50) not null default '' comment 'Type of Account, eg current, deposit etc',
+  accshort varchar(50) not null default '' comment 'Short name for the account type',
+  accname varchar(250) not null default '' comment 'Name of Account, eg HSBC current Account',
+  accsort varchar(50) not null default '' comment 'Sort Code',
+  accacctno varchar(20) not null default '' comment 'Account No',
+  acctswift varchar(20) not null default '' comment 'Account Swift Code no',
+  index (acct_id)
+);
+
+drop table if exists coas;
+create table coas (
+  id int unsigned auto_increment primary key,
+  acct_id varchar(50) not null default '',
+  coanominalcode char(6) not null default '',
+  coadesc varchar(250) not null default '' comment 'Description of Nominal Code',
+  coatype varchar(50) not null default '' comment 'The group to which this code belongs',
+  coareport varchar(50) not null default '' comment 'The Report in which this value is reported',
+  coabalance decimal(20,2) not null default '0' comment 'The running balance',
+  index (acct_id)
+);
+
+drop table if exists nominals;
+create table nominals (
+  id int unsigned auto_increment primary key,
+  acct_id varchar(50) not null default '',
+  link_id int unsigned not null comment 'id of root transaction/invoice',
+  nomtype char(1) not null default '' comment ' whether link_id is transaction T or invoice I',
+  nomcode varchar(10) not null default '' comment 'nominal code of this entry',
+  nomamount decimal(20,2) not null default '0' comment 'amount for this coa entry',
+  nomdate date comment 'date of this entry',
+  index nom1 (acct_id),
+  index nom2 (link_id)
+);
+
+drop table if exists customers;
+create table customers (
+  id int unsigned auto_increment primary key,
+  acct_id varchar(50) not null default '',
+  cusname varchar(250) not null default '' comment 'Customers trading name',
+  cusaddress varchar(1000) not null default '' comment 'Customers Address',
+  cuspostcode varchar(100) not null default '',
+  cusregion varchar(20) not null default '4000' comment 'The VAT region of the customer',
+  custel varchar(100) not null default '',
+  cuscontact varchar(250) not null default '' comment 'Customer Contact Name',
+  cusemail varchar(250) not null default '' comment 'Customer Accounts Email Address',
+  custerms char(3) not null default '28' comment 'Number of days before payment due',
+  cusdefpo varchar(100) not null default '' comment 'Customer default Purchase Order No',
+  cusdefcoa varchar(8) not null default '4000' comment 'Default coa for this customer/supplier',
+  cusdefvatrate varchar(10) not null comment 'Default VAT rate',
+  cusbank varchar(250) not null default '',
+  cussortcode varchar(20) not null default '',
+  cusacctno varchar(20) not null default '',
+  cusbalance decimal(20,2) not null default '0' comment 'Outstanding balance',
+  cuscredit decimal(20,2) not null default '0' comment 'Unallocated Payments',
+  cuslimit decimal(20,2) not null default '0' comment 'Any Customer Limit',
+  cusdefpaymethod varchar(255) not null default '1200' comment 'default method of invoice payment (bank)',
+  cussales char(1) not null default '' comment 'Flag denoting whether thi customer is a Sales Customer',
+  cussupplier char(1) not null default '' comment 'Flag denoting whether this customer is a Supplier',
+  cusremarks varchar(5000) not null default '' comment 'Customer Remarks',
+  cusemailmsg varchar(5000) not null default '' comment 'Default email meesage for this customer',
+  cusstmtmsg varchar(5000) not null default '' comment 'Default stmt meesage for this customer',
+  cusautostmts char(1) not null default 'N' comment 'Whether to run auto statements for this customer',
+  index cus1 (acct_id),
+  index cus2 (cusname)
+);
+
+drop table if exists invoices;
+create table invoices (
+  id int unsigned auto_increment primary key,
+  acct_id varchar(50) not null default '',
+  cus_id int unsigned not null,
+  invinvoiceno varchar(50) not null default '',
+  invcusref varchar(250) not null default '',
+  invtype char(1) not null default 'S' comment 'S - invoice C - credit Note P - purchase invoice R - Purchase Refund',
+  invcusname varchar(250) not null default '',
+  invcusaddr varchar(1000) not null default '',
+  invcuspostcode varchar(50) not null default '',
+  invcusregion varchar(20) not null default 'UK',
+  invcuscontact varchar(250) not null default '',
+  invcusemail varchar(250) not null default '',
+  invcusterms varchar(50) not null default '',
+  invremarks text comment 'Remarks displayed on invoice',
+  invcoa varchar(20) not null default '4000' comment 'nominalcode  assigned to invoice',
+  invcreated datetime comment 'Date Invoice first saved',
+  invprintdate date comment 'Date invoice printed/emailed',
+  invduedate date comment 'Date payment for the invoice is due',
+  invtotal decimal(20,2) not null default '0' comment 'The invoice total (excl VAT if applicable)',
+  invvat decimal(20,2) not null default '0' comment 'VAT total',
+  invpaid decimal(20,2) not null default '0' comment 'Total paid so far',
+  invpaidvat decimal(20,2) not null default '0' comment 'Total VAT paid so far',
+  invpaiddate date comment 'Date that last instalment was paid',
+  invstatus varchar(50) not null default 'Draft' comment 'Current Invoice status - Draft, Unpaid, Overdue, Part-Paid, Paid',
+  invstatuscode decimal(2,0) not null default '0' comment 'Status code, Draft - 1, Printed - 3 etc',
+  invstatusdate datetime comment 'Status Date',
+  invfpflag char(1) not null default '' comment 'Flag to denote full payment checkbox checked',
+  invitemcount int comment 'No of line items',
+  invitems text comment 'HTML snippet of all line items before invoice saved',
+  invdesc varchar(250) not null default '' comment 'First line of description',
+  invyearend varchar(20) not null default '' comment 'Invoice Yearend reporting period',
+  invrepeat char(1) not null default '' comment 'flag to denote that this is a repeat invoice',
+  invrepeatfreq varchar(20) not null default '' comment ' the frequency with which the invoice is to be repeated week, month, year etc',
+  invrepeatnext date comment 'the date of the next invoice.  This is updated each time the invoice is printed',
+  invaccumstart decimal(6,0) not null default '0' comment ' the number of the next invoice, only activated if invrepeat = Y',
+  invaccumtot decimal(6,0) not null default '0' comment 'the last number, ie max of invoices to be produced',
+  invnextinvdate date not null default '2000-01-01' comment 'Date of next repeat invoice',
+  index inv1 (acct_id),
+  index inv2 (invinvoiceno)
+);
+
+drop table if exists invoice_templates;
+create table invoice_templates (
+  id int unsigned auto_increment primary key,
+  acct_id varchar(50) not null default '',
+  cus_id int unsigned not null,
+  invcusref varchar(250) not null default '',
+  invtype char(1) not null default 'I' comment 'I - invoice C - credit Note P - purchase invoice R - Purchase Refund',
+  invcusname varchar(250) not null default '',
+  invcusaddr varchar(1000) not null default '',
+  invcuspostcode varchar(50) not null default '',
+  invcusregion varchar(20) not null default 'UK',
+  invcuscontact varchar(250) not null default '',
+  invcusemail varchar(250) not null default '',
+  invcusterms varchar(50) not null default '',
+  invremarks text comment 'Remarks displayed on invoice',
+  invcoa varchar(20) not null default '4000' comment 'nominalcode  assigned to invoice',
+  invcreated datetime comment 'Date Invoice first saved',
+  invtotal decimal(20,2) not null default '0' comment 'The invoice total (excl VAT if applicable)',
+  invvat decimal(20,2) not null default '0' comment 'VAT total',
+  invitemcount int comment 'No of line items',
+  invitems text not null default '' comment 'HTML snippet of all line items before invoice saved',
+  invdesc varchar(250) not null default '' comment 'First line of description',
+  invrepeatfreq varchar(20) not null default '' comment ' the frequency with which the invoice is to be repeated week, month, year etc',
+  invnextinvdate date not null default '2000-01-01' comment 'Date of next repeat invoice',
+  invemailmsg varchar(5000) not null default '' comment 'message to place on email',
+  index invtemp1 (acct_id)
+);
+
+drop table if exists items;
+create table items (
+  id int unsigned auto_increment primary key,
+  acct_id varchar(50) not null default '',
+  inv_id int unsigned,
+  itmtype char(1) not null default 'S',
+  itmqty decimal(8,0) not null default '1',
+  itmnomcode varchar(20) not null default '',
+  itmdesc varchar(1000) not null default '',
+  itmtotal decimal(20,2) not null default '0' comment 'Total Value excluding any VAT',
+  itmvat decimal(20,2) not null default '0' comment 'VAT total',
+  itmvatrate varchar(50) not null default '' comment 'The VAT rate applied',
+  itmdate date comment 'Date item created/printed',
+  index (acct_id)
+);
+
+drop table if exists vatrates;
+create table vatrates (
+  id int unsigned auto_increment primary key,
+  vatcode char(2) not null default 'S',
+  vatdesc varchar(50) not null default '' comment 'VAT Rate description eg Standard (2009)',
+  vatpercent char(8) not null default '17.5%',
+  vatcalc decimal(7,3) not null default '0.175' comment 'Value used to calculate tax'
+);
+insert into vatrates (vatcode,vatdesc,vatpercent,vatcalc) values ('S1','Standard','17.5%',0.175);
+insert into vatrates (vatcode,vatdesc,vatpercent,vatcalc) values ('S2','Standard','20%',0.2);
+insert into vatrates (vatcode,vatdesc,vatpercent,vatcalc) values ('R','Reduced','5%',0.05);
+insert into vatrates (vatcode,vatdesc,vatpercent,vatcalc) values ('Z','Zero','0%',0.0);
+insert into vatrates (vatcode,vatdesc,vatpercent,vatcalc) values ('E','Exempt','0%',0.0);
+
+drop table if exists transactions;
+create table transactions (
+  id int unsigned not null auto_increment primary key,
+  acct_id varchar(50) not null default '',
+  link_id int unsigned,
+  stmt_id int unsigned,
+  txntxnno varchar(80) not null,
+  txnamount decimal(20,2) not null default '0' comment 'The net amount of the transaction',
+  txndate datetime comment 'Date time of the transaction',
+  txnmethod varchar(20) not null default '' comment 'method of this transaction, ie cash, cheque, transfer, credit card',
+  txnbanked char(1) not null default '' comment 'flag denoting whether cheque transactions have been banked',
+  txnselected char(1) not null default '' comment 'flag to denote that this entry has been selected for reconciliation',
+  txntxntype varchar(50) not null default '' comment 'the type of transaction ie (S)ales, (P)urchase, (B)ank',
+  txncusname varchar(250) not null default '' comment ' name of the customer making/receiving this transaction',
+  txnremarks varchar(5000) not null default '' comment 'any remarks to do with this transaction',
+  txnyearend varchar(20) not null default '' comment 'Transaction yearend reporting period',
+  txncreated timestamp,
+  index (acct_id)
+);
+
+drop table if exists inv_txns;
+create table inv_txns (
+  id int unsigned auto_increment primary key,
+  acct_id varchar(50) not null default '',
+  txn_id int unsigned not null comment 'id of the associated transaction',
+  inv_id int unsigned not null comment 'id of invoice',
+  ittxnno varchar(80) not null,
+  itinvoiceno varchar(50) not null,
+  itnet decimal(20,2) not null default '0' comment 'net amount of this transaction element',
+  itvat decimal(20,2) not null default '0' comment 'vat amount of this transactio element',
+  itdate datetime comment 'datetime of the transaction',
+  itmethod varchar(50) not null comment 'nominal code of payment method',
+  index itx1 (acct_id),
+  index itx2 (txn_id),
+  index itx3 (inv_id)
+);
+
+drop table if exists vatreturns;
+create table vatreturns (
+  id int unsigned not null auto_increment primary key,
+  acct_id varchar(50) not null default '',
+  perquarter varchar(50) not null default '' comment 'The quater (Q? YYYY) for the return in question',
+  perstartdate date not null comment 'Start date for this quarter',
+  perenddate date not null comment 'End Date for this quarter',
+  perduedate date comment 'Date VAT Return is due to HMRC',
+  perstatus varchar(50) not null default '' comment 'Current Status = open - not completed, closed - completed, filed - filed to HMRC',
+  perstatusdate datetime,
+  perbox1 decimal(20,2) not null default '0.00',
+  perbox2 decimal(20,2) not null default '0.00',
+  perbox3 decimal(20,2) not null default '0.00',
+  perbox4 decimal(20,2) not null default '0.00',
+  perbox5 decimal(20,2) not null default '0.00',
+  perbox6 decimal(18,0) not null default '0.00',
+  perbox7 decimal(18,0) not null default '0.00',
+  perbox8 decimal(18,0) not null default '0.00',
+  perbox9 decimal(18,0) not null default '0.00',
+  percompleted date,
+  perfiled date,
+  index vatr1 (acct_id),
+  index vatr2 (perquarter)
+);
+
+drop table if exists vataccruals;
+create table vataccruals (
+  id int unsigned not null auto_increment primary key,
+  vr_id int unsigned not null comment 'Vat Return id',
+  acct_id varchar(50) not null default '',
+  acrtotal decimal(20,2) not null default '0' comment 'Total excl VAT',
+  acrvat decimal(20,2) not null default '0' comment 'VAT Amount owed to/by HMRC',
+  acrtype char(1) not null default '' comment 'Type of accrual, Input or Output',
+  acrquarter text comment 'the quarter in which the VAT is due (and paid!)',
+  acrprintdate datetime comment 'date vat became liable',
+  acrnominalcode varchar(20) not null default '' comment 'Nominal code of this vat txn for Form 100 purposes',
+  acrtxn_id int unsigned comment 'the id of the relevant transaction record (transaction for Cash accounting, inv_txn for Standard accounting)',
+  acrcreated timestamp,
+  index (acct_id)
+);
+
+drop table if exists statements;
+create table statements (
+  id int unsigned not null auto_increment primary key,
+  acct_id varchar(50) not null default '',
+  acc_id int unsigned comment 'bank account id',
+  staopenbal decimal(20,2) not null default '0' comment 'Bank opening balance',
+  staclosebal decimal(20,2) not null default '0' comment 'bank closing balance',
+  stastmtno varchar(12) not null default '' comment 'Statement number',
+  stanotxns varchar(12) not null default '' comment 'number of transactions on the account',
+  staopendate datetime comment 'open date of the statement',
+  staclosedate datetime comment 'close date of the statement',
+  starec_no int unsigned comment 'The current reconciliation number as a running total',
+  index (acct_id)
+);
+
+drop table if exists audit_trails;
+create table audit_trails (
+  acct_id varchar(50) not null default '',
+  link_id int unsigned not null,
+  audtype varchar(20) not null default '' comment 'The entity (dataset) that this link_id refers to',
+  audaction varchar(20) not null default '' comment 'The action refered to, eg print, pay, receive, transfer etc',
+  audstamp timestamp,
+  audtext varchar(250) not null default '',
+  auduser varchar(50) not null comment 'userid of user making change',
+  index (acct_id)
+);
+
+drop table if exists reminders;
+create table reminders (
+  id int unsigned not null auto_increment primary key,
+  acct_id varchar(50) not null,
+  remtext varchar(1000) not null comment 'reminder text',
+  remcode varchar(20) not null default 'GEN' comment 'Grouping code to determine the type ofthe reminder',
+  remgrade char(1) not null default 'N' comment 'grade of reminder, normal, urgent etc',
+  remstartdate date comment 'date that reminders is to be displayed',
+  remenddate date comment 'date that reminder is no longer to be shown and deleted',
+  index (acct_id)
+);
+
+drop table if exists comments;
+create table comments (
+  id int unsigned not null auto_increment primary key,
+  comtext varchar(1000) not null comment 'reminder text',
+  comuser varchar(1000) not null default '' comment 'user id of commentator',
+  comgrade char(1) not null default 'N' comment 'grade of reminder, normal, urgent etc'
+);
+
+drop table if exists tempstacks;
+create table tempstacks (
+  id int unsigned not null auto_increment primary key,
+  acct_id varchar(50) not null,
+  caller varchar(100) not null comment 'Program associated with this temp table',
+  f1 varchar(250) not null,
+  f2 varchar(250) not null,
+  f3 varchar(250) not null,
+  f4 varchar(250) not null,
+  f5 varchar(250) not null,
+  f6 varchar(250) not null,
+  f7 varchar(250) not null,
+  f8 varchar(250) not null,
+  f9 varchar(250) not null,
+  index ts1 (acct_id),
+  index ts2 (caller)
+);
+
+drop table if exists add_users;
+create table add_users (
+  id int unsigned not null auto_increment primary key,
+  addemail varchar(250) not null default '' comment 'email address of new user',
+  addusername varchar(250) not null default '' comment ' Name of new user',
+  addactive char(3) not null default 'P' comment 'Flag to denote whether this has been activated P or C (any Cs can be deleted)',
+  addactivecode varchar(250) comment 'SHA activation code for Pending additional user',
+  addreg2_id int(10) unsigned not null default 0 comment 'registration id of original owner',
+  addcom_id int(10) unsigned not null default 0 comment 'id of company',
+  addcomname varchar(250) not null default '' comment ' name of company signing on to',
+  adddate date
+);
+
+drop table if exists images;
+create table images (
+  id int unsigned not null auto_increment primary key,
+  link_id int unsigned not null comment 'id of associated parent',
+  acct_id varchar(50) not null,
+  imgdoc_type varchar(20) not null default '' comment 'parent type, eg INV,TXN,STMT etc',
+  imgfilename varchar(50) not null default '' comment ' filename of uploaded file',
+  imgext varchar(20) not null default '' comment 'extension of file uploaded',
+  imgdesc text comment 'description of the uploaded document',
+  imgthumb blob comment 'thumbnail of the image',
+  imgimage mediumblob comment 'the image, itself',
+  imgdate_saved date comment 'the date the image was saved',
+  index img1 (acct_id),
+  index img2 (link_id)
+);
+
+drop table if exists adverts;
+create table adverts (
+  id int unsigned not null auto_increment primary key,
+  href varchar(250) not null default '',
+  img varchar(250) not null default '',
+  sector varchar(200) not null default 'all',
+  shows int unsigned not null default 0,
+  index ad1 (shows)
+);
+
+insert into adverts (href,img) values ('http://scripts.affiliatefuture.com/AFClick.asp?affiliateID=237742&merchantID=96&programmeID=282&mediaID=5256&tracking=&url=','5256.gif');
+insert into adverts (href,img) values ('http://scripts.affiliatefuture.com/AFClick.asp?affiliateID=237742&merchantID=4677&programmeID=12199&mediaID=102066&tracking=&url=','102066.gif');
+insert into adverts (href,img) values ('http://scripts.affiliatefuture.com/AFClick.asp?affiliateID=237742&merchantID=4111&programmeID=10331&mediaID=77495&tracking=&url=','77495.gif');
+insert into adverts (href,img) values ('http://scripts.affiliatefuture.com/AFClick.asp?affiliateID=237742&merchantID=1064&programmeID=3161&mediaID=16598&tracking=&url=','16598.gif');
+insert into adverts (href,img) values ('http://scripts.affiliatefuture.com/AFClick.asp?affiliateID=237742&merchantID=1975&programmeID=5334&mediaID=31180&tracking=&url=','31180.gif');
+insert into adverts (href,img) values ('http://scripts.affiliatefuture.com/AFClick.asp?affiliateID=237742&merchantID=2016&programmeID=5451&mediaID=38959&tracking=&url=','38959.gif');
+
+drop table if exists market_sectors;
+create table market_sectors (
+  id int unsigned auto_increment primary key,
+  sector varchar(250) not null default '',
+  frsrate varchar(5) not null default ''
+);
+
+insert into market_sectors (sector,frsrate) values ('Accountancy or bookkeeping','11.5');
+insert into market_sectors (sector,frsrate) values ('Advertising','8.5');
+insert into market_sectors (sector,frsrate) values ('Agricultural services','7');
+insert into market_sectors (sector,frsrate) values ('Any other services not listed elsewhere','9');
+insert into market_sectors (sector,frsrate) values ('Architect, civil and structural engineer or surveyor','11');
+insert into market_sectors (sector,frsrate) values ('Boarding or care of animals','9.5');
+insert into market_sectors (sector,frsrate) values ('Business services that are not listed elsewhere','9.5');
+insert into market_sectors (sector,frsrate) values ('Catering services including restaurants and takeaways','10.5');
+insert into market_sectors (sector,frsrate) values ('Charitable organisation','9');
+insert into market_sectors (sector,frsrate) values ('Computer and IT consultancy or data processing','11.5');
+insert into market_sectors (sector,frsrate) values ('Computer repair services','10');
+insert into market_sectors (sector,frsrate) values ('Dealing in waste or scrap','8.5');
+insert into market_sectors (sector,frsrate) values ('Entertainment or journalism','9.5');
+insert into market_sectors (sector,frsrate) values ('Estate agency or property management services','9.5');
+insert into market_sectors (sector,frsrate) values ('Farming or agricultural that is not listed elsewhere','5.5');
+insert into market_sectors (sector,frsrate) values ('Film, radio, television or video production','9.5');
+insert into market_sectors (sector,frsrate) values ('Financial services','10.5');
+insert into market_sectors (sector,frsrate) values ('Forestry or fishing','8');
+insert into market_sectors (sector,frsrate) values ('General building or construction services*','7.5');
+insert into market_sectors (sector,frsrate) values ('Hairdressing or other beauty treatment services','10.5');
+insert into market_sectors (sector,frsrate) values ('Hiring or renting goods','7.5');
+insert into market_sectors (sector,frsrate) values ('Hotel or accommodation','8.5');
+insert into market_sectors (sector,frsrate) values ('Investigation or security','9');
+insert into market_sectors (sector,frsrate) values ('Labour only building or construction services*','11.5');
+insert into market_sectors (sector,frsrate) values ('Laundry or dry cleaning services','9.5');
+insert into market_sectors (sector,frsrate) values ('Lawyer or legal services','12');
+insert into market_sectors (sector,frsrate) values ('Library, archive, museum or other cultural activity','7.5');
+insert into market_sectors (sector,frsrate) values ('Management consultancy','11');
+insert into market_sectors (sector,frsrate) values ('Manufacturing that is not listed elsewhere','7.5');
+insert into market_sectors (sector,frsrate) values ('Manufacturing fabricated metal products','8.5');
+insert into market_sectors (sector,frsrate) values ('Manufacturing food','7');
+insert into market_sectors (sector,frsrate) values ('Manufacturing yarn, textiles or clothing','7.5');
+insert into market_sectors (sector,frsrate) values ('Membership organization','5.5');
+insert into market_sectors (sector,frsrate) values ('Mining or quarrying','8');
+insert into market_sectors (sector,frsrate) values ('Packaging','7.5');
+insert into market_sectors (sector,frsrate) values ('Photography','8.5');
+insert into market_sectors (sector,frsrate) values ('Post offices','2');
+insert into market_sectors (sector,frsrate) values ('Printing','6.5');
+insert into market_sectors (sector,frsrate) values ('Publishing','8.5');
+insert into market_sectors (sector,frsrate) values ('Pubs','5.5');
+insert into market_sectors (sector,frsrate) values ('Real estate activity not listed elsewhere','11');
+insert into market_sectors (sector,frsrate) values ('Repairing personal or household goods','7.5');
+insert into market_sectors (sector,frsrate) values ('Repairing vehicles','6.5');
+insert into market_sectors (sector,frsrate) values ('Retailing food, confectionery, tobacco, newspapers or children\'s clothing','2');
+insert into market_sectors (sector,frsrate) values ('Retailing pharmaceuticals, medical goods, cosmetics or toiletries','6');
+insert into market_sectors (sector,frsrate) values ('Retailing that is not listed elsewhere','5.5');
+insert into market_sectors (sector,frsrate) values ('Retailing vehicles or fuel','5.5');
+insert into market_sectors (sector,frsrate) values ('Secretarial services','9.5');
+insert into market_sectors (sector,frsrate) values ('Social work','8');
+insert into market_sectors (sector,frsrate) values ('Sport or recreation','6');
+insert into market_sectors (sector,frsrate) values ('Transport or storage, including couriers, freight, removals and taxis','8');
+insert into market_sectors (sector,frsrate) values ('Travel agency','8');
+insert into market_sectors (sector,frsrate) values ('Veterinary medicine','8');
+insert into market_sectors (sector,frsrate) values ('Wholesaling agricultural products','5.5');
+insert into market_sectors (sector,frsrate) values ('Wholesaling food','5');
+insert into market_sectors (sector,frsrate) values ('Wholesaling that is not listed elsewhere','6');

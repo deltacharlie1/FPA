@@ -1,0 +1,102 @@
+/* 
+  -----------------------------------
+  Glide Panel Magic
+  by Project Seven Development
+  www.projectseven.com
+  Style Theme: 01 - Carbon
+  -----------------------------------
+*/
+.p7GP01 {
+	background-color: #FFFFFF;
+	border: 1px solid #000000;
+	padding: 3px;
+}
+.p7GP01 .p7GPinnerwrapper {
+	padding: 0;
+	background-color: #000000;
+}
+.p7GP01 .p7GPtwrapper {
+	width: 200px;
+	float: left;
+	margin: 0;
+	background-color: #000000;
+}
+.p7GP01 .p7GPtwrapper ul {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+.p7GP01 .p7GPtwrapper ul a {
+	color: #CCCCCC !important;
+	text-decoration: none;
+	display: block;
+	padding: 6px 10px;
+	border-top: 1px solid #585858;
+	border-bottom: 1px solid #282828;
+	background-image: url(img/p7gp_carbonbut.jpg);
+	background-repeat: repeat-x;
+	background-color: #2b2b2b;
+}
+.p7GP01 .p7GPtwrapper ul a:hover {
+	color: #999999 !important;
+	background-color: #2b2b2b;
+}
+.p7GP01 .p7GPtwrapper ul a.down, .p7GP01 .p7GPtwrapper ul a.down:hover {
+	background-color: #151515 !important;
+	color: #DFDFDF !important;
+	border-color: #000000;
+	background-image: url(img/p7gp_fadetocarbon.jpg);
+	background-repeat: repeat-y;
+}
+.p7GP01 .p7GPcwrapper {
+	margin: 0 0 0 200px;
+	background-color: #FFFFFF;
+	border-left: 1px solid #151515;
+}
+.p7GP01 .p7GPcontent {
+	padding: 24px;
+	line-height: 1.5em;
+	color: #000000;
+}
+.p7GP01 .p7GPcontent a {
+	color: #0033FF;
+}
+.p7GP01 .p7GPcontent a:visited {
+	color: #486CFF;
+}
+.p7GP01 .p7GPcontent a:hover {
+	color: #CC0000;
+}
+.p7GPcurrentmark {
+	font-weight:bold !important;
+}
+.p7GP01 .clearfloats {
+	clear: both;
+	height: 0;
+	line-height: 0.0;
+	font-size: 0;
+}
+.p7GP01 .sidecontent {
+	padding: 12px;
+	color: #CCCCCC;
+}
+.p7GP01_external {
+	font-size: 0.75em;
+}
+.p7GP01_external ul {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+.p7GP01_external ul li {
+	margin: 0;
+}
+.p7GP01_external ul a {
+	color: #0033FF;
+}
+.p7GP01_external ul a:hover {
+	color: #000000;
+}
+.p7GP01_external ul a.down {
+	color: #CC0000;
+}

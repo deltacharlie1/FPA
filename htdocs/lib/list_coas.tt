@@ -1,0 +1,26 @@
+<div class="main">
+<h1>Chart of Accounts</h1>
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="listing">
+    <tr>
+      <th>Nominal Code</th>
+      <th>Description</th>
+      <th>Type</th>
+      <th>Balance</th>
+    </tr>
+[% class = [ "even","odd" ] -%]
+[%- FOREACH entry IN entries -%]
+  [%- ndx = loop.count % 2 -%]
+    <tr class="[%- class.$ndx -%]"[%- IF entry.coabalance != '0.00' -%] onclick="location.href='/cgi-bin/fpa/coa_drill_down.pl?filter=[%- entry.coanominalcode -%]';"[%- END -%]>
+      <td>[%- entry.coanominalcode -%]</td>
+      <td>[%- entry.coadesc | truncate(30) -%]</td>
+      <td>[%- entry.coatype -%]</td>
+      <td>[%- entry.coabalance | format('%1.2f') -%]</td>
+    </tr>
+[%- END -%]
+  </table>
+</div>
+<div id="sidebar">
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+  </div>
+</div>

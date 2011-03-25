@@ -1,0 +1,89 @@
+[% USE date -%]
+<div class="main">
+<div id="invpayment" title="Receive Payment" style="display:none;">
+  <form id="form1" name="form1" method="post" action="/cgi-bin/fpa/receive_invoice_payment.pl">
+    <input type="hidden" name="cus_id" id="i_cus_id" value="[%- cus.id -%]"/>
+    <input type="hidden" name="id" id="i_id" value=""/>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="formtable">
+      <tr>
+        <td><label>Invoice No</label></td>
+        <td style="font-weight:bold;color:#800000;"><span id="amtinvno"></span></td>
+      </tr>
+      <tr>
+        <td><label>Amount Outstanding</label></td>
+        <td><span id="amtowed"></span></td>
+      </tr>
+      <tr>
+        <td><label>Amount Being Paid</label></td>
+        <td><span><input type="text" name="txnamount" id="i_txnamount" value="" size="10" title="Amount Being Paid" class="mandatory currency"/></span></td>
+      </tr>
+      <tr>
+        <td><label>Payment Method</label></td>
+        <td>
+          <select name="txnmethod" id="pay">
+            <option value="1300" [%- IF cus.cusdefpaymethod == "1300" -%]selected="selected"[%- END -%]>Cash</option>
+            <option value="1310" [%- IF cus.cusdefpaymethod == "1310" -%]selected="selected"[%- END -%]>Cheque</option>
+            <option value="1200" [%- IF cus.cusdefpaymethod == "1200" -%]selected="selected"[%- END -%]>Bank Transfer</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td><label>Date</label></td>
+        <td><input type="text" name="invprintdate" id="i_invprintdate" value="[%- date.format(date.now, '%d-%b-%y') -%]" size="10" readonly="readonly"/></td>
+      </tr>
+      <tr>
+        <td colspan="2">Remarks<br/><textarea name="invdesc" id="i_invremarks" cols="30" rows="1"></textarea></td>
+      </tr>
+    </table>
+  </form>
+</div>
+<h1>Invoice List</h1>
+[% INCLUDE page_select.tt -%]
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="listing">
+    <tr>
+      <th>Invoice</th>
+      <th>Customer</th>
+      <th>Description</th>
+      <th>Total</th>
+      <th>Printed</th>
+      <th>Due</th>
+      <th>Paid</th>
+      <th>Status</th>
+      <th>Pay</th>
+    </tr>
+[% class = [ "even","odd" ] -%]
+[% FOREACH invoice IN invoices -%]
+  [%- ndx = loop.count % 2 -%]
+    <tr class="[%- class.$ndx -%]">
+      <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invinvoiceno -%]</td>
+      <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invcusname -%]</td>
+      <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invdesc | truncate(30) -%]</td>
+      <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invamount -%]</td>
+      <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.printdate -%]</td>
+      <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.duedate -%]</td>
+      <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invpaid -%]</td>
+      <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">
+  [% IF invoice.invstatus == 'Overdue' -%]<span style="color:#800000;font-weight:bold;">Overdue</span>[%- ELSE; invoice.invstatus; END -%]</td>
+    [% IF invoice.status != "Paid" AND invoice.invpaid < invoice.invamount -%]
+      <td><img src="/icons/coins.png" title="Receive Payment" onclick="get_amt('[%- invoice.invid -%]','[%- invoice.invinvoiceno -%]','[%- invoice.invamount - invoice.invpaid -%]','[%- invoice.cusdefpaymethod -%]','[%- invoice.cus_id -%]');"/></td>
+    [% ELSE -%]
+      <td>&nbsp;</td>
+    [% END -%]
+    </tr>
+[% END -%]
+  </table>
+</div>
+<div id="sidebar">
+  <ul>    
+    <li>    
+      <div>   
+        <a href="/cgi-bin/fpa/new_invoice.pl?[%- cus.id -%]">
+         Create New Invoice
+        </a>    
+      </div>  
+    </li>   
+  </ul>   
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+</div>
+</div>

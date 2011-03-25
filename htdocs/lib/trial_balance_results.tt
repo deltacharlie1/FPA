@@ -1,0 +1,32 @@
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="listing">
+    <tr>
+      <th>Nominal Code</th>
+      <th>Description</th>
+      <th>Debit</th>
+      <th>Credit</th>
+    </tr>
+[% debits = 0; credits = 0 -%]
+[%- class = [ "even","odd" ] -%]
+[%- FOREACH entry IN entries -%]
+  [%- ndx = loop.count % 2 -%]
+    <tr class="[%- class.$ndx -%]"[%- IF entry.balance != 'x.00' -%] onclick="location.href='/cgi-bin/fpa/coa_drill_down.pl?filter=[%- entry.nomcode -%]&tbstart=[%- tbstart -%]&tbend=[%- tbend -%]';"[%- END -%]>
+      <td>[%- entry.nomcode -%]</td>
+      <td>[%- entry.coadesc | truncate(30) -%]</td>
+  [% IF entry.coatype.match('(?i)Assets|Expenses') -%]
+      <td style="text-align:right;">[%- debits = debits + entry.balance; entry.balance | format('%1.2f') -%]</td>
+      <td>&nbsp;</td>
+  [% ELSE -%]
+      <td>&nbsp;</td>
+      <td style="text-align:right;">[%- credits = credits + entry.balance; entry.balance | format('%1.2f') -%]</td>
+  [% END -%]
+    </tr>
+[%- END -%]
+[% ndx = (ndx + 1) % 2 -%]
+    <tr class="[%- class.$ndx -%]">
+      <td>&nbsp;</td>
+      <td style="font-weight:bold;text-align:right;">Total</td>
+      <td style="font-weight:bold;text-align:right;">[%- debits | format('%1.2f') -%]</td>
+      <td style="font-weight:bold;text-align:right;">[%- credits | format('%1.2f') -%]</td>
+    </tr>
+
+  </table>

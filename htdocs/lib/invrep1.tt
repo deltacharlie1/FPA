@@ -1,0 +1,66 @@
+<div class="main">
+<form action="/cgi-bin/fpa/invrep2.pl" method="post" id="form1" autocomplete="off">
+<input type="hidden" name="numrows" id="numrows" value="0"/>
+<input type="hidden" name="offset" id="offset" value="0"/>
+<input type="hidden" name="rows" id="rows" value="15"/>
+<input type="hidden" name="action" id="action" value="S"/>
+<input type="hidden" name="sumtotal" id="sumtotal" value="0"/>
+<h1>Invoice Analysis</h1>
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="formtable">
+    <tr>
+      <td><label>Date From</label></td>
+      <td><input name="startdate" type="text" id="startdate" size="9" value="[% startdate -%]" readonly="readonly" onchange="get_results('S');"/></td>
+      <td><label>Date To</label></td>
+      <td><input name="enddate" type="text" id="enddate" size="9" value="[% enddate -%]" readonly="readonly" onchange="get_results('S');"/></td>
+    </tr>
+    <tr>
+      <td><label>Customer Name</label></td>
+      <td><input name="invcusname" type="text" id="invcusname" size="20" value="" onchange="get_results('S');"/></td>
+      <td><label>Invoice #</label></td>
+      <td><input name="invinvoiceno" type="text" id="invinvoiceno" size="10" value="" onchange="get_results('S');"/></td>
+    </tr>
+    <tr>
+      <td><label>Customer Reference</label></td>
+      <td><input name="invcusref" type="text" id="invcusref" size="20" value="" onchange="get_results('S');"/></td>
+      <td><label>Invoice Type</label></td>
+      <td>
+        <select name="invtype" id="invtype" size="1" onchange="get_results('S');">
+          <option value="" selected="selected"></option>
+          <option value="S">Sales Invoices</option>
+          <option value="P">Purchase Invoices</option>
+          <option value="C">Credit Notes</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td><label>Item Description</label></td>
+      <td><input name="invitem" type="text" id="invitem" size="20" value="" onchange="get_results('S');"/></td>
+      <td><label>Status</label></td>
+      <td>
+        <select name="invstatuscode" id="invstatuscode" size="1" onchange="get_results('S');">
+          <option value="" selected="selected"></option>
+          <option value="9">Overdue</option>
+          <option value="2">Paid</option>
+          <option value="3">Printed</option>
+          <option value="1">Draft</option>
+          <option value="V">Cancelled</option>
+        </select>
+      </td>
+    </tr>
+  </table><br/>
+  <div id="results"></div>
+</div>
+<div id="sidebar">
+  <ul>
+    <li>
+      <div>
+       <input type="reset" name="reset" id="reset" value="Start Again"/>
+      </div>
+    </li>
+  </ul>
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+  </div>
+</div>
+</form>
+</div>

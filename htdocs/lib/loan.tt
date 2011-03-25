@@ -1,0 +1,80 @@
+<div class="main">
+[% USE date(format = '%d-%b-%y') %]
+<form action="/cgi-bin/fpa/loan2.pl" method="post" name="form1" id="form1">
+<input type="hidden" name="loantype" id="loantype" value="[%- loantype -%]"/>
+<h1>[%- IF loantype == "I" -%]Increase[%- ELSE -%]Decrease[%- END -%] Loan / Share Value</h1>
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="formtable">
+    <tr>
+      <td nowrap="nowrap"><label>Existing Long Term Liabilities</label></td>
+      <td>[%- loan.coabalance -%]</td>
+    </tr>
+    <tr>
+      <td><label>Paid Up Share Capital</label></td>
+      <td>[%- shares.coabalance -%]</td>
+    </tr>
+    <tr>
+      <td><label>Total being [%- IF loantype == "I" -%]Increased[%- ELSE -%]Decreased[%- END -%] by</label></td>
+      <td><span><input title="Total Payment" name="amtpaid" type="text" id="amtpaid" size="10" class="mandatory currency"/></span></td>
+    </tr>
+    <tr>
+      <td><label>Type of Payment</label></td>
+      <td>
+        <select title="Type of Payment" name="paytype" id="paytype" size="1">
+          <option value="loan" selected="selected">Loan</option>
+          <option value="shares">Payment for shares</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td><label>[%- IF loantype == "I" -%]Benefactor[%- ELSE -%]Beneficiary[%- END -%]</label></td>
+      <td><span><input name="name" title="[%- IF loantype == "I" -%]Benefactor[%- ELSE -%]Beneficiary[%- END -%]" type="text" id="name" size="30" class="mandatory"/></span></td>
+    </tr>
+      <td><label>Method of Payment</label></td>
+      <td>
+        <select title="Method of Payment" name="paymethod" id="paymethod" size="1">
+          <option value="1300" selected="selected">Cash</option>
+          <option value="1200">Bank Transfer</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td><label>Transaction Date</label></td>
+      <td><input type="text" name="txndate" id="txndate" readonly="readonly" size="9" value="[%- date.format -%]"/></td>
+    </tr>
+    <tr>
+      <td style="vertical-align:top;"><label>Remarks</label></td>
+      <td><textarea name="rmks" id="rmks" cols="30" rows="4"></textarea></td>
+    </tr>
+  </table>
+</div>
+<div id="sidebar">
+  <ul>
+    <li>
+      <div>
+        <input type="submit" name="save" id="save" value="Save these Details"/>
+      </div>
+    </li>
+    <li>
+      <div>
+       <input type="reset" name="reset" id="reset" value="Start Again"/>
+      </div>
+    </li>
+    <li>
+      <div>
+[% IF loantype == "I" -%]
+        <a href="/cgi-bin/fpa/loan.pl?D">
+          Reduce/Pay Off Loan
+[% ELSE -%]
+        <a href="/cgi-bin/fpa/loan.pl?I">
+          Add/Increase Loan
+[% END -%]
+        </a>
+      </div>
+    </li>
+  </ul>
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+  </div>
+</div>
+</form>
+</div>

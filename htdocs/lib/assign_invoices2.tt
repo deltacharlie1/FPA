@@ -1,0 +1,26 @@
+<table width="660" border="0" cellpadding="0" cellspacing="0" class="listing">
+  <tr>
+    <th>Invoice</th>
+    <th>Type</th>
+    <th>Customer</th>
+    <th>Description</th>
+    <th>Total</th>
+    <th>Printed</th>
+    <th>Status</th>
+    <th>Select</th>
+  </tr>
+[% class = [ "even","odd" ] -%]
+[% FOREACH invoice IN invoices -%]
+  [%- ndx = loop.count % 2 -%]
+  <tr class="[%- class.$ndx -%]">
+    <td>[%- invoice.invinvoiceno -%]</td>
+    <td>[%- invoice.invtype -%]</td>
+    <td>[%- invoice.invcusname -%]</td>
+    <td>[%- invoice.invdesc | truncate(30) -%]</td>
+    <td style="text-align:right;">[%- invoice.printtotal | remove('-') -%]</td>
+    <td>[%- invoice.printdate -%]</td>
+    <td>[%- invoice.invstatus -%]</td>
+    <td><input type="checkbox" name="c_[%- invoice.invid -%]" id="c_[%- invoice.invid -%]" value="v_[%- invoice.invid -%]"/></td>
+  </tr>
+[% END -%]
+</table>

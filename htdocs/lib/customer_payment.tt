@@ -1,0 +1,125 @@
+<form action="/cgi-bin/fpa/customer_payment2.pl" method="post" name="form1" id="form1">
+<div class="main">
+[%- USE date(format = '%d-%b-%y') %]
+<input type="hidden" name="id" id="id" value="[% cus.id -%]"/>
+[%- USE date -%]
+[%- curdate = (date.now div 86400) + 719528 -%]
+<h1>Customer Details</h1>
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="formtable">
+[% UNLESS cus.id AND cus.id > 0 -%]
+    <tr id="selcus">
+      <td><label>Select Customer</label></td>
+      <td colspan="2"></div><div id="srch"></div></td>
+      <td>&nbsp;</td>
+      <input type="hidden" name="searchtype" id="searchtype" value="Customer">
+    </tr>
+[% END -%]
+    <tr>
+      <td><label>Company Name</label></td>
+      <td><input title="Company Name" name="cusname" type="text" id="cusname" size="20" value="[% cus.cusname -%]" class="mandatory"/></td>
+      <td><label>Current Balance</label></td>
+      <td id="balance">[% cus.cusbalance -%]</td>
+    </tr>
+    <tr>
+      <td style="vertical-align:top;" rowspan="2"><label>Address</label></td>
+      <td rowspan="2"><textarea title="Address" name="cusaddress" id="cusaddress" cols="25" rows="3">[% cus.cusaddress -%]</textarea></td>
+      <td style="vertical-align:top;padding-top:9px;"><label>Credit Limit</label></td>
+      <td style="vertical-align:top;" id="limit"><input title="Credit Limit" name="cuslimit" type="text" id="cuslimit" size="10" value="[% cus.cuslimit -%]"/></td>
+    </tr>
+    <tr>
+      <td colspan="2">&nbsp;</td>
+    </tr>
+    <tr>
+      <td><label>Post Code</label></td>
+      <td><input title="Post Code" name="cuspostcode" type="text" id="cuspostcode" value="[% cus.cuspostcode -%]" size="10"/></td>
+      <td colspan="2">&nbsp;</td>
+    </tr>
+    <tr>
+      <td><label>Region</label></td>
+      <td><select title="Region" name="cusregion" id="cusregion">
+          <option value="UK" [% IF cus.cusregion == 'UK' -%] selected="selected" [% END -%] >UK</option>
+          <option value="EU" [% IF cus.cusregion == 'EU' -%] selected="selected" [% END -%] >EU (other than UK)</option>
+          <option value="NEU" [% IF cus.cusregion == 'NEU' -%] selected="selected" [% END -%] >Non-EU</option>
+        </select>
+      </td>
+      <td><label>Terms</label></td>
+      <td><select title="Terms of Business" name="custerms" id="custerms">
+          <option value="" [% IF cus.custerms == '' -%] selected="selected" [% END -%] >--  Please Select  --</option>
+          <option value="N" [% IF cus.custerms == 'N' -%] selected="selected" [% END -%] >Due Now</option>
+          <option value="I" [% IF cus.custerms == 'I' -%] selected="selected" [% END -%] >With Invoice</option>
+          <option value="7" [% IF cus.custerms == '7' -%] selected="selected" [% END -%] >7 Days</option>
+          <option value="14" [% IF cus.custerms == '14' -%] selected="selected" [% END -%] >14 Days</option>
+          <option value="28" [% IF cus.custerms == '28' -%] selected="selected" [% END -%] >28 Days</option>
+          <option value="30" [% IF cus.custerms == '30' -%] selected="selected" [% END -%] >30 Days</option>
+          <option value="60" [% IF cus.custerms == '60' -%] selected="selected" [% END -%] >60 Days</option>
+          <option value="90" [% IF cus.custerms == '90' -%] selected="selected" [% END -%] >90 Days</option>
+          <option value="120" [% IF cus.custerms == '120' -%] selected="selected" [% END -%] >120 Days</option>
+          <option value="COD" [% IF cus.custerms == 'COD' -%] selected="selected" [% END -%] >Cash on Delivery (COD)</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td><label>Payment Method</label></td>
+      <td><select title="Payment Method" name="txninvpaytype" id="txninvpaytype">
+          <option value="Cheque" [% IF  cus.cusdefpaymethod == 'Cheque' -%] selected="selected" [% END -%] >Cheque</option>
+          <option value="Cash" [% IF cus.cusdefpaymethod == 'Cash' -%] selected="selected" [% END -%] >Cash</option>
+          <option value="Bank" [% IF cus.cusdefpaymethod == 'Bank' -%] selected="selected" [% END -%] >Bank Transfer</option>
+        </select>
+      </td>
+      <td colspan="2">&nbsp;</td>
+    </tr>
+    <tr>
+      <td><label>Amount</label></td>
+      <td><input title="Amount" name="txnamount" type="text" id="txnamount" value="[% txnamount -%]" size="10"/></td>
+      <td><label>Invoice Date</label></td>
+      <td><input type="text" name="txndate" id="txndate" readonly="readonly" size="9" value="[%- date.format -%]"/></td>
+    </tr>
+  </table>
+  <p>&nbsp;</p>
+[%# INCLUDE page_select.tt -%]
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="listing">
+    <tr>
+      <th>Invoice</th>
+      <th>Description</th>
+      <th>Total</th>
+      <th>Terms</th>
+      <th>Printed</th>
+      <th>Due</th>
+      <th>Owed</th>
+      <th>Status</th>
+      <th>Amt Paid</th>
+    </tr>
+[% class = [ "even","odd" ] -%]
+[%- FOREACH invoice IN invoices -%]
+  [%- ndx = loop.count % 2 -%]
+    <tr class="[%- class.$ndx -%]">
+      <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invinvoiceno -%]</td>
+      <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invdesc | truncate(30) -%]</td>
+      <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invamount -%]</td>
+      <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- IF invoice.invterms AND invoice.invcusterms > "0"; invoice.invcusterms -%] Days[%- ELSE; invoice.invcusterms -%]</td>
+      <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invprintdate -%]</td>
+      <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invduedate -%]</td>
+      <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invowed -%]</td>
+      <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">
+[%- IF invoice.invstatus == 'Final' -%][%- IF invoice.invduedate -%][%- IF invoice.duedays < curdate -%]<span style="color:#800000;font-weight:bold;">Overdue</span>[%- ELSIF invoice.duedays < (invoice.printdays + ((invoice.duedays - invoice.printdays) * 0.7)) -%]Due[%- ELSE -%]Printed[%- END -%][%- END -%][%- END -%]</td>
+      <td><input type="text" name="c[%- invoice.invid -%]" id="c[%- invoice.invid -%]" value="" title="[%- invoice.invowed -%]"/></td>
+{-% ELSE -%]
+      <td>&nbsp;</td>
+[%- END -%]
+    </tr>
+[%- END -%]
+  </table>
+</div>
+<div id="sidebar">
+  <ul>
+    <li>
+      <div>
+         <input type="submit" name="pay" id="pay" value="Receive Payment"/>
+      </div>
+    </li>
+  </ul>   
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+</div>
+</div>
+</form>

@@ -1,0 +1,30 @@
+[% INCLUDE search_select.tt -%]
+<table width="660" border="0" cellpadding="0" cellspacing="0" class="listing">
+  <tr>
+    <th>Date</th>
+    <th>Txn #</th>
+    <th>Account</th>
+    <th>Customer</th>
+    <th>Description</th>
+    <th>Paid Out</th>
+    <th>Paid In</th>
+  </tr>
+[% class = [ "even","odd" ] -%]
+[% FOREACH txn IN txns -%]
+  [%- ndx = loop.count % 2 -%]
+  <tr class="[%- class.$ndx -%]">
+    <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- txn.printdate -%]</td>
+    <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- txn.txntxnno -%]</td>
+    <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- txn.txnmethod -%]</td>
+    <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- txn.txncusname | truncate(30) -%]</td>
+    <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- txn.txnremarks | truncate(30) -%]</td>
+  [% IF txn.txnamount < 0 -%]
+    <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- txn.txnamount | remove('-') -%]</td>
+    <td>&nbsp;</td>
+  [% ELSE -%]
+    <td>&nbsp;</td>
+    <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- txn.txnamount | remove('-') -%]</td>
+  [% END -%]
+  </tr>
+[% END -%]
+</table>

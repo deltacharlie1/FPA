@@ -1,0 +1,52 @@
+<div class="main">
+<table width="660" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td style="vertical-align:bottom;">
+      <h1>[%- pagetitle -%]</h1>
+    </td>
+    <td style="text-align:right;padding-top:15px;">
+      <h2>Current Balance = &pound;[%- pagebalance -%]</h2>
+    </td>
+  </tr>
+</table>
+[% INCLUDE page_select.tt -%]
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="listing">
+    <tr>
+      <th>Date</th>
+      <th>Detail</th>
+      <th style="text-align:right;">Paid In</th>
+      <th style="text-align:right;">Paid Out</th>
+    </tr>
+[% class = [ "even","odd" ]; ndx = 0 -%]
+[% FOREACH entry IN entries -%]
+  [%- ndx = loop.count % 2 -%]
+    <tr class="[%- class.$ndx -%]" onclick="location.href='/cgi-bin/fpa/list_inv_txns.pl?[%- entry.id -%]';">
+      <td>[%- entry.tdate -%]</td>
+      <td>[%- entry.txncusname | truncate(60) -%]</td>
+      <td style="text-align:right;">[%- IF entry.txnamount >= 0; entry.txnamount; ELSE -%]&nbsp;[%- END -%]</td>
+      <td style="text-align:right;">[%- IF entry.txnamount < 0; entry.txnamount | remove('-'); ELSE -%]&nbsp;[%- END -%]</td>
+    </tr>
+[% END -%]
+[% ndx = (ndx + 1) % 2 -%]
+    <tr class="[%- class.$ndx -%]"><!--  onclick="location.href='/cgi-bin/fpa/add_address.pl?[%- entry.id -%]';" //-->
+      <td>[%- entry.tdate -%]</td>
+      <td style="font-weight:bold;">Opening Balance</td>
+      <td style="text-align:right;">[%- IF stmt.staclosebal >= 0; stmt.staclosebal; ELSE -%]&nbsp;[%- END -%]</td>
+      <td style="text-align:right;">[%- IF stmt.staclosebal < 0; stmt.staclosebal | remove('-'); ELSE -%]&nbsp;[%- END -%]</td>
+    </tr>
+  </table>
+</div>
+<div id="sidebar">
+  <ul> 
+    <li>
+      <div>
+        <a href="javascript:history.back();">
+         Previous Screen
+        </a>
+      </div>
+    </li>
+  </ul>
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+  </div>
+</div>

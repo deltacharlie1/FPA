@@ -1,0 +1,39 @@
+<div class="main">
+<h1>Profit &amp; Loss Report</h1>
+<form name="form1" id="form1">
+<input type="hidden" name="tbfy" id="tbfy" value="[%- daterange.tbfy -%]"/>
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="formtable">
+    <tr>
+      <td><label>Select Date Range</label></td>
+      <td colspan="3">
+        <select name="tbselect" id="tbselect" size="1" onchange="set_range(this);">
+          <option value="tw">This Week to Date</option>
+          <option value="tm">This Month to Date</option>
+          <option value="tq">This Financial Quarter to Date</option>
+          <option value="ty" selected="selected">This Financial Year to Date</option>
+          <option value="lw">Last Week</option>
+          <option value="lm">Last Month</option>
+          <option value="lq">Last Financial Quarter</option>
+          <option value="ly">Last Financial Year</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td><label>Date From</label></td>
+      <td><input type="text" name="tbstart" id="tbstart" value="[%- daterange.plfy -%]" size="9" readonly="readonly" onchange="get_balances();"/>
+      <td><label>Date To</label></td>
+      <td width="40%"><input type="text" name="tbend" id="tbend" value="[%- daterange.tbend -%]" size="9" readonly="readonly" onchange="get_balances();"/></td>
+    </tr>
+  </table>
+</form>
+<br/>
+  <h2>Statement</h2>
+  <div id="results">
+  </div>
+</div>
+<div id="sidebar">
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+  </div>
+</div>
+</div>

@@ -1,0 +1,712 @@
+Content-Type: text/html
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="description" />
+<meta name="keywords" content="keywords" />
+<link href="/app.css" rel="stylesheet" type="text/css" />
+<link rel="shortcut icon" href="/favicon.ico"/>
+<link rel="stylesheet" href="/jquery-ui.css" type="text/css"/>
+<script src="/js/jquery.js" type="text/javascript"></script>
+<script src="/js/jquery-ui.js" type="text/javascript"></script>
+<title>Accounts - Upgrade Error</title>
+<script type="text/javascript">
+var errfocus = "";
+$(document).ready(function(){
+  $(".mandatory").before("<span style='font-size:20px;font-weight:bold;color:red;padding:0 6px 0 0;'>*<\/span>");
+  $("#searchimg").click(function() {
+    switch(document.getElementById('dfg').title) {
+      case 'Customers':
+        document.getElementById('dfg').title = "Suppliers";
+        document.getElementById('dfg').innerHTML = "Search Suppliers";
+        $("#searchcus").autocomplete("option","minLength",1);
+        break;
+      case 'Suppliers':
+        document.getElementById('dfg').title = "Invoices";
+        document.getElementById('dfg').innerHTML = "Search Invoices";
+        $("#searchcus").autocomplete("option","minLength",3);
+        break;
+      default:
+        document.getElementById('dfg').title = "Customers";
+        document.getElementById('dfg').innerHTML = "Search Customers";
+        $("#searchcus").autocomplete("option","minLength",1);
+        break;
+    }
+  });
+  $("#searchcus").autocomplete({
+    minLength: 1,
+    source: function (request,response) {
+      request.type = document.getElementById("dfg").title;
+      $.ajax({
+        url: "/cgi-bin/fpa/autosuggest.pl",
+        dataType: "json",
+        data: request,
+        success: function( data ) {
+          response (data);
+        }
+      });
+    },
+    select: function(event, ui) {
+      switch(document.getElementById('dfg').title) {
+        case 'Customers':
+          location.href="/cgi-bin/fpa/list_customer_invoices.pl?" + ui.item.id;
+          break;
+        case 'Suppliers':
+          location.href="/cgi-bin/fpa/list_supplier_purchases.pl?" + ui.item.id;
+          break;
+        case 'Invoices':
+          location.href="/cgi-bin/fpa/update_invoice.pl?" + ui.item.id;
+          break;
+        default:
+          location.href="/cgi-bin/fpa/list_customer_invoices.pl?" + ui.item.id;
+          break;
+      }
+    }
+  });
+  $.datepicker.setDefaults({showOn: "button", buttonImage: "/images/calendaricon.gif", buttonImageOnly: true, buttonText: "", dateFormat: "dd-M-y", duration: "", changeYear: true,changeMonth: true});
+//  $.datepicker.setDefaults({showOn: "button", buttonImage: "/images/calendaricon.gif", buttonImageOnly: true, buttonText: "", dateFormat: "dd-M-y", duration: "", changeYear: true,changeMonth: true, minDate: new Date()});
+  $("#rec_cus_id").autocomplete({
+    minLength: 0,
+    delay: 50,
+    source: function (request,response) {
+      request.type = "Customers";
+      $.ajax({
+        url: "/cgi-bin/fpa/autosuggest.pl",
+        dataType: "json",
+        data: request,
+        success: function( data ) {
+          response (data);
+        }
+      });
+    },
+    select: function(event, ui) {
+      document.getElementById("rec_amtcusid").value = ui.item.id;
+      $("#rec_invcoa").val(ui.item.coa);
+      $("#rec_vatrate").val(ui.item.vatrate);
+      $("#rec_txnamount").focus();
+    }
+  });
+  $("#rec_invprintdate").datepicker();
+  $("#pay_cus_id").autocomplete({
+    minLength: 0,
+    delay: 50,
+    source: function (request,response) {
+      request.type = "Suppliers";
+      $.ajax({
+        url: "/cgi-bin/fpa/autosuggest.pl",
+        dataType: "json",
+        data: request,
+        success: function( data ) {
+          response (data);
+        }
+      });
+    },
+    select: function(event, ui) {
+      document.getElementById("pay_amtcusid").value = ui.item.id;
+      $("#pay_invcoa").val(ui.item.coa);
+      $("#pay_vatrate").val(ui.item.vatrate);
+      $("#pay_txnamount").focus();
+    }
+  });
+  $("#pay_invprintdate").datepicker();
+  $("#remstartdate").datepicker();
+  $("#remenddate").datepicker();
+  $("#dialog").dialog({
+    bgiframe: true,
+    height: 200,
+    autoOpen: false,
+    position: [200,100],
+    modal: true,
+    buttons: { "Ok": function() { $(this).dialog("close");setfocus(); } }
+  });
+  $("#vcomments").dialog({
+    bgiframe: true,
+    height: 200,
+    autoOpen: false,
+    position: [200,100],
+    modal: true
+  });
+  $("#vcomment").dialog({
+    bgiframe: true,
+    autoOpen: false,
+    position: [200,100],
+    height: 350,
+    width: 400,
+    modal: true,
+    buttons: {
+      "Save": function() {
+        if (document.getElementById("comtext").value.length > 0) {
+          $.post("/cgi-bin/fpa/add_comment.pl", { comtext: document.getElementById("comtext").value, comgrade: document.getElementById("comgrade").value },function(data) {
+            document.getElementById("dialog").title = "";
+            document.getElementById("dialog").innerHTML = data;
+            errfocus = "comtext";
+            $("#dialog").dialog("open");
+            document.getElementById("comtext").value = "";
+          },"text");
+          $(this).dialog("close");
+       }
+       else {
+          document.getElementById("dialog").innerHTML = "You have not entered any comment";
+          errfocus = "comtext";
+          $("#dialog").dialog("open");
+       }
+      },
+      Cancel: function() {
+        $(this).dialog("close");
+      }
+    }
+  });
+  $("#vreminders").dialog({
+    bgiframe: true,
+    height: 200,
+    autoOpen: false,
+    position: [200,100],
+    modal: true
+  });
+  $("#vreminder").dialog({
+    bgiframe: true,
+    autoOpen: false,
+    position: [200,100],
+    height: 350,
+    width: 400,
+    modal: true,
+    buttons: {
+      "Save": function() {
+        if (document.getElementById("remtext").value.length > 0) {
+          $.post("/cgi-bin/fpa/add_reminder.pl", { remtext: document.getElementById("remtext").value, remgrade: document.getElementById("remgrade").value, remstartdate: document.getElementById("remstartdate").value, remenddate: document.getElementById("remenddate").value } ,function(data) {
+            document.getElementById("dialog").title = "";
+            document.getElementById("dialog").innerHTML = data;
+            errfocus = "remtext";
+            $("#dialog").dialog("open");
+            document.getElementById("remtext").value = "";
+            document.getElementById("remstartdate").value = "";
+            document.getElementById("remenddate").value = "";
+          },"text");
+          $(this).dialog("close");
+       }
+       else {
+          document.getElementById("dialog").innerHTML = "You have not entered any message";
+          errfocus = "remtext";
+          $("#dialog").dialog("open");
+       }
+      },
+      Cancel: function() {
+        $(this).dialog("close");
+      }
+    }
+  });
+  $("#receipt2").dialog({
+    bgiframe: true,
+    autoOpen: false,
+    position: [200,100],
+    height: 420,
+    width: 500,
+    modal: true,
+    buttons: {
+      "Record Receipt": function() {
+        if (validate_form("#recform2")) {
+          document.getElementById("rec_invcusname").value = document.getElementById("rec_cus_id").value;
+          $.post("/cgi-bin/fpa/process_txn.pl", $("form#recform2").serialize(),function(data) {
+            if ( ! /^OK/.test(data)) {
+              alert(data);
+            }
+            window.location.reload(true);
+          },"text");
+          $(this).dialog("close");
+        }
+      },
+      Cancel: function() {
+        $(".error").removeClass("error");
+        $("#recform2")[0].reset();
+        $(this).dialog("close");
+      }
+    }
+  });
+  $("#payment2").dialog({
+    bgiframe: true,
+    autoOpen: false,
+    position: [200,100],
+    height: 475,
+    width: 500,
+    modal: true,
+    buttons: {
+      "Record Payment": function() {
+        if (validate_form("#payform2")) {
+          document.getElementById("pay_invcusname").value = document.getElementById("pay_cus_id").value;
+          $.post("/cgi-bin/fpa/process_txn.pl", $("form#payform2").serialize(),function(data) {
+            if ( ! /^OK/.test(data)) {
+              alert(data);
+            }
+            window.location.reload(true);
+          },"text");
+          $(this).dialog("close");
+        }
+      },
+      Cancel: function() {
+        $(".error").removeClass("error");
+        $("#payform2")[0].reset();
+        $(this).dialog("close");
+      }
+    }
+  });
+//  $("#wrapper").css("height",$(document).height() > 900 ? $(document).height() + 20 : 900);
+//  $("#body").css("height",$("#wrapper").height() - 260);
+});
+function validate_form(form) {
+  var errs = "";
+  $(".error").removeClass("error");
+  $(":input.mandatory",form).each(function() {
+    if ($(this).is(".mandatory") && $(this).val() == "") {
+      err = errs + "<li>Empty " + this.title + "<\/li>";
+      $(this).parent().addClass("error");
+      if (errfocus == "") {
+        errfocus = this.id;
+      }
+    }
+    else {
+      if ($(this).is(".currency") && $(this).val() != "" && ! /^-?\d+\.?\d?\d?$/.test($(this).val())) {
+        errs = errs + "<li>" + this.title + "  must contain a valid currency amount (n.nn)<\/li>";
+        $(this).parent().addClass("error");
+        if (errfocus == "") {
+          errfocus = this.id;
+        }
+      }
+    }
+  });
+  if (errs.length > 0) {
+    errs = "You have the following error(s):-<ol>" + errs + "<\/ol>Please correct them before re-submitting";
+    document.getElementById("dialog").innerHTML = errs;
+    $("#dialog").dialog("open");
+    return false;
+  }
+  else {
+    return true;
+  }
+}
+function setfocus() {
+  try {eval("document.getElementById(\'" + errfocus + "\').focus();");}
+  catch(e) {}
+}
+function check_currency(obj) {
+  if (obj.value.length > 0) {
+    if (! /^-?\d+\.?\d?\d?$/.test(obj.value)) {
+      document.getElementById("dialog").innerHTML = obj.value + "is an invalid currency format, please correct";
+      $("#dialog").dialog("open");
+      obj.value="";
+      errfocus = obj.id;
+    }
+  }
+}
+function calc_vat(obj) {
+  if (/^pay/.test(obj.id)) {
+    if (/^-?\d+\.?\d?\d?/.test(document.getElementById("pay_txnamount").value)) {
+      var totamt = parseFloat(document.getElementById("pay_txnamount").value);
+      var vat = parseFloat(document.getElementById("pay_vatrate").value);
+      var vatdiv = vat + 1;
+      var vatvalue = totamt * vat / vatdiv;
+      document.getElementById("pay_invvat").value = vatvalue.toFixed(2);
+      var netamt = totamt - vatvalue;
+      document.getElementById("pay_netamt").innerHTML = "(Net = " + netamt.toFixed(2) + ")";
+    }
+    else {
+      document.getElementById("pay_invvat").value = "";
+      document.getElementById("pay_netamt").innerHTML = "";
+    }
+  }
+  else {
+    if (/^-?\d+\.?\d?\d?/.test(document.getElementById("rec_txnamount").value)) {
+      var totamt = parseFloat(document.getElementById("rec_txnamount").value);
+      var vat = parseFloat(document.getElementById("rec_vatrate").value);
+      var vatdiv = vat + 1;
+      var vatvalue = totamt * vat / vatdiv;
+      document.getElementById("rec_invvat").value = vatvalue.toFixed(2);
+      var netamt = totamt - vatvalue;
+      document.getElementById("rec_netamt").innerHTML = "(Net = " + netamt.toFixed(2) + ")";
+    }
+    else {
+      document.getElementById("rec_invvat").value = "";
+      document.getElementById("rec_netamt").innerHTML = "";
+    }
+  }
+}
+function display_form(io) {
+  $(".error").removeClass("error");
+  if (io == "I") {
+    $("#rec_netamt").html("");
+    $("#receipt2").dialog("open");
+    document.getElementById("rec_cus_id").focus();
+  }
+  else {
+    $("#pay_netamt").html("");
+    $("#payment2").dialog("open");
+    document.getElementById("pay_cus_id").focus();
+  }
+}
+function view_comments() {
+  $.ajax({ url: "/cgi-bin/fpa/view_comments.pl", cache: false, success: function(data) {
+    document.getElementById("vcomments").innerHTML = data;
+    $("#vcomments").dialog("open");
+  }});
+}
+function view_reminders() {
+  $.ajax({ url: "/cgi-bin/fpa/view_reminders.pl", cache: false, success: function(data) {
+    document.getElementById("vreminders").innerHTML = data;
+    $("#vreminders").dialog("open");
+  }});
+}
+function delete_reminder(id) {
+  $.get("/cgi-bin/fpa/delete_reminder.pl?" + id,function(data) {
+    window.location.reload(true);
+  });
+}
+</script>
+
+</head>
+<body >
+<div id="wrapper">
+<table width="100%"  cellpadding="0" cellspacing="0" border="0" style="height:103px;background-image:url(/images/header_back.png);background-repeat:repeat-x;">
+  <tr>
+    <td style="padding:0px;vertical-align:middle;text-align:center;width:120px;"><img src="/logo5.png"/></td>
+    <td><h1 id="tagline"></h1></td>
+    <td style="text-align:right;padding:6px;"><a href="http://www.completemarketingservices.com"><img src="/images/sponsor_logo.png"/></a></td>
+  </tr>
+</table>
+<div style="position: absolute; display: inline; top:80px; left:830px;">
+  <div id="logout_button">
+    <a href="/cgi-bin/fpa/login.pl"></a>
+  </div>
+</div>
+<div style=" background-image:url(/images/nav_back-old.png);height:70px;">
+  <ul id="nav">
+    <li class="top">
+      <a href="#nogo57" id="company" class="top_link">
+        <span title="Company Related"  class="down">
+          <img src="/icons/company.png"/><br/>
+          <span>Company</span>
+        </span>
+      </a>
+      <ul class="sub">
+        <li><a href="/cgi-bin/fpa/company_details.pl">Company Details</a></li>
+        <li><a href="/cgi-bin/fpa/reregister.pl">Registration Details</a></li>
+        <li><a href="/cgi-bin/fpa/list_coas.pl">Chart of Accounts</a></li>
+        <li><a href="/cgi-bin/fpa/loan.pl?I">Add Loan</a></li>
+        <li><a href="/cgi-bin/fpa/loan.pl?D">Reduce Loan</a></li>
+        <li><a href="/cgi-bin/fpa/wipe_clean.pl">Delete All Data</a></li>
+      </ul>
+    </li>
+    <li class="top">
+      <a href="/cgi-bin/fpa/list_invoices.pl?listorder=N" id="customers" class="top_link">
+        <span title="Customers,Sales etc" class="down">
+          <img src="/icons/customers.png"/><br/>
+          <span>Sales</span>
+        </span>
+      </a>
+      <ul class="sub">
+        <li><a href="/cgi-bin/fpa/list_invoices.pl?listorder=N">List Invoices</a></li>
+        <li><a href="/cgi-bin/fpa/list_customers.pl">List Customers</a></li>
+        <li><a href="/cgi-bin/fpa/add_address.pl?C">Add New Customer</a></li>
+        <li><a href="/cgi-bin/fpa/list_invoices.pl?listorder=O">List Unpaid Invoices</a></li>
+        <li><a href="/cgi-bin/fpa/new_invoice.pl">Create New Invoice</a></li>
+        <li><a href="#" onclick="display_form('I');">Receive Money In</a></li>
+	      </ul>
+    </li>
+    <li class="top">
+      <a href="/cgi-bin/fpa/list_purchases.pl?listorder=N" id="suppliers" class="top_link">
+        <span title="Suppliers,Purchases etc" class="down">
+          <img src="/icons/suppliers.png"/><br/>
+          <span>Purchases</span>
+        </span>
+      </a>
+      <ul class="sub">
+        <li><a href="/cgi-bin/fpa/list_purchases.pl?listorder=N">List Purchases</a></li>
+        <li><a href="/cgi-bin/fpa/list_suppliers.pl">List Suppliers</a></li>
+        <li><a href="/cgi-bin/fpa/add_address.pl?S">Add New Supplier</a></li>
+        <li><a href="/cgi-bin/fpa/list_purchases.pl?listorder=O">List Unpaid Purchases</a></li>
+        <li><a href="/cgi-bin/fpa/new_purchase.pl">New Purchase Invoice</a></li>
+        <li><a href="/cgi-bin/fpa/new_purchase.pl?">Record Expenses</a></li>
+        <li><a href="/cgi-bin/fpa/multi_purchases.pl?">Pay Expenses</a></li>
+        <li><a href="#" onclick="display_form('P');">Pay Money Out</a></li>
+      </ul>
+    </li>
+    <li class="top">
+      <a href="/cgi-bin/fpa/list_txns.pl" id="accounts" class="top_link">
+        <span title="Accounts Details" class="down">
+          <img src="/icons/accounts.png"/><br/>
+          <span>Accounts</span>
+        </span>
+      </a>
+      <ul class="sub">
+        <li><a href="/cgi-bin/fpa/list_txns.pl">List Transactions</a></li>
+        <li><a href="/cgi-bin/fpa/list_accounts.pl">List Accounts</a></li>
+        <li><a href="/cgi-bin/fpa/list_stmts.pl">List Statements</a></li>
+        <li><a href="/cgi-bin/fpa/cashtobank.pl">Put Money In</a></li>
+        <li><a href="/cgi-bin/fpa/transfer.pl?O">Get money Out</a></li>
+        <li><a href="/cgi-bin/fpa/transfer.pl?T">Transfer Money</a></li>
+      </ul>
+    </li>
+    <li class="top">
+      <a href="#nogo57" id="vat" class="top_link">
+        <span title="VAT Form 100,payments,refunds" class="down">
+          <img src="/icons/vat.png"/><br/>
+          <span>VAT</span>
+        </span>
+      </a>
+      <ul class="sub">
+        <li><a href="/cgi-bin/fpa/list_vatreturns.pl">List VAT Returns</a></li>
+        <li><a href="/cgi-bin/fpa/list_vats.pl?filter=2100">List VAT Outputs</a></li>
+        <li><a href="/cgi-bin/fpa/list_vats.pl?filter=1400">List VAT Inputs</a></li>
+        <li><a href="/cgi-bin/fpa/vatreturn.pl">VAT Form 100</a></li>
+      </ul>
+    </li>
+    <li class="top">
+      <a href="#nogo57" id="reports" class="top_link">
+        <span title="Reports" class="down">
+          <img src="/icons/reports.png"/><br/>
+          <span>Reports</span>
+        </span>
+      </a>
+      <ul class="sub">
+        <li><a href="/cgi-bin/fpa/dashboard.pl">Front Page</a></li>
+        <li><a href="/cgi-bin/fpa/invrep1.pl">Invoice Analysis</a></li>
+        <li><a href="/cgi-bin/fpa/txnrep1.pl">Transaction Analysis</a></li>
+        <li><a href="/cgi-bin/fpa/trial_balance.pl">Trial Balance</a></li>
+        <li><a href="/cgi-bin/fpa/pandl.pl">Profit &amp; Loss</a></li>
+        <li><a href="#">Aged Debtors</a></li>
+        <li><a href="#">Aged Creditors</a></li>
+      </ul>
+    </li>
+    <li class="top">
+      <a href="#" onclick="view_reminders();" id="reminders" class="top_link">
+        <span title="System and personal reminders" class="down">
+          <img src="/icons/reminders.png"/><br/>
+          <span>Reminders</span>
+        </span>
+      </a>
+      <ul class="sub">
+        <li><a href="#" onclick="view_reminders();">View Reminders</a></li>
+        <li><a href="#" onclick="$('#vreminder').dialog('open');">Add Reminder</a></li>
+      </ul>
+    </li>
+    <li class="top">
+      <a href="#nogo57" id="admin" class="top_link">
+        <span title="Admin,Preferences and Settings"  class="down">
+          <img src="/icons/admin.png"/><br/>
+          <span>Admin</span>
+        </span>
+      </a>
+      <ul class="sub">
+        <li><a href="#" onclick="view_comments();">View Feedback</a></li>
+        <li><a href="#" onclick="$('#vcomment').dialog('open');">Add New Feedback</a></li>
+        <li><a href="/cgi-bin/fpa/switch_systems.pl">Switch to Testbed</a></li>
+        <li><a href="/cgi-bin/fpa/list_audit_trails.pl">Audit Trail</a></li>
+      </ul>
+    </li>
+    <li class="top">
+      <a href="/manual.html" id="help" class="top_link">
+        <span title="Help" class="down">
+          <img src="/icons/help.png"/><br/>
+          <span>Help</span>
+        </span>
+      </a>
+    </li>
+  </ul>
+    <div id="searchimg"><img src="/icons/search.png"/></div>
+    <div style="float:right;padding:10px 25px 0px 0px;">
+      <div id="dfg" title="Customers">Search Customers</div>
+      <input id="searchcus" />
+    </div>
+</div>
+<div id="dialog" style="text-align:left;z-index:10100;" title="Errors!"></div>
+<div id="vcomments" style="text-align:left;z-index:10100;" title="Feedback"></div>
+<div id="vcomment" style="display:none;" title="Add a Comment">
+  <form id="fcomment" name="fcomment" method="post" action="/cgi-bin/fpa/comment.pl">
+    <table width="100%" cellpadding="4" cellspacing="0" border="0" class="formtable">
+      <tr>
+        <td style="vertical-align:top;"><label>Comment</label></td>
+        <td><textarea name="comtext" id="comtext" cols="30" rows="3"></textarea></td>
+      </tr>
+      <tr>
+        <td><label>Priority</label></td>
+        <td>
+          <select name="comgrade" id="comgrade">
+            <option value="N">Normal</option>
+            <option value="H">Important</option>
+          </select>
+        </td>
+      </tr>
+    </table>
+  </form>
+</div>
+<div id="vreminders" style="text-align:left;z-index:10100;" title="Reminders"></div>
+<div id="vreminder" style="display:none;" title="Add a Reminder">
+  <form id="freminder" name="freminder" method="post" action="/cgi-bin/fpa/reminder.pl">
+    <table width="100%" cellpadding="4" cellspacing="0" border="0" class="formtable">
+      <tr>
+        <td style="vertical-align:top;"><label>Message</label></td>
+        <td><textarea name="remtext" id="remtext" cols="30" rows="3"></textarea></td>
+      </tr>
+      <tr>
+        <td><label>Priority</label></td>
+        <td>
+          <select name="remgrade" id="remgrade">
+            <option value="N">Normal</option>
+            <option value="H">Important</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td><label>Show from</label></td>
+        <td><input type="text" name="remstartdate" id="remstartdate" size="9" readonly="readonly"/></td>
+      </tr>
+      <tr>
+        <td><label>Show to</label></td>
+        <td><input type="text" name="remenddate" id="remenddate" size="9" readonly="readonly"/></td>
+      </tr>
+    </table>
+  </form>
+</div>
+<table width="660" cellspacing="9" cellpadding="9" border="0" style="margin:40px;font-size:16px;line-height:20px;">
+  <tr>
+    <td>
+      <h1>ERROR</h1>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Unfortunately you are unable to use this function as you do not have the requisite permissions.&nbsp;&nbsp;Please either purchase the required upgrade or, if you believe that there is some sort of problem, contact the FreePlus Accounts support staff..
+    </td>
+  </tr>
+</table>
+
+</div>  <!-- end of wrapper  //-->
+<div id="receipt2" title="Receive Money In" style="width:520px;">
+  <form id="recform2" name="recform2" method="post" action="/cgi-bin/fpa/process_txn.pl">
+    <input type="hidden" name="invtype" id="rec_invtype" value="I"/>
+    <input type="hidden" name="searchtype" id="rec_searchtype" value="Customers"/>
+    <input type="hidden" name="amtcusid" id="rec_amtcusid" value="0"/>
+    <table width="100%" cellpadding="4" cellspacing="0" border="0" class="formtable">
+      <tr>
+        <td><label>Received From</label></td>
+        <td><div><input type="hidden" name="invcusname" id="rec_invcusname" value=""/><input id="rec_cus_id" title="Received From" class="mandatory"/></div></td>
+      </tr>
+      <tr>
+        <td><label>Payment Method</label></td>
+        <td>
+          <select name="txnmethod" id="rec_txnmethod">
+            <option value="1300">Cash</option>
+            <option value="1310">Cheque</option>
+            <option value="1200" selected="selected">Bank Transfer</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td><label>Total Amount Received</label></td>
+        <td><span><input type="text" name="txnamount" id="rec_txnamount" value="" size="10" title="Total Amount Received" class="mandatory currency" onchange="calc_vat(this);"/></span></td>
+      </tr>
+      <tr>
+        <td><label>VAT Rate</label></td>
+        <td>
+          <select name="vatrate" id="rec_vatrate" onchange="calc_vat(this);">
+  <option value="0.2" selected="selected">Standard (20%)</option>
+  <option value="0.175">Standard (17.5%)</option>
+  <option value="0.05">Reduced (5%)</option>
+  <option value="0">Zero (0%)</option>
+  <option value="0">Exempt (0%)</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td><label>VAT Amount</label></td>
+        <td><span><input type="text" name="invvat" id="rec_invvat" value="" size="10" title="VAT Amount Received" class="currency"/></span>&nbsp;<span id="rec_netamt"></span></td>
+      </tr>
+      <tr>
+        <td><label>Allocate to</label></td>
+        <td>
+          <select name="invcoa" id="rec_invcoa" size="1">
+            <option value="4000" selected="selected">UK Sales</option>
+            <option value="4100">EU Sales</option>
+            <option value="4200">Export Sales</option>
+            <option value="4300">Other Income</option>
+          </select>
+        </td> 
+      </tr>
+      <tr>
+        <td><label>Transaction Date</label></td>
+        <td><input type="text" name="invprintdate" id="rec_invprintdate" value="10-Jan-11" size="10" readonly="readonly"/></td>
+      </tr>
+      <tr>
+        <td colspan="2"><label style="text-align:left;">Description</label><textarea name="invdesc" id="rec_invdesc" cols="30" rows="2" title="Description of the receipt" class="mandatory"></textarea></td>
+      </tr>
+    </table>
+  </form>
+</div>
+<div id="payment2" title="Pay Money Out" style="width:520px;">
+  <form id="payform2" name="payform2" method="post" action="/cgi-bin/fpa/process_txn.pl">
+    <input type="hidden" name="invtype" id="pay_invtype" value="P"/>
+    <input type="hidden" name="searchtype" id="pay_searchtype" value="Customers"/>
+    <input type="hidden" name="amtcusid" id="pay_amtcusid" value="0"/>
+    <table width="100%" cellpadding="4" cellspacing="0" border="0" class="formtable">
+      <tr>
+        <td><label>Paid To</label></td>
+        <td><div><input type="hidden" name="invcusname" id="pay_invcusname" value=""/><input id="pay_cus_id" title="Paid To" class="mandatory"/></div></td>
+      </tr>
+      <tr>
+        <td><label>Payment Method</label></td>
+        <td>
+          <select name="txnmethod" id="pay_txnmethod">
+            <option value="1300">Cash</option>
+            <option value="1310">Cheque</option>
+            <option value="1200" selected="selected">Bank Transfer</option>
+            <option value="2010">Credit Card</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td><label>Total Amount Paid</label></td>
+        <td><span><input type="text" name="txnamount" id="pay_txnamount" value="" size="10" title="Total Amount Paid" class="mandatory currency" onchange="calc_vat(this);"/></span></td>
+      </tr>
+      <tr>
+        <td><label>VAT Rate</label></td>
+        <td>
+          <select name="vatrate" id="pay_vatrate" onchange="calc_vat(this);">
+  <option value="0.2" selected="selected">Standard (20%)</option>
+  <option value="0.175">Standard (17.5%)</option>
+  <option value="0.05">Reduced (5%)</option>
+  <option value="0">Zero (0%)</option>
+  <option value="0">Exempt (0%)</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td><label>VAT Amount</label></td>
+        <td><input type="text" name="invvat" id="pay_invvat" value="" size="10" title="VAT Amount Paid" class="currency"/>&nbsp;<span id="pay_netamt"></span></td>
+      </tr>
+      <tr>
+        <td><label>Allocate to</label></td>
+        <td>
+          <select name="invcoa" id="pay_invcoa" size="1">
+            <option value="5000">Cost of Sales</option>
+            <option value="6000" selected="selected">Other Expenses</option>
+            <option value="7000">Fixed Overheads</option>
+            <option value="1000">Fixed Assets</option>
+            <option value="1500">Other Current Assets</option>
+          </select>
+        </td> 
+      </tr>
+      <tr>
+        <td><label>Transaction Date</label></td>
+        <td><input type="text" name="invprintdate" id="pay_invprintdate" value="10-Jan-11" size="10" readonly="readonly"/></td>
+      </tr>
+      <tr>
+        <td><label>Supplier Reference</label></td>
+        <td><span><input type="text" name="invcusref" id="pay_invcusref" value="" title="Supplier Reference"/></span></td>
+      </tr>
+      <tr>
+        <td colspan="2"><label style="text-align:left;">Description</label><textarea name="invdesc" id="pay_invdesc" cols="30" rows="2" title="Description of the payment" class="mandatory"></textarea></td>
+      </tr>
+    </table>
+  </form>
+</div>
+</body>
+</html>

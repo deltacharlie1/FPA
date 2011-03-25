@@ -1,0 +1,176 @@
+<div class="main">
+[%- freq = {
+  'S' = 'Once Only'
+  '1' = 'Monthly'
+  '3' = 'Quarterly'
+  '12' = 'Annually'
+ }; invfreq = invoice.invrepeatfreq -%]
+<form action="/cgi-bin/fpa/update_template2.pl" method="post" name="form1" id="form1">
+<input type="hidden" name="id" id="x_id" value="[%- invoice.id -%]"/>
+<input type="hidden" name="cus_id" id="x_cus_id" value="[%- invoice.cus_id -%]"/>
+<input type="hidden" name="invitemcount" id="invitemcount" value="[%- invoice.invitemcount -%]"/>
+<input type="hidden" name="invitems" id="invitems" value=""/>
+<input type="hidden" name="invtotal" id="x_invtotal" value="[%- invoice.invtotal -%]"/>
+[%- UNLESS cookie.VAT == "N" -%]<input type="hidden" name="invvat" id="x_invvat" value="[%- invoice.invvat -%]"/>[%- END -%]
+<input type="hidden" name="item_tt" id="item_tt" value="[%- invoice.tottotal -%]"/>
+<input type="hidden" name="invstatus" id="x_invstatus" value="[%- invoice.invstatus -%]"/>
+<div class="status">Invoice Template</div>
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="formtable">
+    <tr>
+      <td><label>Company Name</label></td>
+      <td><input title="Company Name" name="invcusname" type="text" id="x_invcusname" size="20" value="[%- invoice.invcusname -%]" class="mandatory"/></td>
+      <td><label>Invoice Type</label></td>
+      <td>Sales Invoice</td>
+    </tr>
+    <tr>
+      <td style="vertical-align:top;" rowspan="2"><label>Address</label></td>
+      <td rowspan="2"><textarea title="Address" name="invcusaddr" id="x_invcusaddr" cols="20" rows="3">[%- invoice.invcusaddr -%]</textarea></td>
+      <td style="vertical-align:top;padding-top:9px;"><label>Next Invoice Date</label></td>
+      <td style="vertical-align:top;"><input type="text" name="invprintdate" id="x_invprintdate" readonly="readonly" size="9" value="[%- invoice.printdate -%]"/></td>
+    </tr>
+    <tr>
+      <td style="vertical-align:top;" nowrap="nowrap"><label>Frequency</label></td>
+      <td style="vertical-align:top;">
+        <select name="invrepeatfreq" id="invrepeatfreq" size="1">
+          <option value="S"[%- IF invoice.invrepeatfreq == 'S' -%] selected="selected"[%- END -%]>Once Only</option>
+          <option value="1"[%- IF invoice.invrepeatfreq == '1' -%] selected="selected"[%- END -%]>Monthly</option>
+          <option value="3"[%- IF invoice.invrepeatfreq == '3' -%] selected="selected"[%- END -%]>Quarterly</option>
+          <option value="12"[%- IF invoice.invrepeatfreq == '12' -%] selected="selected"[%- END -%]>Annually</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td><label>Post Code</label></td>
+      <td><input title="Post Code" name="invcuspostcode" type="text" id="x_invcuspostcode" value="[%- invoice.invcuspostcode -%]" size="10"/></td>
+      <td style="vertical-align:top;padding-top:9px;" nowrap="nowrap"><label>Customer Reference</label></td>
+      <td style="vertical-align:top;"><input name="invcusref" type="text" id="x_invcusref" size="20" value="[%- invoice.invcusref -%]"/></td>
+    </tr>
+    <tr>
+      <td><label>Region</label></td>
+      <td><select title="Region" name="invcusregion" id="x_invcusregion">
+          <option value="UK" [%- IF invoice.invcusregion == 'UK' -%] selected="selected" [%- END -%] >UK</option>
+          <option value="EU" [%- IF invoice.invcusregion == 'EU' -%] selected="selected" [%- END -%] >EU (other than UK)</option>
+          <option value="NEU" [%- IF invoice.invcusregion == 'NEU' -%] selected="selected" [%- END -%] >Non-EU</option>
+        </select>
+      </td>
+      <td><label>Terms</label></td>
+      <td><select title="Terms of Business" name="invcusterms" id="x_invcusterms">
+          <option value="" [%- IF invoice.invcusterms == '' -%] selected="selected" [%- END -%] >--  Please Select  --</option>
+          <option value="N" [%- IF invoice.invcusterms == 'N' -%] selected="selected" [%- END -%] >Due Now</option>
+          <option value="I" [%- IF invoice.invcusterms == 'I' -%] selected="selected" [%- END -%] >With Invoice</option>
+          <option value="7" [%- IF invoice.invterms == '7' -%] selected="selected" [%- END -%] >7 Days</option>
+          <option value="14" [%- IF invoice.invcusterms == '14' -%] selected="selected" [%- END -%] >14 Days</option>
+          <option value="28" [%- IF invoice.invcusterms == '28' -%] selected="selected" [%- END -%] >28 Days</option>
+          <option value="30" [%- IF invoice.invcusterms == '30' -%] selected="selected" [%- END -%] >30 Days</option>
+          <option value="60" [%- IF invoice.invcusterms == '60' -%] selected="selected" [%- END -%] >60 Days</option>
+          <option value="90" [%- IF invoice.invcusterms == '90' -%] selected="selected" [%- END -%] >90 Days</option>
+          <option value="120" [%- IF invoice.invcusterms == '120' -%] selected="selected" [%- END -%] >120 Days</option>
+          <option value="COD" [%- IF invoice.invcusterms == 'COD' -%] selected="selected" [%- END -%] >Cash on Delivery (COD)</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td><label>Contact Name</label></td>
+      <td><input title="Contact Name" name="invcuscontact" type="text" id="x_invcuscontact" value="[%- invoice.invcuscontact -%]" size="20"/></td>
+      <td><label>Email</label></td>
+      <td><input title="Email Address" name="invcusemail" type="text" id="x_invcusemail" value="[%- invoice.invcusemail -%]" siz="20"/></td>
+    </tr>
+    <tr>
+      <td colspan="4"><center><hr style="border-bottom:1px solid #233930;width:95%;"/></center></td>
+    </tr>
+    <tr>
+      <td colspan="4">
+        <table border="0" cellspacing="0" cellpadding="0" width="660">
+          <tr>
+            <td>
+              <table width="520" border="0" cellpadding="0" cellspacing="0" class="datatable">
+                <tr>
+                  <th>Description</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+              [% UNLESS cookie.VAT == "N" -%]<th>VAT Rate</th>[%- END %]
+                </tr>
+                <tr> 
+[% IF cookie.VAT == "N" -%]
+                  <td><textarea name="desc" id="desc" cols="50" rows="2"></textarea></td>
+[% ELSE -%]
+                  <td><textarea name="desc" id="desc" cols="30" rows="2"></textarea></td>
+[% END -%]
+                  <td style="vertical-align:top;"><input name="price" id="price" type="text" size="5"  onblur="check_currency(this);"/></td>
+                  <td style="vertical-align:top;"><input name="qty" id="qty" type="text" size="4"  onblur="check_int(this);"/></td>
+[% UNLESS cookie.VAT == "N" -%]
+                  <td style="vertical-align:top;">
+                    <select name="vat" id="sel_vat">
+  [% INCLUDE vatrates -%]
+                    </select>
+                  </td>
+[% END -%]
+                </tr>
+              </table>
+            </td>
+            <td>
+              <a href="#" onclick="add_row();"><img src="/icons/add_button_over.png" alt="Add" title="Add Line Item"/></a>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4">
+        <div style="width:630px;height:120px;overflow:auto;" id="div_html">
+            [%- invoice.invitems -%]
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2" rowspan="3">Remarks<br/><textarea name="invremarks" id="remarks" cols="35" rows="2"></textarea></td>
+      <td style="text-align:right;"><strong>Sub Total : </strong></td>
+      <td id="st" style="text-align:right;padding-right:40px;">[%- invoice.invtotal | remove('-') -%]</td>
+    </tr>
+    <tr>
+[% IF cookie.VAT == "N" -%]
+      <td colspan="2">&nbsp;</td>
+[% ELSE -%]
+      <td style="text-align:right;"><strong>VAT : </strong></td>
+      <td id="vt" style="text-align:right;padding-right:40px;">[%- invoice.invvat | remove('-') -%]</td>
+[% END -%]
+    </tr>
+    <tr>
+      <td style="text-align:right;"><strong>Invoice Total : </strong></td>
+      <td id="tt" style="text-align:right;padding-right:40px;">[%- invoice.tottotal | remove('-') -%]</td>
+    </tr>
+    <tr>
+      <td colspan="4" rowspan="3">Email Message<br/><textarea name="invemailmsg" id="invemailmsg" cols="35" rows="4">[%- invoice.invemailmsg -%]</textarea></td>
+  </table>
+</td>
+</tr>
+</table>
+</div>
+<div id="sidebar">
+  <ul>    
+    <li>
+      <div>
+        <input type="submit" name="submit" value="Update Details"/>
+      </div>  
+    </li>   
+    <li>    
+      <div>   
+        <a href="/cgi-bin/fpa/update_template2.pl?id=[%- invoice.id -%]&submit=Delete">
+          Delete
+        </a>
+      </div>  
+    </li>   
+    <li>
+      <div>
+        <a href="/cgi-bin/fpa/update_template.pl?[%- invoice.id -%]">
+          Start Again
+        </a>
+      </div>
+    </li>
+  </ul>   
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+  </div>
+</form>
+</div>
+

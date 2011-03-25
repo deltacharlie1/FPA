@@ -1,0 +1,73 @@
+<div class="main">
+<div id="pudialog" style="display:none;" title="Upload a Document">
+  <form id="puform" name="puform" method="post" action="/cgi-bin/fpa/uploadify.pl">
+    <table width="100%" cellpadding="4" cellspacing="0" border="0" class="formtable">
+      <tr>
+        <td><label style="text-align:left;">Description</label></td>
+      </tr>
+      <tr>
+        <td><input type="text" name="docdesc" id="docdesc" size="30" class="mandatory"/></td>
+      </tr>
+      <tr>
+        <td style="text-align:center;"><input id="pufile" name="pufile" type="file"/></td>
+      </tr>
+    </table>
+  </form>
+</div>
+<form method="post" id="form1" autocomplete="off">
+<input type="hidden" name="numrows" id="numrows" value="0"/>
+<input type="hidden" name="offset" id="offset" value="0"/>
+<input type="hidden" name="rows" id="rows" value="10"/>
+<input type="hidden" name="action" id="action" value="S"/>
+<h1>Documents List</h1>
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="formtable">
+    <tr>
+      <td><label>Date From</label></td>
+      <td><input name="startdate" type="text" id="startdate" size="9" value="[% startdate -%]" readonly="readonly" onchange="get_results('S');"/></td>
+      <td><label>Date To</label></td>
+      <td><input name="enddate" type="text" id="enddate" size="9" value="[% enddate -%]" readonly="readonly" onchange="get_results('S');"/></td>
+    </tr>
+    <tr>
+      <td><label>File Name</label></td>
+      <td><input name="imgfilename" type="text" id="imgfilename" size="20" value="" onchange="get_results('S');"/></td>
+      <td><label>Document Type</label></td>
+      <td>
+        <select name="imgdoc_type" id="imgdoc_type" size="1" onchange="get_results('S');">
+          <option value="" selected="selected">Any</option>
+          <option value="INV">Purchase Invoices</option>
+          <option value="STMT">Bank Statements</option>
+          <option value="OTHER">Other</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td><label>Document Description</label></td>
+      <td><input name="imgdesc" type="text" id="imgdesc" size="20" value="" onchange="get_results('S');"/></td>
+      <td colspan="2">&nbsp;</td>
+    </tr>
+  </table><br/>
+  <div id="results"></div>
+</div>
+<div id="sidebar">
+  <ul>
+[% IF cookie.UPLDS -%]
+    <li>
+      <div>
+        <a href="#" onclick="display_puform();">
+         Upload Documents
+        </a>
+      </div>
+    </li>
+[% END -%]
+    <li>
+      <div>
+       <input type="reset" name="reset" id="reset" value="Start Again"/>
+      </div>
+    </li>
+  </ul>
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+  </div>
+</div>
+</form>
+</div>

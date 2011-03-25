@@ -1,0 +1,70 @@
+<div class="main">
+<table width="660" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td style="vertical-align:bottom;">
+      <h1>[%- pagetitle -%]</h1>
+    </td>
+    <td style="text-align:right;padding-top:15px;">
+      <h2>Current Balance = &pound;[%- pagebalance -%]</h2>
+    </td>
+  </tr>
+</table>
+[% INCLUDE page_select.tt -%]
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="listing">
+    <tr>
+      <th>Date</th>
+      <th>Type</th>
+      <th>Txn/Invoice #</th>
+      <th>Detail</th>
+      <th style="text-align:right;">Debit&nbsp;</th>
+      <th style="text-align:right;">Credit&nbsp;</th>
+    </tr>
+[% class = [ "even","odd" ] -%]
+[%- FOREACH entry IN entries -%]
+  [%- ndx = loop.count % 2 -%]
+  [%- IF entry.nomtype == 'S' -%]
+    <tr class="[%- class.$ndx -%]" onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- entry.linkid -%]';">
+      <td>[%- entry.printdate -%]</td>
+      <td>Inv</td>
+      <td>[%- entry.invinvoiceno -%]</td>
+      <td>[%- entry.invcusname | truncate(60) -%]</td>
+    [% IF coatype.match('(?i)Assets|Expenses') -%]
+      <td style="text-align:right;">[%- entry.amount | format('%1.2f') -%]</td>
+      <td>&nbsp;</td>
+    [% ELSE -%]
+      <td>&nbsp;</td>
+      <td style="text-align:right;">[%- entry.amount | format('%1.2f') -%]</td>
+    [% END -%]
+    </tr>
+  [% ELSE -%]
+    <tr class="[%- class.$ndx -%]" onclick="location.href='/cgi-bin/fpa/update_purchase.pl?[%- entry.linkid -%]';">
+      <td>[%- entry.printdate -%]</td>
+      <td>Txn</td>
+      <td>[%- entry.txntxnno -%]</td>
+      <td>[%- entry.txncusname | truncate(60) -%]</td>
+    [% IF coatype.match('(?i)Assets|Expenses') -%]
+      <td>&nbsp;</td>
+      <td style="text-align:right;">[%- 0 - entry.amount | format('%1.2f') -%]</td>
+    [% ELSE -%]
+      <td style="text-align:right;">[%- 0 - entry.amount | format('%1.2f') -%]</td>
+      <td>&nbsp;</td>
+    [% END -%]
+    </tr>
+  [% END -%]
+[%- END -%]
+  </table>
+</div>
+<div id="sidebar">
+  <ul>
+    <li>
+      <div>
+        <a href="javascript:history.back();">
+         Previous Screen
+        </a>
+      </div>
+    </li>
+  </ul>
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+  </div>
+</div>

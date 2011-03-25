@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>FreePlus Accounts</title>
+<link rel="shortcut icon" href="/favicon.ico"/>
+<link href="/default.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="/jquery-ui.css" type="text/css"/>
+<link rel="stylesheet" href="/jquery.cluetip.css" type="text/css"/>
+<script src="/js/jquery.js" type="text/javascript"></script>
+<script src="/js/jquery.cluetip.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+  $('.extra').cluetip({ 
+    local: true,
+    positionBy: 'absolute',
+    topOffset: 100,
+    leftOffset: 350,
+    width:375,
+    titleAttribute: 'rev',
+    activation: 'click',
+    sticky: true,
+    closePosition: 'bottom',
+    closeText: '<img src="/icons/cross.png" alt="Close" />'
+  });
+}); 
+</script> 
+</head>
+<body>
+[% INCLUDE pub_menu.tt -%]
+<div style="position: absolute; margin-top:20px; width:170px;">
+  <div class="testimonials"><b></b><i></i><em></em>
+    <h2>Testimonials</h2>
+    <p>So easy to use</p>
+    <p>John Smith</p>
+    <p>Provides me with all that I need (and more) and all for the princely sum of NOTHING!</p>
+    <p>Bill Gates </p>
+  </div>
+</div>
+<div style="position: relative;  left: 130px; width:870px;">
+  <div class="textbody" style="position: relative; width: 750px;display: block; padding:10px 20px;">
+    <h1>Online Accounting for Startups and Small Businesses</h1>
+    <table width="640" cellpadding="5" border="0" style="margin-left:30px;">
+      <tr>
+        <td style="vertical-align:top;"><img src="/images/six.png" border="0"/></td>
+        <td style="vertical-align:top;padding-top:4px;"><h2> good reasons to try FreePlus Accounts ...</h2></td>
+        <td><div id="tryitnow"><a href="/register.html"></a></div></td>
+      </tr>
+    </table>
+    <table border="0" cellpadding="0" cellspacing="0" width="90%" id="features">
+      <tr>
+        <td><img src="/images/tick.gif" alt="tick" /></td>
+        <td nowrap="nowrap"><span class="style4">Free</span></td>
+        <td><div class="style4" style="text-align:center;padding:0px 10px;">-</div></td>
+        <td><div class="boxed"><b></b><i></i><em></em><div>No subscription required.&nbsp;&nbsp;The business startup version is free and forever.<br/>&nbsp;&nbsp;<a href="#" class="extra" rel="#freetext" rev="FREE">Read More...</a></div></div></td>
+      </tr>
+      <tr>
+        <td><img src="/images/tick.gif" alt="tick" height="32" width="28" /></td>
+        <td nowrap="nowrap"><span class="style4">Easy</span></td>
+        <td><div class="style4" align="center">-</div></td>
+        <td><div class="boxed"><b></b><i></i><em></em><div>FreePlus Accounts has been designed for ordinary business owners by business people, not by accountants.&nbsp;&nbsp;That means it is simple and straightforward to use.<br/>&nbsp;&nbsp;<a href="#" class="extra" rel="#easytext" rev="EASY">Read More ...</a></div></div></td>
+      </tr>
+      <tr>
+        <td><img src="/images/tick.gif" alt="tick" /></td>
+        <td nowrap="nowrap"><span class="style4">Secure</span></td>
+        <td><div class="style4" align="center">-</div></td>
+        <td><div class="boxed"><b></b><i></i><em></em><div>We use the same level of security as the banks which means that, unlike your PC, the data cannot be stolen .&nbsp;&nbsp;Also, our servers are continuously backed up, so you cannot lose your data because of equipment failure, either.<br/>&nbsp;&nbsp;<a href="#" class="extra" rel="#securetext" rev="SECURE">Read More ...</a></div></div></td>
+      </tr>
+      <tr>
+        <td><img src="/images/tick.gif" alt="tick" height="32" width="28" /></td>
+        <td nowrap="nowrap"><span class="style4">No Downloads</span></td>
+        <td><div class="style4" align="center">-</div></td>
+        <td><div class="boxed"><b></b><i></i><em></em><div>All you need is your browser (which you ar using now!).&nbsp;&nbsp;There is nothing to download, nothing to install, nothing to maintain and viruses cannot corrupt your data.<br/>&nbsp;&nbsp;<a href="#" class="extra" rel="#downloadtext" rev="NO DOWNLOADS">Read More ...</a></div></div> </td>
+      </tr>
+      <tr>
+        <td><img src="/images/tick.gif" alt="tick" height="32" width="28" /></td>
+        <td nowrap="nowrap"><span class="style4">Share</span></td>
+        <td><div class="style4" align="center">-</div></td>
+        <td><div class="boxed"><b></b><i></i><em></em><div>You can share access with your accountant or book keeper.&nbsp;&nbsp;No need to visit their offices taking a downloaded copy of your accounts with you.<br/>&nbsp;&nbsp;<a href="#" class="extra" rel="#anywheretext" rev="SHARE">Read More ...</a></div></div></td>
+      </tr>
+      <tr>
+        <td><img src="/images/tick.gif" alt="tick" height="32" width="28" /></td>
+        <td nowrap="nowrap"><span class="style4">Up-to-date </span></td>
+        <td><div class="style4" align="center">-</div></td>
+        <td><div class="boxed"><b></b><i></i><em></em><div>Changes of regulation (e.g. a change in the VAT rates) are always immediately incorporated.&nbsp;&nbsp;You don't have to do anything.<br/>&nbsp;&nbsp;<a href="#" class="extra" rel="#uptodatetext" rev="UP-TO-DATE">Read More ...</a></div></div></td>
+      </tr>
+    </table>
+    <p>So, whether you require a full accounting system or just need to produce a few invoices <a href="/register.html">Click here</a> for your free sign up.</p>
+  </div>
+</div>
+</div>
+  <div style="display:none;">
+<div id="freetext"><p>The basic system is free to use for as long as you wish.  We developed FreePlus Accounts to help us manage our own business (as we did not like any of the existing accounts packages) and because we like it so much we have made it available to a wider audience.  The cost of providing this availability is covered by the advertising revenue that we receive.</p>
+<p>A number of our users have asked for additional features and so we offer the enhanced system for a small subscription of &pound;10 per month </p>
+  </div>
+  <div id="securetext"><p>Our servers are high-redundancy computers located in a purpose built data centre in London which provides the same level of physical security as other high-value systems such as the banks.  The data is regularly backed up and we take snapshots to confirm that no corruption has occurred.  In addition we use the same level of encryption (128 bit SSL) as the banks so as to ensure that hackers cannot gain access to your data between leaving your browser and being stored on our computers.</p>
+  </div>
+  <div id="easytext"><p>We have designed FreePlus Accounts to work the way that we work rather than the way that accountants work.  We wanted a system that would help us track customer and supplier payments, manage our different bank accounts and provide the information required for our VAT and Year End records.  We find our system very easy to use and, because we are convinced that there are many companies that are very similar to ours, we are sure that you will, too.</p>
+  </div>
+  <div id="downloadtext"><p>We believe that software that has to be downloaded and installed onto a Personal Computer is inherently susceptible both because of the difficulty in knowing how to set it up correctly and also because of the potential for the programs or data to become corrupted.  We are not all technical (even in our own company) and we wanted a system that could be centrally managed and accessed using any standard browser.  In short, we wanted to reduce the risk of failure to an absolute minimum.</p>
+  </div>
+  <div id="anywheretext"><p>You, your partners and your accountant can all have easy access to your data (provided, of course, that you have authorised their access) and can even do so at the same time.&nbsp;&nbsp;Equally, you have access to your accounts no matter where you are, in your office, at home, on holiday or even out shopping!</p>
+  </div>
+  <div id="uptodatetext"><p>As FreePlus Accounts is managed by our own staff on our own computers we are able to keep it right up-to-date both from a regulatory perspective, eg VAT rates, and also from a usability perspective.  This means that we do the work so that you don.t have to.</p>
+  </div>
+</div>
+</body>
+</html>

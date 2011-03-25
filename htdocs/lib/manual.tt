@@ -1,0 +1,118 @@
+<div class="main">
+<data>
+<p>
+<h1>FreePlus Accounts</h1><br>
+<br>
+<span style="font: 11pt Calibri;">Introduction</span><br>
+<span style="font: 11pt Calibri;">FreePlus Accounts is a complete accounting for small businesses, especially startup businesses. &#160;Users access the system over the internet using any modern browser with Java script enabled.</span><br>
+<br>
+<span style="font: 11pt Calibri;">A business needs to have some sort of accounting system for 2 reasons:-</span><br>
+</p>
+<p style="text-indent: -0.64cm;margin-left:  1.91cm;">
+<span style="font: 12pt Calibri;">1.&#160;</span><span style="font: 11pt Calibri;">There is a statutory requirement for all businesses to keep a record of all sales and purchases. &#160;An accounting system facilitates this requirement and can also help to produce other mandatory documents such as VAT returns and Year End documents.</span></p>
+<p style="text-indent: -0.64cm;margin-left:  1.91cm;">
+<span style="font: 12pt Calibri;">2.&#160;</span><span style="font: 11pt Calibri;">It provides a toll for managing the business such as customer and supplier payments, cashflow analysis, performance and many other aspects of running a business.</span></p>
+<p style="margin-left:  1.27cm;">
+</p>
+<p>
+<span style="font: 11pt Calibri;">FreePlus Accounts meets these requirements in a simple and user-friendly way.</span><br>
+<br>
+<span style="font: 11pt Calibri;">Fundamentally, there are three main tasks that the small business owner needs to perform on a fairly regular basis. &#160;These tasks are:-</span><br>
+</p>
+<p style="text-indent: -0.64cm;margin-left:  1.91cm;">
+<span style="font: 12pt Calibri;">1.&#160;</span><span style="font: 11pt Calibri;">Functions to do with money coming in to the business such as raising invoices and recording payments.</span></p>
+<p style="text-indent: -0.64cm;margin-left:  1.91cm;">
+<span style="font: 12pt Calibri;">2.&#160;</span><span style="font: 11pt Calibri;">Functions to do with money going out of the business such as making purchases.</span><br>
+<span style="font: 12pt Calibri;">3.&#160;</span><span style="font: 11pt Calibri;">Functions to do with actually managing the money within the business such as checking bank statements.</span></p>
+<p>
+<br>
+<span style="font: 11pt Calibri;">In FreePlus Accounts this functionality is accessed from a menu across the top of the screen, just under the banner. &#160;The remainder of this document describes how to register, login and use this functionality.</span><br>
+<br>
+<span style="font: 11pt Calibri;">Registration</span><br>
+<span style="font: 11pt Calibri;">Before you can use FreePlus Accounts, you must register for an account. &#160;Registration is a 2 part process. &#160;First you enter a minimal amount of information that is used during the log in process. &#160;Secondly, once you have completed the registration screen, you will receive an email that contains a link to enable you to activate your registration. &#160;On activation a basic account is set up using the information entered during the initial registration process.</span><br>
+<br>
+<span style="font: 11pt Calibri;">Points to note on the registration process are:=</span><br>
+</p>
+<p style="text-indent: -0.64cm;margin-left:  1.91cm;">
+<span style="font: 12pt Symbol;">·&#160;</span><span style="font: 11pt Calibri;"> that you need to enter a valid email address as all communication is conducted to this address.</span></p>
+<p style="text-indent: -0.64cm;margin-left:  1.91cm;">
+<span style="font: 12pt Symbol;">·&#160;</span><span style="font: 11pt Calibri;">your password must be at least 6 characters long and can contain any characters.</span><br>
+<span style="font: 12pt Symbol;">·&#160;</span><span style="font: 11pt Calibri;">your memorable word must be at least 8 characters long and can contain only lower case characters, numbers or a space.</span></p>
+<p>
+<br>
+<span style="font: 11pt Calibri;">Logging In</span><br>
+<span style="font: 11pt Calibri;">FreePlus Accounts takes security very seriously and uses a system similar to many banks as the log in process. &#160;Part one of that process is to enter your registered email address (the one you selected during the registration process) followed by your password. &#160;Generally the system remembers your email address and pre-enters it, your password must be entered each time you wish to log in.</span><br>
+<br>
+<span style="font: 11pt Calibri;">Once the initial log in has been accepted, you are asked to enter 3 characters from your memorable word.</span><br>
+<br>
+<span style="font: 11pt Calibri;">If you have forgotten either your password or your memorable word you can request an email reminder. &#160;However, please note that we are unable to read your password and so will reset it to a set of random characters. &#160;If you do need to request a new password, we suggest that you change it to something more meaningful as soon as you have logged in.</span><br>
+<br>
+<span style="font: 11pt Calibri;">Initial Setup</span><br>
+<span style="font: 11pt Calibri;">The first time you log in there are a number of things that you either must do or should do. &#160;In order of importance, these are:</span><br>
+<br>
+<span style="font: 11pt Calibri;"> Company Details</span><br>
+<span style="font: 11pt Calibri;">The very first thing you must do (and FreePlus Accounts will automatically display the relevant screen) is to complete your company details, including your address, company registration number the month in which your Year End occurs and, if registered for VAT, your VAT details. &#160;If you do complete the VAT section you will need to log out and then log back in before you can view screens set for VAT.</span><br>
+<br>
+<span style="font: 11pt Calibri;">Opening Balances</span><br>
+<span style="font: 11pt Calibri;">Once you have completed and saved your company details you should enter your opening balances by clicking the &#039;Set Opening Balances&#039; tab on the right hand side of the screen. &#160;If this is a new business then most of thse fields will be empty. &#160;If, however, you are switching from another accounting system you will need to enter the balances as they were at the point that you are switching. &#160;the easiest way to do this is to &#039;start&#039; at the beginning of the most recent VAT period (if registered for VAT) or on the opening date of your most recent bank statement.</span><br>
+<br>
+<span style="font: 11pt Calibri;">For &#039;Cash on Hand&#039; just enter the amount of petty cash (including any cheques) that you are currently holding.</span><br>
+<br>
+<span style="font: 11pt Calibri;">For &#039;Current Account Opening Balance&#039; (and &#039;Deposit Account Opening Balance&#039; if you have a deposit account) enter the Balance Carried Forward amount from your selected statement, ie the closing balance amount, and the statement number.</span><br>
+<br>
+<span style="font: 11pt Calibri;">Similarly, if you have any outstanding (business) debt on your credit card, enter that in the &#039;Amount Owed on &#160;Credit Card&#039; field.</span><br>
+<br>
+<span style="font: 11pt Calibri;">For &#160;&#039;Amount Owed by Debtors&#039; enter the total owed to you for invoices raised PRIOR TO THE DATE OF THE CURRENT ACCOUNT OPENING BALANCE. &#160;If you are using your most recent statement this is the total that is owed at this point. &#160;If you are using an earlier statement it might be easier to use one from several months earlier so that you know that ALL invoices as of that date have been paid.</span><br>
+<br>
+<span style="font: 11pt Calibri;">For the &#039;Amount Owed to Creditors&#039; enter the total amount you still owe to your suppliers. &#160;The rules for this are the same as for Debtors.</span><br>
+<br>
+<span style="font: 11pt Calibri;">When you have entered these balances click on the &#039;Save these Details&#039; tab on the right hand side.</span><br>
+<br>
+<span style="font: 11pt Calibri;">Once these details have been saved you cannot change them. &#160;If you discover any mistakes you will need to correct them by making &#039;contra&#039; entries,which will be described in a later section.</span><br>
+<br>
+<span style="font: 11pt Calibri;">Customers and Suppliers</span><br>
+<span style="font: 11pt Calibri;">Althouggh not essential, it is a good idea at this stage to enter the details of customers and suppliers with whom you deal with regularly. &#160;This particularly applies to those customers to whom you have to send invoices.</span><br>
+<br>
+<span style="font: 11pt Calibri;">To create a new customer, click on the &#039;Customers&#039; button and select &#039;Add New Customer&#039; from the dropdown menu. &#160;Unless you are raising invoices for this customer you need only enter the customer&#039;s name althouggh you may find that additional information is helpful.</span><br>
+<br>
+<span style="font: 11pt Calibri;">Similarly, to create a new supplier, click on the &#039;Suppliers&#039; button and select &#039;Add New Supplier from the dropdown menu. &#160;For suppliers you will almost certainly need enter only the supplier name.</span><br>
+<br>
+<span style="font: 11pt Calibri;">Regular Usage</span><br>
+<span style="font: 11pt Calibri;">In the main, regular usage consists of raising invoices to your customers, recording payments from your customers, recording payments to your suppliers and monitoring the state of the business.</span><br>
+<br>
+<span style="font: 11pt Calibri;">Raising Invoices</span><br>
+<span style="font: 11pt Calibri;">Onbe of the primary functions of an accounting system is to &#160;enable you to create invoices for your customers. &#160;FreePlus Accoun ts allows you to create invoices in different ways.</span><br>
+<br>
+<span style="font: 11pt Calibri;">Regular Customers</span><br>
+<span style="font: 11pt Calibri;">For regular customers, those to whom you will send several invoices, whose details you have entered using the &#039;Add New Customer&#039; described above can be invoiced in two different ways:-</span><br>
+<br>
+<span style="font: 11pt Calibri;">By clicking on the &#039;Customers&#039; button and then clicking the pencil icon of the relevant custpomer. &#160;This will open up the invoice screen, pre-populated with the details you entered when you created the customer record.</span><br>
+<br>
+<span style="font: 11pt Calibri;">Alternatively, if you want to see what previous invoices you have raised for a customer (or, maybe, to copy an existing one), click on the &#039;Customers&#039; button as before and then click anywhere (other than the icons) on the relevant customer details. &#160;The customer you are about to select is highlighted in blue to aid your selection. &#160;When you click, a new screen is displayed showing details of the selected customer plus a list of the invoices you have already raised. &#160;If you wish to copy an existing invoice just click on the invoice in question (again, the invoice is highlighted in blue as you hover your mouse over it). &#160;Otherwise, to create a new invoice, click on the &#039;Create New Invoice&#039; tab on the right hand side.</span><br>
+<br>
+<span style="font: 11pt Calibri;">One-off Customers</span><br>
+<span style="font: 11pt Calibri;">If you wish to raise an invoice for a customer whose details have not been added to the database (perhaps because you will only ever raise the one invoice) hover your mouse over the &#039;Customers&#039; button and then select &#039;Create New Invoice&#039; from the dropdown menu.</span><br>
+<br>
+<span style="font: 11pt Calibri;">Whichever method you choose you will end up with the invoice screen being displayed.</span><br>
+<br>
+<span style="font: 11pt Calibri;">Completing the Invoice</span><br>
+<span style="font: 11pt Calibri;">First make sure that sufficient detail, such as customer name, address etc, has been entered into the main invoice section.</span><br>
+<span style="font: 11pt Calibri;">Next you need to enter the details of the products and/or services that you are selling. &#160;To do this, just enter the product/service detail in the &#039;Description&#039; box in the centre section, followed by the price you are charging (exclusive of VAT if you are VAT registered). &#160;Enter the number of items beinf sold and select the appropriate VAT rate (if registered). &#160;Finally, click the &#039;Plus&#039; symbol on the right hand side and the details will be copied to the line item section immediately underneath. &#160;The invoice sub total and total will also be updated.</span><br>
+<br>
+<span style="font: 11pt Calibri;">You may continue adding as many line items as you wish by just repeating the above procedure.</span><br>
+<br>
+<span style="font: 11pt Calibri;">If you wish to amend any line item, click the &#039;Amd&#039; button of the relevent item and the details will be copied back into the Edit section. &#160;Make whatever changes you wish and then click the &#039;Plus&#039; button again. &#160;Similarly, if you wish to delete a line item, just click the &#039;Del&#039; button.</span><br>
+<br>
+<span style="font: 11pt Calibri;">Once you have finished entering the line item details you can add any general remark in the Remarks section at the bottom left of the invoice screen.</span><br>
+<br>
+<span style="font: 11pt Calibri;">If you wish to save the invoice in a draft form (a Proforma Invoice) click on the &#039;Save Draft&#039; tab you will then be able to amend any details at a later time.</span><br>
+<br>
+<span style="font: 11pt Calibri;">If you want to see how the invoice will loook before saving it, click on the &#039;Preview&#039; tab. &#160;This will display a PDF image which you may, if you wish, print out.</span><br>
+<br>
+<span style="font: 11pt Calibri;">Once you are satisfied with the layout and contents of the invoice you can save it in a final form (after which time you will not be able to amend it) by clicking the &#039;Save Final&#039; tab. &#160;However, before you do so, if the customer has already paid click the &#039;Paid in Full - Yes&#039; button this will save you having to enter the payment details at a later time. &#160;Also, if you do not intend to print or email the invoice, uncheck the &#039;Display Invoice PDF&#039; checkbox.</span><br>
+<br>
+<span style="font: 11pt Calibri;">If you do not uncheck the &#039;Display Invoice PDF&#039; checkbox, once you click the &#039;Save Final&#039; tab a new screen will display showing the finished invoice and a section to enable you to email it if you so wish.</span><br>
+<br>
+</p>
+</data>
+</div>

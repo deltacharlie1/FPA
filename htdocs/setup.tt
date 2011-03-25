@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="description" />
+<meta name="keywords" content="keywords" />
+<link href="/default.css" rel="stylesheet" type="text/css" />
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="stylesheet" href="/jquery-ui.css" type="text/css">
+<script src="/js/jquery.js" type="text/javascript"></script>
+<script src="/js/jquery-ui.js" type="text/javascript"></script>
+<title>FreePlus Accounts - Setup Company Details</title>
+</head>
+<body onload="document.form1.email.focus();">
+<div id="dialog" title="Errors!" style="text-align:left;"></div>
+<table width="1000" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><img src="/images/fpa_logo.jpg" alt="FreePlus Accounts" width="1000" height="140" /></td>
+  </tr>
+  <tr>
+    <td>
+[% INCLUDE lib/company_setup.tt -%]
+    </td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+</body>
+</html>

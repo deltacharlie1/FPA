@@ -1,0 +1,54 @@
+<div class="main">
+<h1>Contact Address Details&nbsp;</h1>
+[%# INCLUDE address_select.tt -%]
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="listing">
+    <tr>
+      <th>Name</th>
+      <th>Address</th>
+      <th>Post Code</th>
+      <th>Telephone</th>
+      <th>Contact</th>
+      <th>Relationship</th>
+    </tr>
+[% class = [ "even","odd" ] -%]
+[%- FOREACH entry IN entries -%]
+  [%- ndx = loop.count % 2 -%]
+    <tr class="[%- class.$ndx -%]" onclick="location.href='/cgi-bin/fpa/add_address.pl?[%- entry.id -%]';">
+      <td>[%- entry.cusname | truncate(20) -%]</td>
+      <td>[%- entry.cusaddress | remove("\n.*") -%]</td>
+      <td>[%- entry.cuspostcode -%]</td>
+      <td>[%- entry.custel -%]</td>
+      <td>[%- entry.cuscontact -%]</td>
+      <td style="text-align:center;">[%- IF entry.cussales AND entry.cussupplier -%]Both[%- ELSIF entry.cussales -%]Sales[%- ELSIF entry.cussupplier -%]Supplier[%- END -%]</td>
+    </tr>
+[%- END -%]
+  </table>
+</div>
+<div id="sidebar">
+  <ul>
+    <li>
+      <div>
+        <a href="#">
+          Contacts - List View
+        </a>
+      </div>
+    </li>
+    <li>
+      <div>
+        <a href="#">
+         Contacts - Card View 
+        </a>
+      </div>
+    </li>
+    <li>
+      <div>
+        <a href="/cgi-bin/fpa/add_address.pl">
+         Add New Partner 
+        </a>
+      </div>
+    </li>
+  </ul>
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+  </div>
+</div>

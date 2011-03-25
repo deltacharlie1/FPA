@@ -1,0 +1,40 @@
+<div class="main">
+<input type="hidden" name="cus_id" id="x_cus_id" value="[% cus.id -%]"/>
+<h1>Invoice List</h1>
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="listing">
+    <tr>
+      <th>Invoice</th>
+      <th>Customer</th>
+      <th>Description</th>
+      <th>Total</th>
+      <th>Printed</th>
+      <th>Due</th>
+      <th>Paid</th>
+      <th>Status</th>
+    </tr>
+[% class = [ "even","odd" ] -%]
+[% FOREACH invoice IN invoices -%]
+  [%- ndx = loop.count % 2 -%]
+  [% IF invoice.invtype.match('S|C') -%]
+    <tr class="[%- class.$ndx -%]" onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">
+  [% ELSE -%]
+    <tr class="[%- class.$ndx -%]" onclick="location.href='/cgi-bin/fpa/update_purchase.pl?[%- invoice.invid -%]';">
+  [% END -%]
+      <td>[%- invoice.invinvoiceno -%]</td>
+      <td>[%- invoice.invcusname -%]</td>
+      <td>[%- invoice.invdesc | truncate(30) -%]</td>
+      <td>[%- invoice.invamount -%]</td>
+      <td>[%- invoice.printdate -%]</td>
+      <td>[%- invoice.invduedate -%]</td>
+      <td>[%- invoice.invpaid -%]</td>
+      <td>
+  [%- IF invoice.invstatus == 'Overdue' -%]<span style="color:#800000;font-weight:bold;">Overdue</span>[%- ELSE; invoice.invstatus; END -%]</td>
+    </tr>
+[% END -%]
+  </table>
+</div>
+<div id="sidebar">
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+</div>
+</div>

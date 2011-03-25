@@ -1,0 +1,109 @@
+<div class="main">
+[% USE date -%]
+[%- DEFAULT acct.accname = 'Bank' -%]
+<div id="changedate" title="Change Txn Date" style="display:none;">
+  <form id="fchangedate" name="fchangedate" action="">
+  <input type="hidden" name="id" id="cd_id" value=""/>
+  <table width="100%" border="0" cellpadding="0" cellspacing="0" class="formtable">
+    <tr>
+      <td><label>New Date</label></td>
+      <td><input type="text" name="newdate" id="newdate" size="9" value="" readonly="readonly"/></td>
+    </tr>
+  </table>
+  </form>
+</div>
+<form action="/cgi-bin/fpa/reconcile2.pl" method="post" name="form1" id="form1">
+<input type="hidden" name="id" id="id" value="[%- acct.id -%]"/>
+<input type="hidden" name="txnmethod" id="txnmethod" value="[%- acct.acctype-%]"/>
+<input type="hidden" name="staopendate" id="staopendate" value="[%- acct.staclosedate -%]"/>
+<h1>Reconcile [%- acct.accname -%] Account [%- acct.accacctno -%]</h1>
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="formtable">
+    <tr>
+      <td width="40%"><label>Total Interest</label></td>
+      <td nowrap="nowrap"><input type="text" name="thisint" id="thisint" size="10" class="currency" value=""/>&nbsp;<input type="text" name="thisintdate" id="thisintdate" size="9" value="" readonly="readonly"/></td>
+      <td rowspan="2" width="30%"><a href="#" title="Click to Add to Transactions" onclick="do_bankpayment();"><img src="/icons/add_button_over.png" alt="Click to Add" /></a></td>
+    </tr>
+    <tr>
+      <td><label>Total Charges</label></td>
+      <td nowrap="nowrap"><input type="text" name="thisch" id="thisch" size="10" class="currency" value=""/>&nbsp;<input type="text" name="thischdate" id="thischdate" size="9" value="" readonly="readonly"/></td>
+    </tr>
+[% IF vat.perbox5 -%]
+    <tr id="vatbox">
+      <td width="40%"><label>Due [%- IF vat.perbox5 < 0 -%]from[%- ELSE -%]to[%- END -%] HMRC for [%- vat.perquarter -%] return</label></td>
+      <td nowrap="nowrap"><input type="hidden" name="vatid" id="vatid" value="[%- vat.id -%]"/><input type="text" name="vatamt" id="vatamt" size="10" value="[%- vat.perbox5 | remove('-') -%]" readonly="readonly"/>&nbsp;<input type="text" name="vatdte" id="vatdte" size="9" value="" readonly="readonly"/></td>
+      <td width="30%"><a href="#" title="Click to Add to Transactions" onclick="do_vatpayment();"><img src="/icons/add_button_over.png" alt="Click to Add" /></a></td>
+    </tr>
+[% END -%]
+    <tr>
+      <td><label>Statement #</label></td>
+      <td colspan="2"><span><input type="text" name="thisno" id="thisno" size="6" class="mandatory" onchange="updstack();" value="[%- IF stack.f1; stack.f1; ELSE; acct.stastmtno + 1; END -%]"/></span> (Previous statement was [%- acct.stastmtno -%])</td>
+    </tr>
+    <tr>
+      <td nowrap="nowrap"><label>Balance Brought Forward</label></td>
+      <td colspan="2"><span id="thisbf">[%- IF  acct.staclosebal AND acct.staclosebal>0; acct.staclosebal; ELSE -%]0.00[%- END -%]</span><input type="hidden" name="thatbf" id="thatbf" value="[%- IF  acct.staclosebal AND acct.staclosebal>0; acct.staclosebal; ELSE -%]0.00[%- END -%]"/></td>
+    </tr>
+    <tr>
+      <td><label>Balance Carried Forward</label></td>
+      <td colspan="2"><span><input type="text" name="thiscf" id="thiscf" size="10" class="mandatory" onchange="check_bals();" value="[%- stack.f2 -%]"/></span>&nbsp;<input type="text" name="thiscfdate" id="thiscfdate" size="9" onchange="updstack();" value="[%- IF stack.f3; stack.f3; ELSE; date.format(date.now,'%d-%b-%y'); END -%]" readonly="readonly"/></td>
+    </tr>
+    <tr>
+      <td><label>Transactions total</label></td>
+      <td colspan="2"><span id="txntot">0.00</span></td>
+    </tr>
+    <tr>
+      <td colspan="3"><center><hr style="border-bottom:1px solid #B7CD97;width:95%;"/></center></td>
+    </tr>
+    <tr>
+      <td><label>Statement Difference</label></td>
+      <td colspan="2"><span id="staact">0.00</span></td>
+    </tr>
+    <tr>
+      <td><label>Total of Checked Items</label></td>
+      <td colspan="2"><span id="chkditems">0.00</span></td>
+    </tr>
+    <tr>
+      <td><label>Accounts Difference</label></td>
+      <td colspan="2"><span id="txndiff">0.00</span></td>
+    </tr>
+  </table><br/>
+  <h3>Unreconciled Transactions</h3>
+  <div style="overflow:auto;height:440px;">
+    <table width="660" border="0" cellpadding="0" cellspacing="0" class="listing">
+      <thead>
+      <tr onclick="sorttable();">
+        <th>Date</th>
+        <th>Detail</th>
+        <th>Paid Out</th>
+        <th>Paid In</th>
+        <th>Match?</th>
+      </tr>
+      </thead>
+      <tbody id="sorttable">
+[% class = [ "even","odd" ] -%]
+[%- FOREACH entry IN entries -%]
+  [%- ndx = loop.count % 2 -%]
+      <tr class="[%- class.$ndx -%]">
+        <td onclick="change_date(this,[%- entry.id -%],'[%- entry.tdate -%]');">[%- entry.tdate -%]</td>
+        <td>[%- entry.txncusname | truncate(60) -%]</td>
+        <td style="text-align:right;">[%- IF entry.txnamount < 0; entry.txnamount | remove('-'); ELSE -%]&nbsp;[%- END -%]</td>
+        <td style="text-align:right;">[%- IF entry.txnamount >= 0; entry.txnamount; ELSE -%]&nbsp;[%- END -%]</td>
+        <td style="text-align:center;"><input type="checkbox" class="txnchk" name="x[%- entry.id -%]" id="x[%- entry.id -%]" value="[%- entry.txnamount -%]" [%- UNLESS entry.txnselected == '' -%]checked="checked"[%- END -%] onclick="check_txn(this);"/></td>
+      </tr>
+[%- END -%]
+      </tbody>
+    </table>
+  </div>
+</form>
+</div>
+<div id="sidebar">
+  <ul>
+    <li>
+      <div>
+        <input type="button" name="save" id="save" onclick="validate();" value="Accept &amp; Lock"/>
+      </div>
+    </li>
+  </ul>
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+  </div>
+</div>

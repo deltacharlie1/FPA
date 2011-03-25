@@ -1,0 +1,64 @@
+<div class="main">
+<form action="/cgi-bin/fpa/opening_balances2.pl" method="post" name="form1" id="form1">
+<h1>Opening Balances</h1>
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="formtable">
+    <tr>
+      <td colspan="2" style="text-align:center;padding-bottom:16px;"><div style="width:600px;line-height:20px;font-weight:normal;" class="status">
+          Please note that if you are making adjustments to existing opening balances you must enter the <b>DIFFERENCE</b> between the earlier amount and new amount <b>NOT</b> the new amount.</div>
+      </td>
+    </tr>
+[% UNLESS comacccompleted == 'Y' -%]
+    <tr>
+      <td><label>Starting Date</label></td>
+      <td><span><input type="text" name="cdate" id="cdate" size="9" readonly="readonly" value="[%- startdate -%]"/></td>
+    </tr>
+[% END -%]
+    <tr>
+      <td><label>Cash on Hand</label></td>
+      <td nowrap><span><input title="Cash on Hand" name="x1300" type="text" id="x1300" class="currency"/></span></td>
+    </tr>
+    <tr>
+      <td><label>Current Account Opening Balance</label></td>
+      <td><span><input type="text" title "Current Account Balance" name="x1200" id="x1200" class="currency"/></span></td>
+    </tr>
+    <tr>
+      <td><label>Current Account last Statement Number</label></td>
+      <td><span><input title="Statement Number" name="cstmt" type="text" id="cstmt" value="0" class="currency"/></span></td>
+    </tr>
+    <tr>
+      <td><label>Deposit Account Balance</label></td>
+      <td><span><input title="Deposit Account Balance" name="x1210" type="text" id="x1210" class="currency""/></span></td>
+    </tr>
+    <tr>
+      <td><label>Deposit Account last Statement Number</label></td>
+      <td><span><input title="Statement Number" name="dstmt" type="text" id="dstmt" value="0" class="currency"/></span></td>
+    </tr>
+    <tr>
+      <td><label>Current Value of Assets</label></td>
+      <td><span><input title="Current Value of Assets" name="x1000" type="text" id="x1000" class="currency"/></span></td>
+    </tr>
+    <tr>
+      <td><label>Existing Long Term Liabilities</label></td>
+      <td><span><input title="Long Term Liabilities" name="x3100" type="text" id="x3100" class="currency"/></span>&nbsp;<a href='#' class="extra" onclick="ob_dialog();">What are these?</a></td>
+    </tr>
+  </table>
+</div>
+<div id="sidebar">
+  <ul>
+    <li>
+      <div>
+        <input type="submit" name="save" id="save" value="Save these Details"/>
+      </div>
+    </li>
+    <li>
+      <div>
+       <input type="reset" name="reset" id="reset" value="Start Again"/>
+      </div>
+    </li>
+  </ul>
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+  </div>
+</div>
+</form>
+</div>

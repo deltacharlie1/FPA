@@ -1,0 +1,5 @@
+  <option value="0.2" selected="selected">Standard (20%)</option>
+  <option value="0.175">Standard (17.5%)</option>
+  <option value="0.05">Reduced (5%)</option>
+  <option value="0">Zero (0%)</option>
+  <option value="0">Exempt (0%)</option>

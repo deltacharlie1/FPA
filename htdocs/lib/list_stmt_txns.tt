@@ -1,0 +1,60 @@
+<div class="main">
+<table border="0" width="660">
+  <tr>
+    <td style="vertical-align:bottom;"><h1>Transaction List</h1></td>
+    <td style="padding:0 0 5px 20px;vertical-align:bottom;"><h2> - [%- stmt.accname -%] Account [%- stmt.accacctno -%] Stmt # [%- stmt.stastmtno -%]</h2></td>
+    <td style="text-align:right;">
+[%- IF attach.imgthumb -%]
+<a href="/cgi-bin/fpa/display_attach.pl?[%- attach.id -%]"><img src="/cgi-bin/fpa/display_thumb.pl?[%- attach.imgthumb -%]"/></a>
+[%- ELSE -%]
+<input type="file" name="stfile" id="stfile"/>
+[%- END -%]</td>
+  </tr>
+</table>
+[% INCLUDE page_select.tt -%]
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="listing">
+    <thead>
+    <tr onclick="sorttable();">
+      <th>Date</th>
+      <th>Detail</th>
+      <th>Paid Out</th>
+      <th>Paid In</th>
+      <th>Balance</th>
+    </tr>
+    </thead>
+    <tbody id="sorttable">
+    <tr class="odd"><!--  onclick="location.href='/cgi-bin/fpa/add_address.pl?[%- entry.id -%]';" //-->
+      <td>[%- stmt.staopendate -%]</td>
+      <td style="font-weight:bold;">Balance Brought Forward</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td style="text-align:right;">[%- stmt.staopenbal -%]</td>
+    </tr>
+[% balance = stmt.staopenbal -%]
+[% class = [ "odd","even" ]; ndx = 0 -%]
+[%- FOREACH entry IN entries -%]
+  [%- ndx = loop.count % 2 -%]
+    <tr class="[%- class.$ndx -%]"><!--  onclick="location.href='/cgi-bin/fpa/add_address.pl?[%- entry.id -%]';" //-->
+      <td>[%- entry.tdate -%]</td>
+      <td>[%- entry.txncusname | truncate(60) -%]</td>
+      <td style="text-align:right;">[%- IF entry.txnamount < 0; entry.txnamount | remove('-'); ELSE -%]&nbsp;[%- END -%]</td>
+      <td style="text-align:right;">[%- IF entry.txnamount >= 0; entry.txnamount; ELSE -%]&nbsp;[%- END -%]</td>
+      <td style="text-align:right;">[%- balance = balance + entry.txnamount; balance | format("%1.2f") -%]</td>
+    </tr>
+[%- END -%]
+[% ndx = (ndx + 1) % 2 -%]
+    <tr class="[%- class.$ndx -%]"><!--  onclick="location.href='/cgi-bin/fpa/add_address.pl?[%- entry.id -%]';" //-->
+      <td>[%- stmt.staclosedate -%]</td>
+      <td style="font-weight:bold;">Balance Carried Forward</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td style="text-align:right;">[%- stmt.staclosebal -%]</td>
+    </tr>
+  </tbody>
+  </table>
+</div>
+<div id="sidebar">
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+  </div>
+</div>
