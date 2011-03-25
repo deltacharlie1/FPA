@@ -1,0 +1,131 @@
+<div class="main">
+[%- USE date -%]
+<div id="invpayment" title="Record Payment" style="display:none;">
+  <form id="payform" name="payform" method="post" action="/cgi-bin/fpa/make_payment.pl">
+    <input type="hidden" name="cus_id" id="i_cus_id" value="[%- cus.id -%]"/>
+    <input type="hidden" name="id" id="i_id" value=""/>
+    <input type="hidden" name="invcusname" id="i_invcusname" value="[%- cus.cusname -%]"/>
+    <table width="100%" cellspacing="0" cellpadding="0" border="0" class="formtable">
+      <tr>
+        <td><label>Purchase Order No</label></td>
+        <td style="font-weight:bold;color:#800000;"><span id="amtinvno"></span></td>
+      </tr>
+      <tr>
+        <td><label>Amount Outstanding</label></td>
+        <td><span id="amtowed"></span></td>
+      </tr>
+      <tr>
+        <td><label>Amount Being Paid</label></td>
+        <td><span><input type="text" name="txnamount" id="i_txnamount" value="" size="10" title="Amount Being Paid" class="mandatory currency"/></span></td>
+      </tr>
+      <tr>
+        <td><label>Payment Method</label></td>
+        <td>
+          <select name="txnmethod" id="i_txnmethod">
+            <option value="1300" [%- IF cus.cusdefpaymethod == "1300" -%]selected="selected"[%- END -%]>Cash</option>
+            <option value="1310" [%- IF cus.cusdefpaymethod == "1310" -%]selected="selected"[%- END -%]>Cheque</option>
+            <option value="1200" [%- IF cus.cusdefpaymethod == "1200" -%]selected="selected"[%- END -%]>Bank Transfer</option>
+            <option value="2010" [%- IF cus.cusdefpaymethod == "2010" -%]selected="selected"[%- END -%]>Credit Card</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td><label>Date</label></td>
+        <td><input type="text" name="invprintdate" id="i_invprintdate" value="[%- date.format(date.now, '%d-%b-%y') -%]" size="10" readonly="readonly"/></td>
+      </tr>
+      <tr>
+        <td colspan="2">Remarks<br/><textarea name="invdesc" id="i_invdesc" cols="30" rows="1"></textarea></td>
+      </tr>
+    </table>
+  </form>
+</div>
+<h1>Supplier Details</h1>
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="formtable">
+    <tr>
+      <td><label>Company Name</label></td>
+      <td>[% cus.cusname -%]</td>
+      <td><label>Owed to Supplier</label></td>
+      <td>[%- 0 - cus.cusbalance | format('%1.2f') -%]</td>
+    </tr>
+    <tr>
+      <td style="vertical-align:top;"><label>Address</label></td>
+      <td style="vertical-align:top;">[% cus.cusaddress | replace("\n","<br/>") -%]</td>
+      <td colspan="2">&nbsp;</td>
+    </tr>
+    <tr>
+      <td><label>Post Code</label></td>
+      <td>[% cus.cuspostcode -%]</td>
+      <td colspan="2">&nbsp;</td>
+    </tr>
+    <tr>
+      <td><label>Region</label></td>
+      <td>[%- IF cus.cusregion == "4200" -%]Non-EU[%- ELSIF cus.cusregion == "4100" -%]EU (other than UK)[%- ELSE -%]UK[%- END -%]</td>
+      <td colspan="2">&nbsp;</td>
+    </tr>
+    <tr>
+      <td><label>Telephone</label></td>
+      <td>[% cus.custel -%]</td>
+      <td><label>Contact Name</label></td>
+      <td>[% cus.cuscontact -%]</td>
+    </tr>
+  </table>
+  <p>&nbsp;</p>
+[% INCLUDE page_select.tt -%]
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="listing">
+    <tr>
+      <th>PO #</th>
+      <th>Reference</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Total</th>
+      <th>Printed</th>
+      <th>Paid</th>
+      <th>Status</th>
+      <th>Pay</th>
+    </tr>
+[% class = [ "even","odd" ] -%]
+[%- FOREACH invoice IN invoices -%]
+  [%- ndx = loop.count % 2 -%]
+    <tr class="[%- class.$ndx -%]">
+      <td onclick="location.href='/cgi-bin/fpa/update_purchase.pl?[%- invoice.invid -%]';">[%- invoice.invinvoiceno -%]</td>
+      <td onclick="location.href='/cgi-bin/fpa/update_purchase.pl?[%- invoice.invid -%]';">[%- invoice.invcusref -%]</td>
+      <td onclick="location.href='/cgi-bin/fpa/update_purchase.pl?[%- invoice.invid -%]';">[%- IF invoice.invtype == "R" -%]Refund[%- ELSE -%]Purch Inv[%- END -%]</td>
+      <td onclick="location.href='/cgi-bin/fpa/update_purchase.pl?[%- invoice.invid -%]';">[%- invoice.invdesc | truncate(30) -%]</td>
+      <td onclick="location.href='/cgi-bin/fpa/update_purchase.pl?[%- invoice.invid -%]';">[%- invoice.invamount | remove('-') -%]</td>
+      <td onclick="location.href='/cgi-bin/fpa/update_purchase.pl?[%- invoice.invid -%]';">[%- invoice.printdate -%]</td>
+      <td onclick="location.href='/cgi-bin/fpa/update_purchase.pl?[%- invoice.invid -%]';">[%- invoice.invpaid | remove('-') -%]</td>
+      <td onclick="location.href='/cgi-bin/fpa/update_purchase.pl?[%- invoice.invid -%]';">[%- invoice.invstatus -%]</td>
+  [%- IF invoice.status != "Paid" AND invoice.invpaid > invoice.invamount -%]
+    [%- IF invoice.invtype == "P" -%]
+      <td><img src="/icons/coins.png" title="Record Payment" onclick="get_amt('[%- invoice.invid -%]','[%- invoice.invinvoiceno -%]','[%- (invoice.invamount - invoice.invpaid) | remove('-') | format('%1.2f') -%]');"></td>
+    [%- ELSE -%]
+      <td><img src="/icons/coins.png" title="Receive Payment" onclick="get_amt('[%- invoice.invid -%]','[%- invoice.invinvoiceno -%]','[%- invoice.invamount - invoice.invpaid | format('%1.2f') -%]');"></td>
+    [%- END -%]
+  [%- ELSE -%]
+      <td>&nbsp;</td>
+  [%- END -%]
+    </tr>
+[%- END -%]
+  </table>
+</div>
+<div id="sidebar">
+  <ul>    
+    <li>
+      <div>
+        <a href="/cgi-bin/fpa/add_address.pl?[%- cus.id -%]">
+          Update Details 
+        </a>    
+      </div>  
+    </li>   
+    <li>    
+      <div>   
+        <a href="/cgi-bin/fpa/new_purchase.pl?[%- cus.id -%]">
+         New Purchase Order
+        </a>    
+      </div>  
+    </li>   
+  </ul>   
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+</div>
+</div>

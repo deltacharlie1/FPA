@@ -1,0 +1,68 @@
+#!/usr/bin/perl
+
+$ACCESS_LEVEL = 1;
+
+#  script to add to / reduce loans and / or share capital 
+
+use Checkid;
+$COOKIE = &checkid($ENV{HTTP_COOKIE},$ACCESS_LEVEL);
+
+($Reg_id,$Com_id) = split(/\+/,$COOKIE->{ACCT});
+
+use DBI;
+my $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
+
+$Coas = $dbh->prepare("select coanominalcode,coadesc,coabalance from coas where coanominalcode in ('2300','3000') and acct_id='$COOKIE->{ACCT}'");
+$Coas->execute;
+$Coa = $Coas->fetchall_hashref('coanominalcode');
+$Coas->finish;
+
+use Template;
+$tt = Template->new({
+        INCLUDE_PATH => ['.','/usr/local/httpd/htdocs/fpa/lib'],
+        WRAPPER => 'header.tt',
+});
+
+$Vars = {
+        title => 'Accounts - Long Term Liabilities',
+	cookie => $COOKIE,
+	focus => 'amtpaid',
+	loantype => $ENV{QUERY_STRING},
+        loan => $Coa->{'2300'},
+        shares => $Coa->{'3000'},
+        javascript => '<script type="text/javascript" src="/js/jquery-form.js"></script> 
+<script language="JavaScript">
+var responseText = "";
+var errfocus = "";
+$(document).ready(function(){
+  var options = {
+    beforeSubmit: validate,
+    success: showResponse
+  };
+  $("#form1").ajaxForm(options);
+  $("#txndate").datepicker();
+});
+function showResponse(responseText, statusText) {
+  if (/OK/i.test(responseText)) {
+    var href = responseText.split("-");
+    location.href = "/cgi-bin/fpa/" + href[1];
+  }
+  else {
+    document.getElementById("dialog").innerHTML = responseText;
+    $("#dialog").dialog("open");
+    errfocus = "amtpaid";
+  }
+}
+function validate(formData,jqForm,options) {
+  return validate_form("#form1");
+}
+</script>',
+};
+
+print "Content-Type: text/html\n\n";
+$tt->process('loan.tt',$Vars);
+
+$Coas->finish;
+$dbh->disconnect;
+exit;
+

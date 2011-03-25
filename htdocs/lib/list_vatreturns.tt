@@ -1,0 +1,35 @@
+<div class="main">
+<h1>VAT Returns</h1>
+[% INCLUDE page_select.tt -%]
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="listing">
+    <tr>
+      <th>Period</th>
+      <th>Start Date</th>
+      <th>End Date</th>
+      <th>VAT Amount</th>
+      <th>Due</th>
+      <th>Completed</th>
+      <th>Filed</th>
+      <th>Status</th>
+    </tr>
+[% class = [ "even","odd" ] -%]
+[% FOREACH vatreturn IN vatreturns -%]
+  [%- ndx = loop.count % 2 -%]
+    <tr class="[%- class.$ndx -%]" onclick="location.href='/cgi-bin/fpa/vatreturn.pl?[%- vatreturn.id -%]';">
+      <td><a href="#">[%- vatreturn.perquarter -%]</a></td>
+      <td>[%- vatreturn.perstartdate -%]</td>
+      <td>[%- vatreturn.perenddate -%]</td>
+      <td>[%- vatreturn.perbox5 -%]</td>
+      <td>[%- vatreturn.perduedate -%]</td>
+      <td>[%- vatreturn.percompleted -%]</td>
+      <td>[%- vatreturn.perfiled -%]</td>
+      <td>[%- vatreturn.perstatus -%]</td>
+    </tr>
+[% END -%]
+  </table>
+</div>
+<div id="sidebar">
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+</div>
+</div>

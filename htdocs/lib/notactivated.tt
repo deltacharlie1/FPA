@@ -1,0 +1,11 @@
+<h1>Error</h1>
+<table width="600" cellspacing="0" cellpadding="0" border="0">
+  <tr>
+    <td>For some reason your activation has failed.&nbsp;&nbsp;This is probably becauseyou did not activate your account within the stipulated time (1 day)</td>
+  <tr>
+    <td>If you would like us to send another activation email please enter the email address you used when registering and then click on the button below,</td>
+  </tr>
+  <tr><form name="form1" id="form1" method="post" action="/cgi-bin/fpa/reactivate.pl">
+    <td style="text-align:center;">Email Address <input type="text" name="email" id="email" value="" />&nbsp;<input type="submit" name="submit" id="submit" value="Send new Activation Email"/></td>
+  </tr>
+</table>

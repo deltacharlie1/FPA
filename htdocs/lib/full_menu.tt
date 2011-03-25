@@ -1,0 +1,151 @@
+  <ul id="nav">
+    <li class="top">
+      <a href="#nogo57" id="company" class="top_link">
+        <span title="Company Related"  class="down">
+          <img src="/icons/company.png"/><br/>
+          <span>Company</span>
+        </span>
+      </a>
+      <ul class="sub">
+        <li><a href="/cgi-bin/fpa/reregister.pl">Registration Details</a></li>
+        <li class="divider"><a href="/cgi-bin/fpa/company_details.pl">Company Details</a></li>
+[% IF cookie.ADDU > 0 -%]
+        <li><a href="/cgi-bin/fpa/adduser.pl">Add New User</a></li>
+[% END -%]
+        <li><a href="/cgi-bin/fpa/docsrep1.pl">List Documents</a></li>
+        <li><a href="/cgi-bin/fpa/list_coas.pl">Chart of Accounts</a></li>
+        <li><a href="/cgi-bin/fpa/loan.pl?I">Add Loan</a></li>
+        <li><a href="/cgi-bin/fpa/loan.pl?D">Reduce Loan</a></li>
+        <li><a href="/cgi-bin/fpa/wipe_clean.pl">Delete All Data</a></li>
+      </ul>
+    </li>
+    <li class="top">
+      <a href="/cgi-bin/fpa/list_invoices.pl?listorder=N" id="customers" class="top_link">
+        <span title="Customers,Sales etc" class="down">
+          <img src="/icons/customers.png"/><br/>
+          <span>Sales</span>
+        </span>
+      </a>
+      <ul class="sub">
+        <li><a href="/cgi-bin/fpa/list_invoices.pl?listorder=O">List Unpaid Invoices</a></li>
+        <li><a href="/cgi-bin/fpa/list_invoices.pl?listorder=N">List Invoices</a></li>
+        <li><a href="/cgi-bin/fpa/new_invoice.pl">Create New Invoice</a></li>
+	[% IF cookie.REP_INVS == "1" -%]
+        <li><a href="/cgi-bin/fpa/list_templates.pl">List Invoice Templates</a></li>
+[% END -%]
+        <li class="divider"><a href="#" onclick="display_form('I');">Receive Money In</a></li>
+        <li class="divider"><a href="/cgi-bin/fpa/list_customers.pl">List Customers</a></li>
+        <li><a href="/cgi-bin/fpa/add_address.pl?C">Add New Customer</a></li>
+      </ul>
+    </li>
+    <li class="top">
+      <a href="/cgi-bin/fpa/list_purchases.pl?listorder=N" id="suppliers" class="top_link">
+        <span title="Suppliers,Purchases etc" class="down">
+          <img src="/icons/suppliers.png"/><br/>
+          <span>Purchases</span>
+        </span>
+      </a>
+      <ul class="sub">
+        <li><a href="/cgi-bin/fpa/list_purchases.pl?listorder=O">List Unpaid Purchases</a></li>
+        <li><a href="/cgi-bin/fpa/list_purchases.pl?listorder=N">List Purchases</a></li>
+        <li><a href="/cgi-bin/fpa/new_purchase.pl">New Purchase Invoice</a></li>
+        <li class="divider"><a href="#" onclick="display_form('P');">Pay Money Out</a></li>
+        <li class="divider"><a href="/cgi-bin/fpa/list_suppliers.pl">List Suppliers</a></li>
+        <li><a href="/cgi-bin/fpa/add_address.pl?S">Add New Supplier</a></li>
+<!--        <li><a href="/cgi-bin/fpa/new_purchase.pl?[%- cookie.EXP -%]">Record Expenses</a></li>
+        <li><a href="/cgi-bin/fpa/multi_purchases.pl?[%- cookie.EXP -%]">Pay Expenses</a></li> //-->
+      </ul>
+    </li>
+    <li class="top">
+      <a href="/cgi-bin/fpa/list_txns.pl" id="accounts" class="top_link">
+        <span title="Accounts Details" class="down">
+          <img src="/icons/accounts.png"/><br/>
+          <span>Accounts</span>
+        </span>
+      </a>
+      <ul class="sub">
+        <li><a href="/cgi-bin/fpa/list_txns.pl">List Transactions</a></li>
+        <li class="divider"><a href="/cgi-bin/fpa/list_accounts.pl">List Accounts</a></li>
+        <li class="divider"><a href="/cgi-bin/fpa/list_stmts.pl">List Statements</a></li>
+        <li class="divider"><a href="/cgi-bin/fpa/cashtobank.pl">Put Money In</a></li>
+        <li><a href="/cgi-bin/fpa/transfer.pl?O">Get money Out</a></li>
+        <li class="divider"><a href="/cgi-bin/fpa/transfer.pl?T">Transfer Money</a></li>
+      </ul>
+    </li>
+[% UNLESS cookie.VAT == "N" -%]
+    <li class="top">
+      <a href="#nogo57" id="vat" class="top_link">
+        <span title="VAT Form 100,payments,refunds" class="down">
+          <img src="/icons/vat.png"/><br/>
+          <span>VAT</span>
+        </span>
+      </a>
+      <ul class="sub">
+        <li><a href="/cgi-bin/fpa/list_vatreturns.pl">List VAT Returns</a></li>
+        <li><a href="/cgi-bin/fpa/list_vats.pl?filter=2100">List VAT Outputs</a></li>
+        <li><a href="/cgi-bin/fpa/list_vats.pl?filter=1400">List VAT Inputs</a></li>
+        <li class="divider"><a href="/cgi-bin/fpa/vatreturn.pl">VAT Form 100</a></li>
+      </ul>
+    </li>
+[% END -%]
+    <li class="top">
+      <a href="#nogo57" id="reports" class="top_link">
+        <span title="Reports" class="down">
+          <img src="/icons/reports.png"/><br/>
+          <span>Reports</span>
+        </span>
+      </a>
+      <ul class="sub">
+        <li><a href="/cgi-bin/fpa/dashboard.pl">Front Page</a></li>
+        <li class="divider"><a href="/cgi-bin/fpa/invrep1.pl">Invoice Analysis</a></li>
+        <li><a href="/cgi-bin/fpa/txnrep1.pl">Transaction Analysis</a></li>
+        <li class="divider"><a href="/cgi-bin/fpa/trial_balance.pl">Trial Balance</a></li>
+        <li><a href="/cgi-bin/fpa/pandl.pl">Profit &amp; Loss</a></li>
+        <li class="divider"><a href="#">Aged Debtors</a></li>
+        <li><a href="#">Aged Creditors</a></li>
+      </ul>
+    </li>
+    <li class="top">
+      <a href="#" onclick="view_reminders();" id="reminders" class="top_link">
+        <span title="System and personal reminders" class="down">
+          <img src="/icons/reminders.png"/><br/>
+          <span>Reminders</span>
+        </span>
+      </a>
+      <ul class="sub">
+        <li><a href="#" onclick="view_reminders();">View Reminders</a></li>
+        <li><a href="#" onclick="$('#vreminder').dialog('open');">Add Reminder</a></li>
+      </ul>
+    </li>
+    <li class="top">
+      <a href="#nogo57" id="admin" class="top_link">
+        <span title="Admin,Preferences and Settings"  class="down">
+          <img src="/icons/admin.png"/><br/>
+          <span>Admin</span>
+        </span>
+      </a>
+      <ul class="sub">
+        <li><a href="#" onclick="view_comments();">View Feedback</a></li>
+        <li><a href="#" onclick="$('#vcomment').dialog('open');">Add New Feedback</a></li>
+        <li><a href="/cgi-bin/fpa/assign_invoices.pl">Assign Unlisted Invoices</a></li>
+        <li><a href="/cgi-bin/fpa/switch_systems.pl">Switch to [%- IF cookie.ACCT == "7+7" -%]Live System[%- ELSE -%]Testbed[%- END -%]</a></li>
+        <li><a href="/cgi-bin/fpa/list_audit_trails.pl">Audit Trail</a></li>
+      </ul>
+    </li>
+    <li class="top">
+      <a href="#" onclick="print_display();" id="help" class="top_link">
+        <span title="Print" class="down">
+          <img src="/icons/print.png"/><br/>
+          <span>Print</span>
+        </span>
+      </a>
+    </li>
+    <li class="top">
+      <a href="/manual.html" id="help" class="top_link">
+        <span title="Help" class="down">
+          <img src="/icons/help.png"/><br/>
+          <span>Help</span>
+        </span>
+      </a>
+    </li>
+  </ul>

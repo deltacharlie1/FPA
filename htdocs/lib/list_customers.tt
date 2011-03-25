@@ -1,0 +1,43 @@
+<div class="main">
+[%- USE date -%]
+<h1>List of Customers</h1>
+[% INCLUDE address_select.tt -%]
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="listing">
+    <tr>
+      <th>Name</th>
+      <th>Post Code</th>
+      <th>Contact</th>
+      <th>Unallocated<br/>Payments</th>
+      <th>Balance<br/>Owing</th>
+      <th>Credit<br/>Limit</th>
+      <th>Actions</th>
+    </tr>
+[% class = [ "even","odd" ] -%]
+[%- FOREACH entry IN entries -%]
+  [%- ndx = loop.count % 2 -%]
+    <tr class="[%- class.$ndx -%]">
+      <td onclick="location.href='/cgi-bin/fpa/list_customer_invoices.pl?[%- entry.id -%]';">[%- entry.cusname | truncate(30) -%]</td>
+      <td onclick="location.href='/cgi-bin/fpa/list_customer_invoices.pl?[%- entry.id -%]';">[%- entry.cuspostcode | remove("\n.*") -%]</td>
+      <td onclick="location.href='/cgi-bin/fpa/list_customer_invoices.pl?[%- entry.id -%]';">[%- entry.cuscontact -%]</td>
+      <td onclick="location.href='/cgi-bin/fpa/list_customer_invoices.pl?[%- entry.id -%]';">[%- entry.cuscredit -%]</td>
+      <td onclick="location.href='/cgi-bin/fpa/list_customer_invoices.pl?[%- entry.id -%]';">[%- IF entry.cusbalance AND entry.cuslimit AND entry.cusbalance > entry.cuslimit AND entry.cuslimit > 0 -%]<span style="color:#a00000;font-weight:bold;">[%- entry.cusbalance -%]</span>[%- ELSE -%][%- entry.cusbalance -%][%- END -%]</td>
+      <td onclick="location.href='/cgi-bin/fpa/list_customer_invoices.pl?[%- entry.id -%]';">[%- IF  entry.cuslimit AND entry.cuslimit > 0; entry.cuslimit; END -%]</td>
+      <td style="text-align:center;" nowrap="nowrap"><img src="/icons/invoice.png" title="Raise Invoice" onclick="location.href='/cgi-bin/fpa/new_invoice.pl?[%- entry.id -%]';"/>&nbsp;<img src="/icons/coins.png" title="Receive Payment" onclick="location.href='/cgi-bin/fpa/multi_receipts.pl?[%- entry.id -%]';"/></td>
+    </tr>
+[%- END -%]
+  </table>
+</div>
+<div id="sidebar">
+  <ul>
+    <li>
+      <div>
+        <a href="/cgi-bin/fpa/add_address.pl?C">
+         Add New Customer 
+        </a>
+      </div>
+    </li>
+  </ul>
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+  </div>
+</div>

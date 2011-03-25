@@ -1,0 +1,43 @@
+<div class="main">
+<form action="/cgi-bin/fpa/adduser2.pl" method="post" name="form1" id="form1">
+<input type="hidden" name="addtype" id="addtype"/>
+<h1>Add an Additional User</h1>
+<table width="500" border="0" cellpadding="0" cellspacing="0" class="formtable">
+  <tr>
+    <td><label>New User's Name</label></td>
+    <td><span><input name="addusername" type="text" id="addusername" size="30" title="User Name" class="mandatory"/></span></td>
+  </tr>
+  <tr>
+    <td><label>User's Email Address</label></td>
+    <td><span><input name="addemail" type="text" id="addemail" size="30" class="mandatory" title="Email Address"/></span></td>
+  </tr>
+</table>
+</div>
+<div id="sidebar">
+  <ul>
+    <li>
+      <div>
+        <a href="#" onclick="submit_form('New');">
+         Send New Invitation
+        </a>
+      </div>
+    </li>
+    <li>
+      <div>
+        <a href="#" onclick="submit_form('Old');">
+         Re-Send Invitation
+        </a>
+      </div>
+    </li>
+    <li>
+      <div>
+       <input type="reset" name="reset" id="reset" value="Start Again"/>
+      </div>
+    </li>
+  </ul>
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+  </div>
+</div>
+</form>
+</div>

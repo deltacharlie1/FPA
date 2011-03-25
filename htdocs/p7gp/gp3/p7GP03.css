@@ -1,0 +1,103 @@
+/* 
+  -----------------------------------
+  Glide Panel Magic
+  by Project Seven Development
+  www.projectseven.com
+  Style Theme: 03 - Bluestone
+  -----------------------------------
+*/
+.p7GP03 {
+	background-color: #FFFFFF;
+	border: 1px solid #3B3B3B;
+	padding: 3px;
+	margin-right: 10px;
+}
+.p7GP03 .p7GPinnerwrapper {
+	padding: 0;
+	border: 0;
+	background-color: #FFFFFF;
+}
+.p7GP03 .p7GPtwrapper {
+	width: 200px;
+	float: left;
+	margin: 0;
+	background-color: #FFFFFF;
+}
+.p7GP03 .p7GPtwrapper ul {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+.p7GP03 .p7GPtwrapper ul a {
+	color: #FFFFFF !important;
+	text-decoration: none;
+	display: block;
+	padding: 6px 10px;
+	border-bottom: 1px solid #3A81AF;
+	border-top: 1px solid #94BED8;
+	background-repeat: repeat-x;
+	background-color: #4993C4;
+}
+.p7GP03 .p7GPtwrapper ul a:hover {
+	color: #FFFFFF !important;
+	background-color: #0E64AF;
+}
+.p7GP03 .p7GPtwrapper ul a.down, .p7GP03 .p7GPtwrapper ul a.down:hover {
+	background-color: #CCCCCC;
+	color: #000000 !important;
+	border: 0;
+	background-repeat: repeat-y;
+	font-weight: bold;
+}
+.p7GP03 .p7GPcwrapper {
+	margin: 0 0 0 200px;
+	background-color: #FFFFFF;
+}
+.p7GP03 .p7GPcontent {
+	padding: 24px;
+	line-height: 1.5em;
+	background-color: #FFFFFF;
+	color: #000000;
+}
+.p7GP03 .p7GPcontent a {
+	color: #0033FF;
+}
+.p7GP03 .p7GPcontent a:visited {
+	color: #486CFF;
+}
+.p7GP03 .p7GPcontent a:hover {
+	color: #CC0000;
+}
+.p7GPcurrentmark {
+	font-weight:bold !important;
+}
+.p7GP03 .clearfloats {
+	clear: both;
+	height: 0;
+	line-height: 0.0;
+	font-size: 0;
+}
+.p7GP03 .sidecontent {
+	padding: 12px;
+	color: #333333;
+}
+.p7GP03_external {
+	font-size: 1em;
+}
+.p7GP03_external ul {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+.p7GP03_external ul li {
+	margin: 0;
+}
+.p7GP03_external ul a {
+	color: #0033CC;
+}
+.p7GP03_external ul a:hover {
+	color: #000000;
+}
+.p7GP03_external ul a.down {
+	color: #CC0000;
+}

@@ -1,0 +1,41 @@
+<table width="600" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="center">
+      <noscript><p id="jstest" class="status" style="width:600px;"><b>WARNING!</b> - FreePlus Accounts requires Javascript in order to function properly.&nbsp;&nbsp;Currently, Javascript is not enabled in your browser and your user experience will be severely curtailed.&nbsp;&nbsp;We strongly recommend that you enable Javascript before proceeding.</p></noscript>
+      <table width="600" border="0" cellspacing="0" cellpadding="4">
+      <tr>
+        <td><h1>New User Setup for [%- tag -%]</h1></td>
+      </tr>
+      <tr>
+        <td style="text-align:left;">
+            <p>You must complete <b>BOTH</b> fields</p>
+          <form action="/cgi-bin/fpa/confirmuser2.pl" method="post" name="form1" id="form1">
+          <input type="hidden" name="actcode" id="actcode" value="[%- code -%]"/>
+          <input type="hidden" name="emamil" id="email" value="[%- email -%]"/>
+          <table width="100%" border="0" cellpadding="0" cellspacing="0" class="formtable">
+            <tr>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td><label>Your Email Address<br />
+                <span class="subnote" style="text-align:right;">(used as your login id)</span></label>
+              </td>
+              <td style="font-weight:bold;padding-left:35px;font-size:larger;color:#333333;">[%- email -%]</td>
+            </tr>
+            <tr>
+              <td><label>Enter Your Password<br/>to confirm your identity</label></td>
+              <td><span><input name="pwd1" type="password" id="pwd1" size="30" class="mandatory" title="Password"/></span></td>
+            </tr>
+            <tr>
+              <td colspan="2" style="text-align:center;height:40px;">
+                <input name="but2" type="button" id="but2" value="Setup User" onclick="validate();"/>
+              </td>
+            </tr>
+          </table>
+          </form>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;</p>

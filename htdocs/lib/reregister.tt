@@ -1,0 +1,77 @@
+<div class="main">
+<form action="/cgi-bin/fpa/reregister2.pl" method="post" name="reregform1" id="reregform1">
+<h1>Registration Details</h1>
+<table width="660" border="0" cellpadding="0" cellspacing="0" class="formtable">
+  <tr>
+    <td><label>New Password</label></td>
+    <td><span><input name="pwd1" type="password" id="pwd1" size="30" title="Password"/></span></td>
+  </tr>
+  <tr>
+    <td><label>Confirm your Password</label></td>
+    <td><span><input name="pwd2" type="password" id="pwd2" size="30" title="Password confiermation"/></span></td>
+  </tr>
+  <tr>
+    <td><label>New memorable word</label></td>
+    <td><span><input name="mem1" type="password" id="mem1" size="30" title="Memorable Word"/></span></td>
+  </tr>
+  <tr>
+    <td><label>Confirm your memorable word</label></td>
+    <td ><span><input name="mem2" type="password" id="mem2" size="30" title="Memorable Word Confirmation"/></span></td>
+  </tr>
+  <tr>
+    <td><label>Your Name</label></td>
+    <td><span><input name="name" type="text" id="name" size="30" class="mandatory" title="Name" value="[%- reg.regusername -%]"/></span></td>
+  </tr>
+  <tr>
+    <td><label>Your Email Address</label></td>
+    <td><span><input name="email" type="text" id="email" size="30" class="mandatory" title="Email Address" value="[%- reg.regemail -%]"/></span></td>
+  </tr>
+  <tr>
+    <td><label>Membership Plan</label></td>
+    <td>
+      <select name="plan" id="plan" size="1">
+        <option value="1"[%- IF reg.regmembership == '1' -%] selected="selected"[%- END -%]>FreePlus Startup  --  FREE!</option>
+<!--        <option value="3"[%- IF reg.regmembership == '3' -%] selected="selected"[%- END -%]>FreePlus Premium  --  &pound;10pm</option>  //-->
+<!--        <option value="4"[%- IF reg.regmembership == '4' -%] selected="selected"[%- END -%]>FreePlus Platinum  --  &pound;15pm</option>  //-->
+      </select>
+    </td>
+  </tr>
+  <tr>
+    <td><label>Preferred Menu</label></td>
+    <td>
+      <select name="regmenu" id="regmenu" size="1">
+        <option value="F"[%- IF reg.regmenu == 'F' -%] selected="selected"[%- END -%]>Full Function Menu</option>
+        <option value="S"[%- IF reg.regmenu == 'S' -%] selected="selected"[%- END -%]>Simple Menu</option>
+      </select>
+    </td>
+  <tr>
+    <td><label>Email Opt In</label></td>
+    <td>
+      <select name="optin" id="optin" size="1" onchange="check_optin();">
+        <option value="Y"[%- IF reg.regoptin == 'Y' -%] selected="selected"[%- END -%]>Yes - I would like to continue receiving the newsletter</option>
+        <option value="N"[%- IF reg.regoptin == 'N' -%] selected="selected"[%- END -%]>No - I wish to stop receiving emails</option>
+      </select>
+    </td>
+  </tr>
+  </tr>
+</table>
+</div>
+<div id="sidebar">
+  <ul>
+    <li>
+      <div>
+        <input type="submit" name="save" id="save" value="Save these Details"/>
+      </div>
+    </li>
+    <li>
+      <div>
+       <input type="reset" name="reset" id="reset" value="Start Again"/>
+      </div>
+    </li>
+  </ul>
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+  </div>
+</div>
+</form>
+</div>

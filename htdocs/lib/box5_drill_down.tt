@@ -1,0 +1,61 @@
+<div class="main">
+[%- vat_input = 0; vat_output = 0; -%]
+<table width="660" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td style="vertical-align:bottom;">
+      <h1>[%- pagetitle -%]</h1>
+    </td>
+    <td style="text-align:right;padding-top:15px;">
+      <h2>Total = &pound;[%- vattotal -%]</h2>
+    </td>
+  </tr>
+</table>
+[% INCLUDE page_select.tt -%]
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="listing">
+    <tr>
+      <th>VAT Date</th>
+      <th>Detail</th>
+      <th>Net Amount</th>
+      <th style="text-align:right;width:120px;">Due to HMRC&nbsp;</th>
+      <th style="text-align:right;width:120px;" nowrap="nowrap">Due From HMRC&nbsp;</th>
+    </tr>
+[% class = [ "even","odd" ] -%]
+[% FOREACH entry IN entries -%]
+  [%- ndx = loop.count % 2 -%]
+    <tr class="[%- class.$ndx -%]" onclick="location.href='/cgi-bin/fpa/update_[%- IF entry.acrtype=='S' -%]invoice[%- ELSE -%]purchase[%- END -%].pl?[%- entry.inv_id -%]';">
+      <td>[%- entry.vatdate -%]</td>
+      <td>[%- entry.invcusname -%] ([%- IF entry.acrtype == 'S' -%]Sales[%- ELSE -%]Purchase[%- END -%] Invoice - [%- entry.invinvoiceno -%])</td>
+      <td style="text-align:right;width:15%;">[%- entry.acrtotal | remove('-') -%]</td>
+  [% IF entry.acrtype == 'S' -%]
+      <td style="text-align:right;width:15%;">[%- vat_input = vat_input + entry.acramt; entry.acramt -%]</td>
+      <td>&nbsp;</td>
+  [% ELSE -%]
+      <td>&nbsp;</td>
+      <td style="text-align:right;width:15%;">[%- vat_output = vat_output - entry.acramt; entry.acramt | remove('-') -%]</td>
+  [% END -%]
+    </tr>
+[% END -%]
+[% ndx = (ndx + 1) % 2 -%]
+    <tr class="[%- class.$ndx -%]"><!--  onclick="location.href='/cgi-bin/fpa/add_address.pl?[%- entry.id -%]';" //-->
+      <td style="font-weight:bold;">Total</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td style="text-align:right;font-weight:bold;">[%- vat_input | format('%1.2f') -%]</td>
+      <td style="text-align:right;font-weight:bold;">[%- vat_output | format('%1.2f') -%]</td>
+    </tr>
+  </table>
+</div>
+<div id="sidebar">
+  <ul> 
+    <li>
+      <div>
+        <a href="javascript:history.back();">
+         Previous Screen
+        </a>
+      </div>
+    </li>
+  </ul>
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+  </div>
+</div>

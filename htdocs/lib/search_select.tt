@@ -1,0 +1,22 @@
+<table width="660" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><h3>Number of Entries Found = [%- numrows -%]</h3></td>
+    <td style="text-align:right;"><h3>(Page [%- offset div rows + 1 -%] of [%- numrows mod rows > 0 ? numrows div rows + 1: numrows div rows -%])</h3></td>
+  </tr>
+[% IF numrows > rows -%]
+  <tr>
+    <td><h3>Total Value = &pound;[%- sumtotal -%]</td>
+    <td style="text-align:right;">
+      <a href="#" onclick="redisplay('first');"><img src="/icons/first.png"/></a>
+      <a href="#" onclick="redisplay('back');"><img src="/icons/back.png"/></a>
+      <span style="vertical-align:middle;padding:0 5px 10px 5px;"> Go To <input type="text" name="goto" id="goto" value="" size="3" onchange="redisplay(this.value);"/></span> 
+      <a href="#" onclick="redisplay('next');"><img src="/icons/next.png"/></a>
+      <a href="#" onclick="redisplay('last');"><img src="/icons/last.png"/></a>
+    </td>
+  </tr>
+[% ELSE -%]
+  <tr>
+    <td colspan="2"><h3>Total Value = &pound;[%- sumtotal -%]</td>
+  </tr>
+[% END -%]
+</table>

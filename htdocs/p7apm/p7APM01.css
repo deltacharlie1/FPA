@@ -1,0 +1,81 @@
+/* 
+  -----------------------------------
+  Accordion Panel Magic
+  by Project Seven Development
+  www.projectseven.com
+  Style Theme: 01 - Basic
+  -----------------------------------
+*/
+
+.p7APM01 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	padding: 2px 4px;
+	border: 1px solid #000;
+	margin: 0 auto;
+	width: auto;
+}
+.p7APM01 .p7APMtrig {
+	margin: 0;
+	padding: 2px 0;
+}
+.p7APM01 .p7APMtrig h3, .p7APM01 .p7APMtrig h4 {
+	margin: 0 !important;
+	padding: 0 !important;
+	letter-spacing: normal !important;
+	font-size: 15px;
+}
+.p7APM01 .p7APMtrig a {
+	display: block;
+	text-decoration: none;
+	padding: 4px 8px 4px 20px;
+	background-color: #FFF !important;
+	color: #000 !important;
+	background-image: url(img/p7apmPlus_black.gif);
+	background-repeat: no-repeat;
+	background-position: left center;
+	border: 1px solid #000;
+	font-weight: normal;
+}
+.p7APM01 .p7APMtrig .p7APM_ext, .p7APM01 .p7APMtrig .p7APM_ext.p7APMtrig_down {
+	background-image: url(img/p7apm_page_black.gif) !important;
+	background-color: #FFF !important;
+	letter-spacing: normal !important;
+	color: #000 !important;
+}
+.p7APM01 .p7APMtrig a:hover {
+	color: #FFF !important;
+	background-color: #0070DF !important;
+	background-image: url(img/p7apmPlus_white.gif);
+}
+.p7APM01 .p7APMtrig a:active, .p7APM01 .p7APMtrig a:focus {
+	outline: 1px dotted #ccc;
+}
+.p7APM01 .p7APMtrig .p7APMtrig_down, .p7APM01 .p7APMtrig .p7APMtrig_down:hover {
+	background-image: url(img/p7apmMinus_white.gif) !important;
+	background-repeat: no-repeat;
+	background-position: left center;
+	background-color: #0070DF !important;
+	color: #FFF !important;
+}
+.p7APM01 .p7APMtrig .p7APMtrig_down:hover {}
+.p7APM01 .p7APMcwrapper {
+	position: relative;
+}
+.p7APM01 .p7APMpanelcontent {
+	padding: 20px;
+	line-height: 1.5em;
+}
+.p7APM01 .p7APMcontent h2, .p7APM01 .p7APMcontent h3, 
+.p7APM01 .p7APMcontent h4 {
+	font-size: 14px;
+	margin: 0px;
+	line-height: normal;
+	letter-spacing: 0.1em;
+}
+.p7APM01 .p7APMcontent p {
+	margin: 6px 0;
+}
+.p7APM01 .current_mark {
+	font-weight: bold !important;
+}

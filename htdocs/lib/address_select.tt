@@ -1,0 +1,49 @@
+<table width="660" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><h3>Number of Entries Found = [%- numrows -%]</h3></td>
+    <td style="text-align:right;"><h3>(Page [%- offset div rows + 1 -%] of [%- numrows mod rows > 0 ? numrows div rows + 1: numrows div rows -%])</h3></td>
+  </tr>
+  <tr>
+    <td nowrap="nowrap"><h3>
+      <a href="#" onclick="redisplay('all');">All</a>
+      <a href="#" onclick="redisplay('9');">0-9</a>
+      <a href="#" onclick="redisplay('A');">A</a>
+      <a href="#" onclick="redisplay('B');">B</a>
+      <a href="#" onclick="redisplay('C');">C</a>
+      <a href="#" onclick="redisplay('D');">D</a>
+      <a href="#" onclick="redisplay('E');">E</a>
+      <a href="#" onclick="redisplay('F');">F</a>
+      <a href="#" onclick="redisplay('G');">G</a>
+      <a href="#" onclick="redisplay('H');">H</a>
+      <a href="#" onclick="redisplay('I');">I</a>
+      <a href="#" onclick="redisplay('J');">J</a>
+      <a href="#" onclick="redisplay('K');">K</a>
+      <a href="#" onclick="redisplay('L');">L</a>
+      <a href="#" onclick="redisplay('M');">M</a>
+      <a href="#" onclick="redisplay('N');">N</a>
+      <a href="#" onclick="redisplay('O');">O</a>
+      <a href="#" onclick="redisplay('P');">P</a>
+      <a href="#" onclick="redisplay('Q');">Q</a>
+      <a href="#" onclick="redisplay('R');">R</a>
+      <a href="#" onclick="redisplay('S');">S</a>
+      <a href="#" onclick="redisplay('T');">T</a>
+      <a href="#" onclick="redisplay('U');">U</a>
+      <a href="#" onclick="redisplay('V');">V</a>
+      <a href="#" onclick="redisplay('W');">W</a>
+      <a href="#" onclick="redisplay('X');">X</a>
+      <a href="#" onclick="redisplay('Y');">Y</a>
+      <a href="#" onclick="redisplay('Z');">Z</a></h3>
+    </td>
+[%- IF numrows > rows -%]
+    <td style="text-align:right;">
+      <a href="#" onclick="redisplay('first');"><img src="/icons/first.png"/></a>
+      <a href="#" onclick="redisplay('back');"><img src="/icons/back.png"/></a>
+      <span style="vertical-align:middle;padding:0 5px 10px 5px;"> Go To <input type="text" name="goto" id="goto" value="" size="3"/></span> 
+      <a href="#" onclick="redisplay('next');"><img src="/icons/next.png"/></a>
+      <a href="#" onclick="redisplay('last');"><img src="/icons/last.png"/></a>
+    </td>
+[%- ELSE -%]
+    <td style="text-align:right;"><input type="hidden" name="goto" id="goto" value=""/>&nbsp;</td>
+[%- END -%]
+  </tr>
+</table>

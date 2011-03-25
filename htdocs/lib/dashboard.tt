@@ -1,0 +1,87 @@
+<div style="position: absolute; width:660px;">
+<table border="0" cellpadding="6" cellspacing="6" width="100%">
+  <tr>
+    <td style="vertical-align:top;">
+  <div class="testimonials" style="width:340px;height:174px;"><b></b><i></i><em></em>
+      <h2>Reminders</h2>
+[% IF reminders.size > 0 -%]
+    <div style="overflow:auto; width:100%;height:162px;padding-top:0px;">
+      <table border="0" cellpadding="0" cellspacing="0" width="100%" class="listing">
+[% class = [ "even","odd" ] -%]
+[% FOREACH reminder IN reminders -%]
+  [%- ndx = loop.count % 2 -%]
+        <tr class="[%- class.$ndx -%]"[%- IF reminder.remgrade == 'H' -%] style="background-color:#f9dfc3;"[%- END -%] -%]>
+          <td>[%- reminder.remtext; IF reminder.remcode == 'GEN' -%]<div style="float:right;"><a href="#" onclick="delete_reminder('[%- reminder.id -%]');"><img src="/icons/delete.png" width="12" height="12"></a></div>[%- END -%]</td>
+        </tr>
+[% END -%]
+      </table>
+    </div>
+[% END -%]
+  </div>
+    </td>
+    <td rowspan="2" style="vertical-align:top;">
+      <div class="testimonials" style="width:260px;"><b></b><i></i><em></em>
+        <h2>Key Balances</h2>
+        <table width="100%" border="0" cellpadding="0" cellspacing="0" class="formtable">
+          <tr class="hilite" onclick="location.href='/cgi-bin/fpa/coa_drill_down.pl?filter=1200';">
+            <td><label>Current Account Balance</label></td>
+            <td>[%- coa.1200.coabalance -%]</td>
+          </tr>
+          <tr class="hilite" onclick="location.href='/cgi-bin/fpa/coa_drill_down.pl?filter=1300';">
+            <td><label>Cash on Hand</label></td>
+            <td>[%- coa.1300.coabalance -%]</td>
+          </tr>
+          <tr class="hilite" onclick="location.href='/cgi-bin/fpa/coa_drill_down.pl?filter=1310';">
+            <td><label>Undeposited Cheques</label></td>
+            <td>[%- coa.1310.coabalance -%] ([%- company.comnocheques -%])</td>
+          </tr>
+          <tr class="hilite" onclick="location.href='/cgi-bin/fpa/coa_drill_down.pl?filter=1100';">
+            <td><label>Total Debtors</label></td>
+            <td>[%- coa.1100.coabalance -%]</td>
+          </tr>
+          <tr class="hilite" onclick="location.href='/cgi-bin/fpa/coa_drill_down.pl?filter=2000';">
+            <td><label>Total Creditors</label></td>
+            <td>[%- coa.2000.coabalance | format('%1.2f') -%]</td>
+          </tr>
+          <tr class="hilite" onclick="location.href='/cgi-bin/fpa/hmrc_drill_down.pl?vattotal=[%- company.comvatcontrol -%]&boxno=box5&vrid=0';">
+            <td><label>VAT due this quarter</label></td>
+            <td>[%- company.comvatcontrol -%]</td>
+          </tr>
+        </table><br/>
+          <h2>Overdue Invoices</h2>
+        <div style="overflow:auto; width:100%;height:150px;padding-top:0px;">
+          <table border="0" cellpadding="0" cellspacing="0" width="100%" class="listing">
+            <tr>
+              <th>Inv No</th>
+              <th>Customer</th>
+              <th>Amount</th>
+            </tr>
+[% class = [ "even","odd" ] -%]
+[% FOREACH invoice IN invoices -%]
+  [%- ndx = loop.count % 2 -%]
+            <tr class="[%- class.$ndx -%]">
+              <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invinvoiceno -%]</td>
+              <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invcusname | truncate(20) -%]</td>
+              <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invamount -%]</td>
+            </tr>
+[% END -%]
+          </table>
+        </div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td style="vertical-align:top;">
+  <div class="testimonials" style="width:340px;height:165px;"><b></b><i></i><em></em>
+    <h2>Stats</h2>
+  </div>
+    </td>
+  </tr>
+</table>
+</div>
+<div id="sidebar">
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+  </div>
+</div>
+

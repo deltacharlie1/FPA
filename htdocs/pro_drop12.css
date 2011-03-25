@@ -1,0 +1,102 @@
+#background {width:750px; height:440px; background:url(model3.jpg); padding-top:10px;}
+/* ================================================================ 
+This copyright notice must be kept untouched in the stylesheet at 
+all times.
+
+The original version of this stylesheet and the associated (x)html
+is available at http://www.cssplay.co.uk/menu/pro_drop12.html
+Copyright (c) 2005-2007 Stu Nicholls. All rights reserved.
+This stylesheet and the associated (x)html may be modified in any 
+way to fit your requirements.
+=================================================================== */
+#menu2 {padding:0; width:750px; margin:0; list-style:none; height:28px; position:relative; z-index:500; font-family:arial, verdana, sans-serif; background:#000; border-bottom:1px solid #edb;}
+#menu2 li.top {display:block; float:left;}
+
+#menu2 li a.top_link {display:block; height:25px; float:left; line-height:22px; font-size:11px; font-weight:bold; padding:0 20px 0 10px; color:#edb; text-decoration:none; border-top:3px solid #000;}
+
+#menu2 li a.top_link:hover {color:#d85; border-color:#a52;}
+
+#menu2 li:hover > a.top_link {color:#d85; border-color:#a52;}
+
+#menu2 table {border-collapse:collapse; width:0; height:0; position:absolute; top:0; left:0;}
+
+/* Default link styling */
+
+/* Style the list OR link hover. Depends on which browser is used */
+
+#menu2 a:hover {visibility:visible; position:relative; z-index:200;}
+#menu2 li:hover {position:relative; z-index:200;}
+
+/* keep the 'next' level invisible by placing it off screen. */
+#menu2 ul, 
+#menu2 :hover ul ul, 
+#menu2 :hover ul :hover ul ul,
+#menu2 :hover ul :hover ul :hover ul ul,
+#menu2 :hover ul :hover ul :hover ul :hover ul ul {position:absolute; left:-9999px; top:-9999px; height:0; margin:0; padding:0; list-style:none;}
+
+#menu2 :hover ul.sub {left:0; top:25px; white-space:nowrap; width:120px; height:auto; z-index:300; padding-top:5px; background:url(trans.gif);}
+#menu2 :hover ul.sub li {display:block; float:left; width:100%; height:25px;}
+#menu2 :hover ul.sub li span {display:block; height:25px; float:left; width:90px; font-weight:normal;}
+#menu2 :hover ul.sub li b {display:block; height:25px; float:left; width:30px; font-weight:normal;}
+
+#menu2 :hover ul.sub li a {display:block; position:relative; font-size:11px; height:25px; width:120px; margin-right:-30px; line-height:25px; text-indent:10px; color:#edb; text-decoration:none; background:url(trans.gif);}
+
+#menu2 :hover ul.sub li span a:hover {color:#f97;}
+
+#menu2 :hover ul.sub li:hover > span a {color:#f97;}
+
+#menu2 :hover ul :hover ul,
+#menu2 :hover ul :hover ul :hover ul,
+#menu2 :hover ul :hover ul :hover ul :hover ul,
+#menu2 :hover ul :hover ul :hover ul :hover ul :hover ul
+{left:120px; top:0; white-space:nowrap; width:120px; z-index:400; height:auto;}
+
+#menu2 :hover ul.wide {width:150px;}
+#menu2 :hover ul.wide li span {width:120px;}
+#menu2 :hover ul.wide li a {width:150px;}
+
+#menu2 :hover ul.narrow {width:90px;}
+#menu2 :hover ul.narrow li span {width:60px;}
+#menu2 :hover ul.narrow li a {width:90px;}
+
+#menu2 :hover ul.narrow :hover ul,
+#menu2 :hover ul :hover ul.narrow :hover ul,
+#menu2 :hover ul :hover ul :hover ul.narrow :hover ul,
+#menu2 :hover ul :hover ul :hover ul :hover ul.narrow :hover ul
+{left:90px;}
+
+#menu2 li > span {
+background: url(tab-midleft.png);
+}
+#menu2 li > b {
+background: url(tab-midright.png)
+}
+#menu2 li.fly > b {
+background: url(tab-midright-sub.png)
+}
+
+#menu2 li.subtop > span,
+#menu2 li.flytop > span { 
+background:url(tab-topleft.png);
+}
+#menu2 li.subtop > b {
+background:url(tab-topright.png);
+}
+
+#menu2 li.flytop > b {
+background:url(tab-topright-sub.png);
+}
+
+#menu2 li.subbot > span,
+#menu2 li.flybot > span {
+height:35px !important; background:url(tab-botleft.png);
+}
+
+#menu2 li.subbot > b {
+height:35px !important; background:url(tab-botright.png);
+}
+#menu2 li.flybot > b {
+height:35px !important; background:url(tab-botright-sub.png);
+}
+
+

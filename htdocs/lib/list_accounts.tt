@@ -1,0 +1,34 @@
+<div class="main">
+<h1>[%- pagetitle -%]</h1>
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="listing">
+    <tr>
+      <th>Account</th>
+      <th>Bank</th>
+      <th>Sort Code</th>
+      <th>Account #</th>
+      <th>Last Stmt #</th>
+      <th>Closing Bal</th>
+      <th>Current Bal</th>
+      <th>Reconcile</th>
+    </tr>
+[% class = [ "even","odd" ] -%]
+[% FOREACH entry IN entries -%]
+  [%- ndx = loop.count % 2 -%]
+    <tr class="[%- class.$ndx -%]" onclick="location.href='/cgi-bin/fpa/list_txns.pl?filter=[%- entry.acctype -%]';">
+      <td>[%- entry.coadesc -%]</td>
+      <td>[%- entry.accname -%]</td>
+      <td>[%- entry.accsort -%]</td>
+      <td>[%- entry.accacctno -%]</td>
+      <td>[%- entry.stastmtno -%]</td>
+      <td>[%- entry.staclosebal -%]</td>
+      <td>[%- entry.coabalance -%]</td>
+      <td style="text-align:center;"><a href='/cgi-bin/fpa/reconcile.pl?[%- entry.acctype -%]'><img src='/icons/calculator.png' alt='Reconcile Account'/></a></td>
+    </tr>
+[% END -%]
+  </table>
+</div>
+<div id="sidebar">
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+  </div>
+</div>

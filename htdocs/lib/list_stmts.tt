@@ -1,0 +1,31 @@
+<div class="main">
+<h1>List of Statements</h1>
+[% INCLUDE page_select.tt -%]
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="listing">
+    <tr>
+      <th>Date</th>
+      <th>Account</th>
+      <th>Statement #</th>
+      <th>Opening Balance</th>
+      <th>Closing Balance</th>
+      <th># Transactions</th>
+    </tr>
+[% class = [ "even","odd" ] -%]
+[%- FOREACH entry IN entries -%]
+  [%- ndx = loop.count % 2 -%]
+    <tr class="[%- class.$ndx -%]" onclick="location.href='/cgi-bin/fpa/list_stmt_txns.pl?filter=[%- entry.stmtid -%]';">
+      <td>[%- entry.tdate -%]</td>
+      <td>[%- entry.accname -%][%- IF entry.accacctno -%] ([%- entry.accacctno -%])[%- END -%]</td>
+      <td>[%- entry.stastmtno -%]</td>
+      <td style="text-align:right;">[%- entry.staopenbal -%]</td>
+      <td style="text-align:right;">[%- entry.staclosebal -%]</td>
+      <td style="text-align:right;">[%- entry.stanotxns -%]</td>
+    </tr>
+[%- END -%]
+  </table>
+</div>
+<div id="sidebar">
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+  </div>
+</div>

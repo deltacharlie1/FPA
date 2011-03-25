@@ -1,0 +1,48 @@
+<div id="outer">
+  <img style="position: relative; display:block;" src="/images/fpa_logo.jpg"/>
+  <div style="position: absolute; display: inline; top:124px; left:860px;width:148px;">
+    <div id="login_button"><a href="/cgi-bin/fpa/login.pl"></a></div>
+    <div id="reg_button"><a href="/register.html"></a></div>
+  </div>
+  <div>
+    <ul id="menu2">
+      <li class="top"><a href="/index.html" class="top_link"><b>Home</b></a></li>
+      <li class="top"><a href="#nogo1" class="top_link"><b>Features</b></a></li>
+      <li class="top"><a href="#nogo2" class="top_link"><b>Tutorials</b></a>
+      <ul class="sub">
+        <li class="subtop"><a href="#nogo19">Starting Out</a></li>
+        <li><a href="/tutorials/Registration/Registration.html">Registration</a></li>
+        <li><a href="/tutorials/Company_Details/Company_Details.html">Initial Setup</a></li>
+        <li><a href="/tutorials/New_Customer/New_Customer.html">Add a New Customer</a></li>
+        <li class="fly"><span><a href="#nogo21">Raise an Invoice</a></span>
+          <ul>
+            <li class="subtop"><a href="/tutorials/New_Invoice/New_Invoice.html">Existing Customer</a></li>
+            <li class="subbot"><a href="#nogo">One-Off Customer</a></li>
+          </ul>
+        </li>
+        <li><a href="/tutorials/Payment/Payment.html">Record a Payment</a></li>
+        <li class="fly"><span><a href="#nogo19">Record a Purchase</a></span>
+          <ul>
+            <li class="subtop"><a href="/tutorials/purchase1/purchase1.html">One-Off Purchase</a></li>
+            <li class="subbot"><a href="/tutorials/Purchase2/Purchase2.html">Purchase Invoice</a></li>
+          </ul>
+        </li>
+        <li class="fly"><span><a href="#nogo21">Expenses</a></span>
+          <ul>
+            <li class="subtop"><a href="#nogo">Recording Expenses</a></li>
+            <li class="subbot"><a href="#nogo">Paying Expenses</a></li>
+          </ul>
+        </li>
+        <li><a href="#nogo21">Reconcle Accounts</a></li>
+        <li><a href="#nogo19">VAT</a></li>
+        <li><a href="#nogo20">Reports</a></li>
+        <li class="subbot"><a href="#nogo21">Settings</a></li>
+      </ul>
+    </li>
+    <li class="top"><a href="#nogo22" class="top_link"><b>FAQs</b></a></li>
+    <li class="top"><a href="#nogo27" class="top_link"><b>Forum</b></a></li>
+    <li class="top"><a href="#nogo57" class="top_link"><b>About Us</b></a></li>
+    <li class="top"><a href="#nogo57" class="top_link"><b>Contact Us</b></a></li>
+    <li class="top"><a href="/privacypolicy.html" class="top_link"><b>Privacy Policy</b></a></li>
+  </ul>
+</div>  <!--  End of Outer -->

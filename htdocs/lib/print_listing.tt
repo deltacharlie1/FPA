@@ -1,0 +1,20 @@
+<div class="main">
+    <pre id="print_listing" style="overflow:auto; width:600px;height:600px;padding-top:10px;background-color:#ffffff;color:#000000;font-weight:normal;">
+[% data -%]
+    </pre>
+</div>
+<div id="sidebar">
+  <ul>
+    <li>
+      <div>
+        <a href="javascript:history.back();">
+         Previous Screen
+        </a>
+      </div>
+    </li>
+  </ul>
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+  </div>
+</div>
+

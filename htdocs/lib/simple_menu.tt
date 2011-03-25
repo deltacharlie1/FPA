@@ -1,0 +1,119 @@
+  <ul id="nav">
+    <li class="top">
+      <a href="#nogo57" id="company" class="top_link">
+        <span title="Company Related"  class="down">
+          <img src="/icons/company.png"/><br/>
+          <span>Company</span>
+        </span>
+      </a>
+      <ul class="sub">
+        <li><a href="/cgi-bin/fpa/company_details.pl">Company Details</a></li>
+        <li><a href="/cgi-bin/fpa/reregister.pl">Registration Details</a></li>
+      </ul>
+    </li>
+    <li class="top">
+      <a href="#" onclick="display_form('I');" id="customers" class="top_link">
+        <span title="Customers,Sales etc" class="down">
+          <img src="/icons/customers.png"/><br/>
+          <span>Money In</span>
+        </span>
+      </a>
+      <ul class="sub">
+        <li><a href="#" onclick="display_form('I');">Receive Money In</a></li>
+        <li><a href="/cgi-bin/fpa/list_customers.pl">List Customers</a></li>
+        <li><a href="/cgi-bin/fpa/add_address.pl?C">Add New Customer</a></li>
+      </ul>
+    </li>
+    <li class="top">
+      <a href="#" onclick="display_form('P');" id="suppliers" class="top_link">
+        <span title="Suppliers,Purchases etc" class="down">
+          <img src="/icons/suppliers.png"/><br/>
+          <span>Money Out</span>
+        </span>
+      </a>
+      <ul class="sub">
+        <li><a href="#" onclick="display_form('P');">Pay Money Out</a></li>
+        <li><a href="/cgi-bin/fpa/list_suppliers.pl">List Suppliers</a></li>
+        <li><a href="/cgi-bin/fpa/add_address.pl?S">Add New Supplier</a></li>
+      </ul>
+    </li>
+    <li class="top">
+      <a href="/cgi-bin/fpa/list_txns.pl" id="accounts" class="top_link">
+        <span title="Accounts Details" class="down">
+          <img src="/icons/accounts.png"/><br/>
+          <span>Accounts</span>
+        </span>
+      </a>
+      <ul class="sub">
+        <li><a href="/cgi-bin/fpa/list_txns.pl">List Transactions</a></li>
+        <li><a href="/cgi-bin/fpa/list_accounts.pl">List Accounts</a></li>
+        <li><a href="/cgi-bin/fpa/list_stmts.pl">List Statements</a></li>
+        <li><a href="/cgi-bin/fpa/cashtobank.pl">Put Money In</a></li>
+        <li><a href="/cgi-bin/fpa/transfer.pl?O">Get money Out</a></li>
+        <li><a href="/cgi-bin/fpa/transfer.pl?T">Transfer Money</a></li>
+      </ul>
+    </li>
+[% UNLESS cookie.VAT == "N" -%]
+    <li class="top">
+      <a href="#nogo57" id="vat" class="top_link">
+        <span title="VAT Form 100,payments,refunds" class="down">
+          <img src="/icons/vat.png"/><br/>
+          <span>VAT</span>
+        </span>
+      </a>
+      <ul class="sub">
+        <li><a href="/cgi-bin/fpa/list_vatreturns.pl">List VAT Returns</a></li>
+        <li><a href="/cgi-bin/fpa/list_vats.pl?filter=2100">List VAT Outputs</a></li>
+        <li><a href="/cgi-bin/fpa/list_vats.pl?filter=1400">List VAT Inputs</a></li>
+        <li><a href="/cgi-bin/fpa/vatreturn.pl">VAT Form 100</a></li>
+      </ul>
+    </li>
+[% END -%]
+    <li class="top">
+      <a href="#nogo57" id="reports" class="top_link">
+        <span title="Reports" class="down">
+          <img src="/icons/reports.png"/><br/>
+          <span>Reports</span>
+        </span>
+      </a>
+      <ul class="sub">
+        <li><a href="/cgi-bin/fpa/dashboard.pl">Front Page</a></li>
+        <li><a href="#">Trail Balance</a></li>
+        <li><a href="#">Profit &amp; Loss</a></li>
+        <li><a href="#">Aged Debtors</a></li>
+        <li><a href="#">Aged Creditors</a></li>
+        <li><a href="/cgi-bin/fpa/list_coas.pl">Chart of Accounts</a></li>
+      </ul>
+    </li>
+    <li class="top">
+      <a href="#" onclick="view_reminders();" id="reminders" class="top_link">
+        <span title="System and personal reminders" class="down">
+          <img src="/icons/reminders.png"/><br/>
+          <span>Reminders</span>
+        </span>
+      </a>
+      <ul class="sub">
+        <li><a href="#" onclick="view_reminders();">View Reminders</a></li>
+        <li><a href="#" onclick="$('#vreminder').dialog('open');">Add Reminder</a></li>
+      </ul>
+    </li>
+    <li class="top">
+      <a href="#nogo57" id="admin" class="top_link">
+        <span title="Admin,Preferences and Settings"  class="down">
+          <img src="/icons/admin.png"/><br/>
+          <span>Admin</span>
+        </span>
+      </a>
+      <ul class="sub">
+        <li><a href="/cgi-bin/fpa/list_audit_trails.pl">Audit Trail</a></li>
+      </ul>
+    </li>
+    <li class="top">
+      <a href="/manual.html" id="help" class="top_link">
+        <span title="Help" class="down">
+          <img src="/icons/help.png"/><br/>
+          <span>Help</span>
+        </span>
+      </a>
+    </li>
+  </ul>

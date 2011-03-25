@@ -1,0 +1,224 @@
+[%- USE date; curdate = date.now div 86400 + 719528; today = date(format = '%d-%b-%y') -%]
+<div class="main">
+<div id="invpayment" title="Receive Payment" style="display:none;">
+  <form id="pay2form" name="pay2form">
+    <input type="hidden" name="i_cus_id" id="i_cus_id" value="[%- invoice.cus_id -%]"/>
+    <input type="hidden" name="i_id" id="i_id" value=""/>
+    <input type="hidden" name="i_invcusname" id="i_invcusname" value="[%- invoice.invcusname -%]"/>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="formtable">
+      <tr>
+        <td><label>Invoice No</label></td>
+        <td style="font-weight:bold;color:#800000;"><span id="amtinvno"></span></td>
+      </tr>
+      <tr>
+        <td><label>Amount Outstanding</label></td>
+        <td><span id="amtowed"></span></td>
+      </tr>
+      <tr>
+        <td><label>Amount Being Paid</label></td>
+        <td><span><input type="text" name="i_txnamount" id="i_txnamount" value="" size="10" title="Amount Being Paid" class="mandatory currency"/></span></td>
+      </tr>
+      <tr>
+        <td><label>Payment Method</label></td>
+        <td>
+          <select name="i_txnmethod" id="i_txnmethod">
+            <option value="1300" [%- IF invoice.cusdefpaymethod == "1300" -%]selected="selected"[%- END -%]>Cash</option>
+            <option value="1310" [%- IF invoice.cusdefpaymethod == "1310" -%]selected="selected"[%- END -%]>Cheque</option>
+            <option value="1200" [%- IF invoice.cusdefpaymethod == "1200" -%]selected="selected"[%- END -%]>Bank Transfer</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td><label>Date</label></td>
+        <td><input type="text" name="invprintdate" id="i_invprintdate" value="[%- date.format(date.now, '%d-%b-%y') -%]" size="10" readonly="readonly"/></td>
+      </tr>
+      <tr>
+        <td colspan="2">Remarks<br/><textarea name="i_invdesc" id="i_invdesc" cols="30" rows="1"></textarea></td>
+      </tr>
+    </table>
+  </form>
+</div>
+[% region = { 'UK' => 'UK','EU' => 'Other EU', 'NEU' => 'Non-EU' }; overdue = '' -%]
+<div class="status" style="float:left;">[%- invoice.invstatus; IF invoice.invtype == "C" -%] Credit Note[%- ELSE -%] Invoice[%- END -%]</div>[%- IF invoice.duedays AND invoice.duedays < curdate AND invoice.invstatuscode > 2; overdue='Y' -%]<div style="color:#800000;font-weight:bold;float:right;border:1px solid red;margin-right:30px;padding:9px 20px;font-size:24px;">OVERDUE</div>[%- END -%]
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="formtable">
+    <tr>
+      <td><label>Company Name</label></td>
+      <td>[%- invoice.invcusname -%]</td>
+      <td><label>Invoice Type</label></td>
+      <td>[%- IF invoice.invtype == "C" -%]Credit Note[%- ELSE -%]Sales Invoice[%- END -%]</td>
+    </tr>
+    <tr>
+      <td style="vertical-align:top;" rowspan="3"><label>Address</label></td>
+      <td rowspan="3" style="vertical-align:top;">[%- invoice.invcusaddr | replace('\n','<br/>') -%]</td>
+      <td style="vertical-align:top;"><label><span id="invtext">Invoice</span> Number</label></td>
+      <td style="vertical-align:top;color:#800000;font-weight:bold;">[%- invoice.invinvoiceno -%]</td>
+    </tr>
+    <tr>
+      <td style="vertical-align:top;"><label>Invoice Printed</label></td>
+      <td style="vertical-align:top;">[%- invoice.invprintdate -%]</td>
+    </tr>
+    <tr>
+      <td style="vertical-align:top;"><label>Payment Due</label></td>
+      <td style="vertical-align:top;">[%- invoice.invduedate -%]</td>
+    </tr>
+    <tr>
+      <td><label>Post Code</label></td>
+      <td>[%- invoice.invcuspostcode -%]</td>
+      <td><label>Customer Reference</label></td>
+      <td>[%- invoice.invcusref -%]</td>
+    </tr>
+    <tr>
+      <td><label>Region</label></td>
+      <td>[%- region.item(invoice.invcusregion) -%]</td>
+      <td><label>Terms</label></td>
+      <td>[%- IF invoice.invcusterms AND invoice.invcusterms > 0; invoice.invcusterms -%] Days[%- ELSIF invoice.invcusterms AND invoice.invcusterms == "0" -%]Due Now[%- ELSE; invoice.invcusterms; END -%] </td>
+    </tr>
+    <tr>
+      <td><label>Contact Name</label></td>
+      <td>[%- invoice.invcuscontact -%]</td>
+      <td><label>Email</label></td>
+      <td>[%- invoice.invcusemail | truncate() -%]</td>
+    </tr>
+    <tr>
+      <td colspan="4">
+        <div style="width:630px;height:120px;overflow:auto;" id="div_html">
+          [%- invoice.invitems | replace('\x1E','<br/>') -%]
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2" rowspan="2" style="vertical-align:top;">Remarks<br/>[%- invoice.invremarks | replace('\n','<br/>')-%]</td>
+        <td style="text-align:right;"><strong>Sub Total : </strong></td>
+        <td id="st" style="text-align:right;padding-right:40px;">[%- IF invoice.invtype == 'C'; 0 - invoice.invtotal | format('%1.2f'); ELSE; invoice.invtotal; END -%]</td>
+    </tr>
+    <tr>
+      <td style="text-align:right;"><strong>VAT : </strong></td>
+      <td id="vt" style="text-align:right;padding-right:40px;">[%- IF invoice.invtype == 'C'; 0 -invoice.invvat | format('%1.2f'); ELSE; invoice.invvat; END -%]</td>
+    </tr>
+    <tr>
+      <td colspan="2" style="text-align:right;">&nbsp;</td>
+      <td style="text-align:right;"><strong><span id="i3">Invoice</span> Total : </strong></td>
+      <td id="tt" style="text-align:right;padding-right:40px;">[%- IF invoice.invtype == 'C'; 0 - invoice.tottotal | format('%1.2f'); ELSE; invoice.tottotal; END -%]</td>
+    </tr>
+<!--    <tr>
+      <td colspan="4" style="text-align:center;"><hr style="width:90%;"/></td>
+    </tr>  //-->
+    <tr>
+      <td style="text-align:right;"><strong>Date of last Payment : </strong></td>
+      <td>[%- invoice.invpaiddate -%]</td>
+      <td style="text-align:right;"><strong>Total Paid to Date : </strong></td>
+      <td style="text-align:right;padding-right:40px;">[%- invoice.totpaid -%]</td>
+    </tr>
+  </table>
+<p>&nbsp;</p>
+<h2>Payment History</h2>
+  <table width="400" border="0" cellpadding="0" cellspacing="0" class="listing">
+    <tr>
+      <th>Date</th>
+      <th>Method</th>
+[% IF cookie.VAT == "N" -%]
+      <th>Total</th>
+[% ELSE -%]
+      <th>Net</th>
+      <th>VAT</th>
+      <th>Total</th>
+      <th>Remarks</th>
+[% END -%]
+    </tr>
+[% class = [ "even","odd" ] -%]
+[%- FOREACH entry IN entries -%]
+  [%- ndx = loop.count % 2 -%]
+    <tr class="[%- class.$ndx -%]"> <!-- onclick="location.href='/cgi-bin/fpa/[%- entry.audtype -%]?[%- entry.link_id -%]';" //-->
+      <td>[%- entry.itdate -%]</td>
+      <td>[%- entry.coadesc -%]</td>
+  [% IF cookie.VAT == "N" -%]
+      <td>[%- entry.ittot -%]</td>
+  [% ELSE -%]
+      <td>[%- entry.itnet -%]</td>
+      <td>[%- entry.itvat -%]</td>
+      <td>[%- entry.ittot -%]</td>
+  [% END -%]
+      <td>[%- entry.txnremarks -%]</td>
+    </tr>
+[%- END -%]
+  </table>
+</div>
+<div id="sidebar">
+<ul>    
+[% IF invoice.invstatuscode >2 -%]
+    <li>    
+      <div>   
+        <a href="#" onclick="get_amt('[%- invoice.id -%]','[%- invoice.invinvoiceno -%]','[%- invoice.tottotal - invoice.totpaid -%]');">
+         Record Payment 
+        </a>
+      </div>  
+    </li>   
+[% END -%]
+    <li>    
+      <div>
+        <a href="/cgi-bin/fpa/print_invoice.pl?[%- invoice.id -%]">
+          Print Copy
+        </a>
+      </div>  
+    </li>   
+    <li>    
+      <div>   
+        <a href="/cgi-bin/fpa/copy_invoice.pl?[%- invoice.id -%]">
+          Copy to New
+        </a>
+      </div>  
+    </li>   
+[% IF invoice.firsttime == 'F' -%]
+    <li>
+      <div>
+        <a href="#" onclick="delete_invoice();">
+         Delete this  Invoice
+        </a>
+      </div>
+    </li>
+[% ELSIF invoice.invstatuscode > 2 AND invoice.invtype == 'S' -%]
+    <li>    
+      <div>   
+        <a href="#" onclick="cancel_invoice('[%- invoice.id -%]');">
+          Void Invoice
+        </a>
+      </div>  
+    </li>   
+[% END -%]
+[% IF overdue == 'Y' -%]
+    <li>    
+      <div>   
+        <a href="#" onclick="writeoff_invoice('[%- invoice.id -%]');">
+          Write-off Invoice
+        </a>
+      </div>  
+    </li>   
+[% END -%]
+    <li>    
+      <div>
+        <a href="/cgi-bin/fpa/list_customer_invoices.pl?[%- invoice.cus_id -%]">
+          List Invoices
+        </a>
+      </div>  
+    </li>   
+  </ul>   
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+  </div>
+</div>
+<div id="cancelreason" title="Void Invoice" style="display:none;">
+  <form id="fcancelreason" name="fcancelreason">
+    <input type="hidden" name="id" id="f_id" value="[%- invoice.id -%]"/>
+    <h3>Reason for Voiding</h3>
+    <textarea name="cancelmsg" id="cancelmsg" rows="2" cols="40" class="mandatory"></textarea>
+  </form
+</div>
+<div id="writeoffreason" title="Write-off Invoice" style="display:none;">
+  <form id="fwriteoffreason" name="fwriteoffreason">
+    <input type="hidden" name="id" id="w_id" value="[%- invoice.id -%]"/>
+    <h3>Reason for Write-off</h3>
+    <textarea name="cancelmsg" id="writeoffmsg" rows="2" cols="40" class="mandatory"></textarea>
+  </form
+</div>
+</div>
+
