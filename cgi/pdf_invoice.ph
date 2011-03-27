@@ -39,6 +39,7 @@ $Invoices->execute;
 @Invoice = $Invoices->fetchrow;
 $Invoices->finish;
 
+$Invtype = "";
 if ($Invoice[12] =~ /Draft/i) {
 	$Invtype = "DRAFT ";
 }
@@ -61,6 +62,17 @@ elsif ($Invoice[3] =~ /^\d+$/) {
 ###  Set Global PDF parameters  ###
 
 # my ($page, $text, $g, $endw, $Ypos, $tb, $Net, $Vat, $Total);
+
+$page = "";
+$text = "";
+$g = "";
+$endw = "";
+$Ypos = "";
+$tb = "";
+$Net = "";
+$Vat = "";
+$Total = "";
+$Invtext = "";
 
 $pdf = PDF::API2->new;
 $font = $pdf->corefont('Helvetica');

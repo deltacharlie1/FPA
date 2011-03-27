@@ -45,6 +45,16 @@ $Invoices->finish;
 
 # my ($page, $text, $g, $endw, $Ypos, $tb, $Net, $Vat, $Total);
 
+$page = "";
+$text = "";
+$g = "";
+$endw = "";
+$Ypos = "";
+$tb = "";
+$Net = "";
+$Vat = "";
+$Total = "";
+
 $pdf = PDF::API2->new;
 $font = $pdf->corefont('Helvetica');
 $font_bold = $pdf->corefont('Helvetica Bold');

@@ -72,6 +72,7 @@ else {
 		$Vatreturn->{dispend} = $Company[4];
 		$Vatreturn->{perstatus} = "Paid";
 	}
+		$Vatreturn->{perstatus} = "save";
 
 	$Vatreturns->finish;
 
