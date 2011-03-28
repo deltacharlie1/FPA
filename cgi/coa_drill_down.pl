@@ -32,7 +32,6 @@ unless ($FORM{tbstart}) {
 unless ($FORM{tbend}) {
 	$FORM{tbend} = "31-Dec-50";
 }
-warn "numrows = $FORM{numrows}\n";
 
 unless ($FORM{numrows}) {
 	$Nominals = $dbh->prepare("select count(*),sum(nomamount),coadesc,coatype from nominals left join coas on (nominals.nomcode=coas.coanominalcode and nominals.acct_id=coas.acct_id) where nominals.acct_id='$COOKIE->{ACCT}' and nomcode='$FORM{filter}' and nomdate>=str_to_date('$FORM{tbstart}','%d-%b-%y') and nomdate<=str_to_date('$FORM{tbend}','%d-%b-%y')");

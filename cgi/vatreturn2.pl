@@ -120,8 +120,6 @@ else {
 		$Status = "Completed";
 	}
 
-warn "Process VAT return\n";
-
 	if ($FORM{id} > 0) {		#  Existing record, so just update status
 
 		$Sts = $dbh->do("update vatreturns set perstatus='$Status',perstatusdate=curdate(),perfiled=curdate() where acct_id='$COOKIE->{ACCT}' and id=$FORM{id}");
