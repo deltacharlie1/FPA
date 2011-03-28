@@ -2,60 +2,81 @@
 
 $ACCESS_LEVEL = 1;
 
-#  script to list invoices
+#  script to assign unlisted invoices to a Customer/Supplier
 
 use Checkid;
 $COOKIE = &checkid($ENV{HTTP_COOKIE},$ACCESS_LEVEL);
 
-$Buffer = $ENV{QUERY_STRING};
-
-@pairs = split(/&/,$Buffer);
-
-# print "Content-Type: text/plain\n\n";
-
-foreach $pair (@pairs) {
-
-        ($Name, $Value) = split(/=/, $pair);
-
-        $Value =~ tr/+/ /;
-        $Value =~ s/%([a-fA-F0-9][a-fA-F0-9])/pack("C",hex($1))/eg;
-        $Value =~ tr/\\\'//d;
-        $FORM{$Name} = $Value;
-# print "$Name = $Value\n";
-}
-# exit;
-
+use CGI;
 use DBI;
-my $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
+$dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
 
-#  Construct the SQL filter
+$Data = new CGI;
+%FORM = $Data->Vars;
+$None_Checked = "1";
 
-$SQL = "";
+while (( $Key,$Value) = each %FORM) {
 
-if ($FORM{invcusname}) {
-	$SQL .= "invcusname like '$FORM{invcusname}%' and ";
+#  Remove any bad characters
+
+	$Value =~ s/\%2b/\+/ig;
+	$Value =~ tr/\\//d;
+	$Value =~ s/\'/\\\'/g;
+        $FORM{$Key} = $Value;
+	if ($Key =~ /^c_/) {
+		$None_Checked = "";
+		push(@Invoices,$Value);
+	}
 }
-$SQL .= "invoices.acct_id='$COOKIE->{ACCT}'";
 
-#  Now see if wwe are executing a new query (action = -1) or a continuation of an exisitng one
+#  Do some basic validation
 
-$Invoices = $dbh->prepare("select invoices.id as invid,cus_id,invtype,invinvoiceno,invcusname,date_format(invprintdate,'%d-%b-%y') as printdate,invdesc,invtotal+invvat as printtotal,invstatus from invoices left join customers on (cus_id=customers.id and invoices.acct_id=customers.acct_id) where customers.cusname='Unlisted' and $SQL");
-$Invoices->execute;
+$Errs = "";
 
-use Template;
-$tt = Template->new({
-        INCLUDE_PATH => ['.','/usr/local/httpd/htdocs/fpa/lib'],
-});
+unless ($FORM{cusname}) { $Errs .= "<li>You must enter an Assign-to Customer/Supplier</li>\n"; }
+if ($None_Checked) { $Errs .= "<li>You have not selected any invoices to assign</li>\n"; }
 
-$Vars = {
-	cookie => $COOKIE,
-	invoices => $Invoices->fetchall_arrayref({})
-};
+if ($Errs) {
+	print<<EOD;
+Content-Type: text/plain
 
-print "Content-Type: text/html\n\n";
-$tt->process('assign_invoices2.tt',$Vars);
+You have the following errors:-<ol>
+$Errs
+</ol>
+Please correct them and resubmit
+EOD
+}
+else {
 
-$Invoices->finish;
+#  For each invoice we get the outstanding amount and deduct (add) that from Unlisted cusbalance and 
+#      add (deduct) that from Customer cusbalance
+#  We then set the invoices cus_id to cusname (which, in fact, is the customer id)
+
+	foreach $Id (@Invoices) {
+
+		$Invoices = $dbh->prepare("select id,cus_id,invstatuscode,invtotal+invvat-invpaid-invpaidvat as outstanding from invoices where id=$Id and acct_id='$COOKIE->{ACCT}'");
+		$Invoices->execute;
+		$Invoice = $Invoices->fetchrow_hashref;
+
+		if ($Invoice->{invstatuscode} > 2 && $Invoice->{outstanding} != 0) {
+
+#  Adjust the cusbalance
+
+			$Sts = $dbh->do("update customers set cusbalance=cusbalance-'$Invoice->{outstanding}' where acct_id='$COOKIE->{ACCT}' and id=$Invoice->{cus_id}");
+			$Sts = $dbh->do("update customers set cusbalance=cusbalance+'$Invoice->{outstanding}' where acct_id='$COOKIE->{ACCT}' and id=$FORM{cusname}");
+		}
+
+#  Finally change the cus_id
+
+		$Sts = $dbh->do("update invoices set cus_id=$FORM{cusname} where acct_id='$COOKIE->{ACCT}' and id=$Invoice->{id}");
+	}
+	$Invoices->finish;
+
+        print<<EOD;
+Content-Type: text/plain
+
+OK
+EOD
+}
 $dbh->disconnect;
 exit;
-

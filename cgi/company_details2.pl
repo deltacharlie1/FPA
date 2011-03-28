@@ -65,6 +65,13 @@ else {
 
 	($Reg_id,$Com_id) = split(/\+/,$COOKIE->{ACCT});
 
+#  Get existing details
+
+	$Companies = $dbh->prepare("select comvatscheme from companies where reg_id=$Reg_id and id=$Coom_id");
+	$Companies->execute;
+	$Company = $Companies->fetchrow_hashref;
+	$Companies->finish;
+
 	if ($Img) {
 		$Image1 = new GD::Image($Img);
 		($width,$height) = $Image1->getBounds();
@@ -124,6 +131,14 @@ else {
 	else {
 		$Sts = $dbh->do("update companies set comname='$FORM{comname}',comregno='$FORM{comregno}',comaddress='$FORM{comaddress}',compostcode='$FORM{compostcode}',comtel='$FORM{comtel}',combusiness='$FORM{combusiness}',comcontact='$FORM{comcontact}',comemail='$FORM{comemail}',comyearend='$FORM{comyearend}',comnextsi='$FORM{comnextsi}',comnextpi='$FORM{comnextpi}',comvatscheme='$FORM{comvatscheme}',comvatno='$FORM{comvatno}',comvatduein='$FORM{comvatduein}',comvatmsgdue='$Date[1]',comcompleted='1',comemailmsg='$FORM{comemailmsg}',comstmtmsg='$FORM{comstmtmsg}' where reg_id=$Reg_id and id=$Com_id");
 	}
+
+#  Check to see if the comvatscheme has gone from Cash Accounting to Standard Accounting
+
+######	if ($Company->{comvatscheme} =~ /C/i && $FORM{comvatscheme} =~ /S/i) {
+
+#  Scoop up all unpaid VAT and put it into vataccruals
+
+######		$Invoices = $dbh->prepare("select
 
 #  Check to see if we have any Current Account data (ie a bank name)
 

@@ -300,11 +300,11 @@ button {
 #nav a:hover {position:relative; white-space:normal; z-index:200;}
 
 #nav :hover ul.sub
-{left:1px; top:62px; background: #E5EcDB; padding:5px; border:1px solid #151e10; white-space:nowrap; width:120px; height:auto; z-index:300;text-align:left;}
+{left:1px; top:62px; background: #E5EcDB; padding:5px; border:1px solid #151e10; white-space:nowrap; width:130px; height:auto; z-index:300;text-align:left;}
 #nav :hover ul.sub li
-{display:block; height:24px; position:relative; float:left; width:120px; font-weight:normal;}
+{display:block; height:24px; position:relative; float:left; width:130px; font-weight:normal;}
 #nav :hover ul.sub li a
-{display:block; font-size:11px; height:24px; width:120px; line-height:24px; text-indent:5px; color:#000; text-decoration:none;}
+{display:block; font-size:11px; height:24px; width:130px; line-height:24px; text-indent:5px; color:#000; text-decoration:none;}
 #nav li ul.sub li a.fly
 {background:#5F7F6B url(/icons/arrow.gif) 100px 6px no-repeat;}
 #nav :hover ul.sub li a:hover 

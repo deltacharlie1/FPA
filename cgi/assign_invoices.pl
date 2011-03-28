@@ -37,7 +37,7 @@ $(document).ready(function(){
     minLength: 1,
     delay: 50,
     source: function (request,response) {
-      request.type = "Customers";
+      request.type = document.getElementById("custype").value;
       $.ajax({
         url: "/cgi-bin/fpa/autosuggest.pl",
         dataType: "json",
@@ -55,12 +55,44 @@ $(document).ready(function(){
 });
 function get_results(action) {
   document.getElementById("action").value = action;
-  $.get("/cgi-bin/fpa/assign_invoices2.pl",$("form#form1").serialize() ,function(data) {
+  $.get("/cgi-bin/fpa/assign_invoices_results.pl",$("form#form1").serialize() ,function(data) {
     document.getElementById("results").innerHTML = data;
   });
 }
 function redisplay(action) {
   get_results("S");
+}
+function assign_invoices() {
+  Errs = "";
+  if (document.getElementById("cusname").value.length < 1) {
+    Errs = Errs + "<li>You have not selected an Assign-to Customer\/Supplier<\/li>\n";
+  }
+  None_Checked = true;
+  $(".cassign").each(function() {
+    if (this.checked) {
+      None_Checked = false;
+    }
+  });
+  if (None_Checked) {
+    Errs = Errs + "<li>You have not selected any Invoices to re-assign<\/li>\n";
+  }
+  if (Errs.length > 0) {
+    document.getElementById("dialog").innerHTML = "You have the following errors:-\n<ol>" + Errs + "<\/ol>\nPlease correct and resubmit";
+    $("#dialog").dialog("open");
+  }
+  else {
+    $.post("/cgi-bin/fpa/assign_invoices2.pl", $("#form1").serialize(),function(data) {
+      if ( ! /^OK/.test(data)) {
+        alert(data);
+      }
+      if (document.getElementById("custype").value == "Supplier") {
+        location.href = "/cgi-bin/fpa/list_supplier_purchases.pl?" + document.getElementById("cusname").value
+      }
+      else {
+        location.href = "/cgi-bin/fpa/list_customer_invoices.pl?" + document.getElementById("cusname").value
+      }
+    },"text");
+  }
 }
 </script>'
 };

@@ -7,7 +7,13 @@
     <tr>
       <td><label>Unlisted Company Name</label></td>
       <td><input name="invcusname" type="text" id="invcusname" size="20" value="" onchange="get_results('S');"/></td>
-      <td><label>Assign to Customer</label></td>
+    </tr>
+    <tr>
+      <td><label>Assign to 
+         <select name="custype" id="custype" size="1" style="padding:0 5px 0 5px;">
+           <option value="Customer" selected="selected">Customer</option>
+           <option value="Supplier">Supplier</option>
+         </select></label></td>
       <td><input name="cussrch" type="text" id="cussrch"/></td>
     </tr>
   </table><br/>
@@ -15,6 +21,13 @@
 </div>
 <div id="sidebar">
   <ul>
+    <li>
+      <div>
+        <a href="#" onclick="assign_invoices();">
+        Re-Assign Invoices 
+        </a>
+      </div>
+    </li>
     <li>
       <div>
        <input type="reset" name="reset" id="reset" value="Start Again"/>
