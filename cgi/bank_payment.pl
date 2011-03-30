@@ -70,19 +70,19 @@ if ($FORM{thisint}) {
         $FORM{txnno} = $Company[0];
         $Sts = $dbh->do("update companies set comnexttxn=comnexttxn+1 where reg_id=$Reg_id and id=$Com_id");
 
+#  create a dummy invoice (invoice # = unlisted)  -  Not sure that his is required
+
+	$Sts = $dbh->do("insert into invoices (acct_id,invinvoiceno,invdesc,invcusregion,invcoa,invtotal,invpaid,invprintdate,invstatuscode,invtype) values ('$COOKIE->{ACCT}','unlisted','Bank Interest','UK','4300','$FORM{thisint}','$FORM{thisint}',$Date,'2','B')");
+       $New_inv_id = $dbh->last_insert_id(undef, undef, qw(invoices undef));
+
 #  create a transaction record
 
 	$Sts = $dbh->do("insert into transactions (acct_id,txncusname,link_id,txnmethod,txnamount,txndate,txntxntype,txnremarks,txntxnno) values ('$COOKIE->{ACCT}','Bank Payment',$New_inv_id,'$FORM{txnmethod}','$FORM{thisint}',$Date,'income','Interest','$FORM{txnno}')");
         $New_txn_id = $dbh->last_insert_id(undef, undef, qw(transactions undef));
 
-#  create a dummy invoice (invoice # = unlisted)  -  Not sure that his is required
-
-#	$Sts = $dbh->do("insert into invoices (acct_id,invinvoiceno,invdesc,invcusregion,invcoa,invtotal,invpaid,invprintdate,invstatuscode,invtype) values ('$COOKIE->{ACCT}','unlisted','Bank Interest','UK','4300','$FORM{thisint}','$FORM{thisint}',$Date,'2','B')");
-#       $New_inv_id = $dbh->last_insert_id(undef, undef, qw(invoices undef));
-
 #  Create an inv_txn record
 
-#        $Sts = $dbh->do("insert into inv_txns (acct_id,txn_id,inv_id,itnet,itvat,itdate,itmethod,itinvoiceno,ittxnno) values ('$COOKIE->{ACCT}',$New_txn_id,$New_inv_id,'$FORM{thisint}','0',$Date,'$FORM{txnmethod}','unlisted','$FORM{txnno}')");
+        $Sts = $dbh->do("insert into inv_txns (acct_id,txn_id,inv_id,itnet,itvat,itdate,itmethod,itinvoiceno,ittxnno) values ('$COOKIE->{ACCT}',$New_txn_id,$New_inv_id,'$FORM{thisint}','0',$Date,'$FORM{txnmethod}','unlisted','$FORM{txnno}')");
 
 #  update nominal codes for bank/cash/cheque and customer unallocated balance
 
@@ -125,19 +125,19 @@ if ($FORM{thisch}) {
         $FORM{txnno} = $Company[0];
         $Sts = $dbh->do("update companies set comnexttxn=comnexttxn+1 where reg_id=$Reg_id and id=$Com_id");
 
+#  create a dummy invoice (invoice # = unlisted)
+
+	$Sts = $dbh->do("insert into invoices (acct_id,invinvoiceno,invdesc,invcusregion,invcoa,invtotal,invpaid,invprintdate,invstatuscode,invtype) values ('$COOKIE->{ACCT}','unlisted','Bank Charges','UK','6000','$FORM{thisch}','$FORM{thisch}',$Date,'2','B')");
+        $New_inv_id = $dbh->last_insert_id(undef, undef, qw(invoices undef));
+
 #  create a transaction record
 
         $Sts = $dbh->do("insert into transactions (acct_id,link_id,txncusname,txnmethod,txnamount,txndate,txntxntype,txnremarks,txntxnno) values ('$COOKIE->{ACCT}',$New_inv_id,'Bank Payment','$FORM{txnmethod}','$FORM{thisch}',$Date,'expense','Charges','$FORM{txnno}')");
         $New_txn_id = $dbh->last_insert_id(undef, undef, qw(transactions undef));
 
-#  create a dummy invoice (invoice # = unlisted)
-
-#	$Sts = $dbh->do("insert into invoices (acct_id,invinvoiceno,invdesc,invcusregion,invcoa,invtotal,invpaid,invprintdate,invstatuscode,invtype) values ('$COOKIE->{ACCT}','unlisted','Bank Charges','UK','6000','$FORM{thisch}','$FORM{thisch}',$Date,'2','B')");
-#        $New_inv_id = $dbh->last_insert_id(undef, undef, qw(invoices undef));
-
 #  Create an inv_txn record
 
-#        $Sts = $dbh->do("insert into inv_txns (acct_id,txn_id,inv_id,itnet,itvat,itdate,itmethod,itinvoiceno,ittxnno) values ('$COOKIE->{ACCT}',$New_txn_id,$New_inv_id,'$FORM{thisch','0',$Date,'$FORM{txnmethod}','unlisted','$FORM{txnno}')");
+        $Sts = $dbh->do("insert into inv_txns (acct_id,txn_id,inv_id,itnet,itvat,itdate,itmethod,itinvoiceno,ittxnno) values ('$COOKIE->{ACCT}',$New_txn_id,$New_inv_id,'$FORM{thisch}','0',$Date,'$FORM{txnmethod}','unlisted','$FORM{txnno}')");
 
 #  update nominal codes for bank/cash/cheque and customer unallocated balance
 
