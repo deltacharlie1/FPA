@@ -77,7 +77,7 @@ if ($FORM{thisint}) {
 
 #  create a transaction record
 
-	$Sts = $dbh->do("insert into transactions (acct_id,txncusname,link_id,txnmethod,txnamount,txndate,txntxntype,txnremarks,txntxnno) values ('$COOKIE->{ACCT}','Bank Payment',$New_inv_id,'$FORM{txnmethod}','$FORM{thisint}',$Date,'income','Interest','$FORM{txnno}')");
+	$Sts = $dbh->do("insert into transactions (acct_id,txncusname,link_id,txnmethod,txnamount,txndate,txntxntype,txnremarks,txntxnno) values ('$COOKIE->{ACCT}','Bank Payment',$New_inv_id,'$FORM{txnmethod}','$FORM{thisint}',$Date,'bank','Interest','$FORM{txnno}')");
         $New_txn_id = $dbh->last_insert_id(undef, undef, qw(transactions undef));
 
 #  Create an inv_txn record
@@ -98,7 +98,7 @@ if ($FORM{thisint}) {
 
 #  Audit trail
 
-        $Sts = $dbh->do("insert into audit_trails (acct_id,link_id,audtype,audaction,audtext,auduser) values ('$COOKIE->{ACCT}',$New_txn_id,'transactions','income','Bank Interest of &pound;$FORM{thisint} received','$COOKIE->{USER}')");
+        $Sts = $dbh->do("insert into audit_trails (acct_id,link_id,audtype,audaction,audtext,auduser) values ('$COOKIE->{ACCT}',$New_txn_id,'transactions','bank','Bank Interest of &pound;$FORM{thisint} received','$COOKIE->{USER}')");
 
 }
 if ($FORM{thisch}) {
@@ -132,7 +132,7 @@ if ($FORM{thisch}) {
 
 #  create a transaction record
 
-        $Sts = $dbh->do("insert into transactions (acct_id,link_id,txncusname,txnmethod,txnamount,txndate,txntxntype,txnremarks,txntxnno) values ('$COOKIE->{ACCT}',$New_inv_id,'Bank Payment','$FORM{txnmethod}','$FORM{thisch}',$Date,'expense','Charges','$FORM{txnno}')");
+        $Sts = $dbh->do("insert into transactions (acct_id,link_id,txncusname,txnmethod,txnamount,txndate,txntxntype,txnremarks,txntxnno) values ('$COOKIE->{ACCT}',$New_inv_id,'Bank Payment','$FORM{txnmethod}','$FORM{thisch}',$Date,'bank','Charges','$FORM{txnno}')");
         $New_txn_id = $dbh->last_insert_id(undef, undef, qw(transactions undef));
 
 #  Create an inv_txn record
@@ -155,7 +155,7 @@ if ($FORM{thisch}) {
 
 #  Audit trail
 
-        $Sts = $dbh->do("insert into audit_trails (acct_id,link_id,audtype,audaction,audtext,auduser) values ('$COOKIE->{ACCT}',$New_txn_id,'transactions','expense','Bank Charges of &pound;$FORM{thisch} paid','$COOKIE->{USER}')");
+        $Sts = $dbh->do("insert into audit_trails (acct_id,link_id,audtype,audaction,audtext,auduser) values ('$COOKIE->{ACCT}',$New_txn_id,'transactions','bank','Bank Charges of &pound;$FORM{thisch} paid','$COOKIE->{USER}')");
 
 }
 print<<EOD;
