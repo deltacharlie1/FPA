@@ -25,7 +25,7 @@ unlink("/projects/tmp/$Cookie{'fpa-cookie'}");
 
 $Reg_coms = $dbh->prepare("select reg2_id,com_id,comname,mlgdefmenu from reg_coms where reg1_id=$COOKIE->{REG} order by comname limit $Offset,1");
 $Reg_coms->execute;
-$User = $Cookie;
+$User = $COOKIE->{ID};
 $User =~ s/^(.*?)\@.*/$1/;
 @Reg_com = $Reg_coms->fetchrow;
 

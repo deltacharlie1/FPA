@@ -25,7 +25,7 @@ if ($FORM{filter} && $FORM{filter} !~ /All/i) {
 	$Filter = " txnmethod='$FORM{filter}'";
 }
 else {
-	$Filter = "txntxntype in ('income','expense','transfer','vat')";
+	$Filter = "txntxntype in ('income','expense','transfer','vat','bank')";
 }
 
 use DBI;

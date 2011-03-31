@@ -22,7 +22,7 @@ $TSs->execute;
 $TS = $TSs->fetchrow_hashref;
 $TSs->finish;
 
-$Txns = $dbh->prepare("select id,date_format(txndate,'%d-%b-%y') as tdate,concat(txncusname,' (',txnremarks,')') as txncusname,txnamount,txnselected from transactions where txnselected<>'F' and txnmethod='$Acctype' and acct_id='$COOKIE->{ACCT}' order by txndate");
+$Txns = $dbh->prepare("select id,txntxntype,date_format(txndate,'%d-%b-%y') as tdate,concat(txncusname,' (',txnremarks,')') as txncusname,txnamount,txnselected from transactions where txnselected<>'F' and txnmethod='$Acctype' and acct_id='$COOKIE->{ACCT}' order by txndate");
 $Txns->execute;
 
 #  Check to see if there are any Filed VAT returns awaiting reconciliation
