@@ -307,7 +307,7 @@ sub money_out {
 
 #  Customer balance
 
-	$Sts = $dbh->do("update customers set cusbalance=cusbalance + '$FORM{txnamount}' where acct_id='$COOKIE->{ACCT}' and id=$FORM{cus_id}");
+	$Sts = $dbh->do("update customers set cusbalance=cusbalance - '$Txntot' where acct_id='$COOKIE->{ACCT}' and id=$FORM{cus_id}");
 
 #  Creditor control acct  ('add' Txntot so that any sign is correct)
 
@@ -321,14 +321,7 @@ sub money_out {
 
 sub pay_invoice {
 
-#  First get the current amount of credit that the customer has
-
-	my $Customers = $dbh->prepare("select cuscredit from customers where acct_id='$COOKIE->{ACCT}' and id=$FORM{cus_id}");
-	$Customers->execute;
-	($FORM{txnamount}) = $Customers->fetchrow;
-	$Customers->finish;
-
-#  then get the current balance of the invoice
+#  get the current balance of the invoice
 
 	my $Invoices = $dbh->prepare("select invstatuscode,invtotal,invvat,invpaid,invpaidvat,invtype,invinvoiceno,invcusname,invcoa from invoices where acct_id='$COOKIE->{ACCT}' and id=$FORM{id}");
 	$Invoices->execute;
@@ -341,14 +334,19 @@ sub pay_invoice {
 
 		$FORM{txnamount} =~ tr/-//d;
 
+#  then make sure that it is a negative amount
+
+		$FORM{txnamount} = 0 - $FORM{txnamount};
+
 		my $Owing = $Invoice[1] + $Invoice[2] - $Invoice[3] - $Invoice[4];
+
 		$FORM{invtype} = $Invoice[5];
 		$FORM{invinvoiceno} = $Invoice[6];
 		$FORM{invcusname} = $Invoice[7];
 		$FORM{invcoa} = $Invoice[8];
 		$Invoice_type = "Purchase Invoice";
 
-		if ($FORM{txnamount} >= $Owing) {		#  sufficient funds to cover the
+		if ($FORM{txnamount} <= $Owing) {		#  sufficient funds to cover the
 
 #  Deduct what is owed from what we have to play with
 
@@ -365,7 +363,8 @@ sub pay_invoice {
 
 #  Calculate the percentage of net and vat that can be paid
 
-			$FORM{invvat} = sprintf("%1.2f",($Invoice[2] - $Invoice[4]) * $FORM{txnamount} / $Owing);
+			$FORM{invvat} = sprintf("%1.2f",($Invoice[2] + $Invoice[4]) * $FORM{txnamount} / $Owing);
+
 			$FORM{invtotal} = $FORM{txnamount} - $FORM{invvat};
 			$Owing = $FORM{txnamount};
 

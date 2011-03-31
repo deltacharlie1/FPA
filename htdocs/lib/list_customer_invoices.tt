@@ -85,7 +85,7 @@
       <th>Total</th>
       <th>Printed</th>
       <th>Due</th>
-      <th>Paid</th>
+      <th>Owed</th>
       <th>Status</th>
       <th>Pay</th>
     </tr>
@@ -99,7 +99,7 @@
       <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invamount | remove('-') -%]</td>
       <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.printdate -%]</td>
       <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.duedate -%]</td>
-      <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invpaid | remove('-') -%]</td>
+      <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- IF invoice.invamount - invoice.invpaid != 0; invoice.invamount - invoice.invpaid | format('%1.2f'); ELSE -%]&nbsp;[%- END -%]</td>
       <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">
   [% IF invoice.invstatus == 'Overdue' -%]<span style="color:#800000;font-weight:bold;">Overdue</span>[%- ELSE; invoice.invstatus; END -%]</td>
   [% IF invoice.invstatuscode > 2 -%]

@@ -58,10 +58,10 @@
       <th>Reference</th>
       <th>Customer</th>
       <th>Description</th>
-      <th>Total</th>
       <th>Printed</th>
-      <th>Due</th>
+      <th>Total</th>
       <th>Paid</th>
+      <th>Owed</th>
       <th>Status</th>
       <th>Pay</th>
     </tr>
@@ -73,10 +73,10 @@
       <td onclick="location.href='/cgi-bin/fpa/update_purchase.pl?[%- invoice.invid -%]';">[%- invoice.invcusref -%]</td>
       <td onclick="location.href='/cgi-bin/fpa/update_purchase.pl?[%- invoice.invid -%]';">[%- invoice.invcusname -%]</td>
       <td onclick="location.href='/cgi-bin/fpa/update_purchase.pl?[%- invoice.invid -%]';">[%- invoice.invdesc | truncate(30) -%]</td>
-      <td onclick="location.href='/cgi-bin/fpa/update_purchase.pl?[%- invoice.invid -%]';">[%- invoice.invamount | format('%1.2f') -%]</td>
       <td onclick="location.href='/cgi-bin/fpa/update_purchase.pl?[%- invoice.invid -%]';">[%- invoice.printdate -%]</td>
-      <td onclick="location.href='/cgi-bin/fpa/update_purchase.pl?[%- invoice.invid -%]';">[%- invoice.duedate -%]</td>
+      <td onclick="location.href='/cgi-bin/fpa/update_purchase.pl?[%- invoice.invid -%]';">[%- invoice.invamount | format('%1.2f') -%]</td>
       <td onclick="location.href='/cgi-bin/fpa/update_purchase.pl?[%- invoice.invid -%]';">[%- invoice.invpaid | format('%1.2f') -%]</td>
+      <td onclick="location.href='/cgi-bin/fpa/update_purchase.pl?[%- invoice.invid -%]';">[%- IF invoice.invamount - invoice.invpaid != 0; invoice.invamount - invoice.invpaid | format('%1.2f'); ELSE -%]&nbsp;[%- END -%]</td>
       <td onclick="location.href='/cgi-bin/fpa/update_purchase.pl?[%- invoice.invid -%]';">
   [% IF invoice.invstatus == 'Overdue' -%]<span style="color:#800000;font-weight:bold;">Overdue</span>[%- ELSE; invoice.invstatus; END -%]</td>
     [% IF invoice.status != "Paid" AND invoice.invpaid != invoice.invamount -%]
