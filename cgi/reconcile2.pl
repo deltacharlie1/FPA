@@ -97,7 +97,7 @@ else {
 	}
 	$Stmt[1]++;		#  Increment the reconciliation count no
 
-	$Sts = $dbh->do("insert into statements (acct_id,acc_id,staopenbal,staclosebal,stastmtno,staopendate,staclosedate,stanotxns),starec_no values ('$COOKIE->{ACCT}',$FORM{id},'$FORM{thatbf}','$FORM{thiscf}','$FORM{thisno}',str_to_date('$FORM{staopendate}','%d-%b-%y'),$Stmt_date,'$Txn_count',$Stmt[1])");
+	$Sts = $dbh->do("insert into statements (acct_id,acc_id,staopenbal,staclosebal,stastmtno,staopendate,staclosedate,stanotxns,starec_no) values ('$COOKIE->{ACCT}',$FORM{id},'$FORM{thatbf}','$FORM{thiscf}','$FORM{thisno}',str_to_date('$FORM{staopendate}','%d-%b-%y'),$Stmt_date,'$Txn_count',$Stmt[1])");
         $New_stmt_id = $dbh->last_insert_id(undef, undef, qw(transactionss undef));
 
 #  update the relevant transactions

@@ -141,7 +141,7 @@
       </a>
     </li>
     <li class="top">
-      <a href="/manual.html" id="help" class="top_link">
+      <a href="/usermanual.pdf" id="help" class="top_link" target="_new">
         <span title="Help" class="down">
           <img src="/icons/help.png"/><br/>
           <span>Help</span>
