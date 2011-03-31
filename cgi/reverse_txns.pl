@@ -73,9 +73,17 @@ sub reverse_txn {
 		$Invoices->execute;
 		$Invoice = $Invoices->fetchrow_hashref;
 
-		$Inv_total = $Invoice->{invtotal} + $Invoice->{invvat} - $Invoice->{invpaid} - $Invoice->{invpaidvat};
+		if ($Invoice->{invtype} =~ /S/i) {
 
-		if ($Invoice->{invtype} =~ /P/i) {		#  Only interested in Purchase invoices
+#  Adjust the invpaid and invpaidvat
+
+			$Sts = $dbh->do("update invoices set invpaid=invpaid-'$Inv_txn->{itnet}',invpaidvat=invpaidvat-'$Inv_txn->{itvat}' where acct_id='$COOKIE->{ACCT}' and invtype='S' and id=$Inv_txn->{inv_id}");
+
+#  Adjust any cusbalance
+
+			$Sts = $dbh->do("update customers set cusbalance=cusbalance+'$Txn->{txnamount}' where acct_id='$COOKIE->{ACCT}' and id=$Invoice->{cus_id}");
+		}
+		elsif ($Invoice->{invtype} =~ /P/i) {		#  Only interested in Purchase invoices
 
 #  Decrement all higher Purchase Invoice nos
 
@@ -112,11 +120,19 @@ sub reverse_txn {
 #  Write an audit trail comment
 
 			$Sts = $dbh->do("insert into audit_trails (acct_id,link_id,audtype,audaction,audtext,auduser) values ('$COOKIE->{ACCT}',$Invoice->{id},'reverse_txns.pl','adj','$Invoice->{invinvoiceno} deleted','$COOKIE->{USER}')");
+
+#  Only adjust any cusbalance if the invoice is not paid
+
+			if ($Invoice->{invstatuscode} > 2) {
+				$Sts = $dbh->do("update customers set cusbalance=cusbalance-'$Txn->{txnamount}' where acct_id='$COOKIE->{ACCT}' and id=$Invoice->{cus_id}");
+			}
 		}
+		else {
 
-#  Adjust any cusbalance
+#  Just delete the invoice
 
-		$Sts = $dbh->do("update customers set cusbalance=cusbalance-'$Inv_total' where acct_id='$COOKIE->{ACCT}' and id=$Invoice->{cus_id}");
+			$Sts = $dbh->do("delete from invoices where acct_id='$COOKIE->{ACCT}' and id=$Inv_txn->{inv_id}");
+		}
 
 #  Delete inv_txns
 
@@ -163,4 +179,5 @@ sub reverse_txn {
 
 		$Sts = $dbh->do("delete from nominals where acct_id='$COOKIE->{ACCT}' and id=$Nominal->{id}");
 	}
+	$Nominals->finish;
 }
