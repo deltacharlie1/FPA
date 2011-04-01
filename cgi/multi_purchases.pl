@@ -46,7 +46,7 @@ $(document).ready(function(){
 function showResponse(responseText, statusText) {
   if (/OK/i.test(responseText)) {
     var href = responseText.split("-");
-    alert("Details updated");
+//    alert("Payment Recorded");
     location.href = "/cgi-bin/fpa/" + href[1];
   }
   else {

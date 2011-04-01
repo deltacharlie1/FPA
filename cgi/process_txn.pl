@@ -30,17 +30,15 @@ while (( $Key,$Value) = each %FORM) {
 
 $Errs = "";
 
+warn "invtype = $FORM{invtype}\n";
+
 if ($FORM{invtype} =~ /I/i) {
 	unless ($FORM{invcusname}) { $Errs .= "<li>You must enter the Customer's name</li>\n"; }
 }
-else {
+ elsif ($FORM{invtype} =~ /P/) {
 	unless ($FORM{invcusname}) { $Errs .= "<li>You must enter the Supplier's name</li>\n"; }
 }
 unless ($FORM{txnamount} =~ /^-?\d+\.?\d?\d?$/) { $Errs .= "<li>$FORM{txnamount} - You must enter the amount being paid</li>\n"; }
-
-#while (($Key,$Value) = each %FORM) {
-#	$Errs .= "$Key = $Value\n";
-#}
 
 if ($Errs) {
 	print<<EOD;
@@ -77,12 +75,17 @@ EOD
 
 #  Money out (purchase) transaction
 
+		$Expense_type = $FORM{invtype};
+
 		$FORM{invtype} = "P";
 
 		require "/usr/local/httpd/cgi-bin/fpa/process_purchase.ph";
+
 		&save_invoice();
-		&money_out();
-		&pay_invoice();
+		unless ($Expense_type =~ /E/i) {	#  ie if not expenses
+			&money_out();
+			&pay_invoice();
+		}
 		print<<EOD;
 Content-Type: text/plain
 

@@ -52,7 +52,7 @@
         <li class="divider"><a href="#" onclick="display_form('P');">Pay Money Out</a></li>
         <li class="divider"><a href="/cgi-bin/fpa/list_suppliers.pl">List Suppliers</a></li>
         <li><a href="/cgi-bin/fpa/add_address.pl?S">Add New Supplier</a></li>
-<!--        <li><a href="/cgi-bin/fpa/new_purchase.pl?[%- cookie.EXP -%]">Record Expenses</a></li>
+        <li class="divider"><a href="#" onclick="display_form('E');">Record Expense</a></li>
         <li><a href="/cgi-bin/fpa/multi_purchases.pl?[%- cookie.EXP -%]">Pay Expenses</a></li> //-->
       </ul>
     </li>

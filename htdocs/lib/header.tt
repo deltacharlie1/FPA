@@ -401,7 +401,19 @@ function display_form(io) {
   });
 [% END -%]
     $("#payment2").dialog("open");
-    document.getElementById("pay_cus_id").focus();
+    if (io == "E") {
+      $(".notexpenses").hide();
+      $("#pay_cus_id").removeClass("mandatory");
+      document.getElementById("pay_txnamount").focus();
+      document.getElementById("pay_invtype").value = "E";
+      document.getElementById("pay_amtcusid").value = "[%- cookie.EXP -%]";
+    }
+    else {
+      $(".notexpenses").show();
+      $("#pay_cus_id").addClass("mandatory");
+      document.getElementById("pay_invtype").value = "P";
+      document.getElementById("pay_cus_id").focus();
+    }
   }
 }
 function view_comments() {
@@ -564,11 +576,11 @@ function delete_reminder(id) {
     <input type="hidden" name="searchtype" id="pay_searchtype" value="Customers"/>
     <input type="hidden" name="amtcusid" id="pay_amtcusid" value="0"/>
     <table width="100%" cellpadding="4" cellspacing="0" border="0" class="formtable">
-      <tr>
+      <tr class="notexpenses">
         <td><label>Paid To</label></td>
         <td><div><input type="hidden" name="invcusname" id="pay_invcusname" value=""/><input id="pay_cus_id" title="Paid To" class="mandatory"/></div></td>
       </tr>
-      <tr>
+      <tr class="notexpenses">
         <td><label>Payment Method</label></td>
         <td>
           <select name="txnmethod" id="pay_txnmethod">

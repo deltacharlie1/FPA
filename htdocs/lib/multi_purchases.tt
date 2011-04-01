@@ -30,7 +30,7 @@
       <td colspan="2">&nbsp;</td>
     </tr>
     <tr>
-      <td><label>Amount Being Paid</label></td>
+      <td title="Click to enter Total as Amount" onclick="document.getElementById('i_txnamount').value = document.getElementById('totamt').innerHTML;"><label>Amount Being Paid</label></td>
       <td><span><input type="text" name="txnamount" id="i_txnamount" size="10" class="mandatory currency" title="Amount Being Paid"/></span></td>
       <td><label>Payment Method</label></td>
       <td>
