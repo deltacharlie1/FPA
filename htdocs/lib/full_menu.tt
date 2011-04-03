@@ -47,13 +47,13 @@
       </a>
       <ul class="sub">
         <li><a href="/cgi-bin/fpa/list_purchases.pl?listorder=O">List Unpaid Purchases</a></li>
-        <li><a href="/cgi-bin/fpa/list_purchases.pl?listorder=N">List Purchases</a></li>
+        <li><a href="/cgi-bin/fpa/list_purchases.pl?listorder=Q">List Purchases</a></li>
         <li><a href="/cgi-bin/fpa/new_purchase.pl">New Purchase Invoice</a></li>
         <li class="divider"><a href="#" onclick="display_form('P');">Pay Money Out</a></li>
         <li class="divider"><a href="/cgi-bin/fpa/list_suppliers.pl">List Suppliers</a></li>
         <li><a href="/cgi-bin/fpa/add_address.pl?S">Add New Supplier</a></li>
         <li class="divider"><a href="#" onclick="display_form('E');">Record Expense</a></li>
-        <li><a href="/cgi-bin/fpa/multi_purchases.pl?[%- cookie.EXP -%]">Pay Expenses</a></li> //-->
+        <li><a href="/cgi-bin/fpa/multi_purchases.pl?[%- cookie.EXP -%]">Pay Expenses</a></li>
       </ul>
     </li>
     <li class="top">

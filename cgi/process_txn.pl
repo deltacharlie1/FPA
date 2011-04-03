@@ -30,8 +30,6 @@ while (( $Key,$Value) = each %FORM) {
 
 $Errs = "";
 
-warn "invtype = $FORM{invtype}\n";
-
 if ($FORM{invtype} =~ /I/i) {
 	unless ($FORM{invcusname}) { $Errs .= "<li>You must enter the Customer's name</li>\n"; }
 }

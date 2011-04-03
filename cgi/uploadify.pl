@@ -162,7 +162,7 @@ unless ($FORM{doc_type} =~ /LOGO/i) {
 
 #  Calculate the remaining allowance
 
-	$Allowance = $COOKIE->{UPLDS} - length($Raw);
+	$Allowance = $COOKIE->{UPLDS} - length($Original);
 	if ($Allowance < 0) {
 		$Allowance = 0;
 	}
