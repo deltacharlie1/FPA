@@ -17,6 +17,7 @@ $Vars = {
 <script type="text/javascript">
 var responseText = "";
 var errfocus = "";
+var bonusdisplayed = false;
 $(document).ready(function() {
   $(".extra").cluetip({ 
     local: true,
@@ -33,6 +34,15 @@ $(document).ready(function() {
   $("#dialog").dialog({
     bgiframe: true,
     height: 200,
+    autoOpen: false,
+    position: [200,100],
+    modal: true,
+    buttons: { "Ok": function() { $(this).dialog("close");setfocus(); } }
+  });
+  $("#bonusfeatures").dialog({
+    bgiframe: true,
+    height: 360,
+    width: 400,
     autoOpen: false,
     position: [200,100],
     modal: true,
@@ -154,8 +164,17 @@ function validate() {
     },"text");
   }
 }
+function do_bonusfeatures() {
+  if (! bonusdisplayed) {
+    bonusdisplayed = true;
+    $(".bonus").attr("checked",true);
+  }
+  $("#bonusfeatures").dialog("open");
+}
 function setfocus() {
-  eval("document.getElementById(\'" + errfocus + "\').focus();");
+  if (errfocus.length > 0) {
+    eval("document.getElementById(\'" + errfocus + "\').focus();");
+  }
 }
 
 function reactivate() {

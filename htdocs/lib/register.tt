@@ -12,6 +12,8 @@
             <p>You must complete <b>ALL</b> fields</p>
           <form action="/cgi-bin/fpa/register2.pl" method="post" name="form1" id="form1">
           <input type="hidden" name="react" id="react" value="N"/>
+          <div style="position:relative;">
+          <div style="position:absolute;left:460px;top:-60px"><img src="/images/bonus.png" onclick="do_bonusfeatures();"/></div>
           <table width="100%" border="0" cellpadding="0" cellspacing="0" class="formtable">
             <tr>
               <td>&nbsp;</td>
@@ -66,13 +68,43 @@
                 <input name="but2" type="button" id="but2" value="Register!" disabled="disabled" onclick="validate();"/>
               </td>
             </tr>
-          </table>
+          </table></div>
           </form>
         </tr>
       </table>
     </td>
   </tr>
 </table>
+<div id="bonusfeatures" title="Bonus Features" style="display:none;">
+    <table width="100%" cellpadding="4" cellspacing="0" border="0" class="formtable">
+      <tr>
+        <td>As a bonus to our early users we are offering you the opportunity to try out selected additional features for up to 3 months.</td>
+      </tr>
+      <tr>
+        <td>Simply de-select any features that you do <b>NOT</b> wish to try.</td>
+      </tr>
+      <tr>
+        <td><label>Your own logo on invoices</label></td>
+        <td><input type="checkbox" name="ownlogo" id="ownlogo" class="bonus" value="Y"/></td>
+      </tr>
+      <tr>
+        <td><label>2MB worth of file uploads</label></td>
+        <td><input type="checkbox" name="uplds" id="uplds" class="bonus" value="Y"/></td>
+      </tr>
+      <tr>
+        <td><label>Automatically generated statements</label></td>
+        <td><input type="checkbox" name="stmts" id="stmts" class="bonus" value="Y"/></td>
+      </tr>
+      <tr>
+        <td><label>3 Support Credits</label></td>
+        <td><input type="checkbox" name="supt" id="supt" class="bonus" value="Y"/></td>
+      </tr>
+<!--      <tr>
+        <td><label>1 Additional User login ID</label></td>
+        <td><input type="checkbox" name="addusr" id="addusr" class="bonus" value="Y"/></td>
+      </tr>  //-->
+    </table>
+</div>
 <p>&nbsp;</p>
 <div style="display:none;">
   <div id="memwd"><p>Your memorable word is used for additional security.&nbsp;&nbsp;When you log in, as well as your password, you will be asked for 3 random characters from your memorable word.&nbsp;&nbsp;These random characters will change each time you log in.</p>
