@@ -153,7 +153,12 @@ function validate() {
     return false;
   }
   else {
-    $.post("/cgi-bin/fpa/register2.pl", $("form#form1").serialize(),function(data) {
+    var form1flds = $("form#form1").serialize();
+    var bonusflds = $(".bonus").serialize();
+    if (bonusflds.length > 0) {
+      form1flds = form1flds + "&" + bonusflds;
+    }
+    $.post("/cgi-bin/fpa/register2.pl", form1flds, function(data) {
       if (/^OK/.test(data)) {
         location.href="/registered.html";
       }

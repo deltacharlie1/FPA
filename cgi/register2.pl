@@ -17,13 +17,8 @@ foreach $pair (@pairs) {
 	$Value =~ tr/\\//d;		#  Remove all back slashes
 	$Value =~ s/(\'|\")/\\$1/g;
 	$FORM{$Name} = $Value;
-}
 
-#use Template;
-#$tt = Template->new({
-#	INCLUDE_PATH => ['.','/usr/local/httpd/htdocs/fpa/lib'],
-#	WRAPPER => 'wrapper.tt'
-#});
+}
 
 use DBI;
 my $dbh = DBI->connect("DBI:mysql:fpa");
@@ -141,7 +136,6 @@ Yours sincerely
 $FORM{company}
 EOD
 
-
 		$Sts = $dbh->do("insert into companies (reg_id,comname,comcontact,comemail,comvatqstart,comemailmsg,comstmtmsg,comdocsdir) values ($New_reg_id,'$FORM{company}','$FORM{name}','$FORM{email}','2010-01-01','$Emailmsg','$Stmtmsg','/projects/fpa_docs/$Activecode')");
 		$New_com_id = $dbh->last_insert_id(undef, undef, qw(companies undef));
 
@@ -154,9 +148,23 @@ EOD
 		$Sts = $dbh->do("insert into customers (acct_id,cusname,cusaddress,cuscontact,cussupplier,cusemail) values ('$New_reg_id+$New_com_id','$FORM{name} Expenses','Expenses','$FORM{name}','Y','$FORM{email}')");
 		$New_exp_id = $dbh->last_insert_id(undef, undef, qw(customers undef));
 
-#  Update the companies record
+#  Get bonus end date
 
-		$Sts = $dbh->do("update companies set comexpid='$New_exp_id' where reg_id=$New_reg_id and id=$New_com_id");
+		$Dates = $dbh->prepare("select date_add(curdate(),interval 3 month)");
+		$Dates->execute;
+		@Date = $Dates->fetchrow;
+		$Dates->finish;
+
+#  See if any bonus features have been selected
+
+		$Bonusfeatures = "";
+		if ($FORM{ownlogo}) { $Bonusfeatures .= "compt_logo='$Date[0]',"; }
+		if ($FORM{uplds}) { $Bonusfeatures .= "comuplds='2048000',"; }
+		if ($FORM{stmts}) { $Bonusfeatures .= "comstmts='$Date[0]',"; }
+		if ($FORM{suppt}) { $Bonusfeatures .= "comsuppt='3',"; }
+		if ($FORM{addusr}) { $Bonusfeatures .= "comadd_user='1',"; }
+
+		$Sts = $dbh->do("update companies set $Bonusfeatures comexpid='$New_exp_id' where reg_id=$New_reg_id and id=$New_com_id");
 
 #  Create the reg_com record
 
