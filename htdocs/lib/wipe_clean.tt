@@ -1,4 +1,4 @@
-<div class="main">
+<div class="main" id="main">
 <form action="/cgi-bin/fpa/wipe_clean2.pl" method="post" name="form1" id="form1">
   <div class="status" style="width:600px;line-height:20px;font-weight:normal;"><b>WARNING</b> - You are about to irretrievably delete all or the majority of the data you have entered.&nbsp;&nbsp;Once deleted you will be unable to ever access that information again - are you sure that you want to continue?</div>
   <h1>Delete all Existing Data</h1>

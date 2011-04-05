@@ -1,4 +1,4 @@
-<div class="main">
+<div class="main" id="main">
 [% IF pagetitle.match('Output'); prog = 'invoice'; ELSE; prog = 'purchase'; END -%]
 <table width="660" border="0" cellspacing="0" cellpadding="0">
   <tr>

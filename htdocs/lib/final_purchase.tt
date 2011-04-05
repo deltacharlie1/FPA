@@ -1,4 +1,4 @@
-<div class="main">
+<div class="main" id="main">
 [%- USE date; curdate = date.now div 86400 + 719528 -%]
 [% region = { 'UK' => 'UK','EU' => 'Other EU', 'NEU' => 'Non-EU' } -%]
 <div class="status" style="float:left;">[%- invoice.invstatus; IF invoice.invtype == "P" -%] Purchase Invoice[%- ELSE -%] Refund[%- END -%]</div>

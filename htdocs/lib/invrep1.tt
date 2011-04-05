@@ -1,4 +1,4 @@
-<div class="main">
+<div class="main" id="main">
 <form action="/cgi-bin/fpa/invrep2.pl" method="post" id="form1" autocomplete="off">
 <input type="hidden" name="numrows" id="numrows" value="0"/>
 <input type="hidden" name="offset" id="offset" value="0"/>

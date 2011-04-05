@@ -29,6 +29,10 @@ our $VERSION = '0.9';
 
 sub checkid {
 
+#while (($Key,$Value) = each %ENV) {
+#	warn "$Key = $Value\n";
+#}
+#warn "\n\n";
 	my $ACCESS_LEVEL = $_[1];
 
 	$ENV{HTTP_COOKIE} = $ENV{HTTP_COOKIE} || "";
@@ -38,9 +42,10 @@ sub checkid {
         	($Name,$Value) = split(/\=/,$_);
 	        $Name =~ s/^ //g;
         	$Value =~ tr/\"//d;
+#warn "$Name = $Value\n";
 	        $Cookie{$Name} = $Value;
 	}
-
+#warn "\n\n";
 	$Cookie = $Cookie{'fpa-cookie'} || "";
 
 	open(COOKIE,"/projects/tmp/$Cookie");
@@ -52,6 +57,9 @@ sub checkid {
 	close(COOKIE);
 
 #  Check that the cookie email = COOKIE email
+
+#warn "fpa-uid = $Cookie{'fpa-uid'}\n";
+#warn "COOKIE ID = $COOKIE->{ID}\n";
 
 	unless ($Cookie{'fpa-uid'} && $Cookie{'fpa-uid'} eq $COOKIE->{ID}) {
         	print<<EOD;

@@ -1,4 +1,4 @@
-<div class="main">
+<div class="main" id="main">
 <table border="0" width="660">
   <tr>
     <td style="vertical-align:bottom;"><h1>Transaction List</h1></td>

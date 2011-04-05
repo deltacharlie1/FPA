@@ -1,4 +1,4 @@
-<div class="main">
+<div class="main" id="main">
 [% USE date(format = '%d-%b-%y') %]
 <div id="template" style="text-align:left;z-index:10100;display:none;" title="Invoice Frequency Details">
 <form id="repeat_details" form="repeat_details" class="newinvoice">

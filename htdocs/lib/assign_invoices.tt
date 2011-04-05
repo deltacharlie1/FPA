@@ -1,4 +1,4 @@
-<div class="main">
+<div class="main" id="main">
 <form action="/cgi-bin/fpa/assisn_invoices2.pl" method="post" id="form1" autocomplete="off">
 <input type="hidden" name="cusname" id="cusname" value=""/>
 <input type="hidden" name="action" id="action" value="S"/>

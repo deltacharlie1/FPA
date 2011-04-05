@@ -1,4 +1,4 @@
-<div class="main">
+<div class="main" id="main">
 <h1>Profit &amp; Loss Report</h1>
 <form name="form1" id="form1">
 <input type="hidden" name="tbfy" id="tbfy" value="[%- daterange.tbfy -%]"/>

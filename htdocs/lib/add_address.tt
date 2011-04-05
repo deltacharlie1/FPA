@@ -2,7 +2,7 @@
 <input type="hidden" name="custype" id="custype" value="[%- custype -%]"/>
 <input type="hidden" name="id" id="id" value="[% cus.id -%]"/>
 <input type="hidden" name="ignore_action" id="ignore_action" value="Save"/>
-<div class="main">
+<div class="main" id="main">
 <h1>[%- IF custype == "C" -%]Customer[%- ELSE -%]Supplier[%- END -%] Details</h1>
   <table width="660" border="0" cellpadding="0" cellspacing="0" class="formtable">
     <tr>

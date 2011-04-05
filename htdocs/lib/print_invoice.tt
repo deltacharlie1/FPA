@@ -1,6 +1,6 @@
 <form name="form1" id="form1" method="post" action="/cgi-bin/fpa/email_invoice.pl">
 <input type="hidden" name="invid" id="invid" value="[%- invoice.id -%]"/>
-<div class="main">
+<div class="main" id="main">
 <h1>Print/Email Invoice</h1>
 <table width="660" border="0" cellspacing="0" cellpadding="0" class="formtable">
   <tr>

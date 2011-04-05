@@ -16,9 +16,25 @@ my $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
 $Regs = $dbh->prepare("select date_format(date_sub(regregdate,interval 6 month),'%d-%b-%y') as tbstart,date_format(now(),'%d-%b-%y') as tbend,date_add(date_sub(comyearend,interval 1 year),interval 1 day) as tbfy from registrations left join companies on (registrations.reg_id=companies.reg_id) where registrations.reg_id=$Reg_id and companies.id=$Com_id");
 $Regs->execute;
 $Reg = $Regs->fetchrow_hashref;
+$Reg->{tbselect} = "cu";
 ($Yr,$Mth,$Day) = split(/-/,$Reg->{tbfy});
 $Mth--;
+$Startstr = $Reg->{tbstart};
+$Curstr = $Reg->{tbend};
 
+if ($ENV{QUERY_STRING} =~ /redisplay/i) {
+
+#  Get settings from tempstacks
+
+	$TSs = $dbh->prepare("select f1,f2,f3 from tempstacks where acct_id='$COOKIE->{ACCT}' and caller='trial_balance'");
+	$TSs->execute;
+	$TS = $TSs->fetchrow_hashref;
+
+	$Reg->{tbselect} = $TS->{f1};
+	$Reg->{tbstart} = $TS->{f2};
+	$Reg->{tbend} = $TS->{f3};
+	$TSs->finish;
+}
 $Coas = $dbh->prepare("select nomcode,coadesc,coatype,sum(nomamount) as balance from nominals left join coas on (nominals.nomcode=coas.coanominalcode and nominals.acct_id=coas.acct_id) where nominals.acct_id='$COOKIE->{ACCT}' group by nomcode having balance<>0 order by nomcode");
 $Coas->execute;
 
@@ -39,9 +55,16 @@ $(document).ready(function(){
   $("#tbend").datepicker();
   get_balances();
 });
+function print_list() {
+   $.get("/cgi-bin/fpa/print_tb.pl",$("form#form1").serialize() ,function(data) {
+     document.getElementById("main").innerHTML = data;
+     $("#maintabs").hide();
+     $("#printtab").show();
+  });
+}
 function set_range(obj) {
-  var startstr = "'.$Reg->{tbstart}.'";
-  var curstr = "'.$Reg->{tbend}.'";
+  var startstr = "'.$Startstr.'";
+  var curstr = "'.$Curstr.'";
   var curdate = new Date();
   var fydate = new Date();
   fydate.setFullYear('.$Yr.','.$Mth.','.$Day.');
@@ -54,15 +77,15 @@ function set_range(obj) {
 
     case "tw":
       curdate.setDate(curdate.getDate() - curdate.getDay() + 1);
-      var curarray = curdate.toDateString().split(" ");
-      document.getElementById("tbstart").value = curarray[2] + "-" + curarray[1] + "-" + curarray[3].substring(2);
+      var curarray = curdate.toUTCString().split(" ");
+      document.getElementById("tbstart").value = curarray[1] + "-" + curarray[2] + "-" + curarray[3].substring(2);
       document.getElementById("tbend").value = curstr;
       break;
 
     case "tm":
       curdate.setDate(1);
-      var curarray = curdate.toDateString().split(" ");
-      document.getElementById("tbstart").value = curarray[2] + "-" + curarray[1] + "-" + curarray[3].substring(2);
+      var curarray = curdate.toUTCString().split(" ");
+      document.getElementById("tbstart").value = curarray[1] + "-" + curarray[2] + "-" + curarray[3].substring(2);
       document.getElementById("tbend").value = curstr;
       break;
 
@@ -82,33 +105,33 @@ function set_range(obj) {
       }
       curdate.setMonth(curdate.getMonth() - thismonth + fqstart);
       curdate.setDate(1);
-      var curarray = curdate.toDateString().split(" ");
-      document.getElementById("tbstart").value = curarray[2] + "-" + curarray[1] + "-" + curarray[3].substring(2);
+      var curarray = curdate.toUTCString().split(" ");
+      document.getElementById("tbstart").value = curarray[1] + "-" + curarray[2] + "-" + curarray[3].substring(2);
       document.getElementById("tbend").value = curstr;
       break;
 
     case "ty":
-      var fyarray = fydate.toDateString().split(" ");
-      document.getElementById("tbstart").value = fyarray[2] + "-" + fyarray[1] + "-" + fyarray[3].substring(2);
+      var fyarray = fydate.toUTCString().split(" ");
+      document.getElementById("tbstart").value = fyarray[1] + "-" + fyarray[2] + "-" + fyarray[3].substring(2);
       document.getElementById("tbend").value = curstr;
       break;
 
     case "lw":
       curdate.setDate(curdate.getDate() - curdate.getDay());
-      var curarray = curdate.toDateString().split(" ");
-      document.getElementById("tbend").value = curarray[2] + "-" + curarray[1] + "-" + curarray[3].substring(2);
+      var curarray = curdate.toUTCString().split(" ");
+      document.getElementById("tbend").value = curarray[1] + "-" + curarray[2] + "-" + curarray[3].substring(2);
       curdate.setDate(curdate.getDate() - 7);
-      curarray = curdate.toDateString().split(" ");
-      document.getElementById("tbstart").value = curarray[2] + "-" + curarray[1] + "-" + curarray[3].substring(2);
+      curarray = curdate.toUTCString().split(" ");
+      document.getElementById("tbstart").value = curarray[1] + "-" + curarray[2] + "-" + curarray[3].substring(2);
       break;
 
     case "lm":
       curdate.setDate(0);
-      var curarray = curdate.toDateString().split(" ");
-      document.getElementById("tbend").value = curarray[2] + "-" + curarray[1] + "-" + curarray[3].substring(2);
+      var curarray = curdate.toUTCString().split(" ");
+      document.getElementById("tbend").value = curarray[1] + "-" + curarray[2] + "-" + curarray[3].substring(2);
       curdate.setDate(1);
-      curarray = curdate.toDateString().split(" ");
-      document.getElementById("tbstart").value = curarray[2] + "-" + curarray[1] + "-" + curarray[3].substring(2);
+      curarray = curdate.toUTCString().split(" ");
+      document.getElementById("tbstart").value = curarray[1] + "-" + curarray[2] + "-" + curarray[3].substring(2);
       break;
 
     case "lq":
@@ -127,22 +150,22 @@ function set_range(obj) {
       }
       curdate.setMonth(curdate.getMonth() - thismonth + fqstart);
       curdate.setDate(0);
-      var curarray = curdate.toDateString().split(" ");
-      document.getElementById("tbend").value = curarray[2] + "-" + curarray[1] + "-" + curarray[3].substring(2);
+      var curarray = curdate.toUTCString().split(" ");
+      document.getElementById("tbend").value = curarray[1] + "-" + curarray[2] + "-" + curarray[3].substring(2);
       curdate.setMonth(curdate.getMonth() - 2);
       curdate.setDate(1);
-      curarray = curdate.toDateString().split(" ");
-      document.getElementById("tbstart").value = curarray[2] + "-" + curarray[1] + "-" + curarray[3].substring(2);
+      curarray = curdate.toUTCString().split(" ");
+      document.getElementById("tbstart").value = curarray[1] + "-" + curarray[2] + "-" + curarray[3].substring(2);
       break;
 
     case "ly":
       fydate.setDate(fydate.getDate() - 1);
-      var fyarray = fydate.toDateString().split(" ");
-      document.getElementById("tbend").value = fyarray[2] + "-" + fyarray[1] + "-" + fyarray[3].substring(2);
+      var fyarray = fydate.toUTCString().split(" ");
+      document.getElementById("tbend").value = fyarray[1] + "-" + fyarray[2] + "-" + fyarray[3].substring(2);
       fydate.setMonth(fydate.getMonth() - 11);
       fydate.setDate(1);
-      var fyarray = fydate.toDateString().split(" ");
-      document.getElementById("tbstart").value = fyarray[2] + "-" + fyarray[1] + "-" + fyarray[3].substring(2);
+      var fyarray = fydate.toUTCString().split(" ");
+      document.getElementById("tbstart").value = fyarray[1] + "-" + fyarray[2] + "-" + fyarray[3].substring(2);
       break;
 
     default:

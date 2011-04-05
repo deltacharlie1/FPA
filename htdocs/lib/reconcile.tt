@@ -1,4 +1,4 @@
-<div class="main">
+<div class="main" id="main">
 [% USE date -%]
 [%- DEFAULT acct.accname = 'Bank' -%]
 <div id="changedate" title="Change Txn Date" style="display:none;">

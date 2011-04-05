@@ -1,4 +1,4 @@
-<div class="main">
+<div class="main" id="main">
 [%- USE date -%]
 <h1>List of Customers</h1>
 [% INCLUDE address_select.tt -%]

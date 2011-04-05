@@ -1,7 +1,7 @@
 <form name="form1" id="form1" method="post" action="/cgi-bin/fpa/email_statement.pl">
 <input type="hidden" name="id" id="i_id" value="[%- cus.id -%]"/>
 [% USE date(format = '%B') %]
-<div class="main">
+<div class="main" id="main">
 <h1>Print/Email Statement</h1>
 <table width="660" border="0" cellspacing="0" cellpadding="0" class="formtable">
   <tr>

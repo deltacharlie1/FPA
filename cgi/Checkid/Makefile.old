@@ -23,30 +23,30 @@
 
 # --- MakeMaker const_config section:
 
-# These definitions are from config.sh (via /usr/local/lib/perl5/5.10.1/i686-linux/Config.pm).
+# These definitions are from config.sh (via /usr/lib/perl5/5.12.1/i586-linux-thread-multi/Config.pm).
 # They may have been overridden via Makefile.PL or on the command line.
 AR = ar
 CC = cc
 CCCDLFLAGS = -fPIC
-CCDLFLAGS = -Wl,-E
+CCDLFLAGS = -Wl,-E -Wl,-rpath,/usr/lib/perl5/5.12.1/i586-linux-thread-multi/CORE
 DLEXT = so
 DLSRC = dl_dlopen.xs
 EXE_EXT = 
 FULL_AR = /usr/bin/ar
 LD = cc
-LDDLFLAGS = -shared -O2 -L/usr/local/lib -fstack-protector
-LDFLAGS =  -fstack-protector -L/usr/local/lib
-LIBC = /lib/libc-2.9.so
+LDDLFLAGS = -shared -fomit-frame-pointer -fmessage-length=0 -O2 -Wall -D_FORTIFY_SOURCE=2 -fstack-protector -funwind-tables -fasynchronous-unwind-tables -g -Wall -pipe
+LDFLAGS =  -fstack-protector
+LIBC = /lib/libc-2.11.2.so
 LIB_EXT = .a
 OBJ_EXT = .o
 OSNAME = linux
-OSVERS = 2.6.27.19-5-pae
+OSVERS = 2.6.32
 RANLIB = :
-SITELIBEXP = /usr/local/lib/perl5/site_perl/5.10.1
-SITEARCHEXP = /usr/local/lib/perl5/site_perl/5.10.1/i686-linux
+SITELIBEXP = /usr/lib/perl5/site_perl/5.12.1
+SITEARCHEXP = /usr/lib/perl5/site_perl/5.12.1/i586-linux-thread-multi
 SO = so
-VENDORARCHEXP = 
-VENDORLIBEXP = 
+VENDORARCHEXP = /usr/lib/perl5/vendor_perl/5.12.1/i586-linux-thread-multi
+VENDORLIBEXP = /usr/lib/perl5/vendor_perl/5.12.1
 
 
 # --- MakeMaker constants section:
@@ -69,59 +69,59 @@ INST_LIB = blib/lib
 INST_MAN1DIR = blib/man1
 INST_MAN3DIR = blib/man3
 MAN1EXT = 1
-MAN3EXT = 3
+MAN3EXT = 3pm
 INSTALLDIRS = site
 DESTDIR = 
 PREFIX = $(SITEPREFIX)
-PERLPREFIX = /usr/local
-SITEPREFIX = /usr/local
-VENDORPREFIX = 
-INSTALLPRIVLIB = /usr/local/lib/perl5/5.10.1
+PERLPREFIX = /usr
+SITEPREFIX = /usr
+VENDORPREFIX = /usr
+INSTALLPRIVLIB = /usr/lib/perl5/5.12.1
 DESTINSTALLPRIVLIB = $(DESTDIR)$(INSTALLPRIVLIB)
-INSTALLSITELIB = /usr/local/lib/perl5/site_perl/5.10.1
+INSTALLSITELIB = /usr/lib/perl5/site_perl/5.12.1
 DESTINSTALLSITELIB = $(DESTDIR)$(INSTALLSITELIB)
-INSTALLVENDORLIB = 
+INSTALLVENDORLIB = /usr/lib/perl5/vendor_perl/5.12.1
 DESTINSTALLVENDORLIB = $(DESTDIR)$(INSTALLVENDORLIB)
-INSTALLARCHLIB = /usr/local/lib/perl5/5.10.1/i686-linux
+INSTALLARCHLIB = /usr/lib/perl5/5.12.1/i586-linux-thread-multi
 DESTINSTALLARCHLIB = $(DESTDIR)$(INSTALLARCHLIB)
-INSTALLSITEARCH = /usr/local/lib/perl5/site_perl/5.10.1/i686-linux
+INSTALLSITEARCH = /usr/lib/perl5/site_perl/5.12.1/i586-linux-thread-multi
 DESTINSTALLSITEARCH = $(DESTDIR)$(INSTALLSITEARCH)
-INSTALLVENDORARCH = 
+INSTALLVENDORARCH = /usr/lib/perl5/vendor_perl/5.12.1/i586-linux-thread-multi
 DESTINSTALLVENDORARCH = $(DESTDIR)$(INSTALLVENDORARCH)
-INSTALLBIN = /usr/local/bin
+INSTALLBIN = /usr/bin
 DESTINSTALLBIN = $(DESTDIR)$(INSTALLBIN)
-INSTALLSITEBIN = /usr/local/bin
+INSTALLSITEBIN = /usr/bin
 DESTINSTALLSITEBIN = $(DESTDIR)$(INSTALLSITEBIN)
-INSTALLVENDORBIN = 
+INSTALLVENDORBIN = /usr/bin
 DESTINSTALLVENDORBIN = $(DESTDIR)$(INSTALLVENDORBIN)
-INSTALLSCRIPT = /usr/local/bin
+INSTALLSCRIPT = /usr/bin
 DESTINSTALLSCRIPT = $(DESTDIR)$(INSTALLSCRIPT)
-INSTALLSITESCRIPT = /usr/local/bin
+INSTALLSITESCRIPT = /usr/bin
 DESTINSTALLSITESCRIPT = $(DESTDIR)$(INSTALLSITESCRIPT)
-INSTALLVENDORSCRIPT = 
+INSTALLVENDORSCRIPT = /usr/bin
 DESTINSTALLVENDORSCRIPT = $(DESTDIR)$(INSTALLVENDORSCRIPT)
-INSTALLMAN1DIR = /usr/local/share/man/man1
+INSTALLMAN1DIR = /usr/share/man/man1
 DESTINSTALLMAN1DIR = $(DESTDIR)$(INSTALLMAN1DIR)
-INSTALLSITEMAN1DIR = /usr/local/share/man/man1
+INSTALLSITEMAN1DIR = /usr/share/man/man1
 DESTINSTALLSITEMAN1DIR = $(DESTDIR)$(INSTALLSITEMAN1DIR)
-INSTALLVENDORMAN1DIR = 
+INSTALLVENDORMAN1DIR = /usr/share/man/man1
 DESTINSTALLVENDORMAN1DIR = $(DESTDIR)$(INSTALLVENDORMAN1DIR)
-INSTALLMAN3DIR = /usr/local/share/man/man3
+INSTALLMAN3DIR = /usr/share/man/man3
 DESTINSTALLMAN3DIR = $(DESTDIR)$(INSTALLMAN3DIR)
-INSTALLSITEMAN3DIR = /usr/local/share/man/man3
+INSTALLSITEMAN3DIR = /usr/share/man/man3
 DESTINSTALLSITEMAN3DIR = $(DESTDIR)$(INSTALLSITEMAN3DIR)
-INSTALLVENDORMAN3DIR = 
+INSTALLVENDORMAN3DIR = /usr/share/man/man3
 DESTINSTALLVENDORMAN3DIR = $(DESTDIR)$(INSTALLVENDORMAN3DIR)
-PERL_LIB = /usr/local/lib/perl5/5.10.1
-PERL_ARCHLIB = /usr/local/lib/perl5/5.10.1/i686-linux
+PERL_LIB = /usr/lib/perl5/5.12.1
+PERL_ARCHLIB = /usr/lib/perl5/5.12.1/i586-linux-thread-multi
 LIBPERL_A = libperl.a
 FIRST_MAKEFILE = Makefile
 MAKEFILE_OLD = Makefile.old
 MAKE_APERL_FILE = Makefile.aperl
 PERLMAINCC = $(CC)
-PERL_INC = /usr/local/lib/perl5/5.10.1/i686-linux/CORE
-PERL = /usr/local/bin/perl
-FULLPERL = /usr/local/bin/perl
+PERL_INC = /usr/lib/perl5/5.12.1/i586-linux-thread-multi/CORE
+PERL = /usr/bin/perl
+FULLPERL = /usr/bin/perl
 ABSPERL = $(PERL)
 PERLRUN = $(PERL)
 FULLPERLRUN = $(FULLPERL)
@@ -134,7 +134,7 @@ PERM_DIR = 755
 PERM_RW = 644
 PERM_RWX = 755
 
-MAKEMAKER   = /usr/local/lib/perl5/5.10.1/ExtUtils/MakeMaker.pm
+MAKEMAKER   = /usr/lib/perl5/5.12.1/ExtUtils/MakeMaker.pm
 MM_VERSION  = 6.56
 MM_REVISION = 65600
 
@@ -475,7 +475,7 @@ metafile : create_distdir
 	$(NOECHO) $(ECHO) '--- #YAML:1.0' > META_new.yml
 	$(NOECHO) $(ECHO) 'name:               Checkid' >> META_new.yml
 	$(NOECHO) $(ECHO) 'version:            0.9' >> META_new.yml
-	$(NOECHO) $(ECHO) 'abstract:           Perl extension to check the user'\''s id based on the uid cookie passed in HTML headers.  This cookie is used to' >> META_new.yml
+	$(NOECHO) $(ECHO) 'abstract:           Perl extension to check the user'\''s id and access rights based on the uid cookie passed in HTML headers.' >> META_new.yml
 	$(NOECHO) $(ECHO) 'author:' >> META_new.yml
 	$(NOECHO) $(ECHO) '    - Doug Conran <dconran@nonet>' >> META_new.yml
 	$(NOECHO) $(ECHO) 'license:            unknown' >> META_new.yml
@@ -739,7 +739,7 @@ $(FIRST_MAKEFILE) : Makefile.PL $(CONFIGDEP)
 
 # --- MakeMaker makeaperl section ---
 MAP_TARGET    = perl
-FULLPERL      = /usr/local/bin/perl
+FULLPERL      = /usr/bin/perl
 
 $(MAP_TARGET) :: static $(MAKE_APERL_FILE)
 	$(MAKE) $(USEMAKEFILE) $(MAKE_APERL_FILE) $@
@@ -784,10 +784,10 @@ testdb_static :: testdb_dynamic
 # Creates a PPD (Perl Package Description) for a binary distribution.
 ppd :
 	$(NOECHO) $(ECHO) '<SOFTPKG NAME="$(DISTNAME)" VERSION="0.9">' > $(DISTNAME).ppd
-	$(NOECHO) $(ECHO) '    <ABSTRACT>Perl extension to check the user'\''s id based on the uid cookie passed in HTML headers.  This cookie is used to</ABSTRACT>' >> $(DISTNAME).ppd
+	$(NOECHO) $(ECHO) '    <ABSTRACT>Perl extension to check the user'\''s id and access rights based on the uid cookie passed in HTML headers.</ABSTRACT>' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '    <AUTHOR>Doug Conran &lt;dconran@nonet&gt;</AUTHOR>' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '    <IMPLEMENTATION>' >> $(DISTNAME).ppd
-	$(NOECHO) $(ECHO) '        <ARCHITECTURE NAME="i686-linux-5.10" />' >> $(DISTNAME).ppd
+	$(NOECHO) $(ECHO) '        <ARCHITECTURE NAME="i586-linux-thread-multi-5.12" />' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '        <CODEBASE HREF="" />' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '    </IMPLEMENTATION>' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '</SOFTPKG>' >> $(DISTNAME).ppd

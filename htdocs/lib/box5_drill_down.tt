@@ -1,4 +1,4 @@
-<div class="main">
+<div class="main" id="main">
 [%- vat_input = 0; vat_output = 0; -%]
 <table width="660" border="0" cellspacing="0" cellpadding="0">
   <tr>

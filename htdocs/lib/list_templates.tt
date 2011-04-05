@@ -1,5 +1,5 @@
 [% USE date -%]
-<div class="main">
+<div class="main" id="main">
 <h1>Invoice Template List</h1>
 [% INCLUDE page_select.tt -%]
   <table width="660" border="0" cellpadding="0" cellspacing="0" class="listing">

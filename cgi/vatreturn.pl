@@ -133,6 +133,13 @@ $Vars = {
 	vatreturn => $Vatreturn,
         javascript => '
 <script type="text/javascript">
+function print_list() {
+   $.get("/cgi-bin/fpa/print_vatreturn.pl",$("form#form1").serialize() ,function(data) {
+     document.getElementById("main").innerHTML = data;
+     $("#vattabs").hide();
+     $("#printtab").show();
+   });
+}
 function calc_val(obj) {
 
   if (! /^\d+\.?\d?\d?/.test(obj.value)) {

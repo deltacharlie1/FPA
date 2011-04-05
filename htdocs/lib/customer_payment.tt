@@ -1,5 +1,5 @@
 <form action="/cgi-bin/fpa/customer_payment2.pl" method="post" name="form1" id="form1">
-<div class="main">
+<div class="main" id="main">
 [%- USE date(format = '%d-%b-%y') %]
 <input type="hidden" name="id" id="id" value="[% cus.id -%]"/>
 [%- USE date -%]

@@ -1,4 +1,4 @@
-<div class="main">
+<div class="main" id="main">
 <form action="/cgi-bin/fpa/vatreturn2.pl" method="post" name="form1" id="form1">
   <input type="hidden" name="id" id="x_id" value="[%- vatreturn.id -%]"/>
   <input type="hidden" name="qstart" id="qstart" value="[%- vatreturn.dispstart -%]"/>
@@ -67,10 +67,10 @@
   </table>
 </div>
 <div id="sidebar">
-  <ul> 
+  <ul id="vattabs"> 
     <li>
       <div>
-          <input type="submit" name="save" id="list" value="List VAT Entries"/>
+          <input type="button" name="save" id="list" value="List VAT Entries"i onclick="print_list();"/>
       </div>
     </li>
 [% IF vatreturn.perstatus == 'save' -%]
@@ -92,7 +92,14 @@
       </div>
     </li>
 [% END -%]
-  </ul>   
+  </ul>
+  <ul id="printtab" style="display:none;">
+    <li>
+      <div>
+          <input type="button" name="goback" id="goback" value="Previous Screen" onclick="location.href='/cgi-bin/fpa/vatreturn.pl?[%- vatreturn.id -%]';"/>
+      </div>
+    </li>
+  </ul>
   <div id="sidebar-ad">
 [% INCLUDE adverts.tt -%]
   </div>

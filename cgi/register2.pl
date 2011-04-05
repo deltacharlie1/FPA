@@ -173,6 +173,8 @@ EOD
 #  Create the temp stack record(s)
 
 		$Sts = $dbh->do("insert into tempstacks (acct_id,caller) values ('$New_reg_id+$New_com_id','reconciliation')");
+		$Sts = $dbh->do("insert into tempstacks (acct_id,caller) values ('$New_reg_id+$New_com_id','trial_balance')");
+		$Sts = $dbh->do("insert into tempstacks (acct_id,caller) values ('$New_reg_id+$New_com_id','pandl')");
 
 #  ... and create a set of nominal codes
 

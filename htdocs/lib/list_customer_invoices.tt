@@ -1,4 +1,4 @@
-<div class="main">
+<div class="main" id="main">
 [%- USE date -%]
 <div id="invpayment" title="Receive Payment" style="display:none;">
   <form id="payform" name="payform">

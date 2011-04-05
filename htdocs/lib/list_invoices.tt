@@ -1,5 +1,5 @@
 [% USE date -%]
-<div class="main">
+<div class="main" id="main">
 <div id="invpayment" title="Receive Payment" style="display:none;">
   <form id="form1" name="form1" method="post" action="/cgi-bin/fpa/receive_invoice_payment.pl">
     <input type="hidden" name="cus_id" id="i_cus_id" value="[%- cus.id -%]"/>

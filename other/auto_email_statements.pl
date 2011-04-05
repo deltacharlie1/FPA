@@ -33,9 +33,13 @@ EOD
 
 #  Now get each customer who is to receive a statement
 
-	$aCustomers = $dbh->prepare("select id,cusstmtmsg,cusemail,cusname from customers where cusautostmts='Y' and acct_id='$COOKIE->{ACCT}'");
+	$aCustomers = $dbh->prepare("select id,cusstmtmsg,cusemail,cusstmtemail,cusname from customers where cusautostmts='Y' and acct_id='$COOKIE->{ACCT}'");
 	$aCustomers->execute;
 	while ($aCustomer = $aCustomers->fetchrow_hashref) {
+
+		if ($aCustomer->{cusstmtemail}) {
+			$aCustomer->{cusemail} = $aCustomer->{cusstmtemail};
+		}
 
 		if ($aCustomer->{cusemail}) {
 

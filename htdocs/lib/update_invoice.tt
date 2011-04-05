@@ -1,5 +1,5 @@
 <form action="/cgi-bin/fpa/save_invoice.pl" method="post" name="form1" id="form1">
-<div class="main">
+<div class="main" id="main">
 [%- USE date(format = '%d-%b-%y') %]
 [%- IF invoice.invtype == "C"; invtext = "Credit Note"; ELSE; invtext = "Invoice No"; END -%]
 <input type="hidden" name="id" id="x_id" value="[%- invoice.id -%]"/>

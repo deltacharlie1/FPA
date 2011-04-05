@@ -1,4 +1,4 @@
-<div class="main">
+<div class="main" id="main">
 [%- USE date -%]
 <div id="invpayment" title="Record Payment" style="display:none;">
   <form id="payform" name="payform" method="post" action="/cgi-bin/fpa/make_payment.pl">

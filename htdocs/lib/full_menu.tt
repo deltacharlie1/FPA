@@ -47,7 +47,7 @@
       </a>
       <ul class="sub">
         <li><a href="/cgi-bin/fpa/list_purchases.pl?listorder=O">List Unpaid Purchases</a></li>
-        <li><a href="/cgi-bin/fpa/list_purchases.pl?listorder=Q">List Purchases</a></li>
+        <li><a href="/cgi-bin/fpa/list_purchases.pl?listorder=N">List Purchases</a></li>
         <li><a href="/cgi-bin/fpa/new_purchase.pl">New Purchase Invoice</a></li>
         <li class="divider"><a href="#" onclick="display_form('P');">Pay Money Out</a></li>
         <li class="divider"><a href="/cgi-bin/fpa/list_suppliers.pl">List Suppliers</a></li>
@@ -99,7 +99,7 @@
         <li><a href="/cgi-bin/fpa/dashboard.pl">Front Page</a></li>
         <li class="divider"><a href="/cgi-bin/fpa/invrep1.pl">Invoice Analysis</a></li>
         <li><a href="/cgi-bin/fpa/txnrep1.pl">Transaction Analysis</a></li>
-        <li class="divider"><a href="/cgi-bin/fpa/trial_balance.pl">Trial Balance</a></li>
+        <li class="divider"><a href="/cgi-bin/fpa/trial_balance.pl?new">Trial Balance</a></li>
         <li><a href="/cgi-bin/fpa/pandl.pl">Profit &amp; Loss</a></li>
         <li class="divider"><a href="#">Aged Debtors</a></li>
         <li><a href="#">Aged Creditors</a></li>

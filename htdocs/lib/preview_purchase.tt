@@ -1,4 +1,4 @@
-<div class="main">
+<div class="main" id="main">
 <h1>Preview Purchase Invoice</h1>
 <table width="660" border="0" cellspacing="0" cellpadding="0">
   <tr>

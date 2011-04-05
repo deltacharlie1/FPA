@@ -1,4 +1,4 @@
-<div class="main">
+<div class="main" id="main">
 [% USE date -%]
 <h1>[%- IF tfrtype == "T" -%]Transfer Funds Between Accounts[%- ELSIF tfrtype == "I" -%]Cash to Bank[%- ELSE -%]Cash from Bank[%- END -%]</h1>
 <form action="/cgi-bin/fpa/transfer2.pl" method="post" name="form1" id="form1">

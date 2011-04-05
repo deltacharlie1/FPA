@@ -1,4 +1,4 @@
-<div class="main">
+<div class="main" id="main">
 <div id="pudialog" style="display:none;" title="Upload a Document">
   <form id="puform" name="puform" method="post" action="/cgi-bin/fpa/uploadify.pl">
     <table width="100%" cellpadding="4" cellspacing="0" border="0" class="formtable">

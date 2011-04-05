@@ -1,4 +1,4 @@
-<div class="main">
+<div class="main" id="main">
 [%- USE date -%]
 <form action="/cgi-bin/fpa/multi_purchases2.pl" method="post" name="form1" id="form1">
 <input type="hidden" name="cus_id" id="cus_id" value="[%- cus.id -%]"/>

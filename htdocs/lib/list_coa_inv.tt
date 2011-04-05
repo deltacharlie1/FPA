@@ -1,4 +1,4 @@
-<div class="main">
+<div class="main" id="main">
 <table width="660" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td style="vertical-align:bottom;">
@@ -24,29 +24,29 @@
   [%- ndx = loop.count % 2 -%]
   [%- IF entry.nomtype == 'S' -%]
     <tr class="[%- class.$ndx -%]" onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- entry.linkid -%]';">
-      <td>[%- entry.printdate -%]</td>
+      <td>[%- entry.printdate -%] - [%- entry.nomtype -%]</td>
       <td>Inv</td>
       <td>[%- entry.invinvoiceno -%]</td>
       <td>[%- entry.invcusname | truncate(60) -%]</td>
-    [% IF coatype.match('(?i)Assets|Expenses') -%]
-      <td style="text-align:right;">[%- entry.amount | format('%1.2f') -%]</td>
+    [% IF entry.amount >= 0 -%]
+      <td style="text-align:right;">[%- entry.amount | format('%1.2f') | remove('-') -%]</td>
       <td>&nbsp;</td>
     [% ELSE -%]
       <td>&nbsp;</td>
-      <td style="text-align:right;">[%- entry.amount | format('%1.2f') -%]</td>
+      <td style="text-align:right;">[%- entry.amount | format('%1.2f') | remove('-') -%]</td>
     [% END -%]
     </tr>
   [% ELSE -%]
     <tr class="[%- class.$ndx -%]" onclick="location.href='/cgi-bin/fpa/update_purchase.pl?[%- entry.linkid -%]';">
-      <td>[%- entry.printdate -%]</td>
+      <td>[%- entry.printdate -%] - [%- entry.nomtype -%]</td>
       <td>Txn</td>
       <td>[%- entry.txntxnno -%]</td>
       <td>[%- entry.txncusname | truncate(60) -%]</td>
-    [% IF coatype.match('(?i)Assets|Expenses') -%]
+    [% IF entry.amount < 0 -%]
       <td>&nbsp;</td>
-      <td style="text-align:right;">[%- 0 - entry.amount | format('%1.2f') -%]</td>
+      <td style="text-align:right;">[%- 0 - entry.amount | format('%1.2f') | remove('-') -%]</td>
     [% ELSE -%]
-      <td style="text-align:right;">[%- 0 - entry.amount | format('%1.2f') -%]</td>
+      <td style="text-align:right;">[%- 0 - entry.amount | format('%1.2f') | remove('-') -%]</td>
       <td>&nbsp;</td>
     [% END -%]
     </tr>

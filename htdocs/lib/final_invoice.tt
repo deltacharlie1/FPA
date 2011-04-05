@@ -1,5 +1,5 @@
 [%- USE date; curdate = date.now div 86400 + 719528; today = date(format = '%d-%b-%y') -%]
-<div class="main">
+<div class="main" id="main">
 <div id="invpayment" title="Receive Payment" style="display:none;">
   <form id="pay2form" name="pay2form">
     <input type="hidden" name="i_cus_id" id="i_cus_id" value="[%- invoice.cus_id -%]"/>

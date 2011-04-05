@@ -273,11 +273,16 @@ $(document).ready(function(){
 //  $("#body").css("height",$("#wrapper").height() - 260);
 });
 function print_display() {
-  if ($(".main").length) {
-    $(".main").print();
+  if ($("#print_listing").length) {
+    $("#print_listing").print();
   }
   else {
-    window.print();
+    if ($("#main").length) {
+      $("#main").print();
+    }
+    else {
+      window.print();
+    }
   }
 // alert(document.URL);
 }

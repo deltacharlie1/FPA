@@ -1,4 +1,4 @@
-<div class="main">
+<div class="main" id="main">
 <form action="/cgi-bin/fpa/adduser2.pl" method="post" name="form1" id="form1">
 <input type="hidden" name="addtype" id="addtype"/>
 <h1>Add an Additional User</h1>

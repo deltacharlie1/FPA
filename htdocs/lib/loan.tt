@@ -1,4 +1,4 @@
-<div class="main">
+<div class="main" id="main">
 [% USE date(format = '%d-%b-%y') %]
 <form action="/cgi-bin/fpa/loan2.pl" method="post" name="form1" id="form1">
 <input type="hidden" name="loantype" id="loantype" value="[%- loantype -%]"/>
