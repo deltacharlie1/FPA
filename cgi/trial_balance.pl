@@ -22,19 +22,21 @@ $Mth--;
 $Startstr = $Reg->{tbstart};
 $Curstr = $Reg->{tbend};
 
-if ($ENV{QUERY_STRING} =~ /redisplay/i) {
-
 #  Get settings from tempstacks
 
-	$TSs = $dbh->prepare("select f1,f2,f3 from tempstacks where acct_id='$COOKIE->{ACCT}' and caller='trial_balance'");
-	$TSs->execute;
-	$TS = $TSs->fetchrow_hashref;
+$TSs = $dbh->prepare("select f1,f2,f3 from tempstacks where acct_id='$COOKIE->{ACCT}' and caller='report'");
+$TSs->execute;
+$TS = $TSs->fetchrow_hashref;
 
+if ($TS->{f1}) {
 	$Reg->{tbselect} = $TS->{f1};
 	$Reg->{tbstart} = $TS->{f2};
 	$Reg->{tbend} = $TS->{f3};
-	$TSs->finish;
 }
+$TSs->finish;
+
+$Sts = $dbh->do("update tempstacks set f1='',f2='',f3='' where acct_id='$COOKIE->{ACCT}' and caller='report'");
+
 $Coas = $dbh->prepare("select nomcode,coadesc,coatype,sum(nomamount) as balance from nominals left join coas on (nominals.nomcode=coas.coanominalcode and nominals.acct_id=coas.acct_id) where nominals.acct_id='$COOKIE->{ACCT}' group by nomcode having balance<>0 order by nomcode");
 $Coas->execute;
 

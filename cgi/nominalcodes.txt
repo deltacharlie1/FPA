@@ -1,16 +1,16 @@
-1000	Fixed Assets	Assets	Balance Sheet
-1100	Debtors	Assets	Balance Sheet
-1200	Bank Current	Assets	Balance Sheet
-1210	Bank Deposit	Assets	Balance Sheet
-1300	Cash	Assets	Balance Sheet
-1310	Cheques	Assets	Balance Sheet
-1400	VAT Input	Assets	Balance Sheet
-1500	Other Current Assets	Assets	Balance Sheet
-2000	Creditors	Liabilities	Balance Sheet
-2010	Credit Card	Liabilities	Balance Sheet
-2100	VAT Output	Liabilities	Balance Sheet
-2200	Other Current Liability	Liabilities	Balance Sheet
-2300	Long Term Liability	Liabilities	Balance Sheet
+1000	Fixed Assets	Fixed Assets	Balance Sheet
+1100	Debtors	Current Assets	Balance Sheet
+1200	Bank Current	Current Assets	Balance Sheet
+1210	Bank Deposit	Current Assets	Balance Sheet
+1300	Cash	Current Assets	Balance Sheet
+1310	Cheques	Current Assets	Balance Sheet
+1400	VAT Input	Current Assets	Balance Sheet
+1500	Other Current Current Assets	Assets	Balance Sheet
+2000	Creditors	Current Liabilities	Balance Sheet
+2010	Credit Card	Current Liabilities	Balance Sheet
+2100	VAT Output	Current Liabilities	Balance Sheet
+2200	Other Current Liability	Current Liabilities	Balance Sheet
+2300	Long Term Liability	Longterm Liabilities	Balance Sheet
 3000	Share Capital	Capital	Balance Sheet
 3100	Retained Earnings	Capital	Balance Sheet
 4000	UK Sales	Income	P & L

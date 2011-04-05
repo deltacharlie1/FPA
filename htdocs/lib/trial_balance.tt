@@ -39,8 +39,13 @@
           <input type="button" name="save" id="list" value="List Trial Balance" onclick="print_list();"/>
       </div>
     </li>
+    <li>
+      <div>
+          <input type="button" name="balsheet" id="balsheet" value="Balance Sheet" onclick="location.href='/cgi-bin/fpa/balance_sheet.pl';"/>
+      </div>
+    </li>
   </ul>
-  <ul id="printtab">
+  <ul id="printtab" style="display:none;">
     <li>
       <div>
           <input type="button" name="goback" id="goback" value="Previous Screen" onclick="location.href='/cgi-bin/fpa/trial_balance.pl?redisplay';"/>
