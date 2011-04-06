@@ -123,6 +123,5 @@ Status: 301
 Location: /cgi-bin/fpa/list_vatreturns.pl
 
 EOD
-}
 $dbh->disconnect;
 exit;
