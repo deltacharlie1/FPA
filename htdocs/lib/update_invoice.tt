@@ -197,17 +197,23 @@
   <ul>    
     <li>
       <div>
-        <input type="submit" name="submit" id="save" value="Save Draft"/>
+        <a href="#" onclick="submit_details('Draft');">
+         Save Draft
+        </a>
       </div>  
     </li>   
     <li>    
       <div>   
-        <input type="submit" name="submit" id="print" value="Preview"/>
+        <a href="#" onclick="submit_details('Preview');">
+         Preview
+        </a>
       </div>  
     </li>   
     <li>    
       <div>   
-        <input type="submit" name="submit" id="final" value="Save Final"/>
+        <a href="#" onclick="submit_details('Final');">
+         Save Final
+        </a>
       </div>  
     </li>   
     <li>
