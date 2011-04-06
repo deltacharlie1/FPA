@@ -1,16 +1,6 @@
-<form action="/cgi-bin/fpa/save_invoice.pl" method="post" name="form1" id="form1">
 <div class="main" id="main">
 [%- USE date(format = '%d-%b-%y') %]
 [%- IF invoice.invtype == "C"; invtext = "Credit Note"; ELSE; invtext = "Invoice No"; END -%]
-<input type="hidden" name="id" id="x_id" value="[%- invoice.id -%]"/>
-<input type="hidden" name="cus_id" id="x_cus_id" value="[%- invoice.cus_id -%]"/>
-<input type="hidden" name="invitemcount" id="invitemcount" value="[%- invoice.invitemcount -%]"/>
-<input type="hidden" name="invitems" id="invitems" value=""/>
-<input type="hidden" name="invtotal" id="x_invtotal" value="[%- invoice.invtotal -%]"/>
-<input type="hidden" name="invinvoiceno" id="x_invinvoiceno" value="[%- invoice.invinvoiceno -%]"/>
-[%- UNLESS cookie.VAT == "N" -%]<input type="hidden" name="invvat" id="x_invvat" value="[%- invoice.invvat -%]"/>[%- END -%]
-<input type="hidden" name="item_tt" id="item_tt" value="[%- invoice.tottotal -%]"/>
-<input type="hidden" name="invstatus" id="x_invstatus" value="[%- invoice.invstatus -%]"/>
 <div id="template" style="text-align:left;z-index:10100;display:none;" title="Invoice Frequency Details">
 <form id="repeat_details" form="repeat_details" class="newinvoice">
   <table width="100%" border="0" cellpadding="0" cellspacing="0" class="formtable">
@@ -37,6 +27,16 @@
   </table>
 </form>
 </div>
+<form action="/cgi-bin/fpa/save_invoice.pl" method="post" name="form1" id="form1" class="newinvoice">
+<input type="hidden" name="id" id="x_id" value="[%- invoice.id -%]"/>
+<input type="hidden" name="cus_id" id="x_cus_id" value="[%- invoice.cus_id -%]"/>
+<input type="hidden" name="invitemcount" id="invitemcount" value="[%- invoice.invitemcount -%]"/>
+<input type="hidden" name="invitems" id="invitems" value=""/>
+<input type="hidden" name="invtotal" id="x_invtotal" value="[%- invoice.invtotal -%]"/>
+<input type="hidden" name="invinvoiceno" id="x_invinvoiceno" value="[%- invoice.invinvoiceno -%]"/>
+[%- UNLESS cookie.VAT == "N" -%]<input type="hidden" name="invvat" id="x_invvat" value="[%- invoice.invvat -%]"/>[%- END -%]
+<input type="hidden" name="item_tt" id="item_tt" value="[%- invoice.tottotal -%]"/>
+<input type="hidden" name="invstatus" id="x_invstatus" value="[%- invoice.invstatus -%]"/>
 <div class="status">[%- invoice.invstatus -%] <span class="invtext">[%- invtext | remove(" No") -%]</span></div>
   <table width="660" border="0" cellpadding="0" cellspacing="0" class="formtable">
     <tr>

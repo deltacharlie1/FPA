@@ -124,7 +124,9 @@ function amd(obj) {
   document.getElementById('desc').value = tbl.rows[item_row].cells[0].innerHTML;
   document.getElementById('price').value = tbl.rows[item_row].cells[1].innerHTML;
   document.getElementById('qty').value = tbl.rows[item_row].cells[2].innerHTML;
-  document.getElementById('item_cat').value = tbl.rows[item_row].cells[6].innerHTML;
+  if (tbl.rows[item_row].cells[6] != undefined) {
+    document.getElementById('item_cat').value = tbl.rows[item_row].cells[6].innerHTML;
+  }
 
   dlt(obj);
 }

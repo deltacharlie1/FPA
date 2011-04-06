@@ -44,47 +44,13 @@ $Vars = {
 	focus => 'desc',
 	invoice => $Invoice,
 	entries => $IT,
-        javascript => '<script type="text/javascript" src="/js/jquery-form.js"></script>'
-. $Line_js .
+        javascript => $Line_js .
 '<script language="JavaScript">
 var responseText = "";
 var errfocus = "";
 $(document).ready(function(){
   $("#x_invprintdate").datepicker();
-  var options = {
-    beforeSubmit: validate,
-    success: showResponse
-  };
-  $("#form1").ajaxForm(options);
 });
-function showResponse(responseText, statusText) {
-  if (/OK/i.test(responseText)) {
-    var href = responseText.split("-");
-    location.href = "/cgi-bin/fpa/" + href[1];
-  }
-  else {
-    document.getElementById("dialog").innerHTML = responseText;
-    $("#dialog").dialog("open");
-    return false;
-  }
-}
-function validate(formData,jqForm,options) {
-  if(validate_form("form1")) {
-//  Stuff the pass through input fields
-
-    for (i=0; i<formData.length; i++) {
-      if (formData[i].name == "invitems") {
-        formData[i].value = document.getElementById("div_html").innerHTML;
-      }
-      if (formData[i].name == "invtotal") {
-        formData[i].value = document.getElementById("st").innerHTML;
-      }
-      if (formData[i].name == "invvat") {
-        formData[i].value = document.getElementById("vt").innerHTML;
-      }
-    }
-  }
-}
 function setfocus() {
   eval("document.getElementById(\'" + errfocus + "\').value = \'\';");
   eval("document.getElementById(\'" + errfocus + "\').focus();");
@@ -103,7 +69,8 @@ function submit_details(action) {
   }
   else {
     if (validate_form("#form1")) {
-      var submit_data = $(".newinvoice").serialize() + "&invtotal=" + escape(document.getElementById("st").innerHTML) + "&invvat=" + escape(document.getElementById("vt").innerHTML) + "&invitems=" + escape(document.getElementById("div_html").innerHTML) + "&submit=" + action;
+      document.getElementById("invitems").value = document.getElementById("div_html").innerHTML;
+      var submit_data = $(".newinvoice").serialize() + "&submit=" + action;
       $.post("/cgi-bin/fpa/save_invoice.pl",submit_data ,function(data) {
         if ( ! /^OK/.test(data)) {
           alert(data);

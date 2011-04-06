@@ -33,7 +33,6 @@ while (( $Key,$Value) = each %FORM) {
 	$Value =~ tr/\\//d;
 	$Value =~ s/\'/\\\'/g;
         $FORM{$Key} = $Value;
-# $Errs .= "$Key<br/>\n";
 }
 
 #  Do some basic validation
