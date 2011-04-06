@@ -384,6 +384,9 @@ button {
 .items td.txtcenter {
 	text-align:center;
 }
+.items td.hidden {
+	display:none;
+}
 .status {
 	border: 1px solid #D2944E;
 	color: #87441c;

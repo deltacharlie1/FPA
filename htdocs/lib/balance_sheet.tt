@@ -1,0 +1,148 @@
+<div class="main" id="main">
+  <table width="660" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td><h1>Balance Sheet</h1></td>
+      <td style="text-align:right;;vertical-align:bottom;"><h2>[%- tbstart -%] to [%- tbend -%]</td>
+    </tr>
+  </table>
+  <table width="660" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="500">
+        <table width="450" border="0" cellpadding="4" cellspacing="4" style="font-weigh:normal;">
+          <tr>
+            <td colspan="5">
+              <h2>Fixed Assets</h2>
+            </td>
+          </tr>
+[% totfa=0; FOREACH fa IN FixedAssets -%]
+          <tr>
+            <td width="15">&nbsp;</td>
+            <td width="150">([%- fa.nomcode -%]) [%- fa.coadesc -%]</td>
+            <td width="70" style="text-align:right;">[%- IF fa.balance != ''; totfa = totfa + fa.balance; fa.balance; END -%]</td>
+            <td width="60">&nbsp;</td>
+            <td width="60">&nbsp;</td>
+          </tr>
+[% END -%]
+          <tr>
+            <td colspan="4">&nbsp;</td>
+            <td style="text-align:right;">[%- totfa | format('%1.2f') -%]</td>
+          </tr>
+          <tr>
+            <td colspan="5">&nbsp;</td>
+          </tr>
+          <tr>
+            <td colspan="5">
+              <h2>Current Assets</h2>
+            </td>
+          </tr>
+[% totca=0; FOREACH ca IN CurrentAssets -%]
+          <tr>
+            <td width="15">&nbsp;</td>
+            <td width="150">([%- ca.nomcode -%]) [%- ca.coadesc -%]</td>
+            <td width="70" style="text-align:right;">[%- IF ca.balance != ''; totca = totca + ca.balance; ca.balance; END -%]</td>
+            <td width="60">
+            <td width="60">&nbsp;</td>
+          </tr>
+[% END -%]
+          <tr>
+            <td width="15">&nbsp;</td>
+            <td colspan="2">Total Current Assets</td>
+            <td style="text-align:right;">[%- totca | format('%1.2f') -%]</td>
+            <td width="60">&nbsp;</td>
+          </tr>
+          <tr>
+            <td colspan="5">&nbsp;</td>
+          </tr>
+          <tr>
+            <td colspan="5">
+              <h2>Less: Current Liabilities</h2>
+            </td>
+          </tr>
+[% totcl=0; FOREACH cl IN CurrentLiabilities -%]
+          <tr>
+            <td width="15">&nbsp;</td>
+            <td width="150">([%- cl.nomcode -%]) [%- cl.coadesc -%]</td>
+            <td width="70" style="text-align:right;">[%- IF cl.balance != ''; totcl = totcl + cl.balance; cl.balance; END -%]</td>
+            <td width="60">
+            <td width="60">&nbsp;</td>
+          </tr>
+[% END -%]
+          <tr>
+            <td width="15">&nbsp;</td>
+            <td colspan="2">Total Current Liabilities</td>
+            <td style="text-align:right;">[%- totcl | format('%1.2f') -%]</td>
+            <td width="60">&nbsp;</td>
+          </tr>
+          <tr>
+            <td colspan="5">&nbsp;</td>
+          </tr>
+          <tr>
+            <td width="15">&nbsp;</td>
+            <td colspan="3">Net Current Assets</td>
+            <td style="text-align:right;">[%- totca - totcl | format('%1.2f') -%]</td>
+          </tr>
+          <tr>
+            <td colspan="5">&nbsp;</td>
+          </tr>
+          <tr>
+            <td width="15">&nbsp;</td>
+            <td colspan="3">Total Assets less Current Liabilities</td>
+            <td style="text-align:right;">[%- totfa + totca - totcl | format('%1.2f') -%]</td>
+          </tr>
+          <tr>
+            <td colspan="5">&nbsp;</td>
+          </tr>
+          <tr>
+            <td colspan="5">
+              <h2>Long-Term Liabilities</h2>
+            </td>
+          </tr>
+[% totll=0; FOREACH ll IN LongtermLiabilities -%]
+          <tr>
+            <td width="15">&nbsp;</td>
+            <td width="150">([%- ll.nomcode -%]) [%- ll.coadesc -%]</td>
+            <td width="70" style="text-align:right;">[%- IF ll.balance != ''; totll = totll + ll.balance; ll.balance; END -%]</td>
+            <td width="60">
+            <td width="60">&nbsp;</td>
+          </tr>
+[% END -%]
+          <tr>
+            <td width="15">&nbsp;</td>
+            <td colspan="2">Total Long-Term Liabilities</td>
+            <td style="text-align:right;">[%- totll | format('%1.2f') -%]</td>
+            <td width="60">&nbsp;</td>
+          </tr>
+          <tr>
+            <td colspan="5">&nbsp;</td>
+          </tr>
+          <tr>
+            <td colspan="5">
+              <h2>Equity</h2>
+            </td>
+          </tr>
+[% tote=0; FOREACH e IN Capital -%]
+          <tr>
+            <td width="15">&nbsp;</td>
+            <td width="150">([%- e.nomcode -%]) [%- e.coadesc -%]</td>
+            <td width="70" style="text-align:right;">[%- IF e.balance != ''; tote = tote + e.balance; e.balance; END -%]</td>
+            <td width="60">
+            <td width="60">&nbsp;</td>
+          </tr>
+[% END -%]
+          <tr>
+            <td width="15">&nbsp;</td>
+            <td colspan="2">Total Equity</td>
+            <td style="text-align:right;">[%- tote | format('%1.2f') -%]</td>
+            <td width="60">&nbsp;</td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</div>
+<div id="sidebar">
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+  </div>
+</div>
+</div>

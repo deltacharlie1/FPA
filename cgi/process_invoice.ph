@@ -148,10 +148,11 @@ sub save_invoice {
       <th style="text-align: right;" width="30">Qty</th>
       <th style="text-align: right;" width="50">Sub<br>Total</th>
       <th style="text-align: right;" width="60">Total</th>
+      <th style="display:none;"></th>
     </tr>
   </tbody>
   <tr>
-    <td>$FORM{invdesc}</td><td class="txtright">$Net</td><td class="txtright">1</td><td class="txtright">$Net</td><td class="txtright">$Net</td>
+    <td>$FORM{invdesc}</td><td class="txtright">$Net</td><td class="txtright">1</td><td class="txtright">$Net</td><td class="txtright">$Net</td><td class="hidden">$FORM{item_cat}</td>
   </tr>
 </table>
 EOD
@@ -168,10 +169,11 @@ EOD
       <th style="text-align: center;" width="30">VAT<br>Rate</th>
       <th style="text-align: right;" width="40">VAT<br>Amt</th>
       <th style="text-align: right;" width="60">Total</th>
+      <th style="display:none;"></th>
     </tr>
   </tbody>
   <tr>
-    <td>$FORM{invdesc}</td><td class="txtright">$Net</td><td class="txtright">1</td><td class="txtright">$Net</td><td class="txtcenter">$Vatrate</td><td class="txtright">$Vat</td><td class="txtright">$Tot</td>
+    <td>$FORM{invdesc}</td><td class="txtright">$Net</td><td class="txtright">1</td><td class="txtright">$Net</td><td class="txtcenter">$Vatrate</td><td class="txtright">$Vat</td><td class="txtright">$Tot</td><td class="hidden">$FORM{item_cat}</td>
   </tr>
 </table>
 EOD
@@ -227,10 +229,6 @@ EOD
 		}
 		else {				#  New invoice so get the next invoice no
 
-#print "Content-Type: text/plain\n\n";
-#print "\$Sts = \$dbh->do(\"insert into invoices (acct_id,cus_id,invinvoiceno,invcusref,invtype,invcusname,invcusaddr,invcuspostcode,invcusregion,invcoa,invcuscontact,invcusemail,invcusterms,invremarks,invcreated,invstatus,invstatuscode,invstatusdate,invfpflag,invitemcount,invitems,invdesc,invtotal,invvat,invprintdate,invduedate,invyearend) values ('$COOKIE->{ACCT}',$FORM{cus_id},'$FORM{invinvoiceno}','$FORM{invcusref}','$FORM{invtype}','$FORM{invcusname}','$FORM{invcusaddr}','$FORM{invcuspostcode}','$FORM{invcusregion}','$FORM{invcoa}','$FORM{invcuscontact}','$FORM{invcusemail}','$FORM{invcusterms}','$FORM{invremarks}',now(),'Printed','3',now(),'$FORM{invfpflag}',$FORM{invitemcount},'$FORM{invitems}','$FORM{invdesc}','$FORM{invtotal}','$FORM{invvat}',str_to_date('$FORM{invprintdate}','%d-%b-%y'),from_days(to_days(str_to_date('$FORM{invprintdate}','%d-%b-%y')) + '$FORM{invcusterms}'),'$COOKIE->{YEAREND}')\")\n";
-#exit;
-
 			if ($FORM{invcusterms} =~ /^\d+$/) {		#  Calculate the due date
 				$Sts = $dbh->do("insert into invoices (acct_id,cus_id,invinvoiceno,invcusref,invtype,invcusname,invcusaddr,invcuspostcode,invcusregion,invcoa,invcuscontact,invcusemail,invcusterms,invremarks,invcreated,invstatus,invstatuscode,invstatusdate,invfpflag,invitemcount,invitems,invdesc,invtotal,invvat,invprintdate,invduedate,invyearend) values ('$COOKIE->{ACCT}',$FORM{cus_id},'$FORM{invinvoiceno}','$FORM{invcusref}','$FORM{invtype}','$FORM{invcusname}','$FORM{invcusaddr}','$FORM{invcuspostcode}','$FORM{invcusregion}','$FORM{invcoa}','$FORM{invcuscontact}','$FORM{invcusemail}','$FORM{invcusterms}','$FORM{invremarks}',now(),'Printed','3',now(),'$FORM{invfpflag}',$FORM{invitemcount},'$FORM{invitems}','$FORM{invdesc}','$FORM{invtotal}','$FORM{invvat}',str_to_date('$FORM{invprintdate}','%d-%b-%y'),from_days(to_days(str_to_date('$FORM{invprintdate}','%d-%b-%y')) + '$FORM{invcusterms}'),'$COOKIE->{YEAREND}')");
 			}
@@ -267,10 +265,10 @@ EOD
 				$Cell[0] =~ s/^\s+//;
 
 			        if ($COOKIE->{VAT} =~ /N/i) {
-					$Sts = $dbh->do("insert into items (acct_id,inv_id,itmtype,itmqty,itmdesc,itmtotal,itmdate) values ('$COOKIE->{ACCT}',$FORM{id},'S','$Cell[2]','$Cell[0]','$Cell[3]',str_to_date('$FORM{invprintdate}','%d-%b-%y'))");
+					$Sts = $dbh->do("insert into items (acct_id,inv_id,itmtype,itmqty,itmdesc,itmtotal,itmdate,itmcat) values ('$COOKIE->{ACCT}',$FORM{id},'S','$Cell[2]','$Cell[0]','$Cell[3]',str_to_date('$FORM{invprintdate}','%d-%b-%y'),'$Cell[5]')");
 			        }
 		        	else {
-					$Sts = $dbh->do("insert into items (acct_id,inv_id,itmtype,itmqty,itmdesc,itmtotal,itmvat,itmvatrate,itmdate) values ('$COOKIE->{ACCT}',$FORM{id},'S','$Cell[2]','$Cell[0]','$Cell[3]','$Cell[5]','$Cell[4]',str_to_date('$FORM{invprintdate}','%d-%b-%y'))");
+					$Sts = $dbh->do("insert into items (acct_id,inv_id,itmtype,itmqty,itmdesc,itmtotal,itmvat,itmvatrate,itmdate,itmcat) values ('$COOKIE->{ACCT}',$FORM{id},'S','$Cell[2]','$Cell[0]','$Cell[3]','$Cell[5]','$Cell[4]',str_to_date('$FORM{invprintdate}','%d-%b-%y'),'$Cell[7]')");
 			        }
 			}
 		}

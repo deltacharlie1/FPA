@@ -47,6 +47,11 @@
         </select>
       </td>
     </tr>
+    <tr>
+      <td><label>Item Category</label></td>
+      <td><input name="item_cat" type="text" id="item_cat" size="20" value="" onchange="get_results('S');"/></td>
+      <td colspan="2">&nbsp;</td>
+    </tr>
   </table><br/>
   <div id="results"></div>
 </div>

@@ -12,6 +12,7 @@ function add_row() {
   document.getElementById('desc').value = "";
   document.getElementById('price').value = "";
   document.getElementById('qty').value = "";
+  document.getElementById('item_cat').value = "";
   document.getElementById('desc').focus();
 }
 
@@ -54,7 +55,7 @@ function display_row() {
 
 //  Now create 5 cells
 
-  for (i=0; i<6; i++) {
+  for (i=0; i<7; i++) {
     var td = document.createElement("TD");
     switch(i) {
      case 0:		//  Description
@@ -82,6 +83,10 @@ function display_row() {
        td.appendChild(b1);
        td.appendChild(document.createTextNode(" "));
        td.appendChild(b2);
+       break;
+     case 6:
+       td.className = "hidden";
+       td.appendChild(document.createTextNode(document.getElementById('item_cat').value));
        break;
     }
     tr.appendChild(td);
@@ -119,6 +124,7 @@ function amd(obj) {
   document.getElementById('desc').value = tbl.rows[item_row].cells[0].innerHTML;
   document.getElementById('price').value = tbl.rows[item_row].cells[1].innerHTML;
   document.getElementById('qty').value = tbl.rows[item_row].cells[2].innerHTML;
+  document.getElementById('item_cat').value = tbl.rows[item_row].cells[6].innerHTML;
 
   dlt(obj);
 }
@@ -137,7 +143,7 @@ function dlt(obj) {
     var tr = document.createElement("tr");
     var td = document.createElement("td");
 //    td.setAttribute("colspan","6");
-    td.colSpan = 6;
+    td.colSpan = 7;
     td.setAttribute("style","font-style:italic;");
     td.appendChild(document.createTextNode("You have not yet added any line items."));
     tr.appendChild(td);
@@ -145,7 +151,7 @@ function dlt(obj) {
     tr = document.createElement("tr");
     td = document.createElement("td");
 //    td.setAttribute("colspan","6");
-    td.colSpan = 6;
+    td.colSpan = 7;
     td.appendChild(document.createTextNode(" "));
     tr.appendChild(td);
     tbl.appendChild(tr);

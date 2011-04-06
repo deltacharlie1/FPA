@@ -132,9 +132,9 @@
                 </tr>
                 <tr>
 [% IF cookie.VAT == "N" -%]
-                  <td><textarea name="desc" id="desc" cols="50" rows="2"></textarea></td>
+                  <td rowspan="2"><textarea name="desc" id="desc" cols="50" rows="2"></textarea></td>
 [% ELSE -%]
-                  <td><textarea name="desc" id="desc" cols="30" rows="2"></textarea></td>
+                  <td rowspan="2"><textarea name="desc" id="desc" cols="30" rows="2"></textarea></td>
 [% END -%] 
                   <td style="vertical-align:top;"><input name="price" id="price" type="text" size="5"  onblur="check_currency(this);"/></td>
                   <td style="vertical-align:top;"><input name="qty" id="qty" type="text" size="4"  onblur="check_int(this);"/></td>
@@ -145,6 +145,10 @@
                     </select>
                   </td>
 [% END -%]
+                </tr>
+                <tr>
+                  <td><label>Category</label</td>
+                  <td colspan="2"><input type="text" name="item_cat" id="item_cat" size="20"/>
                 </tr>
               </table>
             </td>
@@ -174,6 +178,7 @@
 [% END -%]
               <th width="60" style="text-align:right;">Total</th>
               <th width="70" style="text-align:center;">Edit</th>
+              <th style="display:none;"></th>
             </tr></tbody><tbody id="items">
             <tr>
               <td colspan="8" style="font-style:italic;">You have not yet added any line items.</td>

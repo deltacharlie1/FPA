@@ -193,8 +193,8 @@ $(document).ready(function(){
   $("#receipt2").dialog({
     bgiframe: true,
     autoOpen: false,
-    position: [200,100],
-    height: 420,
+    position: [200,50],
+    height: 480,
     width: 500,
     modal: true,
     buttons: {
@@ -220,8 +220,8 @@ $(document).ready(function(){
   $("#payment2").dialog({
     bgiframe: true,
     autoOpen: false,
-    position: [200,100],
-    height: 475,
+    position: [200,50],
+    height: 535,
     width: 500,
     modal: true,
     buttons: {

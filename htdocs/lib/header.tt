@@ -134,6 +134,10 @@ $(document).ready(function(){
         <td><label>Total Amount Received</label></td>
         <td><span><input type="text" name="txnamount" id="rec_txnamount" value="" size="10" title="Total Amount Received" class="mandatory currency"[%- UNLESS cookie.VAT == "N" -%] onchange="calc_vat(this);"[%- END -%]/></span></td>
       </tr>
+      <tr>
+        <td><label>Category</label></td>
+        <td><span><input type="text" name="item_cat" id="rec_item_cat" value="" size="20" title="Category"/></span></td>
+      </tr>
 [% UNLESS cookie.VAT == "N" -%]
       <tr>
         <td><label>VAT Rate</label></td>
@@ -164,7 +168,7 @@ $(document).ready(function(){
         <td><input type="text" name="invprintdate" id="rec_invprintdate" value="[%- date.format(date.now, '%d-%b-%y') -%]" size="10" readonly="readonly"/></td>
       </tr>
       <tr>
-        <td colspan="2"><label style="text-align:left;">Description</label><textarea name="invdesc" id="rec_invdesc" cols="30" rows="2" title="Description of the receipt" class="mandatory"></textarea></td>
+        <td colspan="2"><label style="text-align:left;padding-bottom:5px;">Description</label><textarea name="invdesc" id="rec_invdesc" cols="30" rows="2" title="Description of the receipt" class="mandatory"></textarea></td>
       </tr>
     </table>
   </form>
@@ -194,6 +198,10 @@ $(document).ready(function(){
       <tr>
         <td><label>Total Amount Paid</label></td>
         <td><span><input type="text" name="txnamount" id="pay_txnamount" value="" size="10" title="Total Amount Paid" class="mandatory currency"[%- UNLESS cookie.VAT == "N" -%] onchange="calc_vat(this);"[%- END -%]/></span></td>
+      </tr>
+      <tr>
+        <td><label>Category</label></td>
+        <td><span><input type="text" name="item_cat" id="rec_item_cat" value="" size="20" title="Category"/></span></td>
       </tr>
 [% UNLESS cookie.VAT == "N" -%]
       <tr>
@@ -230,7 +238,7 @@ $(document).ready(function(){
         <td><span><input type="text" name="invcusref" id="pay_invcusref" value="" title="Supplier Reference"/></span></td>
       </tr>
       <tr>
-        <td colspan="2"><label style="text-align:left;">Description</label><textarea name="invdesc" id="pay_invdesc" cols="30" rows="2" title="Description of the payment" class="mandatory"></textarea>[%- IF cookie.UPLDS > 0 -%]&nbsp;&nbsp;<input id="pifile" name="pifile" type="file"/>[%- END -%]</td>
+        <td colspan="2"><label style="text-align:left;padding-bottom:5px;">Description</label><textarea name="invdesc" id="pay_invdesc" cols="30" rows="2" title="Description of the payment" class="mandatory"></textarea>[%- IF cookie.UPLDS > 0 -%]&nbsp;&nbsp;<input id="pifile" name="pifile" type="file"/>[%- END -%]</td>
       </tr>
     </table>
   </form>

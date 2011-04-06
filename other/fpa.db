@@ -248,6 +248,7 @@ create table items (
   itmvat decimal(20,2) not null default '0' comment 'VAT total',
   itmvatrate varchar(50) not null default '' comment 'The VAT rate applied',
   itmdate date comment 'Date item created/printed',
+  itmcat varchar(100) not null default '' comment 'Item Category',
   index (acct_id)
 );
 

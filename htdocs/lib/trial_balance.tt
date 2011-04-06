@@ -41,7 +41,7 @@
     </li>
     <li>
       <div>
-          <input type="button" name="balsheet" id="balsheet" value="Balance Sheet" onclick="location.href='/cgi-bin/fpa/balance_sheet.pl';"/>
+          <input type="button" name="balsheet" id="balsheet" value="Balance Sheet" onclick="display_bs();"/>
       </div>
     </li>
   </ul>

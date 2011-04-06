@@ -54,6 +54,10 @@ if ($FORM{invitem}) {
 	$Invitems_selected = "1";
 	$SQL .= "itmdesc like '%$FORM{invitem}%' and ";
 }
+if ($FORM{item_cat}) {
+	$Invitems_selected = "1";
+	$SQL .= "itmcat like '%$FORM{item_cat}%' and ";
+}
 if ($FORM{invstatuscode}) {
 	$FORM{invstatuscode} =~ tr/V/0/;
 	if ($FORM{invstatuscode} == 1) {

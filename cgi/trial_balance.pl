@@ -2,7 +2,7 @@
 
 $ACCESS_LEVEL = 1;
 
-#  script to display Chart of Account details
+#  script to display Trial Balance
 
 use Checkid;
 $COOKIE = &checkid($ENV{HTTP_COOKIE},$ACCESS_LEVEL);
@@ -37,9 +37,6 @@ $TSs->finish;
 
 $Sts = $dbh->do("update tempstacks set f1='',f2='',f3='' where acct_id='$COOKIE->{ACCT}' and caller='report'");
 
-$Coas = $dbh->prepare("select nomcode,coadesc,coatype,sum(nomamount) as balance from nominals left join coas on (nominals.nomcode=coas.coanominalcode and nominals.acct_id=coas.acct_id) where nominals.acct_id='$COOKIE->{ACCT}' group by nomcode having balance<>0 order by nomcode");
-$Coas->execute;
-
 use Template;
 $tt = Template->new({
         INCLUDE_PATH => ['.','/usr/local/httpd/htdocs/fpa/lib'],
@@ -49,7 +46,6 @@ $tt = Template->new({
 $Vars = {
         title => 'Accounts - Trial Balance',
 	cookie => $COOKIE,
-	entries => $Coas->fetchall_arrayref({}),
 	daterange => $Reg,
 	javascript => '<script type="text/javascript">
 $(document).ready(function(){
@@ -63,6 +59,9 @@ function print_list() {
      $("#maintabs").hide();
      $("#printtab").show();
   });
+}
+function display_bs() {
+   location.href="/cgi-bin/fpa/balance_sheet.pl?" + $("form#form1").serialize();
 }
 function set_range(obj) {
   var startstr = "'.$Startstr.'";
@@ -190,7 +189,6 @@ function get_balances() {
 print "Content-Type: text/html\n\n";
 $tt->process('trial_balance.tt',$Vars);
 
-$Coas->finish;
 $Regs->finish;
 $dbh->disconnect;
 exit;

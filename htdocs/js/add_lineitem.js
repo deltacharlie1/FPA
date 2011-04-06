@@ -13,6 +13,7 @@ function add_row() {
   document.getElementById('price').value = "";
   document.getElementById('qty').value = "";
   document.getElementById('sel_vat').options[0].selected=true;
+  document.getElementById('item_cat').value = "";
 
   document.getElementById('desc').focus();
 }
@@ -72,7 +73,7 @@ function display_row() {
 
 //  Now create 7 cells
 
-  for (i=0; i<8; i++) {
+  for (i=0; i<9; i++) {
     var td = document.createElement("TD");
     switch(i) {
      case 0:		//  Description
@@ -111,6 +112,10 @@ function display_row() {
        td.appendChild(b1);
        td.appendChild(document.createTextNode(" "));
        td.appendChild(b2);
+       break;
+     case 8:
+       td.className = "hidden";
+       td.appendChild(document.createTextNode(document.getElementById('item_cat').value));
        break;
     }
     tr.appendChild(td);
@@ -156,6 +161,7 @@ function amd(obj) {
   document.getElementById('desc').value = tbl.rows[item_row].cells[0].innerHTML;
   document.getElementById('price').value = tbl.rows[item_row].cells[1].innerHTML;
   document.getElementById('qty').value = tbl.rows[item_row].cells[2].innerHTML;
+  document.getElementById('item_cat').value = tbl.rows[item_row].cells[8].innerHTML;
 
   if (document.getElementById('invtype').options[document.getElementById('invtype').selectedIndex].value == 'P') {
     document.getElementById('splittotal').value = tbl.rows[item_row].cells[3].innerHTML;
@@ -188,7 +194,7 @@ function dlt(obj) {
     var tr = document.createElement("tr");
     var td = document.createElement("td");
 //    td.setAttribute("colspan","8");
-    td.colSpan = 8;
+    td.colSpan = 9;
     td.setAttribute("style","font-style:italic;");
     td.appendChild(document.createTextNode("You have not yet added any line items."));
     tr.appendChild(td);
@@ -196,7 +202,7 @@ function dlt(obj) {
     tr = document.createElement("tr");
     td = document.createElement("td");
 //    td.setAttribute("colspan","8");
-    td.colSpan = 8;
+    td.colSpan = 9;
     td.appendChild(document.createTextNode(" "));
     tr.appendChild(td);
     tbl.appendChild(tr);
