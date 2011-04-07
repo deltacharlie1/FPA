@@ -35,9 +35,27 @@ else {
 
 #  Not a pre-existing VAT return so ...
 
-#  1.  Determine the start date (close date of last return +1 day) (or arbitary date if no previous returns)
+#  1.  Get the vat qend date and whether the vatreminder flag has been set (in which case backdate qend by 3 months)
 
-	$Vatreturns = $dbh->prepare("select date_add(perenddate,interval 1 day),date_format(date_add(perenddate,interval 1 day),'%d-%b-%y') from vatreturns where acct_id='$COOKIE->{ACCT}' order by id desc limit 1");
+        ($Reg_id,$Com_id) = split(/\+/,$COOKIE->{ACCT});
+	$Companies = $dbh->prepare("select comvatreminder,last_day(date_sub(comvatmsgdue,interval 4 month)) as qend1,last_day(date_sub(comvatmsgdue,interval 1 day)) as qend2,date_format(last_day(date_sub(comvatmsgdue,interval 4 month)),'%d-%b-%y') as dispend1,date_format(last_day(date_sub(comvatmsgdue,interval 1 day)),'%d-%b-%y') as dispend2,comvatmsgdue from companies where reg_id=$Reg_id and id=$Com_id");
+	$Companies->execute;
+	@Company = $Companies->fetchrow;
+	$Companies->finish;
+	if ($Company[0]) {
+		$Vatreturn->{qend} = $Company[1];
+		$Vatreturn->{dispend} = $Company[3];
+		$Vatreturn->{perstatus} = "save";
+	}
+	else {
+		$Vatreturn->{qend} = $Company[2];
+		$Vatreturn->{dispend} = $Company[4];
+		$Vatreturn->{perstatus} = "Paid";
+	}
+
+#  2.  Determine the start date (close date of last return +1 day) (or arbitary date if no previous returns)
+
+	$Vatreturns = $dbh->prepare("select date_add(perenddate,interval 1 day),date_format(date_add(perenddate,interval 1 day),'%d-%b-%y'),last_day(date_add(perenddate,interval 3 month)),date_format(last_day(date_add(perenddate,interval 3 month)),'%d-%b-%y') from vatreturns where acct_id='$COOKIE->{ACCT}' order by id desc limit 1");
 	$Vatreturns->execute;
 
 	if ($Vatreturns->rows < 1) {
@@ -51,26 +69,8 @@ else {
 		@Vatreturn = $Vatreturns->fetchrow;
 		$Vatreturn->{qstart} = $Vatreturn[0];
 		$Vatreturn->{dispstart} = $Vatreturn[1];
-	}
-
-#  Now determine the end date (either in the past
-
-        ($Reg_id,$Com_id) = split(/\+/,$COOKIE->{ACCT});
-
-	$Companies = $dbh->prepare("select comvatreminder,date_sub(date_sub(comvatmsgdue,interval 1 day),interval 3 month) as qend1,date_sub(comvatmsgdue,interval 1 day) as qend2,date_format(date_sub(date_sub(comvatmsgdue,interval 1 day),interval 3 month),'%d-%b-%y'),date_format(date_sub(comvatmsgdue,interval 1 day),'%d-%b-%y') from companies where reg_id=$Reg_id and id=$Com_id");
-	$Companies->execute;
-	@Company = $Companies->fetchrow;
-	$Companies->finish;
-
-	if ($Company[0]) {		#  ie a reminder is in force
-		$Vatreturn->{qend} = $Company[1];
-		$Vatreturn->{dispend} = $Company[3];
-		$Vatreturn->{perstatus} = "save";
-	}
-	else {
-		$Vatreturn->{qend} = $Company[2];
-		$Vatreturn->{dispend} = $Company[4];
-		$Vatreturn->{perstatus} = "Paid";
+		$Vatreturn->{qend} = $Vatreturn[2];
+		$Vatreturn->{dispend} = $Vatreturn[3];
 	}
 
 	$Vatreturns->finish;
