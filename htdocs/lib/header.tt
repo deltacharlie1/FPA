@@ -28,7 +28,11 @@ $(document).ready(function(){
     "fileDesc"       : "PDF or Image Files (*.pdf,*.jpg,*.png)",
     "sizeLimit"      : [%- cookie.UPLDS -%],
     "expressInstall" : "/js/expressInstall.swf",
-    "auto"           : false
+    "auto"           : false,
+    "onAllComplete"  : function() {
+                         window.location.reload(true);
+                         $(this).dialog("close");
+                       }
   });
 });
 </script>

@@ -254,11 +254,13 @@ $(document).ready(function(){
                 }
               }
               $("#pifile").uploadifySettings("scriptData",{"cookie" : cookie, "doc_type" : "INV", "doc_rec" : href[1] },true );
-              $("#pifile").uploadifyUpload();
+              $("#pifile").uploadifyUpload(null,true);
+            }
+            else {
+              window.location.reload(true);
+              $(this).dialog("close");
             }
           }
-          window.location.reload(true);
-          $(this).dialog("close");
         }
       },
       Cancel: function() {
@@ -273,18 +275,17 @@ $(document).ready(function(){
 //  $("#body").css("height",$("#wrapper").height() - 260);
 });
 function print_display() {
-  if ($("#print_listing").length) {
+  if ($("#print_listing").length > 0) {
     $("#print_listing").print();
   }
   else {
-    if ($("#main").length) {
+    if ($("#main").length > 0) {
       $("#main").print();
     }
     else {
       window.print();
     }
   }
-// alert(document.URL);
 }
 
 function validate_form(form) {
