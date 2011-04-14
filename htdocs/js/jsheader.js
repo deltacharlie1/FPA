@@ -270,6 +270,7 @@ $(document).ready(function(){
       }
     }
   });
+//  setTimeout("set_logout()",600000);
   setTimeout("set_logout()",600000);
 
 //  $("#wrapper").css("height",$(document).height() > 900 ? $(document).height() + 20 : 900);
@@ -277,6 +278,7 @@ $(document).ready(function(){
 });
 function set_logout() {
   document.cookie="fpa-cookie=; path=/;";
+  $(".main").html("&nbsp;");
   document.getElementById("dialog").innerHTML = "<h2>Auto Logout</h2><p>You have been automatically logged out of <b><i>FreePlus Accounts</i></b> because of extended inactivity.</p><p>Please click \'OK\' to return to the login page</p>";
   $("#dialog").dialog("option", "height", "260");
   $("#dialog").dialog("option", "buttons", { "OK": function() { window.location.href="/cgi-bin/fpa/login.pl"; } });

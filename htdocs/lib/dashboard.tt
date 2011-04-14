@@ -1,4 +1,4 @@
-<div style="position: absolute; width:660px;">
+<div class="main" id="main" style="position: absolute; width:660px;">
 <table border="0" cellpadding="6" cellspacing="6" width="100%">
   <tr>
     <td style="vertical-align:top;">
