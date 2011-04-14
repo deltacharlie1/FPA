@@ -23,30 +23,30 @@
 
 # --- MakeMaker const_config section:
 
-# These definitions are from config.sh (via /usr/lib/perl5/5.12.1/i586-linux-thread-multi/Config.pm).
+# These definitions are from config.sh (via /usr/lib/perl5/5.8.8/i386-linux-thread-multi/Config.pm).
 # They may have been overridden via Makefile.PL or on the command line.
 AR = ar
-CC = cc
+CC = gcc
 CCCDLFLAGS = -fPIC
-CCDLFLAGS = -Wl,-E -Wl,-rpath,/usr/lib/perl5/5.12.1/i586-linux-thread-multi/CORE
+CCDLFLAGS = -Wl,-E -Wl,-rpath,/usr/lib/perl5/5.8.8/i386-linux-thread-multi/CORE
 DLEXT = so
 DLSRC = dl_dlopen.xs
 EXE_EXT = 
 FULL_AR = /usr/bin/ar
-LD = cc
-LDDLFLAGS = -shared -fomit-frame-pointer -fmessage-length=0 -O2 -Wall -D_FORTIFY_SOURCE=2 -fstack-protector -funwind-tables -fasynchronous-unwind-tables -g -Wall -pipe
-LDFLAGS =  -fstack-protector
-LIBC = /lib/libc-2.11.2.so
+LD = gcc
+LDDLFLAGS = -shared -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 -m32 -march=i386 -mtune=generic -fasynchronous-unwind-tables -L/usr/local/lib
+LDFLAGS =  -L/usr/local/lib
+LIBC = /lib/libc-2.5.so
 LIB_EXT = .a
 OBJ_EXT = .o
 OSNAME = linux
-OSVERS = 2.6.32
+OSVERS = 2.6.18-53.el5
 RANLIB = :
-SITELIBEXP = /usr/lib/perl5/site_perl/5.12.1
-SITEARCHEXP = /usr/lib/perl5/site_perl/5.12.1/i586-linux-thread-multi
+SITELIBEXP = /usr/lib/perl5/site_perl/5.8.8
+SITEARCHEXP = /usr/lib/perl5/site_perl/5.8.8/i386-linux-thread-multi
 SO = so
-VENDORARCHEXP = /usr/lib/perl5/vendor_perl/5.12.1/i586-linux-thread-multi
-VENDORLIBEXP = /usr/lib/perl5/vendor_perl/5.12.1
+VENDORARCHEXP = /usr/lib/perl5/vendor_perl/5.8.8/i386-linux-thread-multi
+VENDORLIBEXP = /usr/lib/perl5/vendor_perl/5.8.8
 
 
 # --- MakeMaker constants section:
@@ -76,17 +76,17 @@ PREFIX = $(SITEPREFIX)
 PERLPREFIX = /usr
 SITEPREFIX = /usr
 VENDORPREFIX = /usr
-INSTALLPRIVLIB = /usr/lib/perl5/5.12.1
+INSTALLPRIVLIB = /usr/lib/perl5/5.8.8
 DESTINSTALLPRIVLIB = $(DESTDIR)$(INSTALLPRIVLIB)
-INSTALLSITELIB = /usr/lib/perl5/site_perl/5.12.1
+INSTALLSITELIB = /usr/lib/perl5/site_perl/5.8.8
 DESTINSTALLSITELIB = $(DESTDIR)$(INSTALLSITELIB)
-INSTALLVENDORLIB = /usr/lib/perl5/vendor_perl/5.12.1
+INSTALLVENDORLIB = /usr/lib/perl5/vendor_perl/5.8.8
 DESTINSTALLVENDORLIB = $(DESTDIR)$(INSTALLVENDORLIB)
-INSTALLARCHLIB = /usr/lib/perl5/5.12.1/i586-linux-thread-multi
+INSTALLARCHLIB = /usr/lib/perl5/5.8.8/i386-linux-thread-multi
 DESTINSTALLARCHLIB = $(DESTDIR)$(INSTALLARCHLIB)
-INSTALLSITEARCH = /usr/lib/perl5/site_perl/5.12.1/i586-linux-thread-multi
+INSTALLSITEARCH = /usr/lib/perl5/site_perl/5.8.8/i386-linux-thread-multi
 DESTINSTALLSITEARCH = $(DESTDIR)$(INSTALLSITEARCH)
-INSTALLVENDORARCH = /usr/lib/perl5/vendor_perl/5.12.1/i586-linux-thread-multi
+INSTALLVENDORARCH = /usr/lib/perl5/vendor_perl/5.8.8/i386-linux-thread-multi
 DESTINSTALLVENDORARCH = $(DESTDIR)$(INSTALLVENDORARCH)
 INSTALLBIN = /usr/bin
 DESTINSTALLBIN = $(DESTDIR)$(INSTALLBIN)
@@ -112,14 +112,14 @@ INSTALLSITEMAN3DIR = /usr/share/man/man3
 DESTINSTALLSITEMAN3DIR = $(DESTDIR)$(INSTALLSITEMAN3DIR)
 INSTALLVENDORMAN3DIR = /usr/share/man/man3
 DESTINSTALLVENDORMAN3DIR = $(DESTDIR)$(INSTALLVENDORMAN3DIR)
-PERL_LIB = /usr/lib/perl5/5.12.1
-PERL_ARCHLIB = /usr/lib/perl5/5.12.1/i586-linux-thread-multi
+PERL_LIB = /usr/lib/perl5/5.8.8
+PERL_ARCHLIB = /usr/lib/perl5/5.8.8/i386-linux-thread-multi
 LIBPERL_A = libperl.a
 FIRST_MAKEFILE = Makefile
 MAKEFILE_OLD = Makefile.old
 MAKE_APERL_FILE = Makefile.aperl
 PERLMAINCC = $(CC)
-PERL_INC = /usr/lib/perl5/5.12.1/i586-linux-thread-multi/CORE
+PERL_INC = /usr/lib/perl5/5.8.8/i386-linux-thread-multi/CORE
 PERL = /usr/bin/perl
 FULLPERL = /usr/bin/perl
 ABSPERL = $(PERL)
@@ -134,7 +134,7 @@ PERM_DIR = 755
 PERM_RW = 644
 PERM_RWX = 755
 
-MAKEMAKER   = /usr/lib/perl5/5.12.1/ExtUtils/MakeMaker.pm
+MAKEMAKER   = /usr/lib/perl5/5.8.8/ExtUtils/MakeMaker.pm
 MM_VERSION  = 6.56
 MM_REVISION = 65600
 
@@ -787,7 +787,7 @@ ppd :
 	$(NOECHO) $(ECHO) '    <ABSTRACT>Perl extension to check the user'\''s id and access rights based on the uid cookie passed in HTML headers.</ABSTRACT>' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '    <AUTHOR>Doug Conran &lt;dconran@nonet&gt;</AUTHOR>' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '    <IMPLEMENTATION>' >> $(DISTNAME).ppd
-	$(NOECHO) $(ECHO) '        <ARCHITECTURE NAME="i586-linux-thread-multi-5.12" />' >> $(DISTNAME).ppd
+	$(NOECHO) $(ECHO) '        <ARCHITECTURE NAME="i386-linux-thread-multi-5.8" />' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '        <CODEBASE HREF="" />' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '    </IMPLEMENTATION>' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '</SOFTPKG>' >> $(DISTNAME).ppd
