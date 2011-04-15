@@ -20,7 +20,7 @@ h3 a, h3 a:visited, h3 a:hover {
 	color: #484848;
 }
 
-#wrapper {position:absolute;width:909px; text-align:left; padding: 0px 0px 0px 0px ; background:#fff;background-image:url(/images/main_back.png);background-repeat:repeat-y;z-index:100;}
+#wrapper {position:absolute;width:940px; text-align:left; padding: 0px 0px 0px 0px ; background:#fff;background-image:url(/images/main_back.png);background-repeat:repeat-y;z-index:100;}
 #wrapper hr { border-top:0;border-left:0;border-right:0;border-bottom:5px solid #007f64; margin-top:2px; }	
 #menu {height:67px; background:#fff;background-image:url(/images/nav_back-old2.png);}
 #menu ul {padding:9px 0 0 0; margin:0; list-style:none;}
@@ -34,7 +34,7 @@ h3 a, h3 a:visited, h3 a:hover {
 	padding: 0;
 /*	overflow: auto;
 	height:700px;  */
-	width:690px;
+	width:721px;
 }
 .main div ol li {
 	font-weight:normal;
