@@ -87,14 +87,20 @@
       </td>
     </tr>
     <tr>
+[% IF cookie.VAT == "N" -%]
+      <td colspan="2" style="vertical-align:top;">Remarks<br/>[%- invoice.invremarks | replace('\n','<br/>')-%]</td>
+[% ELSE -%]
       <td colspan="2" rowspan="2" style="vertical-align:top;">Remarks<br/>[%- invoice.invremarks | replace('\n','<br/>')-%]</td>
+[% END -%]
         <td style="text-align:right;"><strong>Sub Total : </strong></td>
         <td id="st" style="text-align:right;padding-right:40px;">[%- IF invoice.invtype == 'C'; 0 - invoice.invtotal | format('%1.2f'); ELSE; invoice.invtotal; END -%]</td>
     </tr>
+[% UNLESS cookie.VAT == "N" -%]
     <tr>
       <td style="text-align:right;"><strong>VAT : </strong></td>
       <td id="vt" style="text-align:right;padding-right:40px;">[%- IF invoice.invtype == 'C'; 0 -invoice.invvat | format('%1.2f'); ELSE; invoice.invvat; END -%]</td>
     </tr>
+[% END -%]
     <tr>
       <td colspan="2" style="text-align:right;">&nbsp;</td>
       <td style="text-align:right;"><strong><span id="i3">Invoice</span> Total : </strong></td>
