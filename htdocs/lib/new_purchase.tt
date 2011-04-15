@@ -101,7 +101,7 @@
                 </tr>
                 <tr>
 [% IF cookie.VAT == "N" -%]
-                  <td rowspan="2"><textarea name="desc" id="desc" cols="40" rows="2"></textarea></td>
+                  <td rowspan="2"><textarea name="desc" id="desc" cols="30" rows="2"></textarea></td>
 [% ELSE -%]
                   <td rowspan="2"><textarea name="desc" id="desc" cols="30" rows="2"></textarea></td>
 [% END -%] 
