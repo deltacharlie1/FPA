@@ -72,12 +72,12 @@ if ($FORM{thisint}) {
 
 #  create a dummy invoice (invoice # = unlisted)  -  Not sure that his is required
 
-	$Sts = $dbh->do("insert into invoices (acct_id,invinvoiceno,invdesc,invcusregion,invcoa,invtotal,invpaid,invprintdate,invstatuscode,invtype) values ('$COOKIE->{ACCT}','unlisted','Bank Interest','UK','4300','$FORM{thisint}','$FORM{thisint}',$Date,'2','B')");
+	$Sts = $dbh->do("insert into invoices (acct_id,invinvoiceno,invdesc,invcusregion,invcoa,invtotal,invpaid,invprintdate,invstatuscode,invtype) values ('$COOKIE->{ACCT}','unlisted','Bank Interest','UK','4300','$FORM{thisint}','$FORM{thisint}',$Date,'2','BI')");
        $New_inv_id = $dbh->last_insert_id(undef, undef, qw(invoices undef));
 
 #  create a transaction record
 
-	$Sts = $dbh->do("insert into transactions (acct_id,txncusname,link_id,txnmethod,txnamount,txndate,txntxntype,txnremarks,txntxnno) values ('$COOKIE->{ACCT}','Bank Payment',$New_inv_id,'$FORM{txnmethod}','$FORM{thisint}',$Date,'bank','Interest','$FORM{txnno}')");
+	$Sts = $dbh->do("insert into transactions (acct_id,txncusname,link_id,txnmethod,txnamount,txndate,txntxntype,txnremarks,txntxnno) values ('$COOKIE->{ACCT}','Bank Payment',$New_inv_id,'$FORM{txnmethod}','$FORM{thisint}',$Date,'bankint','Interest','$FORM{txnno}')");
         $New_txn_id = $dbh->last_insert_id(undef, undef, qw(transactions undef));
 
 #  Create an inv_txn record
@@ -127,12 +127,12 @@ if ($FORM{thisch}) {
 
 #  create a dummy invoice (invoice # = unlisted)
 
-	$Sts = $dbh->do("insert into invoices (acct_id,invinvoiceno,invdesc,invcusregion,invcoa,invtotal,invpaid,invprintdate,invstatuscode,invtype) values ('$COOKIE->{ACCT}','unlisted','Bank Charges','UK','6000','$FORM{thisch}','$FORM{thisch}',$Date,'2','B')");
+	$Sts = $dbh->do("insert into invoices (acct_id,invinvoiceno,invdesc,invcusregion,invcoa,invtotal,invpaid,invprintdate,invstatuscode,invtype) values ('$COOKIE->{ACCT}','unlisted','Bank Charges','UK','6000','$FORM{thisch}','$FORM{thisch}',$Date,'2','BC')");
         $New_inv_id = $dbh->last_insert_id(undef, undef, qw(invoices undef));
 
 #  create a transaction record
 
-        $Sts = $dbh->do("insert into transactions (acct_id,link_id,txncusname,txnmethod,txnamount,txndate,txntxntype,txnremarks,txntxnno) values ('$COOKIE->{ACCT}',$New_inv_id,'Bank Payment','$FORM{txnmethod}','$FORM{thisch}',$Date,'bank','Charges','$FORM{txnno}')");
+        $Sts = $dbh->do("insert into transactions (acct_id,link_id,txncusname,txnmethod,txnamount,txndate,txntxntype,txnremarks,txntxnno) values ('$COOKIE->{ACCT}',$New_inv_id,'Bank Payment','$FORM{txnmethod}','$FORM{thisch}',$Date,'bankexp','Charges','$FORM{txnno}')");
         $New_txn_id = $dbh->last_insert_id(undef, undef, qw(transactions undef));
 
 #  Create an inv_txn record

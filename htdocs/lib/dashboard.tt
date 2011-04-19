@@ -2,7 +2,7 @@
 <table border="0" cellpadding="6" cellspacing="6" width="100%">
   <tr>
     <td style="vertical-align:top;">
-  <div class="testimonials" style="width:340px;height:174px;"><b></b><i></i><em></em>
+  <div class="testimonials" style="width:360px;height:154px;"><b></b><i></i><em></em>
       <h2>Reminders</h2>
 [% IF reminders.size > 0 -%]
     <div style="overflow:auto; width:100%;height:162px;padding-top:0px;">
@@ -72,8 +72,12 @@
   </tr>
   <tr>
     <td style="vertical-align:top;">
-  <div class="testimonials" style="width:340px;height:165px;"><b></b><i></i><em></em>
+  <div class="testimonials" style="width:360px;height:200px;"><b></b><i></i><em></em>
     <h2>Stats</h2>
+    <ul id="carousel" class="jcarousel-skin-tango">
+      <li><img src="/cgi-bin/fpa/display_stats.pl?Inv[%- company.comrecstats -%]"/></li>
+      <li><img src="/cgi-bin/fpa/display_stats.pl?Txn[%- company.compaystats -%]"/></li>
+    </ul>
   </div>
     </td>
   </tr>

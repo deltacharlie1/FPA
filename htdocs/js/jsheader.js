@@ -271,7 +271,7 @@ $(document).ready(function(){
     }
   });
 //  setTimeout("set_logout()",600000);
-  setTimeout("set_logout()",600000);
+  setTimeout("set_logout()",1500000);
 
 //  $("#wrapper").css("height",$(document).height() > 900 ? $(document).height() + 20 : 900);
 //  $("#body").css("height",$("#wrapper").height() - 260);

@@ -2,11 +2,12 @@
 
 use DBI;
 $dbh = DBI->connect("DBI:mysql:fpa");
-$TSs = $dbh->prepare("select acct_id from tempstacks");
-$TSs->execute;
-while ($TS = $TSs->fetchrow_hashref) {
-	$Sts = $dbh->do("insert into tempstacks (acct_id,caller) values ('$TS->{acct_id}','report')");
+$Sales = $dbh->selectall_arrayref("select sum(invtotal) as tot,date_format(invprintdate,'%m') as printdate from invoices where invtype in ('S','C') and invstatuscode>'1' and acct_id='1+1' and invprintdate > date_sub(now(),interval 1 year) group by printdate order by invprintdate");
+
+foreach $Sale ( @$Sales ) {
+	print $Sale->[0]."\t".$Sale->[1]."\n";
+#	print $Sale->{tot}."\n";
 }
-$TSs->finish;
+
 $dbh->disconnect;
 exit;

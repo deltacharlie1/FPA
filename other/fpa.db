@@ -171,7 +171,7 @@ create table invoices (
   cus_id int unsigned not null,
   invinvoiceno varchar(50) not null default '',
   invcusref varchar(250) not null default '',
-  invtype char(1) not null default 'S' comment 'S - invoice C - credit Note P - purchase invoice R - Purchase Refund',
+  invtype char(4) not null default 'S' comment 'S - invoice C - credit Note P - purchase invoice R - Purchase Refund',
   invcusname varchar(250) not null default '',
   invcusaddr varchar(1000) not null default '',
   invcuspostcode varchar(50) not null default '',
