@@ -75,8 +75,9 @@
   <div class="testimonials" style="width:360px;height:200px;"><b></b><i></i><em></em>
     <h2>Stats</h2>
     <ul id="carousel" class="jcarousel-skin-tango">
-      <li><img src="/cgi-bin/fpa/display_stats.pl?Inv[%- company.comrecstats -%]"/></li>
-      <li><img src="/cgi-bin/fpa/display_stats.pl?Txn[%- company.compaystats -%]"/></li>
+      <li><img src="/cgi-bin/fpa/display_stats.pl?Inv[%- company.cominvstats -%]"/></li>
+      <li><img src="/cgi-bin/fpa/display_stats.pl?Txn[%- company.comtxnstats -%]"/></li>
+      <li><img src="/cgi-bin/fpa/display_stats.pl?Net[%- company.comnetstats -%]"/></li>
     </ul>
   </div>
     </td>

@@ -13,7 +13,7 @@ use DBI;
 my $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
 
 ($Reg_id,$Com_id) = split(/\+/,$COOKIE->{ACCT});
-$Companies = $dbh->prepare("select companies.comname,comcompleted,regdefaultrows,comnocheques,comvatcontrol,comrecstats,compaystats from companies left join registrations using(reg_id) where companies.reg_id=$Reg_id and companies.id=$Com_id");
+$Companies = $dbh->prepare("select companies.comname,comcompleted,regdefaultrows,comnocheques,comvatcontrol,cominvstats,comtxnstats,comnetstats from companies left join registrations using(reg_id) where companies.reg_id=$Reg_id and companies.id=$Com_id");
 $Companies->execute;
 $Company = $Companies->fetchrow_hashref;
 $Companies->finish;
@@ -71,7 +71,7 @@ $Vars = {
 $(document).ready(function(){
   var width = (screen.availWidth > 1100) ? 1100 : screen.availWidth;
   var left = parseInt((screen.availWidth - ((screen.availWidth > 1100) ? 1100 : screen.availWidth)) / 2);
-  $("#carousel").jcarousel({ wrap: "circular" });
+  $("#carousel").jcarousel({ wrap: "circular", visible: 1, scroll: 1 });
 //  self.moveTo(left,0);
 //  self.resizeTo(width,screen.availHeight);
 });
