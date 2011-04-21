@@ -123,8 +123,6 @@ while ($Company = $Companies->fetchrow_hashref) {
 	$txnData = join(":",@txnData);
 	$netData = join(":",@netData);
 
-print "$Acct_id\t$invData\n\t$txnData\n\t$netData\n\n";
-
 	$Sts = $dbh->do("update companies set cominvstats='$invData',comtxnstats='$txnData',comnetstats='$netData' where reg_id=$Company->{reg_id} and id=$Company->{id}");
 }
 $Noms1->finish;
