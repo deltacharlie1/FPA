@@ -67,11 +67,49 @@ $Vars = {
 	reminders => $Reminder,
         javascript => '<link rel="stylesheet" type="text/css" href="/tango/skin.css" />
 <script type="text/javascript" src="/js/jquery.jcarousel.min.js"></script>
+<style type="text/css">
+.jcarousel-control {
+    text-align: center;
+}
+
+.jcarousel-control li {
+    display: inline;
+    list-style-type: none;
+    font-size: 75%;
+    text-decoration: none;
+    padding: 0 5px;
+    margin: 0 0 0px 0;
+    border: 1px solid #fff;
+    color: #eee;
+    background-color: #4088b8;
+    font-weight: bold;
+}
+.jcarousel-control li a {
+    color: #eee;
+    text-decoration: none;
+    font-weight: bold;
+}
+.jcarousel-control a:focus,
+.jcarousel-control a:active {
+    outline: none;
+}
+</style>
 <script type="text/javascript">
 $(document).ready(function(){
   var width = (screen.availWidth > 1100) ? 1100 : screen.availWidth;
   var left = parseInt((screen.availWidth - ((screen.availWidth > 1100) ? 1100 : screen.availWidth)) / 2);
-  $("#carousel").jcarousel({ wrap: "circular", visible: 1, scroll: 1 });
+  $("#carousel").jcarousel({ 
+     visible: 1, 
+     scroll: 1, 
+     initCallback: function(carousel) { $(".jcarousel-control li").bind("click", function() { 
+         carousel.scroll($.jcarousel.intval($(this).text())); 
+         return false; 
+       });
+     },
+    itemVisibleInCallback: function(carousel,li,idx,state) { $(".jcarousel-control li").each(function(index) { if (index == idx - 1) { $(this).attr("style","background-color:#800000;"); }});},
+    itemVisibleOutCallback: function(carousel,li,idx,state) { $(".jcarousel-control li").each(function(index) { if (index == idx - 1) { $(this).attr("style","background-color:#4088b8;"); }});}
+
+  });
 //  self.moveTo(left,0);
 //  self.resizeTo(width,screen.availHeight);
 });

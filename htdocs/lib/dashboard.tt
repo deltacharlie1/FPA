@@ -1,5 +1,5 @@
 <div class="main" id="main" style="position: absolute; width:660px;">
-<table border="0" cellpadding="6" cellspacing="6" width="100%">
+<table border="0" cellpadding="4" cellspacing="4" width="100%">
   <tr>
     <td style="vertical-align:top;">
   <div class="testimonials" style="width:360px;height:154px;"><b></b><i></i><em></em>
@@ -72,13 +72,22 @@
   </tr>
   <tr>
     <td style="vertical-align:top;">
-  <div class="testimonials" style="width:360px;height:200px;"><b></b><i></i><em></em>
+  <div class="testimonials" style="position:relative;width:360px;height:200px;"><b></b><i></i><em></em>
     <h2>Stats</h2>
-    <ul id="carousel" class="jcarousel-skin-tango">
-      <li><img src="/cgi-bin/fpa/display_stats.pl?Inv[%- company.cominvstats -%]"/></li>
-      <li><img src="/cgi-bin/fpa/display_stats.pl?Txn[%- company.comtxnstats -%]"/></li>
-      <li><img src="/cgi-bin/fpa/display_stats.pl?Net[%- company.comnetstats -%]"/></li>
-    </ul>
+    <div id="carousel" class="jcarousel-skin-tango">
+      <ul>
+        <li><img src="/cgi-bin/fpa/display_stats.pl?Inv[%- company.cominvstats -%]"/></li>
+        <li><img src="/cgi-bin/fpa/display_stats.pl?Txn[%- company.comtxnstats -%]"/></li>
+        <li><img src="/cgi-bin/fpa/display_stats.pl?Net[%- company.comnetstats -%]"/></li>
+      </ul>
+      <div class="jcarousel-control" style="position:relative;top:-11px;">
+        <ul>
+          <li><a href="#">1</a></li>
+          <li><a href="#">2</a></li>
+          <li><a href="#">3</a></li>
+        </ul>
+      </div>
+    </div>
   </div>
     </td>
   </tr>
