@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>Invoice Designer</title>
+<link href="/app.css" rel="stylesheet" type="text/css" />
+<link rel="shortcut icon" href="/favicon.ico"/>
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/themes/base/jquery-ui.css" type="text/css" media="all" />
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js" type="text/javascript"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/jquery-ui.min.js" type="text/javascript"></script>
+<script>
+	$(function() {
+		$( "#cusname" ).draggable({
+			drag: function(event,ui) {
+				document.getElementById("leftpos").value = $(this).offset().left-10;
+				document.getElementById("toppos").value = $(this).offset().top-10;
+			}
+		});
+		$( "#cusaddr" ).draggable({
+			drag: function(event,ui) {
+				document.getElementById("leftpos").value = $(this).offset().left-10;
+				document.getElementById("toppos").value = $(this).offset().top-10;
+			}
+		});
+	});
+</script>
+<style>
+.bold { font-weight:bold; }
+.normal { font-weight:normal; }
+</style>
+</head>
+<body style="margin:10px;">
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td><img src="/images/testit.png" style="width:595px;height:842px;border:1px solid green;"/></td>
+    <td style="vertical-align:top;">
+      <table width="200" border="0" cellpadding="4" cellspacing="4">
+        <tr>
+          <td>Left: <input type="text" name="leftpos" id="leftpos" size="6" readonly="readonly"</td>
+          <td>Top: <input type="text" name="toppos" id="toppos" size="6" readonly="readonly"</td>
+        </tr>
+        <tr>
+          <td colspan="2"><input type="checkbox" name="chk1" id="chk1" value="B" onchange="if ($('#chk1').attr('checked')) { $('#cusname').removeClass('normal').addClass('bold'); } else { $('#cusname').removeClass('bold').addClass('normal'); }"/>
+          </td>
+        <tr>
+          <td colspan="2">
+            <span id="cusname" class="cusdata" style="height:16px;border:1px solid #000066;background-color:#eeeeff;">Customer Name</span><br/>
+          </td>
+        <tr>
+          <td colspan="2">
+            <div id="cusaddr" class="cusdata" style="width:120px;height:80px;border:1px solid #000066;background-color:#eeeeff;">8 Tupman Walk<br/>
+Bury St Edmunds<br/>
+Suffolk  IP33 1AJ</div>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

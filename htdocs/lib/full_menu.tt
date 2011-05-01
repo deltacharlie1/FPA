@@ -98,7 +98,17 @@
       <ul class="sub">
         <li><a href="/cgi-bin/fpa/dashboard.pl">Front Page</a></li>
         <li class="divider"><a href="/cgi-bin/fpa/invrep1.pl">Invoice Analysis</a></li>
-        <li><a href="/cgi-bin/fpa/txnrep1.pl">Transaction Analysis</a></li>
+        <li><a href="/cgi-bin/fpa/txnrep1.pl">Transaction Analysis</a>
+<!--
+        <li><a href="/cgi-bin/fpa/txnrep1.pl" class="fly">Transaction Analysis</a>
+          <ul>
+            <li><a href="#">One</a></li>
+            <li><a href="#">Two</a></li>
+            <li><a href="#">Three</a></li>
+            <li><a href="#">Four</a></li>
+          </ul>
+//-->
+        </li>
         <li class="divider"><a href="/cgi-bin/fpa/trial_balance.pl?new">Trial Balance</a></li>
         <li><a href="/cgi-bin/fpa/pandl.pl">Profit &amp; Loss</a></li>
         <li class="divider"><a href="#">Aged Debtors</a></li>
@@ -130,6 +140,7 @@
         <li><a href="/cgi-bin/fpa/assign_invoices.pl">Assign Unlisted Invoices</a></li>
         <li><a href="/cgi-bin/fpa/switch_systems.pl">Switch to [%- IF cookie.ACCT == "7+7" -%]Live System[%- ELSE -%]Testbed[%- END -%]</a></li>
         <li><a href="/cgi-bin/fpa/list_audit_trails.pl">Audit Trail</a></li>
+        <li><a href="/cgi-bin/fpa/designer.pl">Invoice Design</a></li>
       </ul>
     </li>
     <li class="top">

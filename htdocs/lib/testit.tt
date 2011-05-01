@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+[%- USE date -%]
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>Invoice Designer</title>
+<link href="/app.css" rel="stylesheet" type="text/css" />
+<link rel="shortcut icon" href="/favicon.ico"/>
+<link rel="stylesheet" href="/jquery-ui2.css" type="text/css" media="all" />
+<script src="/js/jquery.min.js" type="text/javascript"></script>
+<script src="/js/jquery-ui.min.js" type="text/javascript"></script>
+<script>
+$(function() {
+  $( ".cusdata" ).draggable({
+    drag: function(event,ui) {
+      var fldl = $(this).attr("id")+"l";
+      var fldt = $(this).attr("id")+"t";
+      document.getElementById(fldl).value = parseInt($(this).offset().left-10);
+      document.getElementById(fldt).value = parseInt($(this).offset().top-10);
+    }
+  });
+});
+function toggle_bold(obj) {
+  var fldname = obj.name.slice(0,-1);
+  if ($("#"+obj.id).attr("checked")) {
+    $("#"+fldname).removeClass("normal").addClass("bold");
+    $("#"+fldname).val("B");
+  }
+  else {
+    $("#"+fldname).removeClass("bold").addClass("normal");
+    $("#"+fldname).val("");
+  }
+}
+function on_submit() {
+  $(".cusdata").each(function(index) {
+     alstr = $(this).attr("id");
+     alstrt = "#"+alstr + "t";
+     alstrl = "#"+alstr + "l";
+     alstrb = "#"+alstr + "b";
+     alstrh = alstr + "h";
+     document.getElementById(alstrh).value = alstr+":"+$(alstrl).val()+":"+$(alstrt).val()+":"+$(alstrb).attr("checked");
+  });
+  return true;
+}
+</script>
+<style>
+.cusdata { font-weight:normal;font-size:13px;line-height:14px; }
+.bold { font-weight:bold; }
+.normal { font-weight:normal; }
+</style>
+</head>
+<body style="margin:10px;">
+<form name="form1" id="form1" onsubmit="return on_submit();" method="post" action="/cgi-bin/fpa/designer2.pl">
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td><img src="/images/testit.png" style="width:595px;height:842px;border:1px solid green;"/></td>
+    <td style="vertical-align:top;">
+      <table width="400" border="0" cellpadding="0" cellspacing="0" class="listing">
+        <tr>
+          <th>&nbsp;</th>
+          <th>Field Name</th>
+          <th>Top</th>
+          <th>Left</th>
+          <th>Bold</th>
+          <th>Example</th>
+        </tr>
+        <tr>
+          <td rowspan="10">H<br/>E<br/>A<br/>D<br/>E<br/>R</td>
+          <td>Invoice type<input type="hidden" name="invtype" id="invtypeh"/></td>
+          <td><input type="text" name="invtypet" id="invtypet" size="3" readonly="readonly"</td>
+          <td><input type="text" name="invtypel" id="invtypel" size="3" readonly="readonly"</td>
+          <td><input type="checkbox" name="invtypeb" id="invtypeb" value="" onchange="toggle_bold(this)"/>
+          <td><span id="invtype" class="cusdata" style="height:28px;font-size:16px;border:1px solid #000066;background-color:#eeeeff;">INVOICE</span></td>
+        </tr>
+        <tr>
+          <td>Invoice No<input type="hidden" name="invinvoiceno" id="invinvoicenoh"/></td>
+          <td><input type="text" name="invinvoicenot" id="invinvoicenot" size="3" readonly="readonly"</td>
+          <td><input type="text" name="invinvoicenol" id="invinvoicenol" size="3" readonly="readonly"</td>
+          <td><input type="checkbox" name="invinvoicenob" id="invinvoicenob" value="" onchange="toggle_bold(this)"/>
+          <td><span id="invinvoiceno" class="cusdata" style="height:14px;border:1px solid #000066;background-color:#eeeeff;">100055</span></td>
+        </tr>
+        <tr>
+          <td>Customer Name<input type="hidden" name="invcusname" id="invcusnameh"/></td>
+          <td><input type="text" name="invcusnamet" id="invcusnamet" size="3" readonly="readonly"</td>
+          <td><input type="text" name="invcusnamel" id="invcusnamel" size="3" readonly="readonly"</td>
+          <td><input type="checkbox" name="invcusnameb" id="invcusnameb" value="" onchange="toggle_bold(this)"/>
+          <td><span id="invcusname" class="cusdata" style="height:14px;border:1px solid #000066;background-color:#eeeeff;">Acme Widgets Ltd</span></td>
+        </tr>
+        <tr>
+          <td>Customer Address<input type="hidden" name="invcusaddr" id="invcusaddrh"/></td>
+          <td><input type="text" name="invcusaddrt" id="invcusaddrt" size="3" readonly="readonly"</td>
+          <td><input type="text" name="invcusaddrl" id="invcusaddrl" size="3" readonly="readonly"</td>
+          <td><input type="checkbox" name="invcusaddrb" id="invcusaddrb" value="" onchange="toggle_bold(this)"/>
+          <td><div id="invcusaddr" class="cusdata" style="height:80px;width:150px;border:1px solid #000066;background-color:#eeeeff;">Address Line 1<br/>Address Line 2<br/>Address Line 3<br/>Address Line 4<br/></div></td>
+        </tr>
+        <tr>
+          <td>Post Code<input type="hidden" name="invcuspostcode" id="invcuspostcodeh"/></td>
+          <td><input type="text" name="invcuspostcodet" id="invcuspostcodet" size="3" readonly="readonly"</td>
+          <td><input type="text" name="invcuspostcodel" id="invcuspostcodel" size="3" readonly="readonly"</td>
+          <td><input type="checkbox" name="invcuspostcodeb" id="invcuspostcodeb" value="" onchange="toggle_bold(this)"/>
+          <td><span id="invcuspostcode" class="cusdata" style="height:14px;border:1px solid #000066;background-color:#eeeeff;">AB24 5CD</span></td>
+        </tr>
+        <tr>
+          <td>Contact Name<input type="hidden" name="invcuscontact" id="invcuscontacth"/></td>
+          <td><input type="text" name="invcuscontactt" id="invcuscontactt" size="3" readonly="readonly"</td>
+          <td><input type="text" name="invcuscontactl" id="invcuscontactl" size="3" readonly="readonly"</td>
+          <td><input type="checkbox" name="invcuscontactb" id="invcuscontactb" value="" onchange="toggle_bold(this)"/>
+          <td><span id="invcuscontact" class="cusdata" style="height:14px;border:1px solid #000066;background-color:#eeeeff;">Mr Alfred Smith</span></td>
+        </tr>
+        <tr>
+          <td>Invoice Date<input type="hidden" name="invprintdate" id="invprintdateh"/></td>
+          <td><input type="text" name="invprintdatet" id="invprintdatet" size="3" readonly="readonly"</td>
+          <td><input type="text" name="invprintdatel" id="invprintdatel" size="3" readonly="readonly"</td>
+          <td><input type="checkbox" name="invprintdateb" id="invprintdateb" value="" onchange="toggle_bold(this)"/>
+          <td><span id="invprintdate" class="cusdata" style="height:14px;border:1px solid #000066;background-color:#eeeeff;">01-Apr-11</span></td>
+        </tr>
+        <tr>
+          <td>Payment Due Date<input type="hidden" name="invduedate" id="invduedateh"/></td>
+          <td><input type="text" name="invduedatet" id="invduedatet" size="3" readonly="readonly"</td>
+          <td><input type="text" name="invduedatel" id="invduedatel" size="3" readonly="readonly"</td>
+          <td><input type="checkbox" name="invduedateb" id="invduedateb" value="" onchange="toggle_bold(this)"/>
+          <td><span id="invduedate" class="cusdata" style="height:14px;border:1px solid #000066;background-color:#eeeeff;">28-Apr-11</span></td>
+        </tr>
+        <tr>
+          <td>Terms<input type="hidden" name="invcusterms" id="invcustermsh"/></td>
+          <td><input type="text" name="invcustermst" id="invcustermst" size="3" readonly="readonly"</td>
+          <td><input type="text" name="invcustermsl" id="invcustermsl" size="3" readonly="readonly"</td>
+          <td><input type="checkbox" name="invcustermsb" id="invcustermsb" value="" onchange="toggle_bold(this)"/>
+          <td><span id="invcusterms" class="cusdata" style="height:14px;border:1px solid #000066;background-color:#eeeeff;">28 Days</span></td>
+        </tr>
+        <tr>
+          <td>Customer Reference<input type="hidden" name="invcusref" id="invcusrefh"/></td>
+          <td><input type="text" name="invcusreft" id="invcusreft" size="3" readonly="readonly"</td>
+          <td><input type="text" name="invcusrefl" id="invcusrefl" size="3" readonly="readonly"</td>
+          <td><input type="checkbox" name="invcusrefb" id="invcusrefb" value="" onchange="toggle_bold(this)"/>
+          <td><span id="invcusref" class="cusdata" style="height:14px;border:1px solid #000066;background-color:#eeeeff;">CB/00123</span></td>
+        </tr>
+        <tr>
+          <td colspan="6" align="center"><input type="submit" name="submit" value="Submit"/></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</body>
+</html>
