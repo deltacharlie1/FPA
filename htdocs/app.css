@@ -40,10 +40,6 @@ h3 a, h3 a:visited, h3 a:hover {
 	font-weight:normal;
 	text-align:left;
 }
-
-.box {width:320px; padding-top:15px; background:url(/boxTop.png) no-repeat left top; float:left; position:relative;}
-.boxContent {padding:0 20px 0 20px; width:280px; height:270px; background:url(/boxMid.png) repeat-y; margin:0; float:left;}
-.boxEnd {clear:both; display:block; height:15px; background:url(/boxBottom.png) no-repeat left top;}
 .right {float:right;}
 h1 {
 	font: normal 25px arial,sans-serif;
@@ -106,6 +102,30 @@ button {
         padding: 5px 6px 5px 5px;
         text-align: left;
         font-weight: normal;
+}
+.balances {
+	border: 4px #295238 solid;
+	background-color: #EAF1E0;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+}
+.balances label {
+        display:block;
+	text-align:right;
+	font-weight: normal;
+}
+
+.balances td {
+	padding: 6px;
+	font-weight: bold;
+	color:#295238;
+}
+.balances td:hover {
+	color:#295238;
+}
+.balances td:visited {
+	color:#295238;
+	border:0px solid #800000;
 }
 .datatable {
 	border: 4px #295238 solid;
@@ -414,24 +434,15 @@ button {
 .testimonials {
         display: block;
         position:relative;
-        font-weight:normal;
-        width: 210px;
-        border-right:2px solid #AED6A9;
-        border-bottom:2px solid #AED6A9;
-        background:url(testimonial.gif) no-repeat left top;
-        padding:10px;
-	margin:0 5px;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+	border-top: 1px solid #51824c;
+	border-left: 1px solid #51824c;
+	border-bottom: 4px solid #51824c;
+	border-right: 3px solid #51824c;
+	padding: 8px;
+	margin: 2px;
 }
-.testimonials p {
-        font-size:12px;
-}
-
-.testimonials b {display:block; width:10px; height:10px; position:absolute;right:-2px; top:0; background:url(testimonial.gif) no-repeat right top;}
-.testimonials i {display:block; width:10px; height:10px; position:absolute;left:0; bottom:-2px; background:url(testimonial.gif) no-repeat left bottom;}
-.testimonials em {display:block; width:10px; height:10px; position:absolute;right:-2px; bottom:-2px; background:url(testimonial.gif) no-repeat right bottom;}
-
-* html .testimonials i {bottom:-3px;} /* hack for IE6 */
-* html .testimonials em {bottom:-3px;} /* hack for IE6 */
 
 .vattable label {
         font-weight:normal;

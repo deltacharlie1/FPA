@@ -140,7 +140,6 @@
         <li><a href="/cgi-bin/fpa/assign_invoices.pl">Assign Unlisted Invoices</a></li>
         <li><a href="/cgi-bin/fpa/switch_systems.pl">Switch to [%- IF cookie.ACCT == "7+7" -%]Live System[%- ELSE -%]Testbed[%- END -%]</a></li>
         <li><a href="/cgi-bin/fpa/list_audit_trails.pl">Audit Trail</a></li>
-        <li><a href="/cgi-bin/fpa/designer.pl">Invoice Design</a></li>
       </ul>
     </li>
     <li class="top">
