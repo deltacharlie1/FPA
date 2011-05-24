@@ -1,17 +1,10 @@
     
-    <?php
-	
-		
-	
-		$greenoption = get_post_meta($post->ID, 'green-option', true);
-		
+<?php
+	$greenoption = get_post_meta($post->ID, 'green-option', true);
 		if ( $greenoption !== 'hide' ) {
-			
-	
-	?>
-    
+?>
+<?php if (is_page('home')) { ?>         
     <div class="footer-b">
-            
       <div class="m">
         
 			<?php 
@@ -58,7 +51,7 @@
 		</div>
                 
     </div>
-    
+    <?php } ?>
 	<div class="clear"></div>
         
     <?php }  ?>

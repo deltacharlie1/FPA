@@ -4,7 +4,7 @@
         	
             <div class="get-up-and-running">
             
-            	<h3>Get Up And Running <br /><strong>In Less Than 5 Minutes</strong></h3>
+            	<h3>Get Up And Running  -  <strong>In Less Than 5 Minutes</strong></h3>
                 
                 <div class="listfix">
                 

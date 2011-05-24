@@ -56,9 +56,11 @@ get_header(); ?>
         </div>
         
         <?php } ?>
-        
+
+<?php if ( is_page('faqs')) {
+      ?>
         <img src="<?php bloginfo('template_directory'); ?>/images/register.jpg" />
-        
+<?php } ?>        
         <br /><br />
       
       </div>

@@ -79,6 +79,7 @@ $font = $pdf->corefont('Helvetica');
 $font_bold = $pdf->corefont('Helvetica Bold');
 $font_bold_italic = $pdf->corefont('Helvetica BoldOblique');
 $font_italic = $pdf->corefont('Helvetica Oblique');
+
 if ($COOKIE->{PT_LOGO} && $Company[7]) {
 # $Img =~ s/([\\\"\'])/\\$1/g;
 	$Company[7] =~ s/\\\'/\'/g;
@@ -101,9 +102,6 @@ if ($COOKIE->{PT_LOGO} && $Company[7]) {
 
 	$logo = $pdf->image_gd($gdimg);
 
-}
-elsif (! $COOKIE->{PT_LOGO}) {
-	$logo = $pdf->image_jpeg('logo5.jpg');
 }
 
 #  Get overdue icon
@@ -297,17 +295,15 @@ $g->fillcolor("#000000");
 $text = $page->text();
 
 unless ($COOKIE->{PT_LOGO}) {
-        $text->transform( -translate =>[100,742]);
+        $text->transform( -translate =>[90,760]);
         $text->font($font_italic, 8);
         $text->lead(12);
-        $text->text("Produced using");
+        $text->text("Printed using");
         $text->font($font_bold_italic,8);
         $text->text(" FreePlus Accounts");
         $text->cr();
         $text->font($font_italic, 8);
-        $text->text("Free Accounting from");
-        $text->cr();
-        $text->text("www.freeplusaccounts.co.uk");
+        $text->text("(www.freeplusaccounts.co.uk)");
 }
 
 $text->font($font_bold,11);
