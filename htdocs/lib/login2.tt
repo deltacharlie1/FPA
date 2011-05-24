@@ -1,159 +1,154 @@
 <form action="/cgi-bin/fpa/login3.pl" method="post" name="form1" id="form1">
 <input type="hidden" name="posns" id="posns" value="[% char1 -%],[% char2 -%],[% char3 -%]">
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<table width="100%" border="0" cellspacing="0" cellpadding="4">
   <tr>
     <td>&nbsp;</td>
   </tr>
+  <tr>
+    <td align="center"><h1>Login - Step 2</h1></td>
+  </tr>
+  <tr>
     <td align="center">
-      <table width="550" border="0" cellspacing="0" cellpadding="4">
+      <table id="logintable">
         <tr>
-          <td><h1>Login - Step 2</h1></td>
+          <td colspan="3" class="chartext">Please enter characters [% char1 -%], [% char2 -%] and [% char3 -%] from your memorable word</td>
         </tr>
         <tr>
-          <td>
-            <table width="100%" border="0" cellpadding="0" cellspacing="8" class="formtable">
-              <tr>
-                <td colspan="3">Please enter characters [% char1 -%], [% char2 -%] and [% char3 -%] from your memorable word</td>
-              </tr>
-              <tr>
-                <td>Character [% char1 -%]<br />
-                  <select name="first" id="first"> size="1">
-                    <option VALUE=" ">&nbsp;</option>
-                    <option VALUE="a">&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="b">&nbsp;&nbsp;&nbsp;&nbsp;b&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="c">&nbsp;&nbsp;&nbsp;&nbsp;c&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="d">&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="e">&nbsp;&nbsp;&nbsp;&nbsp;e&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="f">&nbsp;&nbsp;&nbsp;&nbsp;f&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="g">&nbsp;&nbsp;&nbsp;&nbsp;g&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="h">&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="i">&nbsp;&nbsp;&nbsp;&nbsp;i&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="j">&nbsp;&nbsp;&nbsp;&nbsp;j&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="k">&nbsp;&nbsp;&nbsp;&nbsp;k&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="l">&nbsp;&nbsp;&nbsp;&nbsp;l&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="m">&nbsp;&nbsp;&nbsp;&nbsp;m&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="n">&nbsp;&nbsp;&nbsp;&nbsp;n&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="o">&nbsp;&nbsp;&nbsp;&nbsp;o&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="p">&nbsp;&nbsp;&nbsp;&nbsp;p&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="q">&nbsp;&nbsp;&nbsp;&nbsp;q&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="r">&nbsp;&nbsp;&nbsp;&nbsp;r&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="s">&nbsp;&nbsp;&nbsp;&nbsp;s&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="t">&nbsp;&nbsp;&nbsp;&nbsp;t&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="u">&nbsp;&nbsp;&nbsp;&nbsp;u&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="v">&nbsp;&nbsp;&nbsp;&nbsp;v&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="w">&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="x">&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="y">&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="z">&nbsp;&nbsp;&nbsp;&nbsp;z&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE=" ">&nbsp;&nbsp;&nbsp;&nbsp;space&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="0">&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="1">&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="2">&nbsp;&nbsp;&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="3">&nbsp;&nbsp;&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="4">&nbsp;&nbsp;&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="5">&nbsp;&nbsp;&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="6">&nbsp;&nbsp;&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="7">&nbsp;&nbsp;&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="8">&nbsp;&nbsp;&nbsp;&nbsp;8&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="9">&nbsp;&nbsp;&nbsp;&nbsp;9&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                  </select>
-                </td>
-                <td>Character [% char2 -%]<br />
-                  <select name="second" id="second"> size="1">
-                    <option VALUE=" ">&nbsp;</option>
-                    <option VALUE="a">&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="b">&nbsp;&nbsp;&nbsp;&nbsp;b&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="c">&nbsp;&nbsp;&nbsp;&nbsp;c&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="d">&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="e">&nbsp;&nbsp;&nbsp;&nbsp;e&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="f">&nbsp;&nbsp;&nbsp;&nbsp;f&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="g">&nbsp;&nbsp;&nbsp;&nbsp;g&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="h">&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="i">&nbsp;&nbsp;&nbsp;&nbsp;i&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="j">&nbsp;&nbsp;&nbsp;&nbsp;j&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="k">&nbsp;&nbsp;&nbsp;&nbsp;k&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="l">&nbsp;&nbsp;&nbsp;&nbsp;l&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="m">&nbsp;&nbsp;&nbsp;&nbsp;m&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="n">&nbsp;&nbsp;&nbsp;&nbsp;n&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="o">&nbsp;&nbsp;&nbsp;&nbsp;o&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="p">&nbsp;&nbsp;&nbsp;&nbsp;p&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="q">&nbsp;&nbsp;&nbsp;&nbsp;q&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="r">&nbsp;&nbsp;&nbsp;&nbsp;r&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="s">&nbsp;&nbsp;&nbsp;&nbsp;s&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="t">&nbsp;&nbsp;&nbsp;&nbsp;t&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="u">&nbsp;&nbsp;&nbsp;&nbsp;u&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="v">&nbsp;&nbsp;&nbsp;&nbsp;v&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="w">&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="x">&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="y">&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="z">&nbsp;&nbsp;&nbsp;&nbsp;z&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE=" ">&nbsp;&nbsp;&nbsp;&nbsp;space&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="0">&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="1">&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="2">&nbsp;&nbsp;&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="3">&nbsp;&nbsp;&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="4">&nbsp;&nbsp;&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="5">&nbsp;&nbsp;&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="6">&nbsp;&nbsp;&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="7">&nbsp;&nbsp;&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="8">&nbsp;&nbsp;&nbsp;&nbsp;8&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="9">&nbsp;&nbsp;&nbsp;&nbsp;9&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                  </select>
-                </td>
-                <td>Character [% char3 -%]<br />
-                  <select name="third" id="third"> size="1">
-                    <option VALUE=" ">&nbsp;</option>
-                    <option VALUE="a">&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="b">&nbsp;&nbsp;&nbsp;&nbsp;b&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="c">&nbsp;&nbsp;&nbsp;&nbsp;c&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="d">&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="e">&nbsp;&nbsp;&nbsp;&nbsp;e&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="f">&nbsp;&nbsp;&nbsp;&nbsp;f&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="g">&nbsp;&nbsp;&nbsp;&nbsp;g&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="h">&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="i">&nbsp;&nbsp;&nbsp;&nbsp;i&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="j">&nbsp;&nbsp;&nbsp;&nbsp;j&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="k">&nbsp;&nbsp;&nbsp;&nbsp;k&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="l">&nbsp;&nbsp;&nbsp;&nbsp;l&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="m">&nbsp;&nbsp;&nbsp;&nbsp;m&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="n">&nbsp;&nbsp;&nbsp;&nbsp;n&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="o">&nbsp;&nbsp;&nbsp;&nbsp;o&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="p">&nbsp;&nbsp;&nbsp;&nbsp;p&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="q">&nbsp;&nbsp;&nbsp;&nbsp;q&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="r">&nbsp;&nbsp;&nbsp;&nbsp;r&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="s">&nbsp;&nbsp;&nbsp;&nbsp;s&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="t">&nbsp;&nbsp;&nbsp;&nbsp;t&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="u">&nbsp;&nbsp;&nbsp;&nbsp;u&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="v">&nbsp;&nbsp;&nbsp;&nbsp;v&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="w">&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="x">&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="y">&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="z">&nbsp;&nbsp;&nbsp;&nbsp;z&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE=" ">&nbsp;&nbsp;&nbsp;&nbsp;space&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="0">&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="1">&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="2">&nbsp;&nbsp;&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="3">&nbsp;&nbsp;&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="4">&nbsp;&nbsp;&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="5">&nbsp;&nbsp;&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="6">&nbsp;&nbsp;&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="7">&nbsp;&nbsp;&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="8">&nbsp;&nbsp;&nbsp;&nbsp;8&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                    <option VALUE="9">&nbsp;&nbsp;&nbsp;&nbsp;9&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                  </select>
-                </td>
-              </tr>
-              <tr>
-                <td colspan="3">Click <a href="#" onclick="location.href='/cgi-bin/fpa/remailmem.pl';alert('Your Memorable Word has been emailed to you');">here</a> if you have forgotten your memorable word</td>
-              </tr>
-            <tr>
-              <td colspan="3" style="text-align:center;"><input type="submit" name="submit" id="submit" value="Login">
-            </tr>
-          </table>
-        </td>
+          <td class="chartext">Character [% char1 -%]<br />
+            <select name="first" id="first"> size="1">
+              <option VALUE=" ">&nbsp;</option>
+              <option VALUE="a">&nbsp;&nbsp;&nbsp;&nbsp;a</option>
+              <option VALUE="b">&nbsp;&nbsp;&nbsp;&nbsp;b</option>
+              <option VALUE="c">&nbsp;&nbsp;&nbsp;&nbsp;c</option>
+              <option VALUE="d">&nbsp;&nbsp;&nbsp;&nbsp;d</option>
+              <option VALUE="e">&nbsp;&nbsp;&nbsp;&nbsp;e</option>
+              <option VALUE="f">&nbsp;&nbsp;&nbsp;&nbsp;f</option>
+              <option VALUE="g">&nbsp;&nbsp;&nbsp;&nbsp;g</option>
+              <option VALUE="h">&nbsp;&nbsp;&nbsp;&nbsp;h</option>
+              <option VALUE="i">&nbsp;&nbsp;&nbsp;&nbsp;i</option>
+              <option VALUE="j">&nbsp;&nbsp;&nbsp;&nbsp;j</option>
+              <option VALUE="k">&nbsp;&nbsp;&nbsp;&nbsp;k</option>
+              <option VALUE="l">&nbsp;&nbsp;&nbsp;&nbsp;l</option>
+              <option VALUE="m">&nbsp;&nbsp;&nbsp;&nbsp;m</option>
+              <option VALUE="n">&nbsp;&nbsp;&nbsp;&nbsp;n</option>
+              <option VALUE="o">&nbsp;&nbsp;&nbsp;&nbsp;o</option>
+              <option VALUE="p">&nbsp;&nbsp;&nbsp;&nbsp;p</option>
+              <option VALUE="q">&nbsp;&nbsp;&nbsp;&nbsp;q</option>
+              <option VALUE="r">&nbsp;&nbsp;&nbsp;&nbsp;r</option>
+              <option VALUE="s">&nbsp;&nbsp;&nbsp;&nbsp;s</option>
+              <option VALUE="t">&nbsp;&nbsp;&nbsp;&nbsp;t</option>
+              <option VALUE="u">&nbsp;&nbsp;&nbsp;&nbsp;u</option>
+              <option VALUE="v">&nbsp;&nbsp;&nbsp;&nbsp;v</option>
+              <option VALUE="w">&nbsp;&nbsp;&nbsp;&nbsp;w</option>
+              <option VALUE="x">&nbsp;&nbsp;&nbsp;&nbsp;x</option>
+              <option VALUE="y">&nbsp;&nbsp;&nbsp;&nbsp;y</option>
+              <option VALUE="z">&nbsp;&nbsp;&nbsp;&nbsp;z</option>
+              <option VALUE=" ">&nbsp;&nbsp;&nbsp;&nbsp;space</option>
+              <option VALUE="0">&nbsp;&nbsp;&nbsp;&nbsp;0</option>
+              <option VALUE="1">&nbsp;&nbsp;&nbsp;&nbsp;1</option>
+              <option VALUE="2">&nbsp;&nbsp;&nbsp;&nbsp;2</option>
+              <option VALUE="3">&nbsp;&nbsp;&nbsp;&nbsp;3</option>
+              <option VALUE="4">&nbsp;&nbsp;&nbsp;&nbsp;4</option>
+              <option VALUE="5">&nbsp;&nbsp;&nbsp;&nbsp;5</option>
+              <option VALUE="6">&nbsp;&nbsp;&nbsp;&nbsp;6</option>
+              <option VALUE="7">&nbsp;&nbsp;&nbsp;&nbsp;7</option>
+              <option VALUE="8">&nbsp;&nbsp;&nbsp;&nbsp;8</option>
+              <option VALUE="9">&nbsp;&nbsp;&nbsp;&nbsp;9</option>
+            </select>
+          </td>
+          <td class="chartext">Character [% char2 -%]<br />
+            <select name="second" id="second"> size="1">
+              <option VALUE=" ">&nbsp;</option>
+              <option VALUE="a">&nbsp;&nbsp;&nbsp;&nbsp;a</option>
+              <option VALUE="b">&nbsp;&nbsp;&nbsp;&nbsp;b</option>
+              <option VALUE="c">&nbsp;&nbsp;&nbsp;&nbsp;c</option>
+              <option VALUE="d">&nbsp;&nbsp;&nbsp;&nbsp;d</option>
+              <option VALUE="e">&nbsp;&nbsp;&nbsp;&nbsp;e</option>
+              <option VALUE="f">&nbsp;&nbsp;&nbsp;&nbsp;f</option>
+              <option VALUE="g">&nbsp;&nbsp;&nbsp;&nbsp;g</option>
+              <option VALUE="h">&nbsp;&nbsp;&nbsp;&nbsp;h</option>
+              <option VALUE="i">&nbsp;&nbsp;&nbsp;&nbsp;i</option>
+              <option VALUE="j">&nbsp;&nbsp;&nbsp;&nbsp;j</option>
+              <option VALUE="k">&nbsp;&nbsp;&nbsp;&nbsp;k</option>
+              <option VALUE="l">&nbsp;&nbsp;&nbsp;&nbsp;l</option>
+              <option VALUE="m">&nbsp;&nbsp;&nbsp;&nbsp;m</option>
+              <option VALUE="n">&nbsp;&nbsp;&nbsp;&nbsp;n</option>
+              <option VALUE="o">&nbsp;&nbsp;&nbsp;&nbsp;o</option>
+              <option VALUE="p">&nbsp;&nbsp;&nbsp;&nbsp;p</option>
+              <option VALUE="q">&nbsp;&nbsp;&nbsp;&nbsp;q</option>
+              <option VALUE="r">&nbsp;&nbsp;&nbsp;&nbsp;r</option>
+              <option VALUE="s">&nbsp;&nbsp;&nbsp;&nbsp;s</option>
+              <option VALUE="t">&nbsp;&nbsp;&nbsp;&nbsp;t</option>
+              <option VALUE="u">&nbsp;&nbsp;&nbsp;&nbsp;u</option>
+              <option VALUE="v">&nbsp;&nbsp;&nbsp;&nbsp;v</option>
+              <option VALUE="w">&nbsp;&nbsp;&nbsp;&nbsp;w</option>
+              <option VALUE="x">&nbsp;&nbsp;&nbsp;&nbsp;x</option>
+              <option VALUE="y">&nbsp;&nbsp;&nbsp;&nbsp;y</option>
+              <option VALUE="z">&nbsp;&nbsp;&nbsp;&nbsp;z</option>
+              <option VALUE=" ">&nbsp;&nbsp;&nbsp;&nbsp;space</option>
+              <option VALUE="0">&nbsp;&nbsp;&nbsp;&nbsp;0</option>
+              <option VALUE="1">&nbsp;&nbsp;&nbsp;&nbsp;1</option>
+              <option VALUE="2">&nbsp;&nbsp;&nbsp;&nbsp;2</option>
+              <option VALUE="3">&nbsp;&nbsp;&nbsp;&nbsp;3</option>
+              <option VALUE="4">&nbsp;&nbsp;&nbsp;&nbsp;4</option>
+              <option VALUE="5">&nbsp;&nbsp;&nbsp;&nbsp;5</option>
+              <option VALUE="6">&nbsp;&nbsp;&nbsp;&nbsp;6</option>
+              <option VALUE="7">&nbsp;&nbsp;&nbsp;&nbsp;7</option>
+              <option VALUE="8">&nbsp;&nbsp;&nbsp;&nbsp;8</option>
+              <option VALUE="9">&nbsp;&nbsp;&nbsp;&nbsp;9</option>
+            </select>
+          </td>
+          <td class="chartext">Character [% char3 -%]<br />
+            <select name="third" id="third"> size="1">
+              <option VALUE=" ">&nbsp;</option>
+              <option VALUE="a">&nbsp;&nbsp;&nbsp;&nbsp;a</option>
+              <option VALUE="b">&nbsp;&nbsp;&nbsp;&nbsp;b</option>
+              <option VALUE="c">&nbsp;&nbsp;&nbsp;&nbsp;c</option>
+              <option VALUE="d">&nbsp;&nbsp;&nbsp;&nbsp;d</option>
+              <option VALUE="e">&nbsp;&nbsp;&nbsp;&nbsp;e</option>
+              <option VALUE="f">&nbsp;&nbsp;&nbsp;&nbsp;f</option>
+              <option VALUE="g">&nbsp;&nbsp;&nbsp;&nbsp;g</option>
+              <option VALUE="h">&nbsp;&nbsp;&nbsp;&nbsp;h</option>
+              <option VALUE="i">&nbsp;&nbsp;&nbsp;&nbsp;i</option>
+              <option VALUE="j">&nbsp;&nbsp;&nbsp;&nbsp;j</option>
+              <option VALUE="k">&nbsp;&nbsp;&nbsp;&nbsp;k</option>
+              <option VALUE="l">&nbsp;&nbsp;&nbsp;&nbsp;l</option>
+              <option VALUE="m">&nbsp;&nbsp;&nbsp;&nbsp;m</option>
+              <option VALUE="n">&nbsp;&nbsp;&nbsp;&nbsp;n</option>
+              <option VALUE="o">&nbsp;&nbsp;&nbsp;&nbsp;o</option>
+              <option VALUE="p">&nbsp;&nbsp;&nbsp;&nbsp;p</option>
+              <option VALUE="q">&nbsp;&nbsp;&nbsp;&nbsp;q</option>
+              <option VALUE="r">&nbsp;&nbsp;&nbsp;&nbsp;r</option>
+              <option VALUE="s">&nbsp;&nbsp;&nbsp;&nbsp;s</option>
+              <option VALUE="t">&nbsp;&nbsp;&nbsp;&nbsp;t</option>
+              <option VALUE="u">&nbsp;&nbsp;&nbsp;&nbsp;u</option>
+              <option VALUE="v">&nbsp;&nbsp;&nbsp;&nbsp;v</option>
+              <option VALUE="w">&nbsp;&nbsp;&nbsp;&nbsp;w</option>
+              <option VALUE="x">&nbsp;&nbsp;&nbsp;&nbsp;x</option>
+              <option VALUE="y">&nbsp;&nbsp;&nbsp;&nbsp;y</option>
+              <option VALUE="z">&nbsp;&nbsp;&nbsp;&nbsp;z</option>
+              <option VALUE=" ">&nbsp;&nbsp;&nbsp;&nbsp;space</option>
+              <option VALUE="0">&nbsp;&nbsp;&nbsp;&nbsp;0</option>
+              <option VALUE="1">&nbsp;&nbsp;&nbsp;&nbsp;1</option>
+              <option VALUE="2">&nbsp;&nbsp;&nbsp;&nbsp;2</option>
+              <option VALUE="3">&nbsp;&nbsp;&nbsp;&nbsp;3</option>
+              <option VALUE="4">&nbsp;&nbsp;&nbsp;&nbsp;4</option>
+              <option VALUE="5">&nbsp;&nbsp;&nbsp;&nbsp;5</option>
+              <option VALUE="6">&nbsp;&nbsp;&nbsp;&nbsp;6</option>
+              <option VALUE="7">&nbsp;&nbsp;&nbsp;&nbsp;7</option>
+              <option VALUE="8">&nbsp;&nbsp;&nbsp;&nbsp;8</option>
+              <option VALUE="9">&nbsp;&nbsp;&nbsp;&nbsp;9</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3" style="padding:10px 15px;">Click <a href="#" onclick="location.href='/cgi-bin/fpa/remailmem.pl';alert('Your Memorable Word has been emailed to you');">here</a> if you have forgotten your memorable word</td>
+        </tr>
+      <tr>
+        <td colspan="3" style="text-align:center;padding:10px 15px;"><input type="submit" name="submit" id="submit" value="Login"></td>
       </tr>
-      </table>
-    </td>
+    </table>
+  </td>
   </tr>
 </table>
 </form>

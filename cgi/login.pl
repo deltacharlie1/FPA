@@ -22,7 +22,7 @@ else {
 use Template;
 $tt = Template->new({
 	INCLUDE_PATH => ['.','/usr/local/httpd/htdocs/fpa/lib'],
-	WRAPPER => 'phoenix.tt',
+	WRAPPER => 'logicdesign.tt',
 });
 
 $Vars = {
@@ -30,13 +30,15 @@ $Vars = {
 	cookie => $Cookie,
 	focus => $Focus,
 	javascript => '<script type="text/javascript" src="/js/jquery-form.js"></script> 
+<link rel="stylesheet" style="text/css" href="/login.css"/>
 <script type="text/javascript">
 var responseText = "";
 var errfocus = "";
 $(document).ready(function() {
   $("#dialog").dialog({
     bgiframe: true,
-    height: 200,
+    height: 250,
+    width: 400,
     autoOpen: false,
     position: [200,100],
     modal: true,

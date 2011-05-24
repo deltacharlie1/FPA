@@ -4,7 +4,7 @@
 use Template;
 $tt = Template->new({
 	INCLUDE_PATH => ['.','/usr/local/httpd/htdocs/fpa/lib'],
-	WRAPPER => 'phoenix.tt',
+	WRAPPER => 'logicdesign.tt',
 });
 
 $Vars = {
@@ -14,6 +14,7 @@ $Vars = {
 <script src="/js/jquery.cluetip.js" type="text/javascript"></script>
 <script src="/js/jquery.watermark.js" type="text/javascript"></script>
 <link rel="stylesheet" href="/jquery.cluetip.css" type="text/css"/>
+<link rel="stylesheet" href="/login.css" type="text/css"/>
 <script type="text/javascript">
 var responseText = "";
 var errfocus = "";

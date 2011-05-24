@@ -53,8 +53,8 @@
           <div class="account listfix">
             
                 <ul>
-                    <li><a href="https://www.freeplusaccounts.co.uk/cgi-bin/fpa/register.pl" class="register"></a></li>
-                    <li><a href="https://www.freeplusaccounts.co.uk/cgi-bin/fpa/login.pl" class="login"></a></li>
+                    <li><a href="/cgi-bin/fpa/register.pl" class="register"></a></li>
+                    <li><a href="/cgi-bin/fpa/login.pl" class="login"></a></li>
                 </ul>
             
             </div>

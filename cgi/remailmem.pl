@@ -68,7 +68,7 @@ EOD
 }
 print<<EOD;
 Content-Type: text/html
-Status: 205 OK
+Status: 204 OK
 
 EOD
 exit;

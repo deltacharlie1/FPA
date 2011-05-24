@@ -14,7 +14,7 @@
           <input type="hidden" name="react" id="react" value="N"/>
           <div style="position:relative;">
           <div style="position:absolute;left:460px;top:-60px"><img src="/images/bonus.png" onclick="do_bonusfeatures();"/></div>
-          <table width="100%" border="0" cellpadding="0" cellspacing="0" class="formtable">
+          <table border="0" cellpadding="0" cellspacing="0" id="registertable">
             <tr>
               <td>&nbsp;</td>
             </tr>
@@ -65,7 +65,7 @@
             </tr>
             <tr>
               <td colspan="2" style="text-align:center;height:40px;">
-                <input name="but2" type="button" id="but2" value="Register!" disabled="disabled" onclick="validate();"/>
+                <input name="but2" type="button" id="but2" value="Sign Up!" disabled="disabled" onclick="validate();"/>
               </td>
             </tr>
           </table></div>
