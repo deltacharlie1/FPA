@@ -30,7 +30,7 @@ $Vars = {
 	cookie => $Cookie,
 	focus => $Focus,
 	javascript => '<script type="text/javascript" src="/js/jquery-form.js"></script> 
-<link rel="stylesheet" style="text/css" href="/login.css"/>
+<link rel="stylesheet" style="text/css" href="/css/login.css"/>
 <script type="text/javascript">
 var responseText = "";
 var errfocus = "";

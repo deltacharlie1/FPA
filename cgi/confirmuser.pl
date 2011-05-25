@@ -45,7 +45,7 @@ $tt = Template->new({
 		        javascript => '<script type="text/javascript" src="/js/jquery-form.js"></script> 
 <script src="/js/jquery.cluetip.js" type="text/javascript"></script>
 <script src="/js/jquery.watermark.js" type="text/javascript"></script>
-<link rel="stylesheet" href="/jquery.cluetip.css" type="text/css"/>
+<link rel="stylesheet" href="/css/jquery.cluetip.css" type="text/css"/>
 <script type="text/javascript">
 var responseText = "";
 var errfocus = "";
@@ -156,7 +156,7 @@ EOD
 		        javascript => '<script type="text/javascript" src="/js/jquery-form.js"></script> 
 <script src="/js/jquery.cluetip.js" type="text/javascript"></script>
 <script src="/js/jquery.watermark.js" type="text/javascript"></script>
-<link rel="stylesheet" href="/jquery.cluetip.css" type="text/css"/>
+<link rel="stylesheet" href="/css/jquery.cluetip.css" type="text/css"/>
 <script type="text/javascript">
 var responseText = "";
 var errfocus = "";

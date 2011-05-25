@@ -14,7 +14,7 @@
 <script type='text/javascript' src='http://www.fpa.co.uk/wp-includes/js/l10n.js?ver=20101110'></script>
 <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js?ver=3.1.2'></script>
 <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js?ver=3.1.2'></script>
-<link rel="stylesheet" type="text/css" href="/jquery-ui.css"/>
+<link rel="stylesheet" type="text/css" href="/css/jquery-ui.css"/>
 <script type='text/javascript' src='http://www.fpa.co.uk/wp-content/plugins/simple-forum/resources/jscript/forum/sf-forum.js?ver=3.1.2'></script>
 <link rel="stylesheet" type="text/css" href="http://www.fpa.co.uk/wp-content/plugins/j-shortcodes/css/jay.css" />
 <script type="text/javascript" src="http://www.fpa.co.uk/wp-content/plugins/j-shortcodes/js/jay.js"></script><link rel="stylesheet" type="text/css" href="http://www.fpa.co.uk/wp-content/plugins/j-shortcodes/galleryview/css/jquery.galleryview-3.0.css" />

@@ -66,8 +66,8 @@ input[type=select] { background-color:#FFF; border:1px solid #CCC; padding:4px; 
 }
 .m.header .logo {
 	display: block;
-	height: 72px;
-	width: 72px;
+	height: 96px;
+	width: 96px;
 	float: left;
 }
 .menu-header .menu {
@@ -80,10 +80,11 @@ input[type=select] { background-color:#FFF; border:1px solid #CCC; padding:4px; 
 	margin:0 0 0 20px;
 }
 .m.header #nav {
-	float: left;
+	float: right;
 	clear: right;
-	width: 700px;
+	width: 800;
 	padding: 5px;
+	margin-top:20px;
 }
 .m.header #nav ul li a {
 	text-transform: uppercase;

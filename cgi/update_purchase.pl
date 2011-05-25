@@ -50,7 +50,7 @@ $Vars = {
 	images => $Images->fetchall_arrayref({}),
         javascript => '<script type="text/javascript" src="/js/jquery-form.js"></script>'
 . $Line_js .
-'<link rel="stylesheet" href="/jquery.flexbox.css" type="text/css">
+'<link rel="stylesheet" href="/css/jquery.flexbox.css" type="text/css">
 <script src="/js/jquery.flexbox.js" type="text/javascript"></script>
 <script language="JavaScript">
 var responseText = "";

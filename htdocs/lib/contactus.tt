@@ -1,0 +1,46 @@
+<script type="text/javascript">$(document).ready(function(){ $("#name").focus(); });</script>
+<form action="/cgi-bin/fpa/contact.pl" method="post">
+<div style="position:relative;">
+<div style="float:left;position:relative;">
+<table border="0" cellspacing="4" cellpadding="4" style="padding-left:20px;">
+<tbody>
+<tr>
+<td width="25%" align="right">Your Name</td>
+<td width="75%"><input name="name" id="name" size="20" type="text" /></td>
+</tr>
+<tr>
+<td width="25%" align="right">Your Email Address</td>
+<td width="75%"><input name="email" size="20" type="text" /></td>
+</tr>
+<tr>
+<td width="25%" align="right">To</td>
+<td width="75%"><select name="recipient"><option selected="selected">Sales</option><option>Customer Service</option><option>Technical Support</option></select></td>
+</tr>
+<tr>
+<td width="25%" align="right">Subject</td>
+<td width="75%"><input name="subject" size="30" type="text" /></td>
+</tr>
+<tr>
+<td width="25%" align="right" valign="top">Message</td>
+<td width="75%"><textarea cols="40" rows="6" name="message"></textarea></td>
+</tr>
+<tr height="40">
+<td></td>
+<td><input name="but2" type="submit" value="Send" /> <input name="reset" type="reset" value="Clear all Fields" /></td>
+</tr>
+<tr>
+<td align="right" nowrap="nowrap">Include copy to Self?</td>
+<td><input id="copy" checked="checked" name="copy" type="checkbox" value="Y" /></td>
+</tr>
+</tbody>
+</table><p>&nbsp;</p><p>&nbsp;</p>
+</form>
+</div>
+<div style="position:absolute;right:1px;font-size:14px;">
+<div style="border:1px solid #999999;padding:10px;">
+Corunna Systems Ltd<br/>
+Sheraton House<br/>
+Castle Park<br/>
+Cambridge CB3 0AX<br/><br/>
+Tel: 01223 462244<br/>
+</div></div></div>

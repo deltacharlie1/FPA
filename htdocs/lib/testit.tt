@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <title>Invoice Designer</title>
-<link href="/app.css" rel="stylesheet" type="text/css" />
+<link href="/css/app.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="/favicon.ico"/>
 <link rel="stylesheet" href="/jquery-ui2.css" type="text/css" media="all" />
 <script src="/js/jquery.min.js" type="text/javascript"></script>

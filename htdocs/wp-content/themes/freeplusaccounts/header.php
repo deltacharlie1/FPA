@@ -48,7 +48,7 @@
         
         <div class="m header">
         
-            <a href="<?php echo get_site_url(); ?>" class="logo" title="Free Plus Accounts"><img src="<?php bloginfo('template_directory'); ?>/images/logo.jpg" alt="Free Plus Accounts" /></a>
+            <a href="<?php echo get_site_url(); ?>" class="logo" title="Free Plus Accounts"><img src="<?php bloginfo('template_directory'); ?>/images/logo.jpg" alt="Free Plus Accounts" /></a>&nbsp;<?php bloginfo('name'); ?>
             
           <div class="account listfix">
             
