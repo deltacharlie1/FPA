@@ -1,7 +1,7 @@
 <?php 
 
 /**
- * Template Name: Home Page
+ * Template Name: Home Page (New)
  */
 
 get_header(); ?>
@@ -22,6 +22,8 @@ get_header(); ?>
       
      <?php if (have_posts()) : ?>
                <?php while (have_posts()) : the_post(); ?>    
+               
+               <h1><?php the_title(); ?></h1>
                
                <?php the_content(); ?>
                

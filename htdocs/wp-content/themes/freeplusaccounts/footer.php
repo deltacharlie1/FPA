@@ -1,10 +1,17 @@
     
-<?php
-	$greenoption = get_post_meta($post->ID, 'green-option', true);
+    <?php
+	
+		
+	
+		$greenoption = get_post_meta($post->ID, 'green-option', true);
+		
 		if ( $greenoption !== 'hide' ) {
-?>
-<?php if (is_page('home')) { ?>         
+			
+	
+	?>
+    
     <div class="footer-b">
+            
       <div class="m">
         
 			<?php 
@@ -29,7 +36,7 @@
             
             	<ul>
 					<?php
-					query_posts($query_string . '&cat=5&posts_per_page=3');
+					query_posts($query_string . '&posts_per_page=3');
 					if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
                 	<li>
                     	<h4><a href="<?php the_permalink(); ?>"><?php the_title(); ?> // <?php the_date(); ?></a></h4>
@@ -51,7 +58,7 @@
 		</div>
                 
     </div>
-    <?php } ?>
+    
 	<div class="clear"></div>
         
     <?php }  ?>
@@ -85,6 +92,11 @@
           <div class="addthis_toolbox addthis_default_style ">
               <a class="addthis_button_tweet"></a>
               <a class="addthis_counter addthis_pill_style"></a>
+<!-- GeoTrust QuickSSL [tm] Smart Icon tag. Do not edit. -->
+
+ <div style="float:right;"><SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript" SRC="//smarticon.geotrust.com/si.js"></SCRIPT></div>
+
+ <!-- end GeoTrust Smart Icon tag -->    
           </div>
           <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=xa-4d9adfb82ccdc016"></script>
           
@@ -95,7 +107,9 @@
       </div>
     
     </div>
-    
+	<script type="text/javascript">
+        swfobject.registerObject("FlashID");
+    </script>
     
     <?php wp_footer(); ?>
     

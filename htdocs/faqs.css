@@ -14,11 +14,11 @@ border-radius: 5px;
 .accordionButton {
 width:580px;
 font-family: "Arial", "Helvetica", sans-serif;
-font-size:13px;
+font-size:14px;
 font-weight:bold;
 padding: 3px 0 3px 20px;
 background: #388A4B url('/icons/arrow.gif') no-repeat center left;
-color:#ffffff;
+color:#003300;
 cursor: pointer;
 }
 #faqs .on {

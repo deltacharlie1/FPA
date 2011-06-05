@@ -3,11 +3,25 @@
 <head>
 
 <title><?php
+	/*
+	 * Print the <title> tag based on what is being viewed.
+	 */
+	global $page, $paged;
 
-	if (is_page('About Us')) { ?>Free Accounting Software<?php }
-	elseif (is_page('Contact Us')) { ?>Online Accounting for Small Businesses<?php }
-	elseif (is_page('Forum')) { ?>Free Accounts for Business<?php }
-	else { ?>FreeOnline Accountancy<?php }
+	wp_title( '|', true, 'right' );
+
+	// Add the blog name.
+	bloginfo( 'name' );
+
+	// Add the blog description for the home/front page.
+	$site_description = get_bloginfo( 'description', 'display' );
+	if ( $site_description && ( is_home() || is_front_page() ) )
+		echo " | $site_description";
+
+	// Add a page number if necessary:
+	if ( $paged >= 2 || $page >= 2 )
+		echo ' | ' . sprintf( __( 'Page %s', 'twentyten' ), max( $paged, $page ) );
+
 	?></title>
     
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -19,12 +33,14 @@
 
 <?php wp_head(); ?>
 
+<script src="<?php bloginfo('template_directory'); ?>/js/cufon/cufon.js" type="text/javascript"></script>
+<script src="<?php bloginfo('template_directory'); ?>/js/cufon/font.js" type="text/javascript"></script>
+<script src="<?php bloginfo('template_directory'); ?>/js/cufon/settings.js" type="text/javascript"></script>
+
 <script src="<?php bloginfo('template_directory'); ?>/js/coda/jquery.easing.1.3.js" type="text/javascript"></script>
 <script src="<?php bloginfo('template_directory'); ?>/js/coda/jquery.coda-slider-2.0.js" type="text/javascript"></script>
-<?php if (is_page('faqs')) { ?>
-<script type="text/javascript" src="/js/jquery-faqs.js"></script>
-<link rel="stylesheet" type="text/css" href="/faqs.css"/>
-<?php } ?>
+
+<script src="<?php bloginfo('template_directory'); ?>/Scripts/swfobject_modified.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 	$().ready(function() {
@@ -48,13 +64,14 @@
         
         <div class="m header">
         
-            <a href="<?php echo get_site_url(); ?>" class="logo" title="Free Plus Accounts"><img src="<?php bloginfo('template_directory'); ?>/images/logo.jpg" alt="Free Plus Accounts" /></a>&nbsp;<?php bloginfo('name'); ?>
-            
+            <a href="<?php echo get_site_url(); ?>" class="logo" title="Free Plus Accounts"><img src="<?php bloginfo('template_directory'); ?>/images/logo.jpg" alt="Free Plus Accounts" /></a>
+<div id="freeplustitle"><img src="<?php bloginfo('template_directory'); ?>/images/freeplustitle.png" alt="Free Plus Accounts" /></div>
+
           <div class="account listfix">
             
                 <ul>
-                    <li><a href="/cgi-bin/fpa/register.pl" class="register"></a></li>
-                    <li><a href="/cgi-bin/fpa/login.pl" class="login"></a></li>
+                    <li><a href="https://www.freeplusaccounts.co.uk/cgi-bin/fpa/register.pl" class="register"></a></li>
+                    <li><a href="https://www.freeplusaccounts.co.uk/cgi-bin/fpa/login.pl" class="login"></a></li>
                 </ul>
             
             </div>

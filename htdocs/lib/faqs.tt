@@ -1,3 +1,5 @@
+<script type="text/javascript" src="/js/jquery-faqs.js"></script>
+<link rel="stylesheet" type="text/css" href="/css/faqs.css"/>
 <div id="faqs">
 <h3>The Company</h3>
 <div class="border"><div class="accordionButton">Who is behind FreePlus Accounts?</div>

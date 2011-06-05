@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <dwsync>
-<file name="archive.php" server="79.170.44.28/public_html/freeplusaccounts/" local="129465842400000000" remote="129465842400000000" />
-<file name="category.php" server="79.170.44.28/public_html/freeplusaccounts/" local="129465814800000000" remote="129465814800000000" />
-<file name="comments.php" server="79.170.44.28/public_html/freeplusaccounts/" local="129465691800000000" remote="129465691800000000" />
-<file name="error.php" server="79.170.44.28/public_html/freeplusaccounts/" local="129464895000000000" remote="129464895000000000" />
-<file name="footer.php" server="79.170.44.28/public_html/freeplusaccounts/" local="129467458200000000" remote="129467458200000000" />
-<file name="functions.php" server="79.170.44.28/public_html/freeplusaccounts/" local="129467457000000000" remote="129467457000000000" />
-<file name="header.php" server="79.170.44.28/public_html/freeplusaccounts/" local="129467448000000000" remote="129467448000000000" />
-<file name="home.php" server="79.170.44.28/public_html/freeplusaccounts/" local="129467457000000000" remote="129467457000000000" />
-<file name="inc_banner.php" server="79.170.44.28/public_html/freeplusaccounts/" local="129467448000000000" remote="129467448000000000" />
-<file name="inc_footer_home.php" server="79.170.44.28/public_html/freeplusaccounts/" local="129467457600000000" remote="129467457600000000" />
 <file name="index.php" server="79.170.44.28/public_html/freeplusaccounts/" local="129465813000000000" remote="129465813000000000" />
-<file name="page.php" server="79.170.44.28/public_html/freeplusaccounts/" local="129464913000000000" remote="129464913000000000" />
-<file name="search.php" server="79.170.44.28/public_html/freeplusaccounts/" local="129465814800000000" remote="129465814800000000" />
-<file name="single.php" server="79.170.44.28/public_html/freeplusaccounts/" local="129465814800000000" remote="129465814800000000" />
-<file name="style.css" server="79.170.44.28/public_html/freeplusaccounts/" local="129467212200000000" remote="129467212200000000" />
+<file name="style.css" server="79.170.44.28/public_html/freeplusaccounts/" local="129501976800000000" remote="129501976800000000" />
+<file name="header.php" server="79.170.44.28/public_html/freeplusaccounts/" local="129502711200000000" remote="129502711200000000" />
+<file name="footer.php" server="79.170.44.28/public_html/freeplusaccounts/" local="129502711800000000" remote="129502711800000000" />
+<file name="inc_banner.php" server="79.170.44.28/public_html/freeplusaccounts/" local="129502751400000000" remote="129502751400000000" />
+<file name="functions.php" server="79.170.44.28/public_html/freeplusaccounts/" local="129467457000000000" remote="129467457000000000" />
+<file name="error.php" server="79.170.44.28/public_html/freeplusaccounts/" local="129464895000000000" remote="129464895000000000" />
+<file name="inc_footer_home.php" server="79.170.44.28/public_html/freeplusaccounts/" local="129467457600000000" remote="129467457600000000" />
+<file name="home.php" server="79.170.44.28/public_html/freeplusaccounts/" local="129467457000000000" remote="129467457000000000" />
 <file name="template-fullwidth.php" server="79.170.44.28/public_html/freeplusaccounts/" local="129464921400000000" remote="129464921400000000" />
 <file name="template-sidebar.php" server="79.170.44.28/public_html/freeplusaccounts/" local="129464934000000000" remote="129464934000000000" />
+<file name="category.php" server="79.170.44.28/public_html/freeplusaccounts/" local="129465814800000000" remote="129465814800000000" />
+<file name="single.php" server="79.170.44.28/public_html/freeplusaccounts/" local="129465814800000000" remote="129465814800000000" />
+<file name="search.php" server="79.170.44.28/public_html/freeplusaccounts/" local="129465814800000000" remote="129465814800000000" />
+<file name="comments.php" server="79.170.44.28/public_html/freeplusaccounts/" local="129465691800000000" remote="129465691800000000" />
+<file name="archive.php" server="79.170.44.28/public_html/freeplusaccounts/" local="129465842400000000" remote="129465842400000000" />
+<file name="home-new-template.php" server="79.170.44.28/public_html/freeplusaccounts/" local="129501972600000000" remote="129501972600000000" />
+<file name="page.php" server="79.170.44.28/public_html/freeplusaccounts/" local="129464913000000000" remote="129464913000000000" />
 </dwsync>

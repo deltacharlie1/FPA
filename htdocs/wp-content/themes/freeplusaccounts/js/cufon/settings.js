@@ -7,3 +7,4 @@
 	Cufon('#nav a');
 	Cufon('.footer-b .m  h3');
 	Cufon('.footer-b .m  h4');
+	Cufon('#freeplustitle');
