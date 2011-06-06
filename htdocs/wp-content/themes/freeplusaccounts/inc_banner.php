@@ -1,7 +1,7 @@
 
     <div class="banner" id="banner">
     
-      <div class="m"><div class="banner-items"><img src="<?php bloginfo('template_directory'); ?>/images/banner-1.png" alt="Free Online Accountancy System" />
+      <div class="m"><div class="banner-items"><div style="display:inline;float:left;"><img src="<?php bloginfo('template_directory'); ?>/images/banner-1.png" alt="Free Online Accountancy System" /></div>
         <div id="media" style="float:right; margin-top:0px;width:330px;height:258px;">
             <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="320" height="258" id="csSWF">
                 <param name="movie" value="fpaintro/FPA mini Intro_controller.swf" />

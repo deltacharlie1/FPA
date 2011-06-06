@@ -8,7 +8,7 @@ $tt = Template->new({
 });
 
 $Vars = {
-	title => 'Register with FreePlus Accounts',
+	title => 'Register',
 	focus => 'email',
 	javascript => '<script type="text/javascript" src="/js/jquery-form.js"></script> 
 <script src="/js/jquery.cluetip.js" type="text/javascript"></script>

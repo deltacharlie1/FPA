@@ -148,6 +148,11 @@ input[type=select] { background-color:#FFF; border:1px solid #CCC; padding:4px; 
 	width: 110px;
 	margin:10px 40px 0 20px;
 }
+.m.header .account.listfix ul li .register {
+	height: 38px;
+	width: 110px;
+	margin: 10px 40px 0 20px;
+}
 .m.header .account.listfix ul li .login {
 	width: 55px;
 	padding: 0px;
