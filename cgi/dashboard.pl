@@ -71,7 +71,10 @@ $Vars = {
 .jcarousel-control {
     text-align: center;
 }
-
+.jcarousel-control  ul{
+    margin:0px;
+    padding:0px;
+}
 .jcarousel-control li {
     display: inline;
     list-style-type: none;
@@ -88,6 +91,7 @@ $Vars = {
     color: #eee;
     text-decoration: none;
     font-weight: bold;
+    display:inline;
 }
 .jcarousel-control a:focus,
 .jcarousel-control a:active {

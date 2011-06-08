@@ -17,7 +17,7 @@
       </table>
     </div>
 [% ELSE -%]
-<br/><span style="padding:0 0 0 40px;color:#999999;font-style:italic;font-weight:normal;">There are no reminders</span>
+<span style="padding:0 0 0 40px;color:#999999;font-size:12px;font-style:italic;font-weight:normal;">There are no reminders</span>
 [% END -%]
   </div>
     </td>

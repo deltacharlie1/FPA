@@ -1,5 +1,7 @@
 #!/usr/bin/perl
 
+warn "Starting\n";
+
 $ACCESS_LEVEL = 1;
 
 use Checkid;

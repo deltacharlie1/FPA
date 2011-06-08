@@ -61,6 +61,10 @@ else {
 		if ($Key =~ /^x/i) {		#  This is a cheque
 			$Key =~ tr/x//d;	#  Strip off the leading 'x'
 
+#  Update the cheque transaction to 'banked'
+
+			$Sts = $dbh->do("update transactions set txnbanked='Y' where acct_id='$COOKIE->{ACCT}' and txnmethod='1310' and id=$Key");
+
 			$Cheque_total += $Value;
 			$Cheque_count++;
 		}
@@ -120,7 +124,7 @@ else {
 	        $FORM{txnno} = $Company[0];
         	$Sts = $dbh->do("update companies set comnexttxn=comnexttxn+1 where reg_id=$Reg_id and id=$Com_id");
 
-	        $Sts = $dbh->do("insert into transactions (acct_id,txnamount,txndate,txnmethod,txntxntype,txncusname,txnremarks,txntxnno,txnyearend) values ('$COOKIE->{ACCT}','$Contra_amt',str_to_date('$FORM{tfrdate}','%d-%b-%y'),'1310','transfer','Cheque','Cash to bank (cheques)','$FORM{txnno}','$COOKIE->{YEAREND}')");
+	        $Sts = $dbh->do("insert into transactions (acct_id,txnamount,txndate,txnmethod,txntxntype,txncusname,txnremarks,txntxnno,txnyearend,txnbanked) values ('$COOKIE->{ACCT}','$Contra_amt',str_to_date('$FORM{tfrdate}','%d-%b-%y'),'1310','transfer','Cheque','Cash to bank (cheques)','$FORM{txnno}','$COOKIE->{YEAREND}','Y')");
 #       	 $New_txn_id = $dbh->last_insert_id(undef, undef, qw(transactions undef));
 
 

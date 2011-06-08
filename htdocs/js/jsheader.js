@@ -12,12 +12,12 @@ $(document).ready(function(){
       case 'Suppliers':
         document.getElementById('dfg').title = "Sales Invoices";
         document.getElementById('dfg').innerHTML = "Search Sales Invoices";
-        $("#searchcus").autocomplete("option","minLength",3);
+        $("#searchcus").autocomplete("option","minLength",1);
         break;
       case 'Sales Invoices':
         document.getElementById('dfg').title = "Purchase Invoices";
         document.getElementById('dfg').innerHTML = "Search Purchase Invoices";
-        $("#searchcus").autocomplete("option","minLength",3);
+        $("#searchcus").autocomplete("option","minLength",1);
         break;
       default:
         document.getElementById('dfg').title = "Customers";
@@ -27,9 +27,9 @@ $(document).ready(function(){
     }
   });
   $("#searchcus").autocomplete({
-    minLength: 3,
+    minLength: 1,
     source: function (request,response) {
-      request.type = document.getElementById("dfg").title;
+      request.type = "Sales Invoice";
       $.ajax({
         url: "/cgi-bin/fpa/autosuggest.pl",
         dataType: "json",

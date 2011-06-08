@@ -39,7 +39,7 @@
   </form>
 </div>
 [% region = { 'UK' => 'UK','EU' => 'Other EU', 'NEU' => 'Non-EU' }; overdue = '' -%]
-<div class="status" style="float:left;">[%- invoice.invstatus; IF invoice.invtype == "C" -%] Credit Note[%- ELSE -%] Invoice[%- END -%]</div>[%- IF invoice.duedays AND invoice.duedays < curdate AND invoice.invstatuscode > 2; overdue='Y' -%]<div style="color:#800000;font-weight:bold;float:right;border:1px solid red;margin-right:30px;padding:9px 20px;font-size:24px;">OVERDUE</div>[%- END -%]
+<div class="status" style="float:left;">[%- invoice.invstatus; IF invoice.invtype == "C" -%] Credit Note[%- ELSE -%] Invoice[%- END -%]</div>[%- IF invoice.duedays AND invoice.duedays < curdate AND invoice.invstatuscode > 2; overdue='Y' -%]<div style="color:#800000;font-weight:bold;float:right;border:3px solid red;margin-right:55px;margin-bottom:5px;padding:4px 20px;font-size:24px;">OVERDUE</div>[%- END -%]
   <table width="660" border="0" cellpadding="0" cellspacing="0" class="formtable">
     <tr>
       <td><label>Company Name</label></td>

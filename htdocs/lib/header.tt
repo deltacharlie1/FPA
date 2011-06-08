@@ -5,11 +5,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="description" content="description" />
 <meta name="keywords" content="keywords" />
-<link href="/css/app.css" rel="stylesheet" type="text/css" />
+<link href="/css/new-css.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="/favicon.ico"/>
 <link rel="stylesheet" href="/css/jquery-ui.css" type="text/css"/>
 <script src="/js/jquery.js" type="text/javascript"></script>
 <script src="/js/jquery-ui.js" type="text/javascript"></script>
+<script src="/js/jquery.watermark.js" type="text/javascript"></script>
 <link rel="stylesheet" href="/uploadify.css" type="text/css"/>
 <script type="text/javascript" src="/js/swfobject.js"></script>
 <script type="text/javascript" src="/js/jquery.uploadify.v2.1.4.js"></script>
@@ -19,6 +20,7 @@
 [% IF cookie.UPLDS > 0 -%]
 <script type="text/javascript">
 $(document).ready(function(){
+  $("#searchcus").watermark("Sales Invoices");
   $("#pifile").uploadify ({
     "uploader"       : "/js/uploadify.swf",
     "script"         : "/cgi-bin/fpa/uploadify.pl",
@@ -40,29 +42,109 @@ $(document).ready(function(){
 [% javascript %]
 </head>
 <body [%- IF focus -%][%- IF focus.search('location') -%] onload="[%- focus; -%]"[%- ELSE -%] onload="document.getElementById('[%- focus -%]').focus();"[%- END -%][%- END -%]>
-<div id="wrapper">
-<table width="100%"  cellpadding="0" cellspacing="0" border="0" style="height:103px;background-image:url(/images/header_back.png);background-repeat:repeat-x;">
-  <tr>
-    <td style="padding:0px;vertical-align:middle;text-align:center;width:120px;"><img src="/logo5.png"/></td>
-    <td><h1 id="tagline">[%- cookie.TAG -%]</h1></td>
-    <td style="text-align:right;padding:6px;"><a href="http://www.completemarketingservices.com"><img src="/images/sponsor_logo.png"/></a></td>
-  </tr>
-</table>
-<div style="position: absolute; display: inline; top:80px; left:830px;">
-  <div id="logout_button">
-    <a href="/cgi-bin/fpa/logout.pl"></a>
-  </div>
-</div>
-<div style=" background-image:url(/images/nav_back-old.png);height:70px;">
-[% IF cookie.MENU == 'S'; INCLUDE simple_menu.tt; ELSE; INCLUDE full_menu.tt; END -%]
-    <div style="float:right;">
-    <div id="searchimg"><img src="/icons/search.png"/></div>
-    <div style="float:right;padding:10px 25px 0px 0px;">
-      <div id="dfg" title="Sales Invoices">Search Sales Invoices</div>
-      <input id="searchcus" />
+  <div id="wrapper">
+    <div id="top">
+      <div class="company-name">[%- cookie.TAG -%]</div>
+      <a href="/cgi-bin/fpa/logout.pl"><div id="logout"></div></a>
+      <div class="top-ad"><img src="/images/sponsor_logo.png"></div>
+    </div><!-- END top -->
+
+    <div class="clear"></div>
+    <div id="navigation">
+      <ul>
+        <li class="company"><a href="#"><span>Company</span></a>
+          <ul>
+            <li><a href="/cgi-bin/fpa/reregister.pl">Registration Details</a></li>
+            <li><a href="/cgi-bin/fpa/company_details.pl">Company Details</a></li>
+[% IF cookie.ADDU > 0 -%]
+            <li><a href="/cgi-bin/fpa/adduser.pl">Add New User</a></li>
+[% END -%]
+            <li><a href="/cgi-bin/fpa/docsrep1.pl">List Documents</a></li>
+            <li><a href="/cgi-bin/fpa/list_coas.pl">Chart of Accounts</a></li>
+            <li><a href="/cgi-bin/fpa/loan.pl?I">Add Loan</a></li>
+            <li><a href="/cgi-bin/fpa/loan.pl?D">Reduce Loan</a></li>
+            <li><a href="/cgi-bin/fpa/wipe_clean.pl">Delete All Data</a></li>
+          </ul>
+        </li>
+        <li class="sales"><a href="#"><span>Sales</span></a>
+          <ul>
+            <li><a href="/cgi-bin/fpa/list_invoices.pl?listorder=O">List Unpaid Invoices</a></li>
+            <li><a href="/cgi-bin/fpa/list_invoices.pl?listorder=N">List Invoices</a></li>
+            <li><a href="/cgi-bin/fpa/new_invoice.pl">Create New Invoice</a></li>
+        [% IF cookie.REP_INVS == "1" -%]
+            <li><a href="/cgi-bin/fpa/list_templates.pl">List Invoice Templates</a></li>
+[% END -%]
+            <li><a href="#" onclick="display_form('I');">Receive Money In</a></li>
+            <li><a href="/cgi-bin/fpa/list_customers.pl">List Customers</a></li>
+            <li><a href="/cgi-bin/fpa/add_address.pl?C">Add New Customer</a></li>
+          </ul>
+        </li>
+        <li class="purchases"><a href="#"><span>Purchases</span></a>
+          <ul>
+            <li><a href="/cgi-bin/fpa/list_purchases.pl?listorder=O">List Unpaid Purchases</a></li>
+            <li><a href="/cgi-bin/fpa/list_purchases.pl?listorder=N">List Purchases</a></li>
+            <li><a href="/cgi-bin/fpa/new_purchase.pl">New Purchase Invoice</a></li>
+            <li><a href="#" onclick="display_form('P');">Pay Money Out</a></li>
+            <li><a href="/cgi-bin/fpa/list_suppliers.pl">List Suppliers</a></li>
+            <li><a href="/cgi-bin/fpa/add_address.pl?S">Add New Supplier</a></li>
+            <li><a href="#" onclick="display_form('E');">Record Expense</a></li>
+            <li><a href="/cgi-bin/fpa/multi_purchases.pl?[%- cookie.EXP -%]">Pay Expenses</a></li>
+          </ul>
+        </li>
+        <li class="accounts"><a href="#"><span>Money</span></a>
+          <ul>
+            <li><a href="/cgi-bin/fpa/list_txns.pl">List Transactions</a></li>
+            <li><a href="/cgi-bin/fpa/list_accounts.pl">List Accounts</a></li>
+            <li><a href="/cgi-bin/fpa/list_stmts.pl">List Statements</a></li>
+            <li><a href="/cgi-bin/fpa/cashtobank.pl">Put Money In</a></li>
+            <li><a href="/cgi-bin/fpa/transfer.pl?O">Get money Out</a></li>
+            <li><a href="/cgi-bin/fpa/transfer.pl?T">Transfer Money</a></li>
+          </ul>
+        </li>
+        <li class="vat"><a href="#"><span>VAT</span></a>
+          <ul>
+            <li><a href="/cgi-bin/fpa/list_vatreturns.pl">List VAT Returns</a></li>
+            <li><a href="/cgi-bin/fpa/list_vats.pl?filter=2100">List VAT Outputs</a></li>
+            <li><a href="/cgi-bin/fpa/list_vats.pl?filter=1400">List VAT Inputs</a></li>
+            <li><a href="/cgi-bin/fpa/vatreturn.pl">VAT Form 100</a></li>
+          </ul>
+        </li>
+        <li class="reports"><a href="#"><span>Reports</span></a>
+          <ul>
+            <li><a href="/cgi-bin/fpa/dashboard.pl">Front Page</a></li>
+            <li><a href="/cgi-bin/fpa/invrep1.pl">Invoice Analysis</a></li>
+            <li><a href="/cgi-bin/fpa/txnrep1.pl">Transaction Analysis</a>
+            <li><a href="/cgi-bin/fpa/trial_balance.pl?new">Trial Balance</a></li>
+            <li><a href="/cgi-bin/fpa/pandl.pl">Profit &amp; Loss</a></li>
+            <li><a href="#">Aged Debtors</a></li>
+            <li><a href="#">Aged Creditors</a></li>
+          </ul>
+        </li>
+        <li class="reminders"><a href="#"><span>Reminders</span></a>
+          <ul>
+            <li><a href="#" onclick="view_reminders();">View Reminders</a></li>
+            <li><a href="#" onclick="$('#vreminder').dialog('open');">Add Reminder</a></li>
+          </ul>
+        </li>
+        <li class="admin"><a href="#"><span>Admin</span></a>
+          <ul>
+            <li><a href="#" onclick="view_comments();">View Feedback</a></li>
+            <li><a href="#" onclick="$('#vcomment').dialog('open');">Add New Feedback</a></li>
+            <li><a href="/cgi-bin/fpa/assign_invoices.pl">Assign Unlisted Invoices</a></li>
+            <li><a href="/cgi-bin/fpa/switch_systems.pl">Switch to [%- IF cookie.ACCT == "7+7" -%]Live System[%- ELSE -%]Testbed[%- END -%]</a></li>
+        <li><a href="/cgi-bin/fpa/list_audit_trails.pl">Audit Trail</a></li>
+          </ul>
+        </li>
+        <li class="print"><a href="#"><span>Print</span></a>
+        </li>
+        <li class="help"><a href="#"><span>Help</span></a>
+        </li>
+        <li class="search"><span><input id="searchcus" /></span>
+        </li>
+      </ul>
     </div>
-    </div>
-</div>
+    <div class="clear"></div>
+      <div class="clear"></div>
 <div id="dialog" style="text-align:left;z-index:10100;" title="Errors!"></div>
 <div id="vcomments" style="text-align:left;z-index:10100;" title="Feedback"></div>
 <div id="vcomment" style="display:none;" title="Add a Comment">
@@ -112,7 +194,9 @@ $(document).ready(function(){
     </table>
   </form>
 </div>
+<div id="container">
 [% content %]
+</div>
 </div>  <!-- end of wrapper  //-->
 <div id="receipt2" title="Receive Money In" style="width:520px;">
   <form id="recform2" name="recform2" method="post" action="/cgi-bin/fpa/process_txn.pl">
