@@ -23,7 +23,7 @@ foreach $pair (@pairs) {
 use DBI;
 my $dbh = DBI->connect("DBI:mysql:fpa");
 
-$Users = $dbh->prepare("select reg_id,regmemword,regmembership,regactive,date_format(date_add(now(), interval 6 month),'%a, %d %b %Y %k:%i:%s GMT'),date_add(now(), interval 6 month) from registrations where regemail='$FORM{email}' and regpwd=password('$FORM{pwd}')");
+$Users = $dbh->prepare("select reg_id,regmemword,regmembership,regactive,date_format(date_add(now(), interval 6 month),'%a, %d %b %Y %k:%i:%s GMT'),date_add(now(), interval 6 month),regvisitcount from registrations where regemail='$FORM{email}' and regpwd=password('$FORM{pwd}')");
 $Users->execute;
 if ($Users->rows < 1) {
 	print<<EOD;
@@ -51,6 +51,13 @@ You have not yet confirmed your registration. Please do so first or click here i
 EOD
 	}
 	else {
+
+#  If this is the first time logging in then create the Wordpress user.  (We need to do it here so that we
+#  can use the clear password).
+
+		if ($Users[6] < 1) {
+			$output = `php /usr/local/git/fpa/cgi/add_fpa_user.php $FORM{email} $FORM{pwd} $FORM{email}`;
+		}
 
 #  Check whether we need to downgrade
 

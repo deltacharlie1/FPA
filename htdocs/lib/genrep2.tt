@@ -1,0 +1,35 @@
+<form action="/cgi-bin/fpa/genrep2.pl" method="post" id="form1" autocomplete="off">
+<input type="hidden" name="numrows" id="numrows" value="[%- numrows -%]"/>
+<input type="hidden" name="offset" id="offset" value="[%- offset -%]"/>
+<input type="hidden" name="rows" id="rows" value="[%- rows -%]"/>
+<input type="hidden" name="sumtotal" id="sumtotal" value="[%- sumtotal -%]"/>
+[% INCLUDE search_select.tt -%]
+<table width="660" border="0" cellpadding="0" cellspacing="0" class="listing">
+  <tr>
+    <th>Invoice</th>
+    <th>Type</th>
+    <th>Customer</th>
+    <th>Description</th>
+    <th>Total</th>
+    <th>Printed</th>
+    <th>Due</th>
+    <th>Paid</th>
+    <th>Status</th>
+  </tr>
+[% class = [ "even","odd" ] -%]
+[% FOREACH invoice IN invoices -%]
+  [%- ndx = loop.count % 2 -%]
+  <tr class="[%- class.$ndx -%]">
+    <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invinvoiceno -%]</td>
+    <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invtype -%]</td>
+    <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invcusname -%]</td>
+    <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.description | truncate(30) -%]</td>
+    <td style="text-align:right;" onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invamount | remove('-') -%]</td>
+    <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.printdate -%]</td>
+    <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.duedate -%]</td>
+    <td style="text-align:right;" onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invpaid | remove('-') -%]</td>
+    <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invstatus -%]</td>
+  </tr>
+[% END -%]
+</table>
+</form>

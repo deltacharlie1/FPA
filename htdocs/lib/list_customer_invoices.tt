@@ -104,9 +104,9 @@
   [% IF invoice.invstatus == 'Overdue' -%]<span style="color:#800000;font-weight:bold;">Overdue</span>[%- ELSE; invoice.invstatus; END -%]</td>
   [% IF invoice.invstatuscode > 2 -%]
     [%- IF invoice.invtype == "C" -%]
-      <td><img src="/icons/coins.png" title="Record Payment" onclick="get_amt('[%- invoice.invid -%]','[%- invoice.invinvoiceno -%]','[%- invoice.invamount - invoice.invpaid -%]');"></td>
+      <td><img src="/images/payout.png" title="Record Payment" onclick="get_amt('[%- invoice.invid -%]','[%- invoice.invinvoiceno -%]','[%- invoice.invamount - invoice.invpaid -%]');"></td>
     [%- ELSE -%]
-      <td><img src="/icons/coins.png" title="Receive Payment" onclick="get_amt('[%- invoice.invid -%]','[%- invoice.invinvoiceno -%]','[%- invoice.invamount - invoice.invpaid -%]');"></td>
+      <td><img src="/images/payin.png" title="Receive Payment" onclick="get_amt('[%- invoice.invid -%]','[%- invoice.invinvoiceno -%]','[%- invoice.invamount - invoice.invpaid -%]');"></td>
     [%- END -%]
   [%- ELSE -%]
     [%- IF invoice.invstatuscode == 2 -%]

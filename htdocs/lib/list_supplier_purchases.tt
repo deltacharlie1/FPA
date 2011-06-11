@@ -99,9 +99,9 @@
       <td onclick="location.href='/cgi-bin/fpa/update_purchase.pl?[%- invoice.invid -%]';">[%- invoice.invstatus -%]</td>
   [%- IF invoice.status != "Paid" AND invoice.invpaid > invoice.invamount -%]
     [%- IF invoice.invtype == "P" -%]
-      <td><img src="/icons/coins.png" title="Record Payment" onclick="get_amt('[%- invoice.invid -%]','[%- invoice.invinvoiceno -%]','[%- (invoice.invamount - invoice.invpaid) | remove('-') | format('%1.2f') -%]');"></td>
+      <td><img src="/images/payout.png" title="Record Payment" onclick="get_amt('[%- invoice.invid -%]','[%- invoice.invinvoiceno -%]','[%- (invoice.invamount - invoice.invpaid) | remove('-') | format('%1.2f') -%]');"></td>
     [%- ELSE -%]
-      <td><img src="/icons/coins.png" title="Receive Payment" onclick="get_amt('[%- invoice.invid -%]','[%- invoice.invinvoiceno -%]','[%- invoice.invamount - invoice.invpaid | format('%1.2f') -%]');"></td>
+      <td><img src="/images/payin.png" title="Receive Payment" onclick="get_amt('[%- invoice.invid -%]','[%- invoice.invinvoiceno -%]','[%- invoice.invamount - invoice.invpaid | format('%1.2f') -%]');"></td>
     [%- END -%]
   [%- ELSE -%]
       <td>&nbsp;</td>

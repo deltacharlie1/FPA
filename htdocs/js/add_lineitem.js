@@ -161,8 +161,8 @@ function amd(obj) {
   document.getElementById('desc').value = tbl.rows[item_row].cells[0].innerHTML;
   document.getElementById('price').value = tbl.rows[item_row].cells[1].innerHTML;
   document.getElementById('qty').value = tbl.rows[item_row].cells[2].innerHTML;
-  if (tbl.rows[item_row].cells[8] != undefined) {
-    document.getElementById('item_cat').value = tbl.rows[item_row].cells[8].innerHTML;
+  if (tbl.rows[item_row].cells[7] != undefined) {
+    document.getElementById('item_cat').value = tbl.rows[item_row].cells[7].innerHTML;
   }
 
   if (document.getElementById('invtype').options[document.getElementById('invtype').selectedIndex].value == 'P') {
@@ -171,9 +171,9 @@ function amd(obj) {
     $('#splits').show();
   }
 
-  for (j=0; j<document.getElementById('vat').length; j++) {
-    if (document.getElementById('vat').options[j].value.match(tbl.rows[item_row].cells[4].innerHTML)) {
-      document.getElementById('vat').options[j].selected = true;
+  for (j=0; j<document.getElementById('sel_vat').length; j++) {
+    if (document.getElementById('sel_vat').options[j].value.match(tbl.rows[item_row].cells[4].innerHTML)) {
+      document.getElementById('sel_vat').options[j].selected = true;
       break;
     }
   }

@@ -7,11 +7,11 @@
   <tr>
     <td><h3>Total Value = &pound;[%- sumtotal -%]</td>
     <td style="text-align:right;">
-      <a href="#" onclick="redisplay('first');"><img src="/icons/first.png"/></a>
-      <a href="#" onclick="redisplay('back');"><img src="/icons/back.png"/></a>
-      <span style="vertical-align:middle;padding:0 5px 10px 5px;"> Go To <input type="text" name="goto" id="goto" value="" size="3" onchange="redisplay(this.value);"/></span> 
-      <a href="#" onclick="redisplay('next');"><img src="/icons/next.png"/></a>
-      <a href="#" onclick="redisplay('last');"><img src="/icons/last.png"/></a>
+      <a href="#" onclick="[%- GEN -%]redisplay('first');"><img src="/icons/first.png"/></a>
+      <a href="#" onclick="[%- GEN -%]redisplay('back');"><img src="/icons/back.png"/></a>
+      <span style="vertical-align:middle;padding:0 5px 10px 5px;"> Go To <input type="text" name="goto" id="goto" value="" size="3" onchange="[%- GEN -%]redisplay(this.value);"/></span> 
+      <a href="#" onclick="[%- GEN -%]redisplay('next');"><img src="/icons/next.png"/></a>
+      <a href="#" onclick="[%- GEN -%]redisplay('last');"><img src="/icons/last.png"/></a>
     </td>
   </tr>
 [% ELSE -%]

@@ -29,8 +29,6 @@ while (( $Key,$Value) = each %FORM) {
 		@Data = split(/\:/,$Value);
 		$text->translate($Data[1],832 - $Data[2]);
 		$text->text($Data[0]);
-warn "$Data[0] - x = $Data[1] - y = $Data[2]\n";
-
 	}
 }
 

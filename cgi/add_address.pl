@@ -59,7 +59,6 @@ $Vars = {
 var responseText = "";
 var errfocus = "";
 $(document).ready(function(){
-  $("#cusnextstmtdate").datepicker();
   $("#cusdefvatrate").val("'.$Customer->{cusdefvatrate}.'");
   var options = {
     beforeSubmit: validate,

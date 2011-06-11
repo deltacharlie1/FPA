@@ -4,7 +4,7 @@
 
 use MIME::Base64;
 use DBI;
-$dbh = DBI->connect("DBI:mysql:fpa");
+$dbh = DBI->connect("DBI:mysql:fpa2");
 
 $Flds = "";
 $Data = "";

@@ -16,7 +16,7 @@ $Regs->finish;
 	
 $tt = Template->new({
 	INCLUDE_PATH => ['.','/usr/local/httpd/htdocs/fpa/lib'],
-	WRAPPER => 'wrapper.tt',
+	WRAPPER => 'logicdesign.tt',
 });
 
 if ($Regs->rows > 0) {
@@ -29,9 +29,8 @@ $Sts = $dbh->do("update registrations set reglastlogindate=now(),regactive='C',r
 
 #  ... and then display the ready to login screen
 
-
 	$Vars = {
-		title => 'Activation Error',
+		title => 'Activation',
 	};
 
 	print<<EOD;

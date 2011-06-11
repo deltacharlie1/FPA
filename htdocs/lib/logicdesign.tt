@@ -4,6 +4,8 @@
 <title>[%- title -%] | FreePlus Accounts</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="/wp-content/themes/freeplusaccounts/style.css"/>
+<link rel="shortcut icon" href="/favicon.ico"/>
+<link rel="stylesheet" href="/css/jquery-ui.css" type="text/css"/>
 <script type='text/javascript' src='/js/jquery.js'></script> 
 <script type='text/javascript' src='/js/jquery-ui.js'></script> 
 <script src="/wp-content/themes/freeplusaccounts/js/cufon/cufon.js" type="text/javascript"></script>
@@ -28,6 +30,7 @@
             </div>
             <div class="clear"></div>
     </div>
+    <div id="dialog" style="text-align:left;z-index:10100;" title="Errors!"></div>
     <div class="spacer clear line"></div>
     <div class="m whitecontainer">
 [% content -%]

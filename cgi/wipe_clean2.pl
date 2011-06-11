@@ -70,7 +70,7 @@ else {
 	}
 
 	$Sts = $dbh->do("update coas set coabalance='0' where acct_id='$COOKIE->{ACCT}'");
-	$Sts = $dbh->do("update companies set comvatcontrol='0',comnextsi='100001',comnextpi='500001',comrecstats='',compaystats='',comnocheques='0',comacccompleted='N',comnexttxn='1' where reg_id=$Reg_id and id=$Com_id");
+	$Sts = $dbh->do("update companies set comvatcontrol='0',comnextsi='100001',comnextpi='500001',comnocheques='0',comacccompleted='N',comnexttxn='1' where reg_id=$Reg_id and id=$Com_id");
 	print<<EOD;
 Content-Type: text/plain
 

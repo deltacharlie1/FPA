@@ -72,7 +72,7 @@ if ($FORM{thisint}) {
 
 #  create a dummy invoice (invoice # = unlisted)  -  Not sure that his is required
 
-	$Sts = $dbh->do("insert into invoices (acct_id,invinvoiceno,invdesc,invcusregion,invcoa,invtotal,invpaid,invprintdate,invstatuscode,invtype) values ('$COOKIE->{ACCT}','unlisted','Bank Interest','UK','4300','$FORM{thisint}','$FORM{thisint}',$Date,'2','BI')");
+	$Sts = $dbh->do("insert into invoices (acct_id,invinvoiceno,invdesc,invcusregion,invcoa,invtotal,invpaid,invprintdate,invstatus,invstatuscode,invtype) values ('$COOKIE->{ACCT}','unlisted','Bank Interest','UK','4300','$FORM{thisint}','$FORM{thisint}',$Date,'Bank','2','BI')");
        $New_inv_id = $dbh->last_insert_id(undef, undef, qw(invoices undef));
 
 #  create a transaction record

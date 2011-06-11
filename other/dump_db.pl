@@ -40,7 +40,7 @@ if ($Registrations->rows > 0) {
 
 #  Company
 
-		$Companies = $dbh->prepare("select comname,comregno,comaddress,compostcode,comtel,combusiness,comcontact,comemail,comyearend,comnextsi,comnextpi,comnextpr,comnexttxn,comvatscheme,comvatno,comvatcontrol,comvatduein,comvatqstart,comvatmsgdue,comnocheques,comyearendmsgdue,comyearendreminder,comcompleted,comacccompleted,comrecstats,compaystats,comoptin,comemailmsg,comstmtmsg,comfree,comno_ads,comrep_invs,comstmts,comuplds,compt_logo,comhmrc,comsuppt,id from companies where reg_id=$Registration->{reg_id}");
+		$Companies = $dbh->prepare("select comname,comregno,comaddress,compostcode,comtel,combusiness,comcontact,comemail,comyearend,comnextsi,comnextpi,comnextpr,comnexttxn,comvatscheme,comvatno,comvatcontrol,comvatduein,comvatqstart,comvatmsgdue,comnocheques,comyearendmsgdue,comyearendreminder,comcompleted,comacccompleted,comoptin,comemailmsg,comstmtmsg,comfree,comno_ads,comrep_invs,comstmts,comuplds,compt_logo,comhmrc,comsuppt,id,comadd_user,comnetstats,comdocsdir from companies where reg_id=$Registration->{reg_id}");
 		$Companies->execute;
 
 		print FILE substr($Tabs,0,$Tab_count)."<Company>\n";
@@ -209,7 +209,7 @@ if ($Registrations->rows > 0) {
 
 #  Customers
 
-			$Customers = $dbh->prepare("select cusname,cusaddress,cuspostcode,cusregion,custel,cuscontact,cusemail,custerms,cusdefcoa,cusdefvatrate,cusbank,cussortcode,cusacctno,cuscredit,cuslimit,cusdefpaymethod,cussales,cussupplier,cusremarks,cusemailmsg,cusstmtmsg,cusnextstmtdate,id from customers where acct_id='$Acct_id' order by cusname");
+			$Customers = $dbh->prepare("select cusname,cusaddress,cuspostcode,cusregion,custel,cuscontact,cusemail,custerms,cusdefcoa,cusdefvatrate,cusbank,cussortcode,cusacctno,cuscredit,cuslimit,cusdefpaymethod,cussales,cussupplier,cusremarks,cusemailmsg,cusstmtmsg,id from customers where acct_id='$Acct_id' order by cusname");
 			$Customers->execute;
 			if ($Customers->rows > 0) {
 				print FILE substr($Tabs,0,$Tab_count)."<Customers>\n";

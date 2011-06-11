@@ -80,7 +80,7 @@
       <td onclick="location.href='/cgi-bin/fpa/update_purchase.pl?[%- invoice.invid -%]';">
   [% IF invoice.invstatus == 'Overdue' -%]<span style="color:#800000;font-weight:bold;">Overdue</span>[%- ELSE; invoice.invstatus; END -%]</td>
     [% IF invoice.status != "Paid" AND invoice.invpaid != invoice.invamount -%]
-      <td><img src="/icons/coins.png" title="Receive Payment" onclick="get_amt('[%- invoice.invid -%]','[%- invoice.invinvoiceno -%]','[%- invoice.invamount - invoice.invpaid -%]','[%- invoice.cusdefpaymethod -%]','[%- invoice.cus_id -%]');"/></td>
+      <td><img src="/images/payout.png" title="Receive Payment" onclick="get_amt('[%- invoice.invid -%]','[%- invoice.invinvoiceno -%]','[%- invoice.invamount - invoice.invpaid -%]','[%- invoice.cusdefpaymethod -%]','[%- invoice.cus_id -%]');"/></td>
     [% ELSE -%]
       <td>&nbsp;</td>
     [% END -%]

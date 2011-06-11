@@ -132,10 +132,10 @@
 [% ELSE -%]
                   <td rowspan="2"><textarea name="desc" id="desc" cols="30" rows="2"></textarea></td>
 [% END -%]
-                  <td style="vertical-align:top;"><input name="price" id="price" type="text" size="5"  onblur="check_currency(this);"/></td>
-                  <td style="vertical-align:top;"><input name="qty" id="qty" type="text" size="4"  onblur="check_int(this);"/></td>
+                  <td><input name="price" id="price" type="text" size="5"  onblur="check_currency(this);"/></td>
+                  <td><input name="qty" id="qty" type="text" size="4"  onblur="check_int(this);"/></td>
 [% UNLESS cookie.VAT == "N" -%]
-                  <td style="vertical-align:top;">
+                  <td>
                     <select name="vat" id="sel_vat">
   [% INCLUDE vatrates -%]
                     </select>
@@ -144,7 +144,7 @@
                 </tr>
                 <tr>
                   <td><label>Category</label</td>
-                  <td colspan="2"><input type="text" name="item_cat" id="item_cat" size="20"/>
+                  <td colspan="2"><input type="text" name="item_cat" id="item_cat" style="width:95%;"/>
                 </tr>
               </table>
             </td>

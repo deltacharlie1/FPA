@@ -2,63 +2,21 @@ var errfocus = "";
 var ajax_return = "";
 $(document).ready(function(){
   $(".mandatory").before("<span style='font-size:20px;font-weight:bold;color:red;padding:0 6px 0 0;'>*<\/span>");
-  $("#searchimg").click(function() {
-    switch(document.getElementById('dfg').title) {
-      case 'Customers':
-        document.getElementById('dfg').title = "Suppliers";
-        document.getElementById('dfg').innerHTML = "Search Suppliers";
-        $("#searchcus").autocomplete("option","minLength",1);
-        break;
-      case 'Suppliers':
-        document.getElementById('dfg').title = "Sales Invoices";
-        document.getElementById('dfg').innerHTML = "Search Sales Invoices";
-        $("#searchcus").autocomplete("option","minLength",1);
-        break;
-      case 'Sales Invoices':
-        document.getElementById('dfg').title = "Purchase Invoices";
-        document.getElementById('dfg').innerHTML = "Search Purchase Invoices";
-        $("#searchcus").autocomplete("option","minLength",1);
-        break;
-      default:
-        document.getElementById('dfg').title = "Customers";
-        document.getElementById('dfg').innerHTML = "Search Customers";
-        $("#searchcus").autocomplete("option","minLength",1);
-        break;
-    }
+  var serchtimer;
+  $("#searchcus").keyup(function() {
+    clearTimeout(serchtimer);
+    var ms = 800;
+    var val = this.value;
+    serchtimer = setTimeout(function() {
+      $.get('/cgi-bin/fpa/genrep2.pl', 
+        { searchval: val, action: 'S' },
+        function(data) {
+          document.getElementById("main").innerHTML = data;
+        }, 'html'
+      );
+    }, ms);
   });
-  $("#searchcus").autocomplete({
-    minLength: 1,
-    source: function (request,response) {
-      request.type = "Sales Invoice";
-      $.ajax({
-        url: "/cgi-bin/fpa/autosuggest.pl",
-        dataType: "json",
-        data: request,
-        success: function( data ) {
-          response (data);
-        }
-      });
-    },
-    select: function(event, ui) {
-      switch(document.getElementById('dfg').title) {
-        case 'Customers':
-          location.href="/cgi-bin/fpa/list_customer_invoices.pl?" + ui.item.id;
-          break;
-        case 'Suppliers':
-          location.href="/cgi-bin/fpa/list_supplier_purchases.pl?" + ui.item.id;
-          break;
-        case 'Sales Invoices':
-          location.href="/cgi-bin/fpa/update_invoice.pl?" + ui.item.id;
-          break;
-        case 'Purchase Invoices':
-          location.href="/cgi-bin/fpa/update_purchase.pl?" + ui.item.id;
-          break;
-        default:
-          location.href="/cgi-bin/fpa/list_customer_invoices.pl?" + ui.item.id;
-          break;
-      }
-    }
-  });
+
   $.datepicker.setDefaults({showOn: "button", buttonImage: "/images/calendaricon.gif", buttonImageOnly: true, buttonText: "", dateFormat: "dd-M-y", duration: "", changeYear: true,changeMonth: true});
   $("#rec_cus_id").autocomplete({
     minLength: 0,
@@ -276,6 +234,27 @@ $(document).ready(function(){
 //  $("#wrapper").css("height",$(document).height() > 900 ? $(document).height() + 20 : 900);
 //  $("#body").css("height",$("#wrapper").height() - 260);
 });
+function get_gen_results(action) {
+  $.get("/cgi-bin/fpa/genrep2.pl",$("form#form1").serialize()+"&searchval="+document.getElementById("searchcus").value+"&action="+action ,
+    function(data) {
+      document.getElementById("main").innerHTML = data;
+    }
+  );
+}
+function gen_redisplay(action) {
+  if (/^\d+$/.test(action)) {
+    if ((action - 1) * document.getElementById("rows").value < document.getElementById("numrows").value) {
+      get_gen_results(action);
+    }
+    else {
+      alert("Page count is too high");
+    }
+  }
+  else {
+    get_gen_results(action.substring(0,1));
+  }
+}
+
 function set_logout() {
   document.cookie="fpa-cookie=; path=/;";
   $(".main").html("&nbsp;");

@@ -34,7 +34,8 @@ $(document).ready(function() {
   });
   $("#dialog").dialog({
     bgiframe: true,
-    height: 200,
+    height: 360,
+    width: 400,
     autoOpen: false,
     position: [200,100],
     modal: true,

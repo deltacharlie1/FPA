@@ -22,7 +22,7 @@
       <td onclick="location.href='/cgi-bin/fpa/list_customer_invoices.pl?[%- entry.id -%]';">[%- entry.cuscredit -%]</td>
       <td onclick="location.href='/cgi-bin/fpa/list_customer_invoices.pl?[%- entry.id -%]';">[%- IF entry.cusbalance AND entry.cuslimit AND entry.cusbalance > entry.cuslimit AND entry.cuslimit > 0 -%]<span style="color:#a00000;font-weight:bold;">[%- entry.cusbalance -%]</span>[%- ELSE -%][%- entry.cusbalance -%][%- END -%]</td>
       <td onclick="location.href='/cgi-bin/fpa/list_customer_invoices.pl?[%- entry.id -%]';">[%- IF  entry.cuslimit AND entry.cuslimit > 0; entry.cuslimit; END -%]</td>
-      <td style="text-align:center;" nowrap="nowrap"><img src="/icons/invoice.png" title="Raise Invoice" onclick="location.href='/cgi-bin/fpa/new_invoice.pl?[%- entry.id -%]';"/>&nbsp;<img style="border:1px solid #999999;" src="/icons/coins.png" title="Receive Payment" onclick="location.href='/cgi-bin/fpa/multi_receipts.pl?[%- entry.id -%]';"/></td>
+      <td style="text-align:center;" nowrap="nowrap"><img src="/images/edit.png" title="Raise Invoice" onclick="location.href='/cgi-bin/fpa/new_invoice.pl?[%- entry.id -%]';"/>&nbsp;&nbsp;<img src="/images/payin.png" title="Receive Payment" onclick="location.href='/cgi-bin/fpa/multi_receipts.pl?[%- entry.id -%]';"/></td>
     </tr>
 [%- END -%]
   </table>

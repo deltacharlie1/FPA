@@ -11,8 +11,6 @@ $Buffer = $ENV{QUERY_STRING};
 
 @pairs = split(/&/,$Buffer);
 
-# print "Content-Type: text/plain\n\n";
-
 foreach $pair (@pairs) {
 
         ($Name, $Value) = split(/=/, $pair);
@@ -21,9 +19,9 @@ foreach $pair (@pairs) {
         $Value =~ s/%([a-fA-F0-9][a-fA-F0-9])/pack("C",hex($1))/eg;
         $Value =~ tr/\\\'//d;
         $FORM{$Name} = $Value;
-# print "$Name = $Value\n";
+# warn "$Name = $Value\n";
 }
-# exit;
+#  exit;
 
 use DBI;
 my $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
