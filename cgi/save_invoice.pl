@@ -79,9 +79,9 @@ else {
                 	$Sts = $dbh->do("delete from invoices where id=$FORM{id} and acct_id='$COOKIE->{ACCT}'");
 
 	                print<<EOD;
-Content-Type: text/plain
-
-OK-list_customer_invoices.pl?$FORM{cus_id}
+Content-Type: text/html
+Status: 301
+Location: /cgi-bin/fpa/list_invoices.pl
 
 EOD
 	        }

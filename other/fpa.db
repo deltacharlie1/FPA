@@ -22,6 +22,7 @@ create table registrations (
   regdefaultrows char(5) not null default '30' comment 'Default number of rows to show for listings',
   regmenutype char(1) not null default 'F' comment ' menu type to use - F - Full, S - Simple',
   regoptin char(1) not null default 'Y' comment 'opt in flag for emails and newsletter values ar Y/N',
+  old_id int unsigned,
   index (regemail)
 );
 
@@ -38,6 +39,7 @@ create table reg_coms (
   mlgaccum varchar(20) not null comment 'running total of miles claimed for',
   mlgvattype varchar(20) not null comment 'car type, used to calculate the VAT claim',
   mlgdefmenu varchar(100) not null default 'dashboard.pl' comment 'Default menu',
+  old_id int unsigned,
   index reg1 (reg1_id),
   index reg2 (reg2_id),
   index reg3 (com_id)
@@ -91,6 +93,7 @@ create table companies (
   comhmrc date not null default '2010-01-01' comment 'Allow auto-update of HMRC VAT',
   comsuppt int unsigned not null default 0 comment 'Remaining Support credits',
   comadd_user int(10) unsigned not null default 0 comment 'number of new users that may be added',
+  old_id int unsigned,
   index (reg_id)
 );
 
@@ -104,6 +107,7 @@ create table accounts (
   accsort varchar(50) not null default '' comment 'Sort Code',
   accacctno varchar(20) not null default '' comment 'Account No',
   acctswift varchar(20) not null default '' comment 'Account Swift Code no',
+  old_id int unsigned,
   index (acct_id)
 );
 
@@ -116,6 +120,7 @@ create table coas (
   coatype varchar(50) not null default '' comment 'The group to which this code belongs',
   coareport varchar(50) not null default '' comment 'The Report in which this value is reported',
   coabalance decimal(20,2) not null default '0' comment 'The running balance',
+  old_id int unsigned,
   index (acct_id)
 );
 
@@ -128,6 +133,7 @@ create table nominals (
   nomcode varchar(10) not null default '' comment 'nominal code of this entry',
   nomamount decimal(20,2) not null default '0' comment 'amount for this coa entry',
   nomdate date comment 'date of this entry',
+  old_id int unsigned,
   index nom1 (acct_id),
   index nom2 (link_id)
 );
@@ -161,6 +167,7 @@ create table customers (
   cusstmtemail varchar(250) not null default '' comment 'Statement email address (if completed)',
   cusstmtmsg varchar(5000) not null default '' comment 'Default stmt meesage for this customer',
   cusautostmts char(1) not null default 'N' comment 'Whether to run auto statements for this customer',
+  old_id int unsigned,
   index cus1 (acct_id),
   index cus2 (cusname)
 );
@@ -204,6 +211,7 @@ create table invoices (
   invaccumstart decimal(6,0) not null default '0' comment ' the number of the next invoice, only activated if invrepeat = Y',
   invaccumtot decimal(6,0) not null default '0' comment 'the last number, ie max of invoices to be produced',
   invnextinvdate date not null default '2000-01-01' comment 'Date of next repeat invoice',
+  old_id int unsigned,
   index inv1 (acct_id),
   index inv2 (invinvoiceno)
 );
@@ -233,6 +241,7 @@ create table invoice_templates (
   invrepeatfreq varchar(20) not null default '' comment ' the frequency with which the invoice is to be repeated week, month, year etc',
   invnextinvdate date not null default '2000-01-01' comment 'Date of next repeat invoice',
   invemailmsg varchar(5000) not null default '' comment 'message to place on email',
+  old_id int unsigned,
   index invtemp1 (acct_id)
 );
 
@@ -250,6 +259,7 @@ create table items (
   itmvatrate varchar(50) not null default '' comment 'The VAT rate applied',
   itmdate date comment 'Date item created/printed',
   itmcat varchar(100) not null default '' comment 'Item Category',
+  old_id int unsigned,
   index (acct_id)
 );
 
@@ -258,10 +268,9 @@ create table vatrates (
   id int unsigned auto_increment primary key,
   vatcode char(2) not null default 'S',
   vatdesc varchar(50) not null default '' comment 'VAT Rate description eg Standard (2009)',
-  vatpercent char(8) not null default '17.5%',
-  vatcalc decimal(7,3) not null default '0.175' comment 'Value used to calculate tax'
+  vatpercent char(8) not null default '20%',
+  vatcalc decimal(7,3) not null default '0.2' comment 'Value used to calculate tax'
 );
-insert into vatrates (vatcode,vatdesc,vatpercent,vatcalc) values ('S1','Standard','17.5%',0.175);
 insert into vatrates (vatcode,vatdesc,vatpercent,vatcalc) values ('S2','Standard','20%',0.2);
 insert into vatrates (vatcode,vatdesc,vatpercent,vatcalc) values ('R','Reduced','5%',0.05);
 insert into vatrates (vatcode,vatdesc,vatpercent,vatcalc) values ('Z','Zero','0%',0.0);
@@ -284,6 +293,7 @@ create table transactions (
   txnremarks varchar(5000) not null default '' comment 'any remarks to do with this transaction',
   txnyearend varchar(20) not null default '' comment 'Transaction yearend reporting period',
   txncreated timestamp,
+  old_id int unsigned,
   index (acct_id)
 );
 
@@ -299,6 +309,7 @@ create table inv_txns (
   itvat decimal(20,2) not null default '0' comment 'vat amount of this transactio element',
   itdate datetime comment 'datetime of the transaction',
   itmethod varchar(50) not null comment 'nominal code of payment method',
+  old_id int unsigned,
   index itx1 (acct_id),
   index itx2 (txn_id),
   index itx3 (inv_id)
@@ -325,6 +336,7 @@ create table vatreturns (
   perbox9 decimal(18,0) not null default '0.00',
   percompleted date,
   perfiled date,
+  old_id int unsigned,
   index vatr1 (acct_id),
   index vatr2 (perquarter)
 );
@@ -342,6 +354,7 @@ create table vataccruals (
   acrnominalcode varchar(20) not null default '' comment 'Nominal code of this vat txn for Form 100 purposes',
   acrtxn_id int unsigned comment 'the id of the relevant transaction record (transaction for Cash accounting, inv_txn for Standard accounting)',
   acrcreated timestamp,
+  old_id int unsigned,
   index (acct_id)
 );
 
@@ -357,6 +370,7 @@ create table statements (
   staopendate datetime comment 'open date of the statement',
   staclosedate datetime comment 'close date of the statement',
   starec_no int unsigned comment 'The current reconciliation number as a running total',
+  old_id int unsigned,
   index (acct_id)
 );
 
@@ -369,6 +383,7 @@ create table audit_trails (
   audstamp timestamp,
   audtext varchar(250) not null default '',
   auduser varchar(50) not null comment 'userid of user making change',
+  old_id int unsigned,
   index (acct_id)
 );
 
@@ -381,6 +396,7 @@ create table reminders (
   remgrade char(1) not null default 'N' comment 'grade of reminder, normal, urgent etc',
   remstartdate date comment 'date that reminders is to be displayed',
   remenddate date comment 'date that reminder is no longer to be shown and deleted',
+  old_id int unsigned,
   index (acct_id)
 );
 
@@ -390,6 +406,7 @@ create table comments (
   comtext varchar(1000) not null comment 'reminder text',
   comuser varchar(1000) not null default '' comment 'user id of commentator',
   comgrade char(1) not null default 'N' comment 'grade of reminder, normal, urgent etc'
+  old_id int unsigned,
 );
 
 drop table if exists tempstacks;
@@ -406,6 +423,7 @@ create table tempstacks (
   f7 varchar(250) not null,
   f8 varchar(250) not null,
   f9 varchar(250) not null,
+  old_id int unsigned,
   index ts1 (acct_id),
   index ts2 (caller)
 );
@@ -420,6 +438,7 @@ create table add_users (
   addreg2_id int(10) unsigned not null default 0 comment 'registration id of original owner',
   addcom_id int(10) unsigned not null default 0 comment 'id of company',
   addcomname varchar(250) not null default '' comment ' name of company signing on to',
+  old_id int unsigned,
   adddate date
 );
 
@@ -435,6 +454,7 @@ create table images (
   imgthumb blob comment 'thumbnail of the image',
   imgimage mediumblob comment 'the image, itself',
   imgdate_saved date comment 'the date the image was saved',
+  old_id int unsigned,
   index img1 (acct_id),
   index img2 (link_id)
 );

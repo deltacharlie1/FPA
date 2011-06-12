@@ -22,7 +22,7 @@
       <td>[%- entry.stastmtno -%]</td>
       <td>[%- entry.staclosebal -%]</td>
       <td>[%- entry.coabalance -%]</td>
-      <td style="text-align:center;"><a href='/cgi-bin/fpa/reconcile.pl?[%- entry.acctype -%]'><img src='/images/reconcile.png' alt='Reconcile Account'/></a></td>
+      <td style="text-align:center;"><a href='/cgi-bin/fpa/reconcile.pl?[%- entry.acctype -%]'><img src='/images/reconcile.png' alt='Reconcile Account' title="Reconcile"/></a></td>
     </tr>
 [% END -%]
   </table>

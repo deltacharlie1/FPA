@@ -17,7 +17,7 @@ h1 {
 	margin:0px 0px 20px 0px;
 	padding:0px;
 	font-family: Arial, Helvetica, sans-serif;
-	font-size: 29px;
+	font-size: 24px;
 	font-weight: normal;
 	color: #5e8f54;
 	text-transform: uppercase;
@@ -161,17 +161,12 @@ ul a{
 	background:transparent;
 	border:none;
 }
-#container-bottom {
-	background-image: url(/images/content-bottom.gif);
-	background-repeat: none;
-	background-position: left;
-	width:742px;
-}
 #container {
 	background-image: url(/images/content-bg.gif);
 	background-repeat: repeat-y;
 	background-position: left;
-	min-height:800px;
+	overflow:auto;
+	min-height:600px;
 }
 #container #main {
 	float: left;
@@ -199,7 +194,7 @@ ul a{
 }
 #container #sidebar li a, #container #sidebar li input {
         color: #385a44;
-	padding-top:0px;
+	padding-top:2px;
 	text-align:left;
 }
 #container #sidebar li input {
@@ -208,6 +203,10 @@ ul a{
 }
 #container #sidebar li:hover {
 	background-image: url(/images/side-button-hover.gif);
+	color:#800000;
+}
+#container #sidebar li:hover a, #container #sidebar li:hover input {
+	color:#800000;
 }
 
 #container #sidebar li, #container #sidebar li input {
@@ -591,4 +590,7 @@ button {
 .watermark {
 	color:#999999;
 	font-style:italic;
+}
+#goto {
+	margin-bottom:5px;
 }

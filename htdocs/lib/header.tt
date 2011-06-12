@@ -197,7 +197,7 @@ $(document).ready(function(){
 <div id="container">
 [% content %]
 </div>
-<hr style="width:743px;padding:0;margin:0;font-size:0;border-color:#aaaaaa;"/>
+<img style="padding:0;margin:0;" src="/images/container-bottom.gif"/>
 </div>  <!-- end of wrapper  //-->
 <div id="receipt2" title="Receive Money In" style="width:520px;">
   <form id="recform2" name="recform2" method="post" action="/cgi-bin/fpa/process_txn.pl">
