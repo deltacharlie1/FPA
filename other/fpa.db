@@ -405,8 +405,8 @@ create table comments (
   id int unsigned not null auto_increment primary key,
   comtext varchar(1000) not null comment 'reminder text',
   comuser varchar(1000) not null default '' comment 'user id of commentator',
-  comgrade char(1) not null default 'N' comment 'grade of reminder, normal, urgent etc'
-  old_id int unsigned,
+  comgrade char(1) not null default 'N' comment 'grade of reminder, normal, urgent etc',
+  old_id int unsigned
 );
 
 drop table if exists tempstacks;

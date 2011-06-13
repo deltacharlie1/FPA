@@ -24,7 +24,7 @@
   [%- ndx = loop.count % 2 -%]
   [%- IF entry.nomtype == 'S' -%]
     <tr class="[%- class.$ndx -%]" onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- entry.linkid -%]';">
-      <td>[%- entry.printdate -%] - [%- entry.nomtype -%]</td>
+      <td>[%- entry.printdate -%]</td>
       <td>Inv</td>
       <td>[%- entry.invinvoiceno -%]</td>
       <td>[%- entry.invcusname | truncate(60) -%]</td>
@@ -38,7 +38,7 @@
     </tr>
   [% ELSE -%]
     <tr class="[%- class.$ndx -%]" onclick="location.href='/cgi-bin/fpa/update_purchase.pl?[%- entry.linkid -%]';">
-      <td>[%- entry.printdate -%] - [%- entry.nomtype -%]</td>
+      <td>[%- entry.printdate -%]</td>
       <td>Txn</td>
       <td>[%- entry.txntxnno -%]</td>
       <td>[%- entry.txncusname | truncate(60) -%]</td>
