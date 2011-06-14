@@ -41,14 +41,7 @@
         	<h3>Latest News Posts</h3>
             <div class="listfix">
             	<ul>
-					                	<li>
-                    	<h4><a href="/news/how-to-give-feedback/">How to give Feedback // June 5, 2011</a></h4>
-                        <p>You can easily give feedback to the developers by selecting &#8216;Add New Feedback&#8217; under the &#8216;Admin&#8217; menu. giving feedback will</p> 
-                    </li>   
-                                    	<li>
-                    	<h4><a href="/uncategorized/freeplus-accounts-goes-in-beta-testing/">FreePlus Accounts goes Beta // </a></h4>
-                        <p>We have been using FreePlus Accounts for nearly a year, now and feel that it is ready for beta testing.</p> 
-                    </li>   
+[%- posts -%]
                                     </ul>
                 <div class="clear"></div>
             </div>

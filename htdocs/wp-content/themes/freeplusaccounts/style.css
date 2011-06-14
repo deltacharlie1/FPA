@@ -38,10 +38,15 @@ a img {
 	padding:0px;
 	list-style:none;
 }
-h1, h2, h3, h4, h5 {
+h1, h2, h3, h4, h5, {
 	display:block;
 	margin:0px;
 	padding:0px;
+}
+.h1 {
+	color: #333333;
+	font-size:24px;
+	font-weight: bold;
 }
 .clear {
 	clear:both;

@@ -24,11 +24,15 @@ $tt = Template->new({
 	INCLUDE_PATH => ['.','/usr/local/httpd/htdocs/fpa/lib'],
 	WRAPPER => 'logicdesign.tt',
 });
+$Posts =  `php /usr/local/git/fpa/cgi/get_posts.php`;
+
+#	posts => `php /usr/local/git/fpa/cgi/get_posts.php`,
 
 $Vars = {
 	title => 'Login',
 	cookie => $Cookie,
 	focus => $Focus,
+	posts => $Posts,
 	javascript => '<script type="text/javascript" src="/js/jquery-form.js"></script> 
 <link rel="stylesheet" style="text/css" href="/css/login.css"/>
 <script type="text/javascript">

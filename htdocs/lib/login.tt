@@ -1,3 +1,4 @@
+<div class="leftcol largecol">
 <div id="frmlogin">
 <form action="/cgi-bin/fpa/login2.pl" method="post" name="form1" id="form1">
 <table width="100%" border="0" cellspacing="0" cellpadding="4">
@@ -5,13 +6,13 @@
     <td>&nbsp;</td>
   </tr>
   <tr>
-    <td style="text-align:center;"><h1>Login - Step 1</h1></td>
+    <td style="text-align:center;"><div class="h1">Login - Step 1</div></td>
   </tr>
   <tr>
     <td align="center">
-      <table id="logintable">
+      <table id="registertable">
         <tr>
-          <td nowrap="nowrap"><div class="logintext">Login ID (your email address)</div><span><input name="email" type="text" id="email" size="30" value="[% cookie -%]" class="mandatory" title="Email Address"/></span></td>
+          <td nowrap="nowrap"><div class="logintext">Login ID (your email address)</div><span><input name="email" type="text" id="email" size="30" value="[%- cookie -%]" class="mandatory" title="Email Address"/></span></td>
         </tr>
         <tr>
           <td nowrap="nowrap"><div class="logintext">Password</div><span><input name="pwd" type="password" id="pwd" size="30" class="mandatory" title="Password"/></span></td>
@@ -28,3 +29,9 @@
 </table>
 </form>
 </div>
+</div>
+  <div class="rightcol smallcol">
+    <img src="http://www.fpa.co.uk/wp-content/themes/freeplusaccounts/images/banner-too-good-to-be-true.jpg" />
+    <br /><br />
+  </div>
+  <div class="clear"></div>

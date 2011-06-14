@@ -6,10 +6,12 @@ $tt = Template->new({
 	INCLUDE_PATH => ['.','/usr/local/httpd/htdocs/fpa/lib'],
 	WRAPPER => 'logicdesign.tt',
 });
+$Posts =  `php /usr/local/git/fpa/cgi/get_posts.php`;
 
 $Vars = {
 	title => 'Register',
 	focus => 'email',
+	posts => $Posts,
 	javascript => '<script type="text/javascript" src="/js/jquery-form.js"></script> 
 <script src="/js/jquery.cluetip.js" type="text/javascript"></script>
 <script src="/js/jquery.watermark.js" type="text/javascript"></script>

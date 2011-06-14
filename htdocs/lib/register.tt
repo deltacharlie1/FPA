@@ -1,10 +1,12 @@
+<div class="leftcol largecol">
+<div id="frmlogin">
 <table width="600" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td align="center">
       <noscript><p id="jstest" class="status" style="width:600px;"><b>WARNING!</b> - FreePlus Accounts requires Javascript in order to function properly.&nbsp;&nbsp;Currently, Javascript is not enabled in your browser and your user experience will be severely curtailed.&nbsp;&nbsp;We strongly recommend that you enable Javascript before proceeding.</p></noscript>
       <table width="600" border="0" cellspacing="0" cellpadding="4">
       <tr>
-        <td><h1>FreePlus Accounts Registration</h1></td>
+        <td><div class="h1">FreePlus Accounts Registration</div></td>
       </tr>
       <tr>
         <td style="text-align:left;"><p>Thank you for trying FreePlus Accounts.&nbsp;&nbsp;To get started we first need to collect a few details so as to ensure that only you have access to the account you are about to set up.&nbsp;&nbsp;We take security very seriously indeed (you can read our Privacy Policy <a href="/privacypolicy.html">here</a> for full details) and you can be assured that none of your details are <b><i>ever</i></b> passed on to any third parties.&nbsp;&nbsp;What is private remains private.</p>
@@ -115,3 +117,11 @@
   <div id="memplan"><p>Use of <b><i>FreePlus Accounts</i></b> is free as long as you agree to receive our newsletter and allow adverts on the application pages.&nbsp;&nbsp;You may elect to stop receiving the newsletter and/or adverts at any time, once registered, by unchecking the appropriate checkbox in the Registration Details page.&nbsp;&nbsp;However, if you choose to do this you will no longer be able to use the free system.</p>
   </div>
 </div>
+</div>
+</div>
+  <div class="rightcol smallcol">
+    <img src="http://www.fpa.co.uk/wp-content/themes/freeplusaccounts/images/banner-too-good-to-be-true.jpg" />
+    <br /><br />
+  </div>
+  <div class="clear"></div>
+
