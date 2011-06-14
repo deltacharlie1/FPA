@@ -7,6 +7,7 @@ $tt = Template->new({
 	WRAPPER => 'logicdesign.tt',
 });
 $Posts =  `php /usr/local/git/fpa/cgi/get_posts.php`;
+$Posts =~ s/https/http/g;
 
 $Vars = {
 	title => 'Register',

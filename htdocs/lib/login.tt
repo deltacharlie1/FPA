@@ -10,7 +10,7 @@
   </tr>
   <tr>
     <td align="center">
-      <table id="registertable">
+      <table id="logintable">
         <tr>
           <td nowrap="nowrap"><div class="logintext">Login ID (your email address)</div><span><input name="email" type="text" id="email" size="30" value="[%- cookie -%]" class="mandatory" title="Email Address"/></span></td>
         </tr>
@@ -31,7 +31,7 @@
 </div>
 </div>
   <div class="rightcol smallcol">
-    <img src="http://www.fpa.co.uk/wp-content/themes/freeplusaccounts/images/banner-too-good-to-be-true.jpg" />
+    <img src="/wp-content/themes/freeplusaccounts/images/banner-too-good-to-be-true.jpg" />
     <br /><br />
   </div>
   <div class="clear"></div>

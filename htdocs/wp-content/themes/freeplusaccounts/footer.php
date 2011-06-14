@@ -94,7 +94,7 @@
               <a class="addthis_counter addthis_pill_style"></a>
 <!-- GeoTrust QuickSSL [tm] Smart Icon tag. Do not edit. -->
 
- <div style="float:right;"><SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript" SRC="//smarticon.geotrust.com/si.js"></SCRIPT></div>
+ <div style="float:right;padding-left:20px;"><SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript" SRC="//smarticon.geotrust.com/si.js"></SCRIPT></div>
 
  <!-- end GeoTrust Smart Icon tag -->    
           </div>
