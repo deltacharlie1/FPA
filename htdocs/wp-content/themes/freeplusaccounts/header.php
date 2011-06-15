@@ -68,13 +68,11 @@
 <div id="freeplustitle"><img src="<?php bloginfo('template_directory'); ?>/images/freeplustitle.png" alt="Free Plus Accounts" /></div>
 
           <div class="account listfix">
-            
-                <ul>
-                    <li><a href="https://www.freeplusaccounts.co.uk/cgi-bin/fpa/register.pl" class="register"></a></li>
-                    <li><a href="https://www.freeplusaccounts.co.uk/cgi-bin/fpa/login.pl" class="login"></a></li>
-                </ul>
-            
-            </div>
+              <div class="register">
+                    <a href="/cgi-bin/fpa/register.pl"></div></a>
+                    <div class="lorr">or</div>
+                    <a href="/cgi-bin/fpa/login.pl"><div class="login">LOGIN</div></a>
+              </div>
             
           <div class="listfix" id="nav">
                 

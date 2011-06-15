@@ -119,11 +119,10 @@ input[type=select] { background-color:#FFF; border:1px solid #CCC; padding:4px; 
 }
 .m.header .account.listfix {
 	float: right;
-	background-image: url(images/login-register.jpg);
 	background-repeat: no-repeat;
 	background-position: left top;
 	height: 55px;
-	width: 243px;
+	width: 343px;
 	margin: 0px;
 	padding: 0px;
 }
@@ -148,25 +147,35 @@ input[type=select] { background-color:#FFF; border:1px solid #CCC; padding:4px; 
 }
 #banner .m .banner-items{
 }
-.m.header .account.listfix ul li a {
-	display: block;
-	height: 38px;
-	width: 110px;
-	margin:10px 40px 0 20px;
-}
-.m.header .account.listfix ul li .register {
-	height: 38px;
-	width: 110px;
-	margin: 10px 40px 0 20px;
-}
-.m.header .account.listfix ul li .login {
-	width: 55px;
-	padding: 0px;
+.m.header .account.listfix .register {
+	float: right;
+	background-image: url(/images/regbutton1.png);
+	height: 75px;
+	width: 165px;
 	margin:0px;
-	height: 50px;
+	padding: 0px;
 }
-.m.header .account.listfix ul li {
-	float:left;
+.m.header .account.listfix .register:hover {
+	background-image: url(/images/regbutton2.png);
+}
+.m.header .account.listfix .login {
+	float: right;
+	text-align:right;
+	color:#666666;
+	font-size:20px;
+	padding: 25px 4px 0px 4px;
+	margin:0px;
+	height: 60px;
+}
+.m.header .account.listfix .lorr{
+	float: right;
+	text-align:center;
+	color:#666666;
+	font-size:14px;
+	width: 30px;
+	padding: 30px 4px 0px 0px;
+	margin:0px;
+	height: 60px;
 }
 .footer {
 	border-top: 1px solid #388A4B;
