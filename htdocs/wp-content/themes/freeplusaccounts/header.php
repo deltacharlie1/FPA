@@ -29,7 +29,6 @@
 <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>" />
 
 <link rel="stylesheet" type="text/css" href="<?php bloginfo('template_directory'); ?>/style.css"/>
-<link rel="stylesheet" type="text/css" href="<?php bloginfo('template_directory'); ?>/js/coda/coda-slider-2.0.css"/>
 
 <?php wp_head(); ?>
 
