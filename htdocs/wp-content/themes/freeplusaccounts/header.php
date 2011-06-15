@@ -68,9 +68,9 @@
 
           <div class="account listfix">
               <div class="register">
-                    <a href="/cgi-bin/fpa/register.pl"></div></a>
+                    <a href="https://www.freeplusaccounts.co.uk/cgi-bin/fpa/register.pl"></div></a>
                     <div class="lorr">or</div>
-                    <a href="/cgi-bin/fpa/login.pl"><div class="login">LOGIN</div></a>
+                    <a href="https://www.freeplusaccounts.co.uk/cgi-bin/fpa/login.pl"><div class="login">LOGIN</div></a>
               </div>
             
           <div class="listfix" id="nav">
