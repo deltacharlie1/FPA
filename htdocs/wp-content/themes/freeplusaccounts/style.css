@@ -175,6 +175,7 @@ input[type=select] { background-color:#FFF; border:1px solid #CCC; padding:4px; 
 .m.header .account.listfix .login {
 	float: right;
 	text-align:right;
+	text-decoration: none;
 	color:#666666;
 	font-size:20px;
 	padding: 30px 4px 0px 4px;

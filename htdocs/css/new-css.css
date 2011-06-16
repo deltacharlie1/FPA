@@ -75,14 +75,14 @@ img {
 
 
 #top #logout {
-	background-image: url(/images/logout-button.gif);
-	height: 63px;
-	width: 123px;
+	background-image: url(/images/logout-button.png);
+	height: 34px;
+	width: 64px;
 	float: right;
 	margin-top: 10px;
 	margin-right:50px;
 }
-#top #logout:hover { background-image: url(/images/logout-button-hover.gif); }
+#top #logout:hover { background-image: url(/images/logout-button-hover.png); }
 
 #navigation ul {
 	padding: 0px;
