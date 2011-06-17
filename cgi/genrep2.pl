@@ -29,12 +29,29 @@ my $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
 #  Construct the SQL filter
 
 $SQL = "";
+$Prefix = "";
 
-if ($FORM{searchval} =~ /^\d+$/) {	#  ie this is an invoice no
-	$SQL .= "invinvoiceno like '$FORM{searchval}%' and ";
+if ($FORM{searchval} =~ /^\%/) {
+	$Prefix = "%";
+	$FORM{searchval} =~ tr /\%//d;
+}
+
+if ($FORM{searchval} =~ /^\=\d+\.\d\d$/) {
+	$FORM{searchval} =~ tr /\=//d;
+	$SQL .= "(invtotal='$FORM{searchval}' or invtotal='-$FORM{searchval}') and ";
+}
+elsif ($FORM{searchval} =~ /^\d+\.\d\d$/) {
+	$SQL .= "(invtotal+invvat='$FORM{searchval}' or invtotal+invvat='-$FORM{searchval}') and ";
+}
+elsif ($FORM{searchval} =~ /^\d+$/) {	#  ie this is an invoice no
+	$SQL .= "invinvoiceno like '$Prefix$FORM{searchval}%' and ";
+}
+elsif ($FORM{searchval} =~ /^\#/) {	#  ie this is an invoice no
+	$FORM{searchval} =~ tr /\#//d;
+	$SQL .= "invcusref like '$Prefix$FORM{searchval}%' and ";
 }
 else {
-	$SQL .= "invcusname like '$FORM{searchval}%' and ";
+	$SQL .= "invcusname like '$Prefix$FORM{searchval}%' and ";
 }
 $SQL .= "invoices.acct_id='$COOKIE->{ACCT}'";
 

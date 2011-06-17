@@ -153,11 +153,12 @@ ul a{
 	height: 41px;
 	width: 180px;
 	display: block;
-	padding-top: 18px;
-	padding-left: 21px;
+	padding-top: 17px;
+	padding-left: 22px;
 }
 #navigation ul .search span #searchcus {
-	width: 130px;
+	height:16px;
+	width: 120px;
 	background:transparent;
 	border:none;
 }
@@ -198,6 +199,8 @@ ul a{
 	text-align:left;
 }
 #container #sidebar li input {
+	height:16px;
+	padding-left:0px;
 	border:none;
 	background-color:transparent;
 }
