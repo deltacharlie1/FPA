@@ -26,6 +26,7 @@
   </table>
 </form>
 </div>
+<div id="confirmdialog" style="text-align:left;z-index:10100;" title="Please Confirm">Is this a new customer?<p>Would you like to save these details for further invoices?</p></div>
 <form action="/cgi-bin/fpa/save_invoice.pl" method="post" name="form1" id="form1" class="newinvoice">
 <input type="hidden" name="cus_id" id="x_cus_id" value="[% cus.id -%]"/>
 <input type="hidden" name="id" id="x_id" value=""/>

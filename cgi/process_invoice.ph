@@ -19,6 +19,14 @@ sub validate_customer {
 
 		$Sts = $dbh->do("update customers set $Custype='Y' where id=$FORM{cus_id} and acct_id='$COOKIE->{ACCT}'");
 	}
+	elsif ($FORM{cus_id} < 0) {
+
+#  Tis is a new customer whose details are to be saved in customers
+
+		$Sts = $dbh->do("insert into customers (acct_id,cusname,cusaddress,cuspostcode,cusregion,cuscontact,cusemail,custerms,cusdefpo,cussales) values ('$COOKIE->{ACCT}','$FORM{invcusname}','$FORM{invcusaddr}','$FORM{invcuspostcode}','$FORM{invcusregion}','$FORM{invcuscontact}','$FORM{invcusemail}','$FORM{invcusterms}','$FORM{invcusref}','Y')");
+		$FORM{cus_id} = $dbh->last_insert_id(undef, undef, qw(customers undef));
+
+	}
 	else {
 
 #  First get the 'Unlisted' customer id (if it exists)

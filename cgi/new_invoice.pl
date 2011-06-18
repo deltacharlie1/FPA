@@ -36,6 +36,31 @@ $Vars = {
 '<script type="text/javascript">
 var errfocus = "";
 $(document).ready(function(){
+  $("#confirmdialog").dialog({
+    bgiframe: true,
+    height: 180,
+    width: 300,
+    autoOpen: false,
+    position: [200,100],
+    modal: true,
+    buttons: {
+      "Yes": function() { document.getElementById("x_cus_id").value = "-1"; $(this).dialog("close"); },
+      "No": function() { $(this).dialog("close"); }
+    },
+    close: function() {
+      var dg = document.getElementById("div_html").innerHTML.replace(/\+/gim,"%2B");
+      var submit_data = $(".newinvoice").serialize() + "&invtotal=" + escape(document.getElementById("st").innerHTML) + "&invvat=" + escape(document.getElementById("vt").innerHTML) + "&invitems=" + escape(dg) + "&submit=Final";
+      $.post("/cgi-bin/fpa/save_invoice.pl",submit_data ,function(data) {
+        if ( ! /^OK/.test(data)) {
+          alert(data);
+        }
+        else {
+          var href = data.split("-");
+          location.href = "/cgi-bin/fpa/" + href[1];
+       }
+      },"text");
+    }
+  });
   $("#invnextinvdate").datepicker({ minDate: new Date() });
   $("#template").dialog({
     bgiframe: true,
@@ -130,17 +155,22 @@ function submit_details(action) {
   }
   else {
     if (validate_form("#form1")) {
-      var dg = document.getElementById("div_html").innerHTML.replace(/\+/gim,"%2B");
-      var submit_data = $(".newinvoice").serialize() + "&invtotal=" + escape(document.getElementById("st").innerHTML) + "&invvat=" + escape(document.getElementById("vt").innerHTML) + "&invitems=" + escape(dg) + "&submit=" + action;
-      $.post("/cgi-bin/fpa/save_invoice.pl",submit_data ,function(data) {
-        if ( ! /^OK/.test(data)) {
-          alert(data);
-        }
-        else {
-          var href = data.split("-");
-          location.href = "/cgi-bin/fpa/" + href[1];
-       }
-      },"text");
+      if (document.getElementById("x_cus_id").value == "" && action == "Final") {
+         $("#confirmdialog").dialog("open");
+      }
+      else {
+        var dg = document.getElementById("div_html").innerHTML.replace(/\+/gim,"%2B");
+        var submit_data = $(".newinvoice").serialize() + "&invtotal=" + escape(document.getElementById("st").innerHTML) + "&invvat=" + escape(document.getElementById("vt").innerHTML) + "&invitems=" + escape(dg) + "&submit=" + action;
+        $.post("/cgi-bin/fpa/save_invoice.pl",submit_data ,function(data) {
+          if ( ! /^OK/.test(data)) {
+            alert(data);
+          }
+          else {
+            var href = data.split("-");
+            location.href = "/cgi-bin/fpa/" + href[1];
+         }
+        },"text");
+      }
     }
   }
 }

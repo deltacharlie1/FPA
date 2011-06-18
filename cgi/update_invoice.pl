@@ -49,6 +49,31 @@ $Vars = {
 var responseText = "";
 var errfocus = "";
 $(document).ready(function(){
+  $("#confirmdialog").dialog({
+    bgiframe: true,
+    height: 180,
+    width: 300,
+    autoOpen: false,
+    position: [200,100],
+    modal: true,
+    buttons: {
+      "Yes": function() { document.getElementById("x_cus_id").value = "-1"; $(this).dialog("close"); },
+      "No": function() { $(this).dialog("close"); }
+    },
+    close: function() {
+      document.getElementById("invitems").value = document.getElementById("div_html").innerHTML;
+      var submit_data = $(".newinvoice").serialize() + "&submit=" + action;
+      $.post("/cgi-bin/fpa/save_invoice.pl",submit_data ,function(data) {
+        if ( ! /^OK/.test(data)) {
+          alert(data);
+        }
+        else {
+          var href = data.split("-");
+          location.href = "/cgi-bin/fpa/" + href[1];
+        }
+      },"text");
+    }
+  });
   $("#x_invprintdate").datepicker();
 });
 function setfocus() {
@@ -69,17 +94,22 @@ function submit_details(action) {
   }
   else {
     if (validate_form("#form1")) {
-      document.getElementById("invitems").value = document.getElementById("div_html").innerHTML;
-      var submit_data = $(".newinvoice").serialize() + "&submit=" + action;
-      $.post("/cgi-bin/fpa/save_invoice.pl",submit_data ,function(data) {
-        if ( ! /^OK/.test(data)) {
-          alert(data);
-        }
-        else {
-          var href = data.split("-");
-          location.href = "/cgi-bin/fpa/" + href[1];
-       }
-      },"text");
+      if (document.getElementById("x_cus_id").value == "" && action == "Final") {
+         $("#confirmdialog").dialog("open");
+      }
+      else {
+        document.getElementById("invitems").value = document.getElementById("div_html").innerHTML;
+        var submit_data = $(".newinvoice").serialize() + "&submit=" + action;
+        $.post("/cgi-bin/fpa/save_invoice.pl",submit_data ,function(data) {
+          if ( ! /^OK/.test(data)) {
+            alert(data);
+          }
+          else {
+            var href = data.split("-");
+            location.href = "/cgi-bin/fpa/" + href[1];
+         }
+        },"text");
+      }
     }
   }
 }
