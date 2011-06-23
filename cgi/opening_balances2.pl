@@ -44,6 +44,7 @@ if ($FORM{cstmt} && $FORM{cstmt} !~ /^-?\d+$/) { $Errs .= "<li>Invalid Current A
 if ($FORM{x1210} && $FORM{x1210} !~ /^-?\d+\.?\d?\d?$/) { $Errs .= "<li>Invalid Deposit Account amount</li>\n"; }
 if ($FORM{dstmt} && $FORM{dstmt} !~ /^-?\d+$/) { $Errs .= "<li>Invalid Current Account Statement Number</li>\n"; }
 if ($FORM{x2010} && $FORM{x2010} !~ /^-?\d+\.?\d?\d?$/) { $Errs .= "<li>Invalid Credit Card amount</li>\n"; }
+if ($FORM{x1000} && $FORM{x1000} !~ /^-?\d+\.?\d?\d?$/) { $Errs .= "<li>Invalid Current Assets amount</li>\n"; }
 if ($FORM{x1100} && $FORM{x1100} !~ /^-?\d+\.?\d?\d?$/) { $Errs .= "<li>Invalid Debtors amount</li>\n"; }
 if ($FORM{x2000} && $FORM{x2000} !~ /^-?\d+\.?\d?\d?$/) { $Errs .= "<li>Invalid Creditors amount</li>\n"; }
 if ($FORM{xvat} && $FORM{xvat} !~ /^-?\d+\.?\d?\d?$/) { $Errs .= "<li>Invalid VAT Owed amount</li>\n"; }
@@ -76,6 +77,17 @@ else {
 		$Start_date = "now()";
 	}
 
+#  Determine whether this is a new balance or an adjustment (is there an existing statement)
+
+	$Stmts = $dbh->prepare("select * from statements where acct_id='$COOKIE->{ACCT}' and stanotxns='-1'");
+	$Stmts->execute;
+	if ($Stmts->rows > 0) {
+		$Adjustment = "adjustment for";
+	}
+	else {
+		$Adjustment = "for";
+	}
+
 	while (($Key,$Value) = each %FORM) {
 		if ($Value && $Key =~ /^x\d\d\d\d/) {
 			$Key =~ s/^x//;
@@ -85,7 +97,7 @@ else {
 			$Companies->execute;
 			@Company = $Companies->fetchrow;
 	
-		        $Sts = $dbh->do("insert into transactions (acct_id,txncusname,txnmethod,txnamount,txndate,txntxntype,txnremarks,txntxnno,txnselected) values ('$COOKIE->{ACCT}','Opening Balance','$Key','$Value',$Start_date,'income','$Acctype{$Key}','$Company[0]','F')");
+		        $Sts = $dbh->do("insert into transactions (acct_id,txncusname,txnmethod,txnamount,txndate,txntxntype,txnremarks,txntxnno,txnselected) values ('$COOKIE->{ACCT}','Opening Balance $Adjustment $Acctype{$Key}','$Key','$Value',$Start_date,'income','$Acctype{$Key}','$Company[0]','F')");
 		        $New_txn_id = $dbh->last_insert_id(undef, undef, qw(transactions undef));
 
 			$Sts = $dbh->do("update companies set comnexttxn=comnexttxn+1 where reg_id=$Reg_id and id=$Com_id");
@@ -107,7 +119,7 @@ else {
 	                $Value =~ tr/-//d;
         	        $Value = sprintf("%1.2f",$Value);
 
-                	$Sts = $dbh->do("insert into audit_trails (acct_id,audtype,audaction,audtext,auduser) values ('$COOKIE->{ACCT}','opening balances','setup','Opening Balance of &pound;$Value for $Key','$COOKIE->{USER}')");
+                	$Sts = $dbh->do("insert into audit_trails (acct_id,audtype,audaction,audtext,auduser) values ('$COOKIE->{ACCT}','opening balances','setup','Opening Balance $Adjustment $Acctype{$Key} of &pound;$Value','$COOKIE->{USER}')");
 		}
 	}
 
@@ -122,7 +134,7 @@ else {
 	$Stmts->execute;
 	if ($Stmts->rows > 0) {
 
-	        $Sts = $dbh->do("insert into audit_trails (acct_id,audtype,audaction,audtext,auduser) values ('$COOKIE->{ACCT}','opening balances','setup','Retained Earnings adjusted by &pound;$Retained_earnings for 3100','$COOKIE->{USER}')");
+	        $Sts = $dbh->do("insert into audit_trails (acct_id,audtype,audaction,audtext,auduser) values ('$COOKIE->{ACCT}','opening balances','setup','Retained Earnings adjusted by &pound;$Retained_earnings for `Retained Earnings`','$COOKIE->{USER}')");
 
 #  Existing opening balance, so just adjust
 
@@ -137,7 +149,7 @@ else {
 	}
 	else {
 
-        $Sts = $dbh->do("insert into audit_trails (acct_id,audtype,audaction,audtext,auduser) values ('$COOKIE->{ACCT}','opening balances','setup','Total Retained Earnings of &pound;$Retained_earnings for 3100','$COOKIE->{USER}')");
+	        $Sts = $dbh->do("insert into audit_trails (acct_id,audtype,audaction,audtext,auduser) values ('$COOKIE->{ACCT}','opening balances','setup','Total Retained Earnings of &pound;$Retained_earnings for 3100','$COOKIE->{USER}')");
 
 #  Get the current and deposit account ids
 

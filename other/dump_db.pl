@@ -175,7 +175,7 @@ if ($Companies->rows > 0) {
 
 #  VAT Returns
 
-		$Vatreturns = $dbh->prepare("select perquarter,perstartdate,perenddate,perduedate,perstatus,perstatusdate,perbox1,perbox2,perbox3,perbox4,perbox5,perbox6,perbox7,perbox8,perbox9,percompleted,perfiled,id as old_id from vatreturns order by id");
+		$Vatreturns = $dbh->prepare("select perquarter,perstartdate,perenddate,perduedate,perstatus,perstatusdate,perbox1,perbox2,perbox3,perbox4,perbox5,perbox6,perbox7,perbox8,perbox9,percompleted,perfiled,id as old_id from vatreturns  where acct_id='$Acct_id' order by id");
 		$Vatreturns->execute;
 		if ($Vatreturns->rows > 0) {
 			print FILE substr($Tabs,0,$Tab_count)."<VAT Returns>\n";
@@ -247,7 +247,7 @@ if ($Companies->rows > 0) {
 
 #  Invoice Items
 
-		$Items = $dbh->prepare("select itmtype,itmqty,itmnomcode,itmdesc,itmtotal,itmvat,itmvatrate,itmdate from items where acct_id='$Acct_id'");
+		$Items = $dbh->prepare("select itmtype,itmqty,itmnomcode,itmdesc,itmtotal,itmvat,itmvatrate,itmdate from items where acct_id='$Acct_id' order by id");
 		$Items->execute;
 		if ($Items->rows > 0) {
 			print FILE substr($Tabs,0,$Tab_count)."<Invoice Items>\n";

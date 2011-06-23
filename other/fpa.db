@@ -459,6 +459,13 @@ create table images (
   index img2 (link_id)
 );
 
+drop table if exists categories;
+create table categories (
+  id int unsigned not null auto_increment primary key,
+  cat_code varchar(100) not null default '' comment 'Category Code',
+  cat_description varchar(255) not null default '' comment 'Category Description'
+);
+
 drop table if exists adverts;
 create table adverts (
   id int unsigned not null auto_increment primary key,

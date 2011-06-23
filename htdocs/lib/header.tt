@@ -61,8 +61,9 @@ $(document).ready(function(){
 [% END -%]
             <li><a href="/cgi-bin/fpa/docsrep1.pl">List Documents</a></li>
             <li><a href="/cgi-bin/fpa/list_coas.pl">Chart of Accounts</a></li>
-            <li><a href="/cgi-bin/fpa/loan.pl?I">Add Loan</a></li>
-            <li><a href="/cgi-bin/fpa/loan.pl?D">Reduce Loan</a></li>
+            <li><a href="/cgi-bin/fpa/loan.pl?I">Adjustments In (<b> + </b>)</a></li>
+            <li><a href="/cgi-bin/fpa/loan.pl?D">Adjustments Out (<b> - </b>)</a></li>
+            <li><a href="/cgi-bin/fpa/opening_balances.pl">Adjust Balances</a></li>
             <li><a href="/cgi-bin/fpa/wipe_clean.pl">Delete All Data</a></li>
           </ul>
         </li>

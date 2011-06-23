@@ -19,6 +19,8 @@
 4300	Other Income	Income	P & L
 5000	Cost of Sales	Expenses	P & L
 6000	Other Expenses	Expenses	P & L
+6500	Dividends	Expenses	P & L
+6600	Corporation Tax	Expenses	P & L
 7000	Fixed Overheads	Expenses	P & L
 7500	Wages	Expenses	P & L
 7600	Payroll Taxes	Expenses	P & L
