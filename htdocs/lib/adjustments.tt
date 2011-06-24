@@ -1,0 +1,68 @@
+<div class="main" id="main">
+[% USE date(format = '%d-%b-%y') %]
+<form action="/cgi-bin/fpa/adjustments2.pl" method="post" name="form1" id="form1">
+<input type="hidden" name="loantype" id="loantype" value="[%- loantype -%]"/>
+<h1>Adjustments [%- IF loantype == "I" -%]In[%- ELSE -%]Out[%- END -%]</h1>
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="formtable">
+    <tr>
+      <td><label>Total amount to be [%- IF loantype == "I" -%]Added[%- ELSE -%]Deducted[%- END -%]</label></td>
+      <td><span><input title="Total Payment" name="amtpaid" type="text" id="amtpaid" size="10" class="mandatory currency"/></span></td>
+    </tr>
+    <tr>
+      <td><label>Type of [%- IF loantype == "I" -%]Receipt[%- ELSE -%]Payment[%- END -%]</label></td>
+      <td>
+        <select title="Type of Payment" name="paytype" id="paytype" size="1">
+[% IF loantype == "I" -%]
+          <option value="4300" selected="selected">Un-Specified</option>
+          <option value="2300">Reduction of Loan to company</option>
+          <option value="3000">Increase in Share Capital</option>
+[% ELSE -%]
+          <option value="6000" selected="selected">Un-Specified</option>
+          <option value="7500">Wages</option>
+          <option value="7600">Payroll Taxes</option>
+          <option value="6500">Payment of Dividend</option>
+          <option value="6600">Payment of Corporation Tax</option>
+          <option value="2300">Increase of Loan to company</option>
+          <option value="3000">Reduction in Share Capital</option>
+[% END -%]
+        </select>
+      </td>
+    </tr>
+      <td><label>Method of Payment</label></td>
+      <td>
+        <select title="Method of Payment" name="paymethod" id="paymethod" size="1">
+          <option value="1200" selected="selected">Bank Transfer</option>
+          <option value="1300">Cash</option>
+          <option value="1310">Cheque</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td><label>Transaction Date</label></td>
+      <td><input type="text" name="txndate" id="txndate" readonly="readonly" size="9" value="[%- date.format -%]"/></td>
+    </tr>
+    <tr>
+      <td style="vertical-align:top;"><label>Remarks</label></td>
+      <td style="vertical-align:top;"><textarea name="rmks" id="rmks" cols="30" rows="4" class="mandatory" title="Remarks"></textarea></td>
+    </tr>
+  </table>
+</div>
+<div id="sidebar">
+  <ul>
+    <li>
+      <div>
+        <input type="submit" name="save" id="save" value="Save [%- IF loantype == "I" -%]Receipt[%- ELSE -%]Payment[%- END -%]"/>
+      </div>
+    </li>
+    <li>
+      <div>
+       <input type="reset" name="reset" id="reset" value="Start Again"/>
+      </div>
+    </li>
+  </ul>
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+  </div>
+</div>
+</form>
+</div>

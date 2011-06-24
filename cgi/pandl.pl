@@ -26,7 +26,7 @@ $tt = Template->new({
 });
 
 $Vars = {
-        title => 'Accounts - P and L',
+        title => 'P and L',
 	cookie => $COOKIE,
         daterange => $Reg,
 	javascript => '<style type="text/css">

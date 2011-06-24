@@ -1,7 +1,7 @@
 var errfocus = "";
 var ajax_return = "";
 $(document).ready(function(){
-  $(".mandatory").before("<span style='font-size:20px;font-weight:bold;color:red;padding:0 6px 0 0;'>*<\/span>");
+  $(".mandatory").before("<span style='vertical-align:top;font-size:20px;font-weight:bold;color:red;padding:0 6px 0 0;'>*<\/span>");
   var serchtimer;
   $("#searchcus").keyup(function() {
     clearTimeout(serchtimer);

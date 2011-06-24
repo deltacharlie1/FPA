@@ -61,8 +61,8 @@ $(document).ready(function(){
 [% END -%]
             <li><a href="/cgi-bin/fpa/docsrep1.pl">List Documents</a></li>
             <li><a href="/cgi-bin/fpa/list_coas.pl">Chart of Accounts</a></li>
-            <li><a href="/cgi-bin/fpa/loan.pl?I">Adjustments In (<b> + </b>)</a></li>
-            <li><a href="/cgi-bin/fpa/loan.pl?D">Adjustments Out (<b> - </b>)</a></li>
+            <li><a href="/cgi-bin/fpa/adjustments.pl?I">Adjustments In (<b> + </b>)</a></li>
+            <li><a href="/cgi-bin/fpa/adjustments.pl?O">Adjustments Out (<b> - </b>)</a></li>
             <li><a href="/cgi-bin/fpa/opening_balances.pl">Adjust Balances</a></li>
             <li><a href="/cgi-bin/fpa/wipe_clean.pl">Delete All Data</a></li>
           </ul>
@@ -117,6 +117,7 @@ $(document).ready(function(){
             <li><a href="/cgi-bin/fpa/txnrep1.pl">Transaction Analysis</a>
             <li><a href="/cgi-bin/fpa/trial_balance.pl?new">Trial Balance</a></li>
             <li><a href="/cgi-bin/fpa/pandl.pl">Profit &amp; Loss</a></li>
+            <li><a href="/cgi-bin/fpa/nomledger.pl">Nominal Ledger</a></li>
             <li><a href="#">Aged Debtors</a></li>
             <li><a href="#">Aged Creditors</a></li>
           </ul>

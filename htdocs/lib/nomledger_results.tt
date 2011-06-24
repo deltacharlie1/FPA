@@ -1,0 +1,81 @@
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="listing">
+    <tr>
+      <th>Code</th>
+      <th>Account</th>
+      <th>Date</th>
+      <th>Item Description</th>
+      <th>Debit</th>
+      <th>Credit</th>
+    </tr>
+[% curcode = ""; ctr = 0; -%]
+[%- class = [ "even","odd" ] -%]
+[%- FOREACH entry IN entries -%]
+  [%  UNLESS curcode == entry.nomcode; -%]
+    [% IF curcode != "" -%]
+      [%- ctr = ctr+1; ndx = ctr % 2 -%]
+    <tr class="[%- class.$ndx -%]">
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td style="text-align:right;">Sub Totals</td>
+      <td style="font-weight:bold;text-align:right;border-top:1px dotted #333333;border-bottom:1px solid  #333333;">[%- IF debits != 0; debits | remove('-') | format('%1.2f'); ELSE -%]&nbsp;[%- END -%]</td>
+      <td style="font-weight:bold;text-align:right;border-top:1px dotted #333333;border-bottom:1px solid #333333;">[%- IF credits != 0; credits | remove('-') | format('%1.2f'); ELSE -%]&nbsp;[%- END -%]</td>
+    </tr>
+      [%- ctr = ctr+1; ndx = ctr % 2 -%]
+    <tr class="[%- class.$ndx -%]">
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td style="text-align:right;font-weight:bold;">[%- curdesc -%] Net Total</td>
+      <td style="font-weight:bold;text-align:right;border-bottom:3px double #333333;">[%- IF debits >= credits; debits + credits | remove('-') | format('%1.2f'); ELSE -%]&nbsp;[%- END -%]</td>
+      <td style="font-weight:bold;text-align:right;border-bottom:3px double #333333;">[%- IF credits > debits; credits + debits | remove('-') | format('%1.2f'); ELSE -%]&nbsp;[%- END -%]</td>
+    </tr>
+  [% END; curcode = entry.nomcode; curdesc = entry.coadesc; debits = 0; credits = 0; END -%]
+  [%- ctr = ctr+1; ndx = ctr % 2 -%]
+    <tr class="[%- class.$ndx -%]"[%- IF entry.nomtype == "S" -%] onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- entry.link_id -%]'"[%- END -%]>
+      <td>[%- entry.nomcode -%]</td>
+      <td>[%- entry.coadesc | truncate(30) -%]</td>
+      <td>[%- entry.printdate -%]</td>
+    [% IF entry.nomtype == "T" -%]
+      <td>[%- entry.txndescr | truncate(70) -%]</td>
+    [% ELSE -%]
+      <td>[%- entry.invdescr | truncate(70) -%]</td>
+    [% END -%]
+  [% IF entry.coatype.match('(?i)Assets|Expenses') -%]
+    [% IF entry.balance >= 0 -%]
+      <td style="text-align:right;">[%- debits = debits + entry.balance; entry.balance | format('%1.2f') -%]</td>
+      <td>&nbsp;</td>
+    [% ELSE -%]
+      <td>&nbsp;</td>
+      <td style="text-align:right;">[%- credits = credits + entry.balance; entry.balance | remove('-') | format('%1.2f') -%]</td>
+    [% END -%]
+  [% ELSE -%]
+    [% IF entry.balance >= 0 -%]
+      <td>&nbsp;</td>
+      <td style="text-align:right;">[%- credits = credits + entry.balance; entry.balance | format('%1.2f') -%]</td>
+    [% ELSE -%]
+      <td style="text-align:right;">[%- debits = debits + entry.balance; entry.balance | remove('-') | format('%1.2f') -%]</td>
+      <td>&nbsp;</td>
+    [% END -%]
+  [% END -%]
+    </tr>
+[%- END -%]
+[%- ctr = ctr+1; ndx = ctr % 2 -%]
+    <tr class="[%- class.$ndx -%]">
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td style="text-align:right;">Sub Totals</td>
+      <td style="font-weight:bold;text-align:right;border-top:1px dotted #333333;border-bottom:1px solid  #333333;">[%- IF debits != 0; debits | remove('-') | format('%1.2f'); ELSE -%]&nbsp;[%- END -%]</td>
+      <td style="font-weight:bold;text-align:right;border-top:1px dotted #333333;border-bottom:1px solid #333333;">[%- IF credits != 0; credits | remove('-') | format('%1.2f'); ELSE -%]&nbsp;[%- END -%]</td>
+    </tr>
+      [%- ctr = ctr+1; ndx = ctr % 2 -%]
+    <tr class="[%- class.$ndx -%]">
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td style="text-align:right;font-weight:bold;">[%- curdesc -%] Net Total</td>
+      <td style="font-weight:bold;text-align:right;border-bottom:3px double #333333;">[%- IF debits >= credits; debits + credits | remove('-') | format('%1.2f'); ELSE -%]&nbsp;[%- END -%]</td>
+      <td style="font-weight:bold;text-align:right;border-bottom:3px double #333333;">[%- IF credits > debits; credits + debits | remove('-') | format('%1.2f'); ELSE -%]&nbsp;[%- END -%]</td>
+    </tr>
+  </table>

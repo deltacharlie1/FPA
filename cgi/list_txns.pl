@@ -32,14 +32,14 @@ use DBI;
 my $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
 
 unless ($FORM{rows}) {
-	$Txns = $dbh->prepare("select date_format(txndate,'%d-%b-%y') as tdate,concat(txncusname,' (',txnremarks,')') as txncusname,txnamount,coadesc,txntxnno from transactions left join coas on (txnmethod=coanominalcode) where $Filter and transactions.acct_id='$COOKIE->{ACCT}' and coas.acct_id='$COOKIE->{ACCT}' order by txndate desc,transactions.id desc");
+	$Txns = $dbh->prepare("select date_format(txndate,'%d-%b-%y') as tdate,concat(txncusname,' (',txnremarks,')') as txncusname,txnamount,coadesc,txntxnno from transactions left join coas on (txnmethod=coanominalcode) where $Filter and transactions.acct_id='$COOKIE->{ACCT}' and coas.acct_id='$COOKIE->{ACCT}' order by txndate desc,txntxnno desc");
 	$Txns->execute;
 	$FORM{numrows} = $Txns->rows;
 	$FORM{offset} = 0;
 	$FORM{rows} = 24;
 }
 
-$Txns = $dbh->prepare("select date_format(txndate,'%d-%b-%y') as tdate,concat(txncusname,' (',txnremarks,')') as txncusname,txnamount,coadesc,txntxnno from transactions left join coas on (txnmethod=coanominalcode) where $Filter and transactions.acct_id='$COOKIE->{ACCT}' and coas.acct_id='$COOKIE->{ACCT}' order by txndate desc limit $FORM{offset},$FORM{rows}");
+$Txns = $dbh->prepare("select date_format(txndate,'%d-%b-%y') as tdate,concat(txncusname,' (',txnremarks,')') as txncusname,txnamount,coadesc,txntxnno from transactions left join coas on (txnmethod=coanominalcode) where $Filter and transactions.acct_id='$COOKIE->{ACCT}' and coas.acct_id='$COOKIE->{ACCT}' order by txndate desc,txntxnno desc limit $FORM{offset},$FORM{rows}");
 $Txns->execute;
 
 use Template;

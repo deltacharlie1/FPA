@@ -405,7 +405,7 @@ button {
 	text-decoration: underline;
 }
 .mandatory, .mandatory2 {
-	background-color:#f8e8c8;
+	background-color:#f8e8c8 !important;
 }
 .error {
 	border:solid 2px #8f0000;

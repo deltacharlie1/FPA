@@ -2,7 +2,7 @@
 
 $ACCESS_LEVEL = 1;
 
-#  script to display Trial Balance
+#  script to display Nominal Ledger (ie all nominals)
 
 use Checkid;
 $COOKIE = &checkid($ENV{HTTP_COOKIE},$ACCESS_LEVEL);
@@ -44,7 +44,7 @@ $tt = Template->new({
 });
 
 $Vars = {
-        title => 'Trial Balance',
+        title => 'Nominal Ledger',
 	cookie => $COOKIE,
 	daterange => $Reg,
 	javascript => '<script type="text/javascript">
@@ -178,7 +178,7 @@ function set_range(obj) {
   get_balances();
 }
 function get_balances() {
-   $.get("/cgi-bin/fpa/trial_balance_results.pl",$("form#form1").serialize() ,function(data) {
+   $.get("/cgi-bin/fpa/nomledger_results.pl",$("form#form1").serialize() ,function(data) {
      document.getElementById("results").innerHTML = data;
   });
 }
@@ -187,7 +187,7 @@ function get_balances() {
 };
 
 print "Content-Type: text/html\n\n";
-$tt->process('trial_balance.tt',$Vars);
+$tt->process('nomledger.tt',$Vars);
 
 $Regs->finish;
 $dbh->disconnect;

@@ -7,16 +7,6 @@ $ACCESS_LEVEL = 1;
 use Checkid;
 $COOKIE = &checkid($ENV{HTTP_COOKIE},$ACCESS_LEVEL);
 
-($Reg_id,$Com_id) = split(/\+/,$COOKIE->{ACCT});
-
-use DBI;
-my $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
-
-$Coas = $dbh->prepare("select coanominalcode,coadesc,coabalance from coas where coanominalcode in ('2300','3000') and acct_id='$COOKIE->{ACCT}'");
-$Coas->execute;
-$Coa = $Coas->fetchall_hashref('coanominalcode');
-$Coas->finish;
-
 use Template;
 $tt = Template->new({
         INCLUDE_PATH => ['.','/usr/local/httpd/htdocs/fpa/lib'],
@@ -24,7 +14,7 @@ $tt = Template->new({
 });
 
 $Vars = {
-        title => 'Accounts - Long Term Liabilities',
+        title => 'Adjustments',
 	cookie => $COOKIE,
 	focus => 'amtpaid',
 	loantype => $ENV{QUERY_STRING},
@@ -60,9 +50,6 @@ function validate(formData,jqForm,options) {
 };
 
 print "Content-Type: text/html\n\n";
-$tt->process('loan.tt',$Vars);
-
-$Coas->finish;
-$dbh->disconnect;
+$tt->process('adjustments.tt',$Vars);
 exit;
 
