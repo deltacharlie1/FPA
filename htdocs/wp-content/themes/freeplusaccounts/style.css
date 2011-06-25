@@ -163,14 +163,14 @@ input[type=select] { background-color:#FFF; border:1px solid #CCC; padding:4px; 
 }
 .m.header .account.listfix .register {
 	float: right;
-	background-image: url(/images/regbutton1.png);
+	background-image: url(/images/regbutton.png);
 	height: 75px;
 	width: 165px;
 	margin: 5px;
 	padding: 0px;
 }
 .m.header .account.listfix .register:hover {
-	background-image: url(/images/regbutton2.png);
+	background-position:bottom;
 }
 .m.header .account.listfix .login {
 	float: right;
