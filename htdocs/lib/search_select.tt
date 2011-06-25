@@ -5,7 +5,7 @@
   </tr>
 [% IF numrows > rows -%]
   <tr>
-    <td><h3>Total Value = &pound;[%- sumtotal -%]</td>
+    <td><h3>Total Value = &pound;[%- sumtotal -%]</h3></td>
     <td style="text-align:right;">
       <a href="#" onclick="[%- GEN -%]redisplay('first');"><img src="/icons/first.png"/></a>
       <a href="#" onclick="[%- GEN -%]redisplay('back');"><img src="/icons/back.png"/></a>

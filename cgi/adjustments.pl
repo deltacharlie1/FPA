@@ -46,6 +46,14 @@ function showResponse(responseText, statusText) {
 function validate(formData,jqForm,options) {
   return validate_form("#form1");
 }
+function check_receipt(obj) {
+  if (obj.value == "1000") {
+    $("#paymethod").hide();
+  }
+  else {
+    $("#paymethod").show();
+  }
+}
 </script>',
 };
 

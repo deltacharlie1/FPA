@@ -63,6 +63,7 @@ else {
 		$Loan_text = "paid";
 		$Loan_type = "expense adj";
 
+		$Acctype{1000} = "Asset Depreciation";
 		$Acctype{2300} = "Loan Repayment";
 		$Acctype{3000} = "Repayment of Share Capital";
 		$Acctype{6000} = "Un-specified Expense";
@@ -75,6 +76,7 @@ else {
 	$Txntype{1200} = "Bank Transfer";
 	$Txntype{1300} = "Cash";
 	$Txntype{1310} = "Cheque";
+	$Txntype{3100} = "Retained Earnings";
 
 #  Get the next transaction no
 
@@ -118,6 +120,12 @@ else {
 		$Sts = $dbh->do("insert into audit_trails (acct_id,link_id,audtype,audaction,audtext,auduser) values ('$COOKIE->{ACCT}',$New_txn_id,'transactions','$Loan_type','$Acctype{$FORM{paytype}} of &pound;$FORM{amtpaid} $Loan_text $FORM{name}','$COOKIE->{USER}')");
 	}
 	else {					#  This is money out
+
+#  Fix the paymethod for depreciation
+
+		if ($FORM{paytype} =~ /1000/) {
+			$FORM{paymethod} = "3100";	#  Retained Earnings
+		}
 
 		$FORM{amtpaid} = 0 - $FORM{amtpaid};	#  Reverse the sign of the amount
 

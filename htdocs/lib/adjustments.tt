@@ -11,9 +11,10 @@
     <tr>
       <td><label>Type of [%- IF loantype == "I" -%]Receipt[%- ELSE -%]Payment[%- END -%]</label></td>
       <td>
-        <select title="Type of Payment" name="paytype" id="paytype" size="1">
+        <select title="Type of Payment" name="paytype" id="paytype" size="1" onchange="check_receipt(this);">
 [% IF loantype == "I" -%]
           <option value="4300" selected="selected">Un-Specified</option>
+          <option value="1000">Asset Depreciation</option>
           <option value="2300">Reduction of Loan to company</option>
           <option value="3000">Increase in Share Capital</option>
 [% ELSE -%]
@@ -28,6 +29,7 @@
         </select>
       </td>
     </tr>
+    <tr  id="payblock">
       <td><label>Method of Payment</label></td>
       <td>
         <select title="Method of Payment" name="paymethod" id="paymethod" size="1">
