@@ -42,6 +42,7 @@ $Vars = {
 	tbstart => $FORM{tbstart},
 	tbend => $FORM{tbend},
 	curcode => $Coa->[0]->{nomcode},
+	numrows => $Coas->rows,
         entries => $Coa
 };
 
