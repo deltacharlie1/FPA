@@ -90,9 +90,10 @@ input[type=select] { background-color:#FFF; border:1px solid #CCC; padding:4px; 
 .m.header #nav ul li a {
 	text-transform: uppercase;
 	text-decoration: none;
+	font-weight:900;
+	font-family: Arial Black, Helvetica, sans-serif;
 	color: #666;
 	font-size: 13px;
-	font-weight:bold;
 	padding: 5px 10px;
 	background-color: #FFF;
 	border:1px solid #ffffff;
@@ -103,6 +104,7 @@ input[type=select] { background-color:#FFF; border:1px solid #CCC; padding:4px; 
 	font-size: 13px;
 	padding: 5px 10px;
 	border:1px solid #666666;
+	color:#ffffff !important;
 /*
 	color: #388A4B;
 	background-color: #E0E0E0;
@@ -112,7 +114,6 @@ input[type=select] { background-color:#FFF; border:1px solid #CCC; padding:4px; 
 */
 	background-image:url(/images/nav-background.png);
 	background-repeat:repeat-x;
-	color:#f8f8f8;
 }
 .m.header #nav ul li.current_page_item a {
 	text-transform: uppercase;
@@ -129,7 +130,7 @@ input[type=select] { background-color:#FFF; border:1px solid #CCC; padding:4px; 
 */
 }
 .m.header #nav ul li.current_page_item a:hover {
-	color: #87d075;
+	color: #b1f9c2 !important;
 }
 .m.header .account.listfix {
 	float: right;
