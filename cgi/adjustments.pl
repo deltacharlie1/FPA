@@ -31,6 +31,14 @@ $(document).ready(function(){
   };
   $("#form1").ajaxForm(options);
   $("#txndate").datepicker();
+  $("#paytype").change(function() {
+    if (this.value == "1000") {
+      $("#payblock").hide();
+    }
+    else {
+      $("#payblock").show();
+    }
+  });
 });
 function showResponse(responseText, statusText) {
   if (/OK/i.test(responseText)) {
@@ -47,12 +55,6 @@ function validate(formData,jqForm,options) {
   return validate_form("#form1");
 }
 function check_receipt(obj) {
-  if (obj.value == "1000") {
-    $("#paymethod").hide();
-  }
-  else {
-    $("#paymethod").show();
-  }
 }
 </script>',
 };
