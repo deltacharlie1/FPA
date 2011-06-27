@@ -90,8 +90,10 @@
           <script type="text/javascript"> Cufon.now(); </script>
             
           <div class="addthis_toolbox addthis_default_style ">
+            <div style="float:left;width:100px;">
               <a class="addthis_button_tweet"></a>
-              <a class="addthis_counter addthis_pill_style"></a>
+              <a class="addthis_counter addthis_pill_style" style="margin-top:10px;float:right;"></a>
+            </div>
 <!-- GeoTrust QuickSSL [tm] Smart Icon tag. Do not edit. -->
 
  <div style="float:right;padding-left:20px;"><SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript" SRC="//smarticon.geotrust.com/si.js"></SCRIPT></div>

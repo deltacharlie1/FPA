@@ -504,19 +504,6 @@ button {
 .strikethrough {
 	text-decoration: line-through;
 }
-.testimonials {
-        display: block;
-        position:relative;
-	-moz-border-radius: 15px;
-	border-radius: 15px;
-	border-top: 1px solid #51824c;
-	border-left: 1px solid #51824c;
-	border-bottom: 4px solid #51824c;
-	border-right: 3px solid #51824c;
-	padding: 8px;
-	margin: 2px;
-}
-
 .vattable label {
         font-weight:normal;
 }

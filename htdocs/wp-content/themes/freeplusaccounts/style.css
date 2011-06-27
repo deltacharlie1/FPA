@@ -91,7 +91,6 @@ input[type=select] { background-color:#FFF; border:1px solid #CCC; padding:4px; 
 	text-transform: uppercase;
 	text-decoration: none;
 	font-weight:900;
-	font-family: Arial Black, Helvetica, sans-serif;
 	color: #666;
 	font-size: 13px;
 	padding: 5px 10px;
@@ -214,8 +213,8 @@ input[type=select] { background-color:#FFF; border:1px solid #CCC; padding:4px; 
 	float: left;
 	font-size: 11px;
 	color: #666;
-	padding:40px 0 0 20px;
-	width: 450px;
+	padding:40px 0 0 5px;
+	width: 560px;
 }
 .footer .m .footer-links .credits ,.footer .m .footer-links .credits a  {
 	color: #999;
@@ -235,14 +234,14 @@ input[type=select] { background-color:#FFF; border:1px solid #CCC; padding:4px; 
 	border-left-width: 0px;
 	font-size: 11px;
 	line-height: 11px;
-	padding: 0 10px 0 0;
+	padding: 0 7px 0 0;
 }
 .footer .m .footer-links .listfix ul li {
 	display: inline;
 	border-left: 1px solid #CCC;
 	font-size: 11px;
 	line-height: 11px;
-	padding: 0 10px;
+	padding: 0 7px;
 }
 .footer .m .footer-links .listfix ul li a {
 	color: #666;
