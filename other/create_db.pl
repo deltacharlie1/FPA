@@ -108,6 +108,11 @@ while (<FILE>) {
 		$Data .= "'$Acct_id'";
 		$Sts = $dbh->do("insert into reminders ($Flds) values ($Data)");
 	}
+	elsif (/^\s*\<\/Tempstack Details/i) {
+		$Flds .= "acct_id"; 
+		$Data .= "'$Acct_id'";
+		$Sts = $dbh->do("insert into tempstacks ($Flds) values ($Data)");
+	}
 
 ##############  Start of field processing
 

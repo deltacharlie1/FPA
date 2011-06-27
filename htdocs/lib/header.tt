@@ -137,7 +137,7 @@ $(document).ready(function(){
         <li><a href="/cgi-bin/fpa/list_audit_trails.pl">Audit Trail</a></li>
           </ul>
         </li>
-        <li class="print"><a href="#"><span>Print</span></a>
+        <li class="print"><a href="#" onclick="print_display();"><span>Print</span></a>
         </li>
         <li class="help"><a href="/usermanual.pdf"><span>Help</span></a>
         </li>

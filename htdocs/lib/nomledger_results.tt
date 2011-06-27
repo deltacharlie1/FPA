@@ -9,7 +9,7 @@
       <th>Debit</th>
       <th>Credit</th>
     </tr>
-[% curdesc = entry.coadesc; ctr = 0 -%]
+[% debits = 0; credits = 0; ctr = 0 -%]
 [%- class = [ "even","odd" ] -%]
 [%- FOREACH entry IN entries -%]
   [%  IF curcode != entry.nomcode; -%]

@@ -7,14 +7,15 @@
       <td><label>Select Date Range</label></td>
       <td colspan="3">
         <select name="tbselect" id="tbselect" size="1" onchange="set_range(this);">
-          <option value="tw">This Week to Date</option>
-          <option value="tm">This Month to Date</option>
-          <option value="tq">This Financial Quarter to Date</option>
-          <option value="ty" selected="selected">This Financial Year to Date</option>
-          <option value="lw">Last Week</option>
-          <option value="lm">Last Month</option>
-          <option value="lq">Last Financial Quarter</option>
-          <option value="ly">Last Financial Year</option>
+          <option value="cu" [%- IF daterange.tbselect == "cu" -%]selected="selected"[%- END -%]>Current</option>
+          <option value="tw" [%- IF daterange.tbselect == "tw" -%]selected="selected"[%- END -%]>This Week to Date</option>
+          <option value="tm" [%- IF daterange.tbselect == "tm" -%]selected="selected"[%- END -%]>This Month to Date</option>
+          <option value="tq" [%- IF daterange.tbselect == "tq" -%]selected="selected"[%- END -%]>This Financial Quarter to Date</option>
+          <option value="ty" [%- IF daterange.tbselect == "ty" -%]selected="selected"[%- END -%]>This Financial Year to Date</option>
+          <option value="lw" [%- IF daterange.tbselect == "lw" -%]selected="selected"[%- END -%]>Last Week</option>
+          <option value="lm" [%- IF daterange.tbselect == "lm" -%]selected="selected"[%- END -%]>Last Month</option>
+          <option value="lq" [%- IF daterange.tbselect == "lq" -%]selected="selected"[%- END -%]>Last Financial Quarter</option>
+          <option value="ly" [%- IF daterange.tbselect == "ly" -%]selected="selected"[%- END -%]>Last Financial Year</option>
         </select>
       </td>
     </tr>
@@ -31,6 +32,20 @@
   </div>
 </div>
 <div id="sidebar">
+  <ul id="htmltabs">
+    <li>
+      <div>
+          <input type="button" name="save" id="list" value="List Ledger Entries" onclick="print_list();"/>
+      </div>
+    </li>
+  </ul>
+  <ul id="printtab" style="display:none;">
+    <li>
+      <div>
+          <input type="button" name="goback" id="goback" value="Previous Screen" onclick="location.href='/cgi-bin/fpa/nomledger.pl';"/>
+      </div>
+    </li>
+  </ul>
   <div id="sidebar-ad">
 [% INCLUDE adverts.tt -%]
   </div>

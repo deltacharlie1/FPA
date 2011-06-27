@@ -405,6 +405,30 @@ if ($Companies->rows > 0) {
 			$Tab_count--;
 			print FILE substr($Tabs,0,$Tab_count)."</Reminders>\n";
 		}
+
+# Temp Stacks 
+
+		$Tss = $dbh->prepare("select caller,f1,f2,f3,f4,f5,f6,f7,f8,f9 from tempstacks where acct_id='$Acct_id' order by id");
+		$Tss->execute;
+		if ($Tss->rows > 0) {
+			print FILE substr($Tabs,0,$Tab_count)."<Tempstacks>\n";
+			$Tab_count++;
+			while ($Ts = $Tss->fetchrow_hashref) {
+				print FILE substr($Tabs,0,$Tab_count)."<Tempstack Details>\n";
+				$Tab_count++;
+				foreach $Key (sort keys %$Ts) {
+					$Ts->{$Key} =~ s/\n/\\\\n/g;
+					$Tag = $Key;
+#					$Tag =~ s/^sta//;
+#					$Tag =~ s/^txn//;
+					print FILE substr($Tabs,0,$Tab_count)."<$Tag>$Ts->{$Key}</$Tag>\n" if $Ts->{$Key};
+				}
+				$Tab_count--;
+				print FILE substr($Tabs,0,$Tab_count)."</Tempstack Details>\n";
+			}
+			$Tab_count--;
+			print FILE substr($Tabs,0,$Tab_count)."</Tempstacks>\n";
+		}
 		$Tab_count--;
 		print FILE substr($Tabs,0,$Tab_count)."</Company>\n";
 	}
@@ -424,6 +448,7 @@ $Inv_txns->finish;
 $Noms->finish;
 $Audits->finish;
 $Reminders->finish;
+$Tss->finish;
 $dbh->disconnect;
 close(FILE);
 exit;

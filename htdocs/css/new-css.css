@@ -516,6 +516,18 @@ button {
         color:#999999;
         text-align:center;
 }
+.testimonials {
+        display: block;
+        position:relative;
+        -moz-border-radius: 15px;
+        border-radius: 15px;
+        border-top: 1px solid #51824c;
+        border-left: 1px solid #51824c;
+        border-bottom: 4px solid #51824c;
+        border-right: 3px solid #51824c;
+        padding: 8px;
+        margin: 2px;
+}
 .ui-datepicker-trigger { vertical-align:top; }
 .extra {
         font-family: Verdana, Helvetica, sans-serif;

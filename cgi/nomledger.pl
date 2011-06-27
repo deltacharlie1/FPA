@@ -53,13 +53,6 @@ $(document).ready(function(){
   $("#tbend").datepicker();
   get_balances();
 });
-function print_list() {
-   $.get("/cgi-bin/fpa/print_tb.pl",$("form#form1").serialize() ,function(data) {
-     document.getElementById("main").innerHTML = data;
-     $("#maintabs").hide();
-     $("#printtab").show();
-  });
-}
 function display_bs() {
    location.href="/cgi-bin/fpa/balance_sheet.pl?" + $("form#form1").serialize();
 }
@@ -182,7 +175,13 @@ function get_balances() {
      document.getElementById("results").innerHTML = data;
   });
 }
-
+function print_list() {
+   $.get("/cgi-bin/fpa/print_nomledger_results.pl",$("form#form1").serialize() ,function(data) {
+     document.getElementById("main").innerHTML = data;
+     $("#htmltabs").hide();
+     $("#printtab").show();
+   });
+}
 </script>'
 };
 
