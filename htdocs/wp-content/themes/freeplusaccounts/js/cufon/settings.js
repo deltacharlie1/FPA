@@ -8,3 +8,4 @@
 	Cufon('.footer-b .m  h4');
 	Cufon('#freeplustitle');
 	Cufon('.menu-item');
+	Cufon('.bullet-header');
