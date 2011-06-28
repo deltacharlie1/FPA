@@ -1,0 +1,40 @@
+<h3>Total number of entries found = [%- numrows -%]</h3>
+<div id="print_listing" style="overflow:auto; width:690px;height:800px;padding-top:10px;">
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="listing">
+    <tr>
+      <th width="25%">Debtor Name</th>
+      <th width="15%">Up to 30 Days</th>
+      <th width="15%">31 - 60 Days</th>
+      <th width="15%">61 - 90 Days</th>
+      <th width="15%">91 - 120 Days</th>
+      <th width="15%">Over 120 Days</th>
+    </tr>
+[%- ctr = 0; ndx = 0; class = [ "even","odd" ]; tl1 = 0; tl2 = 0; tl3 = 0; tl4 = 0; tl5 = 0; -%]
+[%- FOREACH entry IN entries -%]
+  [%- ctr = ctr + 1; ndx = ctr % 2 -%]
+    <tr class="[%- class.$ndx -%]">
+      <td style="text-align:right;">[%- entry.cusname -%]</td>
+      <td style="text-align:right;">[%- tl1 = tl1 + entry.l1; entry.l1 | format('%1.2f') -%]</td>
+      <td style="text-align:right;">[%- tl2 = tl2 + entry.l2; entry.l2 | format('%1.2f') -%]</td>
+      <td style="text-align:right;">[%- tl3 = tl3 + entry.l3; entry.l3 | format('%1.2f') -%]</td>
+      <td style="text-align:right;">[%- tl4 = tl4 + entry.l4; entry.l4 | format('%1.2f') -%]</td>
+      <td style="text-align:right;">[%- tl5 = tl5 + entry.l5; entry.l5 | format('%1.2f') -%]</td>
+    </tr>
+[%- END -%]
+  [%- ctr = ctr + 1; ndx = ctr % 2 -%]
+    <tr class="[%- class.$ndx -%]">
+      <td style="text-align:right;font-weight:bold;border-top:1px dotted #666666;border-bottom:1px solid #666666;">Range Totals</td>
+      <td style="text-align:right;font-weight:bold;border-top:1px dotted #666666;border-bottom:1px solid #666666;">[%- tl1 | format('%1.2f') -%]</td>
+      <td style="text-align:right;font-weight:bold;border-top:1px dotted #666666;border-bottom:1px solid #666666;">[%- tl2 | format('%1.2f') -%]</td>
+      <td style="text-align:right;font-weight:bold;border-top:1px dotted #666666;border-bottom:1px solid #666666;">[%- tl3 | format('%1.2f') -%]</td>
+      <td style="text-align:right;font-weight:bold;border-top:1px dotted #666666;border-bottom:1px solid #666666;">[%- tl4 | format('%1.2f') -%]</td>
+      <td style="text-align:right;font-weight:bold;border-top:1px dotted #666666;border-bottom:1px solid #666666;">[%- tl5 | format('%1.2f') -%]</td>
+    </tr>
+  [%- ctr = ctr + 1; ndx = ctr % 2 -%]
+    <tr class="[%- class.$ndx -%]">
+      <td style="text-align:right;font-weight:bold;border-bottom:3px double #666666;">Grand total</td>
+      <td style="text-align:right;font-weight:bold;border-bottom:3px double #666666;">[%- tl1 + tl2 + tl3 + tl4 + tl5 | format('%1.2f') -%]</td>
+      <td colspan="4">&nbsp;</td>
+    </tr>
+  </table>
+</div>

@@ -19,7 +19,7 @@ $dbh = DBI->connect("DBI:mysql:fpa");
 
 #  Get the Company details
 
-$Companies = $dbh->prepare("select comname,comregno,comaddress,compostcode,comtel,combusiness,comcontact,comemail,comyearend,comnextsi,comnextpi,comnextpr,comnexttxn,comvatscheme,comvatno,comvatcontrol,comvatduein,comvatqstart,comvatmsgdue,comnocheques,comyearendmsgdue,comyearendreminder,comcompleted,comacccompleted,comoptin,comemailmsg,comstmtmsg,comfree,comno_ads,comrep_invs,comstmts,comuplds,compt_logo,comhmrc,comsuppt,id,comadd_user,comnetstats,comdocsdir,reg_id,id as old_id from companies where id=$ARGV[0]");
+$Companies = $dbh->prepare("select comname,comregno,comaddress,compostcode,comtel,combusiness,comcontact,comemail,comyearend,comnextsi,comnextpi,comnextpr,comnexttxn,comvatscheme,comvatno,comvatcontrol,comvatduein,comvatqstart,comvatmsgdue,comnocheques,comyearendmsgdue,comyearendreminder,comcompleted,comacccompleted,comoptin,comexpid,comemailmsg,comstmtmsg,comfree,comno_ads,comrep_invs,comstmts,comuplds,compt_logo,comhmrc,comsuppt,id,comadd_user,comnetstats,comdocsdir,reg_id,id as old_id from companies where id=$ARGV[0]");
 $Companies->execute;
 if ($Companies->rows > 0) {
 	print FILE substr($Tabs,0,$Tab_count)."<Company>\n";

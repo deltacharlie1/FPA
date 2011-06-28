@@ -31,7 +31,7 @@ $User =~ s/^(.*?)\@.*/$1/;
 
 $Cookie = $Reg[2].$$;
 
-$Companies = $dbh->prepare("select comname,comcompleted,comvatscheme,comexpid,comyearend,frsrate,comvatqstart,comvatmsgdue,comyearendmsgdue,to_days(now())-to_days(comvatmsgdue),to_days(now()) - to_days(comyearendmsgdue),if(comfree>now(),'1',''),if(comno_ads>now(),'1',''),if(comrep_invs>now(),'1',''),if(comstmts>now(),'1',''),comuplds,if(compt_logo>now(),'1',''),if(comhmrc>now(),'1',''),comsuppt,comadd_user from companies left join market_sectors on (combusiness=market_sectors.id) where companies.id=$Reg_com[1] and reg_id=$Reg_com[0]");
+$Companies = $dbh->prepare("select comname,comcompleted,comvatscheme,comexpid,comyearend,frsrate,comvatqstart,comvatmsgdue,comyearendmsgdue,to_days(now())-to_days(comvatmsgdue),to_days(now()) - to_days(comyearendmsgdue),if(comfree>now(),'1',''),if(comno_ads>now(),'1',''),if(comrep_invs>now(),'1',''),if(comstmts>now(),'1',''),comuplds,if(compt_logo>now(),'1',''),if(comhmrc>now(),'1',''),comsuppt,comadd_user,datediff(comyearend,now()) from companies left join market_sectors on (combusiness=market_sectors.id) where companies.id=$Reg_com[1] and reg_id=$Reg_com[0]");
 $Companies->execute;
 @Company = $Companies->fetchrow;
 $Companies->finish;
@@ -61,6 +61,22 @@ if ($Company[2] !~ /N/i) {
 $ACCESS = $COOKIE->{PLAN} || $Company[12];
 
 #############  Similar processing for Year End   ######################
+
+if ($Company[20] < 0) {
+
+	$Sts = $dbh->do("update companies set comyearend=date_add(comyearend,interval 1 year),comyearendmsgdue=date_add(comyearend,interval 8 month) where reg_id=$Reg_com[0] and id=$Reg_com[1]");
+
+#  Add a couple of reminders
+
+		$Dates = $dbh->prepare("select date_format(date_add('$Company[20]', interval 1 month),'%d-%b-%y'),date_format(date_sub('$Company[20]',interval 10 month),'%d-%b-%y')");
+		$Dates->execute;
+		@Annual_date = $Dates->fetchrow;
+		$Dates->finish;
+
+		$Sts = $dbh->do("insert into reminders (acct_id,remtext,remcode,remgrade,remstartdate,remenddate) values ('$Reg_com[0]+$Reg_com[1]','Annual return (probably) due by $Annula_date[0]','ANNR','H',now(),'2099-01-01')");
+		$Sts = $dbh->do("insert into reminders (acct_id,remtext,remcode,remgrade,remstartdate,remenddate) values ('$Reg_com[0]+$Reg_com[1]','Accounts due by $Annual_date[1]','ACCR','N',now(),'2099-01-01')");
+
+}
 
 #  Set the correct FRS percentage
 
