@@ -117,9 +117,13 @@ $(document).ready(function(){
             <li><a href="/cgi-bin/fpa/txnrep1.pl">Transaction Analysis</a>
             <li><a href="/cgi-bin/fpa/trial_balance.pl?new">Trial Balance</a></li>
             <li><a href="/cgi-bin/fpa/pandl.pl">Profit &amp; Loss</a></li>
-            <li><a href="/cgi-bin/fpa/nomledger.pl">Nominal Ledger</a></li>
-            <li><a href="/cgi-bin/fpa/aged_debtors.pl">Aged Debtors</a></li>
-            <li><a href="/cgi-bin/fpa/aged_creditors.pl">Aged Creditors</a></li>
+            <li><a href="#">Year End Reports<div style="float:right;font-weight:bold;">&gt;&gt;</div></a>
+              <ul>
+                <li><a href="/cgi-bin/fpa/nomledger.pl">Nominal Ledger</a></li>
+                <li><a href="/cgi-bin/fpa/aged_debtors.pl">Aged Debtors</a></li>
+                <li><a href="/cgi-bin/fpa/aged_creditors.pl">Aged Creditors</a></li>
+              </ul>
+            </li>
           </ul>
         </li>
         <li class="reminders"><a href="#"><span>Reminders</span></a>

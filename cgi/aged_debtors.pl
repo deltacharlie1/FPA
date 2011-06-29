@@ -176,7 +176,7 @@ function get_balances() {
   });
 }
 function print_list() {
-   $.get("/cgi-bin/fpa/print_aged_debtors_results.pl",$("form#form1").serialize() ,function(data) {
+   $.get("/cgi-bin/fpa/print_debtors_results.pl",$("form#form1").serialize() ,function(data) {
      document.getElementById("main").innerHTML = data;
      $("#htmltabs").hide();
      $("#printtab").show();

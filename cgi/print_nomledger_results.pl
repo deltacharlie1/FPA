@@ -5,7 +5,7 @@ $ACCESS_LEVEL = 1;
 #  script to list nominal ledger for a data range
 
 use Checkid;
- $COOKIE = &checkid($ENV{HTTP_COOKIE},$ACCESS_LEVEL);
+# $COOKIE = &checkid($ENV{HTTP_COOKIE},$ACCESS_LEVEL);
 
 $Buffer = $ENV{QUERY_STRING};
 
@@ -25,10 +25,10 @@ foreach $pair (@pairs) {
 }
 # exit;
 
-#$COOKIE->{DB} = "fpa";
-#$COOKIE->{ACCT} = "1+1";
-#$FORM{tbstart} = "01-Jul-10";
-#$FORM{tbend} = "30-Jun-11";
+$COOKIE->{DB} = "fpa";
+$COOKIE->{ACCT} = "1+1";
+$FORM{tbstart} = "01-Jul-10";
+$FORM{tbend} = "30-Jun-11";
 
 use DBI;
 my $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
@@ -55,10 +55,10 @@ Content-Type: text/plain\n\n
 EOD
 
 format STDOUT_TOP =
-                  Nominal Ledger Period:  @>>>>>>>>>>  to  @<<<<<<<<<<
+                                          Nominal Ledger Period:  @>>>>>>>> to @<<<<<<<<
 $FORM{tbstart},$FORM{tbend}
 
-Report Date: @<<<<<<<<<<                                       Page No: @<<<
+Report Date: @<<<<<<<<<<                                                                                      Page No: @<<<
 $Report_date,$%
 
 Code  Account            Date       Item Description                                                             Debit      Credit
@@ -145,6 +145,10 @@ foreach $Coaitem (@$Coa) {
 	write;
 }
 write SUMMARY;
+$Coadescr = "";
+$Debit = "";
+$Credit = "";
+write;
 print "</pre></div>\n";
 
 $Coas->finish;

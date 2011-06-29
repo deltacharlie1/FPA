@@ -556,7 +556,8 @@ button {
 	z-index:99999;
 }
 #navigation ul li:hover ul  { visibility:visible ; }
-#navigation ul li ul li { background-image:none; display:block; height:31px; width:145px; }
+#navigation ul li:hover ul li ul { visibility:hidden ; }
+#navigation ul li ul li { background-image:none; display:block; height:30px; width:145px;position:relative; }
 #navigation ul li ul li:hover { background-image:none; }
 #navigation ul li ul li a {
 	display:block;
@@ -586,4 +587,37 @@ button {
 }
 #goto {
 	margin-bottom:5px;
+}
+#navigation ul li ul li ul {
+	margin:0;
+	left:160px;
+	top:0px;
+	position:absolute;
+	background-color:#dddddd;
+	width:140px;
+	border-right-width: 1px;
+	border-left-width: 1px;
+	border-right-style: solid;
+	border-left-style: solid;
+	border-top: 1px solid #317D43;
+	border-right-color: #317D43;
+	border-left-color: #317D43;
+	visibility:hidden;
+	z-index:99999;
+}
+#navigation ul li ul li:hover ul  { visibility:visible ; }
+#navigation ul li ul li ul li { background-image:none; display:block; height:24px; width:125px; }
+#navigation ul li ul li ul li:hover { background-image:none; }
+#navigation ul li ul li ul li a {
+	display:block;
+	padding:5px 8px;
+	color:#274b2d;
+	background-image:none !important;
+	text-align:left;
+	border-bottom:1px solid green;
+}
+#navigation ul li ul li ul li a:hover {
+	background-image:none !important;
+	color: #FFF;
+	background-color: #4F7F59;
 }
