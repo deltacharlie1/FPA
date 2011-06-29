@@ -1,8 +1,8 @@
-<h3>Total number of entries found = [%- numrows -%]</h3>
+<h3>Total number of Invoices found = [%- numrows -%]</h3>
 <div id="print_listing" style="overflow:auto; width:690px;height:800px;padding-top:10px;">
   <table width="660" border="0" cellpadding="0" cellspacing="0" class="listing">
     <tr>
-      <th width="25%">Debtor Name</th>
+      <th width="25%">[%- colheader -%] Name</th>
       <th width="15%">Up to 30 Days</th>
       <th width="15%">31 - 60 Days</th>
       <th width="15%">61 - 90 Days</th>
@@ -10,31 +10,66 @@
       <th width="15%">Over 120 Days</th>
     </tr>
 [%- ctr = 0; ndx = 0; class = [ "even","odd" ]; tl1 = 0; tl2 = 0; tl3 = 0; tl4 = 0; tl5 = 0; -%]
+[% sl1 = 0; sl2 = 0; sl3 = 0; sl4 = 0; sl5 = 0; -%]
 [%- FOREACH entry IN entries -%]
-  [%- ctr = ctr + 1; ndx = ctr % 2 -%]
+  [% IF curcus != entry.invcusname -%]
+    [%- IF curcus != "" -%]
+      [%- ctr = ctr + 1; ndx = ctr % 2 -%]
     <tr class="[%- class.$ndx -%]">
-      <td style="text-align:right;">[%- entry.cusname -%]</td>
-      <td style="text-align:right;">[%- tl1 = tl1 + entry.l1; entry.l1 | format('%1.2f') -%]</td>
-      <td style="text-align:right;">[%- tl2 = tl2 + entry.l2; entry.l2 | format('%1.2f') -%]</td>
-      <td style="text-align:right;">[%- tl3 = tl3 + entry.l3; entry.l3 | format('%1.2f') -%]</td>
-      <td style="text-align:right;">[%- tl4 = tl4 + entry.l4; entry.l4 | format('%1.2f') -%]</td>
-      <td style="text-align:right;">[%- tl5 = tl5 + entry.l5; entry.l5 | format('%1.2f') -%]</td>
+      <td style="font-weight:bold;text-align:right;border-top:1px dotted #999999;border-bottom:1px solid #999999;">[%- curcus -%]</td>
+      <td style="font-weight:bold;text-align:right;border-top:1px dotted #999999;border-bottom:1px solid #999999;">[%- tl1 = tl1 + sl1; IF sl1>0; sl1 | format('%1.2f'); END -%]</td>
+      <td style="font-weight:bold;text-align:right;border-top:1px dotted #999999;border-bottom:1px solid #999999;">[%- tl2 = tl2 + sl2; IF sl2>0; sl2 | format('%1.2f'); END -%]</td>
+      <td style="font-weight:bold;text-align:right;border-top:1px dotted #999999;border-bottom:1px solid #999999;">[%- tl3 = tl3 + sl3; IF sl3>0; sl3 | format('%1.2f'); END -%]</td>
+      <td style="font-weight:bold;text-align:right;border-top:1px dotted #999999;border-bottom:1px solid #999999;">[%- tl4 = tl4 + sl4; IF sl4>0; sl4 | format('%1.2f'); END -%]</td>
+      <td style="font-weight:bold;text-align:right;border-top:1px dotted #999999;border-bottom:1px solid #999999;">[%- tl5 = tl5 + sl5; IF sl5>0; sl5 | format('%1.2f'); END -%]</td>
     </tr>
+    [% END -%]
+    [%- IF suppress != "Y" -%]
+      [%- ctr = ctr + 1; ndx = ctr % 2 -%]
+    <tr class="[%- class.$ndx -%]">
+      <td colspan="6" style="text-align:left;font-weight:bold;">[%- entry.invcusname -%]</td>
+    </tr>
+    [% END -%]
+    [% curcus = entry.invcusname; sl1 = 0; sl2 = 0; sl3 = 0; sl4 = 0; sl5 = 0; -%]
+  [%- END -%]
+  [%- IF entry.amtoverdue == NULL; entry.amtoverdue = entry.amtdue; END -%]
+  [%- IF entry.overdue > 120; sl5 = sl5 + entry.amtoverdue -%]
+  [%- ELSIF entry.overdue > 90; sl4 = sl4 + entry.amtoverdue -%]
+  [%- ELSIF entry.overdue > 60; sl3 = sl3 + entry.amtoverdue -%]
+  [%- ELSIF entry.overdue > 30; sl2 = sl2 + entry.amtoverdue -%]
+  [%- ELSIF entry.overdue > 0; sl1 = sl1 + entry.amtoverdue; END -%]
+  [%- IF suppress != "Y" -%]
+    [%- ctr = ctr + 1; ndx = ctr % 2 -%]
+    <tr class="[%- class.$ndx -%]">
+      <td style="text-align:right;">[%- entry.printdate -%]</td>
+      <td colspan="4">[%- entry.descr -%]</td>
+      <td>[%- entry.amtoverdue | format('%1.2f') -%]</td>
+    </tr>
+  [% END -%]
 [%- END -%]
-  [%- ctr = ctr + 1; ndx = ctr % 2 -%]
+[%- ctr = ctr + 1; ndx = ctr % 2 -%]
     <tr class="[%- class.$ndx -%]">
-      <td style="text-align:right;font-weight:bold;border-top:1px dotted #666666;border-bottom:1px solid #666666;">Range Totals</td>
-      <td style="text-align:right;font-weight:bold;border-top:1px dotted #666666;border-bottom:1px solid #666666;">[%- tl1 | format('%1.2f') -%]</td>
-      <td style="text-align:right;font-weight:bold;border-top:1px dotted #666666;border-bottom:1px solid #666666;">[%- tl2 | format('%1.2f') -%]</td>
-      <td style="text-align:right;font-weight:bold;border-top:1px dotted #666666;border-bottom:1px solid #666666;">[%- tl3 | format('%1.2f') -%]</td>
-      <td style="text-align:right;font-weight:bold;border-top:1px dotted #666666;border-bottom:1px solid #666666;">[%- tl4 | format('%1.2f') -%]</td>
-      <td style="text-align:right;font-weight:bold;border-top:1px dotted #666666;border-bottom:1px solid #666666;">[%- tl5 | format('%1.2f') -%]</td>
+      <td style="font-weight:bold;text-align:right;border-top:1px dotted #999999;border-bottom:1px solid #999999;">[%- curcus -%]</td>
+      <td style="font-weight:bold;text-align:right;border-top:1px dotted #999999;border-bottom:1px solid #999999;">[%- tl1 = tl1 + sl1; IF sl1>0; sl1 | format('%1.2f'); END -%]</td>
+      <td style="font-weight:bold;text-align:right;border-top:1px dotted #999999;border-bottom:1px solid #999999;">[%- tl2 = tl2 + sl2; IF sl2>0; sl2 | format('%1.2f'); END -%]</td>
+      <td style="font-weight:bold;text-align:right;border-top:1px dotted #999999;border-bottom:1px solid #999999;">[%- tl3 = tl3 + sl3; IF sl3>0; sl3 | format('%1.2f'); END -%]</td>
+      <td style="font-weight:bold;text-align:right;border-top:1px dotted #999999;border-bottom:1px solid #999999;">[%- tl4 = tl4 + sl4; IF sl4>0; sl4 | format('%1.2f'); END -%]</td>
+      <td style="font-weight:bold;text-align:right;border-top:1px dotted #999999;border-bottom:1px solid #999999;">[%- tl5 = tl5 + sl5; IF sl5>0; sl5 | format('%1.2f'); END -%]</td>
     </tr>
-  [%- ctr = ctr + 1; ndx = ctr % 2 -%]
+[%- ctr = ctr + 1; ndx = ctr % 2 -%]
     <tr class="[%- class.$ndx -%]">
-      <td style="text-align:right;font-weight:bold;border-bottom:3px double #666666;">Grand total</td>
-      <td style="text-align:right;font-weight:bold;border-bottom:3px double #666666;">[%- tl1 + tl2 + tl3 + tl4 + tl5 | format('%1.2f') -%]</td>
-      <td colspan="4">&nbsp;</td>
+      <td style="font-weight:bold;text-align:right;border-bottom:3px double #999999;">Range Totals</td>
+      <td style="font-weight:bold;text-align:right;border-bottom:3px double #999999;">[%- IF tl1>0; tl1 | format('%1.2f'); END -%]</td>
+      <td style="font-weight:bold;text-align:right;border-bottom:3px double #999999;">[%- IF tl2>0; tl2 | format('%1.2f'); END -%]</td>
+      <td style="font-weight:bold;text-align:right;border-bottom:3px double #999999;">[%- IF tl3>0; tl3 | format('%1.2f'); END -%]</td>
+      <td style="font-weight:bold;text-align:right;border-bottom:3px double #999999;">[%- IF tl4>0; tl4 | format('%1.2f'); END -%]</td>
+      <td style="font-weight:bold;text-align:right;border-bottom:3px double #999999;">[%- IF tl5>0; tl5 | format('%1.2f'); END -%]</td>
+    </tr>
+[%- ctr = ctr + 1; ndx = ctr % 2 -%]
+    <tr class="[%- class.$ndx -%]">
+      <td style="font-weight:bold;text-align:right;">Grand Total</td>
+      <td style="font-weight:bold;text-align:right;">[%- tl1 + tl2 + tl3 + tl4 + tl5 | format('%1.2f') -%]</td>
+      <td colspan=4">&nbsp;</td>
     </tr>
   </table>
 </div>
