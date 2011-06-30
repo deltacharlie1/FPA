@@ -80,7 +80,6 @@ $(document).ready(function() {
   $("#thischdate").datepicker({ maxDate: new Date() });
 '.$Vatdate.'
   $("#newdate").datepicker({ maxDate: new Date() });
-  var itot = 0;
   var ichkd= 0;
 
   $(".txnchk").each(
@@ -88,11 +87,9 @@ $(document).ready(function() {
       if ($(this).is(":checked")) {
         ichkd = ichkd + parseFloat($(this).val());
       }
-      itot = itot + parseFloat($(this).val());
     }
   );
   document.getElementById("chkditems").innerHTML = ichkd.toFixed(2);
-  document.getElementById("txntot").innerHTML = itot.toFixed(2);
 
   var ibal = 0;
   var ibf = 0;
@@ -190,10 +187,6 @@ function check_txn(obj) {
     }
   );
   document.getElementById("chkditems").innerHTML = itot.toFixed(2);
-  document.getElementById("txndiff").innerHTML = (parseFloat(document.getElementById("staact").innerHTML) - parseFloat(document.getElementById("chkditems").innerHTML)).toFixed(2);
-  if (/0\.00/.test(document.getElementById("txndiff").innerHTML)) {
-    document.getElementById("txndiff").innerHTML = "0.00";   //  get rid of any potential minus sign
-  }
 }
 function do_vatpayment () {
   $.post("/cgi-bin/fpa/vat_payment.pl", $("#form1").serialize(),function(data) {
@@ -222,8 +215,8 @@ function do_bankpayment() {
 }
 function validate() {
   if (validate_form("form1")) {
-    if (document.getElementById("txndiff").innerHTML != "0.00") {
-      document.getElementById("dialog").innerHTML = "You have the following errors:-<ol><li>The value of checked intems does not agree with your bank statement<\/li><\/ol> please correct";
+    if (document.getElementById("staact").innerHTML != document.getElementById("chkditems").innerHTML) {
+      document.getElementById("dialog").innerHTML = "You have the following errors:-<ol><li>The value of checked items does not agree with your bank statement<\/li><\/ol> please correct";
       $("#dialog").dialog("open");
       return false;
     }

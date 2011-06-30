@@ -189,18 +189,20 @@ ul a{
 	height: 44px;
 	display:block;
 	width: 173px;
-	padding-top: 23px;
+	padding-top: 13px;
 	padding-left: 5px;
 	background-repeat: no-repeat;
 }
 #container #sidebar li a, #container #sidebar li input {
+	width:170px;
         color: #385a44;
-	padding-top:2px;
+	padding-top:12px;
+	height:24px;
 	text-align:left;
 }
 #container #sidebar li input {
-	height:16px;
-	padding-left:0px;
+	padding:10px 0 26px 0;
+	height:36px;
 	border:none;
 	background-color:transparent;
 }
@@ -209,6 +211,7 @@ ul a{
 	color:#800000;
 }
 #container #sidebar li:hover a, #container #sidebar li:hover input {
+	cursor:pointer;
 	color:#800000;
 }
 
@@ -364,7 +367,7 @@ button {
 	border:0px solid #800000;
 }
 .listing {
-	border: 1px #87876a solid;
+	border: 1px #337040 solid;
 	background-color: #fff;
 }
 .listing th {

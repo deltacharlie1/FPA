@@ -47,10 +47,6 @@
       <td colspan="2"><span><input type="text" name="thiscf" id="thiscf" size="10" class="mandatory" onchange="check_bals();" value="[%- stack.f2 -%]"/></span>&nbsp;<input type="text" name="thiscfdate" id="thiscfdate" size="9" onchange="updstack();" value="[%- IF stack.f3; stack.f3; ELSE; date.format(date.now,'%d-%b-%y'); END -%]" readonly="readonly"/></td>
     </tr>
     <tr>
-      <td><label>Transactions total</label></td>
-      <td colspan="2"><span id="txntot">0.00</span></td>
-    </tr>
-    <tr>
       <td colspan="3"><center><hr style="border-bottom:1px solid #B7CD97;width:95%;"/></center></td>
     </tr>
     <tr>
@@ -60,10 +56,6 @@
     <tr>
       <td><label>Total of Checked Items</label></td>
       <td colspan="2"><span id="chkditems">0.00</span></td>
-    </tr>
-    <tr>
-      <td><label>Accounts Difference</label></td>
-      <td colspan="2"><span id="txndiff">0.00</span></td>
     </tr>
   </table><br/>
   <h3>Unreconciled Transactions</h3>

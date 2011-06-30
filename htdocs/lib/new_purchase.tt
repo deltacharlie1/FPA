@@ -49,9 +49,14 @@
       <td><input title="Post Code" name="invcuspostcode" type="text" id="x_invcuspostcode" value="[%- cus.cuspostcode -%]" size="10"/></td>
       <td><label>Expenses Category</label></td>
       <td><span><select title="Expenses Category" name="invcoa" id="invcoa">
-  [% FOREACH coa IN coas -%]
-          <option value="[%- coa.coanominalcode -%]" [%- IF coa.coanominalcode == cus.cusdefcoa -%] selected="selected" [% END -%] >[%- coa.coadesc -%]</option>
-  [% END -%]
+[% FOREACH coa IN coas -%]
+          <option value="[%- coa.coanominalcode -%]"
+  [%- IF cus.cusdefcoa != "" -%]
+    [%- IF coa.coanominalcode == cus.cusdefcoa -%] selected="selected" [% END -%]
+  [%- ELSE -%]
+    [%- IF coa.coanominalcode == "6000" -%] selected="selected"[% END -%]
+  [%- END -%] >[%- coa.coadesc -%]</option>
+[% END -%]
         </select></span>
       </td>
     </tr>
