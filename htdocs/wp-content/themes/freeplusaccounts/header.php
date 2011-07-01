@@ -40,7 +40,7 @@
 <script src="<?php bloginfo('template_directory'); ?>/js/coda/jquery.coda-slider-2.0.js" type="text/javascript"></script>
 
 <script src="<?php bloginfo('template_directory'); ?>/Scripts/swfobject_modified.js" type="text/javascript"></script>
-
+<script src="/fpaintro/AC_RunActiveContent.js" type="text/javascript"></script>
 <script type="text/javascript">
 	$().ready(function() {
 		$('#testimionials').codaSlider({

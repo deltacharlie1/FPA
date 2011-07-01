@@ -346,7 +346,15 @@ sub pay_invoice {
 		$FORM{invcoa} = $Invoice[8];
 		$Invoice_type = "Purchase Invoice";
 
-		if ($FORM{txnamount} <= $Owing) {		#  sufficient funds to cover the
+#  Compairon of non-integer numbers is failing so convert everything to pennies
+
+		$P_txnamount = $FORM{txnamount};
+		$P_Owing = $Owing;
+
+		$P_txnamount =~ tr/\.//d;
+		$P_Owing =~ tr/\.//d;
+
+		if ($P_txnamount <= $P_Owing) {		#  sufficient funds to cover the
 
 #  Deduct what is owed from what we have to play with
 

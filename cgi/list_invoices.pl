@@ -22,7 +22,7 @@ foreach $pair (@pairs) {
 }
 
 if ($FORM{listorder} =~ /O/i) {
-	$Order = "invstatuscode desc,invduedate,invprintdate";
+	$Order = "invstatuscode desc,invprintdate desc";
 }
 else {
 	$Order = "invinvoiceno desc";

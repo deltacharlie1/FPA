@@ -349,7 +349,7 @@ sub money_in {
 	$Sts = $dbh->do("update customers set cuscredit=cuscredit + '$FORM{txnamount}' where acct_id='$COOKIE->{ACCT}' and id=$FORM{cus_id}");
 
 #  Now get the total available to set against invoices
-
+	warn "my \$Customers = \$dbh->prepare(\"select cuscredit from customers where acct_id='$COOKIE->{ACCT}' and id='$FORM{cus_id}'\")\n";
 	my $Customers = $dbh->prepare("select cuscredit from customers where acct_id='$COOKIE->{ACCT}' and id='$FORM{cus_id}'");
 	$Customers->execute;
 	($FORM{txnamount}) = $Customers->fetchrow;
@@ -382,7 +382,14 @@ sub pay_invoice {
 			$Invoice_type = "Credit Note";
 		}
 
-		if ($FORM{txnamount} >= $Owing) {		#  sufficient funds to cover the
+#  Convert to integer
+
+		$P_txnamount = $FORM{txnamount};
+		$P_Owing = $Owing;
+		$P_txnamount =~ tr/\.//d;
+		$P_Owing =~ tr/\.//d;
+
+		if ($P_txnamount >= $P_Owing) {		#  sufficient funds to cover the
 
 #  Deduct what is owed from what we have to play with
 

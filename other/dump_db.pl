@@ -220,7 +220,7 @@ if ($Companies->rows > 0) {
 
 #  Customer Invoices
 
-		$Invoices = $dbh->prepare("select invinvoiceno,invcusref,invtype,invcusname,invcusaddr,invcuspostcode,invcusregion,invcuscontact,invcusemail,invcusterms,invremarks,invcoa,invcreated,invprintdate,invduedate,invtotal,invvat,invpaid,invpaidvat,invpaiddate,invstatus,invstatuscode,invstatusdate,invfpflag,invitemcount,invitems,invdesc,invyearend,id as old_id from invoices where acct_id='$Acct_id' order by invinvoiceno");
+		$Invoices = $dbh->prepare("select cus_id,invinvoiceno,invcusref,invtype,invcusname,invcusaddr,invcuspostcode,invcusregion,invcuscontact,invcusemail,invcusterms,invremarks,invcoa,invcreated,invprintdate,invduedate,invtotal,invvat,invpaid,invpaidvat,invpaiddate,invstatus,invstatuscode,invstatusdate,invfpflag,invitemcount,invitems,invdesc,invyearend,id as old_id from invoices where acct_id='$Acct_id' order by invinvoiceno");
 		$Invoices->execute;
 		if ($Invoices->rows > 0) {
 			print FILE substr($Tabs,0,$Tab_count)."<Customer Invoices>\n";

@@ -2,32 +2,16 @@
     <div class="banner" id="banner">
     
       <div class="m"><div class="banner-items"><div style="display:inline;float:left;"><img src="<?php bloginfo('template_directory'); ?>/images/banner-1.png" alt="Free Online Accountancy System" /></div>
-        <div id="media" style="float:right; margin-top:0px;width:330px;height:258px;">
-            <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="320" height="258" id="csSWF">
-                <param name="movie" value="fpaintro/FPA mini Intro_controller.swf" />
-                <param name="quality" value="best" />
-                <param name="bgcolor" value="#cccccc" />
-                <param name="allowfullscreen" value="true" />
-                <param name="scale" value="showall" />
-                <param name="allowscriptaccess" value="always" />
-                <param name="flashvars" value="autostart=false&thumb=fpaintro/FirstFrame.png&thumbscale=100&showendscreen=false&color=0x1A1A1A,0x1A1A1A" />
-                <!--[if !IE]>-->
-                <object type="application/x-shockwave-flash" data="fpaintro/FPA mini Intro_controller.swf" width="320" height="258">
-                    <param name="quality" value="best" />
-                    <param name="bgcolor" value="#cccccc" />
-                    <param name="allowfullscreen" value="true" />
-                    <param name="scale" value="showall" />
-                    <param name="allowscriptaccess" value="always" />
-                    <param name="flashvars" value="autostart=false&thumb=fpaintro/FirstFrame.png&thumbscale=100&showendscreen=false&color=0x1A1A1A,0x1A1A1A" />
-                <!--<![endif]-->
-                    <div id="noUpdate">
-                        <p>The Camtasia Studio video content presented here requires JavaScript to be enabled and the latest version of the Adobe Flash Player. If you are using a browser with JavaScript disabled please enable it now. Otherwise, please update your version of the free Adobe Flash Player by <a href="http://www.adobe.com/go/getflashplayer">downloading here</a>. </p>
-                    </div>
-                <!--[if !IE]>-->
-                </object>
-                <!--<![endif]-->
-            </object>
-        </div>
+        <div id="media" style="position:relative;float:right; margin-top:3px;width:416px;height:250px;padding:0px;background-image:url(/fpaintro/frame1.png);background-repeat:none;">
+          <div style="padding:18px; 17px;">
+    <script type="text/javascript"> 
+AC_FL_RunContent( 'codebase','http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,28,0','width','384','height','216','src','/fpaintro/freeplus_player','quality','high','pluginspage','http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash','movie','/fpaintro/freeplus_player' ); //end AC code
+</script><noscript><object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,28,0" width="384" height="216">
+      <param name="movie" value="/fpaintro/freeplus_player.swf" />
+      <param name="quality" value="high" />
+      <embed src="fpaintro/freeplus_player.swf" quality="high" pluginspage="http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash" type="application/x-shockwave-flash" width="384" height="216"></embed>
+    </object></noscript>
+        </div></div>
 </div></div>
       
       <div class="testimionials">
