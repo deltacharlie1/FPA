@@ -33,9 +33,13 @@ get_header(); ?>
       <div class="rightcol">
       
         <div class="listfix">
-        
-			<?php dynamic_sidebar( 'home-side' ); ?>
-        
+               
+		<img alt="Free, Easy, Secure" class="break" src="/wp-content/themes/freeplusaccounts/images/title-free.jpg" /><ul>			<div class="textwidget">How can we afford to make it free?<br/>Read More ...</div>
+		</ul><img alt="Free, Easy, Secure" class="break" src="/wp-content/themes/freeplusaccounts/images/title-easy.jpg" /><ul>			<div class="textwidget">Why is it so easy to use?<br/>Read More ...</div>
+
+		</ul><img alt="Free, Easy, Secure" class="break" src="/wp-content/themes/freeplusaccounts/images/title-secure.jpg" /><ul>			<div class="textwidget">What makes it so secure?<br/>Read More ...</div>
+		</ul>        
+ 
         </div>        
       
       </div>
