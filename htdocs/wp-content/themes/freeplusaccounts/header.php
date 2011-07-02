@@ -35,6 +35,7 @@
 <script src="<?php bloginfo('template_directory'); ?>/js/cufon/cufon.js" type="text/javascript"></script>
 <script src="<?php bloginfo('template_directory'); ?>/js/cufon/font.js" type="text/javascript"></script>
 <script src="<?php bloginfo('template_directory'); ?>/js/cufon/settings.js" type="text/javascript"></script>
+<script src="/js/jquery-truncate.js" type="text/javascript"></script>
 
 <script src="<?php bloginfo('template_directory'); ?>/js/coda/jquery.easing.1.3.js" type="text/javascript"></script>
 <script src="<?php bloginfo('template_directory'); ?>/js/coda/jquery.coda-slider-2.0.js" type="text/javascript"></script>
@@ -51,6 +52,10 @@
 				autoSlideInterval: 5000,
 				autoSlideStopWhenClicked: false
 		});
+		$('#freemore').jTruncate( { length: 40 } );
+		$('#easymore').jTruncate( { length: 29 } );
+		$('#securemore').jTruncate( { length: 28 } );
+		
 	});
 </script>
 
