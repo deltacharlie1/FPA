@@ -75,8 +75,8 @@
 [%- FOREACH entry IN entries -%]
   [%- ndx = loop.count % 2 -%]
       <tr class="[%- class.$ndx -%]">
-        <td onclick="change_date(this,[%- entry.id -%],'[%- entry.tdate -%]');">[%- entry.tdate -%]</td>
-        <td ondblclick="location.href='/cgi-bin/fpa/reverse_txns.pl?[%- entry.id -%]?[%- acct.acctype -%]';">[%- entry.txncusname | truncate(60) -%]</td>
+        <td ondblclick="change_date(this,[%- entry.id -%],'[%- entry.tdate -%]');">[%- entry.tdate -%]</td>
+        <td ondblclick="if (confirm('Continue to delete this record') { location.href='/cgi-bin/fpa/reverse_txns.pl?[%- entry.id -%]?[%- acct.acctype -%]'; }">[%- entry.txncusname | truncate(60) -%]</td>
         <td style="text-align:right;">[%- IF entry.txnamount < 0; entry.txnamount | remove('-'); ELSE -%]&nbsp;[%- END -%]</td>
         <td style="text-align:right;">[%- IF entry.txnamount >= 0; entry.txnamount; ELSE -%]&nbsp;[%- END -%]</td>
         <td style="text-align:center;"><input type="checkbox" class="txnchk" name="x[%- entry.id -%]" id="x[%- entry.id -%]" value="[%- entry.txnamount -%]" [%- UNLESS entry.txnselected == '' -%]checked="checked"[%- END -%] onclick="check_txn(this);"/></td>

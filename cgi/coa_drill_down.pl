@@ -41,8 +41,27 @@ unless ($FORM{numrows}) {
 	$FORM{rows} = 24;
 }
 
-$Nominals = $dbh->prepare("select nominals.link_id as linkid,nominals.nomtype,nominals.nomcode,nominals.nomamount as amount,date_format(nominals.nomdate,'%d-%b-%y') as printdate,invinvoiceno,concat(invcusname,' (',invdesc,')') as invcusname,txntxnno,concat(txncusname,' (',txnremarks,')') as txncusname from nominals left join invoices on (nominals.link_id=invoices.id and nominals.acct_id=invoices.acct_id),nominals a left join transactions on (a.link_id=transactions.id and a.acct_id=transactions.acct_id) where nominals.id=a.id and nominals.acct_id=a.acct_id and nominals.nomcode='$FORM{filter}' and nominals.nomdate>=str_to_date('$FORM{tbstart}','%d-%b-%y') and nominals.nomdate<=str_to_date('$FORM{tbend}','%d-%b-%y') and nominals.acct_id='$COOKIE->{ACCT}' order by nominals.nomdate limit $FORM{offset},$FORM{rows}");
+$Nominals = $dbh->prepare("select nominals.id as nom_id,nominals.link_id as linkid,nominals.nomtype,nominals.nomcode,nominals.nomamount as amount,date_format(nominals.nomdate,'%d-%b-%y') as printdate,invinvoiceno,concat(invcusname,' (',invdesc,')') as invcusname,txntxnno,concat(txncusname,' (',txnremarks,')') as txncusname from nominals left join invoices on (nominals.link_id=invoices.id and nominals.acct_id=invoices.acct_id),nominals a left join transactions on (a.link_id=transactions.id and a.acct_id=transactions.acct_id) where nominals.id=a.id and nominals.acct_id=a.acct_id and nominals.nomcode='$FORM{filter}' and nominals.nomdate>=str_to_date('$FORM{tbstart}','%d-%b-%y') and nominals.nomdate<=str_to_date('$FORM{tbend}','%d-%b-%y') and nominals.acct_id='$COOKIE->{ACCT}' order by nominals.nomdate limit $FORM{offset},$FORM{rows}");
 $Nominals->execute;
+
+if ($FORM{filter} =~ /^(1000|5|6|7|8)/) {
+	$Adjsts = $dbh->prepare("select coanominalcode,coadesc from coas where acct_id='$COOKIE->{ACCT}' and (coanominalcode='1000' or (coanominalcode>'4999' and coanominalcode<'9000')) order by coanominalcode");
+	$Adjsts->execute;
+	$Adjst = $Adjsts->fetchall_arrayref({});
+	$Adjsts->finish;
+}
+elsif ($FORM{filter} =~ /^(12|13)/) {
+	$Adjsts = $dbh->prepare("select coanominalcode,coadesc from coas where acct_id='$COOKIE->{ACCT}' and (coanominalcode>'1199' and coanominalcode<'1399') order by coanominalcode");
+	$Adjsts->execute;
+	$Adjst = $Adjsts->fetchall_arrayref({});
+	$Adjsts->finish;
+}
+elsif ($FORM{filter} =~ /^4/) {
+	$Adjsts = $dbh->prepare("select coanominalcode,coadesc from coas where acct_id='$COOKIE->{ACCT}' and (coanominalcode>'3999' and coanominalcode<'4999') order by coanominalcode");
+	$Adjsts->execute;
+	$Adjst = $Adjsts->fetchall_arrayref({});
+	$Adjsts->finish;
+}
 
 use Template;
 $tt = Template->new({
@@ -60,10 +79,43 @@ $Vars = {
        	rows => $FORM{rows},
 	filter => $FORM{filter},
 	coatype => $Coatype,
+	nomcodes => $Adjst,
 	entries => $Nominals->fetchall_arrayref({}),
         javascript => '<script type="text/javascript">
-function redisplay(action) {
+$(document).ready(function() {
+  $("#changenomcode").dialog({
+    bgiframe: true,
+    autoOpen: false,
+    position: [200,100],
+    height: 250,
+    width: 300,
+    modal: true,
+    buttons: {
+      "Change Nominal Code": function() {
+        $.post("/cgi-bin/fpa/change_nominalcode.pl", $("#fchangenomcode").serialize(),function(data) {
+          if ( ! /^OK/.test(data)) {
+            alert(data);
+          }
+          window.location.reload(true);
+        },"text");
+        $("td").removeClass("error");
+        $(this).dialog("close");
+      },
+      Cancel: function() {
+        $("td").removeClass("error");
+        $(this).dialog("close");
+      }
+    }
+  });
+});
+function change_nomcode(obj,id,descr) {
+  $(obj).addClass("error");
+  document.getElementById("cd_id").value = id;
+  document.getElementById("nomitemdesc").innerHTML = descr;
+  $("#changenomcode").dialog("open");
+}
 
+function redisplay(action) {
   pagetitle = escape("'.$FORM{pagetitle}.'"),
   numrows = ' . $FORM{numrows} . ';
   offset = ' . $FORM{offset} . ';

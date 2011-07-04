@@ -68,7 +68,7 @@ if ($Company[10] < 0) {
 
 #  Add a couple of reminders
 
-		$Dates = $dbh->prepare("select date_format(date_add('$Company[4]', interval 13 month),'%d-%b-%y'),date_format(date_add('$Company[4]',interval 22 month),'%d-%b-%y')");
+		$Dates = $dbh->prepare("select date_format(date_add('$Company[4]', interval 1 month),'%d-%b-%y'),date_format(date_add('$Company[4]',interval 10 month),'%d-%b-%y')");
 		$Dates->execute;
 		@Annual_date = $Dates->fetchrow;
 		$Dates->finish;

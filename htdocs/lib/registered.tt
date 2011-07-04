@@ -28,7 +28,7 @@
     <td>&nbsp;</td>
   </tr>
   <tr>
-    <td style="text-align:center;"><input type="button" name="but1" id="but1" value="Return to FreePlus Accounts Home Page" onclick="location.href='/index.html';"/>
+    <td style="text-align:center;"><input type="button" name="but1" id="but1" value="Return to FreePlus Accounts Home Page" onclick="location.href='/home';"/>
     </td>
   </tr>
 </table>
