@@ -45,8 +45,10 @@ $(document).ready(function(){
   <div id="wrapper">
     <div id="top">
       <div class="company-name">[%- cookie.TAG -%]</div>
-      <a href="/cgi-bin/fpa/logout.pl"><div id="logout"></div></a>
-      <div class="top-ad"><img src="/images/sponsor_logo.png"></div>
+      <div style="float:right;width:220px">
+        <div class="top-ad"><img src="/images/sponsor_logo.png"></div>
+        <a href="/cgi-bin/fpa/logout.pl"><div id="logout"></div></a>
+      </div>
     </div><!-- END top -->
 
     <div class="clear"></div>
