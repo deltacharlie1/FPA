@@ -134,6 +134,10 @@ sub reverse_txn {
 			$Sts = $dbh->do("delete from invoices where acct_id='$COOKIE->{ACCT}' and id=$Inv_txn->{inv_id}");
 		}
 
+#  Delete any vataccruals that have been added (we assume that they have not yet been allocated to a VAT Return!)
+
+		$Sts = $dbh->do("delete from vataccruals where acct_id='$COOKIE->{ACCT}' and id=$Inv_txn->{id}");
+
 #  Delete inv_txns
 
 		$Sts = $dbh->do("delete from inv_txns where acct_id='$COOKIE->{ACCT}' and id=$Inv_txn->{id}");

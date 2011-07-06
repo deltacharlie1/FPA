@@ -1,0 +1,47 @@
+<h3>Total number of entries found = [%- numrows -%]</h3>
+<div id="print_listing" style="overflow:auto; width:690px;height:800px;padding-top:10px;">
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="listing">
+    <tr>
+      <th>Return</th>
+      <th>Date</th>
+      <th>Item Description</th>
+      <th>VAT Input</th>
+      <th>VAT Output</th>
+    </tr>
+[% debits = 0; credits = 0; tdebits = 0; tcredits = 0; ctr = 0 -%]
+[%- class = [ "even","odd" ] -%]
+[%- FOREACH entry IN entries -%]
+  [%  IF curcode != entry.perquarter; -%]
+    [%- ctr = ctr+1; ndx = ctr % 2 -%]
+    <tr class="[%- class.$ndx -%]">
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td style="text-align:right;">Totals</td>
+      <td style="font-weight:bold;text-align:right;border-top:1px dotted #333333;border-bottom:1px solid  #333333;">[%- IF debits != 0; debits | remove('-') | format('%1.2f'); ELSE -%]&nbsp;[%- END -%]</td>
+      <td style="font-weight:bold;text-align:right;border-top:1px dotted #333333;border-bottom:1px solid #333333;">[%- IF credits != 0; credits | remove('-') | format('%1.2f'); ELSE -%]&nbsp;[%- END -%]</td>
+    </tr>
+  [% curcode = entry.perquarter; tcredits = tcredits + credits; tdebits = tdebits + debits; debits = 0; credits = 0; END -%]
+  [%- ctr = ctr+1; ndx = ctr % 2 -%]
+    <tr class="[%- class.$ndx -%]" onclick="location.href='/cgi-bin/fpa/update_[%- IF entry.acrtype == 'S' -%]invoice[%- ELSE -%]purchase[%- END -%].pl?[%- entry.inv_id -%]'">
+      <td>[%- entry.perquarter -%]</td>
+      <td>[%- entry.printdate -%]</td>
+      <td>[%- entry.acrdesc | truncate(70) -%]</td>
+  [% IF entry.acrvat >= 0 -%]
+      <td style="text-align:right;">[%- debits = debits + entry.acrvat; entry.acrvat | format('%1.2f') -%]</td>
+      <td>&nbsp;</td>
+  [% ELSE -%]
+      <td>&nbsp;</td>
+      <td style="text-align:right;">[%- credits = credits + entry.acrvat; entry.acrvat | remove('-') | format('%1.2f') -%]</td>
+  [% END -%]
+    </tr>
+[%- END -%]
+[%- ctr = ctr+1; ndx = ctr % 2 -%]
+    <tr class="[%- class.$ndx -%]">
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td style="text-align:right;">Sub Totals</td>
+      <td style="font-weight:bold;text-align:right;border-top:1px dotted #333333;border-bottom:1px solid  #333333;">[%- IF debits != 0; debits | remove('-') | format('%1.2f'); ELSE -%]&nbsp;[%- END -%]</td>
+      <td style="font-weight:bold;text-align:right;border-top:1px dotted #333333;border-bottom:1px solid #333333;">[%- IF credits != 0; credits | remove('-') | format('%1.2f'); ELSE -%]&nbsp;[%- END -%]</td>
+    </tr>
+  </table>
+</div>
