@@ -12,25 +12,13 @@
 
 use CGI;
 
-# open(FILE,">>/tmp/bank.txt");
-
-# print FILE "New Starting ...\n";
-
-# print "Content-Type: text/plain\n\n";
-# print "Starting to sort out parameters\n";
-
 $ACCESS_LEVEL = 1;
-# print FILE "Calling Checkid\n";
 
 use Checkid;
 $COOKIE = &checkid($ENV{HTTP_COOKIE},$ACCESS_LEVEL);
 
-# print FILE "After Checkid\n";
-
 $Data = new CGI;
 %FORM = $Data->Vars;
-
-# print FILE "Starting to split parameters\n";
 
 while (( $Key,$Value) = each %FORM) {
 
@@ -39,11 +27,7 @@ while (( $Key,$Value) = each %FORM) {
         $Value =~ tr/\\//d;
         $Value =~ s/\'/\\\'/g;
         $FORM{$Key} = $Value;
-
-# print "$Key = $Value\n";
-# print FILE  "$Key = $Value\n";
 }
-# exit;
 
 use DBI;
 $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
@@ -52,8 +36,8 @@ if ($FORM{thisint}) {
 
 #  Set the date if not already set
 
-	if ($FORM{thisintdte}) {
-		$Date = "str_to_date('$FORM{thisintdte}','%d-%b-%y')";
+	if ($FORM{thisintdate}) {
+		$Date = "str_to_date('$FORM{thisintdate}','%d-%b-%y')";
 	}
 	else {
 		$Date = "now()";

@@ -1,0 +1,61 @@
+<div class="main" id="main">
+<h1>Year End Clear Down of P & L Accounts</h1>
+<h3>For the Financial Year <span style="padding:3px 20px;">[%- dispstart -%]</span> to <span style="padding:3px 20px;">[%- dispend -%]</span></h3>
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="listing">
+    <tr>
+      <th>Nominal Code</th>
+      <th>Description</th>
+      <th>Type</th>
+      <th>Debit</th>
+      <th>Credit</th>
+    </tr>
+[% class = [ "even","odd" ]; debits = 0; credits = 0 -%]
+[%- FOREACH entry IN entries -%]
+  [%- ndx = loop.count % 2 -%]
+    <tr class="[%- class.$ndx -%]"[%- IF entry.ibalance != '0.00' -%] onclick="location.href='/cgi-bin/fpa/coa_drill_down.pl?filter=[%- entry.nominalcode -%]';"[%- END -%]>
+      <td>[%- entry.nominalcode -%]</td>
+      <td>[%- entry.coadesc -%]</td>
+      <td>[%- entry.coatype -%]</td>
+  [% IF entry.coatype.match('(?i)Assets|Expenses') -%]
+    [% IF entry.balance >= 0 -%]
+      <td style="text-align:right;">[%- debits = debits + entry.balance; entry.balance | format('%1.2f') -%]</td>
+      <td>&nbsp;</td>
+    [% ELSE -%]
+      <td>&nbsp;</td>
+      <td style="text-align:right;">[%- credits = credits + entry.balance; entry.balance | remove('-') | format('%1.2f') -%]</td>
+    [% END -%]
+  [% ELSE -%]
+    [% IF entry.balance >= 0 -%]
+      <td>&nbsp;</td>
+      <td style="text-align:right;">[%- credits = credits + entry.balance; entry.balance | format('%1.2f') -%]</td>
+    [% ELSE -%]
+      <td style="text-align:right;">[%- debits = debits + entry.balance; entry.balance | remove('-') | format('%1.2f') -%]</td>
+      <td>&nbsp;</td>
+    [% END -%]
+  [% END -%]
+    </tr>
+[%- END -%]
+  </table>
+<p>The total to be transferred to <b>Retained Earnings</b> is <span style="font-weight:bold;border:1px solid #666666;padding:3px 20px;">&pound;[%- credits - debits | format('%1.2f') -%]</span>.</p><p>Please click on the 'Proceed' tab at the right hand side if you agree with this.&nbsp;&nbsp;Otherwise please click the 'Cancel' tab, fix any problems and then re-run this task.</p>
+</div>
+<div id="sidebar">
+  <ul>
+    <li>
+      <div>
+        <a href="/cgi-bin/fpa/yearend_cleardown2.pl">
+         Proceed
+        </a>
+      </div>
+    </li>
+    <li>
+      <div>
+        <a href="/cgi-bin/fpa/list_coas.pl">
+         Cancel
+        </a>
+      </div>
+    </li>
+  </ul>
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+  </div>
+</div>

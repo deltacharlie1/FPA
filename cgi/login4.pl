@@ -64,7 +64,7 @@ $ACCESS = $COOKIE->{PLAN} || $Company[12];
 
 if ($Company[10] < 0) {
 
-	$Sts = $dbh->do("update companies set comyearend=date_add(comyearend,interval 1 year),comyearendmsgdue=date_add(comyearend,interval 8 month) where reg_id=$Reg_com[0] and id=$Reg_com[1]");
+	$Sts = $dbh->do("update companies set comyearendmsgdue=date_add(comyearend,interval 8 month),comyearend=date_add(comyearend,interval 1 year) where reg_id=$Reg_com[0] and id=$Reg_com[1]");
 
 #  Add a couple of reminders
 
@@ -73,7 +73,7 @@ if ($Company[10] < 0) {
 		@Annual_date = $Dates->fetchrow;
 		$Dates->finish;
 
-		$Sts = $dbh->do("insert into reminders (acct_id,remtext,remcode,remgrade,remstartdate,remenddate) values ('$Reg_com[0]+$Reg_com[1]','Year End Procedures need to be completed','YRN','H',now(),'2099-01-01')");
+		$Sts = $dbh->do("insert into reminders (acct_id,remtext,remcode,remgrade,remstartdate,remenddate) values ('$Reg_com[0]+$Reg_com[1]','Year End Procedures need to be completed.  Please <a href=\"/cgi-bin/fpa/yearend_cleardown.pl\">click here</a> to do this.','YRN','H',now(),'2099-01-01')");
 		$Sts = $dbh->do("insert into reminders (acct_id,remtext,remcode,remgrade,remstartdate,remenddate) values ('$Reg_com[0]+$Reg_com[1]','Annual return (probably) due by $Annual_date[0]','GEN','N',now(),'2099-01-01')");
 		$Sts = $dbh->do("insert into reminders (acct_id,remtext,remcode,remgrade,remstartdate,remenddate) values ('$Reg_com[0]+$Reg_com[1]','Accounts due by $Annual_date[1]','GEN','N',now(),'2099-01-01')");
 
