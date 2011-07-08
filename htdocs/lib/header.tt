@@ -125,6 +125,7 @@ $(document).ready(function(){
                 <li><a href="/cgi-bin/fpa/aged_debtors.pl">Aged Debtors</a></li>
                 <li><a href="/cgi-bin/fpa/aged_creditors.pl">Aged Creditors</a></li>
                 <li><a href="/cgi-bin/fpa/vatreport.pl">VAT Report</a></li>
+                <li><a href="/cgi-bin/fpa/nom_invoices.pl">Invoice Report</a></li>
               </ul>
             </li>
           </ul>

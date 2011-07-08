@@ -1,0 +1,36 @@
+<h3>Total number of entries found = [%- numrows -%]</h3>
+<div id="print_listing" style="overflow:auto; width:690px;height:800px;padding-top:10px;">
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="listing">
+    <tr>
+      <th>Invoice</th>
+      <th>Type</th>
+      <th>Customer</th>
+      <th class="dbl">Description</th>
+[% UNLESS cookie.VAT == 'N' -%]
+      <th>Net</th>
+      <th>VAT</th>
+[% END -%]
+      <th>Total</th>
+      <th>Printed</th>
+      <th>Status</th>
+    </tr>
+[% class = [ "even","odd" ] -%]
+[% FOREACH invoice IN invoices -%]
+  [%- ndx = loop.count % 2 -%]
+    <tr class="[%- class.$ndx -%]">
+      <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invinvoiceno -%]</td>
+      <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invtype -%]</td>
+      <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invcusname | truncate(30) -%]</td>
+      <td ondblclick="change_descr(this,[%- invoice.invid -%],'[%- invoice.invdesc -%]');">[%- invoice.invdesc | truncate(50) -%]</td>
+[% UNLESS cookie.VAT == 'N' -%]
+      <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invtotal | remove('-') -%]</td>
+      <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invvat | remove('-')-%]</td>
+[% END -%]
+      <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invamount | remove('-') -%]</td>
+      <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.printdate -%]</td>
+      <td style="text-align:right;" onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">
+  [% IF invoice.invstatus == 'Overdue' -%]<span style="color:#800000;font-weight:bold;">Overdue</span>[%- ELSE; invoice.invstatus; END -%]</td>
+    </tr>
+[% END -%]
+  </table>
+</div>
