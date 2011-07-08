@@ -624,3 +624,8 @@ button {
 	color: #FFF;
 	background-color: #4F7F59;
 }
+.dbl {
+	background-image:url(/images/mouse.png);
+	background-position:top left;
+	background-repeat:no-repeat;
+}
