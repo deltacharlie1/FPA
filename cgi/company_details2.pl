@@ -138,7 +138,9 @@ else {
 
 #  Scoop up all unpaid VAT and put it into vataccruals
 
-######		$Invoices = $dbh->prepare("select
+#	$Invoices = $dbh->prepare("select invinvoiceno,invcusname,invtotal+invvat as owed,sum(acrtotal+acrvat) as paid,(invtotal+invvat-sum(acrtotal+acrvat)) as balance from invoices left join inv_txns on (invoices.id=inv_txns.inv_id and invoices.acct_id=inv_txns.acct_id) left join vataccruals on (inv_txns.id=vataccruals.acrtxn_id and inv_txns.acct_id=vataccruals.acct_id) where invoices.acct_id='$COOKIE->{ACCT}' and invoices.invstatuscode>2 group by invoices.invinvoiceno having isnull(balance) or balance<>0");
+#	$Invoices->execute;
+#	$Invoices->finish;
 
 #  Check to see if we have any Current Account data (ie a bank name)
 

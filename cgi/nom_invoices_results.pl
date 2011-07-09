@@ -25,6 +25,14 @@ foreach $pair (@pairs) {
 }
 # exit;
 
+$SQL = "";
+if ($FORM{invitem}) {
+	$SQL .= "invoices.invdesc like '$FORM{invitem}%' and ";
+}
+if ($FORM{invtype}) {
+	$SQL .= "invoices.invtype='$FORM{invtype}' and ";
+}
+
 use DBI;
 my $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
 
@@ -32,7 +40,7 @@ my $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
 
 $Sts = $dbh->do("update tempstacks set f1='$FORM{tbselect}',f2='$FORM{tbstart}',f3='$FORM{tbend}' where acct_id='$COOKIE->{ACCT}' and caller='report'");
 
-$Invoices = $dbh->prepare("select cus_id,invoices.id as invid,invinvoiceno,invcusname,invtype,invdesc,date_format(invprintdate,'%d-%b-%y') as printdate,date_format(invduedate,'%d-%b-%y') as duedate,invtotal,invvat,(invtotal+invvat) as invamount,invstatus,(invpaid+invpaidvat) as invpaid,to_days(invprintdate) as printdays,to_days(invduedate) as duedays,cusdefpaymethod from invoices left join customers on (customers.id=cus_id) where invprintdate>=str_to_date('$FORM{tbstart}','%d-%b-%y') and invprintdate<=str_to_date('$FORM{tbend}','%d-%b-%y') and invinvoiceno <> 'unlisted' and invoices.acct_id='$COOKIE->{ACCT}' order by invprintdate");
+$Invoices = $dbh->prepare("select cus_id,invoices.id as invid,invinvoiceno,invcusname,invtype,invdesc,date_format(invprintdate,'%d-%b-%y') as printdate,date_format(invduedate,'%d-%b-%y') as duedate,invtotal,invvat,(invtotal+invvat) as invamount,invstatus,(invpaid+invpaidvat) as invpaid,to_days(invprintdate) as printdays,to_days(invduedate) as duedays,cusdefpaymethod from invoices left join customers on (customers.id=cus_id) where $SQL invprintdate>=str_to_date('$FORM{tbstart}','%d-%b-%y') and invprintdate<=str_to_date('$FORM{tbend}','%d-%b-%y') and invinvoiceno <> 'unlisted' and invoices.acct_id='$COOKIE->{ACCT}' order by invprintdate");
 $Invoices->execute;
 $Invoice = $Invoices->fetchall_arrayref({});
 

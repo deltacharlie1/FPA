@@ -36,6 +36,19 @@
       <td><label>Date To</label></td>
       <td width="40%"><input type="text" name="tbend" id="tbend" value="[%- daterange.tbend -%]" size="9" readonly="readonly" onchange="get_balances();"/></td>
     </tr>
+    <tr>
+      <td><label>Item Description</label></td>
+      <td><input name="invitem" type="text" id="invitem" size="20" value="" onchange="get_balances();"/></td>
+      <td><label>Invoice Type</label></td>
+      <td><select name="invtype" id="invtype" size="1" onchange="get_balances();">
+            <option value="" selected="selected">All</option>
+            <option value="S">Sales Invoices</option>
+            <option value="P">Purchase Invoices</option>
+            <option value="C">Credit Notes</option>
+            <option value="R">Refunds</option>
+          </select>
+      </td>
+    </tr>
   </table>
 </form>
 <br/>

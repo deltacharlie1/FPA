@@ -338,7 +338,7 @@ sub pay_invoice {
 
 		$FORM{txnamount} = 0 - $FORM{txnamount};
 
-		my $Owing = $Invoice[1] + $Invoice[2] - $Invoice[3] - $Invoice[4];
+		my $Owing = sprintf('%1.2f',$Invoice[1] + $Invoice[2] - $Invoice[3] - $Invoice[4]);
 
 		$FORM{invtype} = $Invoice[5];
 		$FORM{invinvoiceno} = $Invoice[6];

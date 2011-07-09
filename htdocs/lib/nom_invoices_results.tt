@@ -14,21 +14,22 @@
       <th>Printed</th>
       <th>Status</th>
     </tr>
-[% class = [ "even","odd" ] -%]
-[% FOREACH invoice IN invoices -%]
+[% class = [ "even","odd" ]; prog = 'invoice' -%]
+[%- FOREACH invoice IN invoices -%]
   [%- ndx = loop.count % 2 -%]
+  [%- IF invoice.invtype.match('S|C'); prog = 'invoice'; ELSE; prog = 'purchase'; END -%]
     <tr class="[%- class.$ndx -%]">
-      <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invinvoiceno -%]</td>
-      <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invtype -%]</td>
-      <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invcusname | truncate(30) -%]</td>
+      <td onclick="location.href='/cgi-bin/fpa/update_[%- prog -%].pl?[%- invoice.invid -%]';">[%- invoice.invinvoiceno -%]</td>
+      <td onclick="location.href='/cgi-bin/fpa/update_[%- prog -%].pl?[%- invoice.invid -%]';">[%- invoice.invtype -%]</td>
+      <td onclick="location.href='/cgi-bin/fpa/update_[%- prog -%].pl?[%- invoice.invid -%]';">[%- invoice.invcusname | truncate(30) -%]</td>
       <td ondblclick="change_descr(this,[%- invoice.invid -%],'[%- invoice.invdesc -%]');">[%- invoice.invdesc | truncate(50) -%]</td>
 [% UNLESS cookie.VAT == 'N' -%]
-      <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invtotal | remove('-') -%]</td>
-      <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invvat | remove('-')-%]</td>
+      <td onclick="location.href='/cgi-bin/fpa/update_[%- prog -%].pl?[%- invoice.invid -%]';">[%- invoice.invtotal | remove('-') -%]</td>
+      <td onclick="location.href='/cgi-bin/fpa/update_[%- prog -%].pl?[%- invoice.invid -%]';">[%- invoice.invvat | remove('-')-%]</td>
 [% END -%]
-      <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invamount | remove('-') -%]</td>
-      <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.printdate -%]</td>
-      <td style="text-align:right;" onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">
+      <td onclick="location.href='/cgi-bin/fpa/update_[%- prog -%].pl?[%- invoice.invid -%]';">[%- invoice.invamount | remove('-') -%]</td>
+      <td onclick="location.href='/cgi-bin/fpa/update_[%- prog -%].pl?[%- invoice.invid -%]';">[%- invoice.printdate -%]</td>
+      <td style="text-align:right;" onclick="location.href='/cgi-bin/fpa/update_[%- prog -%].pl?[%- invoice.invid -%]';">
   [% IF invoice.invstatus == 'Overdue' -%]<span style="color:#800000;font-weight:bold;">Overdue</span>[%- ELSE; invoice.invstatus; END -%]</td>
     </tr>
 [% END -%]

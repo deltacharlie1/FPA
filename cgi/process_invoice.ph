@@ -349,7 +349,7 @@ sub money_in {
 	$Sts = $dbh->do("update customers set cuscredit=cuscredit + '$FORM{txnamount}' where acct_id='$COOKIE->{ACCT}' and id=$FORM{cus_id}");
 
 #  Now get the total available to set against invoices
-	warn "my \$Customers = \$dbh->prepare(\"select cuscredit from customers where acct_id='$COOKIE->{ACCT}' and id='$FORM{cus_id}'\")\n";
+
 	my $Customers = $dbh->prepare("select cuscredit from customers where acct_id='$COOKIE->{ACCT}' and id='$FORM{cus_id}'");
 	$Customers->execute;
 	($FORM{txnamount}) = $Customers->fetchrow;
@@ -372,7 +372,7 @@ sub pay_invoice {
 
 	if ($Invoices->rows > 0 && $Invoice[0] > 2) {		#  OK this is a good invoice
 
-		my $Owing = $Invoice[1] + $Invoice[2] - $Invoice[3] - $Invoice[4];
+		my $Owing = sprintf('%1.2f',$Invoice[1] + $Invoice[2] - $Invoice[3] - $Invoice[4]);
 		$FORM{invtype} = $Invoice[5];
 		$FORM{invinvoiceno} = $Invoice[6];
 		$FORM{invcusname} = $Invoice[7];
@@ -389,9 +389,13 @@ sub pay_invoice {
 		$P_txnamount =~ tr/\.//d;
 		$P_Owing =~ tr/\.//d;
 
+warn "txnamount = $P_txnamount\nOwing = $P_Owing\n";
+
 		if ($P_txnamount >= $P_Owing) {		#  sufficient funds to cover the
 
 #  Deduct what is owed from what we have to play with
+
+warn "Full amount paid\n";
 
 			$FORM{txnamount} -= $Owing;
 			$FORM{invtotal} = $Invoice[1] - $Invoice[3];
@@ -403,6 +407,8 @@ sub pay_invoice {
 
 		}
 		else {
+
+warn "Part Paid\n";
 
 #  Calculate the percentage of net and vat that can be paid
 
