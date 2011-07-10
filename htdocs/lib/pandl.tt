@@ -10,19 +10,19 @@
           <option value="tw">This Week to Date</option>
           <option value="tm">This Month to Date</option>
           <option value="tq">This Financial Quarter to Date</option>
-          <option value="ty" selected="selected">This Financial Year to Date</option>
+          <option value="ty">This Financial Year to Date</option>
           <option value="lw">Last Week</option>
           <option value="lm">Last Month</option>
           <option value="lq">Last Financial Quarter</option>
-          <option value="ly">Last Financial Year</option>
+          <option value="ly" selected="selected">Last Financial Year</option>
         </select>
       </td>
     </tr>
     <tr>
       <td><label>Date From</label></td>
-      <td><input type="text" name="tbstart" id="tbstart" value="[%- daterange.plfy -%]" size="9" readonly="readonly" onchange="get_balances();"/>
+      <td><input type="text" name="tbstart" id="tbstart" value="[%- daterange.dispstart -%]" size="9" readonly="readonly" onchange="get_balances();"/>
       <td><label>Date To</label></td>
-      <td width="40%"><input type="text" name="tbend" id="tbend" value="[%- daterange.tbend -%]" size="9" readonly="readonly" onchange="get_balances();"/></td>
+      <td width="40%"><input type="text" name="tbend" id="tbend" value="[%- daterange.dispend -%]" size="9" readonly="readonly" onchange="get_balances();"/></td>
     </tr>
   </table>
 </form>

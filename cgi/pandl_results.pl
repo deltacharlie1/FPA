@@ -36,10 +36,16 @@ use Template;
 $tt = Template->new({
         INCLUDE_PATH => ['.','/usr/local/httpd/htdocs/fpa/lib']
 });
+$FORM{tbstart} =~ s/.*-//;
+$FORM{tbend} =~ s/.*-//;
 
 $Vars = {
         title => 'Accounts - P and L',
 	cookie => $COOKIE,
+	syr1 => sprintf("%02d",$FORM{tbstart}),
+	eyr1 => sprintf("%02d",$FORM{tbend}),
+	syr2 => sprintf("%02d",$FORM{tbstart} - 1),
+	eyr2 => sprintf("%02d",$FORM{tbend} - 1),
 	incomes => $Incomes->fetchall_arrayref({}),
 	expenses => $Expenses->fetchall_arrayref({})
 };

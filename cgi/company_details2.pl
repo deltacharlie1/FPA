@@ -67,7 +67,7 @@ else {
 
 #  Get existing details
 
-	$Companies = $dbh->prepare("select comvatscheme from companies where reg_id=$Reg_id and id=$Coom_id");
+	$Companies = $dbh->prepare("select comvatscheme from companies where reg_id=$Reg_id and id=$Com_id");
 	$Companies->execute;
 	$Company = $Companies->fetchrow_hashref;
 	$Companies->finish;
@@ -134,13 +134,26 @@ else {
 
 #  Check to see if the comvatscheme has gone from Cash Accounting to Standard Accounting
 
-######	if ($Company->{comvatscheme} =~ /C/i && $FORM{comvatscheme} =~ /S/i) {
+	if ($Company->{comvatscheme} =~ /C/i && $FORM{comvatscheme} =~ /S/i) {
 
 #  Scoop up all unpaid VAT and put it into vataccruals
 
-#	$Invoices = $dbh->prepare("select invinvoiceno,invcusname,invtotal+invvat as owed,sum(acrtotal+acrvat) as paid,(invtotal+invvat-sum(acrtotal+acrvat)) as balance from invoices left join inv_txns on (invoices.id=inv_txns.inv_id and invoices.acct_id=inv_txns.acct_id) left join vataccruals on (inv_txns.id=vataccruals.acrtxn_id and inv_txns.acct_id=vataccruals.acct_id) where invoices.acct_id='$COOKIE->{ACCT}' and invoices.invstatuscode>2 group by invoices.invinvoiceno having isnull(balance) or balance<>0");
-#	$Invoices->execute;
-#	$Invoices->finish;
+		$Invoices = $dbh->prepare("select invoices.id as invid,invtype,invprintdate,invcoa,(invtotal+invvat-sum(acrtotal+acrvat)) as balance,if(sum(acrtotal),invtotal-sum(acrtotal),invtotal) as totdiff,if(sum(acrvat),invvat-sum(acrvat),invvat) as vatdiff from invoices left join inv_txns on (invoices.id=inv_txns.inv_id and invoices.acct_id=inv_txns.acct_id) left join vataccruals on (inv_txns.id=vataccruals.acrtxn_id and inv_txns.acct_id=vataccruals.acct_id) where invoices.acct_id='$COOKIE->{ACCT}' and invoices.invstatuscode>2 group by invoices.invinvoiceno having isnull(balance) or balance<>0");
+		$Invoices->execute;
+
+#  For each not fully paid invoice, create a vataccrual record
+		$TotVAT = 0;
+
+		while($Invoice = $Invoices->fetchrow_hashref) {
+			$Sts = $dbh->do("insert into vataccruals (acct_id,acrtotal,acrvat,acrprintdate,acrnominalcode,acrtxn_id) values ('$COOKIE->{ACCT}','$Invoice->{totdiff}','$Invoice->{vatdiff}','$Invoice->{invprintdate}','$Invoice->{invcoa}',$Invoice->{invid})");
+			$TotVAT += $Invoice->{vatdiff};
+		}
+		$Invoices->finish;
+
+#  update the comvatcontrol
+
+		$Sts = $dbh->do("update companies set comvatcontrol=comvatcontrol+'$TotVAT' where reg_id=$Reg_id and id=$Com_id");
+	}
 
 #  Check to see if we have any Current Account data (ie a bank name)
 

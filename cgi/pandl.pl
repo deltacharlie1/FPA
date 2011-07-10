@@ -13,10 +13,10 @@ my $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
 #  First get the initial date range
 
 ($Reg_id,$Com_id) = split(/\+/,$COOKIE->{ACCT});
-$Regs = $dbh->prepare("select date_format(date_sub(regregdate,interval 6 month),'%d-%b-%y') as tbstart,date_format(now(),'%d-%b-%y') as tbend,date_add(date_sub(comyearend,interval 1 year),interval 1 day) as tbfy,date_format(date_add(date_sub(comyearend,interval 1 year),interval 1 day),'%d-%b-%y') as plfy from registrations left join companies on (registrations.reg_id=companies.reg_id) where registrations.reg_id=$Reg_id and companies.id=$Com_id");
+$Regs = $dbh->prepare("select date_format(date_sub(comyearend,interval 1 year),'%d-%b-%y') as dispend,date_sub(comyearend,interval 1 year) as tbend,date_format(date_add(date_sub(comyearend,interval 2 year),interval 1 day),'%d-%b-%y') as dispstart,date_add(date_sub(comyearend,interval 2 year),interval 1 day) as tbstart from companies where reg_id=$Reg_id and id=$Com_id");
 $Regs->execute;
 $Reg = $Regs->fetchrow_hashref;
-($Yr,$Mth,$Day) = split(/-/,$Reg->{tbfy});
+($Yr,$Mth,$Day) = split(/-/,$Reg->{tbstart});
 $Mth--;
 
 use Template;
@@ -29,6 +29,8 @@ $Vars = {
         title => 'P and L',
 	cookie => $COOKIE,
         daterange => $Reg,
+	syr => $SYr,
+	eyr => $EYr,
 	javascript => '<style type="text/css">
 .reporttable {
         border: 2px #87876a solid;
@@ -64,8 +66,8 @@ $(document).ready(function(){
   get_balances();
 });
 function set_range(obj) {
-  var startstr = "'.$Reg->{tbstart}.'";
-  var curstr = "'.$Reg->{tbend}.'";
+  var startstr = "'.$Reg->{dispstart}.'";
+  var curstr = "'.$Reg->{dispend}.'";
   var curdate = new Date();
   var fydate = new Date();
   fydate.setFullYear('.$Yr.','.$Mth.','.$Day.');

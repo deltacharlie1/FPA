@@ -4,8 +4,6 @@
 
 use CGI;
 
-warn "Calling change nomcode\n";
-
 $ACCESS_LEVEL = 1;
 
 use Checkid;

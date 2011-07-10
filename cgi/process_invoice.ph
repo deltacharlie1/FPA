@@ -389,13 +389,9 @@ sub pay_invoice {
 		$P_txnamount =~ tr/\.//d;
 		$P_Owing =~ tr/\.//d;
 
-warn "txnamount = $P_txnamount\nOwing = $P_Owing\n";
-
 		if ($P_txnamount >= $P_Owing) {		#  sufficient funds to cover the
 
 #  Deduct what is owed from what we have to play with
-
-warn "Full amount paid\n";
 
 			$FORM{txnamount} -= $Owing;
 			$FORM{invtotal} = $Invoice[1] - $Invoice[3];
@@ -407,8 +403,6 @@ warn "Full amount paid\n";
 
 		}
 		else {
-
-warn "Part Paid\n";
 
 #  Calculate the percentage of net and vat that can be paid
 
