@@ -11,7 +11,7 @@
 <script src="/js/jquery.js" type="text/javascript"></script>
 <script src="/js/jquery-ui.js" type="text/javascript"></script>
 <script src="/js/jquery.watermark.js" type="text/javascript"></script>
-<link rel="stylesheet" href="/uploadify.css" type="text/css"/>
+<link rel="stylesheet" href="/css/uploadify.css" type="text/css"/>
 <script type="text/javascript" src="/js/swfobject.js"></script>
 <script type="text/javascript" src="/js/jquery.uploadify.v2.1.4.js"></script>
 <script type="text/javascript" src="/js/jquery-print.js"></script>
@@ -77,7 +77,7 @@ $(document).ready(function(){
         [% IF cookie.REP_INVS == "1" -%]
             <li><a href="/cgi-bin/fpa/list_templates.pl">List Invoice Templates</a></li>
 [% END -%]
-            <li><a href="#" onclick="display_form('I');">Receive Money In</a></li>
+            <li><a href="#" onclick="display_form('I');">Record Money In</a></li>
             <li><a href="/cgi-bin/fpa/list_customers.pl">List Customers</a></li>
             <li><a href="/cgi-bin/fpa/add_address.pl?C">Add New Customer</a></li>
           </ul>
@@ -87,7 +87,7 @@ $(document).ready(function(){
             <li><a href="/cgi-bin/fpa/list_purchases.pl?listorder=O">List Unpaid Purchases</a></li>
             <li><a href="/cgi-bin/fpa/list_purchases.pl?listorder=N">List Purchases</a></li>
             <li><a href="/cgi-bin/fpa/new_purchase.pl">New Purchase Invoice</a></li>
-            <li><a href="#" onclick="display_form('P');">Pay Money Out</a></li>
+            <li><a href="#" onclick="display_form('P');">Record Money Out</a></li>
             <li><a href="/cgi-bin/fpa/list_suppliers.pl">List Suppliers</a></li>
             <li><a href="/cgi-bin/fpa/add_address.pl?S">Add New Supplier</a></li>
             <li><a href="#" onclick="display_form('E');">Record Expense</a></li>

@@ -96,6 +96,36 @@
 </table>
 </div>
 <div id="sidebar">
+  <ul>
+    <li>
+      <div>
+        <a href="/cgi-bin/fpa/new_invoice.pl">
+         Create Sales Invoice 
+        </a>
+      </div>
+    </li>
+    <li>
+      <div>
+        <a href="/cgi-bin/fpa/new_purchase.pl">
+         Create Purchase Invoice
+        </a>
+      </div>
+    </li>
+    <li>
+      <div>
+        <a href="#" onclick="display_form('I');">
+         Record Money In
+        </a>
+      </div>
+    </li>
+    <li>
+      <div>
+        <a onclick="display_form('P');">
+         Record Money Out
+        </a>
+      </div>
+    </li>
+  </ul>
   <div id="sidebar-ad">
 [% INCLUDE adverts.tt -%]
   </div>
