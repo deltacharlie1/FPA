@@ -1,7 +1,7 @@
 # This Makefile is for the Checkid extension to perl.
 #
 # It was generated automatically by MakeMaker version
-# 6.56 (Revision: 65600) from the contents of
+# 6.57_05 (Revision: 65705) from the contents of
 # Makefile.PL. Don't edit this file, edit Makefile.PL instead.
 #
 #       ANY CHANGES MADE HERE WILL BE LOST!
@@ -12,7 +12,7 @@
 #   MakeMaker Parameters:
 
 #     ABSTRACT_FROM => q[lib/Checkid.pm]
-#     AUTHOR => q[Doug Conran <dconran@nonet>]
+#     AUTHOR => [q[Doug Conran <dconran@nonet>]]
 #     BUILD_REQUIRES => {  }
 #     NAME => q[Checkid]
 #     PREREQ_PM => {  }
@@ -23,30 +23,30 @@
 
 # --- MakeMaker const_config section:
 
-# These definitions are from config.sh (via /usr/lib/perl5/5.8.8/i386-linux-thread-multi/Config.pm).
+# These definitions are from config.sh (via /usr/lib/perl5/5.14.1/i686-linux/Config.pm).
 # They may have been overridden via Makefile.PL or on the command line.
 AR = ar
-CC = gcc
+CC = cc
 CCCDLFLAGS = -fPIC
-CCDLFLAGS = -Wl,-E -Wl,-rpath,/usr/lib/perl5/5.8.8/i386-linux-thread-multi/CORE
+CCDLFLAGS = -Wl,-E
 DLEXT = so
 DLSRC = dl_dlopen.xs
 EXE_EXT = 
 FULL_AR = /usr/bin/ar
-LD = gcc
-LDDLFLAGS = -shared -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 -m32 -march=i386 -mtune=generic -fasynchronous-unwind-tables -L/usr/local/lib
-LDFLAGS =  -L/usr/local/lib
+LD = cc
+LDDLFLAGS = -shared -O2 -L/usr/local/lib -fstack-protector
+LDFLAGS =  -fstack-protector -L/usr/local/lib
 LIBC = /lib/libc-2.5.so
 LIB_EXT = .a
 OBJ_EXT = .o
 OSNAME = linux
-OSVERS = 2.6.18-53.el5
+OSVERS = 2.6.18-238.12.1.el5
 RANLIB = :
-SITELIBEXP = /usr/lib/perl5/site_perl/5.8.8
-SITEARCHEXP = /usr/lib/perl5/site_perl/5.8.8/i386-linux-thread-multi
+SITELIBEXP = /usr/bin/lib/perl5/site_perl/5.14.1
+SITEARCHEXP = /usr/bin/lib/perl5/site_perl/5.14.1/i686-linux
 SO = so
-VENDORARCHEXP = /usr/lib/perl5/vendor_perl/5.8.8/i386-linux-thread-multi
-VENDORLIBEXP = /usr/lib/perl5/vendor_perl/5.8.8
+VENDORARCHEXP = 
+VENDORLIBEXP = 
 
 
 # --- MakeMaker constants section:
@@ -69,57 +69,57 @@ INST_LIB = blib/lib
 INST_MAN1DIR = blib/man1
 INST_MAN3DIR = blib/man3
 MAN1EXT = 1
-MAN3EXT = 3pm
+MAN3EXT = 3
 INSTALLDIRS = site
 DESTDIR = 
 PREFIX = $(SITEPREFIX)
 PERLPREFIX = /usr
-SITEPREFIX = /usr
-VENDORPREFIX = /usr
-INSTALLPRIVLIB = /usr/lib/perl5/5.8.8
+SITEPREFIX = /usr/bin
+VENDORPREFIX = 
+INSTALLPRIVLIB = /usr/lib/perl5/5.14.1
 DESTINSTALLPRIVLIB = $(DESTDIR)$(INSTALLPRIVLIB)
-INSTALLSITELIB = /usr/lib/perl5/site_perl/5.8.8
+INSTALLSITELIB = /usr/bin/lib/perl5/site_perl/5.14.1
 DESTINSTALLSITELIB = $(DESTDIR)$(INSTALLSITELIB)
-INSTALLVENDORLIB = /usr/lib/perl5/vendor_perl/5.8.8
+INSTALLVENDORLIB = 
 DESTINSTALLVENDORLIB = $(DESTDIR)$(INSTALLVENDORLIB)
-INSTALLARCHLIB = /usr/lib/perl5/5.8.8/i386-linux-thread-multi
+INSTALLARCHLIB = /usr/lib/perl5/5.14.1/i686-linux
 DESTINSTALLARCHLIB = $(DESTDIR)$(INSTALLARCHLIB)
-INSTALLSITEARCH = /usr/lib/perl5/site_perl/5.8.8/i386-linux-thread-multi
+INSTALLSITEARCH = /usr/bin/lib/perl5/site_perl/5.14.1/i686-linux
 DESTINSTALLSITEARCH = $(DESTDIR)$(INSTALLSITEARCH)
-INSTALLVENDORARCH = /usr/lib/perl5/vendor_perl/5.8.8/i386-linux-thread-multi
+INSTALLVENDORARCH = 
 DESTINSTALLVENDORARCH = $(DESTDIR)$(INSTALLVENDORARCH)
 INSTALLBIN = /usr/bin
 DESTINSTALLBIN = $(DESTDIR)$(INSTALLBIN)
 INSTALLSITEBIN = /usr/bin
 DESTINSTALLSITEBIN = $(DESTDIR)$(INSTALLSITEBIN)
-INSTALLVENDORBIN = /usr/bin
+INSTALLVENDORBIN = 
 DESTINSTALLVENDORBIN = $(DESTDIR)$(INSTALLVENDORBIN)
 INSTALLSCRIPT = /usr/bin
 DESTINSTALLSCRIPT = $(DESTDIR)$(INSTALLSCRIPT)
 INSTALLSITESCRIPT = /usr/bin
 DESTINSTALLSITESCRIPT = $(DESTDIR)$(INSTALLSITESCRIPT)
-INSTALLVENDORSCRIPT = /usr/bin
+INSTALLVENDORSCRIPT = 
 DESTINSTALLVENDORSCRIPT = $(DESTDIR)$(INSTALLVENDORSCRIPT)
 INSTALLMAN1DIR = /usr/share/man/man1
 DESTINSTALLMAN1DIR = $(DESTDIR)$(INSTALLMAN1DIR)
-INSTALLSITEMAN1DIR = /usr/share/man/man1
+INSTALLSITEMAN1DIR = /usr/bin/share/man/man1
 DESTINSTALLSITEMAN1DIR = $(DESTDIR)$(INSTALLSITEMAN1DIR)
-INSTALLVENDORMAN1DIR = /usr/share/man/man1
+INSTALLVENDORMAN1DIR = 
 DESTINSTALLVENDORMAN1DIR = $(DESTDIR)$(INSTALLVENDORMAN1DIR)
 INSTALLMAN3DIR = /usr/share/man/man3
 DESTINSTALLMAN3DIR = $(DESTDIR)$(INSTALLMAN3DIR)
-INSTALLSITEMAN3DIR = /usr/share/man/man3
+INSTALLSITEMAN3DIR = /usr/bin/share/man/man3
 DESTINSTALLSITEMAN3DIR = $(DESTDIR)$(INSTALLSITEMAN3DIR)
-INSTALLVENDORMAN3DIR = /usr/share/man/man3
+INSTALLVENDORMAN3DIR = 
 DESTINSTALLVENDORMAN3DIR = $(DESTDIR)$(INSTALLVENDORMAN3DIR)
-PERL_LIB = /usr/lib/perl5/5.8.8
-PERL_ARCHLIB = /usr/lib/perl5/5.8.8/i386-linux-thread-multi
+PERL_LIB = /usr/lib/perl5/5.14.1
+PERL_ARCHLIB = /usr/lib/perl5/5.14.1/i686-linux
 LIBPERL_A = libperl.a
 FIRST_MAKEFILE = Makefile
 MAKEFILE_OLD = Makefile.old
 MAKE_APERL_FILE = Makefile.aperl
 PERLMAINCC = $(CC)
-PERL_INC = /usr/lib/perl5/5.8.8/i386-linux-thread-multi/CORE
+PERL_INC = /usr/lib/perl5/5.14.1/i686-linux/CORE
 PERL = /usr/bin/perl
 FULLPERL = /usr/bin/perl
 ABSPERL = $(PERL)
@@ -134,9 +134,9 @@ PERM_DIR = 755
 PERM_RW = 644
 PERM_RWX = 755
 
-MAKEMAKER   = /usr/lib/perl5/5.8.8/ExtUtils/MakeMaker.pm
-MM_VERSION  = 6.56
-MM_REVISION = 65600
+MAKEMAKER   = /usr/lib/perl5/5.14.1/ExtUtils/MakeMaker.pm
+MM_VERSION  = 6.57_05
+MM_REVISION = 65705
 
 # FULLEXT = Pathname for extension directory (eg Foo/Bar/Oracle).
 # BASEEXT = Basename part of FULLEXT. May be just equal FULLEXT. (eg Oracle)
@@ -188,7 +188,7 @@ PM_TO_BLIB = lib/Checkid.pm \
 
 
 # --- MakeMaker platform_constants section:
-MM_Unix_VERSION = 6.56
+MM_Unix_VERSION = 6.57_05
 PERL_MALLOC_DEF = -DPERL_EXTMALLOC_DEF -Dmalloc=Perl_malloc -Dfree=Perl_mfree -Drealloc=Perl_realloc -Dcalloc=Perl_calloc
 
 
@@ -439,17 +439,17 @@ clean :: clean_subdirs
 	  core.[0-9] $(INST_ARCHAUTODIR)/extralibs.all \
 	  core.[0-9][0-9] $(BASEEXT).bso \
 	  pm_to_blib.ts core.[0-9][0-9][0-9][0-9] \
-	  $(BASEEXT).x $(BOOTSTRAP) \
-	  perl$(EXE_EXT) tmon.out \
-	  *$(OBJ_EXT) pm_to_blib \
-	  $(INST_ARCHAUTODIR)/extralibs.ld blibdirs.ts \
-	  core.[0-9][0-9][0-9][0-9][0-9] *perl.core \
-	  core.*perl.*.? $(MAKE_APERL_FILE) \
-	  perl $(BASEEXT).def \
-	  core.[0-9][0-9][0-9] mon.out \
-	  lib$(BASEEXT).def perlmain.c \
-	  perl.exe so_locations \
-	  $(BASEEXT).exp 
+	  MYMETA.yml $(BASEEXT).x \
+	  $(BOOTSTRAP) perl$(EXE_EXT) \
+	  tmon.out *$(OBJ_EXT) \
+	  pm_to_blib $(INST_ARCHAUTODIR)/extralibs.ld \
+	  blibdirs.ts core.[0-9][0-9][0-9][0-9][0-9] \
+	  *perl.core core.*perl.*.? \
+	  $(MAKE_APERL_FILE) perl \
+	  $(BASEEXT).def core.[0-9][0-9][0-9] \
+	  mon.out lib$(BASEEXT).def \
+	  perlmain.c perl.exe \
+	  so_locations $(BASEEXT).exp 
 	- $(RM_RF) \
 	  blib 
 	- $(MV) $(FIRST_MAKEFILE) $(MAKEFILE_OLD) $(DEV_NULL)
@@ -489,7 +489,7 @@ metafile : create_distdir
 	$(NOECHO) $(ECHO) '    directory:' >> META_new.yml
 	$(NOECHO) $(ECHO) '        - t' >> META_new.yml
 	$(NOECHO) $(ECHO) '        - inc' >> META_new.yml
-	$(NOECHO) $(ECHO) 'generated_by:       ExtUtils::MakeMaker version 6.56' >> META_new.yml
+	$(NOECHO) $(ECHO) 'generated_by:       ExtUtils::MakeMaker version 6.57_05' >> META_new.yml
 	$(NOECHO) $(ECHO) 'meta-spec:' >> META_new.yml
 	$(NOECHO) $(ECHO) '    url:      http://module-build.sourceforge.net/META-spec-v1.4.html' >> META_new.yml
 	$(NOECHO) $(ECHO) '    version:  1.4' >> META_new.yml
@@ -787,7 +787,7 @@ ppd :
 	$(NOECHO) $(ECHO) '    <ABSTRACT>Perl extension to check the user'\''s id and access rights based on the uid cookie passed in HTML headers.</ABSTRACT>' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '    <AUTHOR>Doug Conran &lt;dconran@nonet&gt;</AUTHOR>' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '    <IMPLEMENTATION>' >> $(DISTNAME).ppd
-	$(NOECHO) $(ECHO) '        <ARCHITECTURE NAME="i386-linux-thread-multi-5.8" />' >> $(DISTNAME).ppd
+	$(NOECHO) $(ECHO) '        <ARCHITECTURE NAME="i686-linux-5.14" />' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '        <CODEBASE HREF="" />' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '    </IMPLEMENTATION>' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '</SOFTPKG>' >> $(DISTNAME).ppd
