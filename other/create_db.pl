@@ -12,7 +12,9 @@ $Acct_id = "";
 $VAT_id = 0;
 $Field = "";
 
-open(FILE,"<fpadump.xml");
+$XML_file = $ARGV[0] || 'fpadump.xml';
+
+open(FILE,"<$XML_file");
 while (<FILE>) {
 	if (/^\s*\<\w.+ Details>$/i) {
 		$Flds = "";
@@ -119,6 +121,7 @@ while (<FILE>) {
 	elsif (/^\s*\<(\w+)?>(.*)<\/\1>$/) {		#  Start and end tags on same line
 		$Fldname = $1;
 		$Flddata = $2;
+
 		$Fld{$Fldname} = $Flddata;
 		$Flddata =~ s/\\\\n/\n/g;		#  re-introduce newlines
 
@@ -126,6 +129,7 @@ while (<FILE>) {
 			$Fldname =~ s/^64//;
 			$Flddata = decode_base64($Flddata);
 		}
+		$Flddata =~ s/\'/\\\'/sg;
 		$Flds .= $Fldname.",";
 		if ($Fldname =~ /id/i) {
 			$Data .= "$Flddata,";

@@ -61,7 +61,7 @@ create table companies (
   comyearend varchar(100) not null default '0' comment 'Company Year End month',
   comnextsi varchar(80) not null default '100001' comment 'Next Sales Invoice No',
   comnextpi varchar(80) not null default '500001' comment 'Next Purchase Invoice No',
-  comnextpr varchar(80) not null default '100001' comment 'Next Proforma Invoice No',
+  comnextpr varchar(80) not null default '1001' comment 'Next Proforma Invoice No',
   comnexttxn varchar(80) not null default '1'comment 'Next Transaction Number',
   comvatscheme varchar(10) not null default 'N' comment 'VAT scheme, can be one of N - None, C - Cash, S - Standard',
   comvatno varchar(250) not null default '' comment 'Company VAT Registration No',
