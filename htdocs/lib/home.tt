@@ -14,6 +14,11 @@
 <li>Easily monitor the general health of your business</li></ul>
 <h3>All for the princely sum of NO PENCE per month!</h3>
 </div>
-<div style="float:right;border:1px solid black;width:150px;margin:20px 0 0 20px;padding:10px;">
-Hi Doug this is some text to say that testimonials can go here with out a prpblem
+<div style="position:relative; float:right;width:190px;margin:20px 0 0 20px; padding:0px;">
+<img style="position:absolute;top:5px;padding-left:3px;" src="/wp-content/themes/freeplusaccounts/images/start_quotes.png"/>
+<div style="padding:10px 30px;border:1px dotted #999999;">The website is easy to navigate and the registration to use the product was straightforward.&nbsp;&nbsp;The tutorial was a great help<br/><span class="testauth">Penny Millar - helpfuladmin.co.uk</span><br/><br/>
+As a small business, we have struggled to find an accounts package that is simple, effective and can be continually updated to meet the changing rules. This fits the bill admirably<br/><span class="testauth">Phil Conran - 360 Environmental</span></div>
+<div style="position:relative;float:right;padding-right:30px;">
+<img style="position:absolute;top:-25px;" src="/wp-content/themes/freeplusaccounts/images/end_quotes.png"/>
+</div>
 </div>

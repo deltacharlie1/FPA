@@ -4,7 +4,7 @@
         	
             <div class="get-up-and-running">
             
-            	<h3>Get Up And Running <br /><strong>In Less Than 5 Minutes</strong></h3>
+            	<h3>Get Up And Running In Less Than 5 Minutes</h3>
                 
                 <div class="listfix">
                 
@@ -14,7 +14,7 @@
                         <li class="three">Login<strong>30 sec</strong></li>
                         <li class="four">Setup<strong>1m 30 sec</strong></li>
                         <li class="five">Get Started<strong>easy peasy</strong></li>
-                        <li class="six"><a href="" title="register"></a></li>
+                        <li class="six"><a href="https://www.freeplusaccounts.co.uk/cgi-bin/fpa/register.pl" title="register"></a></li>
                     </ul>
                     
                     <div class="clear"></div>
@@ -23,7 +23,7 @@
                             
             </div>
             
-            <a href="" class="banner"></a>
+            <a href="/whats-the-catch" class="banner"></a>
     	
 			<div class="clear"></div>
                 

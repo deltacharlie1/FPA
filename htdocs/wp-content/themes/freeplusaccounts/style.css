@@ -319,14 +319,14 @@ input[type=select] { background-color:#FFF; border:1px solid #CCC; padding:4px; 
 	float: left;
 	width: 664px;
 	background-repeat: no-repeat;
-	background-position: left 70px;
+	background-position: left 40px;
 	padding: 15px 0 25px 0;
 }
 .footer-a .m .get-up-and-running h3 {
 	text-transform: uppercase;
 	font-size: 15px;
 	font-weight: normal;
-	padding: 20px 0 0 0;
+	padding: 20px 0;
 	margin: 0 0 0 0;
 	line-height: 22px;
 	display: inline;
@@ -768,4 +768,9 @@ img.aligncenter {
 	width:372px;
 	float:left;
 	padding:10px 0 5px 30px;
+}
+.testauth {
+	font-size:10px;
+	color:#999999;
+	font-style:italic;
 }

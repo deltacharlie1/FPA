@@ -1,7 +1,14 @@
 #!/usr/bin/perl
 
-$Name = 'dconran@corunna.com';
+print "Content-Type: text/plain\n\n";
 
-$output = `php add_fpa_user.php $Name ibck dconran\@corunna.co.uk`;
-
+use DBI;
+$dbh = DBI->connect("DBI:mysql:fpa");
+$Companies = $dbh->prepare("select comname,comcontact from companies");
+$Companies->execute;
+while (@Company = $Companies->fetchrow) {
+	print "$Company[0] \t\t-\t$Company[1]\n";
+}
+$Companies->finish;
+$dbh->disconnect;
 exit;

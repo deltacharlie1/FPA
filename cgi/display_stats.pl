@@ -5,6 +5,7 @@
 use GD;
 
 @Month = split(/\:/,$ENV{QUERY_STRING});
+
 $Graphtype = $Month[0];
 
 $Max = 0;
@@ -142,7 +143,7 @@ if ($Graphtype =~ /Net/i) {
 		$image->char(gdMediumBoldFont,$posn+6,123,$Month,$black);                       #  month
 		if ($Sales > 0) {
 			$Sales = int($Sales / $Factor);
-			$image->filledRectangle($posn+4,74,$posn+14,74-$Sales,$blue);           #  Sales
+			$image->filledRectangle($posn+4,74-$Sales,$posn+14,74,$blue);           #  Sales
 		}
 		if ($Sales < 0) {
 			$Sales = int($Sales / $Factor);
@@ -190,11 +191,13 @@ else {
 		$image->char(gdMediumBoldFont,$posn+6,123,$Month,$black);			#  month
 		if ($Sales > 0) {
 			$Sales = int($Sales / $Factor);
-			$image->filledRectangle($posn+2,122,$posn+9,122-$Sales,$blue);		#  Sales
+#			$image->filledRectangle($posn+2,122,$posn+9,122-$Sales,$blue);		#  Sales
+			$image->filledRectangle($posn+2,122-$Sales,$posn+9,122,$blue);		#  Sales
 		}
 		if ($Purchases > 0) {
 			$Purchases = int($Purchases / $Factor);
-			$image->filledRectangle($posn+10,122,$posn+16,122-$Purchases,$red);	#  Purchases
+#			$image->filledRectangle($posn+10,122,$posn+16,122-$Purchases,$red);	#  Purchases
+			$image->filledRectangle($posn+10,122-$Purchases,$posn+16,122,$red);	#  Purchases
 		}
 		$Mth++;
 		if ($Mth > 12) { $Mth = 1; }
