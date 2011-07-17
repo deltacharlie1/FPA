@@ -11,6 +11,10 @@ $Data = "";
 $Acct_id = "";
 $VAT_id = 0;
 $Field = "";
+$Comexpid = 0;
+$Comvatscheme = "";
+$Com_id = 0;
+$Reg_id = 0;
 
 $XML_file = $ARGV[0] || 'fpadump.xml';
 
@@ -28,9 +32,10 @@ while (<FILE>) {
 		if ($Reg_com_id) {
 			$Sts = $dbh->do("update reg_coms set reg1_id=$Reg_com_id where old_id=$Fld{reg1_id}");
 		} 
-
 	}
 	elsif (/^\s*\<\/Company Details>$/i) {
+		$Comexpid = $Fld{comexpid};
+		$Comvatscheme = $Fld{comvatscheme};
 		$Flds =~ s/,$//;
 		$Data =~ s/,$//;
 		$Sts = $dbh->do("insert into companies ($Flds) values ($Data)");
@@ -122,7 +127,6 @@ while (<FILE>) {
 		$Fldname = $1;
 		$Flddata = $2;
 
-		$Fld{$Fldname} = $Flddata;
 		$Flddata =~ s/\\\\n/\n/g;		#  re-introduce newlines
 
 		if ($Fldname =~ /^64.+/) {
@@ -130,6 +134,8 @@ while (<FILE>) {
 			$Flddata = decode_base64($Flddata);
 		}
 		$Flddata =~ s/\'/\\\'/sg;
+		$Fld{$Fldname} = $Flddata;
+
 		$Flds .= $Fldname.",";
 		if ($Fldname =~ /id/i) {
 			$Data .= "$Flddata,";
@@ -143,46 +149,71 @@ close(FILE);
 
 #  Now sort out all of the link fields
 
-$Accounts = $dbh->prepare("select id,old_id from accounts where acct_id='$Acct_id'");
-$Accounts->execute;
-while ($Account = $Accounts->fetchrow_hashref) {
-	$Sts = $dbh->do("update statements set acc_id=$Account->{id} where acc_id=$Account->{old_id} and acct_id='$Acct_id'");
-}
-$Accounts->finish;
-
 $Customers = $dbh->prepare("select id,old_id from customers where acct_id='$Acct_id'");
 $Customers->execute;
 while ($Customer = $Customers->fetchrow_hashref) {
 	$Sts = $dbh->do("update invoices set cus_id=$Customer->{id} where cus_id=$Customer->{old_id} and acct_id='$Acct_id'");
+	$Sts = $dbh->do("update transactions set link_id=$Customer->{id} where link_id=$Customer->{old_id} and txncusname not like 'Bank%' and txncusname not like 'VAT%' and acct_id='$Acct_id'");
+	if ($Customer->{old_id} == $Comexpid) {
+		@Comid = split(/\+/,$Acct_id);
+		$Sts = $dbh->do("update companies set comexpid=$Customer->{id} where reg_id=$Comid[0] and id=$Comid[1]");
+	}
 }
 $Customers->finish;
 
 $Invoices = $dbh->prepare("select id,old_id from invoices where acct_id='$Acct_id'");
 $Invoices->execute;
 while ($Invoice = $Invoices->fetchrow_hashref) {
-	$Sts = $dbh->do("update transactions set link_id=$Invoice->{id} where link_id=$Invoice->{old_id} and acct_id='$Acct_id'");
+	$Sts = $dbh->do("update items set inv_id=$Invoice->{id} where inv_id=$Invoice->{old_id} and acct_id='$Acct_id'");
+	$Sts = $dbh->do("update transactions set link_id=$Invoice->{id} where link_id=$Invoice->{old_id} and txncusname like 'Bank%' and acct_id='$Acct_id'");
 	$Sts = $dbh->do("update inv_txns set inv_id=$Invoice->{id} where inv_id=$Invoice->{old_id} and acct_id='$Acct_id'");
 	$Sts = $dbh->do("update nominals set link_id=$Invoice->{id} where link_id=$Invoice->{old_id} and nomtype='S' and acct_id='$Acct_id'");
+	$Sts = $dbh->do("update audit_trails set link_id=$Invoice->{id},audstamp=audstamp where link_id=$Invoice->{old_id} and audtype like 'update%' and acct_id='$Acct_id'");
+	$Sts = $dbh->do("update images set link_id=$Invoice->{id} where link_id=$Invoice->{old_id} and imgdoc_type='INV' and acct_id='$Acct_id'");
+	if ($Comvatscheme =~ /S/i) {
+		$Sts = $dbh->do("update vataccruals set acrtxn_id=$Invoice->{id} where acrtxn_id=$Invoice->{old_id} and acct_id='$Acct_id'");
+	}
 }
 $Invoices->finish;
-$Statements = $dbh->prepare("select id,old_id from statements where acct_id='$Acct_id'");
-$Statements->execute;
-while ($Statement = $Statements->fetchrow_hashref) {
-	$Sts = $dbh->do("update transactions set stmt_id=$Statement->{id} where stmt_id=$Statement->{old_id} and acct_id='$Acct_id'");
-}
-$Statements->finish;
+
 $Transactions = $dbh->prepare("select id,old_id from transactions where acct_id='$Acct_id'");
 $Transactions->execute;
 while ($Transaction = $Transactions->fetchrow_hashref) {
 	$Sts = $dbh->do("update inv_txns set txn_id=$Transaction->{id} where txn_id=$Transaction->{old_id} and acct_id='$Acct_id'");
 	$Sts = $dbh->do("update nominals set link_id=$Transaction->{id} where link_id=$Transaction->{old_id} and nomtype='T' and acct_id='$Acct_id'");
-	$Sts = $dbh->do("update vataccruals set acrtxn_id=$Transaction->{id} where acrtxn_id=$Transaction->{old_id} and acct_id='$Acct_id'");
+	$Sts = $dbh->do("update images set link_id=$Transaction->{id} where link_id=$Transaction->{old_id} and imgdoc_type='TXN' and acct_id='$Acct_id'");
+	$Sts = $dbh->do("update audit_trails set link_id=$Transaction->{id},audstamp=audstamp where link_id=$Transaction->{old_id} and audtype like 'transac%' and acct_id='$Acct_id'");
 }
 $Transactions->finish;
+
+if ($Comvatscheme =~ /C/i) {
+	$Inv_txns = $dbh->prepare("select id,old_id from inv_txns where acct_id='$Acct_id'");
+	$Inv_txns->execute;
+	while ($Inv_txn = $Inv_txns->fetchrow_hashref) {
+		$Sts = $dbh->do("update vataccruals set acrtxn_id=$Inv_txn->{id} where acrtxn_id=$Inv_txn->{old_id} and acct_id='$Acct_id'");
+	}
+}
+$Inv_txns->finish;
+
+$Accounts = $dbh->prepare("select id,old_id from accounts where acct_id='$Acct_id'");
+$Accounts->execute;
+while ($Account = $Accounts->fetchrow_hashref) {
+	$Sts = $dbh->do("update statements set acc_id=$Account->{id} where acc_id=$Account->{old_id} and acct_id='$Acct_id'");
+}
+$Accounts->finish;
+$Statements = $dbh->prepare("select id,old_id from statements where acct_id='$Acct_id'");
+$Statements->execute;
+while ($Statement = $Statements->fetchrow_hashref) {
+	$Sts = $dbh->do("update transactions set stmt_id=$Statement->{id} where stmt_id=$Statement->{old_id} and acct_id='$Acct_id'");
+	$Sts = $dbh->do("update images set link_id=$Statement->{id} where link_id=$Statement->{old_id} and imgdoc_type='STMT' and acct_id='$Acct_id'");
+}
+$Statements->finish;
 $Vatreturns = $dbh->prepare("select id,old_id from vatreturns where acct_id='$Acct_id'");
 $Vatreturns->execute;
 while ($Vatreturn = $Vatreturns->fetchrow_hashref) {
 	$Sts = $dbh->do("update vataccruals set vr_id=$Vatreturn->{id} where vr_id=$Vatreturn->{old_id} and acct_id='$Acct_id'");
+	$Sts = $dbh->do("update transactions set link_id=$Vatreturn->{id} where link_id=$Vatreturn->{old_id} and txncusname like 'VAT%' and acct_id='$Acct_id'");
+	$Sts = $dbh->do("update audit_trails set link_id=$Vatreturn->{id},audstamp=audstamp where link_id=$Vatreturn->{old_id} and audtype like 'vatreturn%' and acct_id='$Acct_id'");
 }
 $Vatreturns->finish;
 $dbh->disconnect;

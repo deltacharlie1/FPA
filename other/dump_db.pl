@@ -19,7 +19,7 @@ $dbh = DBI->connect("DBI:mysql:fpa");
 
 #  Get the Company details
 
-$Companies = $dbh->prepare("select comname,comregno,comaddress,compostcode,comtel,combusiness,comcontact,comemail,comyearend,comnextsi,comnextpi,comnextpr,comnexttxn,comvatscheme,comvatno,comvatcontrol,comvatduein,comvatqstart,comvatmsgdue,comnocheques,comyearendmsgdue,comyearendreminder,comcompleted,comacccompleted,comoptin,comexpid,comemailmsg,comstmtmsg,comfree,comno_ads,comrep_invs,comstmts,comuplds,compt_logo,comhmrc,comsuppt,id,comadd_user,comnetstats,comdocsdir,reg_id,id as old_id from companies where id=$ARGV[0]");
+$Companies = $dbh->prepare("select comname,comregno,comaddress,compostcode,comtel,combusiness,comcontact,comemail,comyearend,comnextsi,comnextpi,comnextpr,comnexttxn,comvatscheme,comvatno,comvatcontrol,comvatduein,comvatqstart,comvatmsgdue,comnocheques,comyearendmsgdue,comyearendreminder,comcompleted,comacccompleted,comoptin,comexpid,comemailmsg,comstmtmsg,comfree,comno_ads,comrep_invs,comstmts,comuplds,compt_logo,comhmrc,comsuppt,comadd_user,cominvstats,comtxnstats,comnetstats,comdocsdir,reg_id,id,id as old_id from companies where id=$ARGV[0]");
 $Companies->execute;
 if ($Companies->rows > 0) {
 	print FILE substr($Tabs,0,$Tab_count)."<Company>\n";
@@ -54,7 +54,9 @@ if ($Companies->rows > 0) {
 			$Tag = $Key;
 #			$Tag =~ s/^com//;
 			$Company->{$Key} =~ s/\n/\\\\n/g;
-			print FILE substr($Tabs,0,$Tab_count)."<$Tag>$Company->{$Key}</$Tag>\n" if $Company->{$Key};
+			unless ($Tag =~ /^id$/i) {
+				print FILE substr($Tabs,0,$Tab_count)."<$Tag>$Company->{$Key}</$Tag>\n" if $Company->{$Key};
+			}
 		}
 		$Tab_count--;
 		print FILE substr($Tabs,0,$Tab_count)."</Company Details>\n";
@@ -220,7 +222,7 @@ if ($Companies->rows > 0) {
 
 #  Customer Invoices
 
-		$Invoices = $dbh->prepare("select cus_id,invinvoiceno,invcusref,invtype,invcusname,invcusaddr,invcuspostcode,invcusregion,invcuscontact,invcusemail,invcusterms,invremarks,invcoa,invcreated,invprintdate,invduedate,invtotal,invvat,invpaid,invpaidvat,invpaiddate,invstatus,invstatuscode,invstatusdate,invfpflag,invitemcount,invitems,invdesc,invyearend,id as old_id from invoices where acct_id='$Acct_id' order by invinvoiceno");
+		$Invoices = $dbh->prepare("select cus_id,invinvoiceno,invourref,invcusref,invtype,invcusname,invcusaddr,invcuspostcode,invcusregion,invcuscontact,invcusemail,invcusterms,invremarks,invcoa,invcreated,invprintdate,invduedate,invtotal,invvat,invpaid,invpaidvat,invpaiddate,invstatus,invstatuscode,invstatusdate,invfpflag,invitemcount,invitems,invdesc,invyearend,id as old_id from invoices where acct_id='$Acct_id' order by invinvoiceno");
 		$Invoices->execute;
 		if ($Invoices->rows > 0) {
 			print FILE substr($Tabs,0,$Tab_count)."<Customer Invoices>\n";

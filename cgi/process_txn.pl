@@ -23,6 +23,7 @@ while (( $Key,$Value) = each %FORM) {
 	$Value =~ tr/\\//d;
 	$Value =~ s/\'/\\\'/g;
 	$FORM{$Key} = $Value;
+
 }
 # exit;
 
@@ -59,7 +60,30 @@ else {
 		$FORM{invtype} = "S";
 
 		require "/usr/local/httpd/cgi-bin/fpa/process_invoice.ph";
-		&save_invoice();		#  create a dummy invoice
+
+#  Check to see if we have an invoice number (and only an invoice number) in rec_invdesc (remarks)
+
+		if ($FORM{invdesc} =~ /^\d+$/) {
+
+#  We do so see if we can find that invoice
+
+warn "Paying off invoice $FORM{invdesc}\n";
+
+			$Invoices = $dbh->prepare("select id from invoices where invinvoiceno='$FORM{invdesc}' and acct_id='$COOKIE->{ACCT}'");
+			$Invoices->execute;
+			if ($Invoices->rows > 0) {
+				($FORM{id}) = $Invoices->fetchrow;
+warn "Invoice id $FORM{id} found\n";
+
+			}
+			else {
+				&save_invoice();
+			}
+			$Invoices->finish;
+		}
+		else {
+			&save_invoice();		#  create a dummy invoice
+		}
 		&money_in();
 		&pay_invoice();
 

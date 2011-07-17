@@ -178,6 +178,7 @@ create table invoices (
   acct_id varchar(50) not null default '',
   cus_id int unsigned not null,
   invinvoiceno varchar(50) not null default '',
+  invourref varchar(250) not null default '' comment 'our ref, used to hold quotation ref',
   invcusref varchar(250) not null default '',
   invtype char(4) not null default 'S' comment 'S - invoice C - credit Note P - purchase invoice R - Purchase Refund',
   invcusname varchar(250) not null default '',
