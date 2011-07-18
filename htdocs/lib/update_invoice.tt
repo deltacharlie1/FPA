@@ -1,6 +1,6 @@
 <div class="main" id="main">
 [%- USE date(format = '%d-%b-%y') %]
-[%- IF invoice.invtype == "C"; invtext = "Credit Note"; ELSE; invtext = "Invoice No"; END -%]
+[%- IF invoice.invtype == "C"; invtext = "Credit Note"; ELSIF invoice.invstatus == "Quote"; invtext = "Quotation"; ELSE; invtext = "Invoice"; END -%]
 <div id="template" style="text-align:left;z-index:10100;display:none;" title="Invoice Frequency Details">
 <form id="repeat_details" form="repeat_details" class="newinvoice">
   <table width="100%" border="0" cellpadding="0" cellspacing="0" class="formtable">
@@ -38,7 +38,7 @@
 [%- UNLESS cookie.VAT == "N" -%]<input type="hidden" name="invvat" id="x_invvat" value="[%- invoice.invvat -%]"/>[%- END -%]
 <input type="hidden" name="item_tt" id="item_tt" value="[%- invoice.tottotal -%]"/>
 <input type="hidden" name="invstatus" id="x_invstatus" value="[%- invoice.invstatus -%]"/>
-<div class="status">[%- invoice.invstatus -%] <span class="invtext">[%- invtext | remove(" No") -%]</span></div>
+<div class="status">[%- UNLESS invoice.invstatus == "Quote"; invoice.invstatus; END -%] <span class="invtext">[%- invtext | remove(" No") -%]</span></div>
   <table width="660" border="0" cellpadding="0" cellspacing="0" class="formtable">
     <tr>
       <td><label>Company Name</label></td>
@@ -164,7 +164,7 @@
       </td>
     </tr>
     <tr>
-      <td colspan="2" rowspan="3">Remarks<br/><textarea name="invremarks" id="remarks" cols="35" rows="2"></textarea></td>
+      <td colspan="2" rowspan="3">Remarks<br/><textarea name="invremarks" id="remarks" cols="35" rows="2">[%- invoice.invremarks -%]</textarea></td>
       <td style="text-align:right;"><strong>Sub Total : </strong></td>
       <td id="st" style="text-align:right;padding-right:40px;">[%- invoice.invtotal | remove('-') -%]</td>
     </tr>
@@ -186,6 +186,7 @@
 </table>
 </div>
 <div id="sidebar">
+  <ul>    
 [% IF cookie.REP_INVS == "1" -%]
     <li>
       <div>
@@ -195,7 +196,6 @@
       </div>
     </li>
 [% END -%]
-  <ul>    
     <li>
       <div>
         <a href="#" onclick="submit_details('Draft');">
@@ -203,7 +203,14 @@
         </a>
       </div>  
     </li>   
-    <li>    
+    <li>
+      <div>
+        <a href="#" onclick="submit_details('Quote');">
+         Print Quotation
+        </a>
+      </div>  
+    </li>
+    <li>  
       <div>   
         <a href="#" onclick="submit_details('Preview');">
          Preview

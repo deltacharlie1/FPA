@@ -7,7 +7,7 @@ $ACCESS_LEVEL = 1;
 #  Invoice status codes are as follows:-
 #
 #  0  -  Cancelled/Voided
-#  1  -  Draft
+#  1  -  Draft / Quote
 #  2  -  Paid
 #  3  -  Printed
 #  6  -  Due (within 3/10ths of being overdue)
@@ -95,6 +95,15 @@ OK-update_invoice.pl?$FORM{id}
 
 EOD
 		}
+		elsif ($FORM{submit} =~ /Quote/i) {
+			&save_invoice('quote');
+			print<<EOD;
+Content-Type: text/plain
+
+OK-print_invoice.pl?$FORM{id}?Q
+
+EOD
+	        }
 	        elsif ($FORM{submit} =~ /Preview/i) {
 			&save_invoice('draft');
 

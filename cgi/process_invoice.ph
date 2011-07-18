@@ -3,7 +3,7 @@ sub get_com_details {
 #  Get the VAT scheme and when due
 
         ($Reg_id,$Com_id) = split(/\+/,$COOKIE->{ACCT});
-       	$Companies = $dbh->prepare("select comvatscheme,comvatduein,date_format(curdate(),'%m'),comnextsi,comnextpi,comnexttxn from companies where reg_id=$Reg_id and id=$Com_id");
+       	$Companies = $dbh->prepare("select comvatscheme,comvatduein,date_format(curdate(),'%m'),comnextsi,comnextpi,comnexttxn,comnextpr from companies where reg_id=$Reg_id and id=$Com_id");
         $Companies->execute;
        	@Company = $Companies->fetchrow;
         $Companies->finish;
@@ -106,6 +106,7 @@ sub process_vat {
 
 sub save_invoice {
 
+	($Reg_id,$Com_id) = split(/\+/,$COOKIE->{ACCT});
 	my $Level = shift;		#  Is this a draft or final invoice?
 
 	if ($FORM{invtype} =~ /S/i) {
@@ -200,7 +201,38 @@ EOD
 		}
 		else {				#  this is a new invoice so get the next invoice no and then save details
 
-			$Sts = $dbh->do("insert into invoices (acct_id,cus_id,invinvoiceno,invcusref,invtype,invcusname,invcusaddr,invcuspostcode,invcusregion,invcoa,invcuscontact,invcusemail,invcusterms,invremarks,invcreated,invstatus,invstatuscode,invstatusdate,invfpflag,invitemcount,invitems,invdesc,invtotal,invvat) values ('$COOKIE->{ACCT}',$FORM{cus_id},'$FORM{invinvoiceno}','$FORM{invcusref}','$FORM{invtype}','$FORM{invcusname}','$FORM{invcusaddr}','$FORM{invcuspostcode}','$FORM{invcusregion}','$FORM{invcoa}','$FORM{invcuscontact}','$FORM{invcusemail}','$FORM{invcusterms}','$FORM{invremarks}',now(),'Draft','1',now(),'$FORM{invfpflag}',$FORM{invitemcount},'$FORM{invitems}','$FORM{invdesc}','$FORM{invtotal}','$FORM{invvat}')");
+			$Sts = $dbh->do("insert into invoices (acct_id,cus_id,invcusref,invtype,invcusname,invcusaddr,invcuspostcode,invcusregion,invcoa,invcuscontact,invcusemail,invcusterms,invremarks,invcreated,invstatus,invstatuscode,invstatusdate,invfpflag,invitemcount,invitems,invdesc,invtotal,invvat) values ('$COOKIE->{ACCT}',$FORM{cus_id},'$FORM{invcusref}','$FORM{invtype}','$FORM{invcusname}','$FORM{invcusaddr}','$FORM{invcuspostcode}','$FORM{invcusregion}','$FORM{invcoa}','$FORM{invcuscontact}','$FORM{invcusemail}','$FORM{invcusterms}','$FORM{invremarks}',now(),'Draft','1',now(),'$FORM{invfpflag}',$FORM{invitemcount},'$FORM{invitems}','$FORM{invdesc}','$FORM{invtotal}','$FORM{invvat}')");
+			$FORM{id} = $dbh->last_insert_id(undef, undef, qw(invoices undef));
+		}
+	}
+	elsif ($Level =~ /quote/i) {		#  if a quotation is required
+		if ($FORM{id}) {		#  We are updating an existing invoice/credit note
+
+#  OK - this is an existing record, we need to establish whether it is already a quote or a draft being turned in to a quote
+
+			my $Invoices = $dbh->prepare("select invstatus from invoices where id=$FORM{id} and acct_id='$COOKIE->{ACCT}'");
+			$Invoices->execute;
+			($Currentstatus) = $Invoices->fetchrow;
+			$Invoices->finish;
+
+			if ($Currentstatus =~ /Quote/i) {	#  just ssave/update
+
+				$Sts = $dbh->do("update invoices set invprintdate=str_to_date('$FORM{invprintdate}','%d-%b-%y'),invcusref='$FORM{invcusref}',invtype='$FORM{invtype}',invcusname='$FORM{invcusname}',invcusaddr='$FORM{invcusaddr}',invcuspostcode='$FORM{invcuspostcode}',invcusregion='$FORM{invcusregion}',invcoa='$FORM{invcoa}',invcuscontact='$FORM{invcuscontact}',invcusemail='$FORM{invcusemail}',invcusterms='$FORM{invcusterms}',invremarks='$FORM{invremarks}',invfpflag='$FORM{invfpflag}',invitemcount=$FORM{invitemcount},invitems='$FORM{invitems}',invdesc='$FORM{invdesc}',invtotal='$FORM{invtotal}',invvat='$FORM{invvat}' where id=$FORM{id} and acct_id='$COOKIE->{ACCT}'");
+			}
+			else {		#  New quote so get next quote no and then save
+				&get_com_details();
+				$Ourref = 'QT'.$Company[6];
+				$Sts = $dbh->do("update companies set comnextpr=comnextpr+1 where reg_id=$Reg_id and id=$Com_id");
+				$Sts = $dbh->do("update invoices set invprintdate=str_to_date('$FORM{invprintdate}','%d-%b-%y'),invinvoiceno='$Ourref',invourref='$Ourref',invcusref='$FORM{invcusref}',invtype='$FORM{invtype}',invcusname='$FORM{invcusname}',invcusaddr='$FORM{invcusaddr}',invcuspostcode='$FORM{invcuspostcode}',invcusregion='$FORM{invcusregion}',invcoa='$FORM{invcoa}',invcuscontact='$FORM{invcuscontact}',invcusemail='$FORM{invcusemail}',invcusterms='$FORM{invcusterms}',invremarks='$FORM{invremarks}',invfpflag='$FORM{invfpflag}',invitemcount=$FORM{invitemcount},invitems='$FORM{invitems}',invdesc='$FORM{invdesc}',invtotal='$FORM{invtotal}',invvat='$FORM{invvat}' where id=$FORM{id} and acct_id='$COOKIE->{ACCT}'");
+			}
+		}
+		else {				#  this is a new invoice so get the next quotation no and then save details
+
+			&get_com_details();
+			$Ourref = 'QT'.$Company[6];
+			$Sts = $dbh->do("update companies set comnextpr=comnextpr+1 where reg_id=$Reg_id and id=$Com_id");
+
+			$Sts = $dbh->do("insert into invoices (acct_id,invprintdate,invourref,cus_id,invinvoiceno,invcusref,invtype,invcusname,invcusaddr,invcuspostcode,invcusregion,invcoa,invcuscontact,invcusemail,invcusterms,invremarks,invcreated,invstatus,invstatuscode,invstatusdate,invfpflag,invitemcount,invitems,invdesc,invtotal,invvat) values ('$COOKIE->{ACCT}',str_to_date('$FORM{invprintdate}','%d-%b-%y'),'$Ourref',$FORM{cus_id},'$Ourref','$FORM{invcusref}','$FORM{invtype}','$FORM{invcusname}','$FORM{invcusaddr}','$FORM{invcuspostcode}','$FORM{invcusregion}','$FORM{invcoa}','$FORM{invcuscontact}','$FORM{invcusemail}','$FORM{invcusterms}','$FORM{invremarks}',now(),'Quote','1',now(),'$FORM{invfpflag}',$FORM{invitemcount},'$FORM{invitems}','$FORM{invdesc}','$FORM{invtotal}','$FORM{invvat}')");
 			$FORM{id} = $dbh->last_insert_id(undef, undef, qw(invoices undef));
 		}
 	}

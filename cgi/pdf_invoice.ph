@@ -34,7 +34,7 @@ $Vats->finish;
 
 #  Now get the invoice data
 
-$Invoices = $dbh->prepare("select invinvoiceno,date_format(invprintdate,'%d %b %Y'),date_format(invduedate,'%d %b %Y'),invcusterms,invcusref,invcusname,invcusaddr,invcuspostcode,invcuscontact,invitems,invremarks,date_format(curdate(),'%d %b %Y'),invstatus,invtype from invoices where id=$Invoice_id and acct_id='$COOKIE->{ACCT}'");
+$Invoices = $dbh->prepare("select invinvoiceno,date_format(invprintdate,'%d %b %Y'),date_format(invduedate,'%d %b %Y'),invcusterms,invcusref,invcusname,invcusaddr,invcuspostcode,invcuscontact,invitems,invremarks,date_format(curdate(),'%d %b %Y'),invstatus,invtype,invourref from invoices where id=$Invoice_id and acct_id='$COOKIE->{ACCT}'");
 $Invoices->execute;
 @Invoice = $Invoices->fetchrow;
 $Invoices->finish;
@@ -47,6 +47,10 @@ if ($Invoice[13] =~ /^C/) {
 	$Invtype .= "CREDIT NOTE";
 	$Invtext = "Credit Note";
 }
+elsif ($Invoice[12] =~ /Quote/i) {
+	$Invtype = "QUOTATION";
+	$Invtext = "Quote";
+}
 else {
 	$Invtype .= "INVOICE";
 	$Invtext = "Invoice";
@@ -57,6 +61,16 @@ if ($Invoice[3] == "0") {
 }
 elsif ($Invoice[3] =~ /^\d+$/) {
 	$Invoice[3] .= " Days";
+}
+
+$Ref_text = "Your";
+$Ourref_addition = 0;
+if ($Invoice[4] && $Invoice[14]) {
+	$Ourref_addition = 29;
+}
+elsif ($Invoice[14]) {
+	$Ref_text = "Our";
+	$Invoice[4] = $Invoice[14];
 }
 
 ###  Set Global PDF parameters  ###
@@ -72,7 +86,6 @@ $tb = "";
 $Net = "";
 $Vat = "";
 $Total = "";
-$Invtext = "";
 
 $pdf = PDF::API2->new;
 $font = $pdf->corefont('Helvetica');
@@ -112,17 +125,12 @@ $Stamp = $pdf->image_png('overdue.png');
 
 &set_new_page;
 
-# print "Content-Type: text/plain\n\n";
-
-#print "$Invoice[9]\n\n--------------\n\n";
-
 # $Invoice[9] =~ s/^.*?<\/tbody>(.*)<\/table>/$1/i;		#  Get rid of the Column headers
 $Invoice[9] =~ s/^.*?<\/tbody>//gis;				#  Get rid of the Column headers
 $Invoice[9] =~ tr/\r\n//d;					#  remove any newlines
 $Invoice[9] =~ s/<tbody.*?>//ig;					#  Remove any additional tbody tags
 $Invoice[9] =~ s/<\/tbody>//ig;
 $Invoice[9] =~ s/<tr.*?>//gis;
-#print "$Invoice[9]\n\n--------------\n\n";
 
 # $Invoice[9] =~ tr/A-Z/a-z/;
 @Row = split(/\<\/tr\>/,$Invoice[9]);
@@ -241,7 +249,7 @@ $g->rectxy(43,550,284,669);
 
 #  Invoice conditions etc block
 
-$g->rectxy(312,525,552,669);
+$g->rectxy(312,525-$Ourref_addition,552,669);
 $g->move(312,640);
 $g->line(552,640);
 $g->move(312,609);
@@ -250,8 +258,12 @@ $g->move(312,580);
 $g->line(552,580);
 $g->move(312,551);
 $g->line(552,551);
+if ($Ourref_addition) {
+	$g->move(312,522);
+	$g->line(552,522);
+}
 $g->move(425,669);
-$g->line(425,525);
+$g->line(425,525-$Ourref_addition);
 
 #  Line Item Block
 
@@ -316,8 +328,11 @@ $text->text("Due By Date");
 $text->transform( -translate => [320,560]);
 $text->text("Terms");
 $text->transform( -translate => [320,531]);
-$text->text("Your Reference");
-
+$text->text("$Ref_text Reference");
+if ($Ourref_addition) {
+	$text->transform( -translate => [320,502]);
+	$text->text("Our Reference");
+}
 $text->transform( -translate => [51,447]);
 $text->text("Description");
 
@@ -386,7 +401,7 @@ foreach (@Line) {
 }
 
 if ($Company[6] && $COOKIE->{VAT} !~ /N/i) {
-	$text->transform( -translate => [350,507]);
+	$text->transform( -translate => [350,507-$Ourref_addition]);
 	$text->font($font_bold, 10);
 	$text->text("VAT Registration No: ");
 	$text->font($font, 10);
@@ -465,6 +480,10 @@ $text->cr();
 $text->text($Invoice[3]);
 $text->cr();
 $text->text($Invoice[4]);
+if ($Ourref_addition) {
+	$text->cr();
+	$text->text($Invoice[14]);
+}
 
 #  Set the line item block settings
 

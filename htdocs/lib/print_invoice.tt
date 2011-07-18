@@ -22,7 +22,7 @@
       <iframe id="pdf" name="pdf" width="100%" height="400" src="/cgi-bin/fpa/pdf_invoice.pl?[%- invoice.id -%]"></iframe>
     </td>
   </tr>
-[%- IF invoice.invstatuscode > 1 -%]
+[%- IF invoice.invstatuscode > 1 OR invoice.invstatus == "Quote" -%]
   <tr>
     <td colspan="2">&nbsp;</td>
   </tr>
@@ -39,12 +39,12 @@
   </tr>
   <tr>
     <td><label>Subject</label></td>
-    <td><input type="text" name="pdfsubj" id="pdfsubj" size="40" value="[%- IF invoice.invtype == "C" -%]Credit Note [%- ELSE -%]Invoice [%-END;  invoice.invinvoiceno -%] from [%- cookie.TAG -%]"/></td>
+    <td><input type="text" name="pdfsubj" id="pdfsubj" size="40" value="[%- IF invoice.invtype == "C" -%]Credit Note [%- ELSIF invoice.invstatus == "Quote" -%]Quotation [%- ELSE -%]Invoice [%-END;  invoice.invinvoiceno -%] from [%- cookie.TAG -%]"/></td>
   </tr>
   <tr>
     <td style="vertical-align:top;"><label>Message</label></td>
     <td>
-      <textarea name="pdfmsg" id="pdfmsg" cols="40" rows="6">[%- invoice.cusemailmsg | replace('<invoice#>',invoice.invinvoiceno) -%]</textarea>
+      <textarea name="pdfmsg" id="pdfmsg" cols="40" rows="6">[%- IF invoice.invstatus == "Quote"; invoice.cusemailmsg | replace('<invoice#>',invoice.invinvoiceno) | replace('invoice no','quotation'); ELSE; invoice.cusemailmsg | replace('<invoice#>',invoice.invinvoiceno); END -%]</textarea>
     </td>
   </tr>
   <tr>

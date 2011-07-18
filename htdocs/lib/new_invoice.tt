@@ -233,6 +233,13 @@
     </li>   
     <li>
       <div>
+        <a href="#" onclick="submit_details('Quote');">
+         Print Quotation
+        </a>
+      </div>
+    </li>
+    <li>
+      <div>
         <a href="#" onclick="submit_details('Preview');">
          Preview
         </a>
