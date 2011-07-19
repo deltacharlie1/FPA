@@ -192,8 +192,8 @@ if ($Comvatscheme =~ /C/i) {
 	while ($Inv_txn = $Inv_txns->fetchrow_hashref) {
 		$Sts = $dbh->do("update vataccruals set acrtxn_id=$Inv_txn->{id} where acrtxn_id=$Inv_txn->{old_id} and acct_id='$Acct_id'");
 	}
+	$Inv_txns->finish;
 }
-$Inv_txns->finish;
 
 $Accounts = $dbh->prepare("select id,old_id from accounts where acct_id='$Acct_id'");
 $Accounts->execute;
