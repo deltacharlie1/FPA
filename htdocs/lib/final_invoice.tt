@@ -178,7 +178,7 @@
     <li>
       <div>
         <a href="#" onclick="delete_invoice();">
-         Delete this  Invoice
+         Delete this Invoice
         </a>
       </div>
     </li>
@@ -203,7 +203,7 @@
     <li>    
       <div>
         <a href="/cgi-bin/fpa/list_customer_invoices.pl?[%- invoice.cus_id -%]">
-          List Invoices
+         Customer Invoice List 
         </a>
       </div>  
     </li>   

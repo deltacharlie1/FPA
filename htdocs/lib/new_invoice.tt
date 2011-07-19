@@ -215,40 +215,24 @@
 </div>
 <div id="sidebar">
   <ul>    
-[% IF cookie.REP_INVS == "1" -%]
     <li>
       <div>
-        <a href="#" onclick="submit_details('Template');">
-         Save Invoice Template
-        </a>
-      </div>
-    </li>
-[% END -%]
-    <li>
-      <div>
-        <a href="#" onclick="submit_details('Draft');">
-         Save Draft
+        <a href="#" onclick="submit_details('Final');">
+         Finalise Invoice
         </a>
       </div>  
     </li>   
     <li>
       <div>
         <a href="#" onclick="submit_details('Quote');">
-         Print Quotation
+         Print as Quotation
         </a>
       </div>
     </li>
     <li>
       <div>
         <a href="#" onclick="submit_details('Preview');">
-         Preview
-        </a>
-      </div>  
-    </li>   
-    <li>
-      <div>
-        <a href="#" onclick="submit_details('Final');">
-         Save Final
+         Preview / Save Draft
         </a>
       </div>  
     </li>   
@@ -262,10 +246,19 @@
     <li>
       <div>
         <a href="#" onclick="goto_list();">
-          Invoice List
+          Customer Invoice List
         </a>
       </div>
     </li>
+[% IF cookie.REP_INVS == "1" -%]
+    <li>
+      <div>
+        <a href="#" onclick="submit_details('Template');">
+         Save Invoice Template
+        </a>
+      </div>
+    </li>
+[% END -%]
   </ul>   
   <div id="sidebar-ad">
 [% INCLUDE adverts.tt -%]

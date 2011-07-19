@@ -187,60 +187,44 @@
 </div>
 <div id="sidebar">
   <ul>    
-[% IF cookie.REP_INVS == "1" -%]
-    <li>
-      <div>
-        <a href="#" onclick="submit_details('Template');">
-         Save Invoice Template 
-        </a>
-      </div>
-    </li>
-[% END -%]
-    <li>
-      <div>
-        <a href="#" onclick="submit_details('Draft');">
-         Save Draft
+    <li>    
+      <div>   
+        <a href="#" onclick="submit_details('Final');">
+         Finalise Invoice
         </a>
       </div>  
     </li>   
     <li>
       <div>
         <a href="#" onclick="submit_details('Quote');">
-         Print Quotation
+         Print as Quotation
         </a>
       </div>  
     </li>
-    <li>  
+    <li>    
       <div>   
-        <a href="#" onclick="submit_details('Preview');">
-         Preview
+        <a href="/cgi-bin/fpa/copy_invoice.pl?[%- invoice.id -%]">
+          Copy to New
         </a>
       </div>  
     </li>   
-    <li>    
+    <li>  
       <div>   
-        <a href="#" onclick="submit_details('Final');">
-         Save Final
+        <a href="#" onclick="submit_details('Preview');">
+         Preview / Save Draft
         </a>
       </div>  
     </li>   
     <li>
       <div>
         <a href="/cgi-bin/fpa/update_invoice.pl?[%- invoice.id -%]">
-          &nbsp;Start Again
+          Start Again
         </a>
       </div>
     </li>
     <li>    
       <div>   
-        <input type="submit" name="submit" id="delete" value="Delete"/>
-      </div>  
-    </li>   
-    <li>    
-      <div>   
-        <a href="/cgi-bin/fpa/copy_invoice.pl?[%- invoice.id -%]">
-          Copy to New
-        </a>
+        <input type="submit" name="submit" id="delete" value="Delete Invoice"/>
       </div>  
     </li>   
     <li>
@@ -250,6 +234,15 @@
         </a>
       </div>
     </li>
+[% IF cookie.REP_INVS == "1" -%]
+    <li>
+      <div>
+        <a href="#" onclick="submit_details('Template');">
+         Save Invoice Template 
+        </a>
+      </div>
+    </li>
+[% END -%]
   </ul>   
   <div id="sidebar-ad">
 [% INCLUDE adverts.tt -%]

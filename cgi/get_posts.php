@@ -22,7 +22,7 @@ EOD;
 the_permalink();
 echo ">";
 the_title();
-
+echo " // ";
 the_date();
 
 echo "</a></h4>";
