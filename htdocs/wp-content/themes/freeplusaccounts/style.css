@@ -769,8 +769,23 @@ img.aligncenter {
 	float:left;
 	padding:10px 0 5px 30px;
 }
-.testauth {
+#ticker {
+	padding:20px 15px 20px 5px;
+	border:1px dotted #999999;
+	height:250px;
+}
+#ticker ul {
+	visibility:hidden;
+	padding:0;
+	margin:0;
+}
+#ticker ul li {
+	list-style:none;
+	line-height:15px;
+}
+#ticker ul li div {
 	font-size:10px;
 	color:#999999;
+	padding-top:3px;
 	font-style:italic;
 }

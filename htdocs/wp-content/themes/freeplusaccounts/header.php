@@ -42,20 +42,14 @@
 
 <script src="<?php bloginfo('template_directory'); ?>/Scripts/swfobject_modified.js" type="text/javascript"></script>
 <script src="/fpaintro/AC_RunActiveContent.js" type="text/javascript"></script>
+<script src="/css/turboTicker.JQuery.js" type="text/javascript"></script>
 <script type="text/javascript">
 	$().ready(function() {
-		$('#testimionials').codaSlider({
-				dynamicArrows: false,
-				dynamicTabs: true,
-				dynamicTabsPosition: "bottom",
-				autoSlide: true,
-				autoSlideInterval: 5000,
-				autoSlideStopWhenClicked: false
-		});
+		$("#ticker").ticker(70,true,true);
 		$('#freemore').jTruncate( { length: 40 } );
 		$('#easymore').jTruncate( { length: 29 } );
 		$('#securemore').jTruncate( { length: 28 } );
-		
+		$("#ticker ul").css("visibility","visible");
 	});
 </script>
 

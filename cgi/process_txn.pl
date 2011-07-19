@@ -63,7 +63,7 @@ else {
 
 #  Check to see if we have an invoice number (and only an invoice number) in rec_invdesc (remarks)
 
-		if ($FORM{invdesc} =~ /^\d+$/) {
+		if ($FORM{invdesc} =~ /.*\s?\d+$/) {
 
 #  We do so see if we can find that invoice
 
