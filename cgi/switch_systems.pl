@@ -26,12 +26,12 @@ while (<FILE>) {
 }
 close(FILE);
 
-if ($COOKIE->{ACCT} =~ /7\+7/i) {
+if ($COOKIE->{ACCT} =~ /3\+2/i) {
 	$DATA{ACCT} = $DATA{BACCT};
 	$DATA{TAG} = $DATA{BTAG};
 }
 else {
-	$DATA{ACCT} = "7+7";
+	$DATA{ACCT} = "3+2";
 	$DATA{TAG} = "<span style='font-weight:bold;color:#A00000;'>-- Test Company --</span>";
 }
 

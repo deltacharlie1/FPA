@@ -145,7 +145,7 @@ $(document).ready(function(){
             <li><a href="#" onclick="view_comments();">View Feedback</a></li>
             <li><a href="#" onclick="$('#vcomment').dialog('open');">Add New Feedback</a></li>
             <li><a href="/cgi-bin/fpa/assign_invoices.pl">Assign Unlisted Invoices</a></li>
-            <li><a href="/cgi-bin/fpa/switch_systems.pl">Switch to [%- IF cookie.ACCT == "7+7" -%]Live System[%- ELSE -%]Testbed[%- END -%]</a></li>
+            <li><a href="/cgi-bin/fpa/switch_systems.pl">Switch to [%- IF cookie.ACCT == "3+2" -%]Live System[%- ELSE -%]Testbed[%- END -%]</a></li>
         <li><a href="/cgi-bin/fpa/list_audit_trails.pl">Audit Trail</a></li>
           </ul>
         </li>
