@@ -104,6 +104,7 @@ $(document).ready(function(){
             <li><a href="/cgi-bin/fpa/transfer.pl?T">Transfer Money</a></li>
           </ul>
         </li>
+[% UNLESS cookie.VAT == "N" -%]
         <li class="vat"><a href="#"><span>VAT</span></a>
           <ul>
             <li><a href="/cgi-bin/fpa/list_vatreturns.pl">List VAT Returns</a></li>
@@ -112,19 +113,22 @@ $(document).ready(function(){
             <li><a href="/cgi-bin/fpa/vatreturn.pl">VAT Form 100</a></li>
           </ul>
         </li>
+[% END -%]
         <li class="reports"><a href="#"><span>Reports</span></a>
           <ul>
             <li><a href="/cgi-bin/fpa/dashboard.pl">Front Page</a></li>
             <li><a href="/cgi-bin/fpa/invrep1.pl">Invoice Analysis</a></li>
             <li><a href="/cgi-bin/fpa/txnrep1.pl">Transaction Analysis</a>
             <li><a href="/cgi-bin/fpa/trial_balance.pl?new">Trial Balance</a></li>
-            <li><a href="#">Year End Reports<div style="float:right;font-weight:bold;">&gt;&gt;</div></a>
+            <li><a href="#">Year End Reports<div style="float:right;padding-bottom:5px;"><img src="/icons/submenu_pointer.gif"/></div></a>
               <ul>
                 <li><a href="/cgi-bin/fpa/pandl.pl">Profit &amp; Loss</a></li>
                 <li><a href="/cgi-bin/fpa/nomledger.pl">Nominal Ledger</a></li>
                 <li><a href="/cgi-bin/fpa/aged_debtors.pl">Aged Debtors</a></li>
                 <li><a href="/cgi-bin/fpa/aged_creditors.pl">Aged Creditors</a></li>
+[% UNLESS cookie.VAT == "N" -%]
                 <li><a href="/cgi-bin/fpa/vatreport.pl">VAT Report</a></li>
+[% END -%]
                 <li><a href="/cgi-bin/fpa/nom_invoices.pl">Invoice Report</a></li>
               </ul>
             </li>

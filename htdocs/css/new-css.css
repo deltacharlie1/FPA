@@ -114,11 +114,10 @@ img {
 }
 
 #navigation ul li:last-child:hover {
-	height:62px;	
+	height:62px;
 	background-image: url(/images/button-line.gif);
 	background-repeat: no-repeat;
-	}
-
+}
 ul a{
 	background-repeat: no-repeat;
 	display: block;
@@ -562,13 +561,18 @@ button {
 	visibility:hidden;
 	z-index:99999;
 }
+#navigation ul li ul li:last-child:hover {
+	height:30px;
+	background-image:none;
+}
 #navigation ul li:hover ul  { visibility:visible ; }
 #navigation ul li:hover ul li ul { visibility:hidden ; }
 #navigation ul li ul li { background-image:none; display:block; height:30px; width:145px;position:relative; }
-#navigation ul li ul li:hover { background-image:none; }
+/* #navigation ul li ul li:hover { background-image:none; } */
 #navigation ul li ul li a {
 	display:block;
 	padding:8px;
+	margin:0px;
 	color:#274b2d;
 	background-image:none !important;
 	text-align:left;
@@ -628,6 +632,9 @@ button {
 	color: #FFF;
 	background-color: #4F7F59;
 }
+#navigation ul li ul li ul li:last-child:hover {
+	height:24px;	
+	}
 .dbl {
 	background-image:url(/images/mouse.png);
 	background-position:top left;
