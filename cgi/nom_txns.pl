@@ -16,7 +16,7 @@ my $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
 $Regs = $dbh->prepare("select date_format(date_sub(regregdate,interval 6 month),'%d-%b-%y') as tbstart,date_format(now(),'%d-%b-%y') as tbend,date_add(date_sub(comyearend,interval 1 year),interval 1 day) as tbfy from registrations left join companies on (registrations.reg_id=companies.reg_id) where registrations.reg_id=$Reg_id and companies.id=$Com_id");
 $Regs->execute;
 $Reg = $Regs->fetchrow_hashref;
-$Reg->{tbselect} = "cu";
+$Reg->{tbselect} = "ly";
 ($Yr,$Mth,$Day) = split(/-/,$Reg->{tbfy});
 $Mth--;
 $Startstr = $Reg->{tbstart};
@@ -44,11 +44,36 @@ $tt = Template->new({
 });
 
 $Vars = {
-        title => 'Aged Creditors',
+        title => 'Transactions Report',
 	cookie => $COOKIE,
 	daterange => $Reg,
 	javascript => '<script type="text/javascript">
 $(document).ready(function(){
+  $("#changedescr").dialog({
+    bgiframe: true,
+    autoOpen: false,
+    position: [100,100],
+    height: 200,
+    width: 500,
+    modal: true,
+    buttons: {
+      "Change Description": function() {
+        $.post("/cgi-bin/fpa/change_invoice_descr.pl", $("#fchangedescr").serialize(),function(data) {
+          if ( ! /^OK/.test(data)) {
+            alert(data);
+          }
+          window.location.reload(true);
+        },"text");
+        $("td").removeClass("error");
+        $(this).dialog("close");
+      },
+      Cancel: function() {
+        $("td").removeClass("error");
+        $(this).dialog("close");
+      }
+    }
+  });
+
   $("#tbstart").datepicker({minDate: new Date(2000,01 - 1,01) });
   $("#tbend").datepicker();
   get_balances();
@@ -168,22 +193,28 @@ function set_range(obj) {
   get_balances();
 }
 function get_balances() {
-   $.get("/cgi-bin/fpa/aged_creditors_results.pl",$("form#form1").serialize() ,function(data) {
+   $.get("/cgi-bin/fpa/nom_txns_results.pl",$("form#form1").serialize() ,function(data) {
      document.getElementById("results").innerHTML = data;
   });
 }
 function print_list() {
-   $.get("/cgi-bin/fpa/print_aged_creditors_results.pl",$("form#form1").serialize() ,function(data) {
+   $.get("/cgi-bin/fpa/print_nom_txns_results.pl",$("form#form1").serialize() ,function(data) {
      document.getElementById("main").innerHTML = data;
      $("#htmltabs").hide();
      $("#printtab").show();
    });
 }
+function change_descr(obj,id,olddescr) {
+  $(obj).addClass("error");
+  document.getElementById("cd_id").value = id;
+  document.getElementById("newdescr").value = olddescr;
+  $("#changedescr").dialog("open");
+}
 </script>'
 };
 
 print "Content-Type: text/html\n\n";
-$tt->process('aged_creditors.tt',$Vars);
+$tt->process('nom_txns.tt',$Vars);
 
 $Regs->finish;
 $dbh->disconnect;

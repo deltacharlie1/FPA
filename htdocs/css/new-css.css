@@ -640,3 +640,7 @@ button {
 	background-position:top left;
 	background-repeat:no-repeat;
 }
+.yetotals {
+	width:45px;
+	text-align:right;
+}

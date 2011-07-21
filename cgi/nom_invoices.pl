@@ -16,7 +16,7 @@ my $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
 $Regs = $dbh->prepare("select date_format(date_sub(regregdate,interval 6 month),'%d-%b-%y') as tbstart,date_format(now(),'%d-%b-%y') as tbend,date_add(date_sub(comyearend,interval 1 year),interval 1 day) as tbfy from registrations left join companies on (registrations.reg_id=companies.reg_id) where registrations.reg_id=$Reg_id and companies.id=$Com_id");
 $Regs->execute;
 $Reg = $Regs->fetchrow_hashref;
-$Reg->{tbselect} = "cu";
+$Reg->{tbselect} = "ly";
 ($Yr,$Mth,$Day) = split(/-/,$Reg->{tbfy});
 $Mth--;
 $Startstr = $Reg->{tbstart};
@@ -44,7 +44,7 @@ $tt = Template->new({
 });
 
 $Vars = {
-        title => 'Nominal Ledger',
+        title => 'Invoices Report',
 	cookie => $COOKIE,
 	daterange => $Reg,
 	javascript => '<script type="text/javascript">
@@ -198,7 +198,7 @@ function get_balances() {
   });
 }
 function print_list() {
-   $.get("/cgi-bin/fpa/print_vatreport_results.pl",$("form#form1").serialize() ,function(data) {
+   $.get("/cgi-bin/fpa/print_nom_invoices_results.pl",$("form#form1").serialize() ,function(data) {
      document.getElementById("main").innerHTML = data;
      $("#htmltabs").hide();
      $("#printtab").show();

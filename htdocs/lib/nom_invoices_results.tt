@@ -2,6 +2,8 @@
 <div id="print_listing" style="overflow:auto; width:690px;height:800px;padding-top:10px;">
   <table width="660" border="0" cellpadding="0" cellspacing="0" class="listing">
     <tr>
+      <th>Printed</th>
+      <th>Status</th>
       <th>Invoice</th>
       <th>Type</th>
       <th>Customer</th>
@@ -11,14 +13,15 @@
       <th>VAT</th>
 [% END -%]
       <th>Total</th>
-      <th>Printed</th>
-      <th>Status</th>
     </tr>
 [% class = [ "even","odd" ]; prog = 'invoice' -%]
 [%- FOREACH invoice IN invoices -%]
   [%- ndx = loop.count % 2 -%]
   [%- IF invoice.invtype.match('S|C'); prog = 'invoice'; ELSE; prog = 'purchase'; END -%]
     <tr class="[%- class.$ndx -%]">
+      <td onclick="location.href='/cgi-bin/fpa/update_[%- prog -%].pl?[%- invoice.invid -%]';">[%- invoice.printdate -%]</td>
+      <td style="text-align:right;" onclick="location.href='/cgi-bin/fpa/update_[%- prog -%].pl?[%- invoice.invid -%]';">
+  [% IF invoice.invstatus == 'Overdue' -%]<span style="color:#800000;font-weight:bold;">Overdue</span>[%- ELSE; invoice.invstatus; END -%]</td>
       <td onclick="location.href='/cgi-bin/fpa/update_[%- prog -%].pl?[%- invoice.invid -%]';">[%- invoice.invinvoiceno -%]</td>
       <td onclick="location.href='/cgi-bin/fpa/update_[%- prog -%].pl?[%- invoice.invid -%]';">[%- invoice.invtype -%]</td>
       <td onclick="location.href='/cgi-bin/fpa/update_[%- prog -%].pl?[%- invoice.invid -%]';">[%- invoice.invcusname | truncate(30) -%]</td>
@@ -28,9 +31,6 @@
       <td onclick="location.href='/cgi-bin/fpa/update_[%- prog -%].pl?[%- invoice.invid -%]';">[%- invoice.invvat | remove('-')-%]</td>
 [% END -%]
       <td onclick="location.href='/cgi-bin/fpa/update_[%- prog -%].pl?[%- invoice.invid -%]';">[%- invoice.invamount | remove('-') -%]</td>
-      <td onclick="location.href='/cgi-bin/fpa/update_[%- prog -%].pl?[%- invoice.invid -%]';">[%- invoice.printdate -%]</td>
-      <td style="text-align:right;" onclick="location.href='/cgi-bin/fpa/update_[%- prog -%].pl?[%- invoice.invid -%]';">
-  [% IF invoice.invstatus == 'Overdue' -%]<span style="color:#800000;font-weight:bold;">Overdue</span>[%- ELSE; invoice.invstatus; END -%]</td>
     </tr>
 [% END -%]
   </table>

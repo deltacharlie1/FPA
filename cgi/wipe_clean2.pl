@@ -59,8 +59,10 @@ else {
 	$Sts = $dbh->do("delete from vatreturns where acct_id='$COOKIE->{ACCT}'");
 	$Sts = $dbh->do("delete from vataccruals where acct_id='$COOKIE->{ACCT}'");
 	$Sts = $dbh->do("delete from reminders where acct_id='$COOKIE->{ACCT}'");
+	$Sts = $dbh->do("delete from comments where acct_id='$COOKIE->{ACCT}'");
 	$Sts = $dbh->do("delete from nominals where acct_id='$COOKIE->{ACCT}'");
 	$Sts = $dbh->do("delete from items where acct_id='$COOKIE->{ACCT}'");
+	$Sts = $dbh->do("delete from images where acct_id='$COOKIE->{ACCT}'");
 
 	if ($FORM{rem2} =~ /Y/) {
 		$Sts = $dbh->do("delete from customers where acct_id='$COOKIE->{ACCT}'");
@@ -70,7 +72,7 @@ else {
 	}
 
 	$Sts = $dbh->do("update coas set coabalance='0' where acct_id='$COOKIE->{ACCT}'");
-	$Sts = $dbh->do("update companies set comvatcontrol='0',comnextsi='100001',comnextpi='500001',comnocheques='0',comacccompleted='N',comnexttxn='1' where reg_id=$Reg_id and id=$Com_id");
+	$Sts = $dbh->do("update companies set cominvstats='0',comtxnstats='',comnetstats='',comvatcontrol='0',comnextsi='100001',comnextpi='500001',comnextpr='1001',comnocheques='0',comacccompleted='N',comnexttxn='1' where reg_id=$Reg_id and id=$Com_id");
 	print<<EOD;
 Content-Type: text/plain
 

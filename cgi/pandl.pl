@@ -16,6 +16,7 @@ my $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
 $Regs = $dbh->prepare("select date_format(date_sub(comyearend,interval 1 year),'%d-%b-%y') as dispend,date_sub(comyearend,interval 1 year) as tbend,date_format(date_add(date_sub(comyearend,interval 2 year),interval 1 day),'%d-%b-%y') as dispstart,date_add(date_sub(comyearend,interval 2 year),interval 1 day) as tbstart from companies where reg_id=$Reg_id and id=$Com_id");
 $Regs->execute;
 $Reg = $Regs->fetchrow_hashref;
+$Reg->{tbselect} = "ly";
 ($Yr,$Mth,$Day) = split(/-/,$Reg->{tbstart});
 $Mth--;
 
