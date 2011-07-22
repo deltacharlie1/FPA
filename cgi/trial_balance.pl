@@ -24,18 +24,22 @@ $Curstr = $Reg->{tbend};
 
 #  Get settings from tempstacks
 
-$TSs = $dbh->prepare("select f1,f2,f3 from tempstacks where acct_id='$COOKIE->{ACCT}' and caller='report'");
-$TSs->execute;
-$TS = $TSs->fetchrow_hashref;
-
-if ($TS->{f1}) {
-	$Reg->{tbselect} = $TS->{f1};
-	$Reg->{tbstart} = $TS->{f2};
-	$Reg->{tbend} = $TS->{f3};
+if ($ENV{QUERY_STRING} =~ /F/i) {
+        $Sts = $dbh->do("update tempstacks set f1='',f2='',f3='' where acct_id='$COOKIE->{ACCT}' and caller='report'");
 }
-$TSs->finish;
+else {
 
-$Sts = $dbh->do("update tempstacks set f1='',f2='',f3='' where acct_id='$COOKIE->{ACCT}' and caller='report'");
+        $TSs = $dbh->prepare("select f1,f2,f3 from tempstacks where acct_id='$COOKIE->{ACCT}' and caller='report'");
+        $TSs->execute;
+        $TS = $TSs->fetchrow_hashref;
+
+        if ($TS->{f1}) {
+                $Reg->{tbselect} = $TS->{f1};
+                $Reg->{tbstart} = $TS->{f2};
+                $Reg->{tbend} = $TS->{f3};
+        }
+        $TSs->finish;
+}
 
 use Template;
 $tt = Template->new({

@@ -123,7 +123,7 @@ $(document).ready(function(){
             <li><a href="/cgi-bin/fpa/dashboard.pl">Front Page</a></li>
             <li><a href="/cgi-bin/fpa/invrep1.pl?F">Invoice Analysis</a></li>
             <li><a href="/cgi-bin/fpa/txnrep1.pl?F">Transaction Analysis</a>
-            <li><a href="/cgi-bin/fpa/trial_balance.pl?new">Trial Balance</a></li>
+            <li><a href="/cgi-bin/fpa/trial_balance.pl?F">Trial Balance</a></li>
             <li><a href="#">Year End Reports<div style="float:right;padding-bottom:5px;"><img src="/icons/submenu_pointer.gif"/></div></a>
               <ul>
                 <li><a href="/cgi-bin/fpa/pandl.pl?F">Profit &amp; Loss</a></li>

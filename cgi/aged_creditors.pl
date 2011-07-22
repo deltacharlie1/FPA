@@ -16,7 +16,7 @@ my $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
 $Regs = $dbh->prepare("select date_format(date_sub(regregdate,interval 6 month),'%d-%b-%y') as tbstart,date_format(now(),'%d-%b-%y') as tbend,date_add(date_sub(comyearend,interval 1 year),interval 1 day) as tbfy from registrations left join companies on (registrations.reg_id=companies.reg_id) where registrations.reg_id=$Reg_id and companies.id=$Com_id");
 $Regs->execute;
 $Reg = $Regs->fetchrow_hashref;
-$Reg->{tbselect} = "cu";
+$Reg->{tbselect} = "ly";
 ($Yr,$Mth,$Day) = split(/-/,$Reg->{tbfy});
 $Mth--;
 $Startstr = $Reg->{tbstart};
@@ -24,18 +24,24 @@ $Curstr = $Reg->{tbend};
 
 #  Get settings from tempstacks
 
-$TSs = $dbh->prepare("select f1,f2,f3 from tempstacks where acct_id='$COOKIE->{ACCT}' and caller='report'");
-$TSs->execute;
-$TS = $TSs->fetchrow_hashref;
+if ($ENV{QUERY_STRING} =~ /F/i) {
+        $Sts = $dbh->do("update tempstacks set f1='',f2='',f3='' where acct_id='$COOKIE->{ACCT}' and caller='report'");
+        $Reg->{tbselect} = "ly";
 
-if ($TS->{f1}) {
-	$Reg->{tbselect} = $TS->{f1};
-	$Reg->{tbstart} = $TS->{f2};
-	$Reg->{tbend} = $TS->{f3};
 }
-$TSs->finish;
+else {
 
-$Sts = $dbh->do("update tempstacks set f1='',f2='',f3='' where acct_id='$COOKIE->{ACCT}' and caller='report'");
+        $TSs = $dbh->prepare("select f1,f2,f3 from tempstacks where acct_id='$COOKIE->{ACCT}' and caller='report'");
+        $TSs->execute;
+        $TS = $TSs->fetchrow_hashref;
+
+        if ($TS->{f1}) {
+                $Reg->{tbselect} = $TS->{f1};
+                $Reg->{tbstart} = $TS->{f2};
+                $Reg->{tbend} = $TS->{f3};
+        }
+        $TSs->finish;
+}
 
 use Template;
 $tt = Template->new({
@@ -51,6 +57,8 @@ $Vars = {
 $(document).ready(function(){
   $("#tbstart").datepicker({minDate: new Date(2000,01 - 1,01) });
   $("#tbend").datepicker();
+  $("#tbselect").val("'.$Reg->{tbselect}.'");
+  $("#tbselect").trigger("change");
   get_balances();
 });
 function set_range(obj) {

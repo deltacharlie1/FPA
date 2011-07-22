@@ -20,6 +20,27 @@ $Reg->{tbselect} = "ly";
 ($Yr,$Mth,$Day) = split(/-/,$Reg->{tbstart});
 $Mth--;
 
+#  Get settings from tempstacks
+
+if ($ENV{QUERY_STRING} =~ /F/i) {
+        $Sts = $dbh->do("update tempstacks set f1='',f2='',f3='' where acct_id='$COOKIE->{ACCT}' and caller='report'");
+        $Reg->{tbselect} = "ly";
+
+}
+else {
+
+        $TSs = $dbh->prepare("select f1,f2,f3 from tempstacks where acct_id='$COOKIE->{ACCT}' and caller='report'");
+        $TSs->execute;
+        $TS = $TSs->fetchrow_hashref;
+
+        if ($TS->{f1}) {
+                $Reg->{tbselect} = $TS->{f1};
+                $Reg->{tbstart} = $TS->{f2};
+                $Reg->{tbend} = $TS->{f3};
+        }
+        $TSs->finish;
+}
+
 use Template;
 $tt = Template->new({
         INCLUDE_PATH => ['.','/usr/local/httpd/htdocs/fpa/lib'],
@@ -64,6 +85,8 @@ $Vars = {
 $(document).ready(function(){
   $("#tbstart").datepicker({minDate: new Date(2000,01 - 1,01) });
   $("#tbend").datepicker();
+  $("#tbselect").val("'.$Reg->{tbselect}.'");
+  $("#tbselect").trigger("change");
   get_balances();
 });
 function set_range(obj) {
