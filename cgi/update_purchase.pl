@@ -69,6 +69,9 @@ $(document).ready(function(){
     "scriptData"     : {"cookie" : "'.$COOKIE->{COOKIE}.'", "doc_type" : "INV", "doc_rec" : "'.$Invoice->{id}.'" },
     "sizeLimit"      : '.$COOKIE->{UPLDS}.',
     "expressInstall" : "/js/expressInstall.swf",
+    "onError"        : function(event, ID, fileObj, errorObj) {
+         alert(errorObj.type+"::"+errorObj.info);
+      },
     "auto"           : true
   });
   $("#invprintdate").datepicker();

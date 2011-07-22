@@ -156,6 +156,7 @@ unless ($FORM{doc_type} =~ /LOGO/i) {
 	$Company = $Companies->fetchrow_hashref;
 	$Companies->finish;
 
+	warn "open(IMG,\">$Company->{comdocsdir}/$FORM{Filename}\")\n";
 	open(IMG,">$Company->{comdocsdir}/$FORM{Filename}");
 	print IMG $Original;
 	close(IMG);

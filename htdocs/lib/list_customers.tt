@@ -36,6 +36,13 @@
         </a>
       </div>
     </li>
+    <li>
+      <div>
+        <a href="#" onclick="send_statements();">
+         Send out Statements 
+        </a>
+      </div>
+    </li>
   </ul>
   <div id="sidebar-ad">
 [% INCLUDE adverts.tt -%]

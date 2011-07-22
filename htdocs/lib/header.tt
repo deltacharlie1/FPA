@@ -31,6 +31,9 @@ $(document).ready(function(){
     "sizeLimit"      : [%- cookie.UPLDS -%],
     "expressInstall" : "/js/expressInstall.swf",
     "auto"           : false,
+    "onError"	     : function(event, ID, fileObj, errorObj) {
+	 alert(errorObj.type+"::"+errorObj.info);
+      },
     "onAllComplete"  : function() {
                          window.location.reload(true);
                          $(this).dialog("close");
