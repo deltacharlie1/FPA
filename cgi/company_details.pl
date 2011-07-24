@@ -34,7 +34,7 @@ for $Month (1..12) {
 }
 $Dates->finish;
 
-$Companies = $dbh->prepare("select comname,comaddress,compostcode,comtel,combusiness,comregno,comvatno,comvatscheme,comcontact,comemail,comyearend,comvatduein,comnextsi,comnextpi,comcompleted,comacccompleted,comemailmsg,comstmtmsg from companies where reg_id=? and id=?");
+$Companies = $dbh->prepare("select comname,comaddress,compostcode,comtel,combusiness,comregno,comvatno,comvatscheme,comcontact,comemail,comyearend,comvatduein,comnextsi,comnextpi,comcompleted,comacccompleted,comemailmsg,comstmtmsg,comlogo from companies where reg_id=? and id=?");
 $Companies->execute($Reg_id,$Com_id);
 $Company = $Companies->fetchrow_hashref;
 
@@ -60,27 +60,14 @@ if ($COOKIE->{PT_LOGO} =~ /1/) {
     "uploader"    : "/js/uploadify.swf",
     "script"      : "/cgi-bin/fpa/uploadify.pl",
     "cancelImg"   : "/js/cancel.png",
+    "scriptData"  : {"cookie" : "$COOKIE->{COOKIE}", "doc_type" : "LOGO" },
+    "onComplete"  : function() { window.location.reload(true); },
     "buttonText"  : "Select Logo",
     "fileExt"     : "*.jpg;*.png",
     "fileDesc"    : "Image Files (JPG,PNG)",
     "sizeLimit"   : 20480,
-    "auto"        : false
+    "auto"        : true
   });
-EOD
-	$Loadify2 = sprintf<<EOD;
-	if (document.getElementById("comlogoQueue").innerHTML.length > 0) {
-          if (document.cookie.length>0) {
-            c_start=document.cookie.indexOf(c_name + "=");
-            if (c_start!=-1) {
-              c_start=c_start + c_name.length+1;
-              c_end=document.cookie.indexOf(";",c_start);
-              if (c_end==-1) c_end=document.cookie.length;
-              cookie = unescape(document.cookie.substring(c_start,c_end));
-            }
-          }
-          \$("#comlogo").uploadifySettings("scriptData",{"cookie" : cookie, "doc_type" : "LOGO" });
-          \$("#comlogo").uploadifyUpload();
-        }	  
 EOD
 }
 
@@ -154,11 +141,7 @@ function validate() {
       }
       else {
         alert("Details Saved");
-        var href = data.split("-");
-        var c_name = "fpa-cookie";
-        var cookie = "";
-'.$Loadify2.'
-      location.href = "/cgi-bin/fpa/" + href[1];
+        location.href = "/cgi-bin/fpa/" + href[1];
       }
     },"text");
   }

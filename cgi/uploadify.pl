@@ -65,6 +65,8 @@ $status = $Img->BlobToImage($Original);
 
 if ($FORM{doc_type} =~ /LOGO/i) {
 
+warn "Starting uploadify\n";
+
 	if ($width > 144 || $height > 48) {
 		if ($width > $height * 3) {
 			$W1 = 144;
