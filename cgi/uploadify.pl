@@ -65,8 +65,6 @@ $status = $Img->BlobToImage($Original);
 
 if ($FORM{doc_type} =~ /LOGO/i) {
 
-warn "Starting uploadify\n";
-
 	if ($width > 144 || $height > 48) {
 		if ($width > $height * 3) {
 			$W1 = 144;
@@ -158,7 +156,6 @@ unless ($FORM{doc_type} =~ /LOGO/i) {
 	$Company = $Companies->fetchrow_hashref;
 	$Companies->finish;
 
-	warn "open(IMG,\">$Company->{comdocsdir}/$FORM{Filename}\")\n";
 	open(IMG,">$Company->{comdocsdir}/$FORM{Filename}");
 	print IMG $Original;
 	close(IMG);

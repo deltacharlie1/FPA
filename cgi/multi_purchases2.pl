@@ -62,6 +62,7 @@ else {
 
 	foreach $i (@Inv_id) {
 		$FORM{id} = $i;
+		$FORM{txnamount} = sprintf("%1.2f",$FORM{txnamount});
 #		last if ($FORM{txnamount} >= 0);
 		&pay_invoice();
 	}

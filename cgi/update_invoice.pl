@@ -98,8 +98,8 @@ function submit_details(action) {
          $("#confirmdialog").dialog("open");
       }
       else {
-        document.getElementById("invitems").value = document.getElementById("div_html").innerHTML;
-        var submit_data = $(".newinvoice").serialize() + "&submit=" + action;
+        var dg = document.getElementById("div_html").innerHTML.replace(/\+/gim,"%2B");
+        var submit_data = $(".newinvoice").serialize() + "&invtotal=" + escape(document.getElementById("st").innerHTML) + "&invvat=" + escape(document.getElementById("vt").innerHTML) + "&invitems=" + escape(dg) + "&submit=" + action;
         $.post("/cgi-bin/fpa/save_invoice.pl",submit_data ,function(data) {
           if ( ! /^OK/.test(data)) {
             alert(data);

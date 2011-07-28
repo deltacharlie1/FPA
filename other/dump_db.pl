@@ -199,7 +199,7 @@ if ($Companies->rows > 0) {
 
 #  Customers
 
-		$Customers = $dbh->prepare("select cusname,cusaddress,cuspostcode,cusregion,custel,cuscontact,cusemail,custerms,cusdefcoa,cusdefvatrate,cusbank,cussortcode,cusacctno,cuscredit,cuslimit,cusdefpaymethod,cussales,cussupplier,cusremarks,cusemailmsg,cusstmtmsg,id as old_id from customers where acct_id='$Acct_id' order by cusname");
+		$Customers = $dbh->prepare("select cusname,cusaddress,cuspostcode,cusregion,custel,cuscontact,cusemail,custerms,cusdefcoa,cusdefvatrate,cusbank,cussortcode,cusacctno,cuscredit,cusbalance,cuslimit,cusdefpaymethod,cussales,cussupplier,cusremarks,cusemailmsg,cusstmtmsg,cusautostmts,id as old_id from customers where acct_id='$Acct_id' order by cusname");
 		$Customers->execute;
 		if ($Customers->rows > 0) {
 			print FILE substr($Tabs,0,$Tab_count)."<Customers>\n";

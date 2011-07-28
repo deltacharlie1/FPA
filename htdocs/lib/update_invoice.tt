@@ -33,9 +33,7 @@
 <input type="hidden" name="cus_id" id="x_cus_id" value="[%- invoice.cus_id -%]"/>
 <input type="hidden" name="invitemcount" id="invitemcount" value="[%- invoice.invitemcount -%]"/>
 <input type="hidden" name="invitems" id="invitems" value=""/>
-<input type="hidden" name="invtotal" id="x_invtotal" value="[%- invoice.invtotal -%]"/>
 <input type="hidden" name="invinvoiceno" id="x_invinvoiceno" value="[%- invoice.invinvoiceno -%]"/>
-[%- UNLESS cookie.VAT == "N" -%]<input type="hidden" name="invvat" id="x_invvat" value="[%- invoice.invvat -%]"/>[%- END -%]
 <input type="hidden" name="item_tt" id="item_tt" value="[%- invoice.tottotal -%]"/>
 <input type="hidden" name="invstatus" id="x_invstatus" value="[%- invoice.invstatus -%]"/>
 <div class="status">[%- UNLESS invoice.invstatus == "Quote"; invoice.invstatus; END -%] <span class="invtext">[%- invtext | remove(" No") -%]</span></div>
