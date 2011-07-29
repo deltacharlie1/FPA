@@ -59,7 +59,7 @@ if ($COOKIE->{PT_LOGO} && $Company[7]) {
 
 #  Make the logo greyscale
 
-	my $gdimg = GD::Image->new($Company[7]);
+	$gdimg = GD::Image->new($Company[7]);
 	my $i = 0;
 	my $t = $gdimg->colorsTotal;
 

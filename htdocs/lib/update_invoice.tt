@@ -142,7 +142,7 @@
 [% END -%]
                 </tr>
                 <tr>
-                  <td><label>Category</label</td>
+                  <td><label>Category</label></td>
                   <td colspan="2"><input type="text" name="item_cat" id="item_cat" style="width:95%;"/>
                 </tr>
               </table>
@@ -199,13 +199,6 @@
         </a>
       </div>  
     </li>
-    <li>    
-      <div>   
-        <a href="/cgi-bin/fpa/copy_invoice.pl?[%- invoice.id -%]">
-          Copy to New
-        </a>
-      </div>  
-    </li>   
     <li>  
       <div>   
         <a href="#" onclick="submit_details('Preview');">

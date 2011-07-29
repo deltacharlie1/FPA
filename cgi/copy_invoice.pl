@@ -19,6 +19,12 @@ $Invoices->execute;
 my @Invoice = $Invoices->fetchrow;
 $Invoices->finish;
 
+#  Escape any apostrophes
+
+for ($i=0; $i<15; $i++) {
+	$Invoice[$i] =~ s/\'/\\\'/g;
+}
+
 #  Now create the new invoice details
 
 if ($Invoice[15] > 1) {		#  Add the amend/delete buttons to the line item block

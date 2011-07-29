@@ -217,7 +217,7 @@ EOD
 
 			if ($Currentstatus =~ /Quote/i) {	#  just ssave/update
 
-				$Sts = $dbh->do("update invoices set invprintdate=str_to_date('$FORM{invprintdate}','%d-%b-%y'),invcusref='$FORM{invcusref}',invtype='$FORM{invtype}',invcusname='$FORM{invcusname}',invcusaddr='$FORM{invcusaddr}',invcuspostcode='$FORM{invcuspostcode}',invcusregion='$FORM{invcusregion}',invcoa='$FORM{invcoa}',invcuscontact='$FORM{invcuscontact}',invcusemail='$FORM{invcusemail}',invcusterms='$FORM{invcusterms}',invremarks='$FORM{invremarks}',invfpflag='$FORM{invfpflag}',invitemcount=$FORM{invitemcount},invitems='$FORM{invitems}',invdesc='$FORM{invdesc}',invtotal='$FORM{invtotal}',invvat='$FORM{invvat}' where id=$FORM{id} and acct_id='$COOKIE->{ACCT}'");
+				$Sts = $dbh->do("update invoices set invprintdate=str_to_date('$FORM{invprintdate}','%d-%b-%y'),invcusref='$FORM{invcusref}',invtype='$FORM{invtype}',invcusname='$FORM{invcusname}',invcusaddr='$FORM{invcusaddr}',invcuspostcode='$FORM{invcuspostcode}',invcusregion='$FORM{invcusregion}',invcoa='$FORM{invcoa}',invcuscontact='$FORM{invcuscontact}',invcusemail='$FORM{invcusemail}',invcusterms='$FORM{invcusterms}',invremarks='$FORM{invremarks}',invfpflag='$FORM{invfpflag}',invitemcount=$FORM{invitemcount},invitems='$FORM{invitems}',invdesc='$FORM{invdesc}',invtotal='$FORM{invtotal}',invvat='$FORM{invvat}',invstatus='Quote' where id=$FORM{id} and acct_id='$COOKIE->{ACCT}'");
 			}
 			else {		#  New quote so get next quote no and then save
 				&get_com_details();

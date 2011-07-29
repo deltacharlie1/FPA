@@ -25,7 +25,19 @@ get_header(); ?>
       </div>
       
       <div class="rightcol smallcol">
-      
+
+<!--START MERCHANT:365ink from affiliatewindow.com.-->						  <a href="http://www.awin1.com/cread.php?s=254975&v=3466&q=122160&r=125207" target="_blank"><img src="http://www.awin1.com/cshow.php?s=254975&v=3466&q=122160&r=125207" border="0"></a>							<!--START MERCHANT:365ink from affiliatewindow.com.-->
+<br/>
+<!--START MERCHANT:merchant name Vistaprint from affiliatewindow.com.-->
+			<a href="http://www.awin1.com/cread.php?s=75706&v=282&q=62496&r=125207"><img src="http://www.awin1.com/cshow.php?s=75706&v=282&q=62496&r=125207" border="0"></a>
+			<!--END MERCHANT:merchant name Vistaprint from affiliatewindow.com-->
+
+<br/>
+<!--START MERCHANT:merchant name John Lewis from affiliatewindow.com.-->
+			<a href="http://www.awin1.com/cread.php?s=135434&v=1203&q=84922&r=125207"><img src="http://www.awin1.com/cshow.php?s=135434&v=1203&q=84922&r=125207" border="0"></a>
+			<!--END MERCHANT:merchant name John Lewis from affiliatewindow.com-->
+
+<br/>      
 		<?php
         
             $quote =  get_post_meta($post->ID, 'page-quote', true);
