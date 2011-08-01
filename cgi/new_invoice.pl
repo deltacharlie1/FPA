@@ -19,21 +19,14 @@ $tt = Template->new({
         WRAPPER => 'header.tt',
 });
 
-if ($COOKIE->{VAT} =~ /N/i) {
-        $Line_js = sprintf("<script type=\"text/javascript\" src=\"/js/add_novatitem.js\"></script>\n");
-}
-else {
-        $Line_js = sprintf("<script type=\"text/javascript\" src=\"/js/add_lineitem.js\"></script>\n");
-}
-
 $Vars = {
         title => 'Accounts - Customers',
 	cookie => $COOKIE,
         vats => $Vat,
 	focus => 'desc',
 	cus => $Customers->fetchrow_hashref,
-        javascript => $Line_js .
-'<script type="text/javascript">
+        javascript => '<script type="text/javascript" src="/js/add_lineitem.js"></script>
+<script type="text/javascript">
 var errfocus = "";
 $(document).ready(function(){
   $("#confirmdialog").dialog({
@@ -128,6 +121,8 @@ $(document).ready(function(){
     }
   });
   $("#x_invprintdate").datepicker();
+  init_rows();
+  display_table();
 });
 function setfocus() {
   eval("document.getElementById(\'" + errfocus + "\').value = \'\';");

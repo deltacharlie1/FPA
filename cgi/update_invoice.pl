@@ -28,13 +28,6 @@ $tt = Template->new({
         WRAPPER => 'header.tt',
 });
 
-if ($COOKIE->{VAT} =~ /N/i) {
-	$Line_js = sprintf("<script type=\"text/javascript\" src=\"/js/add_novatitem.js\"></script>\n");
-}
-else {
-	$Line_js = sprintf("<script type=\"text/javascript\" src=\"/js/add_lineitem.js\"></script>\n");
-}
-
 print "Content-Type: text/html\n\n";
 if ($Invoice->{"invstatuscode"} == 1) {		#   Draft
 $Vars = {
@@ -44,8 +37,8 @@ $Vars = {
 	focus => 'desc',
 	invoice => $Invoice,
 	entries => $IT,
-        javascript => $Line_js .
-'<script language="JavaScript">
+        javascript => '<script type="text/javascript" src="/js/add_lineitem.js"></script>
+<script language="JavaScript">
 var responseText = "";
 var errfocus = "";
 $(document).ready(function(){
@@ -75,6 +68,8 @@ $(document).ready(function(){
     }
   });
   $("#x_invprintdate").datepicker();
+  init_rows();
+  display_table();
 });
 function setfocus() {
   eval("document.getElementById(\'" + errfocus + "\').value = \'\';");

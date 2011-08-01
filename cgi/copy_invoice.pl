@@ -27,20 +27,20 @@ for ($i=0; $i<15; $i++) {
 
 #  Now create the new invoice details
 
-if ($Invoice[15] > 1) {		#  Add the amend/delete buttons to the line item block
+#if ($Invoice[15] > 1) {		#  Add the amend/delete buttons to the line item block
 
 #  First do the Heading
 
-	$Invoice[13] =~ tr/\r\n//d;			#  Get rid of all newlines
-	$Invoice[13] =~ s/\/tr>/\/tr>\n/ig;		#  Split each row into a line of its own
-	@Row = split(/\n/,$Invoice[13]);		#  Put each row into an array
-	$Row[0] =~ s/\<\/tr>/<th style="text-align: center;" width="70">Edit<\/th>\<\/tr>/;	#  Add the Edit column header
-	for $Row (1..$#Row) {
-		my $Indx = $Row - 1;
-		$Row[$Row] =~ s/\<\/tr>/<td nowrap="nowrap"><input value="Amd" id="a$Indx" type="button" onclick="amd(this);" \/> <input value="Del" id="d$Indx" type="button" onclick="dlt(this);" \/><\/td><\/tr>/;	#  Add Amend/Delete buttons
-	}
-	$Invoice[13] = join("\n",@Row);
-}
+#	$Invoice[13] =~ tr/\r\n//d;			#  Get rid of all newlines
+#	$Invoice[13] =~ s/\/tr>/\/tr>\n/ig;		#  Split each row into a line of its own
+#	@Row = split(/\n/,$Invoice[13]);		#  Put each row into an array
+#	$Row[0] =~ s/\<\/tr>/<th style="text-align: center;" width="70">Edit<\/th>\<\/tr>/;	#  Add the Edit column header
+#	for $Row (1..$#Row) {
+#		my $Indx = $Row - 1;
+#		$Row[$Row] =~ s/\<\/tr>/<td nowrap="nowrap"><input value="Amd" id="a$Indx" type="button" onclick="amd(this);" \/> <input value="Del" id="d$Indx" type="button" onclick="dlt(this);" \/><\/td><\/tr>/;	#  Add Amend/Delete buttons
+#	}
+#	$Invoice[13] = join("\n",@Row);
+#}
 
 #  Next insert the new invoice
 

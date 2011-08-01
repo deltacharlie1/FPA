@@ -125,58 +125,57 @@ $Stamp = $pdf->image_png('overdue.png');
 
 &set_new_page;
 
-# $Invoice[9] =~ s/^.*?<\/tbody>(.*)<\/table>/$1/i;		#  Get rid of the Column headers
-$Invoice[9] =~ s/^.*?<\/tbody>//gis;				#  Get rid of the Column headers
-$Invoice[9] =~ tr/\r\n//d;					#  remove any newlines
-$Invoice[9] =~ s/<tbody.*?>//ig;					#  Remove any additional tbody tags
-$Invoice[9] =~ s/<\/tbody>//ig;
-$Invoice[9] =~ s/<tr.*?>//gis;
+$Invoice[9] =~ s/^.*?<tr>//is;		#  Remove everything up to the first table row
+$Invoice[9] =~ s/^.*?<tr>//is;		#  Then again to remove all headers
+$Invoice[9] =~ s/<tr.*?>//gis;		#  Remove all row start tags
 
-# $Invoice[9] =~ tr/A-Z/a-z/;
 @Row = split(/\<\/tr\>/,$Invoice[9]);
 for $Row (@Row) {
+	$Row =~ s/^.*?<td.*?>//is;
         $Row =~ s/<td.*?>//gis;
         @Cell = split(/\<\/td\>/,$Row);
 
+	if ($Cell[0]) {
+
 #  remove any date/increment brackets
 
-	$Cell[0] =~ s/\[(\%|\+|\-) //g;
-	$Cell[0] =~ s/ (\%|\+|\-)\]//g;
+		$Cell[0] =~ s/\[(\%|\+|\-) //g;
+		$Cell[0] =~ s/ (\%|\+|\-)\]//g;
 
 #  Convert ampersands
 
-	$Cell[0] =~ s/\&amp;/\&/ig;
+		$Cell[0] =~ s/\&amp;/\&/ig;
+		$Cell[0] =~ s/<br\/>/\n/ig;
 
-	$Cell[0] =~ s/<br\/>/\n/ig;
+		if ($COOKIE->{VAT} =~ /N/i) {
+			$text->transform( -translate => [471,$Ypos]);
+			$text->text_right($Cell[2]);
+			$text->transform( -translate => [544,$Ypos]);
+			$text->text_right($Cell[4]);
+		}
+		else {
+			$text->transform( -translate => [348,$Ypos]);
+			$text->text_right($Cell[2]);
+			$text->transform( -translate => [425,$Ypos]);
+			$text->text_right($Cell[3]);
+			$text->transform( -translate => [471,$Ypos]);
+			$text->text_right($Cell[4]);
+			$text->transform( -translate => [544,$Ypos]);
+			$text->text_right($Cell[5]);
+		}
 
-	if ($COOKIE->{VAT} =~ /N/i) {
-		$text->transform( -translate => [471,$Ypos]);
-		$text->text_right($Cell[2]);
-		$text->transform( -translate => [544,$Ypos]);
-		$text->text_right($Cell[4]);
-	}
-	else {
-		$text->transform( -translate => [348,$Ypos]);
-		$text->text_right($Cell[2]);
-		$text->transform( -translate => [425,$Ypos]);
-		$text->text_right($Cell[3]);
-		$text->transform( -translate => [471,$Ypos]);
-		$text->text_right($Cell[4]);
-		$text->transform( -translate => [544,$Ypos]);
-		$text->text_right($Cell[5]);
-	}
+		$tb->y($Ypos);
+		$tb->text($Cell[0]);
+		($endw, $Ypos) = $tb->apply();
 
-	$tb->y($Ypos);
-	$tb->text($Cell[0]);
-	($endw, $Ypos) = $tb->apply();
+		$Ypos -= 25;
+		$Net += $Cell[3];
+		$Vat += $Cell[5];
+		$Total += $Cell[3] + $Cell[5];
 
-	$Ypos -= 25;
-	$Net += $Cell[3];
-	$Vat += $Cell[5];
-	$Total += $Cell[3] + $Cell[5];
-
-	if ($Ypos < 200) {
-		&set_new_page;
+		if ($Ypos < 200) {
+			&set_new_page;
+		}
 	}
 }
 #exit;

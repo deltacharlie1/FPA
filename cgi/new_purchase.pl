@@ -24,13 +24,6 @@ $tt = Template->new({
         WRAPPER => 'header.tt',
 });
 
-if ($COOKIE->{VAT} =~ /N/i) {
-        $Line_js = sprintf("<script type=\"text/javascript\" src=\"/js/add_novatitem.js\"></script>\n");
-}
-else {
-        $Line_js = sprintf("<script type=\"text/javascript\" src=\"/js/add_lineitem.js\"></script>\n");
-}
-
 $Vars = {
         title => 'Accounts - Suppliers',
 	cookie => $COOKIE,
@@ -38,9 +31,9 @@ $Vars = {
 	coas => $Coa,
 	focus => 'desc',
 	cus => $Customers->fetchrow_hashref,
-        javascript => '<script type="text/javascript" src="/js/jquery-form.js"></script>'
-. $Line_js .
-'<script type="text/javascript">
+        javascript => '<script type="text/javascript" src="/js/jquery-form.js"></script>
+<script type="text/javascript" src="/js/add_lineitem.js"></script>
+<script type="text/javascript">
 var responseText = "";
 var errfocus = "";
 $(document).ready(function(){
@@ -78,6 +71,8 @@ $(document).ready(function(){
     success: showResponse
   };
   $("#form1").ajaxForm(options);
+  init_rows();
+  display_table();
 });
 function showResponse(responseText, statusText) {
   if (/OK/i.test(responseText)) {

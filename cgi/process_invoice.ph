@@ -149,8 +149,7 @@ sub save_invoice {
 		$FORM{invitemcount} = "1";
 		if ($COOKIE->{VAT} =~ /N/i) {
 	                $FORM{invitems} = sprintf<<EOD;
-<table id="items" class="items" border="0" cellpadding="0" cellspacing="0" width="610">
-  <tbody>
+<table id="itemstable" class="items" border="0" cellpadding="0" cellspacing="0" width="610">
     <tr>
       <th width="350">Description</th>
       <th style="text-align: right;" width="50">Unit<br>Price</th>
@@ -159,17 +158,20 @@ sub save_invoice {
       <th style="text-align: right;" width="60">Total</th>
       <th style="display:none;"></th>
     </tr>
-  </tbody>
-  <tr>
-    <td>$FORM{invdesc}</td><td class="txtright">$Net</td><td class="txtright">1</td><td class="txtright">$Net</td><td class="txtright">$Net</td><td class="hidden">$FORM{item_cat}</td>
-  </tr>
+    <tr>
+      <td>$FORM{invdesc}</td>
+      <td class="txtright">$Net</td>
+      <td class="txtright">1</td>
+      <td class="txtright">$Net</td>
+      <td class="txtright">$Net</td>
+      <td class="hidden">$FORM{item_cat}</td>
+    </tr>
 </table>
 EOD
 		}
 		else {
         	        $FORM{invitems} = sprintf<<EOD;
-<table id="items" class="items" border="0" cellpadding="0" cellspacing="0" width="610">
-  <tbody>
+<table id="itemstable" class="items" border="0" cellpadding="0" cellspacing="0" width="610">
     <tr>
       <th width="280">Description</th>
       <th style="text-align: right;" width="50">Unit<br>Price</th>
@@ -180,10 +182,16 @@ EOD
       <th style="text-align: right;" width="60">Total</th>
       <th style="display:none;"></th>
     </tr>
-  </tbody>
-  <tr>
-    <td>$FORM{invdesc}</td><td class="txtright">$Net</td><td class="txtright">1</td><td class="txtright">$Net</td><td class="txtcenter">$Vatrate</td><td class="txtright">$Vat</td><td class="txtright">$Tot</td><td class="hidden">$FORM{item_cat}</td>
-  </tr>
+    <tr>
+      <td>$FORM{invdesc}</td>
+      <td class="txtright">$Net</td>
+      <td class="txtright">1</td>
+      <td class="txtright">$Net</td>
+      <td class="txtcenter">$Vatrate</td>
+      <td class="txtright">$Vat</td>
+      <td class="txtright">$Tot</td>
+      <td class="hidden">$FORM{item_cat}</td>
+    </tr>
 </table>
 EOD
 		}
@@ -242,17 +250,18 @@ EOD
 
 		$FORM{invitems} =~ tr/ //s;		#  squash multiple spaces
 
-#  Sort out some IE inconsistences
+#  remove the Edit header column
 
-		$FORM{invitems} =~ s/\<(\/?)TR(.*?)\>/<$1tr$2\>/g;
-		$FORM{invitems} =~ s/\<(\/?)TD(.*?)\>/<$1td$2\>/g;
-		$FORM{invitems} =~ s/(<td.*?>.+?)\n(.*?<td)/$1<br\/>$2/gis;	#  search for newline within <td ... /td>
-
-		$FORM{invitems} =~ tr/\r\n//d;
-	        $FORM{invitems} =~ s/\/td>/\/td>\n/gi;
-	        $FORM{invitems} =~ s/\/th>/\/th>\n/gi;
 	        $FORM{invitems} =~ s/<th.*?Edit<\/th>//im;
+		$FORM{invitems} =~ tr/\r//d;			#  Remove all carriage returns
+		$FORM{invitems} =~ s/(<td.*?>.*?<\/td>)/&Convert_Cols($1)/eigs;	#  Convert embedded newlines to <br/>s
+		$FORM{invitems} =~ s/<\/td><br\/>/<\/td>/gis;		#  remove pesky brs after col end tags
+
+#  Remove the Edit buttons td
+
         	while ($FORM{invitems} =~ s/<td.*?input.*?\/td>//gim) {}
+
+#  We now (should have) the html line items without the edit buttons or header
 
 		&get_com_details();
 		$FORM{invinvoiceno} = $Company[3];
@@ -280,16 +289,20 @@ EOD
 
 #  Separate and store the line item details
 
-		$FORM{invitems} =~ s/^.*?<\/tbody>//gis;                            #  Get rid of the Column headers
-		$FORM{invitems} =~ tr/\r\n//d;                                      #  remove any newlines
-		$FORM{invitems} =~ s/<tbody.*?>//ig;                                #  Remove any additional tbody tags
-		$FORM{invitems} =~ s/<\/tbody>//ig;
-		$FORM{invitems} =~ s/<tr.*?>//gis;
+#  Dump the first (header) line
 
-		@Row = split(/\<\/tr\>/,$FORM{invitems});
-		for $Row (@Row) {
-		        $Row =~ s/<td.*?>//gis;
-		        @Cell = split(/\<\/td\>/,$Row);
+		$FORM{invitems} =~ s/^.*<\/th>.*?<\/tr>//is;
+
+		$FORM{invitems} =~ tr/\r\n//d;			#  remove any newlines
+		$FORM{invitems} =~ s/<tbody.*?>//ig;		#  Remove any additional tbody tags
+		$FORM{invitems} =~ s/<\/tbody>//ig;
+		$FORM{invitems} =~ s/<\/table>//ig;		#  Remove table end tag
+		$FORM{invitems} =~ s/<tr.*?>//gis;		#  Remove all row start tags
+
+		@Row = split(/\<\/tr\>/,$FORM{invitems});	#  Split rows based on row end tags
+		for $Row (@Row) {				#  for each row
+		        $Row =~ s/<td.*?>//gis;			#  Remove all col start tags
+		        @Cell = split(/\<\/td\>/,$Row);		#  Split cols based on col end tags
 			if ($Cell[1]) {		#  ie make sure we don't pick up the last (</table>) line
 
 #  remove any date/increment brackets
@@ -301,8 +314,7 @@ EOD
 
 			        $Cell[0] =~ s/\&amp;/\&/ig;
 
-			        $Cell[0] =~ s/<br\/>/\n/ig;
-				$Cell[0] =~ s/^\s+//;
+				$Cell[0] =~ s/^\s+//;		#  Trim leading spaces
 
 			        if ($COOKIE->{VAT} =~ /N/i) {
 					$Sts = $dbh->do("insert into items (acct_id,inv_id,itmtype,itmqty,itmdesc,itmtotal,itmdate,itmcat) values ('$COOKIE->{ACCT}',$FORM{id},'S','$Cell[2]','$Cell[0]','$Cell[3]',str_to_date('$FORM{invprintdate}','%d-%b-%y'),'$Cell[5]')");
@@ -466,5 +478,10 @@ sub pay_invoice {
 
 		$Sts = $dbh->do("insert into audit_trails (acct_id,link_id,audtype,audaction,audtext,auduser) values ('$COOKIE->{ACCT}',$FORM{id},'update_invoice.pl','income','&pound;$Owing allocated to $Invoice_type $Invoice[6] to make it fully Paid','$COOKIE->{USER}')");
 	}
+}
+sub Convert_Cols {
+	my $Col = shift;
+	$Col =~ s/\n/<br\/>/g;
+	return $Col;
 }
 1;

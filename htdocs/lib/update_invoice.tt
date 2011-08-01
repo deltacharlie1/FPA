@@ -168,7 +168,7 @@
     </tr>
     <tr>
 [% IF cookie.VAT == "N" -%]
-      <td colspan="2">&nbsp;</td>
+      <td colspan="2">&nbsp;<div id="vt"></div></td>
 [% ELSE -%]
       <td style="text-align:right;"><strong>VAT : </strong></td>
       <td id="vt" style="text-align:right;padding-right:40px;">[%- invoice.invvat | remove('-') -%]</td>
