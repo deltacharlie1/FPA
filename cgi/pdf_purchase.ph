@@ -83,85 +83,62 @@ if ($COOKIE->{PT_LOGO} && $Company[7]) {
 	$logo = $pdf->image_gd($gdimg);
 
 }
-else {
-	$logo = $pdf->image_jpeg('logo5.jpg');
-}
 
 #  Set out the first page
 
 &set_new_page;
 
-#  Now do the line items - set up the text block fiexed parameters
+$Invoice[9] =~ s/^.*?<tr>//is;          #  Remove everything up to the first table row
+$Invoice[9] =~ s/^.*?<tr>//is;          #  Then again to remove all headers
+$Invoice[9] =~ s/<tr.*?>//gis;          #  Remove all row start tags
 
-$tb = PDF::TextBlock->new({
-   pdf   => $pdf,
-   page  => $page,
-   fonts => {
-      default => PDF::TextBlock::Font->new({
-         pdf       => $pdf,
-         font      => $pdf->corefont( 'Helvetica' ),
-         size      => 10,
-      }),
-   },
-   x     => 51,
-   w     => 254,
-   h     => 266,
-   align => 'left',
-});
-
-# print "Content-Type: text/plain\n\n";
-
-#print "$Invoice[9]\n\n--------------\n\n";
-
-# $Invoice[9] =~ s/^.*?<\/tbody>(.*)<\/table>/$1/i;		#  Get rid of the Column headers
-$Invoice[9] =~ s/^.*?<\/tbody>//gis;				#  Get rid of the Column headers
-$Invoice[9] =~ tr/\r\n//d;					#  remove any newlines
-$Invoice[9] =~ s/<tbody.*?>//ig;					#  Remove any additional tbody tags
-$Invoice[9] =~ s/<\/tbody>//ig;
-$Invoice[9] =~ s/<tr.*?>//gis;
-#print "$Invoice[9]\n\n--------------\n\n";
-
-$Invoice[9] =~ tr/A-Z/a-z/;
 @Row = split(/\<\/tr\>/,$Invoice[9]);
 for $Row (@Row) {
+        $Row =~ s/^.*?<td.*?>//is;
         $Row =~ s/<td.*?>//gis;
         @Cell = split(/\<\/td\>/,$Row);
 
-	$Cell[0] =~ s/\[\% *this *month *\%\]/$Date[0]/ig;
-	$Cell[0] =~ s/\[\% *next *month *\%\]/$Date[1]/ig;
-	$Cell[0] =~ s/\[\% *last *month *\%\]/$Date[2]/ig;
-	$Cell[0] =~ s/\[\% *this *year *\%\]/$Date[3]/ig;
-	$Cell[0] =~ s/\[\% *next *year *\%\]/$Date[4]/ig;
-	$Cell[0] =~ s/\[\% *last *year *\%\]/$Date[5]/ig;
+        if ($Cell[0]) {
 
-	if ($COOKIE->{VAT} =~ /N/i) {
-		$text->transform( -translate => [471,$Ypos]);
-		$text->text_right($Cell[2]);
-		$text->transform( -translate => [544,$Ypos]);
-		$text->text_right($Cell[4]);
-	}
-	else {
-		$text->transform( -translate => [348,$Ypos]);
-		$text->text_right($Cell[2]);
-		$text->transform( -translate => [425,$Ypos]);
-		$text->text_right($Cell[3]);
-		$text->transform( -translate => [471,$Ypos]);
-		$text->text_right($Cell[4]);
-		$text->transform( -translate => [544,$Ypos]);
-		$text->text_right($Cell[5]);
-	}
+#  remove any date/increment brackets
 
-	$tb->y($Ypos);
-	$tb->text($Cell[0]);
-	($endw, $Ypos) = $tb->apply();
+                $Cell[0] =~ s/\[(\%|\+|\-) //g;
+                $Cell[0] =~ s/ (\%|\+|\-)\]//g;
 
-	$Ypos -= 25;
-	$Net += $Cell[3];
-	$Vat += $Cell[5];
-	$Total += $Cell[3] + $Cell[5];
+#  Convert ampersands
 
-	if ($Ypos < 200) {
-		&set_new_page;
+                $Cell[0] =~ s/\&amp;/\&/ig;
+                $Cell[0] =~ s/<br\/>/\n/ig;
+
+		if ($COOKIE->{VAT} =~ /N/i) {
+			$text->transform( -translate => [471,$Ypos]);
+			$text->text_right($Cell[2]);
+			$text->transform( -translate => [544,$Ypos]);
+			$text->text_right($Cell[4]);
+		}
+		else {
+			$text->transform( -translate => [348,$Ypos]);
+			$text->text_right($Cell[2]);
+			$text->transform( -translate => [425,$Ypos]);
+			$text->text_right($Cell[3]);
+			$text->transform( -translate => [471,$Ypos]);
+			$text->text_right($Cell[4]);
+			$text->transform( -translate => [544,$Ypos]);
+			$text->text_right($Cell[5]);
+		}
+
+		$tb->y($Ypos);
+		$tb->text($Cell[0]);
+		($endw, $Ypos) = $tb->apply();
+
+		$Ypos -= 25;
+		$Net += $Cell[3];
+		$Vat += $Cell[5];
+		$Total += $Cell[3] + $Cell[5];
+
+		if ($Ypos < 200) {
+			&set_new_page;
+		}
 	}
 }
 #exit;
@@ -202,7 +179,9 @@ $g = $page->gfx();
 
 #  Logo
 
-$g->image($logo,43,709);
+if ($logo) {
+	$g->image($logo,43,709);
+}
 
 ####################    Draw all lines and blocks   ##########################
 #  Invoice Type border
@@ -434,5 +413,23 @@ $text->text($Invoice[4]);
 
 $Ypos = 425;
 $text->font($font,10);
+
+#  Now do the line items - set up the text block fiexed parameters
+
+$tb = PDF::TextBlock->new({
+   pdf   => $pdf,
+   page  => $page,
+   fonts => {
+      default => PDF::TextBlock::Font->new({
+         pdf       => $pdf,
+         font      => $pdf->corefont( 'Helvetica' ),
+         size      => 10,
+      }),
+   },
+   x     => 51,
+   w     => 254,
+   h     => 266,
+   align => 'left',
+});
 }
 1;

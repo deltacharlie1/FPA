@@ -357,6 +357,7 @@ sub pay_invoice {
 #  then make sure that it is a negative amount
 
 		$FORM{txnamount} = 0 - $FORM{txnamount};
+		$FORM{txnamount} = sprintf('%1.2f',$FORM{txnamount});
 
 		my $Owing = sprintf('%1.2f',$Invoice[1] + $Invoice[2] - $Invoice[3] - $Invoice[4]);
 
@@ -374,7 +375,10 @@ sub pay_invoice {
 		$P_txnamount =~ tr/\.//d;
 		$P_Owing =~ tr/\.//d;
 
+warn "P_txnamount = $P_txnamount\nP_Owing = $P_Owing\n";
+
 		if ($P_txnamount <= $P_Owing) {		#  sufficient funds to cover the
+							#  (This way around because they are negative amounts)
 
 #  Deduct what is owed from what we have to play with
 

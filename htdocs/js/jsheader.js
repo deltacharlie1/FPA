@@ -163,7 +163,7 @@ $(document).ready(function(){
             if ( ! /^OK/.test(data)) {
               alert(data);
             }
-            window.location.reload(true);
+            location.href="/cgi-bin/fpa/list_invoices.pl";
           },"text");
           $(this).dialog("close");
         }
@@ -194,6 +194,10 @@ $(document).ready(function(){
               ajax_return = data;
               if ( ! /^OK/.test(data)) {
                 alert(data);
+              }
+              else {
+                $(this).dialog("close");
+                location.href="/cgi-bin/fpa/list_purchases.pl";
               }
             }
           });
