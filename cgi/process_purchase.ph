@@ -375,8 +375,6 @@ sub pay_invoice {
 		$P_txnamount =~ tr/\.//d;
 		$P_Owing =~ tr/\.//d;
 
-warn "P_txnamount = $P_txnamount\nP_Owing = $P_Owing\n";
-
 		if ($P_txnamount <= $P_Owing) {		#  sufficient funds to cover the
 							#  (This way around because they are negative amounts)
 

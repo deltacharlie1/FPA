@@ -163,9 +163,9 @@ $(document).ready(function(){
             if ( ! /^OK/.test(data)) {
               alert(data);
             }
-            location.href="/cgi-bin/fpa/list_invoices.pl";
           },"text");
           $(this).dialog("close");
+          window.location.reload(true);
         }
       },
       Cancel: function() {
@@ -197,7 +197,7 @@ $(document).ready(function(){
               }
               else {
                 $(this).dialog("close");
-                location.href="/cgi-bin/fpa/list_purchases.pl";
+                window.location.reload(true);
               }
             }
           });

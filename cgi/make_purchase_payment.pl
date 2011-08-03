@@ -68,6 +68,7 @@ else {
 	$Customers = $dbh->prepare("select cusname from customers where acct_id='$COOKIE->{ACCT}' and id=$FORM{cus_id}");
 	$Customers->execute;
 	($FORM{invcusname}) = $Customers->fetchrow;
+        $FORM{invcusname} =~ s/\'/\\\'/g;
 	$Customers->finish;
 
 	require "/usr/local/httpd/cgi-bin/fpa/process_purchase.ph";
