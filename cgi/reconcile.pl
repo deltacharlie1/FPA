@@ -101,12 +101,7 @@ $(document).ready(function() {
   }
 
   ibal = parseFloat(icf) - parseFloat(ibf);
-
   document.getElementById("staact").innerHTML = ibal.toFixed(2);
-  document.getElementById("txndiff").innerHTML = (ibal - parseFloat(document.getElementById("chkditems").innerHTML)).toFixed(2);
-  if (document.getElementById("txndiff").innerHTML == "-0.00") {
-    document.getElementById("txndiff").innerHTML = "0.00";
-  }
 });
 function showResponse(responseText, statusText) {
   window.location.reload(true);
@@ -147,13 +142,8 @@ function check_bals() {
     }
 
     ibal = parseFloat(icf) - parseFloat(ibf);
-
     document.getElementById("staact").innerHTML = ibal.toFixed(2);
-    document.getElementById("txndiff").innerHTML = (ibal - parseFloat(document.getElementById("chkditems").innerHTML)).toFixed(2);
 
-    if (/0\.00/.test(document.getElementById("txndiff").innerHTML)) {
-      document.getElementById("txndiff").innerHTML = "0.00";   //  get rid of any potential minus sign
-    }
     $.get("/cgi-bin/fpa/reconcileupd1.pl", { f1: document.getElementById("thisno").value, f2: document.getElementById("thiscf").value, f3: document.getElementById("thiscfdate").value });
    }
 }
