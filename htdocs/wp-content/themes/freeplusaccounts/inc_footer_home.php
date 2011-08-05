@@ -9,10 +9,10 @@
                 <div class="listfix">
                 
                     <ul>
-                        <li class="one">Register<strong>60 sec</strong></li>
-                        <li class="two">Activate<strong>5 sec</strong></li>
-                        <li class="three">Login<strong>30 sec</strong></li>
-                        <li class="four">Setup<strong>1m 30 sec</strong></li>
+                        <li class="one">Register<strong>1m 30 secs</strong></li>
+                        <li class="two">Activate<strong>10 secs</strong></li>
+                        <li class="three">Login<strong>40 secs</strong></li>
+                        <li class="four">Setup<strong>2m 30 secs</strong></li>
                         <li class="five">Get Started<strong>easy peasy</strong></li>
                         <li class="six"><a href="https://www.freeplusaccounts.co.uk/cgi-bin/fpa/register.pl" title="register"></a></li>
                     </ul>
