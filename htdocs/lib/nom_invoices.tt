@@ -66,7 +66,7 @@
   <ul id="printtab" style="display:none;">
     <li>
       <div>
-          <input type="button" name="goback" id="goback" value="Previous Screen" onclick="location.href='/cgi-bin/fpa/invoice_report.pl';"/>
+          <input type="button" name="goback" id="goback" value="Previous Screen" onclick="location.href='/cgi-bin/fpa/nom_invoices.pl';"/>
       </div>
     </li>
   </ul>
