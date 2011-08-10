@@ -15,8 +15,8 @@
 <input type="hidden" name="tbfy" id="tbfy" value="[%- daterange.tbfy -%]"/>
   <table width="660" border="0" cellpadding="0" cellspacing="0" class="formtable">
     <tr>
-      <td><label>Select Date Range</label></td>
-      <td colspan="3">
+      <td nowrap="nowrap"><label>Select Date Range</label></td>
+      <td>
         <select name="tbselect" id="tbselect" size="1" onchange="set_range(this);">
           <option value="cu" [%- IF daterange.tbselect == "cu" -%]selected="selected"[%- END -%]>Current</option>
           <option value="tw" [%- IF daterange.tbselect == "tw" -%]selected="selected"[%- END -%]>This Week to Date</option>
@@ -29,6 +29,12 @@
           <option value="ly" [%- IF daterange.tbselect == "ly" -%]selected="selected"[%- END -%]>Last Financial Year</option>
         </select>
       </td>
+      <td><label>Order By</label></td>
+      <td><select name="tbsort" id="tbsort" size="1" onchange="get_balances();">
+            <option value="invprintdate"[%- IF daterange.tbsort == "invprintdate" -%] selected="selected"[%- END -%]>Date</option>
+            <option value="invinvoiceno"[%- IF daterange.tbsort == "invinvoiceno" -%] selected="selected"[%- END -%]>Invoice No</option>
+          </select>
+      </td>
     </tr>
     <tr>
       <td><label>Date From</label></td>
@@ -39,7 +45,7 @@
     <tr>
       <td><label>Item Description</label></td>
       <td><input name="invitem" type="text" id="invitem" size="20" value="" onchange="get_balances();"/></td>
-      <td><label>Invoice Type</label></td>
+      <td nowrap="nowarp"><label>Invoice Type</label></td>
       <td><select name="invtype" id="invtype" size="1" onchange="get_balances();">
             <option value="" selected="selected">All</option>
             <option value="S">Sales Invoices</option>

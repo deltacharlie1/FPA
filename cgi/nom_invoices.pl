@@ -25,13 +25,14 @@ $Curstr = $Reg->{tbend};
 #  Get settings from tempstacks
 
 if ($ENV{QUERY_STRING} =~ /F/i) {
-        $Sts = $dbh->do("update tempstacks set f1='',f2='',f3='' where acct_id='$COOKIE->{ACCT}' and caller='report'");
+        $Sts = $dbh->do("update tempstacks set f1='',f2='',f3='',f4='' where acct_id='$COOKIE->{ACCT}' and caller='report'");
         $Reg->{tbselect} = "ly";
+	$Reg->{tbsort} = "invprintdate";
 
 }
 else {
 
-        $TSs = $dbh->prepare("select f1,f2,f3 from tempstacks where acct_id='$COOKIE->{ACCT}' and caller='report'");
+        $TSs = $dbh->prepare("select f1,f2,f3,f4 from tempstacks where acct_id='$COOKIE->{ACCT}' and caller='report'");
         $TSs->execute;
         $TS = $TSs->fetchrow_hashref;
 
@@ -39,6 +40,7 @@ else {
                 $Reg->{tbselect} = $TS->{f1};
                 $Reg->{tbstart} = $TS->{f2};
                 $Reg->{tbend} = $TS->{f3};
+		$Reg->{tbsort} = $TS->{f4};
         }
         $TSs->finish;
 }

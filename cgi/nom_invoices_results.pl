@@ -38,9 +38,9 @@ my $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
 
 #  Save the current filter settings
 
-$Sts = $dbh->do("update tempstacks set f1='$FORM{tbselect}',f2='$FORM{tbstart}',f3='$FORM{tbend}' where acct_id='$COOKIE->{ACCT}' and caller='report'");
+$Sts = $dbh->do("update tempstacks set f1='$FORM{tbselect}',f2='$FORM{tbstart}',f3='$FORM{tbend}',f4='$FORM{tbsort}' where acct_id='$COOKIE->{ACCT}' and caller='report'");
 
-$Invoices = $dbh->prepare("select id as invid,invinvoiceno,invcusname,invtype,invdesc,date_format(invprintdate,'%d-%b-%y') as printdate,invtotal,invvat,(invtotal+invvat) as invamount,invstatus from invoices where $SQL invprintdate>=str_to_date('$FORM{tbstart}','%d-%b-%y') and invprintdate<=str_to_date('$FORM{tbend}','%d-%b-%y') and invinvoiceno <> 'unlisted' and invoices.acct_id='$COOKIE->{ACCT}' order by invprintdate");
+$Invoices = $dbh->prepare("select id as invid,invinvoiceno,invcusname,invtype,invdesc,date_format(invprintdate,'%d-%b-%y') as printdate,invtotal,invvat,(invtotal+invvat) as invamount,invstatus from invoices where $SQL invprintdate>=str_to_date('$FORM{tbstart}','%d-%b-%y') and invprintdate<=str_to_date('$FORM{tbend}','%d-%b-%y') and invinvoiceno <> 'unlisted' and invoices.acct_id='$COOKIE->{ACCT}' order by $FORM{tbsort}");
 $Invoices->execute;
 $Invoice = $Invoices->fetchall_arrayref({});
 
