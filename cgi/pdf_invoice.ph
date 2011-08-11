@@ -146,6 +146,8 @@ for $Row (@Row) {
 
 		$Cell[0] =~ s/\&amp;/\&/ig;
 		$Cell[0] =~ s/<br\/>/\n/ig;
+		$Cell[3] =~ s/<br\/>//ig;
+		$Cell[5] =~ s/<br\/>//ig;
 
 		if ($COOKIE->{VAT} =~ /N/i) {
 			$text->transform( -translate => [471,$Ypos]);
