@@ -47,7 +47,8 @@ $(document).ready(function(){
 <body [%- IF focus -%][%- IF focus.search('location') -%] onload="[%- focus; -%]"[%- ELSE -%] onload="document.getElementById('[%- focus -%]').focus();"[%- END -%][%- END -%]>
   <div id="wrapper">
     <div id="top">
-      <div class="company-name">[%- cookie.TAG -%]</div>
+      <div class="company-name"><div>[%- cookie.TAG -%]</div>
+        <div><img style='padding-top:6px;' src='/adimages/pbh.gif'></div></div>
       <div style="float:right;width:220px">
         <div class="top-ad"><img src="/images/sponsor_logo.png"></div>
         <a href="/cgi-bin/fpa/logout.pl"><div id="logout"></div></a>
