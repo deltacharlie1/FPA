@@ -10,7 +10,11 @@ use Checkid;
 $COOKIE =  &checkid($ENV{HTTP_COOKIE},$ACCESS_LEVEL);
 
 use DBI;
-my $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
+$dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
+unless ($COOKIE->{NO_ADS}) {
+	require "/usr/local/git/fpa/cgi/display_adverts.ph";
+	&display_adverts();
+}
 
 ($Reg_id,$Com_id) = split(/\+/,$COOKIE->{ACCT});
 $Companies = $dbh->prepare("select companies.comname,comcompleted,regdefaultrows,comnocheques,comvatcontrol,cominvstats,comtxnstats,comnetstats from companies left join registrations using(reg_id) where companies.reg_id=$Reg_id and companies.id=$Com_id");

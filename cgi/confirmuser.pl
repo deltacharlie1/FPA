@@ -5,7 +5,7 @@
 use Template;
 
 use DBI;
-my $dbh = DBI->connect("DBI:mysql:fpa");
+$dbh = DBI->connect("DBI:mysql:fpa");
 
 #  First let's see if this activation code matches what we have in add_users
 

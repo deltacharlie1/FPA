@@ -11,6 +11,11 @@ $Invoice_id = $ENV{QUERY_STRING};
 
 use DBI;
 $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
+unless ($COOKIE->{NO_ADS}) {
+	require "/usr/local/git/fpa/cgi/display_adverts.ph";
+	&display_adverts();
+}
+
 
 require "/usr/local/httpd/cgi-bin/fpa/pdf_invoice.ph";
 ($PDF_data,$Invoice_no) = &pdf_invoice($Invoice_id,'Y');

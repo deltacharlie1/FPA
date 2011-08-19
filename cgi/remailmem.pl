@@ -15,7 +15,7 @@ $Cookie = $Cookie{'fpa-uid'};
 if ($Cookie) {
 
 	use DBI;
-	my $dbh = DBI->connect("DBI:mysql:fpa");
+	$dbh = DBI->connect("DBI:mysql:fpa");
 
 #  Get the current Memorable word
 

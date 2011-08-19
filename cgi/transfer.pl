@@ -10,7 +10,12 @@ $COOKIE = &checkid($ENV{HTTP_COOKIE},$ACCESS_LEVEL);
 $Tfrtype = $ENV{QUERY_STRING};
 
 use DBI;
-my $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
+$dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
+unless ($COOKIE->{NO_ADS}) {
+	require "/usr/local/git/fpa/cgi/display_adverts.ph";
+	&display_adverts();
+}
+
 
 $Txns = $dbh->prepare("select date_format(txndate,'%d-%b-%y') as tdate,concat(txncusname,' (',txnremarks,')') as txncusname,txnamount from transactions where txnmethod='1200' and acct_id=? order by txncreated desc limit 0,15");
 $Txns->execute("$COOKIE->{ACCT}");

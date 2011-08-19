@@ -8,7 +8,12 @@ use Checkid;
 $COOKIE = &checkid($ENV{HTTP_COOKIE},$ACCESS_LEVEL);
 
 use DBI;
-my $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
+$dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
+unless ($COOKIE->{NO_ADS}) {
+	require "/usr/local/git/fpa/cgi/display_adverts.ph";
+	&display_adverts();
+}
+
 
 $Accts = $dbh->prepare("select accounts.acctype,accounts.id,coadesc,accounts.accname,accounts.accsort,accounts.accacctno,stastmtno,staclosebal,coabalance from accounts left join (select * from statements where acct_id='$COOKIE->{ACCT}' order by id desc) as statements on (accounts.id=statements.acc_id),accounts a left join coas on (a.acctype=coas.coanominalcode) where accounts.id=a.id and accounts.acct_id='$COOKIE->{ACCT}' and coas.acct_id='$COOKIE->{ACCT}' group by accounts.id order by accounts.acctype");
 $Accts->execute;

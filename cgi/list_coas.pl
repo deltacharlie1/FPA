@@ -8,7 +8,12 @@ use Checkid;
 $COOKIE = &checkid($ENV{HTTP_COOKIE},$ACCESS_LEVEL);
 
 use DBI;
-my $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
+$dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
+unless ($COOKIE->{NO_ADS}) {
+	require "/usr/local/git/fpa/cgi/display_adverts.ph";
+	&display_adverts();
+}
+
 
 $Coas = $dbh->prepare("select coanominalcode,coadesc,coatype,coabalance from coas where acct_id=? order by coanominalcode");
 $Coas->execute("$COOKIE->{ACCT}");

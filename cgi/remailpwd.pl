@@ -17,7 +17,7 @@ if ($ENV{QUERY_STRING}) {
 	}
 
 	use DBI;
-	my $dbh = DBI->connect("DBI:mysql:fpa");
+	$dbh = DBI->connect("DBI:mysql:fpa");
 
 #  Update the registration
 

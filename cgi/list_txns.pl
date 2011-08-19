@@ -29,7 +29,12 @@ else {
 }
 
 use DBI;
-my $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
+$dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
+unless ($COOKIE->{NO_ADS}) {
+	require "/usr/local/git/fpa/cgi/display_adverts.ph";
+	&display_adverts();
+}
+
 
 unless ($FORM{rows}) {
 	$Txns = $dbh->prepare("select date_format(txndate,'%d-%b-%y') as tdate,concat(txncusname,' (',txnremarks,')') as txncusname,txnamount,coadesc,txntxnno from transactions left join coas on (txnmethod=coanominalcode) where $Filter and transactions.acct_id='$COOKIE->{ACCT}' and coas.acct_id='$COOKIE->{ACCT}' order by txndate desc,txntxnno desc");

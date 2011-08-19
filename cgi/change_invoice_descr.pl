@@ -23,6 +23,11 @@ while (( $Key,$Value) = each %FORM) {
 
 use DBI;
 $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
+unless ($COOKIE->{NO_ADS}) {
+	require "/usr/local/git/fpa/cgi/display_adverts.ph";
+	&display_adverts();
+}
+
 
 $Sts = $dbh->do("update invoices set invdesc='$FORM{newdescr}' where acct_id='$COOKIE->{ACCT}' and id=$FORM{id}");
 

@@ -10,7 +10,12 @@ $COOKIE = &checkid($ENV{HTTP_COOKIE},$ACCESS_LEVEL);
 $Cus_id = $ENV{QUERY_STRING};
 
 use DBI;
-my $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
+$dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
+unless ($COOKIE->{NO_ADS}) {
+	require "/usr/local/git/fpa/cgi/display_adverts.ph";
+	&display_adverts();
+}
+
 
 $Customers = $dbh->prepare("select id,cuscontact,cusemail,cusstmtmsg,date_format(now(),'%M') as stmtdate from customers where id=$Cus_id and acct_id='$COOKIE->{ACCT}'");
 $Customers->execute;

@@ -22,7 +22,12 @@ foreach $pair (@pairs) {
 }
 
 use DBI;
-my $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
+$dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
+unless ($COOKIE->{NO_ADS}) {
+	require "/usr/local/git/fpa/cgi/display_adverts.ph";
+	&display_adverts();
+}
+
 
 $Stmts = $dbh->prepare("select statements.id as id,stastmtno,staopenbal,staclosebal,date_format(staopendate,'%d-%b-%y') as staopendate,date_format(staclosedate,'%d-%b-%y') as staclosedate,accname,accsort,accacctno from statements left join accounts on (acc_id=accounts.id) where statements.acct_id='$COOKIE->{ACCT}' and statements.id=$FORM{filter}");
 $Stmts->execute;

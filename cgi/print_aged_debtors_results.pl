@@ -31,7 +31,12 @@ foreach $pair (@pairs) {
 #$FORM{tbend} = "30-Jun-11";
 
 use DBI;
-my $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
+$dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
+unless ($COOKIE->{NO_ADS}) {
+	require "/usr/local/git/fpa/cgi/display_adverts.ph";
+	&display_adverts();
+}
+
 
 #  List VAT entries in simple text format
 

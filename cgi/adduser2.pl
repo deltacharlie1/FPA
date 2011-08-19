@@ -6,7 +6,7 @@ use Checkid;
 $COOKIE = &checkid($ENV{HTTP_COOKIE},$ACCESS_LEVEL);
 
 use DBI;
-my $dbh = DBI->connect("DBI:mysql:fpa");
+$dbh = DBI->connect("DBI:mysql:fpa");
 
 ($Reg_id,$Com_id) = split(/\+/,$COOKIE->{ACCT});
 

@@ -20,6 +20,11 @@ foreach $pair (@pairs) {
 
 use DBI;
 $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
+unless ($COOKIE->{NO_ADS}) {
+	require "/usr/local/git/fpa/cgi/display_adverts.ph";
+	&display_adverts();
+}
+
 if ($FORM{type} =~ /^Sales/i) {
 	$Customers = $dbh->prepare("select id,invinvoiceno from invoices where invinvoiceno like '$FORM{term}%' and invtype in ('S','C') and acct_id='$COOKIE->{ACCT}' order by invinvoiceno");
 }

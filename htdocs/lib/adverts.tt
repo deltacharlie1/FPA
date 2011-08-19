@@ -1,6 +1,5 @@
 [% IF cookie.NO_ADS == '1' -%]
 <div style="width:5px;height:600px;"></div>
-[% ELSE; sort = cookie.NEXT_AD; USE DBI('dbi:mysql:fpa') -%]
-[% FOREACH advert = DBI.query("select adv2 from adverts where sort=$sort") -%]
-[%- advert.adv2 -%]
-[% END; END -%]
+[% ELSE -%]
+[%- cookie.adv2 -%]
+[% END -%]

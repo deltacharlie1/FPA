@@ -22,7 +22,12 @@ foreach $pair (@pairs) {
 }
 
 use DBI;
-my $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
+$dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
+unless ($COOKIE->{NO_ADS}) {
+	require "/usr/local/git/fpa/cgi/display_adverts.ph";
+	&display_adverts();
+}
+
 
 unless ($FORM{rows}) {
 	$Vatreturns = $dbh->prepare("select id,perquarter,date_format(perstartdate,'%d-%b-%y') as perstartdate,date_format(perenddate,'%d-%b-%y') as perenddate,perbox5,date_format(perduedate,'%d-%b-%y') as perduedate,date_format(percompleted,'%d-%b-%y') as percompleted,date_format(perfiled,'%d-%b-%y') as perfiled,perstatus from vatreturns where acct_id='$COOKIE->{ACCT}' order by perquarter desc");

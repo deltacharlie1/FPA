@@ -33,7 +33,7 @@ foreach (@Cookie) {
 $Cookie = $Cookie{'fpa-uid'};
 
 use DBI;
-my $dbh = DBI->connect("DBI:mysql:fpa");
+$dbh = DBI->connect("DBI:mysql:fpa");
 $Regs = $dbh->prepare("select lower(regmemword),reg_id,regemail,regpwd,regmembership,regdefaultmenu,regmenutype,regoptin from registrations where regemail='$Cookie'");
 $Regs->execute;
 @Reg = $Regs->fetchrow;

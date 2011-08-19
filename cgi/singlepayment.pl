@@ -26,6 +26,11 @@ while (( $Key,$Value) = each %FORM) {
 
 use DBI;
 $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
+unless ($COOKIE->{NO_ADS}) {
+	require "/usr/local/git/fpa/cgi/display_adverts.ph";
+	&display_adverts();
+}
+
 $Customers = $dbh->prepare("select id,cusname,cusaddress,cuspostcode,cusregion,cuscontact,cusemail,custerms,cusdefpo from customers where cusname like '$FORM{q}%' and cussales='Y' and id=$ENV{QUERY_STRING} and acct_id='$COOKIE->{ACCT}' order by cusname");
 $Customers->execute;
 @Customer = $Customers->fetchrow;

@@ -26,7 +26,12 @@ foreach $pair (@pairs) {
 # exit;
 
 use DBI;
-my $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
+$dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
+unless ($COOKIE->{NO_ADS}) {
+	require "/usr/local/git/fpa/cgi/display_adverts.ph";
+	&display_adverts();
+}
+
 
 $Coas = $dbh->prepare("select nomcode,coadesc,coatype,sum(nomamount) as balance from nominals left join coas on (nominals.nomcode=coas.coanominalcode and nominals.acct_id=coas.acct_id) where str_to_date('$FORM{tbstart}','%d-%b-%y')<=nomdate and str_to_date('$FORM{tbend}','%d-%b-%y')>=nomdate and nominals.acct_id='$COOKIE->{ACCT}' group by nomcode order by nomcode");
 $Coas->execute;

@@ -21,7 +21,7 @@ foreach $pair (@pairs) {
 # exit;
 
 use DBI;
-my $dbh = DBI->connect("DBI:mysql:fpa");
+$dbh = DBI->connect("DBI:mysql:fpa");
 
 $Users = $dbh->prepare("select reg_id,regmemword,regmembership,regactive,date_format(date_add(now(), interval 6 month),'%a, %d %b %Y %k:%i:%s GMT'),date_add(now(), interval 6 month),regvisitcount from registrations where regemail='$FORM{email}' and regpwd=password('$FORM{pwd}')");
 $Users->execute;

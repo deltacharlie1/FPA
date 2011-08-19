@@ -10,7 +10,12 @@ $COOKIE = &checkid($ENV{HTTP_COOKIE},$ACCESS_LEVEL);
 ($Reg_id,$Com_id) = split(/\+/,$COOKIE->{ACCT});
 
 use DBI;
-my $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
+$dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
+unless ($COOKIE->{NO_ADS}) {
+	require "/usr/local/git/fpa/cgi/display_adverts.ph";
+	&display_adverts();
+}
+
 $Regs = $dbh->prepare("select regusername,regemail,regmembership,regoptin,regmenutype from registrations where reg_id=$Reg_id");
 $Regs->execute;
 $Reg = $Regs->fetchrow_hashref;

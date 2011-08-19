@@ -18,7 +18,7 @@ foreach $pair (@pairs) {
 }
 
 use DBI;
-my $dbh = DBI->connect("DBI:mysql:fpa");
+$dbh = DBI->connect("DBI:mysql:fpa");
 
 ###  Validation
 
