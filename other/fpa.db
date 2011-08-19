@@ -471,19 +471,13 @@ create table categories (
 drop table if exists adverts;
 create table adverts (
   id int unsigned not null auto_increment primary key,
-  href varchar(250) not null default '',
-  img varchar(250) not null default '',
+  sort int not null default 0,
+  adv1 varchar(250) not null default '',
+  adv2 varchar(250) not null default '',
+  adv3 varchar(250) not null default '',
   sector varchar(200) not null default 'all',
-  shows int unsigned not null default 0,
-  index ad1 (shows)
+  index sort_order (sort)
 );
-
-insert into adverts (href,img) values ('http://scripts.affiliatefuture.com/AFClick.asp?affiliateID=237742&merchantID=96&programmeID=282&mediaID=5256&tracking=&url=','5256.gif');
-insert into adverts (href,img) values ('http://scripts.affiliatefuture.com/AFClick.asp?affiliateID=237742&merchantID=4677&programmeID=12199&mediaID=102066&tracking=&url=','102066.gif');
-insert into adverts (href,img) values ('http://scripts.affiliatefuture.com/AFClick.asp?affiliateID=237742&merchantID=4111&programmeID=10331&mediaID=77495&tracking=&url=','77495.gif');
-insert into adverts (href,img) values ('http://scripts.affiliatefuture.com/AFClick.asp?affiliateID=237742&merchantID=1064&programmeID=3161&mediaID=16598&tracking=&url=','16598.gif');
-insert into adverts (href,img) values ('http://scripts.affiliatefuture.com/AFClick.asp?affiliateID=237742&merchantID=1975&programmeID=5334&mediaID=31180&tracking=&url=','31180.gif');
-insert into adverts (href,img) values ('http://scripts.affiliatefuture.com/AFClick.asp?affiliateID=237742&merchantID=2016&programmeID=5451&mediaID=38959&tracking=&url=','38959.gif');
 
 drop table if exists market_sectors;
 create table market_sectors (

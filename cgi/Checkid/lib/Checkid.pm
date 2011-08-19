@@ -46,7 +46,7 @@ sub checkid {
 	        $Cookie{$Name} = $Value;
 	}
 #warn "\n\n";
-	$Cookie = $Cookie{'fpa-cookie'} || "";
+	$Cookie = $Cookie{'fpa-cookie'} || "*xx*";
 
 	open(COOKIE,"/projects/tmp/$Cookie");
 	while (<COOKIE>) {
@@ -54,7 +54,9 @@ sub checkid {
 	        ($Name,$Value) = split(/\t/,$_);
         	$COOKIE->{$Name} = $Value;
 	}
+
 	close(COOKIE);
+	$COOKIE->{NEXT_AD} = $Cookie{'fpa-next_advert'};
 
 #  Check that the cookie email = COOKIE email
 

@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="/css/uploadify.css" type="text/css"/>
 <script type="text/javascript" src="/js/swfobject.js"></script>
 <script type="text/javascript" src="/js/jquery.uploadify.v2.1.4.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
 <script type="text/javascript" src="/js/jquery-print.js"></script>
 <script type="text/javascript" src="/js/jsheader.js"></script>
 <title>[% title -%]</title>
@@ -39,6 +40,15 @@ $(document).ready(function(){
                          $(this).dialog("close");
                        }
   });
+  var advert = $.cookie('fpa-next_advert') * 1;
+  var last = $.cookie('fpa-last_advert') * 1;
+  if (advert >= last) {
+    advert = 1;
+  }
+  else {
+    advert = advert + 1;
+  }
+  $.cookie('fpa-next_advert',advert, { path: '/' });
 });
 </script>
 [% END -%]

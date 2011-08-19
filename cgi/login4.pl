@@ -125,6 +125,8 @@ if ($Multi) {
 Content-Type: text/plain
 Set-Cookie: fpa-cookie=$Cookie; path=/;
 Set-Cookie: fpa-comname=$Company[0]; path=/;
+Set-Cookie: fpa-next_advert=0; path=/;
+Set-Cookie: fpa-last_advert=12; path=/;
 Status: 301
 Location: /cgi-bin/fpa/$Href
 
@@ -135,6 +137,8 @@ else {
 Content-Type: text/plain
 Set-Cookie: fpa-cookie=$Cookie; path=/;
 Set-Cookie: fpa-comname=$Company[0]; path=/;
+Set-Cookie: fpa-next_advert=0; path=/;
+Set-Cookie: fpa-last_advert=12; path=/;
 
 OK-$Href
 
