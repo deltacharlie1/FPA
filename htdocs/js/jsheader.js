@@ -90,7 +90,7 @@ $(document).ready(function(){
       "Save": function() {
         if (document.getElementById("comtext").value.length > 0) {
           $.post("/cgi-bin/fpa/add_comment.pl", { comtext: document.getElementById("comtext").value, comgrade: document.getElementById("comgrade").value },function(data) {
-            document.getElementById("dialog").title = "";
+            $("#dialog").dialog({ title: "Feedback Added"});
             document.getElementById("dialog").innerHTML = data;
             errfocus = "comtext";
             $("#dialog").dialog("open");
@@ -127,9 +127,9 @@ $(document).ready(function(){
       "Save": function() {
         if (document.getElementById("remtext").value.length > 0) {
           $.post("/cgi-bin/fpa/add_reminder.pl", { remtext: document.getElementById("remtext").value, remgrade: document.getElementById("remgrade").value, remstartdate: document.getElementById("remstartdate").value, remenddate: document.getElementById("remenddate").value } ,function(data) {
-            document.getElementById("dialog").title = "";
             document.getElementById("dialog").innerHTML = data;
             errfocus = "remtext";
+            $("#dialog").dialog({ title: "Reminder Added"});
             $("#dialog").dialog("open");
             document.getElementById("remtext").value = "";
             document.getElementById("remstartdate").value = "";

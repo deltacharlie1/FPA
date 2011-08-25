@@ -17,7 +17,7 @@ AC_FL_RunContent( 'codebase','http://download.macromedia.com/pub/shockwave/cabs/
       <div class="testimionials">
       
             <div class="m">
-<a href="https://www.freeplusaccounts.co.uk/cgi-bin/fpa/register.pl"><img src="<?php bloginfo('template_directory'); ?>/images/register_sequence.png"/></a><div style="float:right;padding-top:10px;padding-right:20px;"><a href="#" onclick="window.open('/help-support.html','support','top=100,left=300,width=500,height=600');"><img src="/images/support.png"/></a></div>
+<a href="https://www.freeplusaccounts.co.uk/cgi-bin/fpa/register.pl"><img src="<?php bloginfo('template_directory'); ?>/images/register_sequence.png"/></a><div style="float:right;padding-top:10px;padding-right:20px;"><a href="#" onclick="window.open('/help-support.html','support','top=100,left=300,width=630,height=600,scrollbars=yes');"><img src="/images/support.png"/></a></div>
         </div>
       
       </div>

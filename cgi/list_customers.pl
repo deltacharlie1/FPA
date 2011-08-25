@@ -167,7 +167,7 @@ function check_vat(obj) {
 }
 function send_statements() {
   $.get("/cgi-bin/fpa/send_statements.pl",function(data) {
-    $("#dialog").attr("title","Send Statements - Results");
+    $("#dialog").dialog("option","title","iSend Statements - Results");
     $("#dialog").html(data);
     $("#dialog").dialog("open");
   });

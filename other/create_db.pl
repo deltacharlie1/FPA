@@ -29,9 +29,6 @@ while (<FILE>) {
 		$Data =~ s/,$//;
 		$Sts = $dbh->do("insert into registrations ($Flds) values ($Data)");
 		$Reg_id = $dbh->last_insert_id(undef, undef, qw(registrations undef));
-		if ($Reg_com_id) {
-			$Sts = $dbh->do("update reg_coms set reg1_id=$Reg_com_id where old_id=$Fld{reg1_id}");
-		} 
 	}
 	elsif (/^\s*\<\/Company Details>$/i) {
 		$Comexpid = $Fld{comexpid};
@@ -48,7 +45,7 @@ while (<FILE>) {
 		$Data =~ s/,$//;
 		$Sts = $dbh->do("insert into reg_coms ($Flds) values ($Data)");
 		$Reg_com_id = $dbh->last_insert_id(undef, undef, qw(reg_coms undef));
-		$Sts = $dbh->do("update reg_coms set reg2_id=$Com_id,com_id=$Com_id where id=$Reg_com_id");
+		$Sts = $dbh->do("update reg_coms set reg2_id=$Reg_id,com_id=$Com_id where id=$Reg_com_id");
 	}
 	elsif (/^\s*\<\/COA Details/i) {
 		$Flds .= "acct_id"; 
@@ -148,6 +145,13 @@ while (<FILE>) {
 close(FILE);
 
 #  Now sort out all of the link fields
+
+$Registrations = $dbh->prepare("select reg_id,old_id from registrations");
+$Registrations->execute;
+while ($Registration = $Registrations->fetchrow_hashref) {
+	$Sts = $dbh->do("update reg_coms set reg1_id=$Registration->{reg_id} where com_id=$Com_id");
+}
+$Registrations->finish;
 
 $Customers = $dbh->prepare("select id,old_id from customers where acct_id='$Acct_id'");
 $Customers->execute;
