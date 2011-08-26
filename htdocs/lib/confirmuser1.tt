@@ -11,7 +11,7 @@
             <p>You must complete <b>BOTH</b> fields</p>
           <form action="/cgi-bin/fpa/confirmuser2.pl" method="post" name="form1" id="form1">
           <input type="hidden" name="actcode" id="actcode" value="[%- code -%]"/>
-          <input type="hidden" name="emamil" id="email" value="[%- email -%]"/>
+          <input type="hidden" name="email" id="email" value="[%- email -%]"/>
           <table width="100%" border="0" cellpadding="0" cellspacing="0" class="formtable">
             <tr>
               <td>&nbsp;</td>

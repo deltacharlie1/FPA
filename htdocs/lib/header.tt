@@ -18,9 +18,9 @@
 <script type="text/javascript" src="/js/jquery-print.js"></script>
 <script type="text/javascript" src="/js/jsheader.js"></script>
 <title>[% title -%]</title>
-[% IF cookie.UPLDS > 0 -%]
 <script type="text/javascript">
 $(document).ready(function(){
+[% IF cookie.UPLDS > 0 -%]
   $("#searchcus").watermark("Search");
   $("#pifile").uploadify ({
     "uploader"       : "/js/uploadify.swf",
@@ -40,6 +40,7 @@ $(document).ready(function(){
                          $(this).dialog("close");
                        }
   });
+[% END -%]
   var advert = $.cookie('fpa-next_advert') * 1;
   var last = $.cookie('fpa-last_advert') * 1;
   if (advert >= last) {
@@ -51,7 +52,6 @@ $(document).ready(function(){
   $.cookie('fpa-next_advert',advert, { path: '/' });
 });
 </script>
-[% END -%]
 [% javascript %]
 </head>
 <body [%- IF focus -%][%- IF focus.search('location') -%] onload="[%- focus; -%]"[%- ELSE -%] onload="document.getElementById('[%- focus -%]').focus();"[%- END -%][%- END -%]>

@@ -27,7 +27,10 @@ $Customers = $dbh->prepare("select id,cusname,cusaddress,cuspostcode,cusregion,c
 $Customers->execute;
 @Customer = $Customers->fetchrow;
 
-$Customer[2] =~ s/\n/\\n/sg;
+for ($i=0;$i<8;$i++) {
+	$Customer[$i] =~ tr/\r//d;
+	$Customer[$i] =~ s/\n/\\n/sg;
+}
 
 print<<EOD;
 Content-Type: application/json

@@ -181,11 +181,18 @@ ul a{
 #container #sidebar {
 	float: right;
 	width: 190px;
+	margin-right: 0px;
 	padding:0px;
 	padding-right:7px;
 }
 #container #sidebar ul {
-	padding:0px;
+	list-style-type: none;
+	padding: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+	display: block;
 }
 #container #sidebar li {
 	background-image: url(/images/side-button.gif);

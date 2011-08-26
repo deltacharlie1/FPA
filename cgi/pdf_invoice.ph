@@ -129,11 +129,11 @@ $Invoice[9] =~ s/^.*?<tr>//is;		#  Remove everything up to the first table row
 $Invoice[9] =~ s/^.*?<tr>//is;		#  Then again to remove all headers
 $Invoice[9] =~ s/<tr.*?>//gis;		#  Remove all row start tags
 
-@Row = split(/\<\/tr\>/,$Invoice[9]);
+@Row = split(/\<\/tr\>/i,$Invoice[9]);
 for $Row (@Row) {
 	$Row =~ s/^.*?<td.*?>//is;
         $Row =~ s/<td.*?>//gis;
-        @Cell = split(/\<\/td\>/,$Row);
+        @Cell = split(/\<\/td\>/i,$Row);
 
 	if ($Cell[0]) {
 

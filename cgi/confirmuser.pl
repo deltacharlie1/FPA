@@ -23,7 +23,7 @@ else {
 	
 $tt = Template->new({
 	INCLUDE_PATH => ['.','/usr/local/httpd/htdocs/fpa/lib'],
-	WRAPPER => 'phoenix.tt',
+	WRAPPER => 'logicdesign.tt',
 });
 
 #  Confirm whether or not they are already registered

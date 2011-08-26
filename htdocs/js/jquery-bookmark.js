@@ -1,4 +1,3 @@
-<script language="javascript" type="text/javascript">
 $(document).ready(function(){
 $("a.jQueryBookmark").click(function(e){
 	e.preventDefault(); // this will prevent the anchor tag from going the user off to the link
@@ -19,4 +18,3 @@ $("a.jQueryBookmark").click(function(e){
 	}
 });
 });
-</script>
