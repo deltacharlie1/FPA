@@ -772,7 +772,7 @@ img.aligncenter {
 #ticker {
 	padding:20px 15px 20px 5px;
 	border:1px dotted #999999;
-	height:250px;
+	height:50px;
 }
 #ticker ul {
 	visibility:hidden;
@@ -826,4 +826,8 @@ img.aligncenter {
 .listing td a:hover {
         color: #800000;
 }
-
+#greyline {
+	background-image:url(/images/grey-dot.png);
+	background-repeat:repeat-y;
+	background-position:center;
+}	

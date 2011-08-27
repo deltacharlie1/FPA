@@ -45,10 +45,10 @@
 <script src="/css/turboTicker.JQuery.js" type="text/javascript"></script>
 <script type="text/javascript">
 	$().ready(function() {
-		$("#ticker").ticker(70,true,true);
-		$('#freemore').jTruncate( { length: 40 } );
-		$('#easymore').jTruncate( { length: 29 } );
-		$('#securemore').jTruncate( { length: 28 } );
+		$("#ticker").ticker(100,true,true);
+		$('#freemore').jTruncate( { length: 140 } );
+		$('#easymore').jTruncate( { length: 129 } );
+		$('#securemore').jTruncate( { length: 128 } );
 		$("#ticker ul").css("visibility","visible");
 	});
 </script>

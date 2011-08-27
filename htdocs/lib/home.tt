@@ -1,20 +1,44 @@
-<h1 style="width:600px;">What is FreePlus Accounts?</h1>
-<p>FreePlus Accounts is a complete accounting application for small businesses, start-ups and sole traders that is <b>COMPLETELY FREE</b> to use for as long as you like and as often as you wish!</p>
-<div style="float:left;width:360px;">
-<div style="font-size:18px;font-weight:bold;margin-top:20px;">With FreePlus Accounts you can:-</div>
-<ul><li>Create, print and email quotations and invoices</li>
-<li>Track customer payments of invoices</li>
-<li>Print and email monthly statements</li>
-<li>Record Purchases</li>
-<li>Record money in to and out of your bank accounts</li>
-<li>Reconcile your bank statements to your accounts</li>
-<li>Produce your VAT Returns (when registered for VAT)</li>
-<li>Carry out Year End processing, including producing year end reports</li>
-<li>Easily select and print any information held in your account</li>
-<li>Easily monitor the general health of your business</li></ul>
-<h3>All for the princely sum of NO PENCE per month!</h3>
-</div>
-<div id="outerticker" style="position:relative; float:right;width:190px;margin:20px 0 0 20px; padding:0px;">
+<h1 style="width:600px;">Why use FreePlus Accounts?</h1>
+<p>FreePlus Accounts is a complete accounting application for small businesses, start-ups and sole traders that is <b>COMPLETELY FREE</b> to use for as long as you like and as often as you wish!&nbsp;&nbsp;Check out the great feature set <a href="/features">HERE</a></p>
+<h3 style="padding:0px;">If you are</h3>
+<table cellspacing="2" cellpadding="2" border="0" width="100%">
+  <tr>
+    <td width="47%" style="text-align:center;padding:0px;"><h3 style="padding:0px;">Just Starting</h3></td>
+    <td width="6%">&nbsp;</td>
+    <td width="47%" style="text-align:center;padding:0px;"><h3 style="padding:0px;">Approaching Year End</h3></td>
+  </tr>
+  <tr>
+    <td style="padding-top:0px;line-height:1.1em;vertical-align:top;">If you are just starting your new business now is by far the best time to start using an accounting system that can grow with you.
+      <p><ul>
+        <li style="padding-top:0px;line-height:1.1em;">No having to catch up with your data entry</li>
+        <li style="padding-top:0px;line-height:1.1em;">No searching around for old receipts</li>
+        <li style="padding-top:0px;line-height:1.1em;">From day one you can readily see how the business is performing</li>
+        <li style="padding-top:0px;line-height:1.1em;">No need to employ a bookkeeper (thus saving money!)</li>
+        <li style="padding-top:0px;line-height:1.1em;">You can give your accountant a head start in knowing you and understanding your business</li>
+      </ul></p><br/>
+So, get your business off to a great start by using FreePlus Accounts and, at the same time, check out our partners to see how they can save you money down the road.
+    </td>
+    <td id="greyline">&nbsp;</td>
+    <td style="padding-top:0px;line-height:1.1em;">
+      <ul>
+        <li style="padding-top:0px;line-height:1.1em;">Is your Year End looming?</li>
+        <li style="padding-top:0px;line-height:1.1em;">Are your accounts still being recorded on paper or spreadsheet?</li>
+        <li style="padding-top:0px;line-height:1.1em;">Are you concerned as to what it might cost to employ an expensive accountant to sort it all out?</li>
+      </ul>
+<br/>
+If you answered 'YES' to any of the above, then FreePlus Accounts can help you and save you money!
+<br/><br/>We have teamed up with businesses that have the same, low-cost, no-frills philosophy that we have to provide all the help you will need to get your accounts organised, checked and approved for HMRC and Companies House.
+<br/><br/>
+So, sign up for a FreePlus Account right now, it will cost you nothing. Then check out our partners to see how they can help to get you ready for your Year End returns.  You'll be surprised at how little it will cost you.
+    </td>
+  </tr>
+  <tr>
+    <td colspan="3">
+See what some of our satisfied customers have to say
+    </td>
+  </tr>
+</table>
+<div id="outerticker" style="position:relative; width:550px;margin:0px 0 0 20px; padding:0px;">
 <img style="position:absolute;top:-10px;left:-12px;" src="/wp-content/themes/freeplusaccounts/images/start_quotes.png"/>
 <div id="ticker">
   <ul>
