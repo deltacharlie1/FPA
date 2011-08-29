@@ -2,13 +2,11 @@
             <p> FreePlus Accounts provides a fully functional, totally free, online accounting system for any small business, including start-ups,  micro-businesses and sole traders. There is no time or use limit. Once you've signed up you can use the service as often as you want and for as long as you want with no charge. </p>
             <p>
               You have the option of signing up for some or all of the additional system features and there is a modest charge for each of these. You will not need to pay for any additional features to make the system usable and you are not required to take up any of the extra functionality if you do not want it. You will not be asked to make a subscription to any of the extra services and there are no automatic renewals. </p>
-            <h3>
-              See what you get with:</h3>
-            <h2>
-              The core FreePlus Accounts system</h2>
+            <h3 style="padding-bottom:0px;">See what you get with:</h3>
+            <h2 style="margin-top:0px;">The core FreePlus Accounts system</h2>
             <ul>
                 <li>Unlimited access to your accounts for a single user from anywhere you can connect to the internet</li>
-                <li>Unlimited Email support</li>
+                <li>Unlimited Email support (response normally within 2 working days)</li>
                 <li>Audit Trail of all financial changes</li>
                 <li>All records held for at least 2 years</li>
                 <li>Export core records to flat files</li>
@@ -53,12 +51,56 @@
             </ul>
             <h3>Optional additional features</h3>
             <ul>
-              <li>Elevated level of support</li>
+              <table border="0" cellspacing="0" cellpadding="0" width="80%">
+<!--                <tr>
+                  <td>
+              <li>Prioritised support (response normally within 4 hours)</li>
+                  </td>
+                  <td><b>&pound;80</b> per year</td>
+                </tr>  -->
+                <tr>
+                  <td>
+              <li>Customise invoices, quotations and statements with your logo</li>
+                  </td>
+                  <td><b>&pound;30</b> per year</td>
+                </tr>
+                <tr>
+                  <td>
+              <li>Access to your FreePlus Accounts logon for 1 additional user</li>
+                  </td>
+                  <td><b>&pound;50</b> per year</td>
+                </tr>
+                <tr>
+                  <td>
               <li>Suppress advertising</li>
-              <li>Advertise your business on FreePlus Accounts</li>
-              <li>Access to your FreePlus Accounts logon for additional users</li>
-              <li>Customise invoices with your logo</li>
+                  </td>
+                  <td><b>&pound;50</b> per year</td>
+                </tr>
+                <tr>
+                  <td>
               <li>Upload documents tagged to statements, purchase invoices etc</li>
+                  </td>
+                  <td><b>&pound;50</b> per year</td>
+                </tr>
+                <tr>
+                  <td>
               <li>All records held for 6 years</li>
+                  </td>
+                  <td><b>&pound;30</b> per year</td>
+                </tr>
+                <tr>
+                  <td>
+              <li>Advertise your business on FreePlus Accounts</li>
+                  </td>
+                  <td><b>&pound;30</b> per year</td>
+                </tr>
+              <tr>
+                <td>
+                <li>Alternatively, users may purchase all of the above features (including prioritised support) for a monthly premium, paid by Direct Debit, of</li>
+                </td>
+                <td valign="bottom" nowrap="nowrap"><b>&pound;10</b> per month</td>
+              </tr>
+                </table>
             </ul>
-            <p>Simply <a href="contact-us">contact us</a> if you wish to opt for any of these additional services.</p>
+            <p style="color:#999999;font-size:12px;font-style:italic;">(All prices are exclusive of VAT.)</p>
+            <p>Once registered simply go to our 'Additional Features' page, select the features you wish to add and follow the instructions.&nbsp;&nbsp;Alternatively you may <a href="contact-us">contact us</a> directly for additional information.</p>

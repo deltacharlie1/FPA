@@ -18,6 +18,11 @@ while (<>) {
 	tr/\r\n//d;
 
 	if (/^</) {
+
+#  First set img source to https and target a new windo
+
+		s/><img src=\"http:/ target=\"_new\"><img src=\"https:/;
+
 		if ($Stack > 2) {
 			push(@Stack3,$_);
 #print "$Incr ($Stack) -\t-\t-\tStack 3\n";
