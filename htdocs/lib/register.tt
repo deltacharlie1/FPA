@@ -88,8 +88,8 @@
                   <td><input type="checkbox" name="uplds" id="uplds" class="bonus" value="Y"/></td>
                 </tr>
                 <tr>
-                  <td><label>1 Additional User login ID</label></td>
-                  <td><input type="checkbox" name="addusr" id="addusr" class="bonus" value="Y"/></td>
+                  <td><label>Advertise your Business<br/>(Please <a href="/contact-us">Contact Us</a> to set this up)</label></td>
+                  <td><input type="checkbox" name="advt" id="advt" class="bonus" value="Y"/></td>
                 </tr>
                 <tr>
                   <td>Remember to click the Register button on the main screen!</td>
