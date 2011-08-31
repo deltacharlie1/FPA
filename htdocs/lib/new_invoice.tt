@@ -37,7 +37,7 @@
 [% UNLESS cus.id AND cus.id > 0 -%]
     <tr id="selcus">
       <td><label>Select Customer</label></td>
-      <td colspan="2"><input type="text" name="srch" id="srch"/></td>
+      <td colspan="2"><input type="text" name="srch" id="srch" title="Enter 1 or more characters of an existing customer name" /></td>
       <td>&nbsp;</td>
       <input type="hidden" name="searchtype" id="searchtype" value="Customer">
     </tr>
@@ -67,7 +67,7 @@
       <td><label>Post Code</label></td>
       <td><input title="Post Code" name="invcuspostcode" type="text" id="x_invcuspostcode" value="[%- cus.cuspostcode -%]" size="10"/></td>
       <td style="vertical-align:top;padding-top:9px;" nowrap="nowrap"><label>Customer Reference</label></td>
-      <td style="vertical-align:top;"><input name="invcusref" type="text" id="x_invcusref" size="20" value="[%- cus.cusdefpo -%]"/></td>
+      <td style="vertical-align:top;"><input name="invcusref" type="text" id="x_invcusref" size="20" title="Your Customer's Reference No" value="[%- cus.cusdefpo -%]"/></td>
     </tr>
     <tr>
       <td><label>Region</label></td>
@@ -149,7 +149,7 @@
                 </tr>
                 <tr>
                   <td><label>Category</label</td>
-                  <td colspan="2"><input type="text" name="item_cat" id="item_cat" size="20"/>
+                  <td colspan="2"><input type="text" name="item_cat" id="item_cat" title="Enter a code or short description to categorise this item" size="20"/>
                 </tr>
               </table>
             </td>

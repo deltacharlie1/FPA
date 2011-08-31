@@ -20,9 +20,9 @@
     </tr>
     <tr>
       <td><label>Date From</label></td>
-      <td><input type="text" name="tbstart" id="tbstart" value="[%- daterange.dispstart -%]" size="9" readonly="readonly" onchange="get_balances();"/>
+      <td><input type="text" name="tbstart" id="tbstart" value="[%- daterange.tbstart -%]" size="9" readonly="readonly" onchange="get_balances();"/>
       <td><label>Date To</label></td>
-      <td width="40%"><input type="text" name="tbend" id="tbend" value="[%- daterange.dispend -%]" size="9" readonly="readonly" onchange="get_balances();"/></td>
+      <td width="40%"><input type="text" name="tbend" id="tbend" value="[%- daterange.tbend -%]" size="9" readonly="readonly" onchange="get_balances();"/></td>
     </tr>
   </table>
 </form>

@@ -122,7 +122,7 @@
     <li>    
       <div>   
         <a href="/cgi-bin/fpa/new_purchase.pl?[%- cus.id -%]">
-         New Purchase Order
+         New Purchase Invoice
         </a>    
       </div>  
     </li>   

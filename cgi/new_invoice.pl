@@ -110,9 +110,7 @@ $(document).ready(function(){
       });
     },
     select: function(event, ui) {
-alert("Selected.  id = " + ui.item.id);
       $.get("/cgi-bin/fpa/getcustomer.pl",{ id: ui.item.id }, function(data) {
-alert("cusname = " + data.cusname);
         document.getElementById("x_cus_id").value = data.id;
         document.getElementById("x_invcusname").value = data.cusname;
         document.getElementById("x_invcusaddr").value = data.cusaddress;

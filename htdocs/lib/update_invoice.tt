@@ -63,7 +63,7 @@
       <td><label>Post Code</label></td>
       <td><input title="Post Code" name="invcuspostcode" type="text" id="x_invcuspostcode" value="[%- invoice.invcuspostcode -%]" size="10"/></td>
       <td style="vertical-align:top;padding-top:9px;" nowrap="nowrap"><label>Customer Reference</label></td>
-      <td style="vertical-align:top;"><input name="invcusref" type="text" id="x_invcusref" size="20" value="[%- invoice.invcusref -%]"/></td>
+      <td style="vertical-align:top;"><input name="invcusref" type="text" id="x_invcusref" size="20" title="Your Customer's Reference No" value="[%- invoice.invcusref -%]"/></td>
     </tr>
     <tr>
       <td><label>Region</label></td>
@@ -143,7 +143,7 @@
                 </tr>
                 <tr>
                   <td><label>Category</label></td>
-                  <td colspan="2"><input type="text" name="item_cat" id="item_cat" style="width:95%;"/>
+                  <td colspan="2"><input type="text" name="item_cat" id="item_cat" title="Enter a code or short description to categorise this item" style="width:95%;"/>
                 </tr>
               </table>
             </td>
