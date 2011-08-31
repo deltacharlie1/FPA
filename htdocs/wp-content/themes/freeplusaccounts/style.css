@@ -184,7 +184,8 @@ input[type=select] { background-color:#FFF; border:1px solid #CCC; padding:4px; 
 	border-bottom:1px dotted #666666;
 }
 .m.header .account.listfix .login:hover {
-	color: #668666;
+	color: #388A4B;
+	border-bottom:1px dotted #388A4B;
 }
 .m.header .account.listfix .lorr{
 	float: right;

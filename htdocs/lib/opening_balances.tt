@@ -39,7 +39,7 @@
     </tr>
     <tr>
       <td><label>Existing Long Term Liabilities</label></td>
-      <td><span><input title="Long Term Liabilities" name="x3100" type="text" id="x3100" class="currency"/></span>&nbsp;<a href='#' class="extra" onclick="ob_dialog();">What are these?</a></td>
+      <td><span><input title="Long Term Liabilities" name="x2300" type="text" id="x2300" class="currency"/></span>&nbsp;<a href='#' class="extra" onclick="ob_dialog();">What are these?</a></td>
     </tr>
   </table>
 </div>
