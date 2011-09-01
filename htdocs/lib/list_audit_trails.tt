@@ -11,7 +11,7 @@
 [% class = [ "even","odd" ] -%]
 [%- FOREACH entry IN entries -%]
   [%- ndx = loop.count % 2 -%]
-    <tr class="[%- class.$ndx -%]" onclick="location.href='/cgi-bin/fpa/[%- entry.audtype -%][%- UNLESS entry.audaction == 'transfer' -%]?[%- entry.link_id; END -%]';">
+    <tr class="[%- class.$ndx -%]"[%- IF entry.audtype.match('update|reconcile') -%] onclick="location.href='/cgi-bin/fpa/[%- entry.audtype -%][%- UNLESS entry.audaction == 'transfer' -%]?[%- entry.link_id; END -%]';"[%- END -%]>
       <td>[%- entry.audaction -%]</td>
       <td>[%- entry.audtime -%]</td>
       <td>[%- entry.audtext | truncate(80) -%]</td>
