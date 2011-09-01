@@ -150,8 +150,9 @@
   </table>
 </div>
 <div id="sidebar">
-<ul>    
-[% IF invoice.invstatuscode >2 -%]
+<ul>
+[%- UNLESS invoice.invstatus.match('Cancelled|Voided') -%]    
+  [% IF invoice.invstatuscode >2 -%]
     <li>    
       <div>   
         <a href="#" onclick="get_amt('[%- invoice.id -%]','[%- invoice.invinvoiceno -%]','[%- invoice.tottotal - invoice.totpaid -%]');">
@@ -159,7 +160,7 @@
         </a>
       </div>  
     </li>   
-[% END -%]
+  [% END -%]
     <li>    
       <div>
         <a href="/cgi-bin/fpa/print_invoice.pl?[%- invoice.id -%]">
@@ -167,6 +168,7 @@
         </a>
       </div>  
     </li>   
+[% END -%]
     <li>    
       <div>   
         <a href="/cgi-bin/fpa/copy_invoice.pl?[%- invoice.id -%]">
@@ -174,7 +176,8 @@
         </a>
       </div>  
     </li>   
-[% IF invoice.firsttime == 'F' -%]
+[%- UNLESS invoice.invstatus.match('Voided|Cancelled') -%]
+  [% IF invoice.firsttime == 'F' -%]
     <li>
       <div>
         <a href="#" onclick="delete_invoice();">
@@ -182,7 +185,7 @@
         </a>
       </div>
     </li>
-[% ELSIF invoice.invstatuscode > 2 AND invoice.invtype == 'S' -%]
+  [% ELSIF invoice.invstatuscode > 2 AND invoice.invtype == 'S' -%]
     <li>    
       <div>   
         <a href="#" onclick="cancel_invoice('[%- invoice.id -%]');">
@@ -190,8 +193,8 @@
         </a>
       </div>  
     </li>   
-[% END -%]
-[% IF overdue == 'Y' -%]
+  [% END -%]
+  [% IF overdue == 'Y' -%]
     <li>    
       <div>   
         <a href="#" onclick="writeoff_invoice('[%- invoice.id -%]');">
@@ -199,7 +202,8 @@
         </a>
       </div>  
     </li>   
-[% END -%]
+  [% END -%]
+[%- END -%]
     <li>    
       <div>
         <a href="/cgi-bin/fpa/list_customer_invoices.pl?[%- invoice.cus_id -%]">

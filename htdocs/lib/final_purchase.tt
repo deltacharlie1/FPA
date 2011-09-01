@@ -98,6 +98,7 @@
 </div>
 <div id="sidebar">
   <ul>    
+[% UNLESS invoice.invstatus.match('Voided|Cancelled') -%]
     <li>    
       <div>
         <a href="/cgi-bin/fpa/preview_purchase.pl?[%- invoice.id -%]">
@@ -120,7 +121,7 @@
       </div>  
     </li>   
 //-->
-[% IF invoice.elapsed_days < 1 -%]
+  [% IF invoice.elapsed_days == 1 -%]
     <li>    
       <div>   
         <a href="/cgi-bin/fpa/cancel_purchase.pl?[%- invoice.id -%]">
@@ -128,7 +129,8 @@
         </a>
       </div>  
     </li>   
-[% END -%]
+  [% END -%]
+[%- END -%]
     <li>    
       <div>
         <a href="/cgi-bin/fpa/list_supplier_purchases.pl?[%- invoice.cus_id -%]">

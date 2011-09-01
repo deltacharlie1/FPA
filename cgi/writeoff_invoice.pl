@@ -61,37 +61,42 @@ else {
 
 	$Sts = $dbh->do("update invoices set invremarks=concat(invremarks,'<br/>$FORM{writeoffmsg}'),invstatus='Written off',invstatuscode='0',invstatusdate=now(),invtotal=0,invvat=0 where id=$FORM{id} and acct_id='$COOKIE->{ACCT}'");
 
+#  Only update nominals, coas etc if status not Draft
+
+	if ($Invoice[6] > 1) {
+
 #  5.  Subtract from customer balance (if we have a cus id)
 
-	if ($Invoice[1]) {
-		$Sts = $dbh->do("update customers set cusbalance=cusbalance - $Tot where id=$Invoice[1] and acct_id='$COOKIE->{ACCT}'");
-	}
+		if ($Invoice[1]) {
+			$Sts = $dbh->do("update customers set cusbalance=cusbalance - $Tot where id=$Invoice[1] and acct_id='$COOKIE->{ACCT}'");
+		}
 
 #  6.  Subtract from the Debtors control (1100) and add to Bad Debts (8000)
 
-	$Sts = $dbh->do("update coas set coabalance=coabalance - $Tot where coanominalcode='1100' and acct_id='$COOKIE->{ACCT}'");
-        $Sts = $dbh->do("insert into nominals (acct_id,link_id,nomtype,nomcode,nomamount,nomdate) values ('$COOKIE->{ACCT}',$FORM{id},'$Invtype','1100','-$Tot',now())");
+		$Sts = $dbh->do("update coas set coabalance=coabalance - $Tot where coanominalcode='1100' and acct_id='$COOKIE->{ACCT}'");
+	        $Sts = $dbh->do("insert into nominals (acct_id,link_id,nomtype,nomcode,nomamount,nomdate) values ('$COOKIE->{ACCT}',$FORM{id},'$Invtype','1100','-$Tot',now())");
 
 
-	$Sts = $dbh->do("update coas set coabalance=coabalance + $Invoice[3] where coanominalcode='8000' and acct_id='$COOKIE->{ACCT}'");
+		$Sts = $dbh->do("update coas set coabalance=coabalance + $Invoice[3] where coanominalcode='8000' and acct_id='$COOKIE->{ACCT}'");
         $Sts = $dbh->do("insert into nominals (acct_id,link_id,nomtype,nomcode,nomamount,nomdate) values ('$COOKIE->{ACCT}',$FORM{id},'$Invtype','$Invoice[2]','-$Invoice[3]',now())");
 
 #  7.  VAT
 
-	unless ($COOKIE->{VAT} =~ /N/) {
-		$Sts = $dbh->do("update coas set coabalance=coabalance - $Invoice[4] where coanominalcode='2100' and acct_id='$COOKIE->{ACCT}'");
-        	$Sts = $dbh->do("insert into nominals (acct_id,link_id,nomtype,nomcode,nomamount,nomdate) values ('$COOKIE->{ACCT}',$FORM{id},'$Invtype','2100','-$Invoice[4]',now())");
-		if ($COOKIE->{VAT} =~ /S/) {
+		unless ($COOKIE->{VAT} =~ /N/) {
+			$Sts = $dbh->do("update coas set coabalance=coabalance - $Invoice[4] where coanominalcode='2100' and acct_id='$COOKIE->{ACCT}'");
+        		$Sts = $dbh->do("insert into nominals (acct_id,link_id,nomtype,nomcode,nomamount,nomdate) values ('$COOKIE->{ACCT}',$FORM{id},'$Invtype','2100','-$Invoice[4]',now())");
+			if ($COOKIE->{VAT} =~ /S/) {
 
 #  Delete from VAT accruals and deduct from comvatcontrol
 
-			$Sts = $dbh->do("delete from vataccruals where acct_id='$COOKIE->{ACCT}' and acrtxn_id=$FORM{id}");
+				$Sts = $dbh->do("delete from vataccruals where acct_id='$COOKIE->{ACCT}' and acrtxn_id=$FORM{id}");
+			}
 		}
-	}
 
 #  8.  Delete any entries in the items table
 
-	$Sts = $dbh->do("delete from items where acct_id='$COOKIE->{ACCT}' and inv_id=$FORM{id}");
+		$Sts = $dbh->do("delete from items where acct_id='$COOKIE->{ACCT}' and inv_id=$FORM{id}");
+	}
 
 	print<<EOD;
 Content-Type: text/plain
