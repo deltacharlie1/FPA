@@ -1,5 +1,5 @@
 <div class="main" id="main">
-[% IF nomcodes.size() > 0 -%]
+[% IF nomcodes.defined AND nomcodes.size() > 0 -%]
 <div id="changenomcode" title="Change Nominal Code" style="display:none;">
   <form id="fchangenomcode" name="fchangenomcode" action="">
   <input type="hidden" name="id" id="cd_id" value=""/>
@@ -48,32 +48,33 @@
 [% class = [ "even","odd" ] -%]
 [%- FOREACH entry IN entries -%]
   [%- ndx = loop.count % 2 -%]
+  [%- IF entry.invtype == 'S'; iprog = 'invoice'; itxt = 'Inv'; ELSE; iprog = 'purchase'; itxt = 'Pur'; END -%]
   [%- IF entry.nomtype == 'S' -%]
     <tr class="[%- class.$ndx -%]">
-      <td[%- IF nomcodes.size() > 0 -%] ondblclick="change_nomcode(this,[%- entry.nom_id -%],'[%- entry.invcusname | truncate(25) -%]');"[%- END -%]>[%- entry.printdate -%]</td>
-      <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- entry.linkid -%]';">Inv</td>
-      <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- entry.linkid -%]';">[%- entry.invinvoiceno -%]</td>
-      <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- entry.linkid -%]';">[%- entry.invcusname | truncate(60) -%]</td>
+      <td[%- IF nomcodes.defined AND nomcodes.size() > 0 -%] ondblclick="change_nomcode(this,[%- entry.nom_id -%],'[%- entry.invcusname | truncate(25) -%]');"[%- END -%]>[%- entry.printdate -%]</td>
+      <td onclick="location.href='/cgi-bin/fpa/update_[%- iprog -%].pl?[%- entry.linkid -%]';">[%- itxt -%]</td>
+      <td onclick="location.href='/cgi-bin/fpa/update_[%- iprog -%].pl?[%- entry.linkid -%]';">[%- entry.invinvoiceno -%]</td>
+      <td onclick="location.href='/cgi-bin/fpa/update_[%- iprog -%].pl?[%- entry.linkid -%]';">[%- entry.invcusname | truncate(60) -%]</td>
     [% IF entry.amount >= 0 -%]
-      <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- entry.linkid -%]';" style="text-align:right;">[%- entry.amount | format('%1.2f') | remove('-') -%]</td>
-      <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- entry.linkid -%]';">&nbsp;</td>
+      <td onclick="location.href='/cgi-bin/fpa/update_[%- iprog -%].pl?[%- entry.linkid -%]';" style="text-align:right;">[%- entry.amount | format('%1.2f') | remove('-') -%]</td>
+      <td onclick="location.href='/cgi-bin/fpa/update_[%- iprog -%].pl?[%- entry.linkid -%]';">&nbsp;</td>
     [% ELSE -%]
-      <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- entry.linkid -%]';">&nbsp;</td>
-      <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- entry.linkid -%]';" style="text-align:right;">[%- entry.amount | format('%1.2f') | remove('-') -%]</td>
+      <td onclick="location.href='/cgi-bin/fpa/update_[%- iprog -%].pl?[%- entry.linkid -%]';">&nbsp;</td>
+      <td onclick="location.href='/cgi-bin/fpa/update_[%- iprog -%].pl?[%- entry.linkid -%]';" style="text-align:right;">[%- entry.amount | format('%1.2f') | remove('-') -%]</td>
     [% END -%]
     </tr>
   [% ELSE -%]
     <tr class="[%- class.$ndx -%]">
-      <td[%- IF nomcodes.size() > 0 -%] ondblclick="change_nomcode(this,[%- entry.nom_id -%],'[%- entry.invcusname | truncate(25) -%]');"[%- END -%]>[%- entry.printdate -%]</td>
-      <td onclick="location.href='/cgi-bin/fpa/update_purchase.pl?[%- entry.linkid -%]';">Txn</td>
-      <td onclick="location.href='/cgi-bin/fpa/update_purchase.pl?[%- entry.linkid -%]';">[%- entry.txntxnno -%]</td>
-      <td onclick="location.href='/cgi-bin/fpa/update_purchase.pl?[%- entry.linkid -%]';">[%- entry.txncusname | truncate(60) -%]</td>
+      <td[%- IF nomcodes.defined AND nomcodes.size() > 0 -%] ondblclick="change_nomcode(this,[%- entry.nom_id -%],'[%- entry.invcusname | truncate(25) -%]');"[%- END -%]>[%- entry.printdate -%]</td>
+      <td>Txn</td>
+      <td>[%- entry.txntxnno -%]</td>
+      <td>[%- entry.txncusname | truncate(60) -%]</td>
     [% IF entry.amount < 0 -%]
-      <td onclick="location.href='/cgi-bin/fpa/update_purchase.pl?[%- entry.linkid -%]';">&nbsp;</td>
-      <td onclick="location.href='/cgi-bin/fpa/update_purchase.pl?[%- entry.linkid -%]';" style="text-align:right;">[%- 0 - entry.amount | format('%1.2f') | remove('-') -%]</td>
+      <td>&nbsp;</td>
+      <td>[%- 0 - entry.amount | format('%1.2f') | remove('-') -%]</td>
     [% ELSE -%]
-      <td onclick="location.href='/cgi-bin/fpa/update_purchase.pl?[%- entry.linkid -%]';" style="text-align:right;">[%- 0 - entry.amount | format('%1.2f') | remove('-') -%]</td>
-      <td onclick="location.href='/cgi-bin/fpa/update_purchase.pl?[%- entry.linkid -%]';">&nbsp;</td>
+      <td>[%- 0 - entry.amount | format('%1.2f') | remove('-') -%]</td>
+      <td>&nbsp;</td>
     [% END -%]
     </tr>
   [% END -%]

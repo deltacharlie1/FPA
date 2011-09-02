@@ -22,7 +22,6 @@
         <td>
           <select name="txnmethod" id="pay">
             <option value="1300">Cash</option>
-            <option value="1200">Cheque</option>
             <option value="1200">Bank Transfer</option>
             <option value="2010">Credit Card</option>
           </select>

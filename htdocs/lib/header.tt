@@ -313,7 +313,6 @@ $(document).ready(function(){
         <td>
           <select name="txnmethod" id="pay_txnmethod">
             <option value="1300">Cash</option>
-            <option value="1310">Cheque</option>
             <option value="1200" selected="selected">Bank Transfer</option>
             <option value="2010">Credit Card</option>
           </select>
