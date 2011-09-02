@@ -43,6 +43,8 @@ else {
 
 #  Set the total invoice/credit note amount 
 
+#  Remember that purchase invoice totals etc are all NEGATIVE!
+
 	my $Tot = $Invoice[3] + $Invoice[4];
 	my $Invoice_type = "Purchase Invoice";
 
@@ -52,7 +54,7 @@ else {
 
 #  4.  Delete the invoice
 
-        $Sts = $dbh->do("update invoices set invremarks=concat(invremarks,'<br/>Cancelled'),invstatus='Cancelled',invstatuscode='0',invstatusdate=now(),invtotal=0,invvat=0,invpaid=0,invpaidvat=0 where id=$FORM{id} and acct_id='$COOKIE->{ACCT}'");
+        $Sts = $dbh->do("update invoices set invdesc=concat(invdesc,' - Cancelled'),invremarks=concat(invremarks,'<br/>Cancelled'),invstatus='Cancelled',invstatuscode='0',invstatusdate=now(),invtotal=0,invvat=0,invpaid=0,invpaidvat=0 where id=$FORM{id} and acct_id='$COOKIE->{ACCT}'");
 
 #  If (and only if) the purchase invoice has a non-Draft status, update nominals and coas etc
 
@@ -60,13 +62,13 @@ else {
 #  5.  Subtract from customer balance (if we have a cus id)
 
 		if ($Invoice[1]) {
-			$Sts = $dbh->do("update customers set cusbalance=cusbalance - $Invoice[9] where id=$Invoice[1] and acct_id='$COOKIE->{ACCT}'");
+			$Sts = $dbh->do("update customers set cusbalance=cusbalance + $Tot where id=$Invoice[1] and acct_id='$COOKIE->{ACCT}'");
 		}
 
 #  6.  Subtract from the Creditors control (1100) and Expenses Control (4000,4100,4200) coas
 
-		$Sts = $dbh->do("update coas set coabalance=coabalance - $Invoice[9] where coanominalcode='2000' and acct_id='$COOKIE->{ACCT}'");
-	        $Sts = $dbh->do("insert into nominals (acct_id,link_id,nomtype,nomcode,nomamount,nomdate) values ('$COOKIE->{ACCT}',$FORM{id},'S','2000','-$Invoice[9]',now())");
+		$Sts = $dbh->do("update coas set coabalance=coabalance + $Tot where coanominalcode='2000' and acct_id='$COOKIE->{ACCT}'");
+	        $Sts = $dbh->do("insert into nominals (acct_id,link_id,nomtype,nomcode,nomamount,nomdate) values ('$COOKIE->{ACCT}',$FORM{id},'S','2000','$Tot',now())");
 
 		$Sts = $dbh->do("update coas set coabalance=coabalance + $Invoice[3] where coanominalcode='$Invoice[2]' and acct_id='$COOKIE->{ACCT}'");
 	        $Sts = $dbh->do("insert into nominals (acct_id,link_id,nomtype,nomcode,nomamount,nomdate) values ('$COOKIE->{ACCT}',$FORM{id},'S','$Invoice[2]','$Invoice[3]',now())");

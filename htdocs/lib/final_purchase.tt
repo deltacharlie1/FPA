@@ -121,7 +121,7 @@
       </div>  
     </li>   
 //-->
-  [% IF invoice.elapsed_days == 1 -%]
+  [% IF invoice.elapsed_days == 0 -%]
     <li>    
       <div>   
         <a href="/cgi-bin/fpa/cancel_purchase.pl?[%- invoice.id -%]">
