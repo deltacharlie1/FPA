@@ -218,7 +218,7 @@
     <li>
       <div>
         <a href="#" onclick="submit_details('Final');">
-         Finalise Invoice
+         Save &amp; Finalise Invoice
         </a>
       </div>  
     </li>   
