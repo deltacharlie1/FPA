@@ -146,6 +146,10 @@ sub save_invoice {
 	        my $Vat = sprintf("%1.2f",$FORM{invvat});
         	my $Tot = sprintf("%1.2f",$FORM{txnamount});
 
+		$Net =~ tr/-//d;
+		$Vat =~ tr/-//d;
+		$Total =~ tr/-//d;
+
 		$FORM{invitemcount} = "1";
 		if ($COOKIE->{VAT} =~ /N/i) {
 	                $FORM{invitems} = sprintf<<EOD;

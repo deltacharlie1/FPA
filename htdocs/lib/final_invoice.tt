@@ -2,26 +2,26 @@
 <div class="main" id="main">
 <div id="invpayment" title="Receive Payment" style="display:none;">
   <form id="pay2form" name="pay2form">
-    <input type="hidden" name="i_cus_id" id="i_cus_id" value="[%- invoice.cus_id -%]"/>
-    <input type="hidden" name="i_id" id="i_id" value=""/>
-    <input type="hidden" name="i_invcusname" id="i_invcusname" value="[%- invoice.invcusname -%]"/>
+    <input type="hidden" name="cus_id" id="i_cus_id" value="[%- invoice.cus_id -%]"/>
+    <input type="hidden" name="id" id="i_id" value=""/>
+    <input type="hidden" name="invcusname" id="i_invcusname" value="[%- invoice.invcusname -%]"/>
     <table width="100%" border="0" cellspacing="0" cellpadding="0" class="formtable">
       <tr>
         <td><label>Invoice No</label></td>
-        <td style="font-weight:bold;color:#800000;"><span id="amtinvno"></span></td>
+        <td style="font-weight:bold;color:#800000;"><span id="i_amtinvno"></span></td>
       </tr>
       <tr>
         <td><label>Amount Outstanding</label></td>
-        <td><span id="amtowed"></span></td>
+        <td><span id="i_amtowed"></span></td>
       </tr>
       <tr>
         <td><label>Amount Being Paid</label></td>
-        <td><span><input type="text" name="i_txnamount" id="i_txnamount" value="" size="10" title="Amount Being Paid" class="mandatory currency"/></span></td>
+        <td><span><input type="text" name="txnamount" id="i_txnamount" value="" size="10" title="Amount Being Paid" class="mandatory currency"/></span></td>
       </tr>
       <tr>
         <td><label>Payment Method</label></td>
         <td>
-          <select name="i_txnmethod" id="i_txnmethod">
+          <select name="txnmethod" id="i_txnmethod">
             <option value="1300" [%- IF invoice.cusdefpaymethod == "1300" -%]selected="selected"[%- END -%]>Cash</option>
             <option value="1310" [%- IF invoice.cusdefpaymethod == "1310" -%]selected="selected"[%- END -%]>Cheque</option>
             <option value="1200" [%- IF invoice.cusdefpaymethod == "1200" -%]selected="selected"[%- END -%]>Bank Transfer</option>
@@ -34,6 +34,31 @@
       </tr>
       <tr>
         <td colspan="2">Remarks<br/><textarea name="i_invdesc" id="i_invdesc" cols="30" rows="1"></textarea></td>
+      </tr>
+    </table>
+  </form>
+</div>
+<div id="refpayment" title="Refund Against Invoice" style="display:none;">
+  <form id="ref2form" name="ref2form">
+    <input type="hidden" name="cus_id" id="r_cus_id" value="[%- invoice.cus_id -%]"/>
+    <input type="hidden" name="id" id="r_id" value=""/>
+    <input type="hidden" name="invcusname" id="r_invcusname" value="[%- invoice.invcusname -%]"/>
+    <input type="hidden" name="txnamount" id="r_txnamount" value=""/>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="formtable">
+      <tr>
+        <td><label>Invoice No</label></td>
+        <td style="font-weight:bold;color:#800000;"><span id="r_amtinvno"></span></td>
+      </tr>
+      <tr>
+        <td><label>Amount to be Refunded</label></td>
+        <td><span id="r_amtowed"></span></td>
+      </tr>
+      <tr>
+        <td><label>Date</label></td>
+        <td><input type="text" name="invprintdate" id="r_invprintdate" value="[%- date.format(date.now, '%d-%b-%y') -%]" size="10" readonly="readonly"/></td>
+      </tr>
+      <tr>
+        <td colspan="2">Remarks<br/><textarea name="invdesc" id="r_invdesc" cols="30" rows="1"></textarea></td>
       </tr>
     </table>
   </form>
@@ -113,7 +138,7 @@
       <td style="text-align:right;"><strong>Date of last Payment : </strong></td>
       <td>[%- invoice.invpaiddate -%]</td>
       <td style="text-align:right;"><strong>Total Paid to Date : </strong></td>
-      <td style="text-align:right;padding-right:40px;">[%- invoice.totpaid -%]</td>
+      <td style="text-align:right;padding-right:40px;">[%- IF invoice.invtype == 'C'; 0 - invoice.totpaid | format('%1.2f'); ELSE; invoice.totpaid; END -%]</td>
     </tr>
   </table>
 <p>&nbsp;</p>
@@ -136,7 +161,7 @@
   [%- ndx = loop.count % 2 -%]
     <tr class="[%- class.$ndx -%]"> <!-- onclick="location.href='/cgi-bin/fpa/[%- entry.audtype -%]?[%- entry.link_id -%]';" //-->
       <td>[%- entry.itdate -%]</td>
-      <td>[%- entry.coadesc -%]</td>
+      <td>[%- entry.coadesc.remove('s$') -%]</td>
   [% IF cookie.VAT == "N" -%]
       <td>[%- entry.ittot -%]</td>
   [% ELSE -%]
@@ -157,6 +182,13 @@
       <div>   
         <a href="#" onclick="get_amt('[%- invoice.id -%]','[%- invoice.invinvoiceno -%]','[%- invoice.tottotal - invoice.totpaid -%]');">
          Record Payment 
+        </a>
+      </div>  
+    </li>   
+    <li>    
+      <div>   
+        <a href="#" onclick="get_refund('[%- invoice.id -%]','[%- invoice.invinvoiceno -%]','[%- invoice.tottotal - invoice.totpaid -%]');">
+         Record Refund 
         </a>
       </div>  
     </li>   
