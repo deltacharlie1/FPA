@@ -123,6 +123,7 @@ create table coas (
   old_id int unsigned,
   index (acct_id)
 );
+insert into coas (acct_id,coanominalcode,coadesc,coatype,coareport) values ('GEN','refund','Refund','None','None');
 
 drop table if exists nominals;
 create table nominals (

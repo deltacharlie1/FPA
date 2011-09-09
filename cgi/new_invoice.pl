@@ -13,10 +13,13 @@ unless ($COOKIE->{NO_ADS}) {
 	require "/usr/local/git/fpa/cgi/display_adverts.ph";
 	&display_adverts();
 }
-
-
 $Customers = $dbh->prepare("select id,cusname,cusaddress,cuspostcode,cusregion,cuscontact,cusemail,custerms,cusbalance,cuslimit,cusdefpo from customers where id=? and acct_id=?");
 $Customers->execute($ENV{QUERY_STRING},"$COOKIE->{ACCT}");
+
+$Focus = "srch";
+if ($ENV{QUERY_STRING} =~ /^\d+$/) {
+	$Focus = "desc";
+}
 
 use Template;
 $tt = Template->new({
@@ -28,7 +31,8 @@ $Vars = {
         title => 'Accounts - Customers',
 	cookie => $COOKIE,
         vats => $Vat,
-	focus => 'desc',
+	focus => $Focus,
+	invtype => $ENV{QUERY_STRING},
 	cus => $Customers->fetchrow_hashref,
         javascript => '<script type="text/javascript" src="/js/add_lineitem.js"></script>
 <script type="text/javascript">

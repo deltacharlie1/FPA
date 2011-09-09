@@ -32,7 +32,7 @@
 <input type="hidden" name="id" id="x_id" value=""/>
 <input type="hidden" name="invitemcount" id="invitemcount" value="0"/>
 <input type="hidden" name="invstatus" id="x_invstatus" value="Draft"/>
-<div class="status">New <span class="invtext">Invoice</span></div>
+<div class="status">New <span class="invtext">[%- IF invtype.match('C') -%]Credit Note[%- ELSE -%]Invoice[%- END -%]</span></div>
   <table width="660" border="0" cellpadding="0" cellspacing="0" class="formtable">
 [% UNLESS cus.id AND cus.id > 0 -%]
     <tr id="selcus">
@@ -48,19 +48,19 @@
       <td><label>Invoice Type</label></td>
       <td>
         <select name="invtype" id="invtype" onchange="change_invtext(this);" size="1">
-          <option value="S" selected="selected">Sales Invoice</option>
-          <option value="C">Credit Note</option>
+          <option value="S"[%- UNLESS invtype.match('C') -%] selected="selected"[%- END -%]>Sales Invoice</option>
+          <option value="C"[%- IF invtype.match('C') -%] selected="selectd"[%- END -%]>Credit Note</option>
         </select>
       </td>
     </tr>
     <tr>
       <td style="vertical-align:top;" rowspan="2"><label>Address</label></td>
       <td rowspan="2"><textarea title="Address" name="invcusaddr" id="x_invcusaddr" cols="20" rows="3">[%- cus.cusaddress -%]</textarea></td>
-      <td style="vertical-align:top;padding-top:9px;"><label><span class="invtext">Invoice</span> Date</label></td>
+      <td style="vertical-align:top;padding-top:9px;"><label><span class="invtext">[%- IF invtype.match('C') -%]Credit Note[%- ELSE -%]Invoice[%- END -%]</span> Date</label></td>
       <td style="vertical-align:top;"><input type="text" name="invprintdate" id="x_invprintdate" readonly="readonly" size="9" value="[%- date.format -%]"/></td>
     </tr>
     <tr>
-      <td style="vertical-align:top;" nowrap="nowrap"><label><span class="invtext">Invoice</span> Number</label></td>
+      <td style="vertical-align:top;" nowrap="nowrap"><label><span class="invtext">[%- IF invtype.match('C') -%]Credit Note[%- ELSE -%]Invoice[%- END -%]</span> Number</label></td>
       <td style="vertical-align:top;color:#800000;">(System Generated)</td>
     </tr>
     <tr>
@@ -205,7 +205,7 @@
 [% END -%]
     </tr>
     <tr>
-      <td style="text-align:right;"><strong><span class="invtext">Invoice</span> Total : </strong></td>
+      <td style="text-align:right;"><strong><span class="invtext">[%- IF invtype.match('C') -%]Credit Note[%- ELSE -%]Invoice[%- END -%]</span> Total : </strong></td>
       <td id="tt" style="text-align:right;padding-right:40px;"></td>
     </tr>
   </table>
@@ -218,10 +218,11 @@
     <li>
       <div>
         <a href="#" onclick="submit_details('Final');">
-         Save &amp; Finalise Invoice
+         Save &amp; lock [%- IF invtype.match('C') -%]Credit Note[%- ELSE -%]Invoice[%- END -%] 
         </a>
       </div>  
     </li>   
+[% UNLESS invtype.match('C') -%]
     <li>
       <div>
         <a href="#" onclick="submit_details('Quote');">
@@ -229,6 +230,7 @@
         </a>
       </div>
     </li>
+[% END -%]
     <li>
       <div>
         <a href="#" onclick="submit_details('Preview');">

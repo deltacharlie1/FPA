@@ -91,7 +91,8 @@ $(document).ready(function(){
           <ul>
             <li><a href="/cgi-bin/fpa/list_invoices.pl?listorder=O">List Unpaid Invoices</a></li>
             <li><a href="/cgi-bin/fpa/list_invoices.pl?listorder=N">List Invoices</a></li>
-            <li><a href="/cgi-bin/fpa/new_invoice.pl">Create New Invoice</a></li>
+            <li><a href="/cgi-bin/fpa/new_invoice.pl?S">Create New Invoice</a></li>
+            <li><a href="/cgi-bin/fpa/new_invoice.pl?C">Create New Credit Note</a></li>
         [% IF cookie.REP_INVS == "1" -%]
             <li><a href="/cgi-bin/fpa/list_templates.pl">List Invoice Templates</a></li>
 [% END -%]

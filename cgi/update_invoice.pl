@@ -22,7 +22,7 @@ $Invoices->execute;
 $Invoice = $Invoices->fetchrow_hashref;
 $Invoice->{firsttime} = $Action;
 
-$ITs = $dbh->prepare("select date_format(inv_txns.itdate,'%d-%b-%y') as itdate,inv_txns.itnet,inv_txns.itvat,coadesc,format(inv_txns.itnet + inv_txns.itvat,2) as ittot,txnremarks from inv_txns left join coas on (inv_txns.itmethod=coanominalcode), inv_txns a left join transactions on (a.txn_id=transactions.id) where inv_txns.id=a.id and inv_txns.acct_id='$COOKIE->{ACCT}' and coas.acct_id='$COOKIE->{ACCT}' and inv_txns.inv_id=$Inv_id order by inv_txns.itdate");
+$ITs = $dbh->prepare("select date_format(inv_txns.itdate,'%d-%b-%y') as itdate,inv_txns.itnet,inv_txns.itvat,coadesc,format(inv_txns.itnet + inv_txns.itvat,2) as ittot,txnremarks from inv_txns left join coas on (inv_txns.itmethod=coanominalcode), inv_txns a left join transactions on (a.txn_id=transactions.id) where inv_txns.id=a.id and inv_txns.acct_id='$COOKIE->{ACCT}' and (coas.acct_id='$COOKIE->{ACCT}' or coas.acct_id='GEN')  and inv_txns.inv_id=$Inv_id order by inv_txns.itdate");
 $ITs->execute;
 $IT = $ITs->fetchall_arrayref({});
 $ITs->finish;
@@ -128,108 +128,137 @@ $Vars = {
         javascript => '<script language="JavaScript">
 $(document).ready(function(){
   $("#i_invprintdate").datepicker();
-  $(function() {
-    $("#invpayment").dialog({
-      bgiframe: true,
-      autoOpen: false,
-      position: [200,100],
-      height: 350,
-      width: 400,
-      modal: true,
-      buttons: {
-        "Record Payment": function() {
-          if(validate_form("#pay2form")) {
-            if (parseFloat(document.getElementById("i_txnamount").value) > parseFloat(document.getElementById("amtowed").innerHTML)) {
-              if (confirm("Paid Amount greater than Owed Amount, balance will be held on Account")) {
-                $.post("/cgi-bin/fpa/receive_invoice_payment.pl", $("#pay2form").serialize(),function(data) {
-                if ( ! /^OK/.test(data)) {
-                  alert(data);
-                }
-                window.location.reload(true);
-                },"text");
-                $(this).dialog("close");
+  $("#invpayment").dialog({
+    bgiframe: true,
+    autoOpen: false,
+    position: [200,100],
+    height: 350,
+    width: 400,
+    modal: true,
+    buttons: {
+      "Record Payment": function() {
+        if(validate_form("#pay2form")) {
+          if (parseFloat(document.getElementById("i_txnamount").value) > parseFloat(document.getElementById("i_amtowed").innerHTML)) {
+            if (confirm("Paid Amount greater than Owed Amount, balance will be held on Account")) {
+              $.post("/cgi-bin/fpa/receive_invoice_payment.pl", $("#pay2form").serialize(),function(data) {
+              if ( ! /^OK/.test(data)) {
+                alert(data);
               }
-            }
-            else {
-              $.post("/cgi-bin/fpa/receive_invoice_payment.pl", $("form#pay2form").serialize(),function(data) {
-                if ( ! /^OK/.test(data)) {
-                  alert(data);
-                }
-                window.location.reload(true);
+              window.location.reload(true);
               },"text");
               $(this).dialog("close");
             }
           }
-        },
-        Cancel: function() {
-          $(this).dialog("close");
-        }
-      }
-  });
-    $("#cancelreason").dialog({
-      bgiframe: true,
-      autoOpen: false,
-      position: [200,100],
-      height: 200,
-      width: 400,
-      modal: true,
-      buttons: {
-        "Void Invoice": function() {
-          if(validate_form("#fcancelreason")) {
-            $.post("/cgi-bin/fpa/cancel_invoice.pl", $("form#fcancelreason").serialize(),function(data) {
-              if (/OK/.test(data)) {
-                location.href = "/cgi-bin/fpa/list_customer_invoices.pl?' . $Invoice->{cus_id} . '";
+          else {
+            $.post("/cgi-bin/fpa/receive_invoice_payment.pl", $("form#pay2form").serialize(),function(data) {
+              if ( ! /^OK/.test(data)) {
+                alert(data);
               }
-              else {
-                responseText = data;
-                document.getElementById("dialog").innerHTML = responseText;
-                $("#dialog").dialog("open");
-              }
-            });
+              window.location.reload(true);
+            },"text");
+            $(this).dialog("close");
           }
-        },
-        Cancel: function() {
+        }
+      },
+      Cancel: function() {
+        $(this).dialog("close");
+      }
+    }
+  });
+  $("#refpayment").dialog({
+    bgiframe: true,
+    autoOpen: false,
+    position: [200,100],
+    height: 350,
+    width: 400,
+    modal: true,
+    buttons: {
+      "Record Refund": function() {
+        if(validate_form("#ref2form")) {
+          $.post("/cgi-bin/fpa/receive_invoice_refund.pl", $("form#ref2form").serialize(),function(data) {
+            alert(data);
+            window.location.reload(true);
+          },"text");
           $(this).dialog("close");
         }
+      },
+      Cancel: function() {
+        $(this).dialog("close");
       }
+    }
   });
-    $("#writeoffreason").dialog({
-      bgiframe: true,
-      autoOpen: false,
-      position: [200,100],
-      height: 200,
-      width: 400,
-      modal: true,
-      buttons: {
-        "Write-off Invoice": function() {
-          if(validate_form("#fcancelreason")) {
-            $.post("/cgi-bin/fpa/writeoff_invoice.pl", $("form#fwriteoffreason").serialize(),function(data) {
-              if (/OK/.test(data)) {
-                location.href = "/cgi-bin/fpa/list_customer_invoices.pl?' . $Invoice->{cus_id} . '";
-              }
-              else {
-                responseText = data;
-                document.getElementById("dialog").innerHTML = responseText;
-                $("#dialog").dialog("open");
-              }
-            });
-          }
-        },
-        Cancel: function() {
-          $(this).dialog("close");
+  $("#cancelreason").dialog({
+    bgiframe: true,
+    autoOpen: false,
+    position: [200,100],
+    height: 200,
+    width: 400,
+    modal: true,
+    buttons: {
+      "Void Invoice": function() {
+        if(validate_form("#fcancelreason")) {
+          $.post("/cgi-bin/fpa/cancel_invoice.pl", $("form#fcancelreason").serialize(),function(data) {
+            if (/OK/.test(data)) {
+              location.href = "/cgi-bin/fpa/list_customer_invoices.pl?' . $Invoice->{cus_id} . '";
+            }
+            else {
+              responseText = data;
+              document.getElementById("dialog").innerHTML = responseText;
+              $("#dialog").dialog("open");
+            }
+          });
         }
+      },
+      Cancel: function() {
+        $(this).dialog("close");
       }
+    }
   });
-});
+  $("#writeoffreason").dialog({
+    bgiframe: true,
+    autoOpen: false,
+    position: [200,100],
+    height: 200,
+    width: 400,
+    modal: true,
+    buttons: {
+      "Write-off Invoice": function() {
+        if(validate_form("#fcancelreason")) {
+          $.post("/cgi-bin/fpa/writeoff_invoice.pl", $("form#fwriteoffreason").serialize(),function(data) {
+            if (/OK/.test(data)) {
+              location.href = "/cgi-bin/fpa/list_customer_invoices.pl?' . $Invoice->{cus_id} . '";
+            }
+            else {
+              responseText = data;
+              document.getElementById("dialog").innerHTML = responseText;
+              $("#dialog").dialog("open");
+            }
+          });
+        }
+      },
+      Cancel: function() {
+        $(this).dialog("close");
+      }
+    }
+  });
 });
 function get_amt(amtinvid,amtinvno,amtamt) {
   document.getElementById("i_id").value = amtinvid;
-  document.getElementById("amtinvno").innerHTML = amtinvno;
-  document.getElementById("amtowed").innerHTML = parseFloat(amtamt).toFixed(2);
+  document.getElementById("i_amtinvno").innerHTML = amtinvno;
+  document.getElementById("i_amtowed").innerHTML = parseFloat(amtamt).toFixed(2);
   document.getElementById("i_txnamount").value = parseFloat(amtamt).toFixed(2);
   document.getElementById("i_invdesc").value = "Invoice " + amtinvno;
 //  document.getElementById("i_txnamount").focus();
   $("#invpayment").dialog("open");
+}
+function get_refund(amtinvid,amtinvno,amtamt) {
+  document.getElementById("r_id").value = amtinvid;
+  document.getElementById("r_amtinvno").innerHTML = amtinvno;
+  document.getElementById("r_amtowed").innerHTML = parseFloat(amtamt).toFixed(2);
+  document.getElementById("r_txnamount").value = parseFloat(amtamt).toFixed(2);
+  document.getElementById("r_invdesc").value = "Refund against Invoice " + amtinvno;
+//  document.getElementById("r_txnamount").focus();
+  $("#refpayment").dialog("open");
 }
 function cancel_invoice(invid) {
   $("#cancelreason").dialog("open");

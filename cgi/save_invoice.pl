@@ -127,7 +127,6 @@ EOD
 
 				$Original_inv = $FORM{invremarks};
 				$Original_inv =~ s/.+\s(\d+)$/$1/;		#  Save the refund inv no for later use
-				$FORM{invremarks} = "";
 			}
 			&save_invoice('final');
 
@@ -139,20 +138,43 @@ EOD
 				$Original_invoices->execute;
 				@Original_invoice = $Original_invoices->fetchrow;
 				$Original_invoices->finish;
+				$Original_total = $Original_invoice[1]+$Original_invoice[2];
 
 				if ($Original_invoice[1]+$Original_invoice[2] < 0-$FORM{invtotal}-$FORM{invvat}) {
 
-					$Sts = $dbh->do("update invoices set invstatus='Refunded',invstatuscode='2',invpaid=invtotal,invpaidvat=invvat,invremarks=concat(invremarks,'<br/>Invoice $FORM{invinvoiceno} refers') where id=$Original_invoice[0] and acct_id='$COOKIE->{ACCT}'");
-					$Sts = $dbh->do("update invoices set invstatus='Part Paid',invstatuscode='7',invpaid='$Original_invoice[1]',invpaidvat='$Original_invoice[2]' where id=$FORM{id} and acct_id='$COOKIE->{ACCT}'");
+#  update the original invoice to fully paid
+
+					$Sts = $dbh->do("update invoices set invstatus='Paid',invstatuscode='2',invpaid=invtotal,invpaidvat=invvat,invremarks=concat(invremarks,'<br/><br/>Refund of &pound;$Original_total via Credit Note $FORM{invinvoiceno}') where id=$Original_invoice[0] and acct_id='$COOKIE->{ACCT}'");
+
+#  update the credit note to a part paid status
+
+					$Sts = $dbh->do("update invoices set invstatus='Part Paid',invstatuscode='7',invpaid=0-'$Original_invoice[1]',invpaidvat=0-'$Original_invoice[2]' where id=$FORM{id} and acct_id='$COOKIE->{ACCT}'");
 				}
 				elsif ($Original_invoice[1]+$Original_invoice[2] == 0-$FORM{invtotal}-$FORM{invvat}) {
-					$Sts = $dbh->do("update invoices set invstatus='Refunded',invstatuscode='2',invpaid=invtotal,invpaidvat=invvat,invremarks=concat(invremarks,'<br/>Invoice $FORM{invinvoiceno} refers') where id=$Original_invoice[0] and acct_id='$COOKIE->{ACCT}'");
-					$Sts = $dbh->do("update invoices set invstatus='Paid',invstatuscode='2',invpaid='$Original_invoice[1]',invpaidvat='$Original_invoice[2]' where id=$FORM{id} and acct_id='$COOKIE->{ACCT}'");
+
+#  update the original invoice to fully paid
+
+					$Sts = $dbh->do("update invoices set invstatus='Paid',invstatuscode='2',invpaid=invtotal,invpaidvat=invvat,invremarks=concat(invremarks,'<br/><br/>Refund of &pound;$Original_total via Credit Note $FORM{invinvoiceno}') where id=$Original_invoice[0] and acct_id='$COOKIE->{ACCT}'");
+
+#  update the credit note to fully paid
+
+					$Sts = $dbh->do("update invoices set invstatus='Paid',invstatuscode='2',invpaid=0-'$Original_invoice[1]',invpaidvat=0-'$Original_invoice[2]' where id=$FORM{id} and acct_id='$COOKIE->{ACCT}'");
 				}
 				else {
-					$Sts = $dbh->do("update invoices set invstatus='Part Refunded',invstatuscode='7',invpaid=invtotal,invpaidvat=invvat,invremarks=concat(invremarks,'<br/>Invoice $FORM{invinvoiceno} refers') where id=$Original_invoice[0] and acct_id='$COOKIE->{ACCT}'");
-					$Sts = $dbh->do("update invoices set invstatus='Paid',invstatuscode='2',invpaid='$Original_invoice[1]',invpaidvat='$Original_invoice[2]' where id=$FORM{id} and acct_id='$COOKIE->{ACCT}'");
+
+#  update the original invoice to part paid
+
+					$Sts = $dbh->do("update invoices set invstatus='Part Paid',invstatuscode='7',invpaid=invtotal,invpaidvat=invvat,invremarks=concat(invremarks,'<br/><br/>Refund of &pound;$Original_total via Credit Note $FORM{invinvoiceno}') where id=$Original_invoice[0] and acct_id='$COOKIE->{ACCT}'");
+
+#  update the crdit note to fully paid
+
+					$Sts = $dbh->do("update invoices set invstatus='Paid',invstatuscode='2',invpaid=0-'$Original_invoice[1]',invpaidvat=0-'$Original_invoice[2]' where id=$FORM{id} and acct_id='$COOKIE->{ACCT}'");
+
 				}
+
+#  Add an audit trail entry
+
+				$Sts = $dbh->do("insert into audit_trails (acct_id,link_id,audtype,audaction,audtext,auduser) values ('$COOKIE->{ACCT}',$FORM{id},'update_invoice.pl','income','Invoice $Original_inv refunded &pound;$Original_total via Credit Note $FORM{invinvoiceno}','$COOKIE->{USER}')");
 
 				$FORM{invfpflag} = "";
 			}
