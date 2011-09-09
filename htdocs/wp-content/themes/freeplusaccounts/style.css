@@ -84,7 +84,7 @@ input[type=select] { background-color:#FFF; border:1px solid #CCC; padding:4px; 
 .m.header #nav {
 	float: right;
 	clear: right;
-	width: 700px;
+	width: 750px;
 	padding: 15px;
 }
 .m.header #nav ul li a {
@@ -92,7 +92,7 @@ input[type=select] { background-color:#FFF; border:1px solid #CCC; padding:4px; 
 	text-decoration: none;
 	font-weight:900;
 	color: #666;
-	font-size: 13px;
+	font-size: 12px;
 	padding: 5px 10px;
 	background-color: #FFF;
 	border:1px solid #ffffff;
@@ -100,7 +100,7 @@ input[type=select] { background-color:#FFF; border:1px solid #CCC; padding:4px; 
 .m.header #nav ul li a:hover {
 	text-transform: uppercase;
 	text-decoration: none;
-	font-size: 13px;
+	font-size: 12px;
 	padding: 5px 10px;
 	border:1px solid #666666;
 	color:#ffffff !important;
@@ -118,7 +118,7 @@ input[type=select] { background-color:#FFF; border:1px solid #CCC; padding:4px; 
 	text-transform: uppercase;
 	text-decoration: none;
 	color: #388A4B;
-	font-size: 13px;
+	font-size: 12px;
 	padding: 5px 10px;
 	border:1px solid #666666;
 /*
@@ -208,7 +208,7 @@ input[type=select] { background-color:#FFF; border:1px solid #CCC; padding:4px; 
 .footer .m .social {
 	float: right;
 	text-align: right;
-	padding: 40px 0 10px 10px;
+	padding: 20px 0 10px 10px;
 }
 .footer .m .footer-links {
 	float: left;
@@ -831,13 +831,6 @@ img.aligncenter {
 	background-image:url(/images/grey-dot.png);
 	background-repeat:repeat-y;
 	background-position:center;
-}
-#videobutton {
-	position:absolute;
-	width:50px;
-	height:50px;
-	left:110px;
-	top:35px;
 }
 
 #videobutton:hover {
