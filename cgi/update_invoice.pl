@@ -138,48 +138,39 @@ $(document).ready(function(){
     buttons: {
       "Record Payment": function() {
         if(validate_form("#pay2form")) {
-          if (parseFloat(document.getElementById("i_txnamount").value) > parseFloat(document.getElementById("i_amtowed").innerHTML)) {
-            if (confirm("Paid Amount greater than Owed Amount, balance will be held on Account")) {
-              $.post("/cgi-bin/fpa/receive_invoice_payment.pl", $("#pay2form").serialize(),function(data) {
-              if ( ! /^OK/.test(data)) {
-                alert(data);
+          if ($("#i_txnmethod option:selected").text() == \'Refund\') {
+            if (document.getElementById("i_txnamount").value == document.getElementById("i_amtowed").innerHTML) {
+              $.post("/cgi-bin/fpa/receive_invoice_refund.pl",$("form#pay2form").serialize() ,function(data) {
+              $(this).dialog("close");
+              window.location.reload(true); },"text");
+            }
+            else {
+              document.getElementById("dialog").innerHTML = "You cannot use the Refund option unless you are refunding the total owed.";
+              $("#dialog").dialog("open");
+            }
+          }
+          else {
+            if (parseFloat(document.getElementById("i_txnamount").value) > parseFloat(document.getElementById("i_amtowed").innerHTML)) {
+              if (confirm("Paid Amount greater than Owed Amount, balance will be held on Account")) {
+                $.post("/cgi-bin/fpa/receive_invoice_payment.pl", $("#pay2form").serialize(),function(data) {
+                if ( ! /^OK/.test(data)) {
+                  alert(data);
+                }
+                window.location.reload(true);
+                },"text");
+                $(this).dialog("close");
               }
-              window.location.reload(true);
+            }
+            else {
+              $.post("/cgi-bin/fpa/receive_invoice_payment.pl", $("form#pay2form").serialize(),function(data) {
+                if ( ! /^OK/.test(data)) {
+                  alert(data);
+                }
+                window.location.reload(true);
               },"text");
               $(this).dialog("close");
             }
           }
-          else {
-            $.post("/cgi-bin/fpa/receive_invoice_payment.pl", $("form#pay2form").serialize(),function(data) {
-              if ( ! /^OK/.test(data)) {
-                alert(data);
-              }
-              window.location.reload(true);
-            },"text");
-            $(this).dialog("close");
-          }
-        }
-      },
-      Cancel: function() {
-        $(this).dialog("close");
-      }
-    }
-  });
-  $("#refpayment").dialog({
-    bgiframe: true,
-    autoOpen: false,
-    position: [200,100],
-    height: 350,
-    width: 400,
-    modal: true,
-    buttons: {
-      "Record Refund": function() {
-        if(validate_form("#ref2form")) {
-          $.post("/cgi-bin/fpa/receive_invoice_refund.pl", $("form#ref2form").serialize(),function(data) {
-            alert(data);
-            window.location.reload(true);
-          },"text");
-          $(this).dialog("close");
         }
       },
       Cancel: function() {

@@ -76,17 +76,30 @@ $(document).ready(function(){
       buttons: {
         "Record Payment": function() {
           if (validate_form("#form1")) {
-            if (parseFloat(document.getElementById("i_txnamount").value) > parseFloat(document.getElementById("amtowed").innerHTML)) {
-              if (confirm("Paid Amount greater than Owed Amount, balance will be held on Account")) {
-                $.post("/cgi-bin/fpa/receive_invoice_payment.pl",$("form#form1").serialize() ,function(data) {
+            if ($("#pay option:selected").text() == \'Refund\') {
+              if (document.getElementById("i_txnamount").value == document.getElementById("amtowed").innerHTML) {
+                $.post("/cgi-bin/fpa/receive_invoice_refund.pl",$("form#form1").serialize() ,function(data) {
                 $(this).dialog("close");
                 window.location.reload(true); },"text");
               }
+              else {
+                document.getElementById("dialog").innerHTML = "You cannot use the Refund option unless you are refunding the total owed.";
+                $("#dialog").dialog("open");
+              }
             }
             else {
-              $.post("/cgi-bin/fpa/receive_invoice_payment.pl",$("form#form1").serialize(),function(data) {
-              $(this).dialog("close");
-              window.location.reload(true); }, "text");
+              if (parseFloat(document.getElementById("i_txnamount").value) > parseFloat(document.getElementById("amtowed").innerHTML)) {
+                if (confirm("Paid Amount greater than Owed Amount, balance will be held on Account")) {
+                  $.post("/cgi-bin/fpa/receive_invoice_payment.pl",$("form#form1").serialize() ,function(data) {
+                  $(this).dialog("close");
+                  window.location.reload(true); },"text");
+                }
+              }
+              else {
+                $.post("/cgi-bin/fpa/receive_invoice_payment.pl",$("form#form1").serialize(),function(data) {
+                $(this).dialog("close");
+                window.location.reload(true); }, "text");
+              }
             }
           }
         },

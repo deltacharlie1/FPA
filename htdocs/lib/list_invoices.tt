@@ -24,6 +24,7 @@
             <option value="1300" [%- IF cus.cusdefpaymethod == "1300" -%]selected="selected"[%- END -%]>Cash</option>
             <option value="1310" [%- IF cus.cusdefpaymethod == "1310" -%]selected="selected"[%- END -%]>Cheque</option>
             <option value="1200" [%- IF cus.cusdefpaymethod == "1200" -%]selected="selected"[%- END -%]>Bank Transfer</option>
+            <option value="refund">Refund</option>
           </select>
         </td>
       </tr>

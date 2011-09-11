@@ -23,17 +23,18 @@ while (<>) {
 
 		s/><img src=\"http:/ target=\"_new\"><img src=\"https:/;
 
+#  Strip out any HTML comments
+
+		s/\<!--.*?-->//g;
+
 		if ($Stack > 2) {
 			push(@Stack3,$_);
-#print "$Incr ($Stack) -\t-\t-\tStack 3\n";
 		}
 		elsif ($Stack > 1) {
 			push(@Stack2,$_);
-#print "$Incr ($Stack) -\t-\tStack 2\n";
 		}
 		else {
 			push(@Stack1,$_);
-#print "$Incr ($Stack) -\tStack 1\n";
 		}
 		$Stack++;
 	}

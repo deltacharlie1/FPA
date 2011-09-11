@@ -473,9 +473,9 @@ drop table if exists adverts;
 create table adverts (
   id int unsigned not null auto_increment primary key,
   sort int not null default 0,
-  adv1 varchar(250) not null default '',
-  adv2 varchar(250) not null default '',
-  adv3 varchar(250) not null default '',
+  adv1 text not null default '',
+  adv2 text not null default '',
+  adv3 text not null default '',
   sector varchar(200) not null default 'all',
   index sort_order (sort)
 );

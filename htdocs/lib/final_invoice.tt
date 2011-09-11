@@ -25,6 +25,7 @@
             <option value="1300" [%- IF invoice.cusdefpaymethod == "1300" -%]selected="selected"[%- END -%]>Cash</option>
             <option value="1310" [%- IF invoice.cusdefpaymethod == "1310" -%]selected="selected"[%- END -%]>Cheque</option>
             <option value="1200" [%- IF invoice.cusdefpaymethod == "1200" -%]selected="selected"[%- END -%]>Bank Transfer</option>
+            <option value="refund">Refund</option>
           </select>
         </td>
       </tr>
@@ -34,31 +35,6 @@
       </tr>
       <tr>
         <td colspan="2">Remarks<br/><textarea name="i_invdesc" id="i_invdesc" cols="30" rows="1"></textarea></td>
-      </tr>
-    </table>
-  </form>
-</div>
-<div id="refpayment" title="Refund Against Invoice" style="display:none;">
-  <form id="ref2form" name="ref2form">
-    <input type="hidden" name="cus_id" id="r_cus_id" value="[%- invoice.cus_id -%]"/>
-    <input type="hidden" name="id" id="r_id" value=""/>
-    <input type="hidden" name="invcusname" id="r_invcusname" value="[%- invoice.invcusname -%]"/>
-    <input type="hidden" name="txnamount" id="r_txnamount" value=""/>
-    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="formtable">
-      <tr>
-        <td><label>Invoice No</label></td>
-        <td style="font-weight:bold;color:#800000;"><span id="r_amtinvno"></span></td>
-      </tr>
-      <tr>
-        <td><label>Amount to be Refunded</label></td>
-        <td><span id="r_amtowed"></span></td>
-      </tr>
-      <tr>
-        <td><label>Date</label></td>
-        <td><input type="text" name="invprintdate" id="r_invprintdate" value="[%- date.format(date.now, '%d-%b-%y') -%]" size="10" readonly="readonly"/></td>
-      </tr>
-      <tr>
-        <td colspan="2">Remarks<br/><textarea name="invdesc" id="r_invdesc" cols="30" rows="1"></textarea></td>
       </tr>
     </table>
   </form>
@@ -182,13 +158,6 @@
       <div>   
         <a href="#" onclick="get_amt('[%- invoice.id -%]','[%- invoice.invinvoiceno -%]','[%- invoice.tottotal - invoice.totpaid -%]');">
          Record Payment 
-        </a>
-      </div>  
-    </li>   
-    <li>    
-      <div>   
-        <a href="#" onclick="get_refund('[%- invoice.id -%]','[%- invoice.invinvoiceno -%]','[%- invoice.tottotal - invoice.totpaid -%]');">
-         Record Refund 
         </a>
       </div>  
     </li>   
