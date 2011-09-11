@@ -89,14 +89,13 @@
       		
           <script type="text/javascript"> Cufon.now(); </script>
             
-          <div class="addthis_toolbox addthis_default_style ">
-            <div style="float:left;width:100px;">
+          <div class="addthis_toolbox addthis_default_style " style="width:200px;">
               <a class="addthis_button_tweet"></a>
-              <a class="addthis_counter addthis_pill_style" style="margin-top:10px;float:right;"></a>
-            </div>
-<!-- GeoTrust QuickSSL [tm] Smart Icon tag. Do not edit. -->
+              <a class="addthis_counter addthis_pill_style" style="margin-top:0px;float:right;"></a>
 
- <div style="float:right;padding-left:20px;"><SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript" SRC="//smarticon.geotrust.com/si.js"></SCRIPT></div>
+<!-- GeoTrust QuickSSL [tm] Smart Icon tag. Do not edit. -->
+              <div style="float:left;padding-top:8px;"><SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript" SRC="//smarticon.geotrust.com/si.js"></SCRIPT></div>
+              <!-- <div style="float:right;padding-top:5px;"><img src="/images/icb_logo.png" width="66" height="64"/></div> -->
 
  <!-- end GeoTrust Smart Icon tag -->    
           </div>
