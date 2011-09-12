@@ -95,7 +95,7 @@
 
 <!-- GeoTrust QuickSSL [tm] Smart Icon tag. Do not edit. -->
               <div style="float:left;padding-top:8px;"><SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript" SRC="//smarticon.geotrust.com/si.js"></SCRIPT></div>
-              <!-- <div style="float:right;padding-top:5px;"><img src="/images/icb_logo.png" width="66" height="64"/></div> -->
+              <div style="float:right;padding-top:5px;"><img src="/wp-content/themes/freeplusaccounts/images/icb_logo.png" width="58" height="60" alt="ICB"
 
  <!-- end GeoTrust Smart Icon tag -->    
           </div>

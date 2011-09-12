@@ -46,9 +46,10 @@
 <script type="text/javascript">
 	$().ready(function() {
 		$("#ticker").ticker(100,true,true);
-		$('#freemore').jTruncate( { length: 140 } );
-		$('#easymore').jTruncate( { length: 129 } );
-		$('#securemore').jTruncate( { length: 128 } );
+		$('#freemore').jTruncate( { length: 62 } );
+		$('#easymore').jTruncate( { length: 59 } );
+		$('#securemore').jTruncate( { length: 48 } );
+		$('#approvedmore').jTruncate( { length: 54 } );
 		$("#ticker ul").css("visibility","visible");
 	});
 </script>
