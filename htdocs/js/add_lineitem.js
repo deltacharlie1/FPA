@@ -22,7 +22,7 @@ function init_rows() {
 
     for (var i=1; i<tbl.rows.length; i++) {
       var item_row = [];
-      for (var j=0; j<no_cols-1; j++) {
+      for (var j=0; j<no_cols; j++) {
         if (! /^<input/.test(tbl.rows[i].cells[j].innerHTML)) {		// ignore edit buttons
           item_row[j] = tbl.rows[i].cells[j].innerHTML;
         }
@@ -66,7 +66,7 @@ function display_table() {
   else {
     for (var i=0; i<item_rows.length; i++) {
       item_table = item_table + '<tr>\n';
-      for (var j=0; j<no_cols-1; j++) {
+      for (var j=0; j<no_cols; j++) {
         if (j == 3) {
           net = net + item_rows[i][j] * 1;
         }
