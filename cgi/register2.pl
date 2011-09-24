@@ -112,7 +112,7 @@ EOD
 		$Dig->add($Dig);
 		$Activecode = $Dig->hexdigest;
 
-		$Sts = $dbh->do("insert into registrations (regusername,regcompanyname,regemail,regpwd,regmemword,regactivecode,regregdate,reglastlogindate,regcountstartdate) values ('$FORM{name}','$FORM{company}','$FORM{email}',password('$FORM{pwd1}'),'$FORM{mem1}','$Activecode',now(),now(),now())");
+		$Sts = $dbh->do("insert into registrations (regusername,regcompanyname,regemail,regpwd,regmemword,regactivecode,regregdate,reglastlogindate,regcountstartdate,regreferer) values ('$FORM{name}','$FORM{company}','$FORM{email}',password('$FORM{pwd1}'),'$FORM{mem1}','$Activecode',now(),now(),now(),'$FORM{referer}')");
 
 #  Get the last insert id
 

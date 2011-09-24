@@ -1,0 +1,63 @@
+<div class="main" id="main">
+<form action="/cgi-bin/fpa/add_festures2.pl" method="post" name="form1" id="form1">
+<h1>Add Extra Features</h1>
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="formtable">
+    <tr>
+      <td><label>Logo on invoices and statements (&pound;30 per year)</label></td>
+      <td>Currently valid until <b>[%- company.compt_logo -%]</b></td>
+      <td><input title="Logo" name="compt_logo" type="checkbox" id="compt_logo" onchange="calc_total();"/></td>
+    </tr>
+    <tr>
+      <td><label>Additional User Login ID (&pound;50 per id)</label></td>
+      <td>Number of exisiting unused IDs <b>[%- company.comadd_user -%]</b></td>
+      <td>
+        <select title="Additional User IDs" name="comadd_user" id="comadd_user" size="1" onchange="calc_total();">
+          <option value="0" selected="selected">0</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td><label>Suppress Advertising (&pound;50 per year)</label></td>
+      <td>Currently valid until <b>[%- company.comno_ads -%]</b></td>
+      <td><input title="Suppress Advertising" name="comno_ads" type="checkbox" id="comno_ads" onchange="calc_total();"/></td>
+    </tr>
+    <tr>
+      <td><label>Upload documents etc (&pound;50 per 100MB)</label></td>
+      <td>Remaining capacity <b>[%- company.comuplds -%]</b></td>
+      <td><input title="Uploads" name="comuplds" type="checkbox" id="comuplds" onchange="calc_total();"/></td>
+    </tr>
+    <tr>
+      <td><label>Retain records for 6 years (&pound;30 per year)</label></td>
+      <td>Currently Valid until <b>[%- company.comkeep_recs -%]</b></td>
+      <td><input title="Retain records for 6 years" name="comkeep_recs" type="checkbox" id="comkeep_recs" onchange="calc_total();"/></td>
+    </tr>
+    <tr>
+      <td><label>Advertise your own business (&pound;30 per year)</label></td>
+      <td>Currently Valid until <b>[%- company.comadvertise -%]</b></td>
+      <td><input title="Advertise your own business" name="comadvertise" type="checkbox" id="comadvertise" onchange="calc_total();"/></td>
+    </tr>
+    <tr>
+      <td height="30"><label><b>Total of Selected Additions</b></label></td>
+      <td height="30" colspan="2" id="additions_total" style="font-weight:bold;">0.00</td>
+    </tr>
+  </table>
+</div>
+<div id="sidebar">
+  <ul>
+    <li>
+      <div>
+        <input type="submit" name="save" id="save" value="Add Features"/>
+      </div>
+    </li>
+  </ul>
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+  </div>
+</div>
+</form>
+</div>
