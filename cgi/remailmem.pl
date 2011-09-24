@@ -19,7 +19,7 @@ if ($Cookie) {
 
 #  Get the current Memorable word
 
-	$Regs = $dbh->prepare("select regmemword from registrations where regemail='$Cookie'");
+	$Regs = $dbh->prepare("select regmemword,regemail from registrations where regemail='$Cookie'");
 	$Regs->execute;
 	@Reg = $Regs->fetchrow;
 	$Regs->finish;
@@ -38,6 +38,12 @@ Subject: Your FreePlus Accounts Memorable Word
 Thank you for using FreePlus Accounts.
 
 Your Memorable Word is: $Reg[0]
+for your Login ID of: $Reg[1]
+
+Please remember that both your Login ID and your Memorable word are case sensitive.
+
+If you continue to have problems logging in please first check that you do not have
+CAPS LOCK on.
 
 As a security measure we suggest that you now log in and change this.
 
