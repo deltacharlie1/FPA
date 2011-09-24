@@ -2,7 +2,7 @@
 /*
 Simple:Press
 Forum Specials
-$LastChangedDate: 2010-04-18 17:22:20 +0100 (Sun, 18 Apr 2010) $
+$LastChangedDate: 2010-04-18 09:22:20 -0700 (Sun, 18 Apr 2010) $
 $Rev: 3920 $
 */
 

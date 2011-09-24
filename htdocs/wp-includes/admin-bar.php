@@ -296,7 +296,6 @@ function wp_admin_bar_updates_menu() {
  *
  */
 function wp_admin_bar_header() { ?>
-<style type="text/css" media="print">#wpadminbar { display:none; }</style>
 <?php
 }
 
@@ -307,10 +306,6 @@ function wp_admin_bar_header() { ?>
  *
  */
 function _admin_bar_bump_cb() { ?>
-<style type="text/css">
-	html { margin-top: 28px !important; }
-	* html body { margin-top: 28px !important; }
-</style>
 <?php
 }
 

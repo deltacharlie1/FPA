@@ -2,7 +2,7 @@
 /*
 Simple:Press
 Installer/Upgrader
-$LastChangedDate: 2011-03-13 11:55:01 +0000 (Sun, 13 Mar 2011) $
+$LastChangedDate: 2011-03-13 04:55:01 -0700 (Sun, 13 Mar 2011) $
 $Rev: 5691 $
 */
 

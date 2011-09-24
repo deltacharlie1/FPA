@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Defined Constants
-$LastChangedDate: 2011-04-16 03:51:11 +0100 (Sat, 16 Apr 2011) $
-$Rev: 5897 $
+$LastChangedDate: 2011-05-14 22:30:14 -0700 (Sat, 14 May 2011) $
+$Rev: 6084 $
 */
 
 if (preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF']))
@@ -31,14 +31,16 @@ function sf_setup_sitewide_constants()
 		if (!defined('SFSITEURL')) define('SFSITEURL',	trailingslashit(site_url()));
 	}
 
-	if (defined('WP_HOME')) {
-		$home = trailingslashit(WP_HOME);
-	} else {
-		$home = trailingslashit(home_url());
-	}
-	if (is_admin() && force_ssl_admin()) $home = str_replace( 'http://', "https://", $home );
-	define('SFHOMEURL', $home);
+	if (!defined('SFHOMEURL')) {
+		if (defined('WP_HOME')) {
+			$home = trailingslashit(WP_HOME);
+		} else {
+			$home = trailingslashit(home_url());
+		}
 
+		if (is_admin() && force_ssl_admin()) $home = str_replace( 'http://', "https://", $home );
+		define('SFHOMEURL', $home);
+	}
 	if (!defined('SFURL')) define('SFURL',	trailingslashit(sf_get_option('sfpermalink')));
 	# ------------------------------------------------------------------
 

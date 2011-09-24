@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Topic View Display
-$LastChangedDate: 2010-10-22 11:50:19 +0100 (Fri, 22 Oct 2010) $
-$Rev: 4787 $
+$LastChangedDate: 2011-06-16 22:56:41 -0700 (Thu, 16 Jun 2011) $
+$Rev: 6329 $
 */
 
 if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) {

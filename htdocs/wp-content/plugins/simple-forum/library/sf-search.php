@@ -2,7 +2,7 @@
 /*
 Simple:Press
 Forum Search url creation
-$LastChangedDate: 2010-07-06 17:39:48 +0100 (Tue, 06 Jul 2010) $
+$LastChangedDate: 2010-07-06 09:39:48 -0700 (Tue, 06 Jul 2010) $
 $Rev: 4236 $
 */
 

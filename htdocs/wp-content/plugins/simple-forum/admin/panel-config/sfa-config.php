@@ -2,7 +2,7 @@
 /*
 Simple:Press
 Configurator
-$LastChangedDate: 2010-08-14 12:52:34 +0100 (Sat, 14 Aug 2010) $
+$LastChangedDate: 2010-08-14 04:52:34 -0700 (Sat, 14 Aug 2010) $
 $Rev: 4424 $
 */
 

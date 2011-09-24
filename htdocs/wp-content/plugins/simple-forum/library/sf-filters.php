@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Filters
-$LastChangedDate: 2011-05-03 06:06:40 +0100 (Tue, 03 May 2011) $
-$Rev: 6034 $
+$LastChangedDate: 2011-06-02 05:56:53 -0700 (Thu, 02 Jun 2011) $
+$Rev: 6226 $
 */
 
 if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) {
@@ -799,7 +799,7 @@ function sf_filter_save_spoiler($content)
 # ------------------------------------------------------------------
 function sf_filter_save_oEmbed($content)
 {
-	$content = preg_replace_callback('#(?<!href=\')(?<!href=")(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+\#]*[\w\-\@?^=%&amp;/~\+\#])?#i', 'sf_check_save_oEmbed', $content);
+	$content = preg_replace_callback('#(?<!=\')(?<!=")(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+\#]*[\w\-\@?^=%&amp;/~\+\#])?#i', 'sf_check_save_oEmbed', $content);
 	return $content;
 }
 
@@ -1183,6 +1183,7 @@ function sf_filter_display_smileys($content)
 	if($sfglobals['smileyoptions']['sfsmallow'] && $sfglobals['smileyoptions']['sfsmtype']==3)
 	{
 		$content = convert_smilies($content);
+		$content = str_replace("'", '"', $content);
 	}
 
 	return $content;

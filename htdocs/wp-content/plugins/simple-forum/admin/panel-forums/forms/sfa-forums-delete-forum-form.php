@@ -2,7 +2,7 @@
 /*
 Simple:Press
 Admin Forums Delete Forum Form
-$LastChangedDate: 2011-01-08 15:43:34 +0000 (Sat, 08 Jan 2011) $
+$LastChangedDate: 2011-01-08 08:43:34 -0700 (Sat, 08 Jan 2011) $
 $Rev: 5278 $
 */
 

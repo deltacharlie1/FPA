@@ -2,8 +2,8 @@
 /*
 Simple:Press
 WP Hooks - Actions and Filters
-$LastChangedDate: 2011-04-09 18:59:16 +0100 (Sat, 09 Apr 2011) $
-$Rev: 5855 $
+$LastChangedDate: 2011-06-24 01:23:05 -0700 (Fri, 24 Jun 2011) $
+$Rev: 6374 $
 */
 
 if (preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF']))
@@ -115,13 +115,13 @@ function sf_setup_sitewide_hooks()
 		if($sfpostlinking['sflinkcomments'] == 2 || $sfpostlinking['sflinkcomments'] == 3) {
 			add_filter('comments_array', 'sf_topic_as_comments');
 			add_filter('get_avatar_comment_types', 'sf_add_comment_type');
+			add_filter('edit_comment_link', 'sf_remove_edit_comment_link', 1, 2);
 		}
 
 		if(isset($sfpostlinking['sfpostcomment']) && $sfpostlinking['sfpostcomment']==true) {
 			add_action('wp_set_comment_status', 'sf_process_new_comment', 10, 2);
 			add_action('comment_post', 'sf_process_new_comment', 10, 2);
 			add_action('edit_comment', 'sf_update_comment_post');
-			add_filter('edit_comment_link', 'sf_remove_edit_comment_link', 1, 2);
 		}
 
 		if($SFSTATUS == 'ok') {

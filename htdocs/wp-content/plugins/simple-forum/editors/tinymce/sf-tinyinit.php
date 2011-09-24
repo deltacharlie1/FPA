@@ -2,8 +2,8 @@
 /*
 Simple:Press
 tinymce init
-$LastChangedDate: 2011-03-05 14:42:11 +0000 (Sat, 05 Mar 2011) $
-$Rev: 5631 $
+$LastChangedDate: 2011-06-18 12:57:35 -0700 (Sat, 18 Jun 2011) $
+$Rev: 6343 $
 */
 
 if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) {
@@ -78,6 +78,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) {
 		<?php } ?>
 		extended_valid_elements: "code",
 		apply_source_formatting : true,
+		paste_text_use_dialog : true,
 		paste_convert_middot_lists : true,
 		paste_remove_spans : true,
 		paste_remove_styles : true,

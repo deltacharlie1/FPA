@@ -2,7 +2,7 @@
 /*
 Simple:Press
 Forum RSS Feeds
-$LastChangedDate: 2010-10-23 19:06:35 +0100 (Sat, 23 Oct 2010) $
+$LastChangedDate: 2010-10-23 11:06:35 -0700 (Sat, 23 Oct 2010) $
 $Rev: 4806 $
 */
 if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) {

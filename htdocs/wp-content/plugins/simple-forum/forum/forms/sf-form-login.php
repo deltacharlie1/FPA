@@ -2,8 +2,8 @@
 /*
 Simple:Press
 In Line Login
-$LastChangedDate: 2011-01-30 22:28:52 +0000 (Sun, 30 Jan 2011) $
-$Rev: 5388 $
+$LastChangedDate: 2011-05-07 09:51:29 -0700 (Sat, 07 May 2011) $
+$Rev: 6054 $
 */
 
 if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF']))
@@ -23,12 +23,13 @@ function sf_render_inline_login_form()
 
 	$redirect_to = $_SERVER['REQUEST_URI'];
 
-   	$out.= '<div id="sfloginform">'."\n";
+   	$out = '<div id="sfloginform">'."\n";
 
 	do_action('login_head', 'sploginform');
 
+	$message = '';
 	$message = apply_filters('sf_filter_login_message', $message);
-	if(!empty($message)) $out.= $message."\n";
+	if (!empty($message)) $out.= $message."\n";
 
    	$out.= '<fieldset style="vertical-align: top; height: 200px;">'."\n";
     $out.= '<form name="loginform" id="loginform" action="'.$sflogin['sfloginurl'].'" method="post">'."\n";

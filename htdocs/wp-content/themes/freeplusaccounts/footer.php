@@ -112,7 +112,11 @@
         swfobject.registerObject("FlashID");
     </script>
     
-    <?php wp_footer(); ?>
+   <?php 
+global $current_user;
+get_currentuserinfo();
+
+if ( $current_user->user_login == 'dconran') { wp_footer(); } ?>
     
 </body>
 </html>

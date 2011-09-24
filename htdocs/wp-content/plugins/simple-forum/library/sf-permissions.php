@@ -2,7 +2,7 @@
 /*
 Simple:Press
 Permissions Model forum rendering helper functions
-$LastChangedDate: 2011-03-25 17:24:04 +0000 (Fri, 25 Mar 2011) $
+$LastChangedDate: 2011-03-25 10:24:04 -0700 (Fri, 25 Mar 2011) $
 $Rev: 5719 $
 */
 

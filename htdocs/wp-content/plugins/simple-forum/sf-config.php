@@ -2,7 +2,7 @@
 /*
 Simple:Press
 wp-config.php - location support for WP 2.6
-$LastChangedDate: 2010-03-26 23:38:27 +0000 (Fri, 26 Mar 2010) $
+$LastChangedDate: 2010-03-26 16:38:27 -0700 (Fri, 26 Mar 2010) $
 $Rev: 3818 $
 */
 

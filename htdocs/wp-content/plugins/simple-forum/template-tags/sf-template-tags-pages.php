@@ -2,7 +2,7 @@
 /*
 Simple:Press
 Template Tag(s) - Pages
-$LastChangedDate: 2010-05-15 04:41:00 +0100 (Sat, 15 May 2010) $
+$LastChangedDate: 2010-05-14 20:41:00 -0700 (Fri, 14 May 2010) $
 $Rev: 4021 $
 */
 

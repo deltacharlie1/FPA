@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Upgrade Path Routines
-$LastChangedDate: 2011-04-23 21:11:58 +0100 (Sat, 23 Apr 2011) $
-$Rev: 5957 $
+$LastChangedDate: 2011-06-05 09:16:54 -0700 (Sun, 05 Jun 2011) $
+$Rev: 6253 $
 */
 
 if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) {
@@ -2982,6 +2982,27 @@ $build = intval($checkval);
     	$sfprofile = sf_get_option('sfprofile');
         if (!array_key_exists('twitter', $sfprofile['label'])) $sfprofile['label']['twitter'] = 'Twitter';
 		sf_update_option('sfprofile', $sfprofile);
+
+		sf_update_option('sfbuild', $section);
+		echo $section;
+		die();
+	}
+
+    # 4.4.5 =====================================================================================
+
+	$section = 6060;
+	if($build < $section)
+	{
+		# repair icon array
+		$icons = array();
+		$icons = sf_get_option('sfshowicon');
+		if(!array_key_exists('Mark All Read', $icons)) {
+			$icons['Mark All Read']=0;
+		}
+		if(!array_key_exists('Print this Topic', $icons)) {
+			$icons['Print this Topic']=0;
+		}
+		sf_update_option('sfshowicon', $icons);
 	}
 
 

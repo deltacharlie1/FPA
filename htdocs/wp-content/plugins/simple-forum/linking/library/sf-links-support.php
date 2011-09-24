@@ -2,7 +2,7 @@
 /*
 Simple:Press
 Blog Linking - general support routines
-$LastChangedDate: 2010-09-11 22:51:26 +0100 (Sat, 11 Sep 2010) $
+$LastChangedDate: 2010-09-11 14:51:26 -0700 (Sat, 11 Sep 2010) $
 $Rev: 4613 $
 */
 

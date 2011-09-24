@@ -2,7 +2,7 @@
 /*
 Simple:Press
 Admin Admins Display Rendering
-$LastChangedDate: 2010-04-22 23:20:30 +0100 (Thu, 22 Apr 2010) $
+$LastChangedDate: 2010-04-22 15:20:30 -0700 (Thu, 22 Apr 2010) $
 $Rev: 3939 $
 */
 

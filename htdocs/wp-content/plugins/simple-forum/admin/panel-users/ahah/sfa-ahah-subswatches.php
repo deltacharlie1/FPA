@@ -2,7 +2,7 @@
 /*
 Simple:Press
 AHAH routine displaying member subscriptions and watches
-$LastChangedDate: 2010-10-22 11:27:46 +0100 (Fri, 22 Oct 2010) $
+$LastChangedDate: 2010-10-22 03:27:46 -0700 (Fri, 22 Oct 2010) $
 $Rev: 4785 $
 */
 

@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Admin Options General Support Functions
-$LastChangedDate: 2011-03-05 14:42:11 +0000 (Sat, 05 Mar 2011) $
-$Rev: 5631 $
+$LastChangedDate: 2011-06-05 09:16:54 -0700 (Sun, 05 Jun 2011) $
+$Rev: 6253 $
 */
 
 if (preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF']))
@@ -329,8 +329,8 @@ function sfa_get_style_data()
 	$ilist = sf_get_option('sfshowicon');
 
 	# We need to check this is kosher as it has been known to get corrupted.
-	# going to try to read the last known entry. If it's there then probably OK
-	if(is_array($ilist) && array_key_exists('Mark All Read', $ilist))
+	# if empty - rebuild it
+	if(!empty($ilist))
 	{
 		$sfoptions['icon-list'] = $ilist;
 	} else {
@@ -396,8 +396,9 @@ function sf_regenerate_iconlist()
 	'Unsubscribe from this Topic'	=> 1,
 	'Manage'						=> 1,
 	'Print this Post'				=> 1,
+	'Print this Topic'				=> 1,
 	'Related Topics'				=> 1,
-	'Mark All Read'					=> 1
+	'Mark All Read'					=> 0
 	);
 	return $icons;
 }

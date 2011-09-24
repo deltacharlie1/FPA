@@ -2,7 +2,7 @@
 /*
 Simple:Press
 Template Tag(s) - Blog Linking Specific
-$LastChangedDate: 2010-05-15 22:31:34 +0100 (Sat, 15 May 2010) $
+$LastChangedDate: 2010-05-15 14:31:34 -0700 (Sat, 15 May 2010) $
 $Rev: 4025 $
 */
 

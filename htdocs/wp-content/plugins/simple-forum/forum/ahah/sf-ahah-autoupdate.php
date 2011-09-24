@@ -2,7 +2,7 @@
 /*
 Simple:Press
 Ahah call for Auto Update
-$LastChangedDate: 2010-10-25 20:36:46 +0100 (Mon, 25 Oct 2010) $
+$LastChangedDate: 2010-10-25 12:36:46 -0700 (Mon, 25 Oct 2010) $
 $Rev: 4825 $
 */
 

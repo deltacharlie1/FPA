@@ -2,7 +2,7 @@
 /*
 Simple:Press
 Global defs
-$LastChangedDate: 2010-10-29 22:05:28 +0100 (Fri, 29 Oct 2010) $
+$LastChangedDate: 2010-10-29 14:05:28 -0700 (Fri, 29 Oct 2010) $
 $Rev: 4839 $
 */
 

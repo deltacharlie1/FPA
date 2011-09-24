@@ -2,7 +2,7 @@
 /*
 Simple:Press
 Global routines needed to start up plugin
-$LastChangedDate: 2010-12-31 13:36:40 +0000 (Fri, 31 Dec 2010) $
+$LastChangedDate: 2010-12-31 06:36:40 -0700 (Fri, 31 Dec 2010) $
 $Rev: 5214 $
 */
 

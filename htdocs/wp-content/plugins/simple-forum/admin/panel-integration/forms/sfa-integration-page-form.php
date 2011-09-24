@@ -2,7 +2,7 @@
 /*
 Simple:Press
 Admin integration Page and Permalink Form
-$LastChangedDate: 2010-08-08 18:29:39 +0100 (Sun, 08 Aug 2010) $
+$LastChangedDate: 2010-08-08 10:29:39 -0700 (Sun, 08 Aug 2010) $
 $Rev: 4362 $
 */
 

@@ -2,7 +2,7 @@
 /*
 Simple:Press
 bbCode to xhtml parser
-$LastChangedDate: 2011-01-23 17:56:55 +0000 (Sun, 23 Jan 2011) $
+$LastChangedDate: 2011-01-23 10:56:55 -0700 (Sun, 23 Jan 2011) $
 $Rev: 5346 $
 */
 

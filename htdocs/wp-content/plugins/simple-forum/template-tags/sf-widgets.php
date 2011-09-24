@@ -2,7 +2,7 @@
 /*
 Simple:Press
 Recent Posts Widget
-$LastChangedDate: 2011-01-07 10:19:34 +0000 (Fri, 07 Jan 2011) $
+$LastChangedDate: 2011-01-07 03:19:34 -0700 (Fri, 07 Jan 2011) $
 $Rev: 5274 $
 */
 

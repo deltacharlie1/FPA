@@ -2,7 +2,7 @@
 /*
 Simple:Press
 Admin integration Update Global Options Support Functions
-$LastChangedDate: 2010-07-16 18:56:09 +0100 (Fri, 16 Jul 2010) $
+$LastChangedDate: 2010-07-16 10:56:09 -0700 (Fri, 16 Jul 2010) $
 $Rev: 4276 $
 */
 

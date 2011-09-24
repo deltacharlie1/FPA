@@ -2,7 +2,7 @@
 /*
 Simple:Press
 Admin ADmins
-$LastChangedDate: 2010-12-30 18:09:51 +0000 (Thu, 30 Dec 2010) $
+$LastChangedDate: 2010-12-30 11:09:51 -0700 (Thu, 30 Dec 2010) $
 $Rev: 5199 $
 */
 

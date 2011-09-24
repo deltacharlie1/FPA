@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Main Forum Installer (New Instalations)
-$LastChangedDate: 2011-04-23 21:47:35 +0100 (Sat, 23 Apr 2011) $
-$Rev: 5959 $
+$LastChangedDate: 2011-06-05 09:16:54 -0700 (Sun, 05 Jun 2011) $
+$Rev: 6253 $
 */
 
 if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) {
@@ -859,7 +859,8 @@ function sf_perform_install($phase, $subphase=0)
 					'Manage'						=> 1,
 					'Print this Post'				=> 1,
 					'Print this Topic'				=> 1,
-					'Related Topics'				=> 1
+					'Related Topics'				=> 1,
+					'Mark All Read'					=> 1
 				);
 
 				sf_add_option('sfshowicon', $icons);

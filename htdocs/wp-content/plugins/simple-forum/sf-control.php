@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Simple:Press
-Version: 4.4.4
+Version: 4.4.5
 Plugin URI: http://simple-press.com
 Description: Fully featured but simple page-based forum
 Author: Andy Staines & Steve Klasen
@@ -16,8 +16,8 @@ at the bottom of forum pages
 	and abide by it's few simple requests. Note that the Highslide JS library is free to use on non-commercial sites.
 	Commercial sites should seek a license for a small fee of about $29US.
 
-$LastChangedDate: 2011-05-04 10:10:04 +0100 (Wed, 04 May 2011) $
-$Rev: 6039 $
+$LastChangedDate: 2011-06-25 07:24:41 -0700 (Sat, 25 Jun 2011) $
+$Rev: 6398 $
 */
 
 # -------------------------------------------------------------------------------------------------------------------
@@ -38,12 +38,18 @@ global $is_IIS;
 # hack for some IIS installations
 if ($is_IIS && @ini_get('error_log') == '') @ini_set('error_log', 'syslog');
 
+# try to increase backtrack limit
+if ((int) @ini_get('pcre.backtrack_limit') < 10000000000) @ini_set('pcre.backtrack_limit', 10000000000);
+
+# try to increase php memory
+if (function_exists('memory_get_usage') && ((int) @ini_get('memory_limit') < abs(intval('64M')))) @ini_set('memory_limit', '64M');
+
 # ----------------------------------------------------------
 # Establist version and system control constants
 # ----------------------------------------------------------
 define('SFPLUGNAME',	'Simple:Press');
-define('SFVERSION',		'4.4.4');
-define('SFBUILD',		6010);
+define('SFVERSION',		'4.4.5');
+define('SFBUILD',		6398);
 define('SFRELEASE',		'Release');
 
 # ==================================================================

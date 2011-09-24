@@ -2,7 +2,7 @@
 /*
 Simple:Press
 Ahah call for Announce New Posts tag
-$LastChangedDate: 2010-09-23 15:31:54 +0100 (Thu, 23 Sep 2010) $
+$LastChangedDate: 2010-09-23 07:31:54 -0700 (Thu, 23 Sep 2010) $
 $Rev: 4695 $
 */
 

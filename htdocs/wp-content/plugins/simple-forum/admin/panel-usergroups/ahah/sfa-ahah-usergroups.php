@@ -2,7 +2,7 @@
 /*
 Simple:Press
 User Group Specials
-$LastChangedDate: 2011-03-04 17:37:35 +0000 (Fri, 04 Mar 2011) $
+$LastChangedDate: 2011-03-04 10:37:35 -0700 (Fri, 04 Mar 2011) $
 $Rev: 5607 $
 */
 

@@ -2,7 +2,7 @@
 /*
 Simple:Press Admin
 Ahah call for Amdin tools (from options)
-$LastChangedDate: 2010-04-25 09:46:39 +0100 (Sun, 25 Apr 2010) $
+$LastChangedDate: 2010-04-25 01:46:39 -0700 (Sun, 25 Apr 2010) $
 $Rev: 3960 $
 */
 

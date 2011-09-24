@@ -53,9 +53,13 @@
               <td ><span><input name="company" type="text" id="company" size="25" class="mandatory" title="company Name"/></span></td>
             </tr>
             <tr>
+              <td><label>How did you hear of Us?</label></td>
+              <td style="padding-left:15px;"><input style="background-color:#fff;" name="referer" type="text" id="referer" size="25" title="How did you hear about us?"/></td>
+            </tr>
+<!--            <tr>
               <td><label>Membership Plan</label></td>
               <td>FreePlus Startup -- <b>(FREE!)</b>&nbsp;<a href="#" class="extra" style="padding-right:20px;float:right;color:#0175c6;font-weight:bold;" rel="#memplan" rev="Memembership Plans">Tell me more</a></td>
-            </tr>
+            </tr> -->
             <tr>
               <td colspan="2" align="center" ><span><input name="tc" type="checkbox" id="tc" value="checkbox" class="mandatory" title="Terms and Conditions" onclick="document.getElementById('but2').disabled = ! document.getElementById('but2').disabled;"/></span>
                     Confirm that you have read and accept our <a href="#" onclick="window.open('/termsandconditions.html','legal','scrollbars=1,resizable=1,height=800,width=1000');">Terms &amp; Conditions </a>

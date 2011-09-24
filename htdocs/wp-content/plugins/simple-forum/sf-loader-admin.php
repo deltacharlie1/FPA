@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Admin Header Routines
-$LastChangedDate: 2011-03-07 00:03:08 +0000 (Mon, 07 Mar 2011) $
-$Rev: 5639 $
+$LastChangedDate: 2011-06-18 14:03:05 -0700 (Sat, 18 Jun 2011) $
+$Rev: 6348 $
 */
 
 if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) {
@@ -109,11 +109,14 @@ function sfa_admin_menu()
 		$parent = 'simple-forum/sf-loader-install.php';
 		add_object_page('Simple:Press',esc_attr( __("Forum", "sforum")), 'activate_plugins', $parent, '', 'div');
 
+		global $submenu;
 		if($SFSTATUS == 'Install')
 		{
 			add_submenu_page($parent, esc_attr(__("Install Simple:Press", "sforum")), esc_attr(__("Install Simple:Press", "sforum")), 'activate_plugins', $parent);
+			$submenu[$parent][1] = array(esc_attr(__('Install Simple:Press', 'spa')), 'xxxxxxx', $parent); # manual dummy entry so next shows
 		} else {
 			add_submenu_page($parent, esc_attr(__("Upgrade Simple:Press", "sforum")), esc_attr(__("Upgrade Simple:Press", "sforum")), 'activate_plugins', $parent);
+			$submenu[$parent][1] = array(esc_attr(__('Upgrade Simple:Press', 'spa')), 'xxxxxxx', $parent); # manual dummy entry so next shows
 		}
 
 		# need to register the called page if coming to spf admin page, but then change to the installer so install can be done
@@ -451,7 +454,7 @@ function sfa_check_plugin_version($plugin)
 		{
 			if (!$screen->is_network) $msg = '<p style="color:red;">'.__("Simple:Press is READY TO BE REMOVED. When you deactivate it ALL DATA WILL BE DELETED", "sforum").'</p>';
 
-		} elseif ($SPSTATUS == 'Upgrade') {
+		} elseif ($SFSTATUS == 'Upgrade') {
  			if (!$screen->is_network) $msg = __("Select the Forum Menu to complete the upgrade of your Simple:Press", "sforum");
  		} else {
 			$checkfile = SFVERCHECK;
