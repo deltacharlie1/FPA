@@ -2,7 +2,7 @@
 /*
 Simple:Press
 Ahah - Post Rating
-$LastChangedDate: 2010-05-14 03:49:45 +0100 (Fri, 14 May 2010) $
+$LastChangedDate: 2010-05-13 19:49:45 -0700 (Thu, 13 May 2010) $
 $Rev: 4017 $
 */
 

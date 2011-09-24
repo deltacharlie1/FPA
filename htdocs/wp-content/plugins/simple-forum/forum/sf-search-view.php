@@ -2,7 +2,7 @@
 /*
 Simple:Press
 Topic View Display
-$LastChangedDate: 2010-11-18 14:46:36 +0000 (Thu, 18 Nov 2010) $
+$LastChangedDate: 2010-11-18 07:46:36 -0700 (Thu, 18 Nov 2010) $
 $Rev: 4960 $
 */
 

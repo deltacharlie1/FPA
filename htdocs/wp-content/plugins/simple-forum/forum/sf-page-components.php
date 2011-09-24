@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Forum General Page Rendering Routines
-$LastChangedDate: 2011-04-29 04:08:44 +0100 (Fri, 29 Apr 2011) $
-$Rev: 5994 $
+$LastChangedDate: 2011-06-05 09:16:54 -0700 (Sun, 05 Jun 2011) $
+$Rev: 6253 $
 */
 
 if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) {
@@ -94,6 +94,7 @@ function sf_render_login_strip($source, $pageview, $button)
 	$sflogin = array();
 	$sflogin = sf_get_option('sflogin');
 	$out = '';
+	$textbelow = '';
 
 	$out.= '<div class="sfloginstrip">'."\n";
 	$out.= '<div class="inline_edit" id="sfthisuser">'.$current_user->ID.'</div>';
@@ -567,7 +568,7 @@ function sf_render_breadcrumbs($forumslug, $topicslug, $page)
 		if($unreads > 0 && $sfglobals['display']['unreadcount']['markall'])
 		{
 			$out.= '<td width="25" valign="top"><a href="'.SFURL.'newposts/"><img class="sfalignright" src="'.SFRESOURCES.'topics-started.png" alt="" title="'.esc_attr(__("Most Recent Topics With Unread Posts", "sforum")).'" /></a></td>';
-			$out.= '<td width="25" valign="top"><a href="'.SFMARKREAD.'"><img class="sfalignright" src="'.SFRESOURCES.'mark-read.png" alt="" title="'.esc_attr(__("Mark All As Read", "sforum")).'" /></a></td>';
+			$out.= '<td width="25" valign="top"><a href="'.SFMARKREAD.'"><img class="sfalignright" src="'.SFRESOURCES.'mark-read.png" alt="" title="'.esc_attr(__("Mark All As Read", "sforum")).'" />'.sf_render_icons('Mark All Read').'</a></td>';
 		}
 	}
 
@@ -1031,6 +1032,7 @@ function sf_render_first_last_post_cell($forumslug, $topicslug, $item, $alt, $ti
 		$posttime = sf_date('t',$item['post_date']);
 	}
 
+	if (empty($item['post_tip'])) $item['post_tip'] = '';
 	if ($title == '')
 	{
 		$out = '<td class="sfuserdetails '.$alt.'">';
@@ -1787,7 +1789,7 @@ function sf_render_version_strip()
 
 function sf_render_topic_printicon($topicid)
 {
-   	$out = '<a class="sficon" href="javascript:void(0);" onclick="javscript:jQuery(\'#topic-'.$topicid.'\').jqprint({debug:true}); return false;"><img src="'.SFRESOURCES.'print.png" alt="" title="'.esc_attr(__("Print This Topic", "sforum")).'"/>'.sf_render_icons("Print this Post").'</a>';
+   	$out = '<a class="sficon" href="javascript:void(0);" onclick="javscript:jQuery(\'#topic-'.$topicid.'\').jqprint({debug:true}); return false;"><img src="'.SFRESOURCES.'print.png" alt="" title="'.esc_attr(__("Print This Topic", "sforum")).'"/>'.sf_render_icons("Print this Topic").'</a>';
 
 	return $out;
 }

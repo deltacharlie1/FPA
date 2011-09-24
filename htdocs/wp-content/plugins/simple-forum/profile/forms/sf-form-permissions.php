@@ -2,7 +2,7 @@
 /*
 Simple:Press
 User Permissions Display
-$LastChangedDate: 2010-05-23 23:19:43 +0100 (Sun, 23 May 2010) $
+$LastChangedDate: 2010-05-23 15:19:43 -0700 (Sun, 23 May 2010) $
 $Rev: 4069 $
 */
 

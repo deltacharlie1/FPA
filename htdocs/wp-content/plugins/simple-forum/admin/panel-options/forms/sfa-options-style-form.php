@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Admin Options style Form
-$LastChangedDate: 2010-07-10 12:24:34 +0100 (Sat, 10 Jul 2010) $
-$Rev: 4243 $
+$LastChangedDate: 2011-06-05 09:16:54 -0700 (Sun, 05 Jun 2011) $
+$Rev: 6253 $
 */
 
 if (preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF']))
@@ -21,7 +21,7 @@ jQuery(document).ready(function() {
 		success: function() {
 			jQuery('#sfreloadst').click();
 			jQuery('#sfmsgspot').fadeIn();
-			jQuery('#sfmsgspot').fadeOut(6000);
+//			jQuery('#sfmsgspot').fadeOut(6000);
 		}
 	});
 });
@@ -90,7 +90,7 @@ jQuery(document).ready(function() {
 
 				echo '<div id="checkboxset">';
 				$i = count($sfoptions['icon-list']);
-				$x = 0;
+//				$x = 0;
 
 				$rows  = ($i/4);
 				if (!is_int($rows))
@@ -110,8 +110,9 @@ jQuery(document).ready(function() {
 						echo '<table class="form-table">';
 						$closed = false;
 					}
-					sfa_paint_checkbox(__($key, "sforum"), "icon$x", $value, false, false, false);
-					$x++;
+					$iName = str_replace(' ', '_', $key);
+					sfa_paint_checkbox(__($key, "sforum"), $iName, $value, false, false, false);
+//					$x++;
 
 					$thisrow++;
 					if ($thisrow == $rows)

@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Admin Options Save Options Support Functions
-$LastChangedDate: 2011-01-06 15:38:37 +0000 (Thu, 06 Jan 2011) $
-$Rev: 5270 $
+$LastChangedDate: 2011-06-05 09:16:54 -0700 (Sun, 05 Jun 2011) $
+$Rev: 6253 $
 */
 
 if (preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF']))
@@ -456,16 +456,15 @@ function sfa_save_style_data()
 		}
 	} else {
 		$icons = sf_get_option('sfshowicon');
-		$x = 0;
 		foreach ($icons as $key=>$value)
 		{
-			if (isset($_POST['icon'.$x]))
+			$iName = str_replace(' ', '_', $key);
+			if (isset($_POST[$iName]))
 			{
 				$icons[$key]=1;
 			} else {
 				$icons[$key]=0;
 			}
-			$x++;
 		}
 		sf_update_option('sfshowicon', $icons);
 	}

@@ -2,7 +2,7 @@
 /*
 Simple:Press
 Buddy List Display
-$LastChangedDate: 2010-08-11 19:38:42 +0100 (Wed, 11 Aug 2010) $
+$LastChangedDate: 2010-08-11 11:38:42 -0700 (Wed, 11 Aug 2010) $
 $Rev: 4383 $
 */
 

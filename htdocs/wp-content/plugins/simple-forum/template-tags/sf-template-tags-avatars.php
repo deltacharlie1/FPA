@@ -2,7 +2,7 @@
 /*
 Simple:Press
 Avatar Template Tag(s)
-$LastChangedDate: 2010-05-29 22:53:48 +0100 (Sat, 29 May 2010) $
+$LastChangedDate: 2010-05-29 14:53:48 -0700 (Sat, 29 May 2010) $
 $Rev: 4094 $
 */
 

@@ -22,6 +22,7 @@ create table registrations (
   regdefaultrows char(5) not null default '30' comment 'Default number of rows to show for listings',
   regmenutype char(1) not null default 'F' comment ' menu type to use - F - Full, S - Simple',
   regoptin char(1) not null default 'Y' comment 'opt in flag for emails and newsletter values ar Y/N',
+  regrefrer varchar(200) not null default '' comment 'How user heard of FPA',
   old_id int unsigned,
   index (regemail)
 );

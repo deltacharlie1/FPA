@@ -2,7 +2,7 @@
 /*
 Simple:Press
 Public - global code
-$LastChangedDate: 2010-09-17 18:04:47 +0100 (Fri, 17 Sep 2010) $
+$LastChangedDate: 2010-09-17 10:04:47 -0700 (Fri, 17 Sep 2010) $
 $Rev: 4642 $
 */
 

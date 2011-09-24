@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Blog Linking - Blog side comment support
-$LastChangedDate: 2011-04-26 10:32:03 +0100 (Tue, 26 Apr 2011) $
-$Rev: 5977 $
+$LastChangedDate: 2011-06-24 01:23:05 -0700 (Fri, 24 Jun 2011) $
+$Rev: 6374 $
 */
 
 if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) {
@@ -229,8 +229,7 @@ function sf_topic_as_comments($comments)
 
 	if($thread)
 	{
-		$sort=get_option('comment_order');
-		if($sort == 'asc' ? $index = count($comments) : $index = (count($comments) + count($thread) -1 ));
+		$index = count($comments);
 
 		foreach($thread as $post)
 		{
@@ -272,10 +271,28 @@ function sf_topic_as_comments($comments)
 			$comments[$index]->user_id = $post['user_id'];
 			$comments[$index]->comment_subscribe = "N";
 
-			if($sort == 'asc' ? $index++ : $index--);
+			$index++;
 		}
 	}
+	if($sfpostlinking['sflinkcomments'] == 2)
+	{
+		usort($comments, 'sp_sort_comments');
+	}
+
 	return $comments;
+}
+
+function sp_sort_comments($a, $b)
+{
+    if ($a->comment_date == $b->comment_date) {
+        return 0;
+    }
+    $sort=get_option('comment_order');
+    if($sort == 'asc') {
+	    return ($a->comment_date < $b->comment_date) ? -1 : 1;
+	} else {
+	    return ($a->comment_date > $b->comment_date) ? 1 : -1;
+	}
 }
 
 function sf_get_thread_for_comments($topicid, $hidedupes)
@@ -286,7 +303,7 @@ function sf_get_thread_for_comments($topicid, $hidedupes)
 	if($hidedupes) $hide = " AND comment_id IS NULL ";
 
 	$records = $wpdb->get_results(
-			"SELECT ".SFPOSTS.".post_id, post_content, ".sf_zone_datetime('post_date').", ".SFPOSTS.".user_id, guest_name, guest_email, post_status, poster_ip,
+			"SELECT ".SFPOSTS.".post_id, post_content, post_date, ".SFPOSTS.".user_id, guest_name, guest_email, post_status, poster_ip,
 			".SFMEMBERS.".display_name, user_url, user_email
 			 FROM ".SFPOSTS."
 			 LEFT JOIN ".SFUSERS." ON ".SFPOSTS.".user_id = ".SFUSERS.".ID

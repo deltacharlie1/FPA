@@ -47,8 +47,9 @@ $icons = array(
 	'Unsubscribe from this Topic'	=> 1,
 	'Manage'						=> 1,
 	'Print this Post'				=> 1,
+	'Print this Topic'				=> 1,
 	'Related Topics'				=> 1,
-	'Mark All Read'					=> 1
+	'Mark All Read'					=> 0
 );
 
 sf_update_option('sfshowicon', $icons);

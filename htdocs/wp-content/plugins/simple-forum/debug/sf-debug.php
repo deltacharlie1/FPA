@@ -2,7 +2,7 @@
 /*
 Simple:Press
 Debug
-$LastChangedDate: 2010-11-02 10:00:34 +0000 (Tue, 02 Nov 2010) $
+$LastChangedDate: 2010-11-02 03:00:34 -0700 (Tue, 02 Nov 2010) $
 $Rev: 4866 $
 */
 

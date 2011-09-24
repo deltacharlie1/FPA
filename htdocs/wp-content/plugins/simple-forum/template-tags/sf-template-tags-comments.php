@@ -2,7 +2,7 @@
 /*
 Simple:Press
 Template Tag(s) - Linked Topics as Comments
-$LastChangedDate: 2010-12-17 16:42:54 +0000 (Fri, 17 Dec 2010) $
+$LastChangedDate: 2010-12-17 09:42:54 -0700 (Fri, 17 Dec 2010) $
 $Rev: 5081 $
 */
 

@@ -2,7 +2,7 @@
 /*
 Simple:Press
 sf-common-functions.php - common/shared routines between back and front ends
-$LastChangedDate: 2011-03-10 13:26:08 +0000 (Thu, 10 Mar 2011) $
+$LastChangedDate: 2011-03-10 06:26:08 -0700 (Thu, 10 Mar 2011) $
 $Rev: 5655 $
 */
 

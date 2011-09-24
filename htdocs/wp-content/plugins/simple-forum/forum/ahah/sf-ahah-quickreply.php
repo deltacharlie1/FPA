@@ -2,7 +2,7 @@
 /*
 Simple:Press
 Admin 'Quick Reply' Save
-$LastChangedDate: 2011-04-04 12:17:40 +0100 (Mon, 04 Apr 2011) $
+$LastChangedDate: 2011-04-04 04:17:40 -0700 (Mon, 04 Apr 2011) $
 $Rev: 5811 $
 */
 

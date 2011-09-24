@@ -2,7 +2,7 @@
 /*
 Simple:Press
 Admin Options Save Options Support Functions
-$LastChangedDate: 2011-04-16 18:18:49 +0100 (Sat, 16 Apr 2011) $
+$LastChangedDate: 2011-04-16 10:18:49 -0700 (Sat, 16 Apr 2011) $
 $Rev: 5903 $
 */
 

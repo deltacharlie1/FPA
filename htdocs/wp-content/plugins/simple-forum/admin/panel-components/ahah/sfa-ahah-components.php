@@ -2,7 +2,7 @@
 /*
 Simple:Press
 Component Specials
-$LastChangedDate: 2010-04-10 14:06:45 +0100 (Sat, 10 Apr 2010) $
+$LastChangedDate: 2010-04-10 06:06:45 -0700 (Sat, 10 Apr 2010) $
 $Rev: 3884 $
 */
 

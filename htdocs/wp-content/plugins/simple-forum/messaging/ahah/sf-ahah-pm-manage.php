@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Ahah call PM related stuff
-$LastChangedDate: 2010-11-13 20:17:44 +0000 (Sat, 13 Nov 2010) $
-$Rev: 4941 $
+$LastChangedDate: 2011-05-27 18:38:05 -0700 (Fri, 27 May 2011) $
+$Rev: 6136 $
 */
 
 ob_start();
@@ -261,11 +261,19 @@ if(isset($_GET['pmdelthread']))
 }
 
 # delete a message ------------------------------------------------
-if(isset($_GET['pmdelmsg']))
+if (isset($_GET['pmdelmsg']))
 {
 	$id = sf_esc_int($_GET['pmdelmsg']);
 	$box = $_GET['pmaction'];
-	sf_pm_delete($id, $box);
+
+	# make sure it belongs to current user
+	$field = ($box == 'inbox') ? 'to_id' : 'from_id';
+	$messages = $wpdb->get_results(
+			"SELECT message_id
+			 FROM ".SFMESSAGES."
+			 WHERE ".$field."=".$current_user->ID." AND message_id='".$id."'");
+	if ($messages) sf_pm_delete($id, $box);
+
 	die();
 }
 

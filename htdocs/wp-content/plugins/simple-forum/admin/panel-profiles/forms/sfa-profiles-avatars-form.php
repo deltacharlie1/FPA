@@ -2,7 +2,7 @@
 /*
 Simple:Press
 Admin Profile Avatars Form
-$LastChangedDate: 2010-12-02 12:15:10 +0000 (Thu, 02 Dec 2010) $
+$LastChangedDate: 2010-12-02 05:15:10 -0700 (Thu, 02 Dec 2010) $
 $Rev: 5033 $
 */
 

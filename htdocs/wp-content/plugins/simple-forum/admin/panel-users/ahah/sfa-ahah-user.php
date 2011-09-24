@@ -2,7 +2,7 @@
 /*
 Simple:Press
 User Specials
-$LastChangedDate: 2010-08-17 19:03:43 +0100 (Tue, 17 Aug 2010) $
+$LastChangedDate: 2010-08-17 11:03:43 -0700 (Tue, 17 Aug 2010) $
 $Rev: 4465 $
 */
 
