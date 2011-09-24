@@ -93,6 +93,9 @@ create table companies (
   comhmrc date not null default '2010-01-01' comment 'Allow auto-update of HMRC VAT',
   comsuppt int unsigned not null default 0 comment 'Remaining Support credits',
   comadd_user int(10) unsigned not null default 0 comment 'number of new users that may be added',
+  comkeep_recs date not null default '2010-01-01' comment 'Expiry date for keeping records for 6 years',
+  comadvertise date not null default '2010-01-01' comment 'Allowed to advertise until this date',
+  comsubs date not null default '2010-01-01' comment 'Date subscription expires',
   old_id int unsigned,
   index (reg_id)
 );

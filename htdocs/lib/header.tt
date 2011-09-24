@@ -82,6 +82,9 @@ $(document).ready(function(){
             <li><a href="/cgi-bin/fpa/adjustments.pl?I">Adjustments In (<b> + </b>)</a></li>
             <li><a href="/cgi-bin/fpa/adjustments.pl?O">Adjustments Out (<b> - </b>)</a></li>
             <li><a href="/cgi-bin/fpa/opening_balances.pl">Adjust Balances</a></li>
+[% IF cookie.ACCT == '1+1' -%]
+            <li><a href="/cgi-bin/fpa/add_features.pl">Add Extra Features</a></li>
+[% END -%]
 [% UNLESS cookie.ACCT == "3+2" -%]
             <li><a href="/cgi-bin/fpa/wipe_clean.pl">Delete All Data</a></li>
 [% END -%]
