@@ -63,7 +63,8 @@ $(document).ready(function(){
       var submit_data = $(".newinvoice").serialize() + "&submit=" + action;
       $.post("/cgi-bin/fpa/save_invoice.pl",submit_data ,function(data) {
         if ( ! /^OK/.test(data)) {
-          alert(data);
+          document.getElementById("dialog").innerHTML = data;
+          $("#dialog").dialog("open");
         }
         else {
           var href = data.split("-");
@@ -102,7 +103,8 @@ function submit_details(action) {
         var submit_data = $(".newinvoice").serialize() + "&invtotal=" + escape(document.getElementById("st").innerHTML) + "&invvat=" + escape(document.getElementById("vt").innerHTML) + "&invitems=" + escape(dg) + "&submit=" + action;
         $.post("/cgi-bin/fpa/save_invoice.pl",submit_data ,function(data) {
           if ( ! /^OK/.test(data)) {
-            alert(data);
+            document.getElementById("dialog").innerHTML = data;
+            $("#dialog").dialog("open");
           }
           else {
             var href = data.split("-");
@@ -154,7 +156,8 @@ $(document).ready(function(){
               if (confirm("Paid Amount greater than Owed Amount, balance will be held on Account")) {
                 $.post("/cgi-bin/fpa/receive_invoice_payment.pl", $("#pay2form").serialize(),function(data) {
                 if ( ! /^OK/.test(data)) {
-                  alert(data);
+                  document.getElementById("dialog").innerHTML = data;
+                  $("#dialog").dialog("open");
                 }
                 window.location.reload(true);
                 },"text");
@@ -164,7 +167,8 @@ $(document).ready(function(){
             else {
               $.post("/cgi-bin/fpa/receive_invoice_payment.pl", $("form#pay2form").serialize(),function(data) {
                 if ( ! /^OK/.test(data)) {
-                  alert(data);
+                  document.getElementById("dialog").innerHTML = data;
+                  $("#dialog").dialog("open");
                 }
                 window.location.reload(true);
               },"text");

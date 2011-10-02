@@ -22,7 +22,7 @@ function init_rows() {
 
     for (var i=1; i<tbl.rows.length; i++) {
       var item_row = [];
-      for (var j=0; j<no_cols; j++) {
+      for (var j=0; j<tbl.rows[i].cells.length; j++) {
         if (! /^<input/.test(tbl.rows[i].cells[j].innerHTML)) {		// ignore edit buttons
           item_row[j] = tbl.rows[i].cells[j].innerHTML;
         }
