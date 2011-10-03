@@ -15,7 +15,7 @@
           <form action="/cgi-bin/fpa/register2.pl" method="post" name="form1" id="form1">
           <input type="hidden" name="react" id="react" value="N"/>
           <div style="position:relative;">
-          <div style="position:absolute;left:460px;top:-60px"><img src="/images/bonus.png" onclick="do_bonusfeatures();"/></div>
+<!--          <div style="position:absolute;left:460px;top:-60px"><img src="/images/bonus.png" onclick="do_bonusfeatures();"/></div>  -->
           <table border="0" cellpadding="0" cellspacing="0" id="registertable">
             <tr>
               <td>&nbsp;</td>
@@ -53,8 +53,8 @@
               <td ><span><input name="company" type="text" id="company" size="25" class="mandatory" title="company Name"/></span></td>
             </tr>
             <tr>
-              <td><label>How did you hear of Us?</label></td>
-              <td style="padding-left:15px;"><input style="background-color:#fff;" name="referer" type="text" id="referer" size="25" title="How did you hear about us?"/></td>
+              <td valign="top"><label>How did you hear of Us?</label></td>
+              <td style="padding-left:15px;"><textarea style="background-color:#fff;border-top:2px solid #999999; border-left:2px solid #999999;border-bottom:1px solid #ffffff;border-right:1px solid #ffffff;" name="referer" id="referer" cols="25" rows="3" title="How did you hear about us?"></textarea></br><span style="color:#999999;font-size:10px;">(up to 200 characters)</td>
             </tr>
 <!--            <tr>
               <td><label>Membership Plan</label></td>
@@ -75,7 +75,7 @@
               </td>
             </tr>
           </table></div>
-            <div id="bonusfeatures" title="Bonus Features" style="display:none;">
+<!--            <div id="bonusfeatures" title="Bonus Features" style="display:none;">
               <table width="100%" cellpadding="4" cellspacing="0" border="0" class="formtable">
                 <tr>
                   <td>As a bonus to our early users we are offering you the opportunity to try out selected additional features for up to 3 months.</td>
@@ -99,7 +99,7 @@
                   <td>Remember to click the Register button on the main screen!</td>
                 </tr>
               </table>
-            </div>
+            </div>  -->
           </form>
         </tr>
       </table>
