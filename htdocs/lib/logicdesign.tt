@@ -14,59 +14,71 @@
 [% IF javascript; javascript; END -%]
 </head>
 <body[%- IF focus -%] onload="document.getElementById('[%- focus -%]').focus();"[%- END -%]>
-    <div class="top-green"></div>
-        <div class="m header">
-            <a href="http://www.freeplusaccounts.co.uk" class="logo" title="Free Plus Accounts"><img src="/wp-content/themes/freeplusaccounts/images/logo.jpg" alt="Free Plus Accounts" /></a>
-<div id="freeplustitle"><img src="/wp-content/themes/freeplusaccounts/images/freeplustitle.png" alt="Free Plus Accounts" /></div>
-          <div class="listfix" id="nav">
-				<div class="menu-header"><ul id="menu-main" class="menu"><li id="menu-item-24" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-24"><a href="http://www.freeplusaccounts.co.uk/">Home</a></li> 
-<li id="menu-item-25" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-25"><a href="http://www.freeplusaccounts.co.uk/about-us/">About Us</a></li> 
-<li id="menu-item-28" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-28"><a href="http://www.freeplusaccounts.co.uk/features/">Features</a></li> 
-<li id="menu-item-29" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-29"><a href="http://www.freeplusaccounts.co.uk/tutorials/">Tutorials</a></li> 
-<li id="menu-item-27" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-27"><a href="http://www.freeplusaccounts.co.uk/faqs/">FAQs</a></li> 
-<li id="menu-item-42" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-42"><a href="http://www.freeplusaccounts.co.uk/forum/">Forum</a></li> 
-<li id="menu-item-26" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-26"><a href="http://www.freeplusaccounts.co.uk/contact-us/">Contact Us</a></li> 
-</ul></div>                        
-            </div>
-            <div class="clear"></div>
+  <div class="top-green"></div>
+  <div class="m header">
+    <a href="http://www.freeplusaccounts.co.uk" class="logo" title="Free Plus Accounts"><img src="/wp-content/themes/freeplusaccounts/images/logo.jpg" alt="Free Plus Accounts" /></a>
+    <div id="freeplustitle"><img src="/wp-content/themes/freeplusaccounts/images/freeplustitle.png" alt="Free Plus Accounts" /></div>
+    <div class="listfix" id="nav">
+      <div class="menu-header">
+        <ul id="menu-main" class="menu">
+          <li id="menu-item-24" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-24"><a href="http://www.freeplusaccounts.co.uk/">Home</a></li> 
+          <li id="menu-item-25" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-25"><a href="http://www.freeplusaccounts.co.uk/about-us/">About Us</a></li> 
+          <li id="menu-item-28" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-28"><a href="http://www.freeplusaccounts.co.uk/features/">Features</a></li> 
+          <li id="menu-item-29" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-29"><a href="http://www.freeplusaccounts.co.uk/tutorials/">Tutorials</a></li> 
+          <li id="menu-item-27" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-27"><a href="http://www.freeplusaccounts.co.uk/faqs/">FAQs</a></li> 
+          <li id="menu-item-42" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-42"><a href="http://www.freeplusaccounts.co.uk/forum/">Forum</a></li> 
+          <li id="menu-item-26" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-26"><a href="http://www.freeplusaccounts.co.uk/contact-us/">Contact Us</a></li> 
+        </ul>
+      </div>                        
     </div>
-    <div id="dialog" style="text-align:left;z-index:10100;" title="Errors!"></div>
-    <div class="spacer clear line"></div>
-    <div class="m whitecontainer">
+    <div class="clear"></div>
+  </div>
+  <div id="dialog" style="text-align:left;z-index:10100;" title="Errors!"></div>
+  <div class="spacer clear line"></div>
+  <div class="m whitecontainer">
 [% content -%]
-      </div>
-    <!--- END WHITECONTAINER --->
-    <div class="footer-b">
-      <div class="m">
-        	<h3>Latest News Posts</h3>
-            <div class="listfix">
-            	<ul>
-[%- posts -%]
-                                    </ul>
-                <div class="clear"></div>
-            </div>
-			<div class="clear"></div>
-		</div>
+    <div class="rightcol smallcol">
+      <div style="padding-left:12px;width:200px;"><iframe src="/amazon.html"width="180" height="150" frameborder="0" scrolling="no"></iframe></div>
+      <br />
+      <img src="/adimages/TAP.png" alt="The Accountancy Partnership"/><br />
     </div>
-	<div class="clear"></div>
-	<div class="clear"></div>
-    <div class="footer">
-      <div class="m">
-      <div class="logo"><a href="http://www.freeplusaccounts.co.uk" title="Free Plus Accounts"><img src="/wp-content/themes/freeplusaccounts/images/logo-footer.jpg" alt="Free Plus Accounts" /></a></div>
-      <div class="footer-links">
-          <div class="listfix">
-				<div class="menu-footer-container"><ul id="menu-footer" class="menu"><li id="menu-item-36" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-36"><a href="http://www.freeplusaccounts.co.uk/">Home</a></li> 
-<li id="menu-item-34" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-34"><a href="http://www.freeplusaccounts.co.uk/about-us/">About Us</a></li> 
-<li id="menu-item-33" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-33"><a href="http://www.freeplusaccounts.co.uk/contact-us/">Contact Us</a></li> 
-<li id="menu-item-31" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-31"><a href="http://www.freeplusaccounts.co.uk/terms-conditions/">Terms &#038; Conditions</a></li> 
-<li id="menu-item-32" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-32"><a href="http://www.freeplusaccounts.co.uk/privacy-policy/">Privacy Policy</a></li> 
-</ul></div>          
-          </div>
-      <p>&copy; 2011 Free Plus Accounts, All Rights Reserved</p>
+    <div class="clear"></div>
+  </div>
+    <!--- END WHITECONTAINER --->
+  <div class="footer-b">
+    <div class="m">
+      <h3>Latest News Posts</h3>
+      <div class="listfix">
+        <ul>
+[%- posts -%]
+        </ul>
+        <div class="clear"></div>
       </div>
       <div class="clear"></div>
-      </div>
     </div>
+  </div>
+  <div class="clear"></div>
+  <div class="clear"></div>
+  <div class="footer">
+    <div class="m">
+      <div class="logo"><a href="http://www.freeplusaccounts.co.uk" title="Free Plus Accounts"><img src="/wp-content/themes/freeplusaccounts/images/logo-footer.jpg" alt="Free Plus Accounts" /></a></div>
+      <div class="footer-links">
+        <div class="listfix">
+          <div class="menu-footer-container">
+            <ul id="menu-footer" class="menu">
+              <li id="menu-item-36" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-36"><a href="http://www.freeplusaccounts.co.uk/">Home</a></li> 
+              <li id="menu-item-34" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-34"><a href="http://www.freeplusaccounts.co.uk/about-us/">About Us</a></li> 
+              <li id="menu-item-33" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-33"><a href="http://www.freeplusaccounts.co.uk/contact-us/">Contact Us</a></li> 
+              <li id="menu-item-31" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-31"><a href="http://www.freeplusaccounts.co.uk/terms-conditions/">Terms &#038; Conditions</a></li> 
+              <li id="menu-item-32" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-32"><a href="http://www.freeplusaccounts.co.uk/privacy-policy/">Privacy Policy</a></li> 
+            </ul>
+          </div>          
+        </div>
+        <p>&copy; 2011 Free Plus Accounts, All Rights Reserved</p>
+      </div>
+      <div class="clear"></div>
+    </div>
+  </div>
 </body>
 </html>
 
