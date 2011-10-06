@@ -129,8 +129,8 @@
       <th>Net</th>
       <th>VAT</th>
       <th>Total</th>
-      <th>Remarks</th>
 [% END -%]
+      <th>Remarks</th>
     </tr>
 [% class = [ "even","odd" ] -%]
 [%- FOREACH entry IN entries -%]
