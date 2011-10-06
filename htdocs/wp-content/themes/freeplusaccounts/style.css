@@ -16,6 +16,9 @@ blockquote {
 	padding-left: 50px;
 }
 blockquote p { font-family:Georgia, "Times New Roman", Times, serif; font-style:italic; font-size:13px !important; line-height:22px; }
+a {
+	border:none;
+}
 a img {
 	border:none !important;
 }

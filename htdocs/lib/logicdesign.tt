@@ -38,9 +38,9 @@
   <div class="m whitecontainer">
 [% content -%]
     <div class="rightcol smallcol">
-      <div style="padding-left:12px;width:200px;"><iframe src="/amazon.html"width="180" height="150" frameborder="0" scrolling="no"></iframe></div>
+      <div style="padding-left:22px;width:200px;"><iframe src="/amazon.html"width="180" height="150" frameborder="0" scrolling="no"></iframe></div>
       <br />
-      <img src="/adimages/TAP.png" alt="The Accountancy Partnership"/><br />
+      <a href="http://www.theaccountancy.co.uk" style="border:none;"><img src="/adimages/TAP.png" alt="The Accountancy Partnership"/></a><br />
     </div>
     <div class="clear"></div>
   </div>
