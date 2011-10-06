@@ -53,7 +53,8 @@ if ($Graphtype =~ /Net/i) {
 else {
 	$Factor = int($Max / 100);
 }
-
+$Factor = $Factor || 1;
+$MaxFactor = $MaxFactor || 1;
 
 $Curmonth = `date +%m`;
 chomp($Curmonth);
