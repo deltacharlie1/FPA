@@ -42,6 +42,7 @@
       <br />
       <a href="http://www.theaccountancy.co.uk" style="border:none;"><img src="/adimages/TAP.png" alt="The Accountancy Partnership"/></a><br />
     </div>
+    <div id="starbuy" style="position:absolute;left:910px;top:320px;"><img src="/adimages/badges.gif" width="140" height="119"/></div>
     <div class="clear"></div>
   </div>
     <!--- END WHITECONTAINER --->
