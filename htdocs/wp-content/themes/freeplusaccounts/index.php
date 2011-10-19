@@ -4,7 +4,7 @@
     
     <div class="m whitecontainer">
     
-    <h1>Woops!</h1>
+    <h1>Oops!</h1>
 
 	<p>There has been an error, <a href="<?php echo get_site_url(); ?>">click here</a> to go back to the home page.</p>
         

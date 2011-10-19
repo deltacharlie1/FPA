@@ -97,7 +97,7 @@ $COOKIE->{ACCT} = "$Reg_com[0]+$Reg_com[1]";
 
 #  Update the visitcount
 
-$Regs = $dbh->do("update registrations set regvisitcount=regvisitcount + 1 where reg_id=$Reg_com[0]");
+$Regs = $dbh->do("update registrations set reglastlogindate=now(),regvisitcount=regvisitcount + 1 where reg_id=$Reg_com[0]");
 
 #  Update the status of any invoices
 

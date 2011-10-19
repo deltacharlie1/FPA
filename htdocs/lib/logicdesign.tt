@@ -40,9 +40,11 @@
     <div class="rightcol smallcol">
       <div style="padding-left:22px;width:200px;"><iframe src="/amazon.html"width="180" height="150" frameborder="0" scrolling="no"></iframe></div>
       <br />
-      <a href="http://www.theaccountancy.co.uk" style="border:none;"><img src="/adimages/TAP.png" alt="The Accountancy Partnership"/></a><br />
+      <div style="position:relative;">
+        <div id="starbuy" style="position:absolute;left:130px;top:-25px;"><img src="/adimages/badges.gif" width="140" height="119"/></div>
+        <a href="http://www.theaccountancy.co.uk" style="border:none;"><img src="/adimages/TAP.png" alt="The Accountancy Partnership"/></a><br />
+      </div>
     </div>
-    <div id="starbuy" style="position:absolute;left:910px;top:320px;"><img src="/adimages/badges.gif" width="140" height="119"/></div>
     <div class="clear"></div>
   </div>
     <!--- END WHITECONTAINER --->

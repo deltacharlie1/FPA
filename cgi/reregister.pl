@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-$ACCESS_LEVEL = 1;
+$ACCESS_LEVEL = 0;
 
 #  script to display the registration screen tuned to reregistering
 
