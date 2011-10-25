@@ -1,0 +1,24 @@
+<div class="main" id="main">
+<form action="/cgi-bin/fpa/unsubscribe2.pl" method="post" name="form1" id="form1">
+  <div class="status" style="width:600px;line-height:20px;font-weight:normal;"><b>WARNING</b> - You are about to irretrievably delete your whole account.&nbsp;&nbsp;Once deleted you will be unable to ever access that information again - are you sure that you want to continue?</div>
+  <h1>Delete all Existing Data</h1>
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="formtable">
+    <tr>
+      <td><label>Please enter your Password to confirm this action</label></td>
+      <td><span><input name="regpwd" type="password" id="regpwd" title="Password" class="mandatory"/></span></td>
+    </tr>
+  </table>
+</div>
+<div id="sidebar">
+  <ul> 
+    <li>
+      <div>
+          <input type="submit" name="save" id="unsubscribe" value="Unsubscribe"/>
+      </div>
+    </li>
+  </ul>   
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+  </div>
+</div>
+</form>
