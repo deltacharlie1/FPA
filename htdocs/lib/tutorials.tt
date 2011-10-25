@@ -2,7 +2,7 @@
               <tr>
                 <td>
                   <h1>FreePlus Accounts Learning Centre</h1>
-                  <iframe name="videoarea" id="videoarea" src="/lessons/tutorials.htm" width="810" height="548" border="0" frameborder="0" NORESIZE></iframe>
+                  <iframe id="videoarea" src="/lessons/tutorials.htm" width="810" height="548" border="0" frameborder="0" NORESIZE></iframe>
                 </td>
               </tr>
               <tr>

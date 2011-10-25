@@ -8,8 +8,7 @@ $dbh = DBI->connect("DBI:mysql:fpa");
 
 #  Get the registered email address (so that we get the case right)
 
-# $Regs = $dbh->prepare("select regemail,regusername,reg_id from registrations where reglastemail < 1 and date_add(regregdate, interval 14 day) < now() and reg_id in (1,3)");
-$Regs = $dbh->prepare("select regemail,regusername,reg_id from registrations where date_add(regregdate, interval 14 day) < now() and reg_id in (1,3)");
+ $Regs = $dbh->prepare("select regemail,regusername,reg_id from registrations where reglastemail < 1 and date_add(regregdate, interval 14 day) < now()");
 $Regs->execute;
 while (@Reg = $Regs->fetchrow) {
 
@@ -82,16 +81,17 @@ Your score for Q9  -
 
 Your score for Q10  -  
 
+
 11.  Overall, how good do you think FreePlus Accounts is for meeting your accounting needs?
 
 Your score for Q11  -  
 
 
-It would also be helpful to us if you would tell us what type of business oyu are (sole trader, limited company, VAT registered etc) and whether you have any employees.
+It would also be helpful to us if you would tell us what type of business you are (sole trader, limited company, VAT registered etc) and whether you have any employees.
 
 Thank you for the time you have taken to respond to this survey, your help now will help us to help others like you.
 
-Finally, if you like FreePlus Accounts, would you like to write a short testimonial that we can use on are website?
+Finally, if you like FreePlus Accounts, would you like to write a short testimonial in the section below that we can use on our website?
 
 ---------  Testimonial  ----------
 
