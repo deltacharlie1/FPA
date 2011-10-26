@@ -140,7 +140,7 @@ Set-Cookie: fpa-comname=$Company[0]; path=/;
 Set-Cookie: fpa-next_advert=0; path=/;
 Set-Cookie: fpa-last_advert=12; path=/;
 
-OK-$Href
+XqQsOK-$Href
 
 EOD
 }

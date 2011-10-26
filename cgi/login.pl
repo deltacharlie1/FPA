@@ -57,7 +57,7 @@ $(document).ready(function() {
   $("#form1").ajaxForm(options);
 });
 function showResponse(responseText, statusText) {
-	if (/OK/i.test(responseText)) {
+	if (/XqQsOK/i.test(responseText)) {
 		var href = responseText.split("-");
 		location.href = "/cgi-bin/fpa/" + href[1];
 	}

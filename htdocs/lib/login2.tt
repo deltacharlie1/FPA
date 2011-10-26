@@ -2,7 +2,7 @@
 <input type="hidden" name="posns" id="posns" value="[% char1 -%],[% char2 -%],[% char3 -%]">
 <table width="100%" border="0" cellspacing="0" cellpadding="4">
   <tr>
-    <td>&nbsp;</td>
+    <td align="center"><a style="border:none;" href='http://scripts.affiliatefuture.com/AFClick.asp?affiliateID=237742&merchantID=2889&programmeID=8000&mediaID=108898&tracking=&url='><img border='0' src='/adimages/108898.gif'></a></td>
   </tr>
   <tr>
     <td align="center"><div class="h1">Login - Step 2</div></td>

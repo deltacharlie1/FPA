@@ -12,7 +12,7 @@
 [% class = [ "even","odd" ]; debits = 0; credits = 0 -%]
 [%- FOREACH entry IN entries -%]
   [%- ndx = loop.count % 2 -%]
-    <tr class="[%- class.$ndx -%]"[%- IF entry.ibalance != '0.00' -%] onclick="location.href='/cgi-bin/fpa/coa_drill_down.pl?filter=[%- entry.nominalcode -%]';"[%- END -%]>
+    <tr class="[%- class.$ndx -%]"[%- IF entry.balance != '0.00' -%] onclick="location.href='/cgi-bin/fpa/coa_drill_down.pl?filter=[%- entry.nominalcode -%]';"[%- END -%]>
       <td>[%- entry.nominalcode -%]</td>
       <td>[%- entry.coadesc -%]</td>
       <td>[%- entry.coatype -%]</td>
