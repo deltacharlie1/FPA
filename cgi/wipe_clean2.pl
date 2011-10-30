@@ -64,7 +64,7 @@ else {
 	$Sts = $dbh->do("delete from vatreturns where acct_id='$COOKIE->{ACCT}'");
 	$Sts = $dbh->do("delete from vataccruals where acct_id='$COOKIE->{ACCT}'");
 	$Sts = $dbh->do("delete from reminders where acct_id='$COOKIE->{ACCT}'");
-	$Sts = $dbh->do("delete from comments where acct_id='$COOKIE->{ACCT}'");
+#	$Sts = $dbh->do("delete from comments where acct_id='$COOKIE->{ACCT}'");
 	$Sts = $dbh->do("delete from nominals where acct_id='$COOKIE->{ACCT}'");
 	$Sts = $dbh->do("delete from items where acct_id='$COOKIE->{ACCT}'");
 	$Sts = $dbh->do("delete from images where acct_id='$COOKIE->{ACCT}'");

@@ -23,7 +23,7 @@
 		echo ' | ' . sprintf( __( 'Page %s', 'twentyten' ), max( $paged, $page ) );
 
 	?></title>
-    
+<meta name="OMG-Verify-V1" content="253287-44db7190-e4d2-4ffb-89f8-2ba41af49e99" />    
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>" />

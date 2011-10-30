@@ -58,7 +58,7 @@
             </tr>
             <tr>
               <td colspan="2" align="center" ><span><input name="tc" type="checkbox" id="tc" value="checkbox" class="mandatory" title="Terms and Conditions" onclick="document.getElementById('but2').disabled = ! document.getElementById('but2').disabled;"/></span>
-                    Confirm that you have read and accept our <a href="#" onclick="window.open('/termsandconditions.html','legal','scrollbars=1,resizable=1,height=800,width=1000');">Terms &amp; Conditions </a>
+                    Confirm that you have read and accept our <a href="#" onclick="window.open('/https://www.freeplusaccounts.co.uk/terms-conditions','legal','scrollbars=1,resizable=1,height=800,width=1000');">Terms &amp; Conditions </a>
               </td>
             </tr>
             <tr>
