@@ -1,17 +1,19 @@
-<table width="800" cellspacing="9" cellpadding="9" border="0" style="margin:40px;font-size:16px;line-height:20px;">
-  <tr>
-    <td><h1>Account Activated</h1></td>
-  </tr>
-  <tr>
-    <td>Thank you for activating your <b><i>FreePlus Account</i></b>.</td>
-  <tr>
-    <td>When you first log in you will be asked to complete your Company Details and set up any Opening Balances that you may have.&nbsp;&nbsp;Once you have entered those details you should log out and then log back in again so that any changes, such as setting up your VAT details, can take effect.</td>
-  </tr>
-  <tr>
-    <td>We suggest that one of the first things you do is to set up your customer and supplier lists, particularly for those customers to whom you will be sending invoices.&nbsp;&nbsp;Once that is completed you are ready to use <b><i>FreePlus Accounts</i></b>.</td>
-  </tr>
-  <tr>
-    <td style="text-align:center;"><input type="button" name="but1" id="but1" value="Log in to FreePlus Accounts" onclick="location.href='/cgi-bin/fpa/login.pl';"/>
-    </td>
-  </tr>
-</table>
+<div class="leftcol largecol">
+  <table width="800" cellspacing="9" cellpadding="9" border="0" style="margin:40px;font-size:16px;line-height:20px;">
+    <tr>
+      <td><h1>Account Activated</h1></td>
+    </tr>
+    <tr>
+      <td>Thank you for activating your <b><i>FreePlus Account</i></b>.</td>
+    <tr>
+      <td>When you first log in you will be asked to complete your Company Details and set up any Opening Balances that you may have.&nbsp;&nbsp;Once you have entered those details you should log out and then log back in again so that any changes, such as setting up your VAT details, can take effect.</td>
+    </tr>
+    <tr>
+      <td>We suggest that one of the first things you do is to set up your customer and supplier lists, particularly for those customers to whom you will be sending invoices.&nbsp;&nbsp;Once that is completed you are ready to use <b><i>FreePlus Accounts</i></b>.</td>
+    </tr>
+    <tr>
+      <td style="text-align:center;"><input type="button" name="but1" id="but1" value="Log in to FreePlus Accounts" onclick="location.href='/cgi-bin/fpa/login.pl';"/>
+      </td>
+    </tr>
+  </table>
+</div>

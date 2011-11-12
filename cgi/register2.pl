@@ -208,9 +208,9 @@ sub post_email {
 	}
 
 	open(EMAIL,"| /usr/sbin/sendmail -t");
+#To: $Addressees
 	print EMAIL <<EOD;
 From: "FreePlus Registrations" <fparegistrations\@corunna.com>
-To: $Addressees
 bcc: doug.conran\@corunna.com
 Subject: Your FreePlus Accounts Registration was successful!
 Content-Type: multipart/alternative;

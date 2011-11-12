@@ -1,37 +1,54 @@
-            <table width="700" cellpadding="0" cellspacing="0" border="0">
-              <tr>
-                <td>
-                  <h1>FreePlus Accounts Learning Centre</h1>
-                  <iframe id="videoarea" src="/lessons/tutorials.htm" width="810" height="548" border="0" frameborder="0" NORESIZE></iframe>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                 <h2>Available Tutorials</h2>
-Please note that these tutorials refer to version 1 of FreePlus Accounts.&nbsp;&nbsp;We have made a number of enhancements to the latest version, including changes to the colour scheme and other visual aspects.&nbsp;&nbsp;The functionality, however, is still, substantially, the same.
-                   <table width="100%" cellpadding="0" cellspacing="12" border="0" style="font-size:14px;">
-                     <tr>
-                       <td width="15%"><b><a href="/lessons/introduction.html" target="videoarea">Introduction</a></b></td>
-                       <td width="35%">An introduction to FreePlus Accounts</td>
-                       <td width="15%"><b><a href="/lessons/registration.html" target="videoarea">Registration</a></b></td>
-                       <td width="35%">How to register for a FreePlus Account</td>
-                     <tr>
-                     <tr>
-                       <td width="15%"><b><a href="/lessons/setup.html" target="videoarea">Initial Setup</a></b></td>
-                       <td width="35%">Setting up your Company Details</td>
-                       <td width="15%"><b><a href="/lessons/newcustomer.html" target="videoarea">Add New Customer</a></b></td>
-                       <td width="35%">How to add a new customer to whom you wish to send multiple invoices</td>
-                     <tr>
-                     <tr>
-                       <td width="15%"><b><a href="/lessons/invoice1.html" target="videoarea">Raising an Invoice (1)</a></b></td>
-                       <td width="35%">How to raise and invoice to an existing customer</td>
-                       <td width="15%"><b>Raising an Invoice (2)</b></td>
-                       <td width="35%">How to raise an invoice to a 'one-off' customer</td>
-                     <tr>
-                   </table>
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-      </table>
+          <h1>FreePlus Accounts Learning Centre</h1>
+          <iframe id="videoarea" src="/lessons/Introduction.html" width="640" height="548" border="0" frameborder="0" NORESIZE></iframe>
+         <ul>
+           <li>These tutorials are best viewed in the order that they are listed.</li>
+           <li>We will be adding further tutorials in the coming weeks, so keep returning to see what's new!</li>
+         </ul>
+         <h2>Available Tutorials</h2>
+         <table width="700" cellpadding="0" cellspacing="0" border="0">
+           <tr>
+             <td><b><a href="/lessons/Intro.html" target="videoarea">Introduction</a></b></td>
+             <td width="10%">(1.53)</td>
+             <td>An introduction to FreePlus Accounts</td>
+           </tr>
+           <tr>
+             <td><b><a href="/lessons/Registration.html" target="videoarea">Registration</a></b></td>
+             <td width="10%">(2.03)</td>
+             <td>How to register for a FreePlus Account</td>
+           </tr>
+           <tr>
+             <td><b><a href="/lessons/Login.html" target="videoarea">Logging In</a></b></td>
+             <td width="10%">(1.15)</td>
+             <td>How to log in to (and out of) FreePlus Accounts</td>
+           </tr>
+           <tr>
+             <td><b><a href="/lessons/Initial_Setup.html" target="videoarea">Initial Setup</a></b></td>
+             <td width="10%">(2.38)</td>
+             <td>Initial Setup of your Company details</td>
+           </tr>
+           <tr>
+             <td><b><a href="/lessons/New_Customer.html" target="videoarea">Adding a New customer</a></b></td>
+             <td width="10%">(1.44)</td>
+             <td>How to add details of a customer to whom many invoices will be sent.</td>
+           </tr>
+           <tr>
+             <td><b><a href="/lessons/Purchase.html" target="videoarea">Recording a Purchase</a></b></td>
+             <td width="10%">(1.41)</td>
+             <td>How to record a purchase</td>
+           </tr>
+           <tr>
+             <td><b><a href="/lessons/Raise_Invoice.html" target="videoarea">Raising an Invoice</a></b></td>
+             <td width="10%">(4.15)</td>
+             <td>How to raise and email an invoice</td>
+           </tr>
+           <tr>
+             <td><b><a href="/lessons/Cash_Sale.html" target="videoarea">Recording a Cash Sale</a></b></td>
+             <td width="10%">(1.48)</td>
+             <td>How to record a cash sale</td>
+           </tr>
+           <tr>
+             <td><b><a href="/lessons/Payment.html" target="videoarea">Receive a Payment</a></b></td>
+             <td width="10%">(0.55)</td>
+             <td>How to record payment received for an invoice</td>
+           </tr>
+         </table>

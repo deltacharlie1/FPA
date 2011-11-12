@@ -15,7 +15,7 @@
     </tr>
     <tr>
       <td style="vertical-align:top;"><label>Company Address</label></td>
-      <td><div style="width:260px;"><textarea title="Company Address" name="comaddress" cols="30" rows="4" wrap="physical" id="comaddress" class="mandatory"/>[%- client.comaddress -%]</textarea></div></td>
+      <td nowrap="nowrap"><div style="width:260px;"><textarea title="Company Address" name="comaddress" cols="30" rows="4" wrap="physical" id="comaddress" class="mandatory"/>[%- client.comaddress -%]</textarea></div></td>
     </tr>
     <tr>
       <td><label>Post Code</label></td>

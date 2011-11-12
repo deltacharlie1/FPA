@@ -10,7 +10,7 @@ $Posts =  `php /usr/local/git/fpa/cgi/get_posts.php`;
 $Posts =~ s/https/http/g;
 
 $Vars = {
-	title => 'Register',
+	title => 'Register - DougPlus',
 	focus => 'email',
 	posts => $Posts,
 	javascript => '<script type="text/javascript" src="/js/jquery-form.js"></script> 
