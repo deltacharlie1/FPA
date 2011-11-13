@@ -1,54 +1,124 @@
           <h1>FreePlus Accounts Learning Centre</h1>
-          <iframe id="videoarea" src="/lessons/Introduction.html" width="640" height="548" border="0" frameborder="0" NORESIZE></iframe>
+          <div id="videoarea" style="width:640px;height:548px;">
+          <h3>Introduction</h3>
+            <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="640" height="498" id="csSWF">
+                <param name="movie" value="/lessons/Intro/Intro_controller.swf" />
+                <param name="quality" value="best" />
+                <param name="bgcolor" value="#ffffff" />
+                <param name="allowfullscreen" value="true" />
+                <param name="scale" value="showall" />
+                <param name="allowscriptaccess" value="always" />
+                <param name="flashvars" value="autostart=false&thumb=/lessons/Intro/FirstFrame.png&thumbscale=100&color=0xffffff,0xffffff" />
+                <!--[if !IE]>-->
+                <object type="application/x-shockwave-flash" data="/lessons/Intro/Intro_controller.swf" width="640" height="498">
+                    <param name="quality" value="best" />
+                    <param name="bgcolor" value="#ffffff" />
+                    <param name="allowfullscreen" value="true" />
+                    <param name="scale" value="showall" />
+                    <param name="allowscriptaccess" value="always" />
+                    <param name="flashvars" value="autostart=false&thumb=/lessons/Intro/FirstFrame.png&thumbscale=100&color=0xffffff,0xffffff" />
+                <!--<![endif]-->
+                    <div id="noUpdate">
+                        <p>The Camtasia Studio video content presented here requires a more recent version of the Adobe Flash Player. If you are using a browser with JavaScript disabled please enable it now. Otherwise, please update your version of the free Flash Player by <a href="http://www.adobe.com/go/getflashplayer">downloading here</a>.</p>
+                    </div>
+                <!--[if !IE]>-->
+                </object>
+                <!--<![endif]-->
+            </object>
+          </div>
          <ul>
            <li>These tutorials are best viewed in the order that they are listed.</li>
            <li>We will be adding further tutorials in the coming weeks, so keep returning to see what's new!</li>
          </ul>
-         <h2>Available Tutorials</h2>
+         <h3>Available Tutorials</h3>
          <table width="700" cellpadding="0" cellspacing="0" border="0">
            <tr>
-             <td><b><a href="/lessons/Intro.html" target="videoarea">Introduction</a></b></td>
+             <td><b><a href="#" onclick="show_it(1);">Introduction</a></b></td>
              <td width="10%">(1.53)</td>
              <td>An introduction to FreePlus Accounts</td>
            </tr>
            <tr>
-             <td><b><a href="/lessons/Registration.html" target="videoarea">Registration</a></b></td>
+             <td><b><a href="#" onclick="show_it(2);">Registration</a></b></td>
              <td width="10%">(2.03)</td>
              <td>How to register for a FreePlus Account</td>
            </tr>
            <tr>
-             <td><b><a href="/lessons/Login.html" target="videoarea">Logging In</a></b></td>
+             <td><b><a href="#" onclick="show_it(3);">Logging In</a></b></td>
              <td width="10%">(1.15)</td>
              <td>How to log in to (and out of) FreePlus Accounts</td>
            </tr>
            <tr>
-             <td><b><a href="/lessons/Initial_Setup.html" target="videoarea">Initial Setup</a></b></td>
+             <td><b><a href="#" onclick="show_it(4);">Initial Setup</a></b></td>
              <td width="10%">(2.38)</td>
              <td>Initial Setup of your Company details</td>
            </tr>
            <tr>
-             <td><b><a href="/lessons/New_Customer.html" target="videoarea">Adding a New customer</a></b></td>
+             <td><b><a href="#" onclick="show_it(5);">Adding a New customer</a></b></td>
              <td width="10%">(1.44)</td>
              <td>How to add details of a customer to whom many invoices will be sent.</td>
            </tr>
            <tr>
-             <td><b><a href="/lessons/Purchase.html" target="videoarea">Recording a Purchase</a></b></td>
+             <td><b><a href="#" onclick="show_it(6);">Recording a Purchase</a></b></td>
              <td width="10%">(1.41)</td>
              <td>How to record a purchase</td>
            </tr>
            <tr>
-             <td><b><a href="/lessons/Raise_Invoice.html" target="videoarea">Raising an Invoice</a></b></td>
+             <td><b><a href="#" onclick="show_it(7);">Raising an Invoice</a></b></td>
              <td width="10%">(4.15)</td>
              <td>How to raise and email an invoice</td>
            </tr>
            <tr>
-             <td><b><a href="/lessons/Cash_Sale.html" target="videoarea">Recording a Cash Sale</a></b></td>
+             <td><b><a href="#" onclick="show_it(8);">Recording a Cash Sale</a></b></td>
              <td width="10%">(1.48)</td>
              <td>How to record a cash sale</td>
            </tr>
            <tr>
-             <td><b><a href="/lessons/Payment.html" target="videoarea">Receive a Payment</a></b></td>
+             <td><b><a href="#" onclick="show_it(9);">Receive a Payment</a></b></td>
              <td width="10%">(0.55)</td>
              <td>How to record payment received for an invoice</td>
            </tr>
          </table>
+         <script type="text/javascript">
+function show_it(lesson) {
+  var lsn = "";
+  switch (lesson) {
+    case 1:
+      title = "Introduction";
+      lsn = "Intro";
+      break;
+    case 2:
+      title = "Registration";
+      lsn = "registration";
+      break;
+    case 3:
+      title = "Logging In";
+      lsn = "log1";
+      break;
+    case 4:
+      title = "Initial Setup";
+      lsn = "setup";
+      break;
+    case 5:
+      title = "Add New Customer";
+      lsn = "customer1";
+      break;
+    case 6:
+      title = "Recording a Purchase";
+      lsn = "purchase";
+      break;
+    case 7:
+      title = "Raising an Invoice";
+      lsn = "invoice1";
+      break;
+    case 8:
+      title = "Recording a Cash Sale";
+      lsn = "cashsale";
+      break;
+    case 9:
+      title = "Receiving a Payment";
+      lsn = "pay1";
+      break;
+}
+      document.getElementById("videoarea").innerHTML = '<h3>' + title + '</h3> <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="640" height="498" id="csSWF"> <param name="movie" value="/lessons/' + lsn + '/' + lsn + '_controller.swf" /> <param name="quality" value="best" /> <param name="bgcolor" value="#ffffff" /> <param name="allowfullscreen" value="true" /> <param name="scale" value="showall" /> <param name="allowscriptaccess" value="always" /> <param name="flashvars" value="autostart=true&thumb=/lessons/' + lsn + '/FirstFrame.png&thumbscale=100&color=0xffffff,0xffffff" /> <!--[if !IE]>--> <object type="application/x-shockwave-flash" data="/lessons/' + lsn + '/' + lsn + '_controller.swf" width="640" height="498"> <param name="quality" value="best" /> <param name="bgcolor" value="#ffffff" /> <param name="allowfullscreen" value="true" /> <param name="scale" value="showall" /> <param name="allowscriptaccess" value="always" /> <param name="flashvars" value="autostart=true&thumb=/lessons/' + lsn + '/FirstFrame.png&thumbscale=100&color=0xffffff,0xffffff" /> <!--<![endif]--><div id="noUpdate"> <p>The Camtasia Studio video content presented here requires a more recent version of the Adobe Flash Player. If you are using a browser with JavaScript disabled please enable it now. Otherwise, please update your version of the free Flash Player by <a href="http://www.adobe.com/go/getflashplayer">downloading here</a>.</p> </div> <!--[if !IE]>--> </object> <!--<![endif]--> </object>';
+}
+</script>

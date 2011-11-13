@@ -86,7 +86,7 @@ input[type=select] { background-color:#FFF; border:1px solid #CCC; padding:4px; 
 }
 .m.header #nav {
 	float: right;
-	clear: right;
+/*	clear: right; */
 	width: 750px;
 	padding: 15px;
 }
