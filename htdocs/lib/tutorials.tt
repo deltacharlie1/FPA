@@ -26,11 +26,12 @@
                 <!--<![endif]-->
             </object>
           </div>
+         <br/>
          <ul>
            <li>These tutorials are best viewed in the order that they are listed.</li>
            <li>We will be adding further tutorials in the coming weeks, so keep returning to see what's new!</li>
          </ul>
-         <h3>Available Tutorials</h3>
+         <h2>Available Tutorials</h2>
          <table width="700" cellpadding="0" cellspacing="0" border="0">
            <tr>
              <td><b><a href="#" onclick="show_it(1);">Introduction</a></b></td>
@@ -119,6 +120,6 @@ function show_it(lesson) {
       lsn = "pay1";
       break;
 }
-      document.getElementById("videoarea").innerHTML = '<h3>' + title + '</h3> <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="640" height="498" id="csSWF"> <param name="movie" value="/lessons/' + lsn + '/' + lsn + '_controller.swf" /> <param name="quality" value="best" /> <param name="bgcolor" value="#ffffff" /> <param name="allowfullscreen" value="true" /> <param name="scale" value="showall" /> <param name="allowscriptaccess" value="always" /> <param name="flashvars" value="autostart=true&thumb=/lessons/' + lsn + '/FirstFrame.png&thumbscale=100&color=0xffffff,0xffffff" /> <!--[if !IE]>--> <object type="application/x-shockwave-flash" data="/lessons/' + lsn + '/' + lsn + '_controller.swf" width="640" height="498"> <param name="quality" value="best" /> <param name="bgcolor" value="#ffffff" /> <param name="allowfullscreen" value="true" /> <param name="scale" value="showall" /> <param name="allowscriptaccess" value="always" /> <param name="flashvars" value="autostart=true&thumb=/lessons/' + lsn + '/FirstFrame.png&thumbscale=100&color=0xffffff,0xffffff" /> <!--<![endif]--><div id="noUpdate"> <p>The Camtasia Studio video content presented here requires a more recent version of the Adobe Flash Player. If you are using a browser with JavaScript disabled please enable it now. Otherwise, please update your version of the free Flash Player by <a href="http://www.adobe.com/go/getflashplayer">downloading here</a>.</p> </div> <!--[if !IE]>--> </object> <!--<![endif]--> </object>';
+      document.getElementById("videoarea").innerHTML = '<h3>' + title + '</h3> <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="640" height="498" id="csSWF"> <param name="movie" value="/lessons/' + lsn + '/' + lsn + '_controller.swf" /> <param name="quality" value="best" /> <param name="bgcolor" value="#ffffff" /> <param name="allowfullscreen" value="true" /> <param name="scale" value="showall" /> <param name="allowscriptaccess" value="always" /> <param name="flashvars" value="autostart=true&thumb=/lessons/' + lsn + '/FirstFrame.png&thumbscale=100&color=0xffffff,0xffffff" /> <!--[if !IE]>--> <object type="application/x-shockwave-flash" data="/lessons/' + lsn + '/' + lsn + '_controller.swf" width="640" height="498"> <param name="quality" value="best" /> <param name="bgcolor" value="#ffffff" /> <param name="allowfullscreen" value="true" /> <param name="scale" value="showall" /> <param name="allowscriptaccess" value="always" /> <param name="flashvars" value="autostart=true&thumb=/lessons/' + lsn + '/FirstFrame.png&thumbscale=100&color=0xffffff,0xffffff" /> <!--<![endif]--> <!--[if !IE]>--> </object> <!--<![endif]--> </object>';
 }
 </script>

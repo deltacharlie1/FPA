@@ -53,31 +53,19 @@
 		$("#ticker ul").css("visibility","visible");
 	});
 </script>
-
-
 </head>
-
 <body>
-
-    <div class="top-green"></div>
-        
-        <div class="m header">
-        
-            <a href="<?php echo get_site_url(); ?>" class="logo" title="Free Plus Accounts"><img src="<?php bloginfo('template_directory'); ?>/images/logo.jpg" alt="Free Plus Accounts" /></a>
-<div id="freeplustitle"><img src="<?php bloginfo('template_directory'); ?>/images/freeplustitle.png" alt="Free Plus Accounts" /></div>
-
-          <div class="account listfix">
-                    <a href="https://www.freeplusaccounts.co.uk/cgi-bin/fpa/register.pl"><div class="register"></div></a>
-                    <div class="lorr">or</div>
-                    <a href="https://www.freeplusaccounts.co.uk/cgi-bin/fpa/login.pl" style="text-decoration: none;"><div class="login">LOGIN</div></a>
-              </div>
-            
-          <div class="listfix" id="nav">
-                
-				<?php wp_nav_menu( array( 'container_class' => 'menu-header', 'theme_location' => 'primary' ) ); ?>
-                        
-            </div>
-            
-            <div class="clear"></div>
-                    
+  <div class="top-green"></div>
+  <div class="m header">
+    <a href="<?php echo get_site_url(); ?>" class="logo" title="Free Plus Accounts"><img src="<?php bloginfo('template_directory'); ?>/images/logo.jpg" alt="Free Plus Accounts" /></a>
+    <div id="freeplustitle"><img src="<?php bloginfo('template_directory'); ?>/images/freeplustitle.png" alt="Free Plus Accounts" /></div>
+    <div class="account listfix">
+      <a href="https://www.freeplusaccounts.co.uk/cgi-bin/fpa/register.pl"><div class="register"></div></a>
+      <div class="lorr">or</div>
+      <a href="https://www.freeplusaccounts.co.uk/cgi-bin/fpa/login.pl" style="text-decoration: none;"><div class="login">LOGIN</div></a>
     </div>
+    <div class="listfix" id="nav">
+      <?php wp_nav_menu( array( 'container_class' => 'menu-header', 'theme_location' => 'primary' ) ); ?>
+    </div>
+    <div class="clear"></div>
+  </div>
