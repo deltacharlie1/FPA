@@ -17,7 +17,7 @@ unless ($COOKIE->{NO_ADS}) {
 }
 
 
-$Txns = $dbh->prepare("select date_format(txndate,'%d-%b-%y') as tdate,concat(txncusname,' (',txnremarks,')') as txncusname,txnamount from transactions where txnmethod='1200' and acct_id=? order by txncreated desc limit 0,15");
+$Txns = $dbh->prepare("select date_format(txndate,'%d-%b-%y') as tdate,concat(txncusname,' (',txnremarks,')') as txncusname,txnamount from transactions where txnmethod in ('1200','1300') and acct_id=? order by txncreated desc limit 0,15");
 $Txns->execute("$COOKIE->{ACCT}");
 
 $Cheques = $dbh->prepare("select id,txncusname,txnremarks,txnamount,date_format(txndate,'%d-%b-%y') as txndte from transactions where acct_id='$COOKIE->{ACCT}' and txnmethod='1310' and txnbanked='' order by txndate");

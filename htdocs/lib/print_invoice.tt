@@ -66,6 +66,12 @@
         <input type="submit" name="email" id="email" value="Email Invoice"/>
       </div>
     </li>
+[% ELSIF invoice.invinvoiceno.match('^QT\d+$') -%]
+    <li>
+      <div>
+        <input type="submit" name="email" id="email" value="Email Quotation"/>
+      </div>
+    </li>
 [%- END -%]
     <li>
       <div>

@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-#  script to test template toolkit
+#  Script to produce the raw invoice and transaction stats
 
 $ACCESS_LEVEL = 1;
 
@@ -9,7 +9,7 @@ $COOKIE = &checkid($ENV{HTTP_COOKIE},$ACCESS_LEVEL);
 
 use DBI;
 
-$dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
+$dbh = DBI->connect("DBI:mysql:$COOKI->{DB}");
 $Acct_id = $COOKIE->{ACCT};
 
 @Month = ('X','J','F','M','A','M','J','J','A','S','O','N','D');
@@ -25,7 +25,7 @@ $Sales_found = "";
 $Txns_found = "";
 $Cash_found = "";
 
-$Acct_id = $COOKIE->{ACCT};
+$Acct_id = "$Company->{reg_id}+$Company->{id}";
 my @invData;
 my @txnData;
 my @netData;
@@ -47,6 +47,7 @@ $hSales = $Sales->fetchall_arrayref({});
 foreach $Sale ( @$hSales ) {
 	$invData[$Sale->{printdate}] .= "|$Sale->{tot}";
 	if ($Sale->{tot} > 0) {
+print "$Acct_id - $Sale->{tot}\n";
 		$Sales_found = "1";
 	}
 }
@@ -141,13 +142,13 @@ foreach $Indx ( 1..12 ) {
 
 #  write the datato the company record
 
+print "$Acct_id - $Sales_found\n";
+
 if ($Sales_found) { $invData = join(":",@invData); }
 if ($Txns_found) { $txnData = join(":",@txnData); }
 if ($Cash_found) { $netData = join(":",@netData); }
 
-($Reg_id,$Com_id) = split(/\+/,$COOKIE->{ACCT});
-
-$Sts = $dbh->do("update companies set cominvstats='$invData',comtxnstats='$txnData',comnetstats='$netData' where reg_id=$Reg_id and id=$Com_id");
+$Sts = $dbh->do("update companies set cominvstats='$invData',comtxnstats='$txnData',comnetstats='$netData' where reg_id=$Company->{reg_id} and id=$Company->{id}");
 
 undef @invData;
 undef @txnData;
@@ -158,13 +159,4 @@ $netData = "";
 
 $Noms1->finish;
 $dbh->disconnect;
-
-unlink "/projects/tmp/$COOKIE->{COOKIE}";
-
-print<<EOD;
-Content-Type: text/html
-Status: 301
-Location: /cgi-bin/fpa/login.pl
-
-EOD
 exit;

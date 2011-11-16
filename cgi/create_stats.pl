@@ -19,6 +19,10 @@ $Companies = $dbh->prepare("select reg_id,id from companies");
 $Companies->execute;
 while ($Company = $Companies->fetchrow_hashref) {
 
+	$Sales_found = "";
+	$Txns_found = "";
+	$Cash_found = "";
+
 	$Acct_id = "$Company->{reg_id}+$Company->{id}";
 	my @invData;
 	my @txnData;
@@ -40,6 +44,10 @@ while ($Company = $Companies->fetchrow_hashref) {
 	$hSales = $Sales->fetchall_arrayref({});
 	foreach $Sale ( @$hSales ) {
 		$invData[$Sale->{printdate}] .= "|$Sale->{tot}";
+		if ($Sale->{tot} > 0) {
+print "$Acct_id - $Sale->{tot}\n";
+			$Sales_found = "1";
+		}
 	}
 
 #  Now check to see if any months have been missed
@@ -57,6 +65,9 @@ while ($Company = $Companies->fetchrow_hashref) {
 	foreach $Purchase ( @$hPurchases ) {
 		$Purchase->{tot} = 0-$Purchase->{tot};
 		$invData[$Purchase->{printdate}] .= "|$Purchase->{tot}";
+		if ($Purchase->{tot} > 0) {
+			$Sales_found = "1";
+		}
 	}
 
 #  Now check to see if any months have been missed
@@ -75,6 +86,9 @@ while ($Company = $Companies->fetchrow_hashref) {
 	$hTxnsin = $Txnsin->fetchall_arrayref({});
 	foreach $Txnin ( @$hTxnsin ) {
 		$txnData[$Txnin->{printdate}] .= "|$Txnin->{tot}";
+		if ($Txnin->{tot} > 0) {
+			$Txns_found = "1";
+		}
 	}
 
 #  Now check to see if any months have been missed
@@ -92,6 +106,9 @@ while ($Company = $Companies->fetchrow_hashref) {
 	foreach $Txnout ( @$hTxnsout ) {
 		$Txnout->{tot} = 0-$Txnout->{tot};
 		$txnData[$Txnout->{printdate}] .= "|$Txnout->{tot}";
+		if ($Txnout->{tot} > 0) {
+			$Txns_found = "1";
+		}
 	}
 
 #  Now check to see if any months have been missed
@@ -111,6 +128,9 @@ while ($Company = $Companies->fetchrow_hashref) {
 	$hNoms = $Noms2->fetchall_arrayref({});
 	foreach $Nom ( @$hNoms ) {
 		$netData[$Nom->{printdate}] .= "|$Nom->{tot}";
+		if ($Nom->{tot} > 0) {
+			$Cash_found = "1";
+		}
 	}
 	foreach $Indx ( 1..12 ) {
 		unless ($netData[$Indx] =~ /\|/) {
@@ -119,11 +139,22 @@ while ($Company = $Companies->fetchrow_hashref) {
 	}
 
 #  write the datato the company record
-	$invData = join(":",@invData);
-	$txnData = join(":",@txnData);
-	$netData = join(":",@netData);
+
+print "$Acct_id - $Sales_found\n";
+
+	if ($Sales_found) { $invData = join(":",@invData); }
+	if ($Txns_found) { $txnData = join(":",@txnData); }
+	if ($Cash_found) { $netData = join(":",@netData); }
 
 	$Sts = $dbh->do("update companies set cominvstats='$invData',comtxnstats='$txnData',comnetstats='$netData' where reg_id=$Company->{reg_id} and id=$Company->{id}");
+
+	undef @invData;
+	undef @txnData;
+	undef @netData;
+	$invData = "";
+	$txnData = "";
+	$netData = "";
+
 }
 $Noms1->finish;
 $Companies->finish;
