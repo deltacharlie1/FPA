@@ -90,7 +90,7 @@ $Cookie = $SHA1_hash->hexdigest;
 
 $IP_Addr = $ENV{'REMOTE_ADDR'};
 open(COOKIE,">/projects/tmp/$Cookie");
-print COOKIE "IP\t$IP_Addr\nACCT\t$Reg_com[0]+$Reg_com[1]\nBACCT\t$Reg_com[0]+$Reg_com[1]\nID\t$COOKIE->{ID}\nPWD\t$COOKIE->{PWD}\nPLAN\t$COOKIE->{PLAN}\nVAT\t$Company[2]\nYEAREND\t$Company[4]\nUSER\t$User\nEXP\t$Company[3]\nFRS\t$Company[5]\nMIN\t$Company[6]\nMENU\t$COOKIE->{MENU}\nTAG\t$Company[0]\nBTAG\t$Company[0]\nACCESS\t$ACCESS\nNO_ADS\t$Company[12]\nREP_INVS\t$Company[13]\nSTMTS\t$Company[14]\nUPLDS\t$Company[15]\nPT_LOGO\t$Company[16]\nHMRC\t$Company[17]\nSUPPT\t$Company[18]\nCOOKIE\t$Cookie\nDB\tfpa\nADDU\t$Company[19]\n";
+print COOKIE "IP\t$IP_Addr\nACCT\t$Reg_com[0]+$Reg_com[1]\nBACCT\t$Reg_com[0]+$Reg_com[1]\nID\t$COOKIE->{ID}\nPWD\t$COOKIE->{PWD}\nPLAN\t$COOKIE->{PLAN}\nVAT\t$Company[2]\nYEAREND\t$Company[4]\nUSER\t$User\nEXP\t$Company[3]\nFRS\t$Company[5]\nMIN\t$Company[6]\nMENU\t$COOKIE->{MENU}\nTAG\t$Company[0]\nBTAG\t$Company[0]\nACCESS\t$ACCESS\nNO_ADS\t$Company[12]\nREP_INVS\t$Company[13]\nSTMTS\t$Company[14]\nUPLDS\t$Company[15]\nPT_LOGO\t$Company[16]\nHMRC\t$Company[17]\nSUPPT\t$Company[18]\nCOOKIE\t$Cookie\nDB\tfpa\nADDU\t$Company[19]\nPREFS\t$COOKIE->{PREFS}\n";
 
 close(COOKIE);
 $COOKIE->{ACCT} = "$Reg_com[0]+$Reg_com[1]";

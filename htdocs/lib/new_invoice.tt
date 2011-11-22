@@ -101,7 +101,7 @@
     </tr>
     <tr>
       <td><label>Paid in Full?</label></td>
-      <td><input type="radio" name="invfpflag" id="fpn" value="N" checked="checked" onclick="$('#fp_type').css('visibility','hidden');"/>&nbsp;No&nbsp;&nbsp;<input type="radio" name="invfpflag" id="fpy" value="Y" onclick="$('#fp_type').css('visibility','visible');"/>&nbsp;&nbsp;Yes<span id="fp_type" style="visibility:hidden;">&nbsp;&nbsp;
+      <td><input type="radio" name="invfpflag" id="fpn" value="N"[%- IF cookie.PREFS.substr(2,1) == 'N' -%] checked="checked"[%- END -%] onclick="$('#fp_type').css('visibility','hidden');"/>&nbsp;No&nbsp;&nbsp;<input type="radio" name="invfpflag" id="fpy" value="Y"[%- IF cookie.PREFS.substr(2,1) == 'Y' -%] checked="checked"[%- END -%] onclick="$('#fp_type').css('visibility','visible');"/>&nbsp;&nbsp;Yes<span id="fp_type" style="visibility:hidden;">&nbsp;&nbsp;
         <select name="txnmethod" id="pay_method" size="1">
           <option value="1300" selected="selected">Cash</option>
           <option value="1310">Cheque</option>
@@ -147,10 +147,12 @@
                   </td>
 [% END -%]
                 </tr>
+[% IF cookie.PREFS.substr(3,1) == 'Y' -%]
                 <tr>
                   <td><label>Category</label</td>
                   <td colspan="2"><input type="text" name="item_cat" id="item_cat" title="Enter a code or short description to categorise this item" size="20"/>
                 </tr>
+[% END -%]
               </table>
             </td>
             <td>

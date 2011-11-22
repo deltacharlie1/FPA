@@ -1,0 +1,42 @@
+<div class="main" id="main">
+<form action="/cgi-bin/fpa/preferences2.pl" method="post" name="form1" id="form1">
+<h1>Preferences</h1>
+<table width="400" border="0" cellpadding="0" cellspacing="0" class="formtable">
+  <tr>
+    <td colspan="2"><h3>Log In</h3></td>
+  </tr>
+  <tr>
+    <td><label>Enablee Memorable Word Check?</label></td>
+    <td><span><input name="memwordcheck" type="radio" id="memwordcheckY" title="Enable Memorable Word" value="Y"[%- IF reg.regprefs.substr(0,1) == 'Y' -%] checked="checked"[%- END -%]/> Yes&nbsp;&nbsp;<input name="memwordcheck" type="radio" id="memwordcheckN" title="Disable Memorable Word" value="N"[%- IF reg.regprefs.substr(0,1) == 'N' -%] checked="checked"[%- END -%]/> No</span></td>
+  </tr>
+  <tr>
+    <td><label>Enable Login Timeout?</label></td>
+    <td><span><input name="timeout" type="radio" id="timeoutY" title="Enable Login Timeout" value="Y"[%- IF reg.regprefs.substr(1,1) == 'Y' -%] checked="checked"[%- END -%]/> Yes&nbsp;&nbsp;<input name="timeout" type="radio" id="timeoutN" title="Disable Log In Timeout" value="N"[%- IF reg.regprefs.substr(1,1) == 'N' -%] checked="checked"[%- END -%]/> No</span></td>
+  </tr>
+  <tr>
+    <td colspan="2"><h3>Invoices</h3></td>
+  </tr>
+  <tr>
+    <td><label>Default to Paid in Full?</label></td>
+    <td><span><input name="invpaid" type="radio" id="invpaidY" title="Default to Paid in Full" value="Y"[%- IF reg.regprefs.substr(2,1) == 'Y' -%] checked="checked"[%- END -%]/> Yes&nbsp;&nbsp;<input name="invpaid" type="radio" id="invpaidN" value="N"[%- IF reg.regprefs.substr(2,1) == 'N' -%] checked="checked"[%- END -%]/> No</span></td>
+  </tr>
+  <tr>
+    <td><label>Display Category field?</label></td>
+    <td><span><input name="invcat" type="radio" id="invcatY" title="Display Category field" value="Y"[%- IF reg.regprefs.substr(3,1) == 'Y' -%] checked="checked"[%- END -%]/> Yes&nbsp;&nbsp;<input name="invcat" type="radio" id="invcatN" title="Hide Category Field" value="N"[%- IF reg.regprefs.substr(3,1) == 'N' -%] checked="checked"[%- END -%]/> No</span></td>
+  </tr>
+</table>
+</div>
+<div id="sidebar">
+  <ul>
+    <li>
+      <div>
+        <input type="submit" name="save" id="save" value="Update Preferences"/>
+      </div>
+    </li>
+  </ul>
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+  </div>
+</div>
+</form>
+</div>

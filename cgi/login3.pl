@@ -34,7 +34,7 @@ $Cookie = $Cookie{'fpa-uid'};
 
 use DBI;
 $dbh = DBI->connect("DBI:mysql:fpa");
-$Regs = $dbh->prepare("select lower(regmemword),reg_id,regemail,regpwd,regmembership,regdefaultmenu,regmenutype,regoptin from registrations where regemail='$Cookie'");
+$Regs = $dbh->prepare("select lower(regmemword),reg_id,regemail,regpwd,regmembership,regdefaultmenu,regmenutype,regoptin,regprefs from registrations where regemail='$Cookie'");
 $Regs->execute;
 @Reg = $Regs->fetchrow;
 $Regs->finish;
@@ -43,7 +43,7 @@ $Regs->finish;
 
 @Posn = split(/\,/,$FORM{posns});
 
-unless ($Reg[0] && substr($Reg[0],$Posn[0] - 1,1) eq $FORM{first} && substr($Reg[0],$Posn[1] - 1,1) eq $FORM{second} && substr($Reg[0],$Posn[2] - 1,1) eq $FORM{third}) {
+unless (substr($Reg[8],0,1) =~ /N/i || ($Reg[0] && substr($Reg[0],$Posn[0] - 1,1) eq $FORM{first} && substr($Reg[0],$Posn[1] - 1,1) eq $FORM{second} && substr($Reg[0],$Posn[2] - 1,1) eq $FORM{third})) {
 
 	print<<EOD;
 Content-Type: text/plain
@@ -78,7 +78,7 @@ else {
 
 	$IP_Addr = $ENV{'REMOTE_ADDR'};
 	open(COOKIE,">/projects/tmp/$Cookie");
-	print COOKIE "IP\t$IP_Addr\nREG\t$Reg[1]\nID\t$Reg[2]\nPWD\t$Reg[3]\nPLAN\t$Reg[4]\nMENU\t$Reg[6]\n";
+	print COOKIE "IP\t$IP_Addr\nREG\t$Reg[1]\nID\t$Reg[2]\nPWD\t$Reg[3]\nPLAN\t$Reg[4]\nMENU\t$Reg[6]\nPREFS\t$Reg[8]\n";
 	close(COOKIE);
 
 	if ($Reg_coms->rows > 1) {

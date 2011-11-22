@@ -23,8 +23,10 @@ foreach $pair (@pairs) {
 use DBI;
 $dbh = DBI->connect("DBI:mysql:fpa");
 
-$Users = $dbh->prepare("select reg_id,regmemword,regmembership,regactive,date_format(date_add(now(), interval 6 month),'%a, %d %b %Y %k:%i:%s GMT'),date_add(now(), interval 6 month),regvisitcount from registrations where regemail='$FORM{email}' and regpwd=password('$FORM{pwd}')");
+$Users = $dbh->prepare("select reg_id,regmemword,regmembership,regactive,date_format(date_add(now(), interval 6 month),'%a, %d %b %Y %k:%i:%s GMT'),date_add(now(), interval 6 month),regvisitcount,regprefs from registrations where regemail='$FORM{email}' and regpwd=password('$FORM{pwd}')");
 $Users->execute;
+@User = $Users->fetchrow;
+
 if ($Users->rows < 1) {
 	print<<EOD;
 Content-Type: text/html
@@ -33,11 +35,15 @@ You have entered an incorrect password, please try again.  If you continue to ha
 
 EOD
 }
+elsif (substr($User[7],0,1) =~ /N/i) {
+	print<<EOD;
+Content-Type: text/plain
+Status: 301
+Location: /cgi-bin/fpa/login3.pl
+
+EOD
+}
 else {
-
-#  Get the user details
-
-	@User = $Users->fetchrow;
 
 #  Check whether this account still needs to be confirmed
 
