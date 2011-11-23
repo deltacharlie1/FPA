@@ -85,12 +85,12 @@
            </tr>
            <tr>
              <td><b><a href="#" onclick="show_it(11);">Create a Quotation</a></b></td>
-             <td width="10%">(0.55)</td>
+             <td width="10%">(1.43)</td>
              <td>How to create and send a Quotation</td>
            </tr>
            <tr>
              <td><b><a href="#" onclick="show_it(12);">Convert Quotation to Invoice</a></b></td>
-             <td width="10%">(1.01)</td>
+             <td width="10%">(1.21)</td>
              <td>How to convert a quotation to an invoice and email it to the customer</td>
            </tr>
          </table>
