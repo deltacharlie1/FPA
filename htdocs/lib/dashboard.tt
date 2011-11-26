@@ -82,7 +82,7 @@
         <li><img src="/cgi-bin/fpa/display_stats.pl?Txn[%- company.comtxnstats -%]"/></li>
         <li><img src="/cgi-bin/fpa/display_stats.pl?Net[%- company.comnetstats -%]"/></li>
       </ul>
-      <div class="jcarousel-control" style="position:relative;top:-11px;">
+      <div class="jcarousel-control" style="position:relative;top:-11px;height:15px;">
         <ul>
           <li><a href="#">1</a></li>
           <li><a href="#">2</a></li>

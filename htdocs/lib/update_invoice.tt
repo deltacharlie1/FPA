@@ -146,6 +146,8 @@
                   <td><label>Category</label></td>
                   <td colspan="2"><input type="text" name="item_cat" id="item_cat" title="Enter a code or short description to categorise this item" style="width:95%;"/>
                 </tr>
+[% ELSE -%]
+                  <input type="hidden" name="item_cat" id="item_cat" value=""/>
 [% END -%]
               </table>
             </td>

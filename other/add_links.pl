@@ -21,7 +21,11 @@ while (<>) {
 
 #  First set img source to https and target a new windo
 
-		s/><img src=\"http:/ target=\"_new\"><img src=\"https:/;
+		s/><img src=\"http:/ target=\"_new\"><img src=\"https:/i;
+
+#  Change any ' to "
+
+		tr/\'/\"/;
 
 #  Strip out any HTML comments
 
