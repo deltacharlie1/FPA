@@ -1,6 +1,5 @@
 <form name="form1" id="form1" method="post" action="/cgi-bin/fpa/email_statement.pl">
 <input type="hidden" name="id" id="i_id" value="[%- cus.id -%]"/>
-[% USE date(format = '%B') %]
 <div class="main" id="main">
 <h1>Print/Email Statement</h1>
 <table width="660" border="0" cellspacing="0" cellpadding="0" class="formtable">
@@ -40,12 +39,12 @@
   </tr>
   <tr>
     <td><label>Subject</label></td>
-    <td><input type="text" name="pdfsubj" id="pdfsubj" size="40" value="[%- date.format -%] statement from [%- cookie.TAG -%]"/></td>
+    <td><input type="text" name="pdfsubj" id="pdfsubj" size="40" value="[%- stmtdate -%] statement from [%- cookie.TAG -%]"/></td>
   </tr>
   <tr>
     <td style="vertical-align:top;"><label>Message</label></td>
     <td>
-      <textarea name="pdfmsg" id="pdfmsg" cols="40" rows="6">[%- cus.cusstmtmsg | replace('<month#>',date.format) -%]</textarea>
+      <textarea name="pdfmsg" id="pdfmsg" cols="40" rows="6">[%- cus.cusstmtmsg | replace('<month#>',stmtdate) -%]</textarea>
     </td>
   </tr>
   <tr>

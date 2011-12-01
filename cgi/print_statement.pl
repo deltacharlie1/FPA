@@ -27,10 +27,22 @@ $tt = Template->new({
         WRAPPER => 'header.tt',
 });
 
+#  Get the statement date - current month if after 7th, else previous month
+
+@Date = ("January","February","March","April","May","June","July","August","September","October","November","December");
+
+@Today = localtime(time);
+
+if ($Today[3] < 8) {
+	$Today[4]--;
+	if ($Today[4] < 0) { $Today[4] = 11; }
+}
+
 $Vars = {
         title => 'Accounts - Customers',
 	cookie => $COOKIE,
 	cus => $Customer,
+	stmtdate => $Date[$Today[4]],
         javascript => '<script type="text/javascript" src="/js/jquery-form.js"></script> 
 <script type="text/javascript">
 var responseText = "";

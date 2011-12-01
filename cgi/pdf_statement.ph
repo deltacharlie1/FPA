@@ -194,7 +194,7 @@ if ($logo) {
 
 $g->fillcolor("#eeeeee");
 $g->strokecolor("#000000");
-$g->rectxy(43,773,258,799);		#  Invoice Type box
+$g->rectxy(43,773,284,799);		#  Invoice Type box
 $g->rectxy(43,105,552,140);		#  overdue Headings
 $g->rectxy(43,511,552,540);		#  Line Item Headings
 $g->fillstroke();		#  Needed at this point, else all rectangles are shaded
@@ -311,10 +311,22 @@ $text->text_center("More than 90 Days");
 
 #  Invoice Type
 
-$text->transform( -translate => [151,779]);
+#  Calculate the month
+
+
+@Date = ("January","February","March","April","May","June","July","August","September","October","November","December");
+
+@Today = localtime(time);
+
+if ($Today[3] < 8) {
+        $Today[4]--;
+        if ($Today[4] < 0) { $Today[4] = 11; }
+}
+
+$text->transform( -translate => [163,779]);
 $text->font($font_bold, 20);
 $text->lead(24);
-$text->text_center('Statement');
+$text->text_center($Date[$Today[4]].' Statement');
 $Line_len = 0;
 
 $text->font($font, 12);
