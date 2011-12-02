@@ -104,37 +104,37 @@ else {
 
 #  get the current month
 
-		$Dates = $dbh->prepare("select date_format(now(),'%m')");
-		$Dates->execute;
-		@Date = $Dates->fetchrow;
+                $Dates = $dbh->prepare("select date_format(now(),'%m'),date_format(now(),'%Y')");
+                $Dates->execute;
+                ($mth,$year) = $Dates->fetchrow;
+                $Dates->finish;
 
-		$NextQ = $FORM{comduein};
+                $mth--;
 
-#  Determine the next Q end
+                $vatq = $FORM{comvatduein} - 1;
 
-		while ($Date[0] > $NextQ) {
-			$NextQ += 3;
-		}
+                $Months_left = $mth % 3;
+                $Cur_quarter = int($mth / 3);
+                $VAT_due = $vatq + (3 * $Cur_quarter) + 1;
+                if ($VAT_due < $mth + 1) {
+                        $VAT_due = $VAT_due + 3;
+                }
+                $VAT_due++;
+                if ($VAT_due > 12) {
+                        $VAT_due = $VAT_due - 12;
+                        $year++;
+                }
+                if (length($VAT_due) < 2) { $VAT_due = '0'.$VAT_due; }
 
-#  Calculate how many months to add to the current month to get the next Q end
-
-		$Months_to_add = $NextQ - $Date[0];
-
-#  Finally, calculate when the next vat message is due (if quarter end = 2010-03-31 then msg due = 2010-04-01 (ie plus 1 day))
-
-		$Dates = $dbh->prepare("select last_day(date_add(now(),interval $Months_to_add month)),date_add(last_day(date_add(now(),interval $Months_to_add month)),interval 1 day)");
-		$Dates->execute;
-		@Date = $Dates->fetchrow;
-		$Dates->finish;
 	}
 
 #  Check whether we have an image to upload
 
 	if ($Img) {
-		$Sts = $dbh->do("update companies set comname='$FORM{comname}',comregno='$FORM{comregno}',comaddress='$FORM{comaddress}',compostcode='$FORM{compostcode}',comtel='$FORM{comtel}',combusiness='$FORM{combusiness}',comcontact='$FORM{comcontact}',comemail='$FORM{comemail}',comyearend='$FORM{comyearend}',comnextsi='$FORM{comnextsi}',comnextpi='$FORM{comnextpi}',comvatscheme='$FORM{comvatscheme}',comvatno='$FORM{comvatno}',comvatduein='$FORM{comvatduein}',comvatmsgdue='$Date[1]',comlogo='$Img',comcompleted='1',comemailmsg='$FORM{comemailmsg}',comstmtmsg='$FORM{comstmtmsg}' where reg_id=$Reg_id and id=$Com_id");
+		$Sts = $dbh->do("update companies set comname='$FORM{comname}',comregno='$FORM{comregno}',comaddress='$FORM{comaddress}',compostcode='$FORM{compostcode}',comtel='$FORM{comtel}',combusiness='$FORM{combusiness}',comcontact='$FORM{comcontact}',comemail='$FORM{comemail}',comyearend='$FORM{comyearend}',comnextsi='$FORM{comnextsi}',comnextpi='$FORM{comnextpi}',comvatscheme='$FORM{comvatscheme}',comvatno='$FORM{comvatno}',comvatduein='$FORM{comvatduein}',comvatmsgdue='$year-$VAT_due-01',comlogo='$Img',comcompleted='1',comemailmsg='$FORM{comemailmsg}',comstmtmsg='$FORM{comstmtmsg}' where reg_id=$Reg_id and id=$Com_id");
 	}
 	else {
-		$Sts = $dbh->do("update companies set comname='$FORM{comname}',comregno='$FORM{comregno}',comaddress='$FORM{comaddress}',compostcode='$FORM{compostcode}',comtel='$FORM{comtel}',combusiness='$FORM{combusiness}',comcontact='$FORM{comcontact}',comemail='$FORM{comemail}',comyearend='$FORM{comyearend}',comnextsi='$FORM{comnextsi}',comnextpi='$FORM{comnextpi}',comvatscheme='$FORM{comvatscheme}',comvatno='$FORM{comvatno}',comvatduein='$FORM{comvatduein}',comvatmsgdue='$Date[1]',comcompleted='1',comemailmsg='$FORM{comemailmsg}',comstmtmsg='$FORM{comstmtmsg}' where reg_id=$Reg_id and id=$Com_id");
+		$Sts = $dbh->do("update companies set comname='$FORM{comname}',comregno='$FORM{comregno}',comaddress='$FORM{comaddress}',compostcode='$FORM{compostcode}',comtel='$FORM{comtel}',combusiness='$FORM{combusiness}',comcontact='$FORM{comcontact}',comemail='$FORM{comemail}',comyearend='$FORM{comyearend}',comnextsi='$FORM{comnextsi}',comnextpi='$FORM{comnextpi}',comvatscheme='$FORM{comvatscheme}',comvatno='$FORM{comvatno}',comvatduein='$FORM{comvatduein}',comvatmsgdue='$year-$VAT_due-01',comcompleted='1',comemailmsg='$FORM{comemailmsg}',comstmtmsg='$FORM{comstmtmsg}' where reg_id=$Reg_id and id=$Com_id");
 	}
 
 #  Check to see if the comvatscheme has gone from Cash Accounting to Standard Accounting
