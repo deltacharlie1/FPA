@@ -36,6 +36,7 @@
 <input type="hidden" name="invinvoiceno" id="x_invinvoiceno" value="[%- invoice.invinvoiceno -%]"/>
 <input type="hidden" name="item_tt" id="item_tt" value="[%- invoice.tottotal -%]"/>
 <input type="hidden" name="invstatus" id="x_invstatus" value="[%- invoice.invstatus -%]"/>
+<input type="hidden" name="cuscis" id="cuscis" value="[%- invoice.cuscis -%]"/>
 <div class="status">[%- UNLESS invoice.invstatus == "Quote"; invoice.invstatus; END -%] <span class="invtext">[%- invtext | remove(" No") -%]</span></div>
   <table width="660" border="0" cellpadding="0" cellspacing="0" class="formtable">
     <tr>

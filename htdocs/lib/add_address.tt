@@ -117,6 +117,14 @@
       <td><label>Relationship</label></td>
       <td><input title="Sales Customer" name="cussales" id="cussales" type="checkbox" value="Y" [%- IF cus.cussales OR custype == "C" -%] checked="checked"[%- END -%]/> Sales Customer&nbsp;&nbsp;<input title="Supplier" name="cussupplier" id="cussupplier" type="checkbox" value="Y" [%- IF cus.cussupplier OR custype == "S" -%] value="Y" checked="checked"[%- END -%]/> Supplier</td>
     </tr>
+[% IF cookie.CIS == 'Y' -%]
+    <tr>
+      <td><label>CIS Contractor?</label></td>
+      <td><span><input name="cuscis" type="radio" id="cuscisN" value="N"[%- IF cus.cuscis == 'N' -%] checked="checked"[%- END -%]/> No&nbsp;&nbsp;<input name="cuscis" type="radio" id="cuscisY" value="Y"[%- IF cus.cuscis == 'Y' -%] checked="checked"[%- END -%]/> Yes</span></td>
+    </tr>
+[% ELSE -%]
+     <input type="hidden" name="cuscis" id="cuscisN" value="N"/>
+[% END -%]
     <tr>
       <td style="vertical-align:top;"><label>Remarks</label></td>
       <td><span><textarea title="Remarks" name="cusremarks" id="cusremarks" cols="30" rows="2">[%- cus.cusremarks -%]</textarea></span></td>

@@ -28,10 +28,11 @@
 </div>
 <div id="confirmdialog" style="text-align:left;z-index:10100;" title="Please Confirm">Is this a new customer?<p>Would you like to save these details for further invoices?</p></div>
 <form action="/cgi-bin/fpa/save_invoice.pl" method="post" name="form1" id="form1" class="newinvoice">
-<input type="hidden" name="cus_id" id="x_cus_id" value="[% cus.id -%]"/>
+<input type="hidden" name="cus_id" id="x_cus_id" value="[%- cus.id -%]"/>
 <input type="hidden" name="id" id="x_id" value=""/>
 <input type="hidden" name="invitemcount" id="invitemcount" value="0"/>
 <input type="hidden" name="invstatus" id="x_invstatus" value="Draft"/>
+<input type="hidden" name="cuscis" id="cuscis" value="[%- cus.cuscis -%]"/>
 <div class="status">New <span class="invtext">[%- IF invtype.match('C') -%]Credit Note[%- ELSE -%]Invoice[%- END -%]</span></div>
   <table width="660" border="0" cellpadding="0" cellspacing="0" class="formtable">
 [% UNLESS cus.id AND cus.id > 0 -%]

@@ -23,7 +23,7 @@ unless ($COOKIE->{NO_ADS}) {
 	&display_adverts();
 }
 
-$Customers = $dbh->prepare("select id,cusname,cusaddress,cuspostcode,cusregion,cuscontact,cusemail,custerms,cusdefpo from customers where id=$FORM{id} and acct_id='$COOKIE->{ACCT}'");
+$Customers = $dbh->prepare("select id,cusname,cusaddress,cuspostcode,cusregion,cuscontact,cusemail,custerms,cusdefpo,cuscis from customers where id=$FORM{id} and acct_id='$COOKIE->{ACCT}'");
 $Customers->execute;
 @Customer = $Customers->fetchrow;
 
@@ -44,7 +44,8 @@ Content-Type: application/json
   "cuscontact": "$Customer[5]", 
   "cusemail": "$Customer[6]",  
   "custerms": "$Customer[7]",  
-  "cusdefpo": "$Customer[8]"  
+  "cusdefpo": "$Customer[8]",  
+  "cuscis": "$Customer[9]"  
 }  
 EOD
 

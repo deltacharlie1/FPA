@@ -13,7 +13,7 @@ unless ($COOKIE->{NO_ADS}) {
 	require "/usr/local/git/fpa/cgi/display_adverts.ph";
 	&display_adverts();
 }
-$Customers = $dbh->prepare("select id,cusname,cusaddress,cuspostcode,cusregion,cuscontact,cusemail,custerms,cusbalance,cuslimit,cusdefpo from customers where id=? and acct_id=?");
+$Customers = $dbh->prepare("select id,cusname,cusaddress,cuspostcode,cusregion,cuscontact,cusemail,custerms,cusbalance,cuslimit,cusdefpo,cuscis from customers where id=? and acct_id=?");
 $Customers->execute($ENV{QUERY_STRING},"$COOKIE->{ACCT}");
 
 $Focus = "srch";
@@ -124,6 +124,7 @@ $(document).ready(function(){
         document.getElementById("x_invcusemail").value = data.cusemail;
         document.getElementById("x_invcusterms").value = data.custerms;
         document.getElementById("x_invcusref").value = data.cusdefpo;
+        document.getElementById("cuscis").value = data.cuscis;
         document.getElementById("selcus").className = "hidden";
         document.getElementById("desc").focus();
       });

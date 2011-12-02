@@ -11,11 +11,6 @@ use GD;
 use CGI;
 use DBI;
 $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
-unless ($COOKIE->{NO_ADS}) {
-	require "/usr/local/git/fpa/cgi/display_adverts.ph";
-	&display_adverts();
-}
-
 
 $Data = new CGI;
 %FORM = $Data->Vars;
@@ -72,7 +67,7 @@ else {
 
 #  Get existing details
 
-	$Companies = $dbh->prepare("select comvatscheme from companies where reg_id=$Reg_id and id=$Com_id");
+	$Companies = $dbh->prepare("select comvatscheme,comcis from companies where reg_id=$Reg_id and id=$Com_id");
 	$Companies->execute;
 	$Company = $Companies->fetchrow_hashref;
 	$Companies->finish;
@@ -98,43 +93,56 @@ else {
 #		$Img =~ s/\'/\\\'/g;
 	}
 
+#  Add an extra nominal code if registered for CIS (and no code exists)
+
+	if ($FORM{comcis} =~ /Y/i && $FORM{comcis} !~ /$Company->{comcis}/i) {
+
+#  See if there is already a 7700 nomincal code
+
+		$COAs = $dbh->prepare("select * from coas where coanominalcode='7700' and acct_id='$COOKIE->{ACCT}'");
+		$COAs->execute;
+		unless ($COAs->rows > 0) {
+			$dbh->do("insert into coas (acct_id,coanominalcode,coadesc,coatype,coareport) values ('$COOKIE->{ACCT}','7700','CIS Tax','Expenses','P & L')");
+		}
+		$COAs->finish;
+	}
+
 	unless ($FORM{comvatscheme} =~ /N/i) {
 
 #  Calculate the current VAT Q end
 
 #  get the current month
 
-		$Dates = $dbh->prepare("select date_format(now(),'%m')");
+		$Dates = $dbh->prepare("select date_format(now(),'%m'),date_format(now(),'%Y')");
 		$Dates->execute;
-		@Date = $Dates->fetchrow;
-
-		$NextQ = $FORM{comduein};
-
-#  Determine the next Q end
-
-		while ($Date[0] > $NextQ) {
-			$NextQ += 3;
-		}
-
-#  Calculate how many months to add to the current month to get the next Q end
-
-		$Months_to_add = $NextQ - $Date[0];
-
-#  Finally, calculate when the next vat message is due (if quarter end = 2010-03-31 then msg due = 2010-04-01 (ie plus 1 day))
-
-		$Dates = $dbh->prepare("select last_day(date_add(now(),interval $Months_to_add month)),date_add(last_day(date_add(now(),interval $Months_to_add month)),interval 1 day)");
-		$Dates->execute;
-		@Date = $Dates->fetchrow;
+		($mth,$year) = $Dates->fetchrow;
 		$Dates->finish;
+
+		$mth--;
+
+		$vatq = $FORM{comvatduein} - 1;
+
+                $Months_left = $mth % 3;
+                $Cur_quarter = int($mth / 3);
+                $VAT_due = $vatq + (3 * $Cur_quarter) + 1;
+                if ($VAT_due < $mth + 1) {
+                        $VAT_due = $VAT_due + 3;
+                }
+		$VAT_due++;
+                if ($VAT_due > 12) {
+			$VAT_due = $VAT_due - 12;
+			$year++;
+		}
+		if (length($VAT_due) < 2) { $VAT_due = '0'.$VAT_due; }
 	}
 
 #  Check whether we have an image to upload
 
 	if ($Img) {
-		$Sts = $dbh->do("update companies set comname='$FORM{comname}',comregno='$FORM{comregno}',comaddress='$FORM{comaddress}',compostcode='$FORM{compostcode}',comtel='$FORM{comtel}',combusiness='$FORM{combusiness}',comcontact='$FORM{comcontact}',comemail='$FORM{comemail}',comyearend='$FORM{comyearend}',comnextsi='$FORM{comnextsi}',comnextpi='$FORM{comnextpi}',comvatscheme='$FORM{comvatscheme}',comvatno='$FORM{comvatno}',comvatduein='$FORM{comvatduein}',comvatmsgdue='$Date[1]',comlogo='$Img',comcompleted='1',comemailmsg='$FORM{comemailmsg}',comstmtmsg='$FORM{comstmtmsg}' where reg_id=$Reg_id and id=$Com_id");
+		$Sts = $dbh->do("update companies set comname='$FORM{comname}',comregno='$FORM{comregno}',comaddress='$FORM{comaddress}',compostcode='$FORM{compostcode}',comtel='$FORM{comtel}',combusiness='$FORM{combusiness}',comcontact='$FORM{comcontact}',comemail='$FORM{comemail}',comyearend='$FORM{comyearend}',comnextsi='$FORM{comnextsi}',comnextpi='$FORM{comnextpi}',comvatscheme='$FORM{comvatscheme}',comvatno='$FORM{comvatno}',comvatduein='$FORM{comvatduein}',comvatmsgdue='$year-$VAT_due-01',comlogo='$Img',comcompleted='1',comemailmsg='$FORM{comemailmsg}',comstmtmsg='$FORM{comstmtmsg}',comcis='$FORM{comcis}' where reg_id=$Reg_id and id=$Com_id");
 	}
 	else {
-		$Sts = $dbh->do("update companies set comname='$FORM{comname}',comregno='$FORM{comregno}',comaddress='$FORM{comaddress}',compostcode='$FORM{compostcode}',comtel='$FORM{comtel}',combusiness='$FORM{combusiness}',comcontact='$FORM{comcontact}',comemail='$FORM{comemail}',comyearend='$FORM{comyearend}',comnextsi='$FORM{comnextsi}',comnextpi='$FORM{comnextpi}',comvatscheme='$FORM{comvatscheme}',comvatno='$FORM{comvatno}',comvatduein='$FORM{comvatduein}',comvatmsgdue='$Date[1]',comcompleted='1',comemailmsg='$FORM{comemailmsg}',comstmtmsg='$FORM{comstmtmsg}' where reg_id=$Reg_id and id=$Com_id");
+		$Sts = $dbh->do("update companies set comname='$FORM{comname}',comregno='$FORM{comregno}',comaddress='$FORM{comaddress}',compostcode='$FORM{compostcode}',comtel='$FORM{comtel}',combusiness='$FORM{combusiness}',comcontact='$FORM{comcontact}',comemail='$FORM{comemail}',comyearend='$FORM{comyearend}',comnextsi='$FORM{comnextsi}',comnextpi='$FORM{comnextpi}',comvatscheme='$FORM{comvatscheme}',comvatno='$FORM{comvatno}',comvatduein='$FORM{comvatduein}',comvatmsgdue='$year-$VAT_due-01',comcompleted='1',comemailmsg='$FORM{comemailmsg}',comstmtmsg='$FORM{comstmtmsg}',comcis='$FORM{comcis}' where reg_id=$Reg_id and id=$Com_id");
 	}
 
 #  Check to see if the comvatscheme has gone from Cash Accounting to Standard Accounting

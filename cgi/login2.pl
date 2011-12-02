@@ -38,7 +38,7 @@ EOD
 elsif (substr($User[7],0,1) =~ /N/i) {
 	print<<EOD;
 Content-Type: text/plain
-Set-Cookie: fpa-uid=$FORM{email}; path=/;
+Set-Cookie: fpa-uid=$FORM{email}; path=/; expires=$User[4];
 Status: 301
 Location: /cgi-bin/fpa/login3.pl
 

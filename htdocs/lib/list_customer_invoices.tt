@@ -91,7 +91,7 @@
     </tr>
 [% class = [ "even","odd" ] -%]
 [%- FOREACH invoice IN invoices -%]
-  [%- ndx = loop.count % 2 -%]
+  [%- ndx = loop.count % 2; IF invoice.invcistotal != "" && invoice.invstatuscode > 2; invoice.invamount = invoice.invcistotal + invoice.invvat | format('%1.2f'); END -%]
     <tr class="[%- class.$ndx -%]">
       <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';"[%- IF invoice.invstatus ==  'Cancelled' -%] class="strikethrough"[%- END -%]>[%- invoice.invinvoiceno -%]</td>
       <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- IF invoice.invtype == "C" -%]CR[%- ELSE -%]Inv[%- END -%]</td>
