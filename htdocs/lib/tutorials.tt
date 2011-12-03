@@ -93,6 +93,11 @@
              <td width="10%">(1.21)</td>
              <td>How to convert a quotation to an invoice and email it to the customer</td>
            </tr>
+           <tr>
+             <td><b><a href="#" onclick="show_it(13);">Making a VAT Return</a></b></td>
+             <td width="10%">(1.16)</td>
+             <td>How to make a VAT return to HMRC</td>
+           </tr>
          </table>
          <script type="text/javascript">
 function show_it(lesson) {
@@ -145,6 +150,10 @@ function show_it(lesson) {
     case 12:
       title = "Converting a Quotation to an Invoice";
       lsn = "quote2";
+      break;
+    case 13:
+      title = "Making a VAT Return";
+      lsn = "vatreturn";
       break;
 }
       document.getElementById("videoarea").innerHTML = '<h3>' + title + '</h3> <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="640" height="498" id="csSWF"> <param name="movie" value="/lessons/' + lsn + '/' + lsn + '_controller.swf" /> <param name="quality" value="best" /> <param name="bgcolor" value="#ffffff" /> <param name="allowfullscreen" value="true" /> <param name="scale" value="showall" /> <param name="allowscriptaccess" value="always" /> <param name="flashvars" value="autostart=true&thumb=/lessons/' + lsn + '/FirstFrame.png&thumbscale=100&color=0xffffff,0xffffff" /> <!--[if !IE]>--> <object type="application/x-shockwave-flash" data="/lessons/' + lsn + '/' + lsn + '_controller.swf" width="640" height="498"> <param name="quality" value="best" /> <param name="bgcolor" value="#ffffff" /> <param name="allowfullscreen" value="true" /> <param name="scale" value="showall" /> <param name="allowscriptaccess" value="always" /> <param name="flashvars" value="autostart=true&thumb=/lessons/' + lsn + '/FirstFrame.png&thumbscale=100&color=0xffffff,0xffffff" /> <!--<![endif]--> <!--[if !IE]>--> </object> <!--<![endif]--> </object>';
