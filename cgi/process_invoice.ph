@@ -447,8 +447,42 @@ sub pay_invoice {
 
 	if ($Invoices->rows > 0 && $Invoice[0] > 2) {		#  OK this is a good invoice
 
-		if ($Invoice[9] > 0) {
-			$Invoice[1] = $Invoice[9];
+		if ($Invoice[9] > 0) {				#  ... and it is a CIS type invoice
+			unless ($FORM{invremarks} =~ /\*part/i) {	#  ie this is not a part payment
+
+#  Calculate the difference between what we thought would be paid and what was paid so that we can adjust 7700 if necessary
+
+				$CIS_total = sprintf('%1.2f',$FORM{txnamount});
+
+				if ($CIS_total != $Invoice[9]) {
+
+#  Add a further 7700 record for the difference
+
+					$CIS_total =~ tr/\.//d;
+					$Invoice[9] =~ tr/\.//d;
+
+					my $CIS_diff = $CIS_total - $Invoice[9];
+					$CIS_diff =~ s/(.*)(\d\d)/$1\.$2/;
+
+#  reduce customer balance and debotrs
+
+					$Sts = $dbh->do("update coas set coabalance = coabalance + '$CIS_diff' where acct_id='$COOKIE->{ACCT}' and coanominalcode='1100'");
+					$Sts = $dbh->do("insert into nominals (acct_id,link_id,nomtype,nomcode,nomamount,nomdate) values ('$COOKIE->{ACCT}',$New_txn_id,'T','1100','$CIS_diff',str_to_date('$FORM{invprintdate}','%d-%b-%y'))");
+
+#  Customer balance (this is initially allocated to the unallocated field and is then deducted when the invoices are processed)
+
+					$Sts = $dbh->do("update customers set cusbalance=cusbalance + '$CIS_diff' where acct_id='$COOKIE->{ACCT}' and id=$FORM{cus_id}");
+
+
+					$Sts = $dbh->do("update coas set coabalance=coabalance + 0-'$CIS_diff' where acct_id='$COOKIE->{ACCT}' and coanominalcode='7700'");
+					$Sts = $dbh->do("insert into nominals (acct_id,link_id,nomtype,nomcode,nomamount,nomdate) values ('$COOKIE->{ACCT}',$FORM{id},'S','7700',0-'$CIS_diff',str_to_date('$FORM{invprintdate}','%d-%b-%y'))");
+
+					$Invoice[1] = $FORM{txnamount};
+				}
+				else {
+					$Invoice[1] = $Invoice[9];
+				}
+			}
 		}
 
 		my $Owing = sprintf('%1.2f',$Invoice[1] + $Invoice[2] - $Invoice[3] - $Invoice[4]);

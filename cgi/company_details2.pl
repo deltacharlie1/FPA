@@ -113,7 +113,6 @@ else {
 
 #  get the current month
 
-<<<<<<< HEAD
 		$Dates = $dbh->prepare("select date_format(now(),'%m'),date_format(now(),'%Y')");
 		$Dates->execute;
 		($mth,$year) = $Dates->fetchrow;

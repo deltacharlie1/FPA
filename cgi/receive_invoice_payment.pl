@@ -68,6 +68,7 @@ else {
 
 	require "/usr/local/httpd/cgi-bin/fpa/process_invoice.ph";
 	$FORM{invtype} = "S";
+	$FORM{invremarks} = $FORM{invdesc};
 	&money_in();
 	&pay_invoice();
 	print<<EOD;
