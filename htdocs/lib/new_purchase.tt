@@ -115,7 +115,7 @@
 [% UNLESS cookie.VAT == "N" -%]
                   <td style="vertical-align:top;">
                     <select name="vat" id="sel_vat">
-  [% INCLUDE vatrates -%]
+  [% cusdefvatrate = cus.cusdefvatrate; INCLUDE vatrates -%]
                     </select>
                   </td>
 [% END -%]

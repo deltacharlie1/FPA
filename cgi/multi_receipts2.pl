@@ -64,8 +64,10 @@ else {
 	$FORM{invtype} = "S";
 	&money_in();
 	@Inv_id = split(/\,/,$Invoice_ids);
+	$No_invoices = @Inv_id;
 
 	foreach $i (@Inv_id) {
+		$No_invoices--;
 		$FORM{id} = $i;
 		$FORM{txnamount} = sprintf("%1.2f",$FORM{txnamount});
 		last if ($FORM{txnamount} <= 0);

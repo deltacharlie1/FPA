@@ -13,7 +13,7 @@ unless ($COOKIE->{NO_ADS}) {
 	require "/usr/local/git/fpa/cgi/display_adverts.ph";
 	&display_adverts();
 }
-$Customers = $dbh->prepare("select id,cusname,cusaddress,cuspostcode,cusregion,cuscontact,cusemail,custerms,cusbalance,cuslimit,cusdefpo,cuscis from customers where id=? and acct_id=?");
+$Customers = $dbh->prepare("select id,cusname,cusaddress,cuspostcode,cusregion,cuscontact,cusemail,custerms,cusbalance,cuslimit,cusdefpo,cuscis,cusdefvatrate,cusdefpaymethod from customers where id=? and acct_id=?");
 $Customers->execute($ENV{QUERY_STRING},"$COOKIE->{ACCT}");
 
 $Focus = "srch";

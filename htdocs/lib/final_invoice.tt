@@ -156,7 +156,7 @@
   [% IF invoice.invstatuscode >2 -%]
     <li>    
       <div>   
-        <a href="#" onclick="get_amt('[%- invoice.id -%]','[%- invoice.invinvoiceno -%]','[%- invoice.tottotal - invoice.totpaid -%]');">
+        <a href="#" onclick="get_amt('[%- invoice.id -%]','[%- invoice.invinvoiceno -%]','[%- IF invoice.invcistotal != ""; invoice.cistotal - invoice.totpaid; ELSE; invoice.tottotal - invoice.totpaid; END -%]');">
          Record Payment 
         </a>
       </div>  

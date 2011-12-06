@@ -20,7 +20,7 @@ $Coas->execute;
 $Coa = $Coas->fetchall_arrayref({});
 $Coas->finish;
 
-$Customers = $dbh->prepare("select id,cusname,cusaddress,cuspostcode,cusregion,cuscontact,cusemail,custerms,cusbalance,cuslimit,cusdefcoa from customers where id=? and acct_id=?");
+$Customers = $dbh->prepare("select id,cusname,cusaddress,cuspostcode,cusregion,cuscontact,cusemail,custerms,cusbalance,cuslimit,cusdefcoa,cusdefvatrate from customers where id=? and acct_id=?");
 $Customers->execute($ENV{QUERY_STRING},"$COOKIE->{ACCT}");
 
 use Template;

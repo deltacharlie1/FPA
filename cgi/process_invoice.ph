@@ -279,25 +279,25 @@ EOD
 			$CIS_invtotal = sprintf("%1.2f",$CIS_invtotal);
 		}
 		else {
-			$CIS_invtotal = "0"
+			$CIS_invtotal = 'NULL';
 		}
 
 		if ($FORM{id}) {		#  existing invoice
 			if ($FORM{invcusterms} =~ /^\d+$/) {	# we have some terms so include the due date
 
-				$Sts = $dbh->do("update invoices set invinvoiceno='$Company[3]',invcusref='$FORM{invcusref}',invtype='$FORM{invtype}',invcusname='$FORM{invcusname}',invcusaddr='$FORM{invcusaddr}',invcuspostcode='$FORM{invcuspostcode}',invcusregion='$FORM{invcusregion}',invcoa='$FORM{invcoa}',invcuscontact='$FORM{invcuscontact}',invcusemail='$FORM{invcusemail}',invcusterms='$FORM{invcusterms}',invremarks='$FORM{invremarks}',invfpflag='$FORM{invfpflag}',invitemcount=$FORM{invitemcount},invitems='$FORM{invitems}',invdesc='$FORM{invdesc}',invtotal='$FORM{invtotal}',invcistotal='$CIS_invtotal',invvat='$FORM{invvat}',invstatus='Printed',invstatuscode='3',invprintdate=str_to_date('$FORM{invprintdate}','%d-%b-%y'),invduedate=from_days(to_days(str_to_date('$FORM{invprintdate}','%d-%b-%y')) + '$FORM{invcusterms}'),invyearend='$COOKIE->{YEAREND}',invcistotal='$CIS_invtotal' where id=$FORM{id} and acct_id='$COOKIE->{ACCT}'");
+				$Sts = $dbh->do("update invoices set invinvoiceno='$Company[3]',invcusref='$FORM{invcusref}',invtype='$FORM{invtype}',invcusname='$FORM{invcusname}',invcusaddr='$FORM{invcusaddr}',invcuspostcode='$FORM{invcuspostcode}',invcusregion='$FORM{invcusregion}',invcoa='$FORM{invcoa}',invcuscontact='$FORM{invcuscontact}',invcusemail='$FORM{invcusemail}',invcusterms='$FORM{invcusterms}',invremarks='$FORM{invremarks}',invfpflag='$FORM{invfpflag}',invitemcount=$FORM{invitemcount},invitems='$FORM{invitems}',invdesc='$FORM{invdesc}',invtotal='$FORM{invtotal}',invcistotal=$CIS_invtotal,invvat='$FORM{invvat}',invstatus='Printed',invstatuscode='3',invprintdate=str_to_date('$FORM{invprintdate}','%d-%b-%y'),invduedate=from_days(to_days(str_to_date('$FORM{invprintdate}','%d-%b-%y')) + '$FORM{invcusterms}'),invyearend='$COOKIE->{YEAREND}' where id=$FORM{id} and acct_id='$COOKIE->{ACCT}'");
 			}
 			else {			#  no terms
-				$Sts = $dbh->do("update invoices set invinvoiceno='$Company[3]',invcusref='$FORM{invcusref}',invtype='$FORM{invtype}',invcusname='$FORM{invcusname}',invcusaddr='$FORM{invcusaddr}',invcuspostcode='$FORM{invcuspostcode}',invcusregion='$FORM{invcusregion}',invcoa='$FORM{invcoa}',invcuscontact='$FORM{invcuscontact}',invcusemail='$FORM{invcusemail}',invcusterms='$FORM{invcusterms}',invremarks='$FORM{invremarks}',invfpflag='$FORM{invfpflag}',invitemcount=$FORM{invitemcount},invitems='$FORM{invitems}',invdesc='$FORM{invdesc}',invtotal='$FORM{invtotal}',invvat='$FORM{invvat}',invstatus='Printed',invstatuscode='3',invprintdate=str_to_date('$FORM{invprintdate}','%d-%b-%y'),invduedate=str_to_date('$FORM{invprintdate}','%d-%b-%y'),invyearend='$COOKIE->{YEAREND}',invcistotal='$CIS_invtotal' where id=$FORM{id} and acct_id='$COOKIE->{ACCT}'");
+				$Sts = $dbh->do("update invoices set invinvoiceno='$Company[3]',invcusref='$FORM{invcusref}',invtype='$FORM{invtype}',invcusname='$FORM{invcusname}',invcusaddr='$FORM{invcusaddr}',invcuspostcode='$FORM{invcuspostcode}',invcusregion='$FORM{invcusregion}',invcoa='$FORM{invcoa}',invcuscontact='$FORM{invcuscontact}',invcusemail='$FORM{invcusemail}',invcusterms='$FORM{invcusterms}',invremarks='$FORM{invremarks}',invfpflag='$FORM{invfpflag}',invitemcount=$FORM{invitemcount},invitems='$FORM{invitems}',invdesc='$FORM{invdesc}',invtotal='$FORM{invtotal}',invvat='$FORM{invvat}',invstatus='Printed',invstatuscode='3',invprintdate=str_to_date('$FORM{invprintdate}','%d-%b-%y'),invduedate=str_to_date('$FORM{invprintdate}','%d-%b-%y'),invyearend='$COOKIE->{YEAREND}',invcistotal=$CIS_invtotal where id=$FORM{id} and acct_id='$COOKIE->{ACCT}'");
 			}
 		}
 		else {				#  New invoice so get the next invoice no
 
 			if ($FORM{invcusterms} =~ /^\d+$/) {		#  Calculate the due date
-				$Sts = $dbh->do("insert into invoices (acct_id,cus_id,invinvoiceno,invcusref,invtype,invcusname,invcusaddr,invcuspostcode,invcusregion,invcoa,invcuscontact,invcusemail,invcusterms,invremarks,invcreated,invstatus,invstatuscode,invstatusdate,invfpflag,invitemcount,invitems,invdesc,invtotal,invvat,invprintdate,invduedate,invyearend,invcistotal) values ('$COOKIE->{ACCT}',$FORM{cus_id},'$FORM{invinvoiceno}','$FORM{invcusref}','$FORM{invtype}','$FORM{invcusname}','$FORM{invcusaddr}','$FORM{invcuspostcode}','$FORM{invcusregion}','$FORM{invcoa}','$FORM{invcuscontact}','$FORM{invcusemail}','$FORM{invcusterms}','$FORM{invremarks}',now(),'Printed','3',now(),'$FORM{invfpflag}',$FORM{invitemcount},'$FORM{invitems}','$FORM{invdesc}','$FORM{invtotal}','$FORM{invvat}',str_to_date('$FORM{invprintdate}','%d-%b-%y'),from_days(to_days(str_to_date('$FORM{invprintdate}','%d-%b-%y')) + '$FORM{invcusterms}'),'$COOKIE->{YEAREND}','$CIS_invtotal')");
+				$Sts = $dbh->do("insert into invoices (acct_id,cus_id,invinvoiceno,invcusref,invtype,invcusname,invcusaddr,invcuspostcode,invcusregion,invcoa,invcuscontact,invcusemail,invcusterms,invremarks,invcreated,invstatus,invstatuscode,invstatusdate,invfpflag,invitemcount,invitems,invdesc,invtotal,invvat,invprintdate,invduedate,invyearend,invcistotal) values ('$COOKIE->{ACCT}',$FORM{cus_id},'$FORM{invinvoiceno}','$FORM{invcusref}','$FORM{invtype}','$FORM{invcusname}','$FORM{invcusaddr}','$FORM{invcuspostcode}','$FORM{invcusregion}','$FORM{invcoa}','$FORM{invcuscontact}','$FORM{invcusemail}','$FORM{invcusterms}','$FORM{invremarks}',now(),'Printed','3',now(),'$FORM{invfpflag}',$FORM{invitemcount},'$FORM{invitems}','$FORM{invdesc}','$FORM{invtotal}','$FORM{invvat}',str_to_date('$FORM{invprintdate}','%d-%b-%y'),from_days(to_days(str_to_date('$FORM{invprintdate}','%d-%b-%y')) + '$FORM{invcusterms}'),'$COOKIE->{YEAREND}',$CIS_invtotal)");
 			}
 			else {		#  just ignore due date
-				$Sts = $dbh->do("insert into invoices (acct_id,cus_id,invinvoiceno,invcusref,invtype,invcusname,invcusaddr,invcuspostcode,invcusregion,invcoa,invcuscontact,invcusemail,invcusterms,invremarks,invcreated,invstatus,invstatuscode,invstatusdate,invfpflag,invitemcount,invitems,invdesc,invtotal,invvat,invprintdate,invduedate,invyearend,invcistotal) values ('$COOKIE->{ACCT}',$FORM{cus_id},'$FORM{invinvoiceno}','$FORM{invcusref}','$FORM{invtype}','$FORM{invcusname}','$FORM{invcusaddr}','$FORM{invcuspostcode}','$FORM{invcusregion}','$FORM{invcoa}','$FORM{invcuscontact}','$FORM{invcusemail}','$FORM{invcusterms}','$FORM{invremarks}',now(),'Printed','3',now(),'$FORM{invfpflag}',$FORM{invitemcount},'$FORM{invitems}','$FORM{invdesc}','$FORM{invtotal}','$FORM{invvat}',str_to_date('$FORM{invprintdate}','%d-%b-%y'),str_to_date('$FORM{invprintdate}','%d-%b-%y'),'$COOKIE->{YEAREND}','$CIS_invtotal')");
+				$Sts = $dbh->do("insert into invoices (acct_id,cus_id,invinvoiceno,invcusref,invtype,invcusname,invcusaddr,invcuspostcode,invcusregion,invcoa,invcuscontact,invcusemail,invcusterms,invremarks,invcreated,invstatus,invstatuscode,invstatusdate,invfpflag,invitemcount,invitems,invdesc,invtotal,invvat,invprintdate,invduedate,invyearend,invcistotal) values ('$COOKIE->{ACCT}',$FORM{cus_id},'$FORM{invinvoiceno}','$FORM{invcusref}','$FORM{invtype}','$FORM{invcusname}','$FORM{invcusaddr}','$FORM{invcuspostcode}','$FORM{invcusregion}','$FORM{invcoa}','$FORM{invcuscontact}','$FORM{invcusemail}','$FORM{invcusterms}','$FORM{invremarks}',now(),'Printed','3',now(),'$FORM{invfpflag}',$FORM{invitemcount},'$FORM{invitems}','$FORM{invdesc}','$FORM{invtotal}','$FORM{invvat}',str_to_date('$FORM{invprintdate}','%d-%b-%y'),str_to_date('$FORM{invprintdate}','%d-%b-%y'),'$COOKIE->{YEAREND}',$CIS_invtotal)");
 			}
 			$FORM{id} = $dbh->last_insert_id(undef, undef, qw(invoices undef));
 		}
@@ -452,7 +452,12 @@ sub pay_invoice {
 
 #  Calculate the difference between what we thought would be paid and what was paid so that we can adjust 7700 if necessary
 
-				$CIS_total = sprintf('%1.2f',$FORM{txnamount});
+				if ($No_invoices > 0) {
+					$CIS_total = $Invoice[9];
+				}
+				else {
+					$CIS_total = sprintf('%1.2f',$FORM{txnamount});
+				}
 
 				if ($CIS_total != $Invoice[9]) {
 

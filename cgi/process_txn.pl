@@ -67,11 +67,13 @@ else {
 
 #  Check to see if we have an invoice number (and only an invoice number) in rec_invdesc (remarks)
 
-		if ($FORM{invdesc} =~ /.*\s?\d+$/) {
+		if ($FORM{invdesc} =~ /^Invoice\s\d+$/i) {
 
 #  We do so see if we can find that invoice
 
-			$Invoices = $dbh->prepare("select id from invoices where invinvoiceno='$FORM{invdesc}' and acct_id='$COOKIE->{ACCT}'");
+			$Inv_no = $FORM{invdesc};
+			$Inv_no =~ s/.*\s(\d+)$/$1/;
+			$Invoices = $dbh->prepare("select id from invoices where invinvoiceno='$Inv_no' and acct_id='$COOKIE->{ACCT}'");
 			$Invoices->execute;
 			if ($Invoices->rows > 0) {
 				($FORM{id}) = $Invoices->fetchrow;

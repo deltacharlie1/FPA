@@ -100,9 +100,9 @@
       <td><label>Paid in Full?</label></td>
       <td><input type="radio" name="invfpflag" id="fpn" value="N"[%- IF cookie.PREFS.substr(2,1) == 'N' -%] checked="checked"[%- END -%] onclick="$('#fp_type').css('visibility','hidden');"/>&nbsp;No&nbsp;&nbsp;<input type="radio" name="invfpflag" id="fpy" value="Y"[%- IF cookie.PREFS.substr(2,1) == 'Y' -%] checked="checked"[%- END -%] onclick="$('#fp_type').css('visibility','visible');"/>&nbsp;&nbsp;Yes<span id="fp_type" style="visibility:hidden;">&nbsp;&nbsp;
         <select name="txnmethod" id="pay_method" size="1">
-          <option value="1300" selected="selected">Cash</option>
-          <option value="1310">Cheque</option>
-          <option value="1200">Bank Transfer</option>
+          <option value="1300"[%- IF invoice.cusdefpaymethod == "1300" -%] selected="selected"[%- END -%]>Cash</option>
+          <option value="1310"[%- IF invoice.cusdefpaymethod == "1310" -%] selected="selected"[%- END -%]>Cheque</option>
+          <option value="1200"[%- IF invoice.cusdefpaymethod == "1200" -%] selected="selected"[%- END -%]>Bank Transfer</option>
         </select>
       </td>
       <td colspan="2">&nbsp;<input type="hidden" name="invpdf" id="invpdf" value="Y"/></td>
@@ -137,7 +137,7 @@
 [% UNLESS cookie.VAT == "N" -%]
                   <td>
                     <select name="vat" id="sel_vat">
-  [% INCLUDE vatrates -%]
+  [% cusdefvatrate = invoice.cusdefvatrate; INCLUDE vatrates -%]
                     </select>
                   </td>
 [% END -%]
