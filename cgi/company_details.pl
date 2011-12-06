@@ -39,9 +39,10 @@ for $Month (1..12) {
 }
 $Dates->finish;
 
-$Companies = $dbh->prepare("select comname,comaddress,compostcode,comtel,combusiness,comregno,comvatno,comvatscheme,comcontact,comemail,comyearend,comvatduein,comnextsi,comnextpi,comcompleted,comacccompleted,comemailmsg,comstmtmsg,comlogo from companies where reg_id=? and id=?");
+$Companies = $dbh->prepare("select comname,comaddress,compostcode,comtel,combusiness,comregno,comvatno,comvatscheme,comcontact,comemail,comyearend,comvatduein,comnextsi,comnextpi,comcompleted,comacccompleted,comemailmsg,comstmtmsg,comlogo,comcis from companies where reg_id=? and id=?");
 $Companies->execute($Reg_id,$Com_id);
 $Company = $Companies->fetchrow_hashref;
+unless ($Company->{comcis}) { $Company->{comcis} = 'N'; }
 
 $Accts = $dbh->prepare("select acctype,accname,accsort,accacctno from accounts where acct_id='$COOKIE->{ACCT}'");
 $Accts->execute;

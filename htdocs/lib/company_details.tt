@@ -11,7 +11,7 @@
 [%- END -%]
     <tr>
       <td><label>Company Name</label></td>
-      <td nowrap><span><input title="Company Name" name="comname" type="text" id="comname" size="40" value="[% client.comname -%]" class="mandatory"/></span></td>
+      <td nowrap><span><input title="Company Name" name="comname" type="text" id="comname" size="40" value="[%- client.comname -%]" class="mandatory"/></span></td>
     </tr>
     <tr>
       <td style="vertical-align:top;"><label>Company Address</label></td>
@@ -19,68 +19,72 @@
     </tr>
     <tr>
       <td><label>Post Code</label></td>
-      <td><span><input title="Post Code" name="compostcode" type="text" id="compostcode" value="[% client.compostcode -%]" class="mandatory"/></span></td>
+      <td><span><input title="Post Code" name="compostcode" type="text" id="compostcode" value="[%- client.compostcode -%]" class="mandatory"/></span></td>
     </tr>
     <tr>
       <td><label>Telephone Number</label></td>
-      <td><span><input title="Telephone No" name="comtel" type="text" id="comtel" value="[% client.comtel -%]"/></span></td>
+      <td><span><input title="Telephone No" name="comtel" type="text" id="comtel" value="[%- client.comtel -%]"/></span></td>
     </tr>
     <tr>
       <td><label>Company Registration No</label></td>
-      <td><input name="comregno" type="text" id="comregno" value="[% client.comregno -%]"/></td>
+      <td><input name="comregno" type="text" id="comregno" value="[%- client.comregno -%]"/></td>
     </tr>
     <tr>
       <td><label>Type of Business</label></td>
       <td><span><select title="Type of Business" name="combusiness" id="combusiness" class="mandatory">
-          <option value="" [% IF client.combusiness == '' -%] selected="selected" [% END -%] >--  Please Select  --</option>
+          <option value="" [%- IF client.combusiness == '' -%] selected="selected" [%- END -%] >--  Please Select  --</option>
 [% FOREACH sector IN sectors -%]
-          <option value="[%- sector.id -%]" [% IF client.combusiness == sector.id -%] selected="selected" [% END -%] >[%- sector.sector | truncate(70) -%]</option>
+          <option value="[%- sector.id -%]"[%- IF client.combusiness == sector.id -%] selected="selected" [%- END -%] >[%- sector.sector | truncate(70) -%]</option>
 [% END -%]
         </select></span>
       </td>
     </tr>
     <tr>
+      <td><label>Registered for CIS?</label></td>
+      <td><input name="comcis" type="radio" id="comcisN" value="N"[%- IF client.comcis == 'N' -%] checked="checked"[%- END -%]/> No&nbsp;&nbsp;<input name="comcis" type="radio" id="comcisY" value="Y"[%- IF client.comcis == 'Y' -%] checked="checked"[%- END -%]/> Yes</td>
+    </tr>
+    <tr>
       <td><label>VAT Accounting Scheme</label></td>
       <td>
         <select name="comvatscheme" id="comvatscheme">
-          <option value="N" [% IF client.comvatscheme == 'N' -%] selected="selected" [% END -%]>None</option>
-          <option value="S" [% IF client.comvatscheme == 'S' -%] selected="selected" [% END -%]>Standard Accounting</option>
-          <option value="C" [% IF client.comvatscheme == 'C' -%] selected="selected" [% END -%]>Cash Accounting</option>
-          <option value="SF" [% IF client.comvatscheme == 'SF' -%] selected="selected" [% END -%]>Fixed Rate Standard Scheme</option>
-          <option value="CF" [% IF client.comvatscheme == 'CF' -%] selected="selected" [% END -%]>Fixed Rate Cash Scheme</option>
+          <option value="N" [%- IF client.comvatscheme == 'N' -%] selected="selected" [%- END -%]>None</option>
+          <option value="S" [%- IF client.comvatscheme == 'S' -%] selected="selected" [%- END -%]>Standard Accounting</option>
+          <option value="C" [%- IF client.comvatscheme == 'C' -%] selected="selected" [%- END -%]>Cash Accounting</option>
+          <option value="SF" [%- IF client.comvatscheme == 'SF' -%] selected="selected" [%- END -%]>Fixed Rate Standard Scheme</option>
+          <option value="CF" [%- IF client.comvatscheme == 'CF' -%] selected="selected" [%- END -%]>Fixed Rate Cash Scheme</option>
         </select>
       </td>
     </tr>
     <tbody id="vat">
     <tr>
-      <td [% IF client.comvatscheme == 'N' -%] class="hidden" [% ELSE -%] class="visible" [% END -%]><label>Company VAT No</label></td>
-      <td [% IF client.comvatscheme == 'N' -%] class="hidden" [% ELSE -%] class="visible" [% END -%]><span><input title="Company VAT No" name="comvatno" type="text" id="comvatno" value="[% client.comvatno -%]" class="mandatory"/></span></td>
+      <td [%- IF client.comvatscheme == 'N' -%] class="hidden" [%- ELSE -%] class="visible" [%- END -%]><label>Company VAT No</label></td>
+      <td [%- IF client.comvatscheme == 'N' -%] class="hidden" [%- ELSE -%] class="visible" [%- END -%]><span><input title="Company VAT No" name="comvatno" type="text" id="comvatno" value="[%- client.comvatno -%]" class="mandatory"/></span></td>
     </tr>
     <tr>
-      <td [% IF client.comvatscheme == 'N' -%] class="hidden" [% ELSE -%] class="visible" [% END -%]><label>VAT Quarter End</label></td>
-      <td [% IF client.comvatscheme == 'N' -%] class="hidden" [% ELSE -%] class="visible" [% END -%]><span><select title="VAT Quarter End" name="comvatduein" id="comvatduein" class="mandatory">
-          <option value="" [% IF client.comvatduein == '' -%] selected="selected" [% END -%]>-- Please Select --</option>
-          <option value="1" [% IF client.comvatduein == '1' -%] selected="selected" [% END -%]>Jan, Apr, Jul, Oct</option>
-          <option value="2" [% IF client.comvatduein == '2' -%] selected="selected" [% END -%]>Feb, May, Aug, Nov</option>
-          <option value="3" [% IF client.comvatduein == '3' -%] selected="selected" [% END -%]>Mar, Jun, Sep, Dec</option>
+      <td [%- IF client.comvatscheme == 'N' -%] class="hidden" [%- ELSE -%] class="visible" [%- END -%]><label>VAT Quarter End</label></td>
+      <td [%- IF client.comvatscheme == 'N' -%] class="hidden" [%- ELSE -%] class="visible" [%- END -%]><span><select title="VAT Quarter End" name="comvatduein" id="comvatduein" class="mandatory">
+          <option value="" [%- IF client.comvatduein == '' -%] selected="selected" [%- END -%]>-- Please Select --</option>
+          <option value="1" [%- IF client.comvatduein == '1' -%] selected="selected" [%- END -%]>Jan, Apr, Jul, Oct</option>
+          <option value="2" [%- IF client.comvatduein == '2' -%] selected="selected" [%- END -%]>Feb, May, Aug, Nov</option>
+          <option value="3" [%- IF client.comvatduein == '3' -%] selected="selected" [%- END -%]>Mar, Jun, Sep, Dec</option>
         </select></span>
       </td>
     </tr>
     </tbody>
     <tr>
       <td><label>Main Contact Name</label></td>
-      <td><input name="comcontact" type="text" id="comcontact" size="40" value="[% client.comcontact -%]"/></td>
+      <td><input name="comcontact" type="text" id="comcontact" size="40" value="[%- client.comcontact -%]"/></td>
     </tr>
     <tr>
       <td><label>Main Contact Email Address</label></td>
-      <td><input name="comemail" type="text" id="comemail" size="40" value="[% client.comemail -%]"/></td>
+      <td><input name="comemail" type="text" id="comemail" size="40" value="[%- client.comemail -%]"/></td>
     </tr>
     <tr>
       <td><label>Accounting Year End Month</label></td>
       <td><span><select title="Year End Month" name="comyearend" id="comyearend" class="mandatory">
-          <option value="" [% IF client.comyearend == '0' -%] selected="selected" [% END -%] >--  Please Select  --</option>
+          <option value="" [%- IF client.comyearend == '0' -%] selected="selected" [%- END -%] >--  Please Select  --</option>
 [% FOREACH ye IN yearend -%]
-          <option value="[%- ye.dte -%]" [% IF client.comyearend == ye.dte -%] selected="selected" [% END -%] >[%- ye.month -%]</option>
+          <option value="[%- ye.dte -%]" [%- IF client.comyearend == ye.dte -%] selected="selected" [%- END -%] >[%- ye.month -%]</option>
 [% END -%]
         </select></span>
       </td>
@@ -88,15 +92,15 @@
 [% IF invoice.count == 0 -%]
     <tr>
       <td><label>Next Sales Invoice No</label></td>
-      <td><span><input title="Next Sales Invoice No" name="comnextsi" type="text" id="comnextsi" size="8" value="[% client.comnextsi %]" class="mandatory"/></span></td>
+      <td><span><input title="Next Sales Invoice No" name="comnextsi" type="text" id="comnextsi" size="8" value="[%- client.comnextsi %]" class="mandatory"/></span></td>
     </tr>
     <tr>
       <td><label>Next Purchase Invoice Reference</label></td>
-      <td><span><input title="Next Purchase Invoice No" name="comnextpi" type="text" id="comnextpi" size="8" value="[% client.comnextpi -%]" class="mandatory"/></span></td>
+      <td><span><input title="Next Purchase Invoice No" name="comnextpi" type="text" id="comnextpi" size="8" value="[%- client.comnextpi -%]" class="mandatory"/></span></td>
     </tr>
 [% ELSE -%]
-<input type="hidden" name="comnextsi" id="comnextsi" value="[% client.comnextsi %]"/>
-<input type="hidden" name="comnextpi" id="comnextpi" value="[% client.comnextpi -%]"/>
+<input type="hidden" name="comnextsi" id="comnextsi" value="[%- client.comnextsi %]"/>
+<input type="hidden" name="comnextpi" id="comnextpi" value="[%- client.comnextpi -%]"/>
 [% END -%]
     <tr>
 <td colspan="2"><div id="silly"><b>- Bank Details -</b>

@@ -18,7 +18,7 @@ unless ($COOKIE->{NO_ADS}) {
 
 
 if ($Cus_type =~ /^\d+$/) {
-	$Customers = $dbh->prepare("select id,cusname,cusaddress,cuspostcode,cusregion,custel,cuscontact,cusemail,custerms,cusdefpo,cusbank,cussortcode,cusacctno,cusdefpaymethod,cusbalance,cussales,cussupplier,cusremarks,cuslimit,cusdefcoa,cusdefvatrate,cusemailmsg,cusstmtmsg,cusautostmts from customers where acct_id=? and id=?");
+	$Customers = $dbh->prepare("select id,cusname,cusaddress,cuspostcode,cusregion,custel,cuscontact,cusemail,custerms,cusdefpo,cusbank,cussortcode,cusacctno,cusdefpaymethod,cusbalance,cussales,cussupplier,cusremarks,cuslimit,cusdefcoa,cusdefvatrate,cusemailmsg,cusstmtmsg,cusautostmts,cuscis from customers where acct_id=? and id=?");
 	$Customers->execute("$COOKIE->{ACCT}",$ENV{QUERY_STRING});
 	$Customer = $Customers->fetchrow_hashref;
 	$Customers->finish;
@@ -36,6 +36,7 @@ else {
 	$Companies->execute;
 	($Customer->{cusemailmsg},$Customer->{cusstmtmsg}) = $Companies->fetchrow;
 	$Companies->finish;
+	$Customer->{cuscis} = 'N';
 }
 
 $Coas = $dbh->prepare("select coanominalcode,coadesc from coas where coatype='Expenses' and acct_id='$COOKIE->{ACCT}'");

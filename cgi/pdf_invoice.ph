@@ -34,7 +34,7 @@ $Vats->finish;
 
 #  Now get the invoice data
 
-$Invoices = $dbh->prepare("select invinvoiceno,date_format(invprintdate,'%d %b %Y'),date_format(invduedate,'%d %b %Y'),invcusterms,invcusref,invcusname,invcusaddr,invcuspostcode,invcuscontact,invitems,invremarks,date_format(curdate(),'%d %b %Y'),invstatus,invtype,invourref from invoices where id=$Invoice_id and acct_id='$COOKIE->{ACCT}'");
+$Invoices = $dbh->prepare("select invinvoiceno,date_format(invprintdate,'%d %b %Y'),date_format(invduedate,'%d %b %Y'),invcusterms,invcusref,invcusname,invcusaddr,invcuspostcode,invcuscontact,invitems,invremarks,date_format(curdate(),'%d %b %Y'),invstatus,invtype,invourref,invcistotal from invoices where id=$Invoice_id and acct_id='$COOKIE->{ACCT}'");
 $Invoices->execute;
 @Invoice = $Invoices->fetchrow;
 $Invoices->finish;
@@ -184,6 +184,12 @@ for $Row (@Row) {
 
 #  Put in any remarks
 
+if ($Invoice[15] && ! $Invoice[10]) {
+	$Pound = pack("H2","A3");
+	$Invoice[15] += $Vat;
+	$Invoice[10] = "Total due for payment = ".$Pound.$Invoice[15];
+
+}
 if ($Invoice[10]) {
 	$Ypos = 139;
 	$tb->y($Ypos);

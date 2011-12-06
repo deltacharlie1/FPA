@@ -10,11 +10,6 @@ $COOKIE = &checkid($ENV{HTTP_COOKIE},$ACCESS_LEVEL);
 use CGI;
 use DBI;
 $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
-unless ($COOKIE->{NO_ADS}) {
-	require "/usr/local/git/fpa/cgi/display_adverts.ph";
-	&display_adverts();
-}
-
 
 $Data = new CGI;
 %FORM2 = $Data->Vars;
@@ -32,26 +27,11 @@ while (($Key,$Value) = each %FORM2) {
 	$Value =~ tr/\\//d;
 	$Value =~ s/\'/\\\'/g;
 	$FORM{$Key} = $Value;
-
-# print "$Key = $Value<br/>\n";
-
-# print "$Key = $Value\n";
 }
-# exit;
-
-#  Do some basic validation
-
-# $FORM{id} = $FORM{i_id};
 
 $Errs = "";
 
 unless ($FORM{txnamount} =~ /^\-?\d+\.?\d?\d?$/) { $Errs .= "<li>$FORM{txnamount} - You must enter the amount being paid</li>\n"; }
-
-#open(FILE,">>/tmp/fpa1.txt");
-#while (($Key,$Value) = each %FORM) {
-#	print FILE  "$Key = $Value\n";
-#}
-#close(FILE);
 
 if ($Errs) {
 	print<<EOD;
@@ -88,6 +68,7 @@ else {
 
 	require "/usr/local/httpd/cgi-bin/fpa/process_invoice.ph";
 	$FORM{invtype} = "S";
+	$FORM{invremarks} = $FORM{invdesc};
 	&money_in();
 	&pay_invoice();
 	print<<EOD;

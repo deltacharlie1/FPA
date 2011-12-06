@@ -54,7 +54,7 @@
     </tr>
 [% class = [ "even","odd" ] -%]
 [% FOREACH invoice IN invoices -%]
-  [%- ndx = loop.count % 2 -%]
+  [%- ndx = loop.count % 2; IF invoice.invcistotal != "" && invoice.invstatuscode > 2; invoice.invamount = invoice.invcistotal + invoice.invvat | format('%1.2f'); END -%]
     <tr class="[%- class.$ndx -%]">
       <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invinvoiceno -%]</td>
       <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invcusname -%]</td>
@@ -65,7 +65,7 @@
       <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- IF invoice.invamount-invoice.invpaid != 0; invoice.invamount - invoice.invpaid | format('%1.2f'); ELSE -%]&nbsp;[%- END -%]</td>
       <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">
   [% IF invoice.invstatus == 'Overdue' -%]<span style="color:#800000;font-weight:bold;">Overdue</span>[%- ELSE; invoice.invstatus; END -%]</td>
-    [% IF invoice.invstatuscode > 2 AND invoice.invpaid < invoice.invamount -%]
+    [% IF invoice.invstatuscode > 2 AND invoice.invpaid != invoice.invamount -%]
       <td><img src="/images/payin.png" title="Receive Payment" onclick="get_amt('[%- invoice.invid -%]','[%- invoice.invinvoiceno -%]','[%- invoice.invamount - invoice.invpaid -%]','[%- invoice.cusdefpaymethod -%]','[%- invoice.cus_id -%]');"/></td>
     [% ELSE -%]
       <td>&nbsp;</td>

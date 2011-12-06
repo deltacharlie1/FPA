@@ -99,6 +99,7 @@ create table companies (
   comkeep_recs date not null default '2010-01-01' comment 'Expiry date for keeping records for 6 years',
   comadvertise date not null default '2010-01-01' comment 'Allowed to advertise until this date',
   comsubs date not null default '2010-01-01' comment 'Date subscription expires',
+  comcis char(3) not null default 'N' comment 'Whether or not this company is in the CIS scheme',
   old_id int unsigned,
   index (reg_id)
 );
@@ -174,6 +175,7 @@ create table customers (
   cusstmtemail varchar(250) not null default '' comment 'Statement email address (if completed)',
   cusstmtmsg varchar(5000) not null default '' comment 'Default stmt meesage for this customer',
   cusautostmts char(1) not null default 'N' comment 'Whether to run auto statements for this customer',
+  cuscis char(3) not null default 'N' comment 'Whether this customer is a CIS Contractor',
   old_id int unsigned,
   index cus1 (acct_id),
   index cus2 (cusname)
@@ -201,6 +203,7 @@ create table invoices (
   invprintdate date comment 'Date invoice printed/emailed',
   invduedate date comment 'Date payment for the invoice is due',
   invtotal decimal(20,2) not null default '0' comment 'The invoice total (excl VAT if applicable)',
+  invcistotal decimal(20,2) not null default '0' comment 'The invoice CIS total',
   invvat decimal(20,2) not null default '0' comment 'VAT total',
   invpaid decimal(20,2) not null default '0' comment 'Total paid so far',
   invpaidvat decimal(20,2) not null default '0' comment 'Total VAT paid so far',
