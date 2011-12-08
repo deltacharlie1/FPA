@@ -149,6 +149,7 @@ ul a{
 .admin a{background-image: url(/images/images/admin.png);}
 .print a{background-image: url(/images/images/print.png);}
 .help a{background-image: url(/images/images/help.png);}
+.bookkeeper a{background-image: url(/images/images/bookkeeper.png);}
 #navigation ul .search { padding-left: 5px; }
 
 #navigation ul .search span {

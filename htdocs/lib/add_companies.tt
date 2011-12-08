@@ -1,0 +1,121 @@
+<div class="main" id="main">
+<h1>Add New Clients</h1>
+  <form name="form1" id="form1" method="post" action="/cgi-bin/fpa/add_companies2.pl" onsubmit="return check_data();">
+  <input type="hidden" name="data" id="data" value=""/>
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="formtable">
+    <tr>
+      <td nowrap="nowrap"><label>Company Name</label></td>
+      <td><span><input type="text" name="company" id="company" size="20" class="mandatory" title="Company Name"/></span></td>
+      <td><label>Client Name</label></td>
+      <td><span><input type="text" name="client" id="client" size="20" class="mandatory" title="Client Name"/></span></td>
+    </tr>
+    <tr>
+      <td nowrap="nowrap"><label>Email Address</label></td>
+      <td><input type="text" name="email" id="email" size="20"/></td>
+      <td><label>Year End</label></td>
+      <td><span>
+        <select name="yearend" id="yearend" size="1" class="mandatory" title="Company Year End">
+          <option value="" selected="selected">--  Please Select  --</option>
+          <option value="Jan">January</option>
+          <option value="Feb">February</option>
+          <option value="Mar">March</option>
+          <option value="Apr">April</option>
+          <option value="May">May</option>
+          <option value="Jun">June</option>
+          <option value="Jul">July</option>
+          <option value="Aug">August</option>
+          <option value="Sep">September</option>
+          <option value="Oct">October</option>
+          <option value "Nov">November</option>
+          <option value="Dec"December</option>
+        </select> 
+      </span></td>
+    </tr>
+    <tr>
+      <td colspan="4"><hr/></td>
+    </tr>
+    <tr>
+      <td><label>VAT Scheme</label></td>
+      <td>
+        <select name="vatscheme" id="vatscheme">
+          <option value="N" selected="selected">None</option>
+          <option value="S">Standard Accounting</option>
+          <option value="C">Cash Accounting</option>
+          <option value="SF">Fixed Rate Standard Scheme</option>
+          <option value="CF">Fixed Rate Cash Scheme</option>
+        </select>
+      </td>
+      <td><label>VAT Quarter End</label></td>
+      <td><select name="vatend" id="vatend" size="1">
+          <option value="" selected="selected">None</option>
+          <option value="1">Jan/Apr/Jul/Oct</option>
+          <option value="2">Feb/May/Aug/Nov</option>
+          <option value="3">Mar/Jun/Sep/Dec</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td><label>CIS Registered?</label></td>
+      <td><input type="radio" name="cis" id="cisN" value="N" checked="checked"> No&nbsp;&nbsp;<input type="radio" name="cis" id="cisY" value="Y"> Yes</td>
+      <td colspan="2">&nbsp;</td>
+    </tr>
+    <tr>
+      <td style="text-align:center" colspan="4"><input type="button" name="but1" id="but1" value="Add Company to List" onclick="add_company();"/></td>
+    </tr>
+  </table>
+  <p>&nbsp;</p>
+  <h2>Companies to be Created</h2>
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="listing">
+    <tr>
+      <th>Company</th>
+      <th>Client</th>
+      <th>Email</th>
+      <th>Year End</th>
+      <th>VAT Scheme</th>
+      <th>VAT Q End</th>
+      <th>CIS?</th>
+      <th>Edit</th>
+    </tr>
+    <tbody id="new">
+    </tbody>
+  </table>
+  <p>&nbsp;</p>
+  <h2>Existing Companies</h2>
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="listing">
+    <tr>
+      <th>Company</th>
+      <th>Client</th>
+      <th>Email</th>
+      <th>Year End</th>
+      <th>VAT Scheme</th>
+      <th>VAT Q End</th>
+      <th>CIS?</th>
+    </tr>
+[% class = [ "even","odd" ]; vatq = [ "","Jan/Apr/Jul/Oct/","Feb/May/Jul/Nov","Mar/Jun/Aug/Dec" ] -%]
+[%- FOREACH company IN companies -%]
+  [%- ndx = loop.count % 2; vatdue = company.comvatduein -%]
+    <tr class="[%- class.$ndx -%]" onclick="location.href='/cgi-bin/fpa/switch_company.pl?[%- company.id -%]';" >
+      <td>[%- company.comname -%]</td>
+      <td>[%- company.comcontact -%]</td>
+      <td>[%- company.regemail -%]</td>
+      <td align="center">[%- company.comyearend -%]</td>
+      <td align="center">[%- company.comvatscheme -%]</td>
+      <td>[%- vatq.$vatdue -%]</td>
+      <td align="center">[%- company.comcis -%]</td>
+    </tr>
+[%- END -%]
+  </table>
+</div>
+<div id="sidebar">
+  <ul>    
+    <li>
+      <div>
+        <input type="submit" name="save" id="save" value="Create Companies"/>
+      </div>  
+    </li>   
+  </ul>   
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+</div>
+</form>
+</div>

@@ -1,0 +1,32 @@
+<div class="main" id="main">
+<h1>Managed Companies</h1>
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="listing">
+    <tr>
+      <th>Company</th>
+      <th>Client</th>
+      <th>Email</th>
+      <th>Year End</th>
+      <th>VAT Scheme</th>
+      <th>VAT Q End</th>
+      <th>CIS?</th>
+    </tr>
+[% class = [ "even","odd" ]; vatq = [ "","Jan/Apr/Jul/Oct/","Feb/May/Jul/Nov","Mar/Jun/Aug/Dec" ] -%]
+[%- FOREACH company IN companies -%]
+  [%- ndx = loop.count % 2; vatdue = company.comvatduein -%]
+    <tr class="[%- class.$ndx -%]" onclick="location.href='/cgi-bin/fpa/switch_company.pl?[%- company.id -%]';" >
+      <td>[%- company.comname -%]</td>
+      <td>[%- company.comcontact -%]</td>
+      <td>[%- company.regemail -%]</td>
+      <td align="center">[%- company.comyearend -%]</td>
+      <td align="center">[%- company.comvatscheme -%]</td>
+      <td>[%- vatq.$vatdue -%]</td>
+      <td align="center">[%- company.comcis -%]</td>
+    </tr>
+[%- END -%]
+  </table>
+</div>
+<div id="sidebar">
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+</div>
+</div>
