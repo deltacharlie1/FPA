@@ -186,13 +186,22 @@ $(document).ready(function(){
             <li><a href="#" onclick="$('#vcomment').dialog('open');">Add New Feedback</a></li>
             <li><a href="/cgi-bin/fpa/assign_invoices.pl">Assign Unlisted Invoices</a></li>
             <li><a href="/cgi-bin/fpa/switch_systems.pl">Switch to [%- IF cookie.ACCT == "3+2" -%]Live System[%- ELSE -%]Testbed[%- END -%]</a></li>
-        <li><a href="/cgi-bin/fpa/list_audit_trails.pl">Audit Trail</a></li>
+            <li><a href="/cgi-bin/fpa/list_audit_trails.pl">Audit Trail</a></li>
           </ul>
         </li>
         <li class="print"><a href="#" onclick="print_display();"><span>Print</span></a>
         </li>
         <li class="help"><a href="/usermanual.pdf"><span>Help</span></a>
         </li>
+[% IF cookie.BUS == '1' AND cookie.ACCESS >= 5 -%]
+        <li class="bookkeeper"><a href="#"><span>Bookkeeper</span></a>
+          <ul>
+            <li><a href="/cgi-bin/fpa/bkpr_add_invoices.pl">Bulk Add Invoices</a></li>
+            <li><a href="/cgi-bin/fpa/list_companies.pl">List Companies</a></li>
+            <li><a href="/cgi-bin/fpa/add_companies.pl">Add Companies</a></li>
+          </ul>
+        </li>
+[% END -%]
         <li class="search"><span><input id="searchcus" /></span>
         </li>
       </ul>

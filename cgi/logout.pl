@@ -2,7 +2,7 @@
 
 #  script to test template toolkit
 
-$ACCESS_LEVEL = 1;
+$ACCESS_LEVEL = 0;
 
 use Checkid;
 $COOKIE = &checkid($ENV{HTTP_COOKIE},$ACCESS_LEVEL);

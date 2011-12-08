@@ -1,0 +1,67 @@
+<div class="main" id="main">
+<h1>Add Invoices/Receipts</h1>
+  <form name="form1" id="form1" method="post" action="/cgi-bin/fpa/bkpr_add_invoices2.pl" onsubmit="return check_data();">
+  <input type="hidden" name="data" id="data" value=""/>
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="formtable">
+    <tr>
+      <td nowrap="nowrap"><label>Customer</label></td>
+      <td><span><input type="text" name="customer" id="customer" size="20" class="mandatory" title="Customer Name"/></span></td>
+      <td><label>Description</label></td>
+      <td><span><input type="text" name="descr" id="descr" size="20" class="mandatory" title="Description"/></span></td>
+    </tr>
+    <tr>
+      <td nowrap="nowrap"><label>Net Amount</label></td>
+      <td><span><input type="text" name="netamt" id="netamt" class="mandatory currency" size="8"/></span></td>
+      <td><label>VAT Rate</label></td>
+      <td><span>
+        <select name="vatrate" id="vatrate" size="1">
+[% INCLUDE vatrates -%]
+        </select> 
+      </span></td>
+    </tr>
+    <tr>
+      <td><label>Invoice Date</label></td>
+      <td><input type="text" name="invdate" id="invdate" size="9"/></td>
+      <td><label>Paid?</label></td>
+      <td><input type="checkbox" name="paid" id="paid" value="Y" checked="checked"/></td>
+    </tr>
+    <tr>
+      <td><label>Category</label></td>
+      <td><input type="text" name="category" id="category" value="" size="10"/></td>
+      <td><label>Nominal Acct</label></td>
+      <td><input type="text" name="nominal" id="nominal" value="" size="10"/></td>
+    </tr>
+    <tr>
+      <td style="text-align:center" colspan="4"><input type="button" name="but1" id="but1" value="Add Invoice to List" onclick="add_company();"/></td>
+    </tr>
+  </table>
+  <p>&nbsp;</p>
+  <h2>Invoices to be Added</h2>
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="listing">
+    <tr>
+      <th>Customer</th>
+      <th>Description</th>
+      <th>Net</th>
+      <th>VAT</th>
+      <th>Total</th>
+      <th>Date</th>
+      <th>Nominal</th>
+      <th>Category</th>
+    </tr>
+    <tbody id="new">
+    </tbody>
+  </table>
+</div>
+<div id="sidebar">
+  <ul>    
+    <li>
+      <div>
+        <input type="submit" name="save" id="save" value="Save Invoices"/>
+      </div>  
+    </li>   
+  </ul>   
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+</div>
+</form>
+</div>

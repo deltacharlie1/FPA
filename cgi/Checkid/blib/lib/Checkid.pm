@@ -75,7 +75,8 @@ EOD
 
 #  Now check the access level
 
-	unless ($COOKIE->{ACCESS} || $ACCESS_LEVEL == 0) {
+#	unless ($COOKIE->{ACCESS} || $ACCESS_LEVEL == 0) {
+	unless ($COOKIE->{ACCESS} >= $ACCESS_LEVEL) {
         	print<<EOD;
 Content-Type: text/html
 Status: 301

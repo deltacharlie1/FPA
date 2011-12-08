@@ -1,17 +1,19 @@
 # This Makefile is for the Checkid extension to perl.
 #
 # It was generated automatically by MakeMaker version
-# 6.42 (Revision: 41145) from the contents of
+# 6.55_02 (Revision: 65502) from the contents of
 # Makefile.PL. Don't edit this file, edit Makefile.PL instead.
 #
 #       ANY CHANGES MADE HERE WILL BE LOST!
 #
 #   MakeMaker ARGV: ()
 #
+
 #   MakeMaker Parameters:
 
 #     ABSTRACT_FROM => q[lib/Checkid.pm]
 #     AUTHOR => q[Doug Conran <dconran@nonet>]
+#     BUILD_REQUIRES => {  }
 #     NAME => q[Checkid]
 #     PREREQ_PM => {  }
 #     VERSION_FROM => q[lib/Checkid.pm]
@@ -21,31 +23,30 @@
 
 # --- MakeMaker const_config section:
 
-# These definitions are from config.sh (via /usr/lib/perl5/5.10.0/i586-linux-thread-multi/Config.pm)
-
-# They may have been overridden via Makefile.PL or on the command line
+# These definitions are from config.sh (via /usr/lib64/perl5/Config.pm).
+# They may have been overridden via Makefile.PL or on the command line.
 AR = ar
-CC = cc
+CC = gcc
 CCCDLFLAGS = -fPIC
-CCDLFLAGS = -Wl,-E -Wl,-rpath,/usr/lib/perl5/5.10.0/i586-linux-thread-multi/CORE
+CCDLFLAGS = -Wl,-E -Wl,-rpath,/usr/lib64/perl5/CORE
 DLEXT = so
 DLSRC = dl_dlopen.xs
 EXE_EXT = 
 FULL_AR = /usr/bin/ar
-LD = cc
-LDDLFLAGS = -shared -march=i586 -mtune=i686 -fmessage-length=0 -O2 -Wall -D_FORTIFY_SOURCE=2 -fstack-protector -funwind-tables -fasynchronous-unwind-tables -g -Wall -pipe
-LDFLAGS = 
-LIBC = /lib/libc-2.9.so
+LD = gcc
+LDDLFLAGS = -shared -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 -m64 -mtune=generic
+LDFLAGS =  -fstack-protector
+LIBC = 
 LIB_EXT = .a
 OBJ_EXT = .o
 OSNAME = linux
-OSVERS = 2.6.27
+OSVERS = 2.6.32-44.2.el6.x86_64
 RANLIB = :
-SITELIBEXP = /usr/lib/perl5/site_perl/5.10.0
-SITEARCHEXP = /usr/lib/perl5/site_perl/5.10.0/i586-linux-thread-multi
+SITELIBEXP = /usr/local/share/perl5
+SITEARCHEXP = /usr/local/lib64/perl5
 SO = so
-VENDORARCHEXP = /usr/lib/perl5/vendor_perl/5.10.0/i586-linux-thread-multi
-VENDORLIBEXP = /usr/lib/perl5/vendor_perl/5.10.0
+VENDORARCHEXP = /usr/lib64/perl5/vendor_perl
+VENDORLIBEXP = /usr/share/perl5/vendor_perl
 
 
 # --- MakeMaker constants section:
@@ -73,52 +74,52 @@ INSTALLDIRS = site
 DESTDIR = 
 PREFIX = $(SITEPREFIX)
 PERLPREFIX = /usr
-SITEPREFIX = /usr
+SITEPREFIX = /usr/local
 VENDORPREFIX = /usr
-INSTALLPRIVLIB = /usr/lib/perl5/5.10.0
+INSTALLPRIVLIB = /usr/share/perl5
 DESTINSTALLPRIVLIB = $(DESTDIR)$(INSTALLPRIVLIB)
-INSTALLSITELIB = /usr/lib/perl5/site_perl/5.10.0
+INSTALLSITELIB = /usr/local/share/perl5
 DESTINSTALLSITELIB = $(DESTDIR)$(INSTALLSITELIB)
-INSTALLVENDORLIB = /usr/lib/perl5/vendor_perl/5.10.0
+INSTALLVENDORLIB = /usr/share/perl5/vendor_perl
 DESTINSTALLVENDORLIB = $(DESTDIR)$(INSTALLVENDORLIB)
-INSTALLARCHLIB = /usr/lib/perl5/5.10.0/i586-linux-thread-multi
+INSTALLARCHLIB = /usr/lib64/perl5
 DESTINSTALLARCHLIB = $(DESTDIR)$(INSTALLARCHLIB)
-INSTALLSITEARCH = /usr/lib/perl5/site_perl/5.10.0/i586-linux-thread-multi
+INSTALLSITEARCH = /usr/local/lib64/perl5
 DESTINSTALLSITEARCH = $(DESTDIR)$(INSTALLSITEARCH)
-INSTALLVENDORARCH = /usr/lib/perl5/vendor_perl/5.10.0/i586-linux-thread-multi
+INSTALLVENDORARCH = /usr/lib64/perl5/vendor_perl
 DESTINSTALLVENDORARCH = $(DESTDIR)$(INSTALLVENDORARCH)
 INSTALLBIN = /usr/bin
 DESTINSTALLBIN = $(DESTDIR)$(INSTALLBIN)
-INSTALLSITEBIN = /usr/bin
+INSTALLSITEBIN = /usr/local/bin
 DESTINSTALLSITEBIN = $(DESTDIR)$(INSTALLSITEBIN)
 INSTALLVENDORBIN = /usr/bin
 DESTINSTALLVENDORBIN = $(DESTDIR)$(INSTALLVENDORBIN)
 INSTALLSCRIPT = /usr/bin
 DESTINSTALLSCRIPT = $(DESTDIR)$(INSTALLSCRIPT)
-INSTALLSITESCRIPT = /usr/bin
+INSTALLSITESCRIPT = /usr/local/bin
 DESTINSTALLSITESCRIPT = $(DESTDIR)$(INSTALLSITESCRIPT)
 INSTALLVENDORSCRIPT = /usr/bin
 DESTINSTALLVENDORSCRIPT = $(DESTDIR)$(INSTALLVENDORSCRIPT)
 INSTALLMAN1DIR = /usr/share/man/man1
 DESTINSTALLMAN1DIR = $(DESTDIR)$(INSTALLMAN1DIR)
-INSTALLSITEMAN1DIR = /usr/share/man/man1
+INSTALLSITEMAN1DIR = /usr/local/share/man/man1
 DESTINSTALLSITEMAN1DIR = $(DESTDIR)$(INSTALLSITEMAN1DIR)
 INSTALLVENDORMAN1DIR = /usr/share/man/man1
 DESTINSTALLVENDORMAN1DIR = $(DESTDIR)$(INSTALLVENDORMAN1DIR)
 INSTALLMAN3DIR = /usr/share/man/man3
 DESTINSTALLMAN3DIR = $(DESTDIR)$(INSTALLMAN3DIR)
-INSTALLSITEMAN3DIR = /usr/share/man/man3
+INSTALLSITEMAN3DIR = /usr/local/share/man/man3
 DESTINSTALLSITEMAN3DIR = $(DESTDIR)$(INSTALLSITEMAN3DIR)
 INSTALLVENDORMAN3DIR = /usr/share/man/man3
 DESTINSTALLVENDORMAN3DIR = $(DESTDIR)$(INSTALLVENDORMAN3DIR)
-PERL_LIB = /usr/lib/perl5/5.10.0
-PERL_ARCHLIB = /usr/lib/perl5/5.10.0/i586-linux-thread-multi
+PERL_LIB = /usr/share/perl5
+PERL_ARCHLIB = /usr/lib64/perl5
 LIBPERL_A = libperl.a
 FIRST_MAKEFILE = Makefile
 MAKEFILE_OLD = Makefile.old
 MAKE_APERL_FILE = Makefile.aperl
 PERLMAINCC = $(CC)
-PERL_INC = /usr/lib/perl5/5.10.0/i586-linux-thread-multi/CORE
+PERL_INC = /usr/lib64/perl5/CORE
 PERL = /usr/bin/perl
 FULLPERL = /usr/bin/perl
 ABSPERL = $(PERL)
@@ -129,12 +130,13 @@ PERLRUNINST = $(PERLRUN) "-I$(INST_ARCHLIB)" "-I$(INST_LIB)"
 FULLPERLRUNINST = $(FULLPERLRUN) "-I$(INST_ARCHLIB)" "-I$(INST_LIB)"
 ABSPERLRUNINST = $(ABSPERLRUN) "-I$(INST_ARCHLIB)" "-I$(INST_LIB)"
 PERL_CORE = 0
+PERM_DIR = 755
 PERM_RW = 644
 PERM_RWX = 755
 
-MAKEMAKER   = /usr/lib/perl5/5.10.0/ExtUtils/MakeMaker.pm
-MM_VERSION  = 6.42
-MM_REVISION = 41145
+MAKEMAKER   = /usr/share/perl5/ExtUtils/MakeMaker.pm
+MM_VERSION  = 6.55_02
+MM_REVISION = 65502
 
 # FULLEXT = Pathname for extension directory (eg Foo/Bar/Oracle).
 # BASEEXT = Basename part of FULLEXT. May be just equal FULLEXT. (eg Oracle)
@@ -186,7 +188,7 @@ PM_TO_BLIB = lib/Checkid.pm \
 
 
 # --- MakeMaker platform_constants section:
-MM_Unix_VERSION = 6.42
+MM_Unix_VERSION = 6.55_02
 PERL_MALLOC_DEF = -DPERL_EXTMALLOC_DEF -Dmalloc=Perl_malloc -Dfree=Perl_mfree -Drealloc=Perl_realloc -Dcalloc=Perl_calloc
 
 
@@ -204,7 +206,7 @@ SHELL = /bin/sh
 CHMOD = chmod
 CP = cp
 MV = mv
-NOOP = $(SHELL) -c true
+NOOP = $(TRUE)
 NOECHO = @
 RM_F = rm -f
 RM_RF = rm -rf
@@ -212,20 +214,22 @@ TEST_F = test -f
 TOUCH = touch
 UMASK_NULL = umask 0
 DEV_NULL = > /dev/null 2>&1
-MKPATH = $(ABSPERLRUN) "-MExtUtils::Command" -e mkpath
-EQUALIZE_TIMESTAMP = $(ABSPERLRUN) "-MExtUtils::Command" -e eqtime
+MKPATH = $(ABSPERLRUN) -MExtUtils::Command -e 'mkpath' --
+EQUALIZE_TIMESTAMP = $(ABSPERLRUN) -MExtUtils::Command -e 'eqtime' --
+FALSE = false
+TRUE = true
 ECHO = echo
 ECHO_N = echo -n
 UNINST = 0
 VERBINST = 0
-MOD_INSTALL = $(ABSPERLRUN) -MExtUtils::Install -e 'install({@ARGV}, '\''$(VERBINST)'\'', 0, '\''$(UNINST)'\'');' --
-DOC_INSTALL = $(ABSPERLRUN) "-MExtUtils::Command::MM" -e perllocal_install
-UNINSTALL = $(ABSPERLRUN) "-MExtUtils::Command::MM" -e uninstall
-WARN_IF_OLD_PACKLIST = $(ABSPERLRUN) "-MExtUtils::Command::MM" -e warn_if_old_packlist
+MOD_INSTALL = $(ABSPERLRUN) -MExtUtils::Install -e 'install([ from_to => {@ARGV}, verbose => '\''$(VERBINST)'\'', uninstall_shadows => '\''$(UNINST)'\'', dir_mode => '\''$(PERM_DIR)'\'' ]);' --
+DOC_INSTALL = $(ABSPERLRUN) -MExtUtils::Command::MM -e 'perllocal_install' --
+UNINSTALL = $(ABSPERLRUN) -MExtUtils::Command::MM -e 'uninstall' --
+WARN_IF_OLD_PACKLIST = $(ABSPERLRUN) -MExtUtils::Command::MM -e 'warn_if_old_packlist' --
 MACROSTART = 
 MACROEND = 
 USEMAKEFILE = -f
-FIXIN = $(PERLRUN) "-MExtUtils::MY" -e "MY->fixin(shift)"
+FIXIN = $(ABSPERLRUN) -MExtUtils::MY -e 'MY->fixin(shift)' --
 
 
 # --- MakeMaker makemakerdflt section:
@@ -321,42 +325,42 @@ blibdirs.ts : blibdirs
 
 $(INST_LIBDIR)$(DFSEP).exists :: Makefile.PL
 	$(NOECHO) $(MKPATH) $(INST_LIBDIR)
-	$(NOECHO) $(CHMOD) 755 $(INST_LIBDIR)
+	$(NOECHO) $(CHMOD) $(PERM_DIR) $(INST_LIBDIR)
 	$(NOECHO) $(TOUCH) $(INST_LIBDIR)$(DFSEP).exists
 
 $(INST_ARCHLIB)$(DFSEP).exists :: Makefile.PL
 	$(NOECHO) $(MKPATH) $(INST_ARCHLIB)
-	$(NOECHO) $(CHMOD) 755 $(INST_ARCHLIB)
+	$(NOECHO) $(CHMOD) $(PERM_DIR) $(INST_ARCHLIB)
 	$(NOECHO) $(TOUCH) $(INST_ARCHLIB)$(DFSEP).exists
 
 $(INST_AUTODIR)$(DFSEP).exists :: Makefile.PL
 	$(NOECHO) $(MKPATH) $(INST_AUTODIR)
-	$(NOECHO) $(CHMOD) 755 $(INST_AUTODIR)
+	$(NOECHO) $(CHMOD) $(PERM_DIR) $(INST_AUTODIR)
 	$(NOECHO) $(TOUCH) $(INST_AUTODIR)$(DFSEP).exists
 
 $(INST_ARCHAUTODIR)$(DFSEP).exists :: Makefile.PL
 	$(NOECHO) $(MKPATH) $(INST_ARCHAUTODIR)
-	$(NOECHO) $(CHMOD) 755 $(INST_ARCHAUTODIR)
+	$(NOECHO) $(CHMOD) $(PERM_DIR) $(INST_ARCHAUTODIR)
 	$(NOECHO) $(TOUCH) $(INST_ARCHAUTODIR)$(DFSEP).exists
 
 $(INST_BIN)$(DFSEP).exists :: Makefile.PL
 	$(NOECHO) $(MKPATH) $(INST_BIN)
-	$(NOECHO) $(CHMOD) 755 $(INST_BIN)
+	$(NOECHO) $(CHMOD) $(PERM_DIR) $(INST_BIN)
 	$(NOECHO) $(TOUCH) $(INST_BIN)$(DFSEP).exists
 
 $(INST_SCRIPT)$(DFSEP).exists :: Makefile.PL
 	$(NOECHO) $(MKPATH) $(INST_SCRIPT)
-	$(NOECHO) $(CHMOD) 755 $(INST_SCRIPT)
+	$(NOECHO) $(CHMOD) $(PERM_DIR) $(INST_SCRIPT)
 	$(NOECHO) $(TOUCH) $(INST_SCRIPT)$(DFSEP).exists
 
 $(INST_MAN1DIR)$(DFSEP).exists :: Makefile.PL
 	$(NOECHO) $(MKPATH) $(INST_MAN1DIR)
-	$(NOECHO) $(CHMOD) 755 $(INST_MAN1DIR)
+	$(NOECHO) $(CHMOD) $(PERM_DIR) $(INST_MAN1DIR)
 	$(NOECHO) $(TOUCH) $(INST_MAN1DIR)$(DFSEP).exists
 
 $(INST_MAN3DIR)$(DFSEP).exists :: Makefile.PL
 	$(NOECHO) $(MKPATH) $(INST_MAN3DIR)
-	$(NOECHO) $(CHMOD) 755 $(INST_MAN3DIR)
+	$(NOECHO) $(CHMOD) $(PERM_DIR) $(INST_MAN3DIR)
 	$(NOECHO) $(TOUCH) $(INST_MAN3DIR)$(DFSEP).exists
 
 
@@ -469,18 +473,26 @@ realclean purge ::  clean realclean_subdirs
 metafile : create_distdir
 	$(NOECHO) $(ECHO) Generating META.yml
 	$(NOECHO) $(ECHO) '--- #YAML:1.0' > META_new.yml
-	$(NOECHO) $(ECHO) 'name:                Checkid' >> META_new.yml
-	$(NOECHO) $(ECHO) 'version:             0.9' >> META_new.yml
-	$(NOECHO) $(ECHO) 'abstract:            Perl extension to check the user'\''s id and access rights based on the uid cookie passed in HTML headers.' >> META_new.yml
-	$(NOECHO) $(ECHO) 'license:             ~' >> META_new.yml
-	$(NOECHO) $(ECHO) 'author:              ' >> META_new.yml
+	$(NOECHO) $(ECHO) 'name:               Checkid' >> META_new.yml
+	$(NOECHO) $(ECHO) 'version:            0.9' >> META_new.yml
+	$(NOECHO) $(ECHO) 'abstract:           Perl extension to check the user'\''s id and access rights based on the uid cookie passed in HTML headers.' >> META_new.yml
+	$(NOECHO) $(ECHO) 'author:' >> META_new.yml
 	$(NOECHO) $(ECHO) '    - Doug Conran <dconran@nonet>' >> META_new.yml
-	$(NOECHO) $(ECHO) 'generated_by:        ExtUtils::MakeMaker version 6.42' >> META_new.yml
-	$(NOECHO) $(ECHO) 'distribution_type:   module' >> META_new.yml
-	$(NOECHO) $(ECHO) 'requires:     ' >> META_new.yml
+	$(NOECHO) $(ECHO) 'license:            unknown' >> META_new.yml
+	$(NOECHO) $(ECHO) 'distribution_type:  module' >> META_new.yml
+	$(NOECHO) $(ECHO) 'configure_requires:' >> META_new.yml
+	$(NOECHO) $(ECHO) '    ExtUtils::MakeMaker:  0' >> META_new.yml
+	$(NOECHO) $(ECHO) 'build_requires:' >> META_new.yml
+	$(NOECHO) $(ECHO) '    ExtUtils::MakeMaker:  0' >> META_new.yml
+	$(NOECHO) $(ECHO) 'requires:  {}' >> META_new.yml
+	$(NOECHO) $(ECHO) 'no_index:' >> META_new.yml
+	$(NOECHO) $(ECHO) '    directory:' >> META_new.yml
+	$(NOECHO) $(ECHO) '        - t' >> META_new.yml
+	$(NOECHO) $(ECHO) '        - inc' >> META_new.yml
+	$(NOECHO) $(ECHO) 'generated_by:       ExtUtils::MakeMaker version 6.55_02' >> META_new.yml
 	$(NOECHO) $(ECHO) 'meta-spec:' >> META_new.yml
-	$(NOECHO) $(ECHO) '    url:     http://module-build.sourceforge.net/META-spec-v1.3.html' >> META_new.yml
-	$(NOECHO) $(ECHO) '    version: 1.3' >> META_new.yml
+	$(NOECHO) $(ECHO) '    url:      http://module-build.sourceforge.net/META-spec-v1.4.html' >> META_new.yml
+	$(NOECHO) $(ECHO) '    version:  1.4' >> META_new.yml
 	-$(NOECHO) $(MV) META_new.yml $(DISTVNAME)/META.yml
 
 
@@ -589,16 +601,16 @@ distsignature : create_distdir
 
 # --- MakeMaker install section:
 
-install :: all pure_install doc_install
+install :: pure_install doc_install
 	$(NOECHO) $(NOOP)
 
-install_perl :: all pure_perl_install doc_perl_install
+install_perl :: pure_perl_install doc_perl_install
 	$(NOECHO) $(NOOP)
 
-install_site :: all pure_site_install doc_site_install
+install_site :: pure_site_install doc_site_install
 	$(NOECHO) $(NOOP)
 
-install_vendor :: all pure_vendor_install doc_vendor_install
+install_vendor :: pure_vendor_install doc_vendor_install
 	$(NOECHO) $(NOOP)
 
 pure_install :: pure_$(INSTALLDIRS)_install
@@ -613,7 +625,7 @@ pure__install : pure_site_install
 doc__install : doc_site_install
 	$(NOECHO) $(ECHO) INSTALLDIRS not defined, defaulting to INSTALLDIRS=site
 
-pure_perl_install ::
+pure_perl_install :: all
 	$(NOECHO) $(MOD_INSTALL) \
 		read $(PERL_ARCHLIB)/auto/$(FULLEXT)/.packlist \
 		write $(DESTINSTALLARCHLIB)/auto/$(FULLEXT)/.packlist \
@@ -627,7 +639,7 @@ pure_perl_install ::
 		$(SITEARCHEXP)/auto/$(FULLEXT)
 
 
-pure_site_install ::
+pure_site_install :: all
 	$(NOECHO) $(MOD_INSTALL) \
 		read $(SITEARCHEXP)/auto/$(FULLEXT)/.packlist \
 		write $(DESTINSTALLSITEARCH)/auto/$(FULLEXT)/.packlist \
@@ -640,7 +652,7 @@ pure_site_install ::
 	$(NOECHO) $(WARN_IF_OLD_PACKLIST) \
 		$(PERL_ARCHLIB)/auto/$(FULLEXT)
 
-pure_vendor_install ::
+pure_vendor_install :: all
 	$(NOECHO) $(MOD_INSTALL) \
 		read $(VENDORARCHEXP)/auto/$(FULLEXT)/.packlist \
 		write $(DESTINSTALLVENDORARCH)/auto/$(FULLEXT)/.packlist \
@@ -651,7 +663,7 @@ pure_vendor_install ::
 		$(INST_MAN1DIR) $(DESTINSTALLVENDORMAN1DIR) \
 		$(INST_MAN3DIR) $(DESTINSTALLVENDORMAN3DIR)
 
-doc_perl_install ::
+doc_perl_install :: all
 	$(NOECHO) $(ECHO) Appending installation info to $(DESTINSTALLARCHLIB)/perllocal.pod
 	-$(NOECHO) $(MKPATH) $(DESTINSTALLARCHLIB)
 	-$(NOECHO) $(DOC_INSTALL) \
@@ -662,7 +674,7 @@ doc_perl_install ::
 		EXE_FILES "$(EXE_FILES)" \
 		>> $(DESTINSTALLARCHLIB)/perllocal.pod
 
-doc_site_install ::
+doc_site_install :: all
 	$(NOECHO) $(ECHO) Appending installation info to $(DESTINSTALLARCHLIB)/perllocal.pod
 	-$(NOECHO) $(MKPATH) $(DESTINSTALLARCHLIB)
 	-$(NOECHO) $(DOC_INSTALL) \
@@ -673,7 +685,7 @@ doc_site_install ::
 		EXE_FILES "$(EXE_FILES)" \
 		>> $(DESTINSTALLARCHLIB)/perllocal.pod
 
-doc_vendor_install ::
+doc_vendor_install :: all
 	$(NOECHO) $(ECHO) Appending installation info to $(DESTINSTALLARCHLIB)/perllocal.pod
 	-$(NOECHO) $(MKPATH) $(DESTINSTALLARCHLIB)
 	-$(NOECHO) $(DOC_INSTALL) \
@@ -719,7 +731,7 @@ $(FIRST_MAKEFILE) : Makefile.PL $(CONFIGDEP)
 	$(PERLRUN) Makefile.PL 
 	$(NOECHO) $(ECHO) "==> Your Makefile has been rebuilt. <=="
 	$(NOECHO) $(ECHO) "==> Please rerun the $(MAKE) command.  <=="
-	false
+	$(FALSE)
 
 
 
@@ -771,13 +783,11 @@ testdb_static :: testdb_dynamic
 # --- MakeMaker ppd section:
 # Creates a PPD (Perl Package Description) for a binary distribution.
 ppd :
-	$(NOECHO) $(ECHO) '<SOFTPKG NAME="$(DISTNAME)" VERSION="0,9,0,0">' > $(DISTNAME).ppd
-	$(NOECHO) $(ECHO) '    <TITLE>$(DISTNAME)</TITLE>' >> $(DISTNAME).ppd
+	$(NOECHO) $(ECHO) '<SOFTPKG NAME="$(DISTNAME)" VERSION="0.9">' > $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '    <ABSTRACT>Perl extension to check the user'\''s id and access rights based on the uid cookie passed in HTML headers.</ABSTRACT>' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '    <AUTHOR>Doug Conran &lt;dconran@nonet&gt;</AUTHOR>' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '    <IMPLEMENTATION>' >> $(DISTNAME).ppd
-	$(NOECHO) $(ECHO) '        <OS NAME="$(OSNAME)" />' >> $(DISTNAME).ppd
-	$(NOECHO) $(ECHO) '        <ARCHITECTURE NAME="i586-linux-thread-multi-5.1" />' >> $(DISTNAME).ppd
+	$(NOECHO) $(ECHO) '        <ARCHITECTURE NAME="x86_64-linux-thread-multi-5.10" />' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '        <CODEBASE HREF="" />' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '    </IMPLEMENTATION>' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '</SOFTPKG>' >> $(DISTNAME).ppd
@@ -785,8 +795,8 @@ ppd :
 
 # --- MakeMaker pm_to_blib section:
 
-pm_to_blib : $(TO_INST_PM)
-	$(NOECHO) $(ABSPERLRUN) -MExtUtils::Install -e 'pm_to_blib({@ARGV}, '\''$(INST_LIB)/auto'\'', '\''$(PM_FILTER)'\'')' -- \
+pm_to_blib : $(FIRST_MAKEFILE) $(TO_INST_PM)
+	$(NOECHO) $(ABSPERLRUN) -MExtUtils::Install -e 'pm_to_blib({@ARGV}, '\''$(INST_LIB)/auto'\'', q[$(PM_FILTER)], '\''$(PERM_DIR)'\'')' -- \
 	  lib/Checkid.pm blib/lib/Checkid.pm 
 	$(NOECHO) $(TOUCH) pm_to_blib
 
