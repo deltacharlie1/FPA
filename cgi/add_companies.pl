@@ -19,6 +19,11 @@ unless ($COOKIE->{NO_ADS}) {
 $Companies = $dbh->prepare("select id,comname,comcontact,comemail,date_format(comyearend,'%b') as comyearend,comvatscheme,comvatduein,comcis from companies where companies.reg_id=$Reg_id order by comname;");
 $Companies->execute;
 
+$Market_Sectors = $dbh->prepare("select id,sector,frsrate from market_sectors");
+$Market_Sectors->execute;
+$Sectors = $Market_Sectors->fetchall_arrayref({});
+$Market_Sectors->finish;
+
 use Template;
 $tt = Template->new({
         INCLUDE_PATH => ['.','/usr/local/httpd/htdocs/fpa/lib'],
@@ -29,6 +34,7 @@ $Vars = {
         title => 'Add Companies',
 	cookie => $COOKIE,
 	focus => 'company',
+	sectors => $Sectors,
 	companies => $Companies->fetchall_arrayref({}),
         javascript => '<script type="text/javascript">
 var item_rows = [];
@@ -45,7 +51,7 @@ function display_table() {
 
   for (var i=0; i<item_rows.length; i++) {
     item_table = item_table + "<tr class=\'" + bkgd[i % 2] + "\'>";
-    for (var j=0;j<7; j++) {
+    for (var j=0;j<8; j++) {
       if (item_rows[i][j] == undefined) {
         item_table = item_table + "<td>&nbsp;</td>";
       }
@@ -58,12 +64,17 @@ function display_table() {
             item_table = item_table + "<td style=\'text-align:center;\'>" + item_rows[i][j] + "</td>";
           }
           else {
-            item_table = item_table + "<td>" + item_rows[i][j] + "</td>";
+            if (j == 7) {
+              item_table = item_table + "<td style=\'display:none;\'>" + item_rows[i][j] + "</td>";
+            }
+            else {
+              item_table = item_table + "<td>" + item_rows[i][j] + "</td>";
+            }
           }
         }
       }
     }
-    item_table = item_table + "<td style=\'text-align:center;\'><input type=\'button\' value=\'Amd\' onclick=\"amd(\'" + i + "\');\"/>&nbsp;<input type=\'button\' value=\'Del\' onclick=\"dlt(\'" + i + "\');\"/></td>\\n</tr>";
+    item_table = item_table + "<td style=\'text-align:center;\'><input type=\'button\' value=\'Amd\' onclick=\"amd(\'" + i + "\');\"/>&nbsp;<input type=\'button\' value=\'Del\' onclick=\"dlt(\'" + i + "\');\"/></td></tr>";
   }
   document.getElementById("new").innerHTML = item_table;
   document.getElementById("data").value = item_table;
@@ -73,7 +84,7 @@ function add_company() {
   var errs;
   if (validate_form("#form1")) {
     var item_row;
-    item_row = [document.getElementById("company").value,document.getElementById("client").value,document.getElementById("email").value,document.getElementById("yearend").value,document.getElementById("vatscheme").value,document.getElementById("vatend").value,$("input:radio[name=cis]:checked").val()];
+    item_row = [document.getElementById("company").value,document.getElementById("client").value,document.getElementById("email").value,document.getElementById("yearend").value,document.getElementById("vatscheme").value,document.getElementById("vatend").value,$("input:radio[name=cis]:checked").val(),document.getElementById("combusiness").value];
 
     item_rows.push(item_row);
     display_table();
@@ -85,6 +96,10 @@ function add_company() {
     document.getElementById("vatscheme").value = "N";
     document.getElementById("vatend").value = "";
     $("#cisN").attr("checked",true);
+    $("#sectors").hide();
+    $("#combusiness").removeClass("mandatory");
+    $("#vatend").removeClass("mandatory");
+    document.getElementById("combusiness").value = "";
   }
 }
 
@@ -100,6 +115,10 @@ function amd(row) {
   }
   else {
     $("#cisY").attr("checked",false);
+  }
+  $("#combusiness").val(item_rows[row][7]);
+  if (/F/i.test(item_rows[row][4])) {
+    $("#sectors").show();
   }
 
   dlt(row);
@@ -117,6 +136,22 @@ function check_data() {
     errfocus = "company";
     $("#dialog").dialog("open");
     return false;
+  }
+}
+function showhide_sectors(obj) {
+  if (/N/i.test(obj.value)) {
+    $("#vatend").removeClass("mandatory");
+  }
+  else {
+    $("#vatend").addClass("mandatory");
+  }
+  if (/F/i.test(obj.value)) {
+    $("#sectors").show();
+    $("#combusiness").addClass("mandatory");
+  }
+  else {
+    $("#sectors").hide();
+    $("#combusiness").removeClass("mandatory");
   }
 }
 </script>',

@@ -27,7 +27,7 @@
           <option value="Sep">September</option>
           <option value="Oct">October</option>
           <option value "Nov">November</option>
-          <option value="Dec"December</option>
+          <option value="Dec">December</option>
         </select> 
       </span></td>
     </tr>
@@ -37,7 +37,7 @@
     <tr>
       <td><label>VAT Scheme</label></td>
       <td>
-        <select name="vatscheme" id="vatscheme">
+        <select name="vatscheme" id="vatscheme" onchange="showhide_sectors(this);">
           <option value="N" selected="selected">None</option>
           <option value="S">Standard Accounting</option>
           <option value="C">Cash Accounting</option>
@@ -46,12 +46,12 @@
         </select>
       </td>
       <td><label>VAT Quarter End</label></td>
-      <td><select name="vatend" id="vatend" size="1">
+      <td><span><select name="vatend" id="vatend" size="1" title="VAT Quarter End">
           <option value="" selected="selected">None</option>
           <option value="1">Jan/Apr/Jul/Oct</option>
           <option value="2">Feb/May/Aug/Nov</option>
           <option value="3">Mar/Jun/Sep/Dec</option>
-        </select>
+        </select></span>
       </td>
     </tr>
     <tr>
@@ -59,6 +59,18 @@
       <td><input type="radio" name="cis" id="cisN" value="N" checked="checked"> No&nbsp;&nbsp;<input type="radio" name="cis" id="cisY" value="Y"> Yes</td>
       <td colspan="2">&nbsp;</td>
     </tr>
+    <tbody id="sectors" style="display:none;">
+    <tr>
+      <td><label>Type of Business</label></td>
+      <td colspan="3"><span><select title="Type of Business" name="combusiness" id="combusiness">
+          <option value="" [%- IF client.combusiness == '' -%] selected="selected" [%- END -%] >--  Please Select  --</option>
+[% FOREACH sector IN sectors -%]
+          <option value="[%- sector.id -%]"[%- IF client.combusiness == sector.id -%] selected="selected" [%- END -%] >[%- sector.sector | truncate(70) -%]</option>
+[% END -%]
+        </select></span>
+      </td>
+    </tr>
+    </tbody>
     <tr>
       <td style="text-align:center" colspan="4"><input type="button" name="but1" id="but1" value="Add Company to List" onclick="add_company();"/></td>
     </tr>
@@ -74,6 +86,7 @@
       <th>VAT Scheme</th>
       <th>VAT Q End</th>
       <th>CIS?</th>
+      <th style="display:none;"></th>
       <th>Edit</th>
     </tr>
     <tbody id="new">

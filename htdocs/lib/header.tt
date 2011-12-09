@@ -193,7 +193,6 @@ $(document).ready(function(){
         </li>
         <li class="help"><a href="/usermanual.pdf"><span>Help</span></a>
         </li>
-[% IF cookie.BUS == '1' AND cookie.ACCESS >= 5 -%]
         <li class="bookkeeper"><a href="#"><span>Bookkeeper</span></a>
           <ul>
             <li><a href="/cgi-bin/fpa/bkpr_add_invoices.pl">Bulk Add Invoices</a></li>
@@ -201,7 +200,6 @@ $(document).ready(function(){
             <li><a href="/cgi-bin/fpa/add_companies.pl">Add Companies</a></li>
           </ul>
         </li>
-[% END -%]
         <li class="search"><span><input id="searchcus" /></span>
         </li>
       </ul>

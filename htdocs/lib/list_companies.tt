@@ -13,7 +13,7 @@
 [% class = [ "even","odd" ]; vatq = [ "","Jan/Apr/Jul/Oct/","Feb/May/Jul/Nov","Mar/Jun/Aug/Dec" ] -%]
 [%- FOREACH company IN companies -%]
   [%- ndx = loop.count % 2; vatdue = company.comvatduein -%]
-    <tr class="[%- class.$ndx -%]" onclick="location.href='/cgi-bin/fpa/switch_company.pl?[%- company.id -%]';" >
+    <tr class="[%- class.$ndx -%]" onclick="location.href='/cgi-bin/fpa/switch_company.pl?[%- company.id -%]?[%- company.reg_id -%]';" >
       <td>[%- company.comname -%]</td>
       <td>[%- company.comcontact -%]</td>
       <td>[%- company.regemail -%]</td>

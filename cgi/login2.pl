@@ -35,7 +35,7 @@ You have entered an incorrect password, please try again.  If you continue to ha
 
 EOD
 }
-elsif (substr($User[7],0,1) =~ /N/i) {
+elsif (substr($User[7],0,1) =~ /N/i && $User[9] =~ /C/i) {
 	print<<EOD;
 Content-Type: text/plain
 Set-Cookie: fpa-uid=$FORM{email}; path=/; expires=$User[4];
@@ -65,15 +65,6 @@ EOD
 		if ($Users[6] < 1) {
 			$output = `php /usr/local/git/fpa/cgi/add_fpa_user.php $FORM{email} $FORM{pwd} $FORM{email}`;
 		}
-
-#  Check whether we need to downgrade
-
-#		if ($User[2] =~ /startup\+/ && $User[5] > $User[6]) {
-#			$User[2] = "startup";
-#			$Sts = $dbh->do("update accounts set membership_level='startup' where id=$User[0]");
-#		}
-
-#  get the mem letters
 
 		my @Nums;
 		while (scalar(@Nums) < 3) {

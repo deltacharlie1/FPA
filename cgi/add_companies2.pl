@@ -59,6 +59,7 @@ $FORM{data} =~ s/<\/td>/\t/ig;
 @Companies = split(/\n/,$FORM{data});
 foreach $Company (@Companies) {
 	@Cell = split(/\t/,$Company);
+
 	if ($Cell[0]) {
 
 #  Create a digest for the directory and (maybe) activation 
@@ -93,7 +94,7 @@ EOD
 		($Mth,$Yr) = split(/\-/,$Curdate);
 
 		$Month = $Month{$Cell[3]};
-		if ($Month > $Mth) {
+		if ($Month < $Mth) {
 			$Yr++;
 		}
 		$Last_day = $Last_day[$Month];
@@ -101,7 +102,7 @@ EOD
 			$Last_day++;
 		}
 
-		$Sts = $dbh->do("insert into companies (reg_id,comname,comcontact,comemail,comvatqstart,comemailmsg,comstmtmsg,comdocsdir,comyearend,comcis) values ($Reg_id,'$Cell[0]','$Cell[1]','$Cell[2]','2010-01-01','$Emailmsg','$Stmtmsg','/projects/fpa_docs/$Activecode','$Yr-$Month-$Last_day','$Cell[6]')");
+		$Sts = $dbh->do("insert into companies (reg_id,comname,comcontact,comemail,comvatqstart,comemailmsg,comstmtmsg,comdocsdir,comyearend,comcis,combusiness) values ($Reg_id,'$Cell[0]','$Cell[1]','$Cell[2]','2010-01-01','$Emailmsg','$Stmtmsg','/projects/fpa_docs/$Activecode','$Yr-$Month-$Last_day','$Cell[6]','$Cell[7]')");
 		$New_com_id = $dbh->last_insert_id(undef, undef, qw(companies undef));
 
 #  Create a docs directory
@@ -121,7 +122,31 @@ EOD
 				$Cell[5] = "3";
 			}
 
-			$Sts = $dbh->do("update companies set comvatscheme='$Cell[4]',comvatduein='$Cell[5]' where id=$New_com_id and reg_id=$Reg_id");
+#  Calculate the next VAT Q end
+
+	                $Dates = $dbh->prepare("select date_format(now(),'%m'),date_format(now(),'%Y')");
+        	        $Dates->execute;
+                	($mth,$year) = $Dates->fetchrow;
+	                $Dates->finish;
+
+        	        $mth--;
+	
+        	        $vatq = $Cell[5] - 1;
+
+                	$Months_left = $mth % 3;
+	                $Cur_quarter = int($mth / 3);
+        	        $VAT_due = $vatq + (3 * $Cur_quarter) + 1;
+                	if ($VAT_due < $mth + 1) {
+                        	$VAT_due = $VAT_due + 3;
+	                }
+        	        $VAT_due++;
+                	if ($VAT_due > 12) {
+                        	$VAT_due = $VAT_due - 12;
+	                        $year++;
+        	        }
+                	if (length($VAT_due) < 2) { $VAT_due = '0'.$VAT_due; }
+
+			$Sts = $dbh->do("update companies set comvatscheme='$Cell[4]',comvatduein='$Cell[5]',comvatmsgdue='$year-$VAT_due-01' where id=$New_com_id and reg_id=$Reg_id");
 		}
 
 #  Create a 'customers' The owner (for expenses)
@@ -160,7 +185,7 @@ EOD
 			$Regs->execute;
 			if ($Regs->rows > 0) {
 				@Reg = $Regs->fetchrow;
-				$Sts = $dbh->do("insert into reg_coms (reg1_id,reg2_id,com_id,comname) values ($Reg_id,$Reg[0],$New_com_id,'$Cell[0]')");
+				$Sts = $dbh->do("insert into reg_coms (reg1_id,reg2_id,com_id,comname) values ($Reg[0],$Reg_id,$New_com_id,'$Cell[0]')");
 			}
 			else {
 #  set up an arbitary password
@@ -182,25 +207,25 @@ EOD
 
 #  Set up his reg_coms record
 
-				$Sts = $dbh->do("insert into reg_coms (reg1_id,reg2_id,com_id,comname) values ($Reg_id,$New_reg_id,$New_com_id,'$Cell[0]')");
+				$Sts = $dbh->do("insert into reg_coms (reg1_id,reg2_id,com_id,comname) values ($New_reg_id,$Reg_id,$New_com_id,'$Cell[0]')");
 
 #  add to the mailing list
 
-				my $apikey = 'a94017b54d91fe7fe1ac9166712e62c2-us2';
-				my $list_id = 'b4d31d6294';
-				use LWP::UserAgent;
+#				my $apikey = 'a94017b54d91fe7fe1ac9166712e62c2-us2';
+#				my $list_id = 'b4d31d6294';
+#				use LWP::UserAgent;
 
-				my $content = "method=listSubscribe&apikey=$apikey&id=$list_id&email_address=$FORM{email}&merge_vars[FNAME]=$FORM{name}&double_optin=false&send_welcome=false&output=json";
+#				my $content = "method=listSubscribe&apikey=$apikey&id=$list_id&email_address=$FORM{email}&merge_vars[FNAME]=$FORM{name}&double_optin=false&send_welcome=false&output=json";
 
-				my $ua = LWP::UserAgent->new;
-				$ua->agent("FPA/0.1 ");
+#				my $ua = LWP::UserAgent->new;
+#				$ua->agent("FPA/0.1 ");
 
 # Create a request
-				my $req = HTTP::Request->new(POST => "http://us2.api.mailchimp.com/1.3/?$content");
-				$req->content_type('application/x-www-form-urlencoded');
+#				my $req = HTTP::Request->new(POST => "http://us2.api.mailchimp.com/1.3/?$content");
+#				$req->content_type('application/x-www-form-urlencoded');
 
 # Pass request to the user agent and get a response back
-				my $res = $ua->request($req);
+#				my $res = $ua->request($req);
 
 
 #  Send the email
