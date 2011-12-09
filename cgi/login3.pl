@@ -54,17 +54,6 @@ EOD
 	exit;
 }
 else {
-
-#  Check to see if there is more than one company for this login
-
-	if ($Cookie =~ /cxrunna\.com/) {
-		$Reg_coms = $dbh->prepare("select reg2_id,com_id,comname from reg_coms");
-	}
-	else {
-		$Reg_coms = $dbh->prepare("select reg2_id,com_id,comname from reg_coms where reg1_id=$Reg[1] order by comname");
-	}
-	$Reg_coms->execute;
-	$Companies = $Reg_coms->fetchall_arrayref({});
 	$User = $Cookie;
 	$User =~ s/^(.*?)\@.*/$1/;
 	$Cookie = $User.$$;
@@ -80,35 +69,13 @@ else {
 	open(COOKIE,">/projects/tmp/$Cookie");
 	print COOKIE "IP\t$IP_Addr\nREG\t$Reg[1]\nID\t$Reg[2]\nPWD\t$Reg[3]\nPLAN\t$Reg[4]\nMENU\t$Reg[6]\nPREFS\t$Reg[8]\n";
 	close(COOKIE);
-
-	if ($Reg_coms->rows > 1) {
-
-                use Template;
-                $tt = Template->new({
-                        INCLUDE_PATH => ['.','/usr/local/httpd/htdocs/fpa/lib'],
-                });
-                print<<EOD;
-Content-Type: text/html
-Set-Cookie: fpa-cookie=$Cookie; path=/;
-
-EOD
-                $Vars = {
-                        title => 'Login - Step 3',
-			heading => 'Select Company',
-			companies => $Companies
-                };
-                $tt->process('login3.tt',$Vars);
-	}
-	else {
-		print<<EOD;
+	print<<EOD;
 Content-Type: text/html
 Status: 301
 Location: /cgi-bin/fpa/login4.pl?0
 Set-Cookie: fpa-cookie=$Cookie; path=/;
 
 EOD
-	}
-	$Reg_coms->finish;
 }
 $dbh->disconnect;
 exit;

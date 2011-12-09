@@ -5,7 +5,7 @@
 use DBI;
 $dbh = DBI->connect("DBI:mysql:fpa");
 
-($Offset,$Multi) = split(/\?/,$ENV{QUERY_STRING});
+# ($Offset,$Multi) = split(/\?/,$ENV{QUERY_STRING});
 @Cookie = split(/\;/,$ENV{HTTP_COOKIE});
 foreach (@Cookie) {
         ($Name,$Value) = split(/\=/,$_);
@@ -23,11 +23,12 @@ close(COOKIE);
 
 unlink("/projects/tmp/$Cookie{'fpa-cookie'}");
 
-$Reg_coms = $dbh->prepare("select reg2_id,com_id,comname,mlgdefmenu from reg_coms where reg1_id=$COOKIE->{REG} order by comname limit $Offset,1");
+$Reg_coms = $dbh->prepare("select reg2_id,com_id,comname,mlgdefmenu from reg_coms where reg1_id=$COOKIE->{REG} order by id");
 $Reg_coms->execute;
+
 $User = $COOKIE->{ID};
 $User =~ s/^(.*?)\@.*/$1/;
-@Reg_com = $Reg_coms->fetchrow;
+@Reg_com = $Reg_coms->fetchrow;		#  Get the first entry which should be the original
 
 $Cookie = $Reg[2].$$;
 
