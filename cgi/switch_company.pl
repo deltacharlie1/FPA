@@ -21,6 +21,10 @@ foreach (@Cookie) {
 ($New_com_id,$New_reg_id) = split(/\?/,$ENV{QUERY_STRING});
 ($Reg_id,$Com_id) = split(/\+/,$COOKIE->{BACCT});
 
+if ($COOKIE->{BACCT} == '1+1') {
+	$Reg_id = $New_reg_id;
+}
+
 open(FILE,"</projects/tmp/$Cookie{'fpa-cookie'}");
 while (<FILE>) {
 	chomp($_);
@@ -88,7 +92,7 @@ if ($Company[10] < 0) {
 $Company[5] = sprintf("%1.3f",$Company[5]/100);
 
 open(FILE,">/projects/tmp/$Cookie{'fpa-cookie'}");
-print FILE "IP\t$DATA{IP}\nACCT\t$New_reg_id+$New_com_id\nBACCT\t$DATA{BACCT}\nID\t$DATA{ID}\nPWD\t$DATA{PWD}\nPLAN\t$DATA{PLAN}\nVAT\t$Company[2]\nYEAREND\t$Company[4]\nUSER\t$DATA{USER}\nEXP\t$Company[3]\nFRS\t$Company[5]\nMIN\t$Company[6]\nMENU\t$DATA{MENU}\nTAG\t$Company[0]\nBTAG\t$DATA{BTAG}\nACCESS\t$DATA{ACCESS}\nNO_ADS\t$DATA{NO_ADS}\nREP_INVS\t$Company[13]\nSTMTS\t$Company[14]\nUPLDS\t$Company[15]\nPT_LOGO\t$Company[16]\nHMRC\t$Company[17]\nSUPPT\t$Company[18]\nCOOKIE\t$DATA{COOKIE}\nDB\tfpa\nADDU\t$Company[19]\nPREFS\t$DATA{PREFS}\nCIS\t$Company[20]\nBUS\t$Company[21]\n";
+print FILE "IP\t$DATA{IP}\nACCT\t$New_reg_id+$New_com_id\nBACCT\t$DATA{BACCT}\nID\t$DATA{ID}\nPWD\t$DATA{PWD}\nPLAN\t$DATA{PLAN}\nVAT\t$Company[2]\nYEAREND\t$Company[4]\nUSER\t$DATA{USER}\nEXP\t$Company[3]\nFRS\t$Company[5]\nMIN\t$Company[6]\nMENU\t$DATA{MENU}\nTAG\t$Company[0]\nBTAG\t$DATA{BTAG}\nACCESS\t$DATA{ACCESS}\nNO_ADS\t$DATA{NO_ADS}\nREP_INVS\t$Company[13]\nSTMTS\t$Company[14]\nUPLDS\t$Company[15]\nPT_LOGO\t$Company[16]\nHMRC\t$Company[17]\nSUPPT\t$Company[18]\nCOOKIE\t$DATA{COOKIE}\nDB\tfpa\nADDU\t$Company[19]\nPREFS\t$DATA{PREFS}\nCIS\t$Company[20]\nBUS\t$DATA{BUS}\n";
 
 close(FILE);
 

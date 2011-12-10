@@ -36,6 +36,7 @@ $(document).ready(function(){
       document.getElementById("rec_amtcusid").value = ui.item.id;
       $("#rec_invcoa").val(ui.item.coa);
       $("#rec_vatrate").val(ui.item.vatrate);
+      $("#rec_cuscis").val(ui.item.cuscis);
       $("#rec_txnamount").focus();
     }
   });
@@ -157,15 +158,21 @@ $(document).ready(function(){
     modal: true,
     buttons: {
       "Record Receipt": function() {
-        if (validate_form("#recform2")) {
-          document.getElementById("rec_invcusname").value = document.getElementById("rec_cus_id").value;
-          $.post("/cgi-bin/fpa/process_txn.pl", $("form#recform2").serialize(),function(data) {
-            if ( ! /^OK/.test(data)) {
-              alert(data);
-            }
-          },"text");
+        if (document.getElementById("rec_cuscis").value == "Y") {
+          alert("You cannot use this option for CIS Contractor payments.\nYou must create an invoice for the full amount and then\nrecord what is paid.");
           $(this).dialog("close");
-          window.location.reload(true);
+        }
+        else {
+          if (validate_form("#recform2")) {
+            document.getElementById("rec_invcusname").value = document.getElementById("rec_cus_id").value;
+            $.post("/cgi-bin/fpa/process_txn.pl", $("form#recform2").serialize(),function(data) {
+              if ( ! /^OK/.test(data)) {
+                alert(data);
+              }
+            },"text");
+            $(this).dialog("close");
+            window.location.reload(true);
+          }
         }
       },
       Cancel: function() {

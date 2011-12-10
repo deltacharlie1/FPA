@@ -16,7 +16,7 @@
     <tr class="[%- class.$ndx -%]" onclick="location.href='/cgi-bin/fpa/switch_company.pl?[%- company.id -%]?[%- company.reg_id -%]';" >
       <td>[%- company.comname -%]</td>
       <td>[%- company.comcontact -%]</td>
-      <td>[%- company.regemail -%]</td>
+      <td>[%- company.comemail -%]</td>
       <td align="center">[%- company.comyearend -%]</td>
       <td align="center">[%- company.comvatscheme -%]</td>
       <td>[%- vatq.$vatdue -%]</td>
