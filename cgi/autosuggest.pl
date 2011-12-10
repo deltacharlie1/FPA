@@ -35,10 +35,10 @@ elsif ($FORM{type} =~ /^Supplier/i) {
 	$Customers = $dbh->prepare("select id,substring(cusname,1,30),cusdefcoa,cusdefvatrate from customers where cusname like '$FORM{term}%' and cussupplier='Y' and cusname<>'Unlisted' and acct_id='$COOKIE->{ACCT}' order by cusname");
 }
 elsif ($FORM{type} =~ /^Customer/i) {
-	$Customers = $dbh->prepare("select id,substring(cusname,1,30),cusdefpaymethod,cusdefvatrate from customers where cusname like '$FORM{term}%' and cussales='Y' and cusname<>'Unlisted' and acct_id='$COOKIE->{ACCT}' order by cusname");
+	$Customers = $dbh->prepare("select id,substring(cusname,1,30),cusdefpaymethod,cusdefvatrate,cuscis from customers where cusname like '$FORM{term}%' and cussales='Y' and cusname<>'Unlisted' and acct_id='$COOKIE->{ACCT}' order by cusname");
 }
 else {
-	$Customers = $dbh->prepare("select id,substring(cusname,1,30),cusdefpaymethod,cusdefvatrate from customers where cusname like '$FORM{term}%' and cusname<>'Unlisted' and acct_id='$COOKIE->{ACCT}' order by cusname");
+	$Customers = $dbh->prepare("select id,substring(cusname,1,30),cusdefpaymethod,cusdefvatrate,cuscis from customers where cusname like '$FORM{term}%' and cusname<>'Unlisted' and acct_id='$COOKIE->{ACCT}' order by cusname");
 }
 $Customers->execute;
 
@@ -48,7 +48,7 @@ print "Content-Type: application/json\n\n";
 $JSON = "[ ";
 
 while (@Customer = $Customers->fetchrow) { 
-	$JSON .= "{\"label\":\"$Customer[1]\",\"value\":\"$Customer[1]\",\"id\":\"$Customer[0]\",\"coa\":\"$Customer[2]\",\"vatrate\":\"$Customer[3]\"}, ";
+	$JSON .= "{\"label\":\"$Customer[1]\",\"value\":\"$Customer[1]\",\"id\":\"$Customer[0]\",\"coa\":\"$Customer[2]\",\"vatrate\":\"$Customer[3]\",\"cuscis\":\"$Customer[4]\"}, ";
 }
 $JSON =~ s/, $/  /;
 $JSON .=  "]";

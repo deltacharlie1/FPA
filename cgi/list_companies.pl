@@ -16,7 +16,12 @@ unless ($COOKIE->{NO_ADS}) {
 
 ($Reg_id,$Com_id) = split(/\+/,$COOKIE->{ACCT});
 
-$Companies = $dbh->prepare("select distinct companies.id,companies.reg_id,companies.comname,comcontact,comemail,date_format(comyearend,'%b') as comyearend,comvatscheme,comvatduein,comcis from companies left join reg_coms on (companies.id=com_id)  where (reg_coms.reg1_id=$Reg_id or reg_coms.reg2_id=$Reg_id) order by comname");
+if ($COOKIE->{BACCT} == '1+1') {
+	$Companies = $dbh->prepare("select distinct companies.id,companies.reg_id,companies.comname,comcontact,comemail,count(invinvoiceno)as comyearend,comvatscheme,comvatduein,comcis from companies left join invoices on (concat(companies.reg_id,'+',companies.id)=invoices.acct_id) group by comname order by comyearend desc");
+}
+else {
+	$Companies = $dbh->prepare("select distinct companies.id,companies.reg_id,companies.comname,comcontact,comemail,date_format(comyearend,'%b') as comyearend,comvatscheme,comvatduein,comcis from companies left join reg_coms on (companies.id=com_id)  where (reg_coms.reg1_id=$Reg_id or reg_coms.reg2_id=$Reg_id) order by comname");
+}
 $Companies->execute;
 
 use Template;
