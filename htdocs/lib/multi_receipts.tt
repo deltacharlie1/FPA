@@ -74,7 +74,7 @@
     </tr>
 [% class = [ "even","odd" ] -%]
 [%- FOREACH invoice IN invoices -%]
-  [%- ndx = loop.count % 2 -%]
+  [%- ndx = loop.count % 2; IF invoice.invcistotal != ""; invoice.invtotal = invoice.invcistotal; invoice.invdue = invoice.invcisdue; END -%]
     <tr class="[%- class.$ndx -%]">
       <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invinvoiceno -%]</td>
       <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invdesc | truncate(30) -%]</td>

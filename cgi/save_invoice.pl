@@ -180,6 +180,9 @@ EOD
 			}
 
 			if ($FORM{invfpflag} =~ /Y/i) {		#  Paid in Full?
+				if ($FORM{cuscis} =~ /Y/i) {
+					$FORM{invtotal} = sprintf('%1.2f',$FORM{invtotal} * 0.8);
+				}
 				$FORM{txnamount} = $FORM{invtotal} + $FORM{invvat};
 				&money_in();
 				&pay_invoice();
