@@ -37,7 +37,20 @@ $(document).ready(function(){
       $("#rec_invcoa").val(ui.item.coa);
       $("#rec_vatrate").val(ui.item.vatrate);
       $("#rec_cuscis").val(ui.item.cuscis);
-      $("#rec_txnamount").focus();
+      if (ui.item.cuscis == 'Y') {
+        $("#cistext").show();
+        $("#cisamount").show();
+      }
+      else {
+        $("#cistext").hide();
+        $("#cisamount").hide();
+      }
+      if (document.getElementById("rec_txnpaid") == null) {
+        $("#rec_txnamount").focus();
+      }
+      else {
+        $("#rec_txnpaid").focus();
+      }
     }
   });
   $("#rec_invprintdate").datepicker();
@@ -158,21 +171,15 @@ $(document).ready(function(){
     modal: true,
     buttons: {
       "Record Receipt": function() {
-        if (document.getElementById("rec_cuscis").value == "Y") {
-          alert("You cannot use this option for CIS Contractor payments.\nYou must create an invoice for the full amount and then\nrecord what is paid.");
+        if (validate_form("#recform2")) {
+          document.getElementById("rec_invcusname").value = document.getElementById("rec_cus_id").value;
+          $.post("/cgi-bin/fpa/process_txn.pl", $("form#recform2").serialize(),function(data) {
+            if ( ! /^OK/.test(data)) {
+              alert(data);
+            }
+          },"text");
           $(this).dialog("close");
-        }
-        else {
-          if (validate_form("#recform2")) {
-            document.getElementById("rec_invcusname").value = document.getElementById("rec_cus_id").value;
-            $.post("/cgi-bin/fpa/process_txn.pl", $("form#recform2").serialize(),function(data) {
-              if ( ! /^OK/.test(data)) {
-                alert(data);
-              }
-            },"text");
-            $(this).dialog("close");
-            window.location.reload(true);
-          }
+          window.location.reload(true);
         }
       },
       Cancel: function() {
@@ -331,6 +338,32 @@ function check_currency(obj) {
     }
   }
 }
+function calc_owed() {
+  if (document.getElementById("rec_cuscis").value == "Y") {
+    if (document.getElementById("rec_vatrate") == null ) {
+      document.getElementById("rec_txnamount").value = document.getElementById("rec_txnpaid").value * 1.25;
+    }
+    else {
+      if (document.getElementById("rec_vatrate").value * 1 == 0.2) {
+        document.getElementById("rec_txnamount").value = document.getElementById("rec_txnpaid").value * 1.2;
+      }
+      else {
+        if (document.getElementById("rec_vatrate").value * 1 == 0.05) {
+          document.getElementById("rec_txnamount").value = document.getElementById("rec_txnpaid").value * 1.2353;
+        }
+        else {
+          document.getElementById("rec_txnamount").value = document.getElementById("rec_txnpaid").value * 1.25;
+        }
+      }
+    }
+    var txnamount = document.getElementById("rec_txnamount").value * 1;
+    document.getElementById("rec_txnamount").value = txnamount.toFixed(2);
+  }
+  else {
+    var txnamount = document.getElementById("rec_txnpaid").value * 1;
+    document.getElementById("rec_txnamount").value = txnamount.toFixed(2);
+  }
+}
 function calc_vat(obj) {
   if (/^pay/.test(obj.id)) {
     if (/^-?\d+\.?\d?\d?/.test(document.getElementById("pay_txnamount").value)) {
@@ -360,6 +393,9 @@ function calc_vat(obj) {
     else {
       document.getElementById("rec_invvat").value = "";
       document.getElementById("rec_netamt").innerHTML = "";
+    }
+    if (typeof document.getElementById("rec_txnpaid") === "undefined") {
+      calc_owed();
     }
   }
 }

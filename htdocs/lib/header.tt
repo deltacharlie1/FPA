@@ -271,7 +271,7 @@ $(document).ready(function(){
     <table width="100%" cellpadding="4" cellspacing="0" border="0" class="formtable">
       <tr>
         <td><label>Received From</label></td>
-        <td><div><input type="hidden" name="invcusname" id="rec_invcusname" value=""/><input id="rec_cus_id" title="Received From" class="mandatory"/></div></td>
+        <td nowrap="nowrap"><div><input type="hidden" name="invcusname" id="rec_invcusname" value=""/><input id="rec_cus_id" title="Received From" class="mandatory"/>[%- IF cookie.CIS == 'Y' -%]&nbsp;<span id="cistext" style="display:none;">(CIS)</span>[%- END -%]</div></td>
       </tr>
       <tr>
         <td><label>Payment Method</label></td>
@@ -283,10 +283,23 @@ $(document).ready(function(){
           </select>
         </td>
       </tr>
+[% IF cookie.CIS == 'Y' -%]
+      <tr>
+        <td><label>Amount Paid</label></td>
+        <td><span><input type="text" name="txnpaid" id="rec_txnpaid" value="" size="10" title="Amount Paid" class="mandatory currency" onchange="calc_owed();"/></span></td>
+      </tr>
+      <tbody id="cisamount" style="display:none;">
+      <tr>
+        <td><label>Total Amount Owed</label></td>
+        <td><span><input type="text" name="txnamount" id="rec_txnamount" value="" size="10" title="Total Amount Owed" class="mandatory currency"[%- UNLESS cookie.VAT == "N" -%] onchange="calc_vat(this);"[%- END -%]/></span></td>
+      </tr>
+      </tbody>
+[% ELSE -%]
       <tr>
         <td><label>Total Amount Received</label></td>
         <td><span><input type="text" name="txnamount" id="rec_txnamount" value="" size="10" title="Total Amount Received" class="mandatory currency"[%- UNLESS cookie.VAT == "N" -%] onchange="calc_vat(this);"[%- END -%]/></span></td>
       </tr>
+[% END -%]
 [% IF cookie.PREFS.substr(3,1) == 'Y' -%]
       <tr>
         <td><label>Category</label></td>

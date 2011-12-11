@@ -35,9 +35,9 @@ while (( $Key,$Value) = each %FORM) {
 
 $Errs = "";
 
-if ($FORM{cuscis} =~ /Y/i) {
-	$Errs .= "You cannot use this option to record CIS Contractor payments\n";
-}
+#if ($FORM{cuscis} =~ /Y/i) {
+#	$Errs .= "You cannot use this option to record CIS Contractor payments\n";
+#}
 if ($FORM{invtype} =~ /I/i) {
 	unless ($FORM{invcusname}) { $Errs .= "You must enter the Customer's name\n"; }
 }
@@ -56,7 +56,6 @@ $Errs
 EOD
 }
 else {
-warn "Continuing\n";
 	$FORM{cus_id} = $FORM{amtcusid};
 	$FORM{invtotal} = $FORM{txnamount} - $FORM{invvat};
 	$FORM{invcusregion} = $FORM{invcusregion} || 'UK';
@@ -90,7 +89,9 @@ warn "Continuing\n";
 		else {
 			&save_invoice();		#  create a dummy invoice
 		}
-
+		if ($FORM{cuscis} =~ /Y/i) {
+			$FORM{txnamount} = $FORM{txnpaid} || $FORM{txnamount};
+		}
 		&money_in();
 		&pay_invoice();
 
