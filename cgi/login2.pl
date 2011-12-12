@@ -35,7 +35,7 @@ You have entered an incorrect password, please try again.  If you continue to ha
 
 EOD
 }
-elsif (substr($User[7],0,1) =~ /N/i && $User[9] =~ /C/i) {
+elsif (substr($User[7],0,1) =~ /N/i && $User[3] =~ /C/i) {
 	print<<EOD;
 Content-Type: text/plain
 Set-Cookie: fpa-uid=$FORM{email}; path=/; expires=$User[4];
