@@ -110,8 +110,7 @@ function set_range(obj) {
           }
         }
       }
-      curdate.setMonth(curdate.getMonth() - thismonth + fqstart);
-      curdate.setDate(1);
+      curdate.setMonth(curdate.getMonth() - thismonth + fqstart,1);
       var curarray = curdate.toUTCString().split(" ");
       document.getElementById("tbstart").value = curarray[1] + "-" + curarray[2] + "-" + curarray[3].substring(2);
       document.getElementById("tbend").value = curstr;
@@ -155,12 +154,10 @@ function set_range(obj) {
           }
         }
       }
-      curdate.setMonth(curdate.getMonth() - thismonth + fqstart);
-      curdate.setDate(0);
+      curdate.setMonth(curdate.getMonth() - thismonth + fqstart,1);
       var curarray = curdate.toUTCString().split(" ");
       document.getElementById("tbend").value = curarray[1] + "-" + curarray[2] + "-" + curarray[3].substring(2);
-      curdate.setMonth(curdate.getMonth() - 2);
-      curdate.setDate(1);
+      curdate.setMonth(curdate.getMonth() - 2,1);
       curarray = curdate.toUTCString().split(" ");
       document.getElementById("tbstart").value = curarray[1] + "-" + curarray[2] + "-" + curarray[3].substring(2);
       break;
@@ -169,8 +166,7 @@ function set_range(obj) {
       fydate.setDate(fydate.getDate() - 1);
       var fyarray = fydate.toUTCString().split(" ");
       document.getElementById("tbend").value = fyarray[1] + "-" + fyarray[2] + "-" + fyarray[3].substring(2);
-      fydate.setMonth(fydate.getMonth() - 11);
-      fydate.setDate(1);
+      fydate.setMonth(fydate.getMonth() - 11,1);
       var fyarray = fydate.toUTCString().split(" ");
       document.getElementById("tbstart").value = fyarray[1] + "-" + fyarray[2] + "-" + fyarray[3].substring(2);
       break;

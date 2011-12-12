@@ -143,7 +143,8 @@ function validate() {
   else {
     $.post("/cgi-bin/fpa/company_details2.pl", $("#form1").serialize(),function(data) {
       if ( ! /^OK/.test(data)) {
-        alert(data);
+        document.getElementById("dialog").innerHTML = data;
+        $("#dialog").dialog("open");
       }
       else {
         alert("Details Saved");
