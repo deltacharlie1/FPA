@@ -11,8 +11,6 @@ $Buffer = $ENV{QUERY_STRING};
 
 @pairs = split(/&/,$Buffer);
 
-# print "Content-Type: text/plain\n\n";
-
 foreach $pair (@pairs) {
 
         ($Name, $Value) = split(/=/, $pair);
@@ -21,14 +19,7 @@ foreach $pair (@pairs) {
         $Value =~ s/%([a-fA-F0-9][a-fA-F0-9])/pack("C",hex($1))/eg;
         $Value =~ tr/\\\'//d;
         $FORM{$Name} = $Value;
-# print "$Name = $Value\n";
 }
-# exit;
-
-#$COOKIE->{DB} = "fpa";
-#$COOKIE->{ACCT} = "1+1";
-#$FORM{tbstart} = "01-Jul-10";
-#$FORM{tbend} = "28-Jun-11";
 
 use DBI;
 $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
@@ -37,13 +28,11 @@ unless ($COOKIE->{NO_ADS}) {
 	&display_adverts();
 }
 
-
 #  Save the current filter settings
 
 $Sts = $dbh->do("update tempstacks set f1='$FORM{tbselect}',f2='$FORM{tbstart}',f3='$FORM{tbend}' where acct_id='$COOKIE->{ACCT}' and caller='report'");
 
-# warn "\$Invoices = \$dbh->prepare(\"select invoices.id as invid,invcusname,invtotal+invvat as amtdue,date_format(invprintdate,'%d-%b-%y') as printdate,concat('Invoice ',invinvoiceno,' (',invdesc,')') as descr,datediff(str_to_date('$FORM{tbend}','%d-%b-%y'),invprintdate) as overdue,sum(itnet+itvat) as amtpaid,invtotal+invvat-sum(itnet+itvat) as amtoverdue from invoices left join inv_txns on (invoices.id=inv_txns.inv_id and invoices.acct_id=inv_txns.acct_id) where invprintdate<=str_to_date('$FORM{tbend}','%d-%b-%y') and invstatuscode>'1' and invtype in ('S','R') and invoices.acct_id='$COOKIE->{ACCT}' group by invoices.id having amtpaid<amtdue or isnull(amtpaid)\")\n";
-$Invoices = $dbh->prepare("select invoices.id as invid,invcusname,invtotal+invvat as amtdue,date_format(invprintdate,'%d-%b-%y') as printdate,concat('Invoice ',invinvoiceno,' (',invdesc,')') as descr,datediff(str_to_date('$FORM{tbend}','%d-%b-%y'),invprintdate) as overdue,sum(itnet+itvat) as amtpaid,invtotal+invvat-sum(itnet+itvat) as amtoverdue from invoices left join inv_txns on (invoices.id=inv_txns.inv_id and invoices.acct_id=inv_txns.acct_id) where invprintdate<=str_to_date('$FORM{tbend}','%d-%b-%y') and invstatuscode>'1' and invtype in ('S','R') and invoices.acct_id='$COOKIE->{ACCT}' group by invoices.id having amtpaid<amtdue or isnull(amtpaid)");
+$Invoices = $dbh->prepare("select invoices.id as invid,invcusname,invtotal+invvat as amtdue,date_format(invprintdate,'%d-%b-%y') as printdate,concat('Invoice ',invinvoiceno,' (',invdesc,')') as descr,datediff(str_to_date('$FORM{tbend}','%d-%b-%y'),invprintdate) as overdue,sum(itnet+itvat) as amtpaid,invtotal+invvat-sum(itnet+itvat) as amtoverdue from invoices left join inv_txns on (invoices.id=inv_txns.inv_id and invoices.acct_id=inv_txns.acct_id) where invprintdate<=str_to_date('$FORM{tbend}','%d-%b-%y') and invstatuscode>'2' and invtype in ('S','R') and invoices.acct_id='$COOKIE->{ACCT}' group by invoices.id having amtpaid<amtdue or isnull(amtpaid)");
 $Invoices->execute;
 $Invoice = $Invoices->fetchall_arrayref({});
 

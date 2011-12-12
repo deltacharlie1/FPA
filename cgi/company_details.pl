@@ -112,7 +112,7 @@ $(document).ready(function(){
 function validate() {
   var errs = "";
   $(".error").removeClass("error");
-  $(".mandatory").each(function(i)
+  $(".mxndatory").each(function(i)
     {
       if (/^com/.test(this.name) && this.value.length < 1) {
         if (/vat/.test(this.name)) {
@@ -143,7 +143,8 @@ function validate() {
   else {
     $.post("/cgi-bin/fpa/company_details2.pl", $("#form1").serialize(),function(data) {
       if ( ! /^OK/.test(data)) {
-        alert(data);
+        document.getElementById("dialog").innerHTML = data;
+        $("#dialog").dialog("open");
       }
       else {
         alert("Details Saved");
