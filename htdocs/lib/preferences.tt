@@ -6,7 +6,7 @@
     <td colspan="2"><h3>Log In</h3></td>
   </tr>
   <tr>
-    <td><label>Enablee Memorable Word Check?</label></td>
+    <td><label>Enable Memorable Word Check?</label></td>
     <td><span><input name="memwordcheck" type="radio" id="memwordcheckY" title="Enable Memorable Word" value="Y"[%- IF reg.regprefs.substr(0,1) == 'Y' -%] checked="checked"[%- END -%]/> Yes&nbsp;&nbsp;<input name="memwordcheck" type="radio" id="memwordcheckN" title="Disable Memorable Word" value="N"[%- IF reg.regprefs.substr(0,1) == 'N' -%] checked="checked"[%- END -%]/> No</span></td>
   </tr>
   <tr>
