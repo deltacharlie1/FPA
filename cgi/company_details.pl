@@ -112,7 +112,7 @@ $(document).ready(function(){
 function validate() {
   var errs = "";
   $(".error").removeClass("error");
-  $(".mxndatory").each(function(i)
+  $(".mandatory").each(function(i)
     {
       if (/^com/.test(this.name) && this.value.length < 1) {
         if (/vat/.test(this.name)) {
