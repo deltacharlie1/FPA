@@ -149,14 +149,14 @@ EOD
 			$Sts = $dbh->do("update companies set comvatscheme='$Cell[4]',comvatduein='$Cell[5]',comvatmsgdue='$year-$VAT_due-01' where id=$New_com_id and reg_id=$Reg_id");
 		}
 
-#  If this is a CIS account then add a 7700 coa
+#  If this is a CIS account then add a 1150 coa
 
 	        if ($Cell[6] =~ /Y/i) {
 
-        	        $COAs = $dbh->prepare("select * from coas where coanominalcode='7700' and acct_id='$Reg_id+$New_com_id'");
+        	        $COAs = $dbh->prepare("select * from coas where coanominalcode='1150' and acct_id='$Reg_id+$New_com_id'");
                 	$COAs->execute;
 	                unless ($COAs->rows > 0) {
-        	                $dbh->do("insert into coas (acct_id,coanominalcode,coadesc,coatype,coareport) values ('$Reg_id+$New_com_id','7700','CIS Tax','Expenses','P & L')");
+        	                $dbh->do("insert into coas (acct_id,coanominalcode,coadesc,coatype,coareport) values ('$Reg_id+$New_com_id','1150','CIS Tax','Expenses','P & L')");
                 	}
 	                $COAs->finish;
 	        }

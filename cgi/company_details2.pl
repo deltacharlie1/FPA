@@ -97,12 +97,12 @@ else {
 
 	if ($FORM{comcis} =~ /Y/i && $FORM{comcis} !~ /$Company->{comcis}/i) {
 
-#  See if there is already a 7700 nomincal code
+#  See if there is already a 1150 nomincal code
 
-		$COAs = $dbh->prepare("select * from coas where coanominalcode='7700' and acct_id='$COOKIE->{ACCT}'");
+		$COAs = $dbh->prepare("select * from coas where coanominalcode='1150' and acct_id='$COOKIE->{ACCT}'");
 		$COAs->execute;
 		unless ($COAs->rows > 0) {
-			$dbh->do("insert into coas (acct_id,coanominalcode,coadesc,coatype,coareport) values ('$COOKIE->{ACCT}','7700','CIS Tax','Expenses','P & L')");
+			$dbh->do("insert into coas (acct_id,coanominalcode,coadesc,coatype,coareport) values ('$COOKIE->{ACCT}','1150','CIS Tax','Expenses','P & L')");
 		}
 		$COAs->finish;
 	}
