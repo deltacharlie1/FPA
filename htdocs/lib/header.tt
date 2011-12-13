@@ -286,7 +286,7 @@ $(document).ready(function(){
 [% IF cookie.CIS == 'Y' -%]
       <tr>
         <td><label>Amount Paid</label></td>
-        <td><span><input type="text" name="txnpaid" id="rec_txnpaid" value="" size="10" title="Amount Paid" class="mandatory currency" onchange="calc_owed();"/></span></td>
+        <td><span><input type="text" name="txnpaid" id="rec_txnpaid" value="" size="10" title="Amount Paid" class="mandatory currency" onchange="calc_owed();[%- UNLESS cookie.VAT == 'N' -%] calc_vat(document.getElementById('rec_txnamount'));[%- END -%]"/></span></td>
       </tr>
       <tbody id="cisamount" style="display:none;">
       <tr>

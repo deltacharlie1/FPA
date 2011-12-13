@@ -15,10 +15,10 @@ unless ($COOKIE->{NO_ADS}) {
 }
 
 
-$Customers = $dbh->prepare("select id,cusname,cusaddress,cuspostcode,cusregion,custel,cuscontact,cusemail,custerms,cusbalance,cuscredit,cuslimit,cusdefpaymethod from customers where id=? and acct_id=?");
+$Customers = $dbh->prepare("select id,cusname,cusaddress,cuspostcode,cusregion,custel,cuscontact,cusemail,custerms,cusbalance,cuscredit,cuslimit,cusdefpaymethod,cuscis from customers where id=? and acct_id=?");
 $Customers->execute($ENV{QUERY_STRING},"$COOKIE->{ACCT}");
 
-$Invoices = $dbh->prepare("select invoices.id as invid,invinvoiceno,invtype,invdesc,date_format(invprintdate,'%d-%b-%y') as printdate,date_format(invduedate,'%d-%b-%y') as duedate,(invtotal+invvat) as invamount,invstatus,(invpaid+invpaidvat) as invpaid,to_days(invprintdate) as printdays,to_days(invduedate) as duedays,invstatuscode,date_format(max(itdate),'%d-%b-%y') as itdate,invcistotal,invvat from invoices left join inv_txns on (inv_txns.inv_id=invoices.id and inv_txns.acct_id=invoices.acct_id) where invinvoiceno <> 'unlisted' and invtype in ('S','C') and cus_id=? and invoices.acct_id=? group by invoices.id order by invstatuscode desc,invprintdate desc limit 0,24");
+$Invoices = $dbh->prepare("select invoices.id as invid,invinvoiceno,invtype,invdesc,date_format(invprintdate,'%d-%b-%y') as printdate,date_format(invduedate,'%d-%b-%y') as duedate,(invtotal+invvat) as invamount,invstatus,(invpaid+invpaidvat) as invpaid,to_days(invprintdate) as printdays,to_days(invduedate) as duedays,invstatuscode,date_format(max(itdate),'%d-%b-%y') as itdate,((invtotal*0.8)+invvat) as cisamount from invoices left join inv_txns on (inv_txns.inv_id=invoices.id and inv_txns.acct_id=invoices.acct_id) where invinvoiceno <> 'unlisted' and invtype in ('S','C') and cus_id=? and invoices.acct_id=? group by invoices.id order by invstatuscode desc,invprintdate desc limit 0,24");
 $Invoices->execute($ENV{QUERY_STRING},"$COOKIE->{ACCT}");
 $Numrows = $Invoices->rows;
 $Rows = 24;

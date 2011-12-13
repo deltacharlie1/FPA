@@ -54,15 +54,15 @@
     </tr>
 [% class = [ "even","odd" ] -%]
 [% FOREACH invoice IN invoices -%]
-  [%- ndx = loop.count % 2; IF invoice.invcistotal != "" && invoice.invstatuscode > 2; invoice.invamount = invoice.invcistotal + invoice.invvat | format('%1.2f'); END -%]
+  [%- ndx = loop.count % 2; -%]
     <tr class="[%- class.$ndx -%]">
       <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invinvoiceno -%]</td>
       <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invcusname -%]</td>
       <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invdesc | truncate(30) -%]</td>
-      <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invamount -%]</td>
+      <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invamount; IF invoice.cuscis == 'Y'; invoice.invamount=invoice.cisamount | format('%1.2f'); END -%]</td>
       <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.printdate -%]</td>
       <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.duedate -%]</td>
-      <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- IF invoice.invamount-invoice.invpaid != 0; invoice.invamount - invoice.invpaid | format('%1.2f'); ELSE -%]&nbsp;[%- END -%]</td>
+      <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- IF invoice.invstatuscode>2; invoice.invamount - invoice.invpaid | format('%1.2f'); ELSE -%]&nbsp;[%- END -%]</td>
       <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">
   [% IF invoice.invstatus == 'Overdue' -%]<span style="color:#800000;font-weight:bold;">Overdue</span>[%- ELSE; invoice.invstatus; END -%]</td>
     [% IF invoice.invstatuscode > 2 AND invoice.invpaid < invoice.invamount -%]

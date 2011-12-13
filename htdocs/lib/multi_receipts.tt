@@ -74,13 +74,13 @@
     </tr>
 [% class = [ "even","odd" ] -%]
 [%- FOREACH invoice IN invoices -%]
-  [%- ndx = loop.count % 2; IF invoice.invcistotal != ""; invoice.invtotal = invoice.invcistotal; invoice.invdue = invoice.invcisdue; END -%]
+  [%- ndx = loop.count % 2 -%]
     <tr class="[%- class.$ndx -%]">
       <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invinvoiceno -%]</td>
       <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invdesc | truncate(30) -%]</td>
       <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.printdate -%]</td>
       <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invduedate -%]</td>
-      <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invtotal -%]</td>
+      <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invtotal; IF cus.cuscis=='Y'; invoice.invdue=invoice.cisdue | format('%1.2f'); END -%]</td>
 [% UNLESS cookie.VAT == "N" -%]
       <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invvat -%]</td>
 [% END -%]
