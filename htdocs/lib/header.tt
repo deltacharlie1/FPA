@@ -196,8 +196,9 @@ $(document).ready(function(){
 [% IF cookie.BUS == "1" && cookie.ACCESS >= 5 -%]
         <li class="bookkeeper"><a href="#"><span>Bookkeeper</span></a>
           <ul>
-            <li><a href="/cgi-bin/fpa/bkpr_add_invoices.pl">Bulk Add Invoices</a></li>
             <li><a href="/cgi-bin/fpa/list_companies.pl">List Companies</a></li>
+            <li><a href="/cgi-bin/fpa/bulk_add_invoices.pl">Bulk Add Invoices</a></li>
+            <li><a href="/cgi-bin/fpa/bulk_add_purchases.pl">Bulk Add Purchases</a></li>
             <li><a href="/cgi-bin/fpa/add_companies.pl">Add Companies</a></li>
           </ul>
 [% END -%]

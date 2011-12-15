@@ -39,7 +39,7 @@ $Vars = {
         javascript => '<script type="text/javascript"> 
 $(document).ready(function(){
   $("#cussrch").autocomplete({
-    minLength: 1,
+    minLength: 0,
     delay: 50,
     source: function (request,response) {
       request.type = document.getElementById("custype").value;
