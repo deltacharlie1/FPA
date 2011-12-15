@@ -16,7 +16,7 @@ unless ($COOKIE->{NO_ADS}) {
 
 ($Reg_id,$Com_id) = split(/\+/,$COOKIE->{ACCT});
 
-$Companies = $dbh->prepare("select id,comname,comcontact,comemail,date_format(comyearend,'%b') as comyearend,comvatscheme,comvatduein,comcis from companies where companies.reg_id=$Reg_id order by comname;");
+$Companies = $dbh->prepare("select id,reg_id,comname,comcontact,comemail,date_format(comyearend,'%b') as comyearend,comvatscheme,comvatduein,comcis from companies where companies.reg_id=$Reg_id order by comname;");
 $Companies->execute;
 
 $Market_Sectors = $dbh->prepare("select id,sector,frsrate from market_sectors");
