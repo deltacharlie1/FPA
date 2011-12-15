@@ -100,7 +100,7 @@ $(document).ready(function(){
     }
   });
   $("#srch").autocomplete({
-    minLength: 1,
+    minLength: 0,
     delay: 50,
     source: function (request,response) {
       request.type = "Customers";

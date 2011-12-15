@@ -1,0 +1,121 @@
+<div class="main" id="main">
+<h1>Add Invoices/Receipts</h1>
+  <form name="form1" id="blk_form1" method="post" action="/cgi-bin/fpa/bulk_add_invoices2.pl" onsubmit="return check_data();">
+  <input type="hidden" name="data" id="blk_data" value=""/>
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="formtable">
+    <tr>
+      <td nowrap="nowrap">Nominal Account<br/>
+      <select name="nomcode" id="blk_nomcode" size="1">
+            <option value="4000" selected="selected">4000 - UK Sales</option>
+            <option value="4100">4100 - EU Sales</option>
+            <option value="4200">4200 - Export Sales</option>
+            <option value="4300">4300 - Other Income</option>
+          </select>
+      </td>
+      <td nowrap="nowrap">Payment Method<br/>
+      <select name="txnmethod" id="blk_txnmethod" size="1">
+            <option value="1200" selected="selected">1200 - Bank</option>
+            <option value="1300">1300 - Cash</option>
+            <option value="1310">1310 - Cheque</option>
+          </select>
+      </td>
+[% UNLESS cookie.VAT == 'N' -%]
+      <td>VAT Rate<br/>
+        <select name="vatrate" id="blk_vatrate" size="1">
+  [% INCLUDE vatrates -%]
+        </select>
+      </td>
+[% ELSE -%]
+      <td>&nbsp;<input type="hidden" name="vatrate" id="blk_vatrate" value=""/></td>
+[% END -%]
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td colspan="4">
+[% IF cookie.VAT == 'N' -%]
+        <div style="float:left;"><table width="580" cellpadding="0" cellspacing="0" class="datatable">
+          <tr>
+            <td colspan="2">&nbsp;Customer<span id="blk_cis" style="display:none;"> (CIS)</span><br/><input type="text" name="invcusname" id="blk_invcusname" size="20" class="mand2" title="Customer Name"/></td>
+<input type="hidden" name="invcus_id" id="blk_invcus_id" value=""/>
+<input type="hidden" name="invcuscis" id="blk_invcuscis" value="N"/>
+<input type="hidden" name="netamt" id="blk_netamt" value=""/>
+<input type="hidden" name="netvat" id="blk_netvat" value=""/>
+            <td>&nbsp;Description<br/><input type="text" name="invdesc" id="blk_invdesc" size="15" class="mand2" title="Description"/></td>
+            <td nowrap="nowrap">&nbsp;Date<br/><input type="text" name="invdate" id="blk_invdate" size="8" class="mand2" title="Date" readonly="readonly"/></td>
+            <td style="vertical-align:middle;">&nbsp;Paid in Full?&nbsp;<input type="checkbox" name="pfflag" id="blk_pfflag" value="Y" checked="checked"/></td>
+          </tr>
+          <tr>
+            <td colspan="2">&nbsp;Total<br/><input type="text" name="totamt" id="blk_totamt" size="7" class="mand2" title="Total"/></td>
+            <td>&nbsp;Category<br/><input type="text" name="invcat" id="blk_invcat" size="10"/></td>
+            <td colspan="2">&nbsp;Reference<br/><input type="text" name="invref" id="blk_invref" size="10"/></td>
+          </tr>
+        </table></div><div style="float:right;padding:40px 10px 0 0;">&nbsp;<img src="/icons/add_button_over.png" onclick="process_invoice();"/></div>
+[% ELSE -%]
+        <div style="float:left;"><table width="580" cellpadding="0" cellspacing="0" class="datatable">
+          <tr>
+            <td colspan="2">&nbsp;Customer<span id="blk_cis" style="display:none;"> (CIS)</span><br/><input type="text" name="invcusname" id="blk_invcusname" size="18" class="mand2" title="Customer Name"/></td>
+<input type="hidden" name="invcus_id" id="blk_invcus_id" value=""/>
+<input type="hidden" name="invcuscis" id="blk_invcuscis" value="N"/>
+            <td>&nbsp;Description<br/><input type="text" name="invdesc" id="blk_invdesc" size="15" class="mand2" title="Description"/></td>
+            <td nowrap="nowrap">&nbsp;Date<br/><input type="text" name="invdate" id="blk_invdate" size="8" class="mand2" title="Date" readonly="readonly"/></td>
+            <td style="vertical-align:middle;">&nbsp;Paid in Full?&nbsp;<input type="checkbox" name="pfflag" id="blk_pfflag" value="Y" checked="checked"/></td>
+          </tr>
+          <tr>
+            <td>&nbsp;Net<br/><input type="text" name="netamt" id="blk_netamt" size="6" class="mand2" onblur="check_currency(this);" onchange="calc_bvat();" title="Net Amount"/></td>
+            <td>&nbsp;VAT<br/><input type="text" name="netvat" id="blk_netvat" size="6" class="mand2" onblur="check_currency(this);" title="VAT Amount"/></td>
+            <td>&nbsp;Total<br/><input type="text" name="totamt" id="blk_totamt" size="7" class="mand2" onblur="check_currency(this);" onchange="calc_bvat();" title="Total Amount"/></td>
+            <td>&nbsp;Category<br/><input type="text" name="invcat" id="blk_invcat" size="10"/></td>
+            <td>&nbsp;Reference<br/><input type="text" name="invref" id="blk_invref" size="10"/></td>
+          </tr>
+        </table></div><div style="float:right;padding:40px 10px 0 0;">&nbsp;<img src="/icons/add_button_over.png" onclick="process_invoice();"/></div>
+[% END -%]
+      </td>
+    </tr>
+    <tr>
+      <td clospan="4">
+  Clear after saving?&nbsp;<input type="radio" name="clear" id="clearY" value="Y" checked="checked"/>&nbsp;Yes&nbsp;&nbsp;<input type="radio" name="clear" id="clearN" value="N"/>&nbsp;No
+      </td>
+    <tr>
+  </table>
+  <p>&nbsp;</p>
+  <h2>Invoices to be Added</h2>
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="listing">
+    <tr>
+      <th>Acct</th>
+      <th>Customer</th>
+      <th style="display:none;">Cus Id</th>
+      <th style="display:none;">Cus Cis</th>
+      <th>Description</th>
+[% IF cookie.VAT == 'N' -%]
+      <th style="display:none;">Net</th>
+      <th style="display:none;">VAT</th>
+[% ELSE -%]
+      <th>Net</th>
+      <th>VAT</th>
+[% END -%]
+      <th>Total</th>
+      <th>Date</th>
+      <th>Pay</th>
+      <th style="display:none;">Category</th>
+      <th style="display:none;">Reference</th>
+      <th>Paid?</th>
+      <th style="display:none;">VAT Rate</th>
+      <th>Edit</th>
+    </tr>
+    <tbody id="new">
+    </tbody>
+  </table>
+</div>
+<div id="sidebar">
+  <ul>    
+    <li>
+      <div>
+        <input type="submit" name="save" id="blk_save" value="Save Invoices"/>
+      </div>  
+    </li>   
+  </ul>   
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+</div>
+</form>
+</div>
