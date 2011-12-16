@@ -281,11 +281,11 @@ function set_logout() {
 }
 function print_display() {
   if ($("#print_listing").length > 0) {
-    $("#print_listing").print();
+    $("#print_listing").jqprint();
   }
   else {
     if ($("#main").length > 0) {
-      $("#main").print();
+      $("#main").jqprint();
     }
     else {
       window.print();
