@@ -197,9 +197,9 @@ function dlt(row) {
   display_table();
 }
 function check_int(obj) {
-  if (obj.value.length > 0 && ! /^\d+$/.test(obj.value)) {
+  if (obj.value.length > 0 && ! /^\d+\.?\d?\d?$/.test(obj.value)) {
     errfocus = obj.name;
-    document.getElementById("dialog").innerHTML = "You must enter a whole number";
+    document.getElementById("dialog").innerHTML = "You must enter a numeric value to no more than 2 decimal places";
     $("#dialog").dialog("open");
   }
 }
