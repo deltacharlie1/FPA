@@ -116,7 +116,7 @@ if ($FORM{vatid}) {
 }
 print<<EOD;
 Content-Type:text/html
-Status: HTTP/1.1 204 No Content
+Status: 204 No Content
 
 EOD
 
