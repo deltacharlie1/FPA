@@ -1,5 +1,5 @@
 <div class="main" id="main">
-    <pre id="print_listing" style="overflow:auto; width:600px;height:600px;padding-top:10px;background-color:#ffffff;color:#000000;font-weight:normal;">
+    <pre style="overflow:auto; width:600px;height:600px;padding-top:10px;background-color:#ffffff;color:#000000;font-weight:normal;">
 [% data -%]
     </pre>
 </div>

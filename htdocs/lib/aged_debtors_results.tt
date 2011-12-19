@@ -1,5 +1,5 @@
 <h3>Total number of Invoices found = [%- numrows -%]</h3>
-<div id="print_listing" style="overflow:auto; width:690px;height:800px;padding-top:10px;">
+<div style="overflow:auto; width:690px;height:800px;padding-top:10px;">
   <table width="660" border="0" cellpadding="0" cellspacing="0" class="listing">
     <tr>
       <th width="25%">[%- colheader -%] Name</th>

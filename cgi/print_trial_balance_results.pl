@@ -53,6 +53,9 @@ format STDOUT_TOP =
            Trial Balance Period:  @>>>>>>>>>>  to  @<<<<<<<<<<
 $FORM{tbstart},$FORM{tbend}
 
+@<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+$COOKIE->{TAG}
+
 Report Date: @<<<<<<<<<<                                       Page No: @<<<
 $Report_date,$%
 

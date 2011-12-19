@@ -64,8 +64,8 @@ Content-Type: text/plain\n\n
 EOD
 
 format STDOUT_TOP =
-                                          Nominal Ledger Period:  @>>>>>>>> to @<<<<<<<<
-$FORM{tbstart},$FORM{tbend}
+@<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<    Nominal Ledger Period:  @>>>>>>>> to @<<<<<<<<
+$COOKIE->{TAG},$FORM{tbstart},$FORM{tbend}
 
 Report Date: @<<<<<<<<<<                                                                                      Page No: @<<<
 $Report_date,$%

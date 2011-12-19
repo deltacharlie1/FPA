@@ -154,7 +154,7 @@ function set_range(obj) {
       curdate.setMonth(curdate.getMonth() - thismonth + fqstart,1);
       var curarray = curdate.toUTCString().split(" ");
       document.getElementById("tbend").value = curarray[1] + "-" + curarray[2] + "-" + curarray[3].substring(2);
-      curdate.setMonth(curdate.getMonth() - 2,);
+      curdate.setMonth(curdate.getMonth() - 2,1);
       curarray = curdate.toUTCString().split(" ");
       document.getElementById("tbstart").value = curarray[1] + "-" + curarray[2] + "-" + curarray[3].substring(2);
       break;

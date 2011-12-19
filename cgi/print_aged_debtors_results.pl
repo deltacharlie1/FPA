@@ -53,8 +53,8 @@ Content-Type: text/plain\n\n
 EOD
 
 format STDOUT_TOP =
-                                           Aged Debtors For: @>>>>>>>> to @<<<<<<<<
-$FORM{tbstart},$FORM{tbend}
+@<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<   Aged Debtors For: @>>>>>>>> to @<<<<<<<<
+$COOKIE->{TAG},$FORM{tbstart},$FORM{tbend}
 
 Report Date: @<<<<<<<<<<                                                                     Page No: @<<<
 $Report_date,$%

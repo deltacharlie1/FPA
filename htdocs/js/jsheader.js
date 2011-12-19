@@ -281,14 +281,20 @@ function set_logout() {
 }
 function print_display(title) {
   if ($("#print_listing").length > 0) {
-    $("#print_listing").jqprint();
+    $(".listing").jqprint();
   }
   else {
-    if ($("#main").length > 0) {
-      $("#main").jqprint();
+    if ($("#results").length > 0) {
+      var $PrintHTML  = $("<h2>" + title + "</h2><h3>From: " + document.getElementById("tbstart").value + " To: " + document.getElementById("tbend").value + "</h3>" + document.getElementById("results").innerHTML);
+      $PrintHTML.jqprint();
     }
     else {
-      window.print();
+      if ($("#main").length > 0) {
+        $("#main").jqprint();
+      }
+      else {
+        window.print();
+      }
     }
   }
 }

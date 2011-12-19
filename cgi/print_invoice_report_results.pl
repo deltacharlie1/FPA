@@ -55,8 +55,8 @@ Content-Type: text/plain\n\n
 EOD
 
 format STDOUT_TOP =
-                                          VAT Reconciliation Report Period:  @>>>>>>>> to @<<<<<<<<
-$FORM{tbstart},$FORM{tbend}
+@<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<    VAT Reconciliation Report Period:  @>>>>>>>> to @<<<<<<<<
+$COOKIE->{TAG},$FORM{tbstart},$FORM{tbend}
 
 Report Date: @<<<<<<<<<<                                                                                      Page No: @<<<
 $Report_date,$%
