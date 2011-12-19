@@ -50,8 +50,8 @@ chomp($Report_date);
 print<<EOD;
 Content-Type: text/plain\n\n
 
-<div id="print_listing" style="overflow:auto; width:670px;height:600px;padding-top:10px;background-color:#ffffff;color:#000000;font-weight:normal;">
-<pre>
+<div style="overflow:auto; width:670px;height:600px;padding-top:10px;background-color:#ffffff;color:#000000;font-weight:normal;">
+<pre id="print_listing">
 EOD
 
 format STDOUT_TOP =

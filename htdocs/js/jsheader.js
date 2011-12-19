@@ -279,7 +279,7 @@ function set_logout() {
   $("#dialog").dialog("option", "buttons", { "OK": function() { window.location.href="/cgi-bin/fpa/login.pl"; } });
   $("#dialog").dialog("open");
 }
-function print_display() {
+function print_display(title) {
   if ($("#print_listing").length > 0) {
     $("#print_listing").jqprint();
   }
