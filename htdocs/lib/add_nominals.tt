@@ -1,4 +1,5 @@
 <div class="main" id="main">
+<div style="padding-left:120px;">
 <h1>Add Nominal Accounts</h1>
   <form name="form1" id="nom_form1" method="post" action="/cgi-bin/fpa/add_nominals2.pl" onsubmit="return check_data();">
   <input type="hidden" name="data" id="nom_data" value=""/>
@@ -19,7 +20,7 @@
           <tr>
             <td>&nbsp;Description<br/><input type="text" name="coadesc" id="coadesc" size="30" class="mand2" title="Description"/></td>
           </tr>
-        </table></div><div style="float:right;padding:15px 10px 0 0;">&nbsp;<img src="/icons/add_button_over.png" onclick="validate_nominal();"/></div>
+        </table></div><div style="float:right;padding:10px 15px 0 0;">&nbsp;<img src="/icons/add_button_over.png" onclick="validate_nominal();"/></div>
       </td>
     </tr>
   </table>
@@ -53,6 +54,7 @@
 [% END -%]
     </tbody>
   </table>
+</div>
 </div>
 <div id="sidebar">
   <ul>    
