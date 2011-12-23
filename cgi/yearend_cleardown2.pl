@@ -45,7 +45,7 @@ foreach $Coaitem (@$Coa) {
 
 #  Make minus entry for amount in nominals
 
-	$Sts = $dbh->do("insert into transactions (acct_id,txncusname,txnmethod,txnamount,txndate,txntxntype,txnremarks,txntxnno) values ('$COOKIE->{ACCT}','$Coaitem->{coadesc}','$Coaitem->{nominalcode}','$Coaitem->{balance}','$Date->{fystart}','yearend','Year End adjst','$Txn_no}')");
+	$Sts = $dbh->do("insert into transactions (acct_id,txncusname,txnmethod,txnamount,txndate,txntxntype,txnremarks,txntxnno) values ('$COOKIE->{ACCT}','$Coaitem->{coadesc}','$Coaitem->{nominalcode}','$Coaitem->{balance}','$Date->{fystart}','yearend','Year End adjst','$Txn_no')");
 	$New_txn_id = $dbh->last_insert_id(undef, undef, qw(transactions undef));
 	$Txn_no++;
 
@@ -56,7 +56,7 @@ foreach $Coaitem (@$Coa) {
 
 #  Now update Retained Earnings
 
-$Sts = $dbh->do("insert into transactions (acct_id,txncusname,txnmethod,txnamount,txndate,txntxntype,txnremarks,txntxnno) values ('$COOKIE->{ACCT}','Retained Earnings','3100','$Balance','$Date->{fystart}','yearend','Year End adjst','$Txn_no}')");
+$Sts = $dbh->do("insert into transactions (acct_id,txncusname,txnmethod,txnamount,txndate,txntxntype,txnremarks,txntxnno) values ('$COOKIE->{ACCT}','Retained Earnings','3100','$Balance','$Date->{fystart}','yearend','Year End adjst','$Txn_no')");
 $New_txn_id = $dbh->last_insert_id(undef, undef, qw(transactions undef));
 $Txn_no++;
 

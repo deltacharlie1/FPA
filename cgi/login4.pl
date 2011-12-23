@@ -80,6 +80,22 @@ if ($Company[10] < 0) {
 
 }
 
+#  Get the User defined account codes
+
+$Coas = $dbh->prepare("select coanominalcode,coadesc,coagroup from coas where acct_id='$Reg_com[0]+$Reg_com[1]' and coagroup=? order by coanominalcode");
+foreach $Coa ('4300','5000','6000','7000') {
+	$Coas->execute($Coa);
+	while (@Coa = $Coas->fetchrow) {
+		if ($Coa[1] =~ /^Other Exp/i && ! $Opt{$Coa}) {
+			$Opt{$Coa} .= "<option value='$Coa[0]' selected='selected'>$Coa[1]</option>";
+		}
+		else {
+			$Opt{$Coa} .= "<option value='$Coa[0]'>$Coa[1]</option>";
+		}
+	}
+}
+$Coas->finish;
+
 #  Set the correct FRS percentage
 
 $Company[5] = sprintf("%1.3f",$Company[5]/100);
@@ -91,7 +107,7 @@ $Cookie = $SHA1_hash->hexdigest;
 
 $IP_Addr = $ENV{'REMOTE_ADDR'};
 open(COOKIE,">/projects/tmp/$Cookie");
-print COOKIE "IP\t$IP_Addr\nACCT\t$Reg_com[0]+$Reg_com[1]\nBACCT\t$Reg_com[0]+$Reg_com[1]\nID\t$COOKIE->{ID}\nPWD\t$COOKIE->{PWD}\nPLAN\t$COOKIE->{PLAN}\nVAT\t$Company[2]\nYEAREND\t$Company[4]\nUSER\t$User\nEXP\t$Company[3]\nFRS\t$Company[5]\nMIN\t$Company[6]\nMENU\t$COOKIE->{MENU}\nTAG\t$Company[0]\nBTAG\t$Company[0]\nACCESS\t$ACCESS\nNO_ADS\t$Company[12]\nREP_INVS\t$Company[13]\nSTMTS\t$Company[14]\nUPLDS\t$Company[15]\nPT_LOGO\t$Company[16]\nHMRC\t$Company[17]\nSUPPT\t$Company[18]\nCOOKIE\t$Cookie\nDB\tfpa\nADDU\t$Company[19]\nPREFS\t$COOKIE->{PREFS}\nCIS\t$Company[20]\nBUS\t$Company[21]\n";
+print COOKIE "IP\t$IP_Addr\nACCT\t$Reg_com[0]+$Reg_com[1]\nBACCT\t$Reg_com[0]+$Reg_com[1]\nID\t$COOKIE->{ID}\nPWD\t$COOKIE->{PWD}\nPLAN\t$COOKIE->{PLAN}\nVAT\t$Company[2]\nYEAREND\t$Company[4]\nUSER\t$User\nEXP\t$Company[3]\nFRS\t$Company[5]\nMIN\t$Company[6]\nMENU\t$COOKIE->{MENU}\nTAG\t$Company[0]\nBTAG\t$Company[0]\nACCESS\t$ACCESS\nNO_ADS\t$Company[12]\nREP_INVS\t$Company[13]\nSTMTS\t$Company[14]\nUPLDS\t$Company[15]\nPT_LOGO\t$Company[16]\nHMRC\t$Company[17]\nSUPPT\t$Company[18]\nCOOKIE\t$Cookie\nDB\tfpa\nADDU\t$Company[19]\nPREFS\t$COOKIE->{PREFS}\nCIS\t$Company[20]\nBUS\t$Company[21]\n4300\t$Opt{'4300'}\n5000\t$Opt{'5000'}\n6000\t$Opt{'6000'}\n7000\t$Opt{'7000'}\n";
 
 close(COOKIE);
 $COOKIE->{ACCT} = "$Reg_com[0]+$Reg_com[1]";

@@ -6,10 +6,10 @@
     <tr>
       <td nowrap="nowrap">Nominal Account<br/>
       <select name="nomcode" id="blk_nomcode" size="1">
-            <option value="4000" selected="selected">4000 - UK Sales</option>
-            <option value="4100">4100 - EU Sales</option>
-            <option value="4200">4200 - Export Sales</option>
-            <option value="4300">4300 - Other Income</option>
+            <option value="4000" selected="selected">UK Sales</option>
+            <option value="4100">EU Sales</option>
+            <option value="4200">Export Sales</option>
+            [% cookie.4300 -%]
           </select>
       </td>
       <td nowrap="nowrap">Payment Method<br/>

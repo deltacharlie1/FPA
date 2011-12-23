@@ -20,6 +20,17 @@
   </table>
 </div>
 <div id="sidebar">
+[% IF cookie.ACCESS >= 5 -%]
+  <ul>
+    <li>
+      <div>
+        <a href="/cgi-bin/fpa/add_nominals.pl">
+          Add Nominal Accounts
+        </a>
+      </div>
+    </li>
+  </ul>
+[% END -%]
   <div id="sidebar-ad">
 [% INCLUDE adverts.tt -%]
   </div>

@@ -14,6 +14,8 @@ unless ($COOKIE->{NO_ADS}) {
 	&display_adverts();
 }
 
+$Coas = $dbh->prepare("select coanominalcode,coadesc from coas where acct_id='$COOKIE->{ACCT}' order by coanominalcode");
+$Coas->execute;
 
 #  First get the initial date range
 
@@ -57,6 +59,7 @@ $Vars = {
         title => 'Nominal Ledger',
 	cookie => $COOKIE,
 	daterange => $Reg,
+	coas => $Coas->fetchall_arrayref({}),
 	javascript => '<script type="text/javascript">
 $(document).ready(function(){
   $("#tbstart").datepicker({minDate: new Date(2000,01 - 1,01) });
@@ -195,7 +198,7 @@ function print_list() {
 
 print "Content-Type: text/html\n\n";
 $tt->process('nomledger.tt',$Vars);
-
+$Coas->finish;
 $Regs->finish;
 $dbh->disconnect;
 exit;

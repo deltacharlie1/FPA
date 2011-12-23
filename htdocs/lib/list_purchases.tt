@@ -31,9 +31,9 @@
         <td><label>Allocatee To</label></td>
         <td>
           <select name="invcoa" id="i_invcoa">
-            <option value="5000">Cost of Sales</option>
-            <option value="6000">Other Expenses</option>
-            <option value="7000">Fixed Overheads</option>
+            [% cookie.5000 -%]
+            [% cookie.6000 -%]
+            [% cookie.7000 -%]
             <option value="1000">Fixed Assets</option>
             <option value="1500">Other Current Assets</option>
           </select>

@@ -328,7 +328,7 @@ $(document).ready(function(){
             <option value="4000" selected="selected">UK Sales</option>
             <option value="4100">EU Sales</option>
             <option value="4200">Export Sales</option>
-            <option value="4300">Other Income</option>
+            [% cookie.4300 -%]
           </select>
         </td> 
       </tr>
@@ -391,11 +391,11 @@ $(document).ready(function(){
         <td><label>Allocate to</label></td>
         <td>
           <select name="invcoa" id="pay_invcoa" size="1">
-            <option value="5000">Cost of Sales</option>
-            <option value="6000" selected="selected">Other Expenses</option>
-            <option value="7000">Fixed Overheads</option>
             <option value="1000">Fixed Assets</option>
             <option value="1500">Other Current Assets</option>
+            [% cookie.5000 -%]
+            [% cookie.6000 -%]
+            [% cookie.7000 -%]
           </select>
         </td> 
       </tr>

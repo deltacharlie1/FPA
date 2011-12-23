@@ -88,7 +88,7 @@ else {
 
 #  Now get the data
 
-        $Vataccs = $dbh->prepare("select sum(acrvat) from vataccruals where acct_id='$COOKIE->{ACCT}' and $Date_Range and vr_id < 1 and acrnominalcode='4000'");
+        $Vataccs = $dbh->prepare("select sum(acrvat) from vataccruals where acct_id='$COOKIE->{ACCT}' and $Date_Range and vr_id < 1 and (acrnominalcode='4000' or acrnominalcode like '43%')");
         $Vataccs->execute;
         ($Vatreturn->{perbox1}) = $Vataccs->fetchrow;
 
@@ -96,16 +96,16 @@ else {
         $Vataccs->execute;
         ($Vatreturn->{perbox2}) = $Vataccs->fetchrow;
 
-        $Vataccs = $dbh->prepare("select sum(acrvat) from vataccruals where acct_id='$COOKIE->{ACCT}' and $Date_Range and vr_id < 1 and acrnominalcode in ('1000','5000','6000','7000')");
+        $Vataccs = $dbh->prepare("select sum(acrvat) from vataccruals where acct_id='$COOKIE->{ACCT}' and $Date_Range and vr_id < 1 and (acrnominalcode='1000' or (acrnominalcode>='5000' and acrnominalcode<'7500'))");
         $Vataccs->execute;
         ($Vatreturn->{perbox4}) = $Vataccs->fetchrow;
 	$Vatreturn->{perbox4} = 0 - $Vatreturn->{perbox4};	#  because it is already a negative number
 
-        $Vataccs = $dbh->prepare("select sum(acrtotal) from vataccruals where acct_id='$COOKIE->{ACCT}' and $Date_Range and vr_id < 1 and acrnominalcode in ('4000','4100','4200')");
+        $Vataccs = $dbh->prepare("select sum(acrtotal) from vataccruals where acct_id='$COOKIE->{ACCT}' and $Date_Range and vr_id < 1 and (acrnominalcode in ('4000','4100','4200') or acrnominalcode like '43%')");
         $Vataccs->execute;
         ($Vatreturn->{perbox6}) = $Vataccs->fetchrow;
 
-        $Vataccs = $dbh->prepare("select sum(acrtotal) from vataccruals where acct_id='$COOKIE->{ACCT}' and $Date_Range and vr_id < 1 and acrnominalcode in ('1000','5000','6000','7000')");
+        $Vataccs = $dbh->prepare("select sum(acrtotal) from vataccruals where acct_id='$COOKIE->{ACCT}' and $Date_Range and vr_id < 1 and (acrnominalcode='1000' or (acrnominalcode>='5000' and acrnominalcode<'7500'))");
         $Vataccs->execute;
         ($Vatreturn->{perbox7}) = $Vataccs->fetchrow;
         $Vatreturn->{perbox7} =~ tr/-//d;
@@ -114,7 +114,7 @@ else {
         $Vataccs->execute;
         ($Vatreturn->{perbox8}) = $Vataccs->fetchrow;
 
-        $Vataccs = $dbh->prepare("select sum(acrtotal) from vataccruals left join invoices on (invoices.id=vataccruals.acrtxn_id and invoices.acct_id=vataccruals.acct_id)  where vataccruals.acct_id='$COOKIE->{ACCT}' and $Date_Range and vr_id < 1 and acrnominalcode in ('1000','5000','6000','7000') and invcusregion='EU'");
+        $Vataccs = $dbh->prepare("select sum(acrtotal) from vataccruals left join invoices on (invoices.id=vataccruals.acrtxn_id and invoices.acct_id=vataccruals.acct_id)  where vataccruals.acct_id='$COOKIE->{ACCT}' and $Date_Range and vr_id < 1 and(acrnominalcode='1000' or (acrnominalcode>='5000' and acrnominalcode<'7500')) and invcusregion='EU'");
         $Vataccs->execute;
         ($Vatreturn->{perbox9}) = $Vataccs->fetchrow;
         $Vatreturn->{perbox9} =~ tr/-//d;

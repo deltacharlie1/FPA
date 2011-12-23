@@ -61,7 +61,7 @@ if ($FORM{thisint}) {
 
 #  create a dummy invoice (invoice # = unlisted)  -  Not sure that his is required
 
-	$Sts = $dbh->do("insert into invoices (acct_id,invinvoiceno,invdesc,invcusregion,invcoa,invtotal,invpaid,invprintdate,invstatus,invstatuscode,invtype) values ('$COOKIE->{ACCT}','unlisted','Bank Interest','UK','4300','$FORM{thisint}','$FORM{thisint}',$Date,'Bank','2','BI')");
+	$Sts = $dbh->do("insert into invoices (acct_id,invinvoiceno,invdesc,invcusregion,invcoa,invtotal,invpaid,invprintdate,invstatus,invstatuscode,invtype) values ('$COOKIE->{ACCT}','unlisted','Bank Interest','UK','4310','$FORM{thisint}','$FORM{thisint}',$Date,'Bank','2','BI')");
        $New_inv_id = $dbh->last_insert_id(undef, undef, qw(invoices undef));
 
 #  create a transaction record
@@ -82,8 +82,8 @@ if ($FORM{thisint}) {
 
 #  Other Income
 
-        $Sts = $dbh->do("update coas set coabalance=coabalance + '$FORM{thisint}' where acct_id='$COOKIE->{ACCT}' and coanominalcode='4300'");
-	$Sts = $dbh->do("insert into nominals (acct_id,link_id,nomtype,nomcode,nomamount,nomdate) values ('$COOKIE->{ACCT}',$New_txn_id,'T','4300','$FORM{thisint}',$Date)");
+        $Sts = $dbh->do("update coas set coabalance=coabalance + '$FORM{thisint}' where acct_id='$COOKIE->{ACCT}' and coanominalcode='4310'");
+	$Sts = $dbh->do("insert into nominals (acct_id,link_id,nomtype,nomcode,nomamount,nomdate) values ('$COOKIE->{ACCT}',$New_txn_id,'T','4310','$FORM{thisint}',$Date)");
 
 #  Audit trail
 
@@ -116,7 +116,7 @@ if ($FORM{thisch}) {
 
 #  create a dummy invoice (invoice # = unlisted)
 
-	$Sts = $dbh->do("insert into invoices (acct_id,invinvoiceno,invdesc,invcusregion,invcoa,invtotal,invpaid,invprintdate,invstatuscode,invtype) values ('$COOKIE->{ACCT}','unlisted','Bank Charges','UK','6000','$FORM{thisch}','$FORM{thisch}',$Date,'2','BC')");
+	$Sts = $dbh->do("insert into invoices (acct_id,invinvoiceno,invdesc,invcusregion,invcoa,invtotal,invpaid,invprintdate,invstatuscode,invtype) values ('$COOKIE->{ACCT}','unlisted','Bank Charges','UK','6010','$FORM{thisch}','$FORM{thisch}',$Date,'2','BC')");
         $New_inv_id = $dbh->last_insert_id(undef, undef, qw(invoices undef));
 
 #  create a transaction record
@@ -139,8 +139,8 @@ if ($FORM{thisch}) {
 
 #  Other Income
 
-        $Sts = $dbh->do("update coas set coabalance=coabalance + '$FORM{thisch}' where acct_id='$COOKIE->{ACCT}' and coanominalcode='6000'");
-	$Sts = $dbh->do("insert into nominals (acct_id,link_id,nomtype,nomcode,nomamount,nomdate) values ('$COOKIE->{ACCT}',$New_txn_id,'T','6000','$FORM{thisch}',$Date)");
+        $Sts = $dbh->do("update coas set coabalance=coabalance + '$FORM{thisch}' where acct_id='$COOKIE->{ACCT}' and coanominalcode='6010'");
+	$Sts = $dbh->do("insert into nominals (acct_id,link_id,nomtype,nomcode,nomamount,nomdate) values ('$COOKIE->{ACCT}',$New_txn_id,'T','6010','$FORM{thisch}',$Date)");
 
 #  Audit trail
 

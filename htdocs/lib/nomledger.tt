@@ -4,8 +4,8 @@
 <input type="hidden" name="tbfy" id="tbfy" value="[%- daterange.tbfy -%]"/>
   <table width="660" border="0" cellpadding="0" cellspacing="0" class="formtable">
     <tr>
-      <td><label>Select Date Range</label></td>
-      <td colspan="3">
+      <td nowrap="nowrap"><label>Select Date Range</label></td>
+      <td>
         <select name="tbselect" id="tbselect" size="1" onchange="set_range(this);">
           <option value="cu" [%- IF daterange.tbselect == "cu" -%]selected="selected"[%- END -%]>Current</option>
           <option value="tw" [%- IF daterange.tbselect == "tw" -%]selected="selected"[%- END -%]>This Week to Date</option>
@@ -16,6 +16,15 @@
           <option value="lm" [%- IF daterange.tbselect == "lm" -%]selected="selected"[%- END -%]>Last Month</option>
           <option value="lq" [%- IF daterange.tbselect == "lq" -%]selected="selected"[%- END -%]>Last Financial Quarter</option>
           <option value="ly" [%- IF daterange.tbselect == "ly" -%]selected="selected"[%- END -%]>Last Financial Year</option>
+        </select>
+      </td>
+      <td><label>Account</label></td>
+      <td>
+        <select name="nomcoa" id="nomcoa" size="1" onchange="get_balances();">
+          <option value="" selected="selected"> ---  All  --- </option>
+[% FOREACH coa IN coas -%]
+          <option value="[%- coa.coanominalcode -%]">[%- coa.coanominalcode -%] - [%- coa.coadesc -%]</option>
+[% END -%]
         </select>
       </td>
     </tr>

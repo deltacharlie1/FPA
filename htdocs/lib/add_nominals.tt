@@ -1,0 +1,69 @@
+<div class="main" id="main">
+<h1>Add Nominal Accounts</h1>
+  <form name="form1" id="nom_form1" method="post" action="/cgi-bin/fpa/add_nominals2.pl" onsubmit="return check_data();">
+  <input type="hidden" name="data" id="nom_data" value=""/>
+  <table width="450" border="0" cellpadding="0" cellspacing="0" class="formtable">
+    <tr>
+      <td nowrap="nowrap">Nominal Account Groups<br/>
+      <select name="nomgrp" id="nom_nomcode" size="1" onchange="document.getElementById('coadesc').focus();">
+            <option value="4300" selected="selected">4300 - Other Income</option>
+            <option value="5000">5000 - Cost of Sales</option>
+            <option value="6000">6000 - Other Expenses</option>
+            <option value="7000">7000 - Fixed Overheads</option>
+          </select>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div style="float:left;"><table width="350" cellpadding="0" cellspacing="0" class="datatable">
+          <tr>
+            <td>&nbsp;Description<br/><input type="text" name="coadesc" id="coadesc" size="30" class="mand2" title="Description"/></td>
+          </tr>
+        </table></div><div style="float:right;padding:15px 10px 0 0;">&nbsp;<img src="/icons/add_button_over.png" onclick="validate_nominal();"/></div>
+      </td>
+    </tr>
+  </table>
+  <p>&nbsp;</p>
+  <h2>Nominal Accounts to be Added</h2>
+  <table width="450" border="0" cellpadding="0" cellspacing="0" class="listing">
+    <tr>
+      <th>Code</th>
+      <th>Description</th>
+      <th>Account Group</th>
+      <th>Group</th>
+      <th>Status</th>
+      <th style="display:none;">Grp Code</th>
+      <th style="display:none;">Report</th>
+      <th>Edit</th>
+    </tr>
+    <tbody id="new">
+[% class = [ "even","odd" ] -%]
+[% FOREACH coa IN coas -%]
+  [%- ndx = loop.count % 2 -%]
+    <tr class="[%- class.$ndx -%]">
+      <td>[%- coa.coanominalcode -%]</td>
+      <td>[%- coa.coadesc -%]</td>
+      <td>[%- coa.coagrp -%]</td>
+      <td>[%- coa.coatype -%]</td>
+      <td>[%- coa.status -%]</td>
+      <td style="display:none;">[%- coa.coagroup -%]</td>
+      <td style="display:none;">[%- coa.coareport -%]</td>
+      <td>&nbsp;</td>
+    </tr>
+[% END -%]
+    </tbody>
+  </table>
+</div>
+<div id="sidebar">
+  <ul>    
+    <li>
+      <div>
+        <input type="submit" name="save" id="blk_save" value="Save Nominal Accounts"/>
+      </div>  
+    </li>   
+  </ul>   
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+</div>
+</form>
+</div>
