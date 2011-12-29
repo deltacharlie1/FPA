@@ -200,6 +200,8 @@ $(document).ready(function(){
             <li><a href="/cgi-bin/fpa/bulk_add_invoices.pl">Bulk Add Invoices</a></li>
             <li><a href="/cgi-bin/fpa/bulk_add_purchases.pl">Bulk Add Purchases</a></li>
             <li><a href="/cgi-bin/fpa/add_companies.pl">Add Companies</a></li>
+            <li><a href="/cgi-bin/fpa/newrec.pl">Reconcile - Step 1</a></li>
+            <li><a href="/cgi-bin/fpa/newrec2.pl">Reconcile - Step 2</a></li>
           </ul>
 [% END -%]
         </li>

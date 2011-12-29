@@ -388,14 +388,14 @@ button {
 	vertical-align:bottom;
 	color: #fff;
 	background-color: #337040;
-	height: 30px;
+	height: 25px;
 	padding:0 0 10px 6px;
 }
 .listing td {
 	font-size: 10px;
 	font-weight:normal;
 	color: #363636;
-	padding: 2px 2px;
+	padding: 0px 2px;
 	height:24px;
 	border-right: solid 1px #c5c5a9;
 }

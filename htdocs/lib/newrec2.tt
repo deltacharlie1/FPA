@@ -1,0 +1,117 @@
+<div class="main" id="main">
+<h1>Reconcile Step 2 - Match</h1>
+<table border="0" cellpadding="2" cellspacing="2" width="100%">
+  <tr>
+    <td style="text-align:right;font-weight:bold;">Closing Balance previous Statement = </td>
+    <td style="font-weight:bold;">[%- acct.staclosebal -%]</td>
+  </tr>
+  <tr>
+    <td style="text-align:right;font-weight:bold;">Opening Balance this Statement = </td>
+    <td style="font-weight:bold;">[%- acct.newopen | format('%1.2f') -%]</td>
+  </tr>
+  <tr>
+    <td style="text-align:right;font-weight:bold;">Closing Balance this Statement = </td>
+    <td style="font-weight:bold;">[%- acct.newclose | format('%1.2f') -%]</td>
+  </tr>
+  <tr>
+    <td style="text-align:right;font-weight:bold;"><label>Difference to match = </label></td>
+    <td style="font-weight:bold;"><span id="stmtdiff">[%- acct.newclose - acct.newopen | format('%1.2f') -%]</span></td>
+  </tr>
+  <tr>
+    <td style="vertical-align:top;"><h3>Unpaid Transactions</h3>
+      <table width="336" cellpadding="0" cellspacing="0" class="listing">
+        <tr>
+          <th style="display:none;">ID</th>
+          <th>Date</th>
+          <th>Inv #</th>
+          <th>Type</th>
+          <th>Customer</th>
+          <th>Description</th>
+          <th>Amt</th>
+        </tr>
+[% class = [ "even","odd" ] -%]
+[% FOREACH invoice IN invoices -%]
+  [%- ndx = loop.count % 2 -%]
+        <tr class="[%- class.$ndx -%] draggable" id="inv[%- invoice.id -%]">
+          <td style="display:none;">[%- invoice.id -%]</td>
+          <td nowrap="nowrap">[%- invoice.printdate -%]</td>
+          <td>[%- invoice.invinvoiceno -%]</td>
+          <td>[%- invoice.invtype -%]</td>
+          <td>[%- invoice.invcusname | truncate(15) -%]</td>
+          <td>[%- invoice.invdesc | truncate(20) -%]</td>
+          <td style="text-align:right;">[%- invoice.amtdue -%]</td>
+        </tr>
+[%- END -%]
+      </table>
+    </td>
+    <td rowspan="2" style="vertical-align:top;"><h3>Statement Transactions</h3>
+      <table width="340" cellpadding="0" cellspacing="0" class="listing">
+        <tr>
+          <th>Date</th>
+          <th>Description</th>
+          <th>Amt</th>
+          <th>Remaining</th>
+        </tr>
+[% FOREACH entry IN stmt -%]
+        <tr class="even">
+          <td nowrap="nowrap">[%- entry.date -%]</td>
+          <td>[%- entry.desc | truncate(40) -%]</td>
+          <td style="text-align:right;">[%- entry.amt | format('%1.2f') -%]</td>
+          <td style="text-align:right;"><span id="pbnk[%- loop.count -%]">[%- entry.amt | format('%1.2f') -%]</span></td>
+        </tr>
+        <tr>
+          <td colspan="4">
+            <table width="336" cellpadding="0" cellspacing="0" class="listing droppable dropzone" id="bnk[%- loop.count -%]">
+              <tr class="placeholder">
+                <td colspan="5"></td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+[% END -%]
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td style="vertical-align:top;"><h3>Un-reconciled Transactions</h3>
+      <table width="336" cellpadding="0" cellspacing="0" class="listing">
+        <tr>
+          <th style="display:none;">ID</th>
+          <th>Date</th>
+          <th>Type</th>
+          <th>Customer</th>
+          <th>Description</th>
+          <th>Amt</th>
+        </tr>
+[% class = [ "even","odd" ] -%]
+[% FOREACH txn IN txns -%]
+  [%- ndx = loop.count % 2 -%]
+        <tr class="[%- class.$ndx -%] draggable" id="txn[%- txn.id -%]">
+          <td style="display:none;">[%- txn.id -%]</td>
+          <td nowrap="nowrap">[%- txn.tdate -%]</td>
+          <td>[%- txn.txntxntype -%]</td>
+          <td>[%- txn.txncusname | truncate(15) -%]</td>
+          <td>[%- txn.txnremarks | truncate(20) -%]</td>
+          <td style="text-align:right;">[%- txn.txnamount | format('%1.2f') -%]</td>
+        </tr>
+[%- END -%]
+      </table>
+    </td>
+  </tr>
+</table>
+</div>
+<div id="sidebar">
+  <ul>
+    <li>
+      <div>
+        <a href="/cgi-bin/fpa/newrec3.pl">
+         Accept &amp; Lock 
+        </a>
+      </div>
+    </li>
+  </ul>
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+  </div>
+</div>
+
