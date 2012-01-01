@@ -369,13 +369,13 @@ $(document).ready(function(){
         <td><label>Total Amount Paid</label></td>
         <td><span><input type="text" name="txnamount" id="pay_txnamount" value="" size="10" title="Total Amount Paid" class="mandatory currency"[%- UNLESS cookie.VAT == "N" -%] onchange="calc_vat(this);"[%- END -%]/></span></td>
       </tr>
-<!--
+[% IF cookie.PREFS.substr(3,1) == 'Y' -%]
       <tr>
         <td><label>Category</label></td>
-        <td><span><input type="text" name="item_cat" id="rec_item_cat" value="" size="20" title="Category"/></span></td>
+        <td><span><input type="text" name="item_cat" id="pay_item_cat" value="" size="20" title="Category"/></span></td>
       </tr>
-//-->
-[% UNLESS cookie.VAT == "N" -%]
+[% END -%]
+[%- UNLESS cookie.VAT == "N" -%]
       <tr>
         <td><label>VAT Rate</label></td>
         <td>

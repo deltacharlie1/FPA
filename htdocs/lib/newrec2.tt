@@ -1,4 +1,78 @@
 <div class="main" id="main">
+<div id="stmtmatch" title="Money In" style="display:none;">
+  <form id="stmtform2" name="stmtform2">
+    <input type="hidden" name="stmttype" id="stmttype" value="In"/>
+    <input type="hidden" name="stmtcustype" id="stmtcustype" value="Customers"/>
+    <input type="hidden" name="stmtcusid" id="stmtcusid" value="0"/>
+    <input type="hidden" name="stmtamt" id="stmtamt" value="0.00"/>
+    <input type="hidden" name="stmttxnmethod" id="stmttxnmethod" value="1200"/>
+    <input type="hidden" name="stmtdropid" id="stmtdropid" value=""/>
+    <table width="100%" cellpadding="2" cellspacing="0" border="0" class="formtable" id="stmttable">
+      <tr>
+        <td colspan="2"><span id="stmtcusnametype">Customer</span><br/>
+        <div><input type="hidden" name="stmtcusname" id="stmtcusname" value=""/><input id="stmt_cus_id" title="Payee/Payor" class="mandatory"/></div></td>
+        <td colspan="2">Description<br/><span><input type="text" name="stmtdesc" id="stmtdesc" size="30" title="Description of the transaction" class="mandatory"></span></td>
+      </tr>
+      <tbody id="stmtpaycodegp" style="display:none;">
+      <tr>
+        <td colspan="2">Allocate to<br/>
+          <select name="stmtpaycodes" id="stmtpaycodes" size="1">
+            <option value="1000">Fixed Assets</option>
+            <option value="1500">Other Current Assets</option>
+            [% cookie.5000 -%]
+            [% cookie.6000 -%]
+            [% cookie.7000 -%]
+          </select>
+        </td> 
+        <td colspan="2">Transaction Date<br/>
+        <input type="text" name="stmttxndate" id="stmtpaytxndate" value="" class="mandatory stmttxndate" size="10" readonly="readonly"/></td>
+      </tr>
+      </tbody>
+      <tbody id="stmtinccodegp">
+      <tr>
+        <td colspan="2">Allocate to<br/>
+          <select name="stmtinccodes" id="stmtinccodes" size="1">
+            <option value="4000" selected="selected">UK Sales</option>
+            <option value="4100">EU Sales</option>
+            <option value="4200">Non-EU Sales</option>
+            [% cookie.4300 -%]
+          </select>
+        </td> 
+        <td colspan="2">Transaction Date<br/>
+        <input type="text" name="stmttxndate" id="stmtinctxndate" value="" class=" mandatory stmttxndate" size="10" readonly="readonly"/></td>
+      </tr>
+      </tbody>
+      <tr>
+        <td><label><span id="stmtpaytype">Amount Received:</span></label></td>
+        <td><span id="stmttxnamount">0.00</span></td>
+[%- UNLESS cookie.VAT == "N" -%]
+        <td><label>VAT Rate</label></td>
+        <td>
+          <select name="stmtvatrate" id="stmtvatrate" onchange="calc_stmtvat();">
+[% INCLUDE vatrates -%]
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td><label>VAT Amount</label></td>
+        <td colspan="3"><span id="stmtvat">0.00</span> <span id="stmtnetamt"></span></td>
+[% ELSE -%]
+        <td colspan="2">&nbsp;</td>
+[% END -%]
+      </tr>
+      <tr>
+        <td colspan="2">Reference<br/>
+        <input type="text" name="stmtcusref" id="stmtcusref" value="" title="Reference"/></td>
+[% IF cookie.PREFS.substr(3,1) == 'Y' -%]
+        <td colspan="2">Category<br/>
+        <input type="text" name="stmtitem_cat" id="stmtitem_cat" value="" size="20" title="Category"/></td>
+[% ELSE -%]
+        <td colspan="2">&nbsp;</td>
+[% END -%]
+      </tr>
+    </table>
+  </form>
+</div>
 <h1>Reconcile Step 2 - Match</h1>
 <table border="0" cellpadding="2" cellspacing="2" width="100%">
   <tr>
@@ -22,6 +96,7 @@
       <table width="336" cellpadding="0" cellspacing="0" class="listing">
         <tr>
           <th style="display:none;">ID</th>
+          <th style="display:none;">Type</th>
           <th>Date</th>
           <th>Inv #</th>
           <th>Type</th>
@@ -34,12 +109,13 @@
   [%- ndx = loop.count % 2 -%]
         <tr class="[%- class.$ndx -%] draggable" id="inv[%- invoice.id -%]">
           <td style="display:none;">[%- invoice.id -%]</td>
+          <td style="display:none;">pay</td>
           <td nowrap="nowrap">[%- invoice.printdate -%]</td>
           <td>[%- invoice.invinvoiceno -%]</td>
           <td>[%- invoice.invtype -%]</td>
           <td>[%- invoice.invcusname | truncate(15) -%]</td>
           <td>[%- invoice.invdesc | truncate(20) -%]</td>
-          <td style="text-align:right;">[%- invoice.amtdue -%]</td>
+          <td style="text-align:right;[%- IF invoice.amtdue < 0 -%] color:#c80000;[%- END -%]">[%- invoice.amtdue -%]</td>
         </tr>
 [%- END -%]
       </table>
@@ -53,11 +129,11 @@
           <th>Remaining</th>
         </tr>
 [% FOREACH entry IN stmt -%]
-        <tr class="even">
+        <tr class="even" id="trbnk[%- loop.count -%]" ondblclick="matchit(this);">
           <td nowrap="nowrap">[%- entry.date -%]</td>
           <td>[%- entry.desc | truncate(40) -%]</td>
           <td style="text-align:right;">[%- entry.amt | format('%1.2f') -%]</td>
-          <td style="text-align:right;"><span id="pbnk[%- loop.count -%]">[%- entry.amt | format('%1.2f') -%]</span></td>
+          <td style="text-align:right;[%- IF entry.amt < 0 -%] color:#c80000;[%- END -%]"><span id="pbnk[%- loop.count -%]">[%- entry.amt | format('%1.2f') -%]</span></td>
         </tr>
         <tr>
           <td colspan="4">
@@ -77,7 +153,9 @@
       <table width="336" cellpadding="0" cellspacing="0" class="listing">
         <tr>
           <th style="display:none;">ID</th>
+          <th style="display:none;">Type</th>
           <th>Date</th>
+          <th>&nbsp;</th>
           <th>Type</th>
           <th>Customer</th>
           <th>Description</th>
@@ -88,11 +166,13 @@
   [%- ndx = loop.count % 2 -%]
         <tr class="[%- class.$ndx -%] draggable" id="txn[%- txn.id -%]">
           <td style="display:none;">[%- txn.id -%]</td>
+          <td style="display:none;">rec</td>
           <td nowrap="nowrap">[%- txn.tdate -%]</td>
+          <td>&nbsp;</td>
           <td>[%- txn.txntxntype -%]</td>
           <td>[%- txn.txncusname | truncate(15) -%]</td>
           <td>[%- txn.txnremarks | truncate(20) -%]</td>
-          <td style="text-align:right;">[%- txn.txnamount | format('%1.2f') -%]</td>
+          <td style="text-align:right;[%- IF txn.txnamount < 0 -%] color:#c80000;[%- END -%]">[%- txn.txnamount | format('%1.2f') -%]</td>
         </tr>
 [%- END -%]
       </table>
@@ -114,4 +194,3 @@
 [% INCLUDE adverts.tt -%]
   </div>
 </div>
-

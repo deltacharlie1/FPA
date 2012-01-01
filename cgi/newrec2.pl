@@ -121,39 +121,206 @@ $Vars = {
 	javascript => '<script type="text/javascript">
 var errfocus;
 $(document).ready(function(){
+  $("#sidebar ul").hide();
+  $(".stmttxndate").datepicker();
+  $("#stmt_cus_id").autocomplete({
+    minLength: 0,
+    delay: 50,
+    source: function (request,response) {
+      request.type = $("#stmtcustype").val();
+      $.ajax({
+        url: "/cgi-bin/fpa/autosuggest.pl",
+        dataType: "json",
+        data: request,
+        success: function( data ) {
+          response (data);
+        }
+      });
+    },
+    select: function(event, ui) {
+      $("#stmtcusid").val(ui.item.id);
+      $("#stmtinccodes").val(ui.item.coa);
+      $("#stmtpaycodes").val(ui.item.coa);
+      $("#stmtvatrate").val(ui.item.vatrate);
+      $("#rec_cuscis").val(ui.item.cuscis);
+      if (ui.item.cuscis == "Y") {
+        $("#cistext").show();
+        $("#cisamount").show();
+      }
+      else {
+        $("#cistext").hide();
+        $("#cisamount").hide();
+      }
+    }
+  });
+  $("#stmtmatch").dialog({
+    bgiframe: true,
+    autoOpen: false,
+    position: [200,50],
+    height: 380,
+    width: 500,
+    modal: true,
+    buttons: {
+  "Add Transaction": function() {
+     var errs = "";
+     if ($("#stmt_cus_id").val() == "") {
+       errs = errs + "<li>You must enter a Customer/Supplier name</li>";
+       errfocus = "stmt_cus_id";
+     }
+     if ($("#stmtdesc").val() == "") {
+       errs = errs + "<li>You must enter a Transaction Description</li>";
+     }
+     if (errs != "") {
+       $("#dialog").html("You have the following errors:-<ol>" + errs + "</ol>");
+       $("#dialog").dialog("open");
+     }
+     else {
+       var trid = document.getElementById("stmtdropid").value;
+       $("#"+trid).find(".placeholder").remove();
+       if (/^Sup/.test($("#stmtcustype").val())) {
+         $("<tr></tr>").html("<td style=\'display:none;\'>"+$("#stmtcusid").val()+"</td><td style=\'display:none;\'>new</td><td nowrap=\'nowrap\'>"+$("#stmtpaytxndate").val()+"</td><td></td><td>"+$("#stmtpaycodes").val()+"</td><td>"+$("#stmt_cus_id").val()+"</td><td>"+$("#stmtdesc").val()+"</td><td>-"+$("#stmttxnamount").text()+"</td><td style=\'display:none;\'>"+$("#stmtvat").text()+"</td><td style=\'display:none;\'>"+$("#stmtcusref").val()+"</td><td style=\'display:none;\'>"+$("#stmtitem_cat").val()+"</td><td onclick=\"revert(\'0\',$(this),\'"+trid+"\');\"><img src=\'/icons/delete.png\' width=\'12\' height=\'12\' alt=\'Delete\'/></td>").appendTo("#"+trid);
+         var diff = document.getElementById("stmtdiff").innerHTML;
+         diff = (diff * 1) + ($("#stmttxnamount").text() * 1);
+         if (diff == 0) {
+           $("#sidebar ul").show();
+         }
+         document.getElementById("stmtdiff").innerHTML = diff.toFixed(2);
+         diff = document.getElementById("p"+trid).innerHTML;
+         diff = (diff * 1) + ($("#stmttxnamount").text() * 1);
+       }
+       else {
+         $("<tr></tr>").html("<td style=\'display:none;\'>"+$("#stmtcusid").val()+"</td><td style=\'display:none;\'>new</td><td nowrap=\'nowrap\'>"+$("#stmtinctxndate").val()+"</td><td></td><td>"+$("#stmtinccodes").val()+"</td><td>"+$("#stmt_cus_id").val()+"</td><td>"+$("#stmtdesc").val()+"</td><td>"+$("#stmttxnamount").text()+"</td><td style=\'display:none;\'>"+$("#stmtvat").text()+"</td><td style=\'display:none;\'>"+$("#stmtcusref").val()+"</td><td style=\'display:none;\'>"+$("#stmtitem_cat").val()+"</td><td onclick=\"revert(\'0\',$(this),\'"+trid+"\');\"><img src=\'/icons/delete.png\' width=\'12\' height=\'12\' alt=\'Delete\'/></td>").appendTo("#"+trid);
+         var diff = document.getElementById("stmtdiff").innerHTML;
+         diff = (diff * 1) - ($("#stmttxnamount").text() * 1);
+         if (diff == 0) {
+           $("#sidebar ul").show();
+         }
+         document.getElementById("stmtdiff").innerHTML = diff.toFixed(2);
+         diff = document.getElementById("p"+trid).innerHTML;
+         diff = (diff * 1) - ($("#stmttxnamount").text() * 1);
+       }
+       $("#p"+trid).html(diff.toFixed(2));
+       $("#stmt_cus_id").val("");
+       $("#stmtcusref").val("");
+       $("#stmtitem_cat").val("");
+
+       $(this).dialog("close");
+     }
+   }, 
+  "Cancel": function() { $(this).dialog("close"); } 
+  }
+}); 
   $(".draggable").draggable({
 	helper: "clone"
   });
   $(".droppable").droppable({
-	accept: ".draggable",
-	drop: function(event,ui) {
-		$( this ).find( ".placeholder").remove();
-		$("<tr></tr>").html( ui.draggable.html()+"<td onclick=\"revert(\'"+ui.draggable.attr("id")+"\',$(this),\'"+$(this).attr("id")+"\');\"><img src=\'/icons/delete.png\' width=\'12\' height=\'12\' alt=\'Delete\'/></td>" ).appendTo( this );
-		ui.draggable.draggable( "option", "revert", false );
-                var diff = document.getElementById("stmtdiff").innerHTML;
-                diff = (diff * 1) - ($(this).find(":nth-child(7)").last().text() * 1);
-		document.getElementById("stmtdiff").innerHTML = diff.toFixed(2);
-                diff = document.getElementById("p"+$(this).attr("id")).innerHTML;
-                diff = (diff * 1) - ($(this).find(":nth-child(7)").last().text() * 1);
-		document.getElementById("p"+$(this).attr("id")).innerHTML = diff.toFixed(2);
-		ui.draggable.draggable("disable");
-		return false;
-	}
+    accept: ".draggable",
+    drop: function(event,ui) {
+      var invvalue = ($(ui.draggable).find(":nth-child(8)").last().text() * 1);
+      var stmtvalue = (document.getElementById("p"+$(this).attr("id")).innerHTML * 1);
+
+      if ((/^-/.test(invvalue) && !/^-/.test(stmtvalue)) || (! /^-/.test(invvalue) && /^-/.test(stmtvalue))) {
+        ui.draggable.draggable( "option", "revert", true );
+        alert("Not a matching Credit/Debit");
+      }
+      else {
+        $( this ).find( ".placeholder").remove();
+        $("<tr></tr>").html( ui.draggable.html()+"<td onclick=\"revert(\'"+ui.draggable.attr("id")+"\',$(this),\'"+$(this).attr("id")+"\');\"><img src=\'/icons/delete.png\' width=\'12\' height=\'12\' alt=\'Delete\'/></td>" ).appendTo( this );
+
+        var invdiff = (invvalue - stmtvalue).toFixed(2)
+	if ((invvalue >= 0 && invdiff > 0) || (invvalue < 0 && invdiff < 0)) {
+          $(ui.draggable).find(":nth-child(8)").text(invdiff);
+          ui.draggable.draggable( "option", "revert", true );
+          invvalue = (invvalue - invdiff).toFixed(2);
+          $(this).find(":nth-child(8)").last().text(invvalue);
+        }
+        else {
+          ui.draggable.draggable( "option", "revert", false );
+          ui.draggable.draggable("disable");
+        }
+        var diff = (document.getElementById("stmtdiff").innerHTML * 1);
+        diff = (diff * 1) - (invvalue * 1);
+        if (diff == 0) {
+          $("#sidebar ul").show();
+        }
+        document.getElementById("stmtdiff").innerHTML = diff.toFixed(2);
+        diff = document.getElementById("p"+$(this).attr("id")).innerHTML;
+        diff = (diff * 1) - (invvalue * 1);
+        document.getElementById("p"+$(this).attr("id")).innerHTML = diff.toFixed(2);
+        return false;
+      }
+    }
   });
 });
 function revert(id,el,dropid) {
-  var diff = document.getElementById("stmtdiff").innerHTML;
-  diff = (diff * 1) + (el.parent().find(":nth-child(7)").last().text() * 1);
+  var diff = (document.getElementById("stmtdiff").innerHTML * 1);
+  var dropvalue = (el.parent().find(":nth-child(8)").last().text() * 1);
+  var stmtremainder = (document.getElementById("p"+dropid).innerHTML * 1);
+  diff = (diff * 1) + (dropvalue * 1);
   document.getElementById("stmtdiff").innerHTML = diff.toFixed(2);
-  diff = (el.parent().find(":nth-child(7)").last().text() * 1) + (document.getElementById("p"+dropid).innerHTML * 1);
+  diff = (dropvalue * 1) + (stmtremainder * 1);
   document.getElementById("p"+dropid).innerHTML = diff.toFixed(2);
-  $("#"+id).draggable(\'enable\');
+  if (id != "0") {
+    var newvalue;
+    var invvalue = ($("#"+id).find(":nth-child(8)").text() * 1);
+    if (invvalue != dropvalue) {
+      newvalue = ($("#"+id).find(":nth-child(8)").text() * 1) + (dropvalue * 1);
+    }
+    else {
+      newvalue = ($("#"+id).find(":nth-child(8)").text() * 1);
+    }
+    newvalue = newvalue.toFixed(2);
+    $("#"+id).find(":nth-child(8)").text(newvalue);
+    $("#"+id).draggable(\'enable\');
+  }
   if (el.parent().parent().children().length < 2) {
     el.parent().replaceWith("<tr class=\'placeholder\'><td colspan=\'4\'></td></tr>");
   }
   else {
     el.parent().remove();
   }
+}
+function matchit(obj) {
+  if ($(obj).find(":nth-child(4)").text() == "0.00") {
+    alert("Already fully matched");
+  }
+  else {
+    var trid = $(obj).attr("id").replace("trbnk","bnk");
+    document.getElementById("stmtdropid").value = trid;
+    if (/^-/.test($(obj).find(":nth-child(4)").text())) {
+      $("#stmtmatch").dialog({title:"Money Out"});
+      $("#stmtpaytxndate").val($(obj).find(":first").text());
+      $("#stmtpaycodegp").show();
+      $("#stmtinccodegp").hide();
+      $("#stmtcusnametype").text("Supplier");
+      $("#stmtpaytype").text("Amount Paid");
+      $("#stmtcustype").val("Suppliers");
+      var txnamt = (0 - ($(obj).find(":nth-child(4)").text() * 1)).toFixed(2);
+    }
+    else {
+      $("#stmtmatch").dialog({title:"Money In"});
+      $("#stmtinctxndate").val($(obj).find(":first").text());
+      $("#stmtinccodegp").show();
+      $("#stmtpaycodegp").hide();
+      $("#stmtcusnametype").text("Customer");
+      $("#stmtpaytype").text("Amount Received");
+      $("#stmtcustype").val("Customers");
+      var txnamt = (($(obj).find(":nth-child(4)").text() * 1)).toFixed(2);
+    }
+    $("#stmttxnamount").text(txnamt);
+    calc_stmtvat();
+    $("#stmtdesc").val($(obj).find(":nth-child(2)").text());
+    $("#stmtmatch").dialog("open");
+  }
+}
+function calc_stmtvat() {
+  var totamt = ($("#stmttxnamount").text() * 1);
+  var vat = (document.getElementById("stmtvatrate").value * 1);
+  var vatdiv = vat + 1;
+  var vatvalue = (totamt * vat / vatdiv).toFixed(2);
+  $("#stmtvat").text(vatvalue);
+  var netamt = totamt - vatvalue;
+  document.getElementById("stmtnetamt").innerHTML = "(Net = " + netamt.toFixed(2) + ")";
 }
 </script>'
 };
