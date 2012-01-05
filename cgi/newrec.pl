@@ -9,6 +9,8 @@ $COOKIE = &checkid($ENV{HTTP_COOKIE},$ACCESS_LEVEL);
 
 $Acctype = $ENV{QUERY_STRING};
 
+$Acctype = $Acctype || "1200";
+
 use DBI;
 $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
 unless ($COOKIE->{NO_ADS}) {
@@ -17,10 +19,15 @@ unless ($COOKIE->{NO_ADS}) {
 }
 
 
-$Accts = $dbh->prepare("select accounts.id,accounts.acctype,accname,accacctno,stastmtno,staclosebal,date_format(staclosedate,'%d-%b-%y') as staclosedate from accounts left join statements on (accounts.id=acc_id) where accounts.acct_id='$COOKIE->{ACCT}' and acctype='1200' order by statements.id desc limit 1");
+$Accts = $dbh->prepare("select accounts.id,accounts.acctype,accname,accacctno,stastmtno,staclosebal,date_format(staclosedate,'%d-%b-%y') as staclosedate from accounts left join statements on (accounts.id=acc_id) where accounts.acct_id='$COOKIE->{ACCT}' and acctype='$Acctype' order by statements.id desc limit 1");
 $Accts->execute;
 $Acct = $Accts->fetchrow_hashref;
 $Accts->finish;
+
+$TSs = $dbh->prepare("select f1,f2,f3 from tempstacks where acct_id='$COOKIE->{ACCT}' and caller='reconciliation'");
+$TSs->execute;
+$TS = $TSs->fetchrow_hashref;
+$TSs->finish;
 
 use Template;
 $tt = Template->new({
@@ -32,6 +39,7 @@ $Vars = {
        	title => 'Accounts - Reconciliations',
 	cookie => $COOKIE,
 	acct => $Acct,
+	ts => $TS,
 	focus => 'stmt',
 	javascript => '<script type="text/javascript">
 var errfocus;

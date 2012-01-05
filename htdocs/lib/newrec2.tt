@@ -121,7 +121,7 @@
       </table>
     </td>
     <td rowspan="2" style="vertical-align:top;"><h3>Statement Transactions</h3>
-      <table width="340" cellpadding="0" cellspacing="0" class="listing">
+      <table width="340" cellpadding="0" cellspacing="0" class="listing" id="dropblock">
         <tr>
           <th>Date</th>
           <th>Description</th>
@@ -129,6 +129,7 @@
           <th>Remaining</th>
         </tr>
 [% FOREACH entry IN stmt -%]
+        <tbody id="tbod[%- loop.count -%]">
         <tr class="even" id="trbnk[%- loop.count -%]" ondblclick="matchit(this);">
           <td nowrap="nowrap">[%- entry.date -%]</td>
           <td>[%- entry.desc | truncate(40) -%]</td>
@@ -144,6 +145,7 @@
             </table>
           </td>
         </tr>
+        </tbody>
 [% END -%]
       </table>
     </td>
@@ -184,9 +186,10 @@
   <ul>
     <li>
       <div>
-        <a href="/cgi-bin/fpa/newrec3.pl">
-         Accept &amp; Lock 
-        </a>
+        <form name="stmtform" id="stmtform" method="post" action="/cgi-bin/fpa/newrec3.pl" onsubmit="return submitit();">
+          <input type="hidden" name="stmtdata" id="stmtdata" value=""/>
+          <input type="submit" name="submit" id="submit" value="Accept &amp; Lock"/>
+        </form> 
       </div>
     </li>
   </ul>

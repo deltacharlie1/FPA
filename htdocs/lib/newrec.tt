@@ -8,10 +8,10 @@
     </tr>
     <tr>
       <td><label>Statement Number of this statement</label></td>
-      <td><input type="text" name="stmtno" id="stmtno" size="6" class="mandatory" value="[%- acct.stastmtno+1 -%]"/></td>
+      <td><input type="text" name="stmtno" id="stmtno" size="6" class="mandatory" value="[%- IF ts.f2 != ""; ts.f2; ELSE; acct.stastmtno+1; END -%]"/></td>
     </tr>
     <tr>
-      <td colspan="2">Paste statement below<br/><textarea name="stmt" id="stmt" cols="60" rows="20" class="mandatory"></textarea></td>
+      <td colspan="2">Paste statement below<br/><textarea name="stmt" id="stmt" cols="60" rows="20" class="mandatory">[%- ts.f1 -%]</textarea></td>
     </tr>
   </table>
 </div>

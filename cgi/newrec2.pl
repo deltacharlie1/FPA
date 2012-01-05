@@ -33,18 +33,6 @@ while (( $Key,$Value) = each %FORM) {
 
 #  Check to see if we have an exisitng spreadsheet saved
 
-unless ($FORM{stmt}) {
-	$TSs = $dbh->prepare("select f1,f2,f3 from tempstacks where acct_id='$COOKIE->{ACCT}' and caller='reconciliation'");
-	$TSs->execute;
-	@TS = $TSs->fetchrow;
-	$TSs->finish;
-
-	if ($TS[0]) {
-		$FORM{stmt} = $TS[0];
-		$FORM{stmtno} = $TS[1];
-	}
-}
-
 $FORM{stmt} =~ s/\\\'/\'/g;	#  strip out any exisitng escapes
 $FORM{stmt} =~ s/\'/\\\'/g;
 
@@ -55,29 +43,55 @@ $Accts->execute;
 $Acct = $Accts->fetchrow_hashref;
 $Accts->finish;
 
-$Stmt = [];
+$Date_posn = "0";
+$Desc_posn = "2";
+$Outamt_posn = "3";
+$Inamt_posn = "4";
+$Bal_posn = "5";
+
+$Date_posn = "0";
+$Desc_posn = "4";
+$Outamt_posn = "5";
+$Inamt_posn = "6";
+$Bal_posn = "7";
+
+# $Date_posn = "0";
+# $Desc_posn = "2";
+# $Outamt_posn = "8";
+# $Inamt_posn = "3";
+# $Bal_posn = "4";
+@Month = ('','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec');
+%hMonth = ('01','Jan','02','Feb','03','Mar','04','Apr','05','May','06','Jun','07','Jul','08','Aug','09','Sep','10','Oct','11','Nov','12','Dec');
+
+$Total = 0;
+
 $FORM{stmt} =~ tr/\r//d;
 @Rows = split(/\n/,$FORM{stmt});
 foreach $Row (@Rows) {
 	chomp($Row);
 	next if ($Row =~ /Date.*Description/i);
 	@Cell = split(/\t/,$Row);
-	if ($Cell[3] =~ /^\d/) {
-		$Cell[4] = 0-$Cell[3];
-	}
-	$Entry = {};
-	$Entry->{date} = $Cell[0];
-	$Entry->{desc} = $Cell[2];
-	$Entry->{amt} = $Cell[4];
-	$Entry->{balance} = $Cell[5];
+	if ($Cell[$Date_posn]) {
+		if ($Cell[$Outamt_posn] =~ /^\d/) {
+			$Cell[$Inamt_posn] = 0-$Cell[$Outamt_posn];
+		}
 
-	if ($Acct->{accname} =~ /HSBC/i) {
-		push(@Stmt,$Entry);
-	}
-	else {
-		unshift(@Stmt,$Entry);
+		$Entry = {};
+		($Day,$Mth,$Yr) = $Cell[$Date_posn] =~ /(\d+)?[-\/](\w+)[-\/]2?0?(\d+)/;
+		$Month = $Month[$Mth] || $Mth;
+		$Entry->{date} = "$Day-$Month-$Yr";
+		$Entry->{desc} = $Cell[$Desc_posn];
+		$Entry->{amt} = $Cell[$Inamt_posn];
+		$Entry->{balance} = $Cell[$Bal_posn];
+		$Entry->{sortkey} = $Yr.$hMonth{$Month}.$Day;
+
+		push(@uStmt,$Entry);
+
+		$Total += abs($Cell[$Inamt_posn]);
 	}
 }
+
+@Stmt = sort { $a->{sortkey} <=> $b->{sortkey} } @uStmt;
 
 #  Calculate the opening balance
 
@@ -120,8 +134,9 @@ $Vars = {
 	stack => $TS,
 	javascript => '<script type="text/javascript">
 var errfocus;
+var absvalue = '.$Total.';
 $(document).ready(function(){
-  $("#sidebar ul").hide();
+//  $("#sidebar ul").hide();
   $(".stmttxndate").datepicker();
   $("#stmt_cus_id").autocomplete({
     minLength: 0,
@@ -178,7 +193,7 @@ $(document).ready(function(){
        var trid = document.getElementById("stmtdropid").value;
        $("#"+trid).find(".placeholder").remove();
        if (/^Sup/.test($("#stmtcustype").val())) {
-         $("<tr></tr>").html("<td style=\'display:none;\'>"+$("#stmtcusid").val()+"</td><td style=\'display:none;\'>new</td><td nowrap=\'nowrap\'>"+$("#stmtpaytxndate").val()+"</td><td></td><td>"+$("#stmtpaycodes").val()+"</td><td>"+$("#stmt_cus_id").val()+"</td><td>"+$("#stmtdesc").val()+"</td><td>-"+$("#stmttxnamount").text()+"</td><td style=\'display:none;\'>"+$("#stmtvat").text()+"</td><td style=\'display:none;\'>"+$("#stmtcusref").val()+"</td><td style=\'display:none;\'>"+$("#stmtitem_cat").val()+"</td><td onclick=\"revert(\'0\',$(this),\'"+trid+"\');\"><img src=\'/icons/delete.png\' width=\'12\' height=\'12\' alt=\'Delete\'/></td>").appendTo("#"+trid);
+         $("<tr></tr>").html("<td style=\'display:none;\'>"+$("#stmtcusid").val()+"</td><td style=\'display:none;\'>new</td><td nowrap=\'nowrap\'>"+$("#stmtpaytxndate").val()+"</td><td></td><td>"+$("#stmtpaycodes").val()+"</td><td>"+$("#stmt_cus_id").val()+"</td><td>"+$("#stmtdesc").val()+"</td><td>-"+$("#stmttxnamount").text()+"</td><td style=\'display:none;\'>-"+$("#stmtvat").text()+"</td><td style=\'display:none;\'>"+$("#stmtcusref").val()+"</td><td style=\'display:none;\'>"+$("#stmtitem_cat").val()+"</td><td onclick=\"revert(\'0\',$(this),\'"+trid+"\');\"><img src=\'/icons/delete.png\' width=\'12\' height=\'12\' alt=\'Delete\'/></td>").appendTo("#"+trid);
          var diff = document.getElementById("stmtdiff").innerHTML;
          diff = (diff * 1) + ($("#stmttxnamount").text() * 1);
          if (diff == 0) {
@@ -247,6 +262,9 @@ $(document).ready(function(){
         diff = document.getElementById("p"+$(this).attr("id")).innerHTML;
         diff = (diff * 1) - (invvalue * 1);
         document.getElementById("p"+$(this).attr("id")).innerHTML = diff.toFixed(2);
+        if ($(this).find(":nth-child(2)").text() == "pay") {
+          $(this).find(":nth-child(3)").text(($("#tr"+$(this).attr("id")).find(":nth-child(1)").first().text()));
+        }
         return false;
       }
     }
@@ -321,6 +339,10 @@ function calc_stmtvat() {
   $("#stmtvat").text(vatvalue);
   var netamt = totamt - vatvalue;
   document.getElementById("stmtnetamt").innerHTML = "(Net = " + netamt.toFixed(2) + ")";
+}
+function submitit() {
+  $("#stmtdata").val($("#dropblock").html());
+  return true;
 }
 </script>'
 };
