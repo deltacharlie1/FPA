@@ -44,7 +44,7 @@ if ($COOKIE->{VAT} =~ /C/i) {		#  Cash Accounting
 		        $FORM{offset} = 0;
 		       	$FORM{rows} = 24;
 		}
-		$Accruals = $dbh->prepare("select date_format(acrprintdate,'%d-%b-%y') as vatdate, invcusname,invinvoiceno,acrtype,acrvat as acramt,inv_txns.inv_id as inv_id from vataccruals,inv_txns,invoices where vataccruals.acrtxn_id=inv_txns.id and vataccruals.acct_id=inv_txns.acct_id and inv_txns.inv_id=invoices.id and inv_txns.acct_id=invoices.acct_id and (acrnominalcode='4000' or acrnominalcode like '43%') and vr_id=$FORM{vrid} and vataccruals.acct_id='$COOKIE->{ACCT}' and $Datereange order by acrprintdate limit $FORM{offset},$FORM{rows}");
+		$Accruals = $dbh->prepare("select date_format(acrprintdate,'%d-%b-%y') as vatdate, invcusname,invinvoiceno,acrtype,acrvat as acramt,inv_txns.inv_id as inv_id from vataccruals,inv_txns,invoices where vataccruals.acrtxn_id=inv_txns.id and vataccruals.acct_id=inv_txns.acct_id and inv_txns.inv_id=invoices.id and inv_txns.acct_id=invoices.acct_id and (acrnominalcode='4000' or acrnominalcode like '43%') and vr_id=$FORM{vrid} and vataccruals.acct_id='$COOKIE->{ACCT}' and $Daterange order by acrprintdate limit $FORM{offset},$FORM{rows}");
 		$Accruals->execute;
 		$Col_header = "VAT Due";
 		$Page_title = "UK Sales VAT";
