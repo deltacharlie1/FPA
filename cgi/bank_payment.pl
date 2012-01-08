@@ -139,13 +139,8 @@ if ($FORM{thisch}) {
 
 #  Other Income
 
-<<<<<<< HEAD
-        $Sts = $dbh->do("update coas set coabalance=coabalance + '$FORM{thisch}' where acct_id='$COOKIE->{ACCT}' and coanominalcode='6010'");
-	$Sts = $dbh->do("insert into nominals (acct_id,link_id,nomtype,nomcode,nomamount,nomdate) values ('$COOKIE->{ACCT}',$New_txn_id,'T','6010','$FORM{thisch}',$Date)");
-=======
         $Sts = $dbh->do("update coas set coabalance=coabalance - '$FORM{thisch}' where acct_id='$COOKIE->{ACCT}' and coanominalcode='6010'");
 	$Sts = $dbh->do("insert into nominals (acct_id,link_id,nomtype,nomcode,nomamount,nomdate) values ('$COOKIE->{ACCT}',$New_txn_id,'T','6010',0-'$FORM{thisch}',$Date)");
->>>>>>> master
 
 #  Audit trail
 
