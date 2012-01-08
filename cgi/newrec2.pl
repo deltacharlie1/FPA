@@ -31,6 +31,20 @@ while (( $Key,$Value) = each %FORM) {
         $FORM{$Key} = $Value;
 }
 
+#  First get all unreconciled TRansactions
+
+$Txns = $dbh->prepare("select id,txntxntype,date_format(txndate,'%d-%b-%y') as tdate,link_id,txncusname,txnremarks,txnamount from transactions where txnselected<>'F' and txnmethod='1200' and acct_id='$COOKIE->{ACCT}' order by txndate");
+$Txns->execute;
+$Txn = $Txns->fetchall_arrayref({});
+$Txns->finish;
+
+#  Then get all unpaid invoices
+
+$Invoices = $dbh->prepare("select id,invtype,date_format(invprintdate,'%d-%b-%y') as printdate,cus_id,invinvoiceno,invcusname,invdesc,(invtotal+invvat-invpaid-invpaidvat) as amtdue,invprintdate from invoices where acct_id='$COOKIE->{ACCT}' and invstatuscode>2 union select id,'vat',date_format(perstatusdate,'%d-%b-%y') as printdate,0,'','HMRC',concat('Quarter End ',perquarter) as invdesc,perbox5 as amtdue,perstatusdate as invprintdate from vatreturns where acct_id='$COOKIE->{ACCT}' and perstatus='Filed' order by invprintdate");
+$Invoices->execute;
+$Invoice = $Invoices->fetchall_arrayref({});
+$Invoices->finish;
+
 #  Check to see if we have an exisitng spreadsheet saved
 
 $FORM{stmt} =~ s/\\\'/\'/g;	#  strip out any exisitng escapes
@@ -43,23 +57,35 @@ $Accts->execute;
 $Acct = $Accts->fetchrow_hashref;
 $Accts->finish;
 
-$Date_posn = "0";
-$Desc_posn = "2";
-$Outamt_posn = "3";
-$Inamt_posn = "4";
-$Bal_posn = "5";
+if ($Acct->{accname} =~ /HSBC/i) {
+	$Date_posn = "0";
+	$Desc_posn = "2";
+	$Outamt_posn = "3";
+	$Inamt_posn = "4";
+	$Bal_posn = "5";
+}
+elsif ($Acct->{accname} =~ /Lloyds/i) {
+	$Date_posn = "0";
+	$Desc_posn = "4";
+	$Outamt_posn = "5";
+	$Inamt_posn = "6";
+	$Bal_posn = "7";
+}
+elsif ($Acct->{accname} =~ /Nat\s*West/i) {
+	$Date_posn = "0";
+	$Desc_posn = "2";
+	$Outamt_posn = "8";
+	$Inamt_posn = "3";
+	$Bal_posn = "4";
+}
+else {
+	$Date_posn = "0";
+	$Desc_posn = "2";
+	$Outamt_posn = "3";
+	$Inamt_posn = "4";
+	$Bal_posn = "5";
+}
 
-$Date_posn = "0";
-$Desc_posn = "4";
-$Outamt_posn = "5";
-$Inamt_posn = "6";
-$Bal_posn = "7";
-
-# $Date_posn = "0";
-# $Desc_posn = "2";
-# $Outamt_posn = "8";
-# $Inamt_posn = "3";
-# $Bal_posn = "4";
 @Month = ('','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec');
 %hMonth = ('01','Jan','02','Feb','03','Mar','04','Apr','05','May','06','Jun','07','Jul','08','Aug','09','Sep','10','Oct','11','Nov','12','Dec');
 
@@ -103,20 +129,6 @@ $TSs->execute;
 $TS = $TSs->fetchrow_hashref;
 $TSs->finish;
 
-#  Get all unpaid invoices
-
-$Invoices = $dbh->prepare("select id,invtype,date_format(invprintdate,'%d-%b-%y') as printdate,invinvoiceno,invcusname,invdesc,(invtotal+invvat-invpaid-invpaidvat) as amtdue from invoices where acct_id='$COOKIE->{ACCT}' and invstatuscode>2 order by invprintdate");
-$Invoices->execute;
-$Invoice = $Invoices->fetchall_arrayref({});
-
-$Txns = $dbh->prepare("select id,txntxntype,date_format(txndate,'%d-%b-%y') as tdate,txncusname,txnremarks,txnamount from transactions where txnselected<>'F' and txnmethod='1200' and acct_id='$COOKIE->{ACCT}' order by txndate");
-$Txns->execute;
-
-#  Check to see if there are any Filed VAT returns awaiting reconciliation
-
-$Vats = $dbh->prepare("select id,perquarter,perbox5 from vatreturns where acct_id='$COOKIE->{ACCT}' and perstatus='Filed' order by perstartdate limit 1");
-$Vats->execute;
-
 use Template;
 $tt = Template->new({
         INCLUDE_PATH => ['.','/usr/local/httpd/htdocs/fpa/lib'],
@@ -127,9 +139,8 @@ $Vars = {
         title => 'Accounts - Reconciliations',
 	cookie => $COOKIE,
 	acct => $Acct,
-	invoices => $Invoice,		# s->fetchall_arrayref({}),
-	txns => $Txns->fetchall_arrayref({}),
-	vat => $Vats->fetchall_arrayref({}),
+	invoices => $Invoice,
+	txns => $Txn,
 	stmt => \@Stmt,
 	stack => $TS,
 	javascript => '<script type="text/javascript">
@@ -351,9 +362,6 @@ print "Content-Type: text/html\n\n";
 
 $tt->process('newrec2.tt',$Vars);
 
-$Invoices->finish;
-$Txns->finish;
-$Vats->finish;
 $dbh->disconnect;
 exit;
 

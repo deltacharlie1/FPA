@@ -99,6 +99,7 @@ create table companies (
   comkeep_recs date not null default '2010-01-01' comment 'Expiry date for keeping records for 6 years',
   comadvertise date not null default '2010-01-01' comment 'Allowed to advertise until this date',
   comsubs date not null default '2010-01-01' comment 'Date subscription expires',
+  comsublevel char(5) default '00' comment 'User/Bookkeeper subscription level',
   comcis char(3) not null default 'N' comment 'Whether or not this company is in the CIS scheme',
   old_id int unsigned,
   index (reg_id)
