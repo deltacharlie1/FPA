@@ -173,13 +173,21 @@ $(document).ready(function(){
       "Record Receipt": function() {
         if (validate_form("#recform2")) {
           document.getElementById("rec_invcusname").value = document.getElementById("rec_cus_id").value;
-          $.post("/cgi-bin/fpa/process_txn.pl", $("form#recform2").serialize(),function(data) {
-            if ( ! /^OK/.test(data)) {
-              alert(data);
+          $.ajax({ 
+            url      : "/cgi-bin/fpa/process_txn.pl", 
+            data     : $("form#recform2").serialize(), 
+            async    : false, 
+            success  : function(data) {
+              ajax_return = data;
+              if ( ! /^OK/.test(data)) {
+                alert(data);
+              }
+              else {
+                $(this).dialog("close");
+                window.location.reload(true);
+              }
             }
-          },"text");
-          $(this).dialog("close");
-          window.location.reload(true);
+          });
         }
       },
       Cancel: function() {

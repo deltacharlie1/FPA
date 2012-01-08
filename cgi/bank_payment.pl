@@ -135,12 +135,17 @@ if ($FORM{thisch}) {
         $Sts = $dbh->do("update coas set coabalance=coabalance + '$FORM{thisch}' where acct_id='$COOKIE->{ACCT}' and coanominalcode='$FORM{txnmethod}'");
 	$Sts = $dbh->do("insert into nominals (acct_id,link_id,nomtype,nomcode,nomamount,nomdate) values ('$COOKIE->{ACCT}',$New_txn_id,'T','$FORM{txnmethod}','$FORM{thisch}',$Date)");
 
-	$FORM{thisch} =~ tr/\-//d;
+#	$FORM{thisch} =~ tr/\-//d;
 
 #  Other Income
 
+<<<<<<< HEAD
         $Sts = $dbh->do("update coas set coabalance=coabalance + '$FORM{thisch}' where acct_id='$COOKIE->{ACCT}' and coanominalcode='6010'");
 	$Sts = $dbh->do("insert into nominals (acct_id,link_id,nomtype,nomcode,nomamount,nomdate) values ('$COOKIE->{ACCT}',$New_txn_id,'T','6010','$FORM{thisch}',$Date)");
+=======
+        $Sts = $dbh->do("update coas set coabalance=coabalance - '$FORM{thisch}' where acct_id='$COOKIE->{ACCT}' and coanominalcode='6010'");
+	$Sts = $dbh->do("insert into nominals (acct_id,link_id,nomtype,nomcode,nomamount,nomdate) values ('$COOKIE->{ACCT}',$New_txn_id,'T','6010',0-'$FORM{thisch}',$Date)");
+>>>>>>> master
 
 #  Audit trail
 
@@ -149,7 +154,7 @@ if ($FORM{thisch}) {
 }
 print<<EOD;
 Content-Type:text/html
-Status: HTTP/1.1 204 No Content
+Status: 204 No Content
 
 EOD
 $dbh->disconnect;
