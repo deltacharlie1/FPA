@@ -101,11 +101,11 @@ else {
         ($Vatreturn->{perbox4}) = $Vataccs->fetchrow;
 	$Vatreturn->{perbox4} = 0 - $Vatreturn->{perbox4};	#  because it is already a negative number
 
-        $Vataccs = $dbh->prepare("select sum(acrtotal) from vataccruals where acct_id='$COOKIE->{ACCT}' and $Date_Range and vr_id < 1 and acrnominalcode in ('4000','4100','4200')");
+        $Vataccs = $dbh->prepare("select sum(acrtotal) from vataccruals where acct_id='$COOKIE->{ACCT}' and acrvat>0 and $Date_Range and vr_id < 1 and acrnominalcode in ('4000','4100','4200')");
         $Vataccs->execute;
         ($Vatreturn->{perbox6}) = $Vataccs->fetchrow;
 
-        $Vataccs = $dbh->prepare("select sum(acrtotal) from vataccruals where acct_id='$COOKIE->{ACCT}' and $Date_Range and vr_id < 1 and acrnominalcode in ('1000','5000','6000','7000')");
+        $Vataccs = $dbh->prepare("select sum(acrtotal) from vataccruals where acct_id='$COOKIE->{ACCT}' and acrvat<0  and $Date_Range and vr_id < 1 and acrnominalcode in ('1000','5000','6000','7000')");
         $Vataccs->execute;
         ($Vatreturn->{perbox7}) = $Vataccs->fetchrow;
         $Vatreturn->{perbox7} =~ tr/-//d;

@@ -134,7 +134,7 @@
     </tr>
 [% IF cookie.PT_LOGO == "1" -%]
     <tr>
-      <td style="vertical-align:middle;"><label>Company Logo (up to 20k jpg,png)</label></td>
+      <td style="vertical-align:middle;"><label>Company Logo (up to 20k png, max size 144 x 48)</label></td>
       <td><div style="vertical-align:middle;float:left;"><input name="comlogo" id="comlogo" type="file" size="30"/></div><div style="vertical-align:middle;float:left;padding-left:10px;">[%- IF client.comlogo != NULL -%]<img src="/cgi-bin/fpa/display_logo.pl"/>[%- END -%]</div></td>
     </tr>
 [% END -%]
