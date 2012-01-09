@@ -1,0 +1,67 @@
+<form name="nomform1" id="nomform1" method="post" action="/cgi-bin/fpa/reassign_nominals2.pl">
+<div class="main" id="main">
+<h1>Re-Assign Nominal Codes</h1>
+<div style="overflow:auto; width:690px;height:800px;padding-top:10px;">
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="listing">
+    <tr>
+      <th>Code</th>
+      <th>New Code</th>
+      <th>Account</th>
+      <th>Date</th>
+      <th>Item Description</th>
+      <th>Debit</th>
+      <th>Credit</th>
+    </tr>
+[%- class = [ "even","odd" ] -%]
+[%- FOREACH entry IN coas -%]
+  [%- ndx = loop.count % 2 -%]
+    <tr class="[%- class.$ndx -%]">
+      <td>[%- entry.nomcode -%]</td>
+      <td><input type="text" name="nom[%- entry.nomid -%]" id="nom[%- entry.nomid -%]" size="6" value="" onchange="checkcode('[%- entry.nomid -%]');"/></td>
+      <td>[%- entry.coadesc | truncate(30) -%]</td>
+      <td>[%- entry.printdate -%]</td>
+    [% IF entry.nomtype == "T" -%]
+      <td>[%- entry.txndescr | truncate(50) -%]</td>
+    [% ELSE -%]
+      <td>[%- entry.invdescr | truncate(50) -%]</td>
+    [% END -%]
+  [% IF entry.coatype.match('(?i)Assets|Expenses') -%]
+    [% IF entry.balance >= 0 -%]
+      <td style="text-align:right;">[%- entry.balance | format('%1.2f') -%]</td>
+      <td>&nbsp;</td>
+    [% ELSE -%]
+      <td>&nbsp;</td>
+      <td style="text-align:right;">[%- entry.balance | remove('-') | format('%1.2f') -%]</td>
+    [% END -%]
+  [% ELSE -%]
+    [% IF entry.balance >= 0 -%]
+      <td>&nbsp;</td>
+      <td style="text-align:right;">[%- entry.balance | format('%1.2f') -%]</td>
+    [% ELSE -%]
+      <td style="text-align:right;">[%- entry.balance | remove('-') | format('%1.2f') -%]</td>
+      <td>&nbsp;</td>
+    [% END -%]
+  [% END -%]
+    </tr>
+[%- END -%]
+  </table>
+</div>
+</div>
+<div id="sidebar">
+  <ul id="htmltabs">
+    <li>
+      <div>
+          <input type="submit" name="save" id="save" value="Update Nominal Ledger"/>
+      </div>
+    </li>
+  </ul>
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+  </div>
+</div>
+</div>
+</form>
+
+
+
+

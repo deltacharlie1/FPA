@@ -29,6 +29,13 @@
         </a>
       </div>
     </li>
+    <li>
+      <div>
+        <a href="/cgi-bin/fpa/reassign_nominals.pl">
+          Re-assign Nominal Codes
+        </a>
+      </div>
+    </li>
   </ul>
 [% END -%]
   <div id="sidebar-ad">
