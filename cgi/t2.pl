@@ -1,4 +1,12 @@
 #!/usr/bin/perl
+
+$Dte = `date +%d-%m-%Y:%H:%M:%S:000`;
+chomp($Dte);
+
+$Dte =~ s/:.*//;
+print "$Dte\n";
+exit;
+
 use DBI;
 $dbh = DBI->connect("DBI:mysql:fpa");
 

@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="/css/new-css.css" rel="stylesheet" type="text/css" />
+<link rel="shortcut icon" href="/favicon.ico"/>
+<link rel="stylesheet" href="/css/jquery-ui.css" type="text/css"/>
+<script src="/js/jquery.js" type="text/javascript"></script>
+<script src="/js/jquery-ui.js" type="text/javascript"></script>
+<title>Subscriptions</title>
+</head>
+<body style='margin:10px 10px;background-image:none;background-color:#ffffff;'>
+  <div style="display:inline;float:left;"><img src="http://www.freeplusaccounts.co.uk/wp-content/themes/freeplusaccounts/images/logo.jpg" alt="Free Plus Accounts" /></div>
+  <div style="display:inline;vertical-align:top;"><img style="padding:10px 0 0 20px;vertical-align:top;" src="http://www.freeplusaccounts.co.uk/wp-content/themes/freeplusaccounts/images/freeplustitle.png" alt="Free Plus Accounts" /><br/><h1 style="padding:20px 0 0 137px;color:#666666;font-weight:bold;">Corunna Systems Ltd</h1></div>
+  <p>&nbsp;</p>
+  <div style="margin-left:45px;margin-right:0px;width:580px;">
+  <h2>Card Details Setup</h2>
+  <table width="520"cellspacing="0" cellpadding="0" border="0" class="formtable">
+[% IF status == 'OK' -%]
+    <tr>
+      <td align="center" colspan="2">Thank you for updating your card details</td>
+    </tr>
+    <tr>
+      <td width="220"><label>Card Type</label></td>
+      <td>[%- cardtype -%]</td>
+    </tr>
+    <tr>
+      <td><label>Card Number</label></td>
+      <td>[%- cardnumber -%]</td>
+    </tr>
+    <tr>
+      <td><label>Expiry</label></td>
+      <td>[%- expiry -%]</td>
+    </tr>
+[% ELSE -%]
+    <tr>
+      <td align="center" colspan="2">Unfortunately your card details have not been accepted</td>
+    </tr>
+    <tr>
+      <td width="220"><label>Error Code</label></td>
+      <td>[%- cardtype -%]</td>
+    </tr>
+    <tr>
+      <td><label>Description</label></td>
+      <td>[%- cardnumber -%]</td>
+    </tr>
+[% END -%]
+  </table>
+  <br/>
+  <div style="width:540px; text-align:center;">
+    <input type="button" name="but1" id="but1" value="Close Window" onclick="window.close();"/>
+  </div>
+  </div>
+</body>
+</html>

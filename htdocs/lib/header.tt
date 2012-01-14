@@ -182,7 +182,9 @@ $(document).ready(function(){
         <li class="admin"><a href="#"><span>Admin</span></a>
           <ul>
             <li><a href="/cgi-bin/fpa/preferences.pl">Preferences</a></li>
-            <li><a href="#" onclick="window.open('/cgi-bin/fpa/subs.pl','subs','width=640,height=720,top=100,left=300,scrollbars=yes');">Change Subscription</a></li>
+[%- IF cookie.BACCT == '1+1' -%]
+            <li><a href="#" onclick="window.open('/cgi-bin/fpa/subs.pl','subs','width=640,height=720,top=100,left=300,scrollbars=yes');">Subscriptions</a></li>
+[%- END -%]
             <li><a href="#" onclick="view_comments();">View Feedback</a></li>
             <li><a href="#" onclick="$('#vcomment').dialog('open');">Add New Feedback</a></li>
             <li><a href="/cgi-bin/fpa/assign_invoices.pl">Assign Unlisted Invoices</a></li>
