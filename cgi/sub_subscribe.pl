@@ -3,8 +3,6 @@
 #  Script to receive a subscription
 #  response comes in as xml
 
-warn "sub_subcribe - $ENV{QUERY_STRING}\n";
-
 ($FORM{MERCHANTREF},$Old_subtype) = split(/\?/,$ENV{QUERY_STRING});		#  This is Merchantref
 
 use LWP::UserAgent;
@@ -15,12 +13,17 @@ $dbh = DBI->connect("DBI:mysql:fpa");
 $Termid = '2645001';
 $Secret = 'CorunnaSecret';
 
+$Membership[0] = 'FreePlus Startup (FREE)';
+$Membership[1] = 'FreePlus Standard (&pound;5.00pm)';
+$Membership[2] = 'FreePlus Premium (&pound;10.00pm)';
+
 #  Get the company details
 
-$Companies = $dbh->prepare("select comsublevel,comsubtype,commerchantref,comcardref,comsubref from companies where commerchantref='$FORM{MERCHANTREF}'");
+$Companies = $dbh->prepare("select comsublevel,comsubtype,commerchantref,comcardref,comsubref,comname from companies where commerchantref='$FORM{MERCHANTREF}'");
 $Companies->execute;
 $Company = $Companies->fetchrow_hashref;
 $Companies->finish;
+$Level = $Company->{comsublevel};
 
 #  Get the date
 
@@ -67,23 +70,32 @@ EOD
 	my $res = $ua->request($req);
 
 	if ($res->is_success) {
-
 		$Res_content = $res->content;
-warn "Subscription Deletion\n$Res_content\n";
 
 		if ($Res_content =~ /RESPONSE/i) {
+			$Status .= "<li>Subscription Cancelled</li>\n";
+			$Sts = $dbh->do("update companies set comsublevel='00',comsubtype='' where commerchantref='$Company->{commerchantref}'");
+
+#  update the database
+		}
+		else {
+			$Status .= "<li>Subscription not cancelled, please contact FreePlus Accounts Technical Support</li>\n";
+		}
+	}
+	else {
+		$Status .= "<li>Subscription not cancelled, please contact FreePlus Accounts Technical Support</li>\n";
+	}
 
 #  Delete the secure card
 
-			$Status .= "<li>Subscription Cancelled</li>\n";
 
-			$Hash = Digest->new("MD5");
-			$Hash->add($Termid.$Company->{commerchantref}.$Dte.$Company->{comcardref}.$Secret);
-			$Hash_text = $Hash->hexdigest;
+	$Hash = Digest->new("MD5");
+	$Hash->add($Termid.$Company->{commerchantref}.$Dte.$Company->{comcardref}.$Secret);
+	$Hash_text = $Hash->hexdigest;
 
 #  Construct the xml to be posted
 
-			$Content = sprintf<<EOD;
+	$Content = sprintf<<EOD;
 <?xml version="1.0" encoding="UTF-8"?>
 <SECURECARDREMOVAL>
   <MERCHANTREF>$Company->{commerchantref}</MERCHANTREF>
@@ -96,42 +108,31 @@ EOD
 
 #  and send the card cancellation
 
-			my $ua = LWP::UserAgent->new;
-			$ua->agent("FPA/0.1");
+	my $ua = LWP::UserAgent->new;
+	$ua->agent("FPA/0.1");
 
-			my $req = HTTP::Request->new(POST => "https://testcashflows.worldnettps.com/merchant/xmlpayment");
-			$req->content_type('text/xml');
-			$req->content($Content);
+	my $req = HTTP::Request->new(POST => "https://testcashflows.worldnettps.com/merchant/xmlpayment");
+	$req->content_type('text/xml');
+	$req->content($Content);
 
-			my $res = $ua->request($req);
+	my $res = $ua->request($req);
+	if ($res->is_success) {
 
-			if ($res->is_success) {
+		$Res_content = $res->content;
 
-				$Res_content = $res->content;
-warn "Card Deletion\n$Res_content\n";
-	
-				if ($Res_content =~ /RESPONSE/i) {
-					$Status .= "<li>Card Details Deleted</li>\n";
+		if ($Res_content =~ /RESPONSE/i) {
 
-#  update the database
+			$Status .= "<li>Card Details Deleted</li>\n";
+			$Level = 0;
+			$Sts = $dbh->do("update companies set comsublevel='00',comsubtype='',commerchantref='',comcardref='' where commerchantref='$Company->{commerchantref}'");
 
-					$Sts = $dbh->do("update companies set comsublevel='00',comsubtype='',commerchantref='',comcardref='' where commerchantref='$Company->{commerchantref}'");
-
-				}
-				else {
-					$Status .= "<li>Card Details not deleted, please contact FreePlus Accounts Technical Support</li>\n";
-				}
-			}
-			else {
-				$Status .= "<li>Card Details not deleted, please contact FreePlus Accounts Technical Support</li>\n";
-			}
 		}
 		else {
-			$Status .= "<li>Subscription not cancelled, please contact FreePlus Accounts Technical Support</li>\n";
+			$Status .= "<li>Card Details not deleted, please contact FreePlus Accounts Technical Support</li>\n";
 		}
 	}
 	else {
-		$Status .= "<li>Subscription not cancelled, please contact FreePlus Accounts Technical Support</li>\n";
+		$Status .= "<li>Card Details not deleted, please contact FreePlus Accounts Technical Support</li>\n";
 	}
 }
 elsif ($Company->{comsublevel} =~ /00/) {	#  New subscription
@@ -171,7 +172,6 @@ EOD
 	if ($res->is_success) {
 
 		$Res_content = $res->content;
-warn "Subscription Creation\n$Res_content\n";
 
 		if ($Res_content =~ /RESPONSE/i) {
 
@@ -211,8 +211,6 @@ elsif ($Company->{comsublevel} > 0) {		#  Updating subscription
 </DELETESUBSCRIPTION>
 EOD
 
-warn "Update1 - $Content\n";
-
 #  Now send it
 
 	my $ua = LWP::UserAgent->new;
@@ -227,7 +225,6 @@ warn "Update1 - $Content\n";
 	if ($res->is_success) {
 
 		$Res_content = $res->content;
-warn "Subscription Deletion\n$Res_content\n";
 
 		if ($Res_content =~ /RESPONSE/i) {
 
@@ -272,7 +269,6 @@ EOD
 			if ($res->is_success) {
 
 				$Res_content = $res->content;
-warn "Card Deletion\n$Res_content\n";
 	
 				if ($Res_content =~ /RESPONSE/i) {
 					$Status .= "<li>New Subscription Added</li>\n";
@@ -306,7 +302,8 @@ $tt = Template->new({
         INCLUDE_PATH => ['.','/usr/local/httpd/htdocs/fpa/lib']
 });
 
-$Vars = { cookie => $COOKIE,
+$Vars = { company => $Company,
+	  membership => $Membership[$Level],
           status => $Status
 };
 

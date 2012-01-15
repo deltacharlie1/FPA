@@ -25,12 +25,17 @@ $Company = $Companies->fetchrow_hashref;
 $Companies->finish;
 $dbh->disconnect;
 
+$Membership[0] = 'FreePlus Startup (FREE)';
+$Membership[1] = 'FreePlus Standard (&pound;5.00pm)';
+$Membership[2] = 'FreePlus Premium (&pound;10.00pm)';
+
 use Template;
 $tt = Template->new({
         INCLUDE_PATH => ['.','/usr/local/httpd/htdocs/fpa/lib']
         });
 
 $Vars = { cookie => $COOKIE,
+	  membership => $Membership[$Company->{comsublevel}],
 	  company => $Company
 };
 

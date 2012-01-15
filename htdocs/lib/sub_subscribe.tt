@@ -10,10 +10,17 @@
 <title>Subscriptions</title>
 </head>
 <body style='margin:10px 10px;background-image:none;background-color:#ffffff;'>
-  <div style="display:inline;float:left;"><img src="http://www.freeplusaccounts.co.uk/wp-content/themes/freeplusaccounts/images/logo.jpg" alt="Free Plus Accounts" /></div>
-  <div style="display:inline;vertical-align:top;"><img style="padding:10px 0 0 20px;vertical-align:top;" src="http://www.freeplusaccounts.co.uk/wp-content/themes/freeplusaccounts/images/freeplustitle.png" alt="Free Plus Accounts" /><br/><h1 style="padding:20px 0 0 137px;color:#666666;font-weight:bold;">Corunna Systems Ltd</h1></div>
+  <div style="display:inline;float:left;"><img src="/wp-content/themes/freeplusaccounts/images/logo.jpg" alt="Free Plus Accounts" /></div>
+  <div style="display:inline;vertical-align:top;"><img style="padding:10px 0 0 20px;vertical-align:top;" src="/wp-content/themes/freeplusaccounts/images/freeplustitle.png" alt="Free Plus Accounts" /><br/><h1 style="padding:20px 0 0 137px;color:#666666;font-weight:bold;">[%- company.comname -%]</h1></div>
   <p>&nbsp;</p>
   <div style="margin-left:45px;margin-right:0px;width:580px;">
+  <table style="padding:10px;" width="520"cellspacing="0" cellpadding="0" border="0" class="formtable">
+    <tr>
+      <td style="text-align:right;font-size:14px;" width="50%">Current Subscription Level:</td>
+      <td style="font-size:14px;font-weight:bold;" width="50%">[%- membership -%]</td>
+    </tr>
+  </table>
+  <br/>
   <h2>Card Details Setup</h2>
   <table width="520"cellspacing="0" cellpadding="0" border="0" class="formtable">
     <tr>

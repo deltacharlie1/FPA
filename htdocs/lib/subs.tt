@@ -10,7 +10,10 @@
 <title>Subscriptions</title>
 <script type="text/javascript">
 function calc_hash() {
-var rtn_flag = "1";
+  if (!$("input[@name=sub]:checked").val()) {
+    alert("You have not selected any subscription option!");
+  }
+  else {
   $.ajax({
     url: "/cgi-bin/fpa/returnhash.pl",
     dataType: "json",
@@ -33,13 +36,14 @@ var rtn_flag = "1";
      alert("Unable to proceed - " + xhr);
    }
  });
+ }
 }
+
 </script>
 </head>
 <body style='margin:10px 10px;background-image:none;background-color:#ffffff;'>
-  <div style="display:inline;float:left;"><img src="http://www.freeplusaccounts.co.uk/wp-content/themes/freeplusaccounts/images/logo.jpg" alt="Free Plus Accounts" /></div>
-  <div style="display:inline;vertical-align:top;"><img style="padding:10px 0 0 20px;vertical-align:top;" src="http://www.freeplusaccounts.co.uk/wp-content/themes/freeplusaccounts/images/freeplustitle.png" alt="Free Plus Accounts" /><br/><h1 style="padding:20px 0 0 137px;color:#666666;font-weight:bold;">Corunna Systems Ltd</h1></div>
-  <p>&nbsp;</p>
+  <div style="display:inline;float:left;"><img src="/wp-content/themes/freeplusaccounts/images/logo.jpg" alt="Free Plus Accounts" /></div>
+  <div style="display:inline;vertical-align:top;"><img style="padding:10px 0 0 20px;vertical-align:top;" src="/wp-content/themes/freeplusaccounts/images/freeplustitle.png" alt="Free Plus Accounts" /><br/><h1 style="padding:20px 0 0 137px;color:#666666;font-weight:bold;">[%- cookie.TAG -%]</h1></div>
   <div style="margin-left:45px;margin-right:0px;width:580px;">
   <form name="form1" id="form1" method="post">
   <input type="hidden" name="ACTION" id="sub_action" value=""/>
@@ -48,20 +52,20 @@ var rtn_flag = "1";
   <input type="hidden" name="DATETIME" id="sub_datetime" value=""/>
   <input type="hidden" name="HASH" id="sub_hash" value=""/>
   <input type="hidden" name="current" id="sub_current" value="[%- company.comsublevel -%]"/>
+  <table style="padding:10px;" width="520"cellspacing="0" cellpadding="0" border="0" class="formtable">
+    <tr>
+      <td style="text-align:right;font-size:14px;" width="50%">Current Subscription Level:</td>
+      <td style="font-size:14px;font-weight:bold;" width="50%">[%- membership -%]</td>
+    </tr>
+  </table>
+  <br/>
 [% IF company.comsublevel > 0 -%]
   <h2>Add/Change Card Details</h2>
   <table width="520"cellspacing="0" cellpadding="0" border="0" class="formtable">
-  [% IF company.comcardref -%]
     <tr>
-      <td width="180" valign="top"><label>Renew existing card</label></td>
+      <td width="180" valign="top"><label>Add/Change existing card</label></td>
       <td width="30" valign="top"><input type="radio" name="sub" id="sub1" value="renew"/></td>
-      <td>Renew your existing card details</td>
-    </tr>
-  [% END -%]
-    <tr>
-      <td width="180" valign="top"><label>Add new card</label></td>
-      <td width="30" valign="top"><input type="radio" name="sub" id="sub2" value="addnew"/></td>
-      <td>Add a new card</td>
+      <td>Renew or change your existing card details</td>
     </tr>
   </table>
   <br/>
