@@ -87,10 +87,12 @@ else {
 	
 			$Image2 = new GD::Image($W1,$H1);
 			$Image2->copyResampled($Image1,0,0,0,0,$W1,$H1,$width,$height);
-			$Img = $Image2->png;
+			$Img = $Image2->jpeg();
 		}
-		$Img =~ s/([\\\"\'])/\\$1/g;
+#		$Img =~ s/([\\\"\'])/\\$1/g;
 #		$Img =~ s/\'/\\\'/g;
+		use  MIME::Base64;
+		$Img = encode_base64($Img);
 	}
 
 #  Add an extra nominal code if registered for CIS (and no code exists)

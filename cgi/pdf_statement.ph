@@ -53,29 +53,11 @@ $font_italic = $pdf->corefont('Helvetica Oblique');
 $font_bold_italic = $pdf->corefont('Helvetica BoldOblique');
 if ($COOKIE->{PT_LOGO} && $Company[7]) {
 # $Img =~ s/([\\\"\'])/\\$1/g;
-	$Company[7] =~ s/\\\'/\'/g;
-	$Company[7] =~ s/\\\"/\"/g;
-#	$Company[7] =~ s/\\\\/\\/g;
+        use MIME::Base64;
+        $Company[7] = decode_base64($Company[7]);
 
-#  Make the logo greyscale
-
-	$gdimg = GD::Image->new($Company[7]);
-	my $i = 0;
-	my $t = $gdimg->colorsTotal;
-
-	while($i < $t) {
-		my( @c ) = $gdimg->rgb( $i );
-		my $g = .30 * $c[0] + .59 * $c[1] + .11 * $c[2];
-		$gdimg->colorDeallocate($i);
-		$gdimg->colorAllocate( $g, $g, $g );
-		$i++;
-	}
-
-	$logo = $pdf->image_gd($gdimg);
-
-}
-elsif (! $COOKIE->{PT_LOGO}) {
-	$logo = $pdf->image_jpeg('logo5.jpg');
+        open IMG,"<",\$Company[7];
+        $logo = $pdf->image_jpeg(\*IMG);
 }
 
 #  Set out the first page
