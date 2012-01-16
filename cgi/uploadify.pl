@@ -5,6 +5,7 @@ $ACCESS_LEVEL = 1;
 #  script to upload a document or image using jquery uploadify
 
 use CGI;
+use MIME::Base64;
 
 $Data = new CGI;
 %FORM = $Data->Vars;
@@ -55,10 +56,6 @@ EOD
 
 use DBI;
 $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
-unless ($COOKIE->{NO_ADS}) {
-	require "/usr/local/git/fpa/cgi/display_adverts.ph";
-	&display_adverts();
-}
 
 use Image::Magick;
 $Img = Image::Magick->new;
@@ -69,7 +66,6 @@ $status = $Img->BlobToImage($Original);
 ($width,$height) = $Img->Get('width','height');	#  Get the dimensions
 
 if ($FORM{doc_type} =~ /LOGO/i) {
-
 	if ($width > 144 || $height > 48) {
 		if ($width > $height * 3) {
 			$W1 = 144;
@@ -81,8 +77,9 @@ if ($FORM{doc_type} =~ /LOGO/i) {
 		}
 		$Img->Resize(width=>$W1,height=>$H1,blur=>'0');
 	}
+	$Logo = $Img->ImageToBlob(magick=>'jpg');
 
-	$Logo = $Img->ImageToBlob(filename=>$FORM{Filename});
+	$Logo = encode_base64($Logo);
 
 #  ... and save it
 
@@ -139,7 +136,6 @@ unless ($FORM{doc_type} =~ /LOGO/i) {
 
 #  Convert Thumb to base64
 
-	use MIME::Base64;
 	$Thumb = encode_base64($Thumb);
 
 	$Images = $dbh->prepare("insert into images (link_id,acct_id,imgdoc_type,imgfilename,imgext,imgdesc,imgthumb,imgimage,imgdate_saved) values (?,?,?,?,?,?,?,?,now())");

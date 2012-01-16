@@ -24,9 +24,9 @@ $Companies->execute;
 $Companies->finish;
 $dbh->disconnect;
 
-$Logo =~ s/\\\'/\'/g;
-$Logo =~ s/\\\"/\"/g;
+use MIME::Base64;
+ $Logo = decode_base64($Logo);
 
-print "Content-Type: image/png\n\n";
+print "Content-Type: image/jpg\n\n";
 print $Logo;
 exit;
