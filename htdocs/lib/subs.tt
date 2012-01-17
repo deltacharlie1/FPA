@@ -78,10 +78,10 @@ function calc_hash() {
     <tr>
       <td colspan="3" style="font-size:12px;font-weight:bold;text-decoration:underline;">For all users</td>
     <tr>
-[% IF company.comsublevel != 1 -%]
+[% IF company.comsublevel != 2 -%]
     <tr class="subblock">
       <td width="180" valign="top"><label>Standard (&pound;5.00 per month)</label></td>
-      <td width="30" valign="top"><input type="radio" name="sub" id="subb" value="fpa1"/></td>
+      <td width="30" valign="top"><input type="radio" name="sub" id="subb" value="fpa2"/></td>
       <td>Includes:-
         <ul>
           <li>Your own logo on invoices and statements</li>
@@ -93,10 +93,10 @@ function calc_hash() {
       </td>
     </tr>
 [% END -%]
-[% IF company.comsublevel != 2 -%]
+[% IF company.comsublevel != 5 -%]
     <tr class="subblock">
       <td width="180" valign="top"><label>Premium (&pound;10.00 per month)</label></td>
-      <td width="30" valign="top"><input type="radio" name="sub" id="subp" value="fpa2"/></td>
+      <td width="30" valign="top"><input type="radio" name="sub" id="subp" value="fpa5"/></td>
       <td>Additionally includes:-
         <ul>
           <li>Data held for 6 years</li>
@@ -113,7 +113,7 @@ function calc_hash() {
   [% IF company.comsublevel != 1 -%]
     <tr class="subblock">
       <td width="180" valign="top"><label>Basic (&pound;5.00 per month)</label></td>
-      <td width="30" valign="top"><input type="radio" name="sub" id="subc" value="fpa3"/></td>
+      <td width="30" valign="top"><input type="radio" name="sub" id="subc" value="fpa1"/></td>
       <td>Includes:-
         <ul>
           <li>Add up to 15 client accounts</li>
@@ -122,10 +122,10 @@ function calc_hash() {
       </td>
     </tr>
   [% END -%]
-  [% IF company.comsublevel != 2 -%]
+  [% IF company.comsublevel != 3 -%]
     <tr class="subblock">
       <td width="180" valign="top"><label>Standard (&pound;10.00 per month)</label></td>
-      <td width="30" valign="top"><input type="radio" name="sub" id="subd" value="fpa4"/></td>
+      <td width="30" valign="top"><input type="radio" name="sub" id="subd" value="fpa3"/></td>
       <td>Additionally includes:-
         <ul>
           <li>Add up to 150 client accounts</li>
@@ -136,10 +136,10 @@ function calc_hash() {
       </td>
     </tr>
   [% END -%]
-  [% IF company.comsublevel != 3 -%]
+  [% IF company.comsublevel != 6 -%]
     <tr class="subblock">
       <td width="180" valign="top"><label>Premium (&pound;20.00 per month)</label></td>
-      <td width="30" valign="top"><input type="radio" name="sub" id="subd" value="fpa4"/></td>
+      <td width="30" valign="top"><input type="radio" name="sub" id="subd" value="fpa6"/></td>
       <td>Additionally includes:-
         <ul>
           <li>Unlimited client accounts</li>
