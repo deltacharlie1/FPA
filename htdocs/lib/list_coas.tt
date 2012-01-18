@@ -20,7 +20,7 @@
   </table>
 </div>
 <div id="sidebar">
-[% IF cookie.ACCESS >= 5 -%]
+[% IF cookie.ACCESS >= 3 -%]
   <ul>
     <li>
       <div>

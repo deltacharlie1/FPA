@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-$ACCESS_LEVEL = 5;
+$ACCESS_LEVEL = 1;
 
 #  script to toggle between the live system and a testbed
 
@@ -38,79 +38,87 @@ $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
 
 #  Get the basic company details for the new compnay
 
-$Companies = $dbh->prepare("select companies.comname,comcompleted,comvatscheme,comexpid,comyearend,frsrate,comvatqstart,comvatmsgdue,comyearendmsgdue,datediff(comvatmsgdue,now()),datediff(comyearend,now()),if(comfree>now(),'1',''),if(comno_ads>now(),'1',''),if(comrep_invs>now(),'1',''),if(comstmts>now(),'1',''),comuplds,if(compt_logo>now(),'1',''),if(comhmrc>now(),'1',''),comsuppt,comadd_user,comcis,combusiness from companies left join reg_coms on (companies.id=reg_coms.com_id) left join market_sectors on (combusiness=market_sectors.id) where companies.id=$New_com_id and reg_id=$New_reg_id and (reg_coms.reg1_id=$Reg_id or reg_coms.reg2_id=$Reg_id)");
-
+$Companies = $dbh->prepare("select companies.comname,comcompleted,comvatscheme,comexpid,comyearend,frsrate,comvatqstart,comvatmsgdue,comyearendmsgdue,datediff(comvatmsgdue,now()) as diffvatmsgdue,datediff(comyearend,now()) as diffyearenddue,comuplds,if(compt_logo>now(),'1','') as pt_logo,comadd_user,comcis,combusiness,comsublevel,datediff(comsubdue,now()) as subdue from companies left join reg_coms on (companies.id=reg_coms.com_id) left join market_sectors on (combusiness=market_sectors.id) where companies.id=$New_com_id and reg_id=$New_reg_id and (reg_coms.reg1_id=$Reg_id or reg_coms.reg2_id=$Reg_id)");
 $Companies->execute;
-@Company = $Companies->fetchrow;
+$Company = $Companies->fetchrow_hashref;
 $Companies->finish;
 
-$Company[6] =~ s/(\d+)-(\d+)-(\d+)/$1,$2 - 1,$3/;
+$Company->{comvatstart} =~ s/(\d+)-(\d+)-(\d+)/$1,$2 - 1,$3/;
 
-#  Get the COA select options
+if ($Company->{comvatscheme} !~ /N/i) {
 
-$Coas = $dbh->prepare("select coanominalcode,coadesc,coagroup from coas where acct_id='$New_reg_id+$New_com_id' and coagroup=? order by coanominalcode");
-foreach $Coa ('4300','5000','6000','7000') {
-        $Coas->execute($Coa);
-        while (@Coa = $Coas->fetchrow) {
-                if ($Coa[1] =~ /^Other Exp/i && ! $Opt{$Coa}) {
-                        $Opt{$Coa} .= "<option value='$Coa[0]' selected='selected'>$Coa[1]</option>";
-                }
-                else {
-                        $Opt{$Coa} .= "<option value='$Coa[0]'>$Coa[1]</option>";
-                }
-        }
-}
-$Coas->finish;
+	if ($Company->{diffvatmsgdue} < 1) {			#  VAT Reminder due
 
-#  Update VAT related fields
+		$Dates = $dbh->prepare("select date_add('$Company->{comvatmsgdue}', interval 3 month),date_format(date_sub('$Company->{comvatmsgdue}',interval 1 day),'%m-%y'),date_format(last_day('$Company->{comvatmsgdue}'),'%d-%b-%y')");
+		$Dates->execute;
+		($Company->{comvatmsgdue},$Prev_qend,$VATduedate) = $Dates->fetchrow;
+		$Dates->finish;
 
-if ($Company[2] !~ /N/i) {
+#  Update comvatmesgdue and comvatreminder
 
-        if ($Company[9] < 1) {                  #  VAT Reminder due
-
-                $Dates = $dbh->prepare("select date_add('$Company[7]', interval 3 month),date_format(date_sub('$Company[7]',interval 1 day),'%m-%y'),date_format(last_day('$Company[7]'),'%d-%b-%y')");
-                $Dates->execute;
-                ($Company[7],$Prev_qend,$VATduedate) = $Dates->fetchrow;
-                $Dates->finish;
-
-#  Update comvatmsgdue & comvatreminder
-
-                $Sts = $dbh->do("update companies set comvatmsgdue='$Company[7]',comvatreminder='1' where reg_id=$New_reg_id and id=$New_com_id");
+		$Sts = $dbh->do("update companies set comvatmsgdue='$Company->{comvatmsgdue}',comvatreminder='1' where reg_id=$New_reg_id and id=$New_com_id");
 
 #  Write reminder message
 
-                $Sts = $dbh->do("insert into reminders (acct_id,remtext,remcode,remgrade,remstartdate,remenddate) values ('$New_reg_id+$New_com_id','VAT return due by $VATduedate','VATR','H',now(),'2099-01-01')");
+		$Sts = $dbh->do("insert into reminders (acct_id,remtext,remcode,remgrade,remstartdate,remenddate) values ('$New_reg_id+$New_com_id','VAT return due by $VATduedate','VATR','H',now(),'2099-01-01')");
 
-        }
+	}
 }
 
-$ACCESS = $COOKIE->{PLAN} || $Company[12];
+$ACCESS = $DATA{PLAN};
 
-#  Update year end related fields
+#############  Similar processing for Year End   ######################
 
-if ($Company[10] < 0) {
+if ($Company->{diffyearenddue} < 0) {
 
-        $Sts = $dbh->do("update companies set comyearendmsgdue=date_add(comyearend,interval 8 month),comyearend=date_add(comyearend,interval 1 year) where reg_id=$New_reg_id and id=$New_com_id");
+	$Sts = $dbh->do("update companies set comyearendmsgdue=date_add(comyearend,interval 8 month),comyearend=date_add(comyearend,interval 1 year) where reg_id=$New_reg_id and id=$New_com_id");
 
 #  Add a couple of reminders
 
-                $Dates = $dbh->prepare("select date_format(date_add('$Company[4]', interval 1 month),'%d-%b-%y'),date_format(date_add('$Company[4]',interval 10 month),'%d-%b-%y')");
-                $Dates->execute;
-                @Annual_date = $Dates->fetchrow;
-                $Dates->finish;
+		$Dates = $dbh->prepare("select date_format(date_add('$Company->{comyearend}', interval 1 month),'%d-%b-%y'),date_format(date_add('$Company->{comyearend}',interval 10 month),'%d-%b-%y')");
+		$Dates->execute;
+		@Annual_date = $Dates->fetchrow;
+		$Dates->finish;
 
-                $Sts = $dbh->do("insert into reminders (acct_id,remtext,remcode,remgrade,remstartdate,remenddate) values ('$New_reg_id+$New_com_id','Year End Procedures need to be completed.  Please <a href=\"/cgi-bin/fpa/yearend_cleardown.pl\">click here</a> to do this.','YRN','H',now(),'2099-01-01')");
-                $Sts = $dbh->do("insert into reminders (acct_id,remtext,remcode,remgrade,remstartdate,remenddate) values ('$New_reg_id+$New_com_id','Annual return (probably) due by $Annual_date[0]','GEN','N',now(),'2099-01-01')");
-                $Sts = $dbh->do("insert into reminders (acct_id,remtext,remcode,remgrade,remstartdate,remenddate) values ('$New_reg_id+$New_com_id','Accounts due by $Annual_date[1]','GEN','N',now(),'2099-01-01')");
+		$Sts = $dbh->do("insert into reminders (acct_id,remtext,remcode,remgrade,remstartdate,remenddate) values ('$New_reg_id+$New_com_id','Year End Procedures need to be completed.  Please <a href=\"/cgi-bin/fpa/yearend_cleardown.pl\">click here</a> to do this.','YRN','H',now(),'2099-01-01')");
+		$Sts = $dbh->do("insert into reminders (acct_id,remtext,remcode,remgrade,remstartdate,remenddate) values ('$New_reg_id+$New_com_id','Annual return (probably) due by $Annual_date[0]','GEN','N',now(),'2099-01-01')");
+		$Sts = $dbh->do("insert into reminders (acct_id,remtext,remcode,remgrade,remstartdate,remenddate) values ('$New_reg_id+$New_com_id','Accounts due by $Annual_date[1]','GEN','N',now(),'2099-01-01')");
 
 }
 
+if ($ACCESS > 1) {
+
+#  Get the User defined account codes
+
+	$Coas = $dbh->prepare("select coanominalcode,coadesc,coagroup from coas where acct_id='$New_reg_id+$New_com_id' and coagroup=? order by coanominalcode");
+	foreach $Coa ('4300','5000','6000','7000') {
+		$Coas->execute($Coa);
+		while (@Coa = $Coas->fetchrow) {
+			if ($Coa[1] =~ /^Other Exp/i && ! $Opt{$Coa}) {
+				$Opt{$Coa} .= "<option value='$Coa[0]' selected='selected'>$Coa[1]</option>";
+			}
+			else {
+				$Opt{$Coa} .= "<option value='$Coa[0]'>$Coa[1]</option>";
+			}
+		}	
+	}
+	$Coas->finish;
+}
+else {
+	$Opt{'4300'} = "<option value='4300'>Other Income</option>";
+	$Opt{'5000'} = "<option value='5000'>Cost of Sales</option>";
+	$Opt{'6000'} = "<option value='6000' selected='seleted'>Other Expenses</option>";
+	$Opt{'7000'} = "<option value='7000'>Fixed Overheads</option>";
+}
+
+
 #  Set the correct FRS percentage
 
-$Company[5] = sprintf("%1.3f",$Company[5]/100);
+$Company->{frsrate} = sprintf("%1.3f",$Company->{frsrate}/100);
 
-open(FILE,">/projects/tmp/$Cookie{'fpa-cookie'}");
-print FILE "IP\t$DATA{IP}\nACCT\t$New_reg_id+$New_com_id\nBACCT\t$DATA{BACCT}\nID\t$DATA{ID}\nPWD\t$DATA{PWD}\nPLAN\t$DATA{PLAN}\nVAT\t$Company[2]\nYEAREND\t$Company[4]\nUSER\t$DATA{USER}\nEXP\t$Company[3]\nFRS\t$Company[5]\nMIN\t$Company[6]\nMENU\t$DATA{MENU}\nTAG\t$Company[0]\nBTAG\t$DATA{BTAG}\nACCESS\t$DATA{ACCESS}\nNO_ADS\t$DATA{NO_ADS}\nREP_INVS\t$Company[13]\nSTMTS\t$Company[14]\nUPLDS\t$Company[15]\nPT_LOGO\t$Company[16]\nHMRC\t$Company[17]\nSUPPT\t$Company[18]\nCOOKIE\t$DATA{COOKIE}\nDB\tfpa\nADDU\t$Company[19]\nPREFS\t$DATA{PREFS}\nCIS\t$Company[20]\nBUS\t$DATA{BUS}\n4300\t$Opt{'4300'}\n5000\t$Opt{'5000'}\n6000\t$Opt{'6000'}\n7000\t$Opt{'7000'}\n";
+$IP_Addr = $ENV{'REMOTE_ADDR'};
+open(COOKIE,">/projects/tmp/$Cookie{'fpa-cookie'}");
+print COOKIE "IP\t$IP_Addr\nACCT\t$New_reg_id+$New_com_id\nBACCT\t$DATA{BACCT}\nID\t$DATA{ID}\nPWD\t$DATA{PWD}\nPLAN\t$DATA{PLAN}\nVAT\t$Company->{comvatscheme}\nYEAREND\t$Company->{comyearend}\nUSER\t$DATA{USER}\nEXP\t$Company->{comexpid}\nFRS\t$Company->{frsrate}\nMIN\t$Company->{comvatstart}\nMENU\t$DATA{MENU}\nTAG\t$Company->{comname}\nBTAG\t$DATA{BTAG}\nACCESS\t$DATA{ACCESS}\nUPLDS\t$Company->{comuplds}\nPT_LOGO\t$Company->{pt_logo}\nCOOKIE\t$Cookie\nDB\tfpa\nADDU\t$Company->{comadd_user}\nPREFS\t$COOKIE->{PREFS}\nCIS\t$Company->{comcis}\nBUS\t$DATA{BUS}\n4300\t$Opt{'4300'}\n5000\t$Opt{'5000'}\n6000\t$Opt{'6000'}\n7000\t$Opt{'7000'}\n";
 
 close(FILE);
 
@@ -124,4 +132,93 @@ Location: /cgi-bin/fpa/dashboard.pl
 
 EOD
 
+exit;
+#!/usr/bin/perl
+
+#  login script part 4 - set up the proper cookie file and display the opening screen
+
+use DBI;
+$dbh = DBI->connect("DBI:mysql:fpa");
+
+# ($Offset,$Multi) = split(/\?/,$ENV{QUERY_STRING});
+@Cookie = split(/\;/,$ENV{HTTP_COOKIE});
+foreach (@Cookie) {
+        ($Name,$Value) = split(/\=/,$_);
+        $Name =~ s/^ //g;
+        $Value =~ tr/\"//d;
+         $Cookie{$Name} = $Value;
+}
+open(COOKIE,"/projects/tmp/$Cookie{'fpa-cookie'}");
+while (<COOKIE>) {
+	chomp($_);
+	($Name,$Value) = split(/\t/,$_);
+	$COOKIE->{$Name} = $Value;
+}
+close(COOKIE);
+
+unlink("/projects/tmp/$Cookie{'fpa-cookie'}");
+
+$Reg_coms = $dbh->prepare("select reg2_id,com_id,comname,mlgdefmenu from reg_coms where reg1_id=$COOKIE->{REG} order by id");
+$Reg_coms->execute;
+
+$User = $COOKIE->{ID};
+$User =~ s/^(.*?)\@.*/$1/;
+@Reg_com = $Reg_coms->fetchrow;		#  Get the first entry which should be the original
+
+$Cookie = $Reg[2].$$;
+
+close(COOKIE);
+$COOKIE->{ACCT} = "$New_reg_id+$New_com_id";
+
+#  Update the visitcount
+
+$Regs = $dbh->do("update registrations set reglastlogindate=now(),regvisitcount=regvisitcount + 1 where reg_id=$New_reg_id");
+
+#  Update the status of any invoices
+
+$Invoices = $dbh->prepare("select to_days(invprintdate),to_days(invduedate),to_days(now()),invtotal,invvat,invpaid,invpaidvat,id from invoices where invstatuscode > '2' and not isnull(invduedate) and acct_id='$COOKIE->{ACCT}'");
+$Invoices->execute;
+while (@Invoice = $Invoices->fetchrow) {
+
+	if ($Invoice[1] < $Invoice[2]) {
+		$Sts = $dbh->do("update invoices set invstatus='Overdue',invstatuscode='9' where id=$Invoice[7] and acct_id='$COOKIE->{ACCT}'");
+	}
+	elsif (($Invoice[1] - $Invoice[2]) < ($Invoice[1] - $Invoice[0]) * 0.7) {
+		$Sts = $dbh->do("update invoices set invstatus='Due',invstatuscode='6' where id=$Invoice[7] and acct_id='$COOKIE->{ACCT}'");
+	}
+}
+$Invoices->finish;
+
+#  Check to see if the company details and account details have been completed
+
+$Href = $Reg_com[3];
+unless ($Company->{comcompleted}) {
+	$Href = "company_details.pl";
+}
+if ($Multi) {
+	print<<EOD;
+Content-Type: text/plain
+Set-Cookie: fpa-cookie=$Cookie; path=/;
+Set-Cookie: fpa-comname=$Company->{comname}; path=/;
+Set-Cookie: fpa-next_advert=0; path=/;
+Set-Cookie: fpa-last_advert=12; path=/;
+Status: 301
+Location: /cgi-bin/fpa/$Href
+
+EOD
+}
+else {
+	print<<EOD;
+Content-Type: text/plain
+Set-Cookie: fpa-cookie=$Cookie; path=/;
+Set-Cookie: fpa-comname=$Company->{comname}; path=/;
+Set-Cookie: fpa-next_advert=0; path=/;
+Set-Cookie: fpa-last_advert=12; path=/;
+
+XqQsOK-$Href
+
+EOD
+}
+$Reg_coms->finish;
+$dbh->disconnect;
 exit;

@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-$ACCESS_LEVEL = 5;
+$ACCESS_LEVEL = 1;
 
 #  script to bulk add invoices
 

@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-$ACCESS_LEVEL = 5;
+$ACCESS_LEVEL = 1;
 
 #  script to list invoices
 
@@ -16,7 +16,22 @@ unless ($COOKIE->{NO_ADS}) {
 
 ($Reg_id,$Com_id) = split(/\+/,$COOKIE->{ACCT});
 
-$Companies = $dbh->prepare("select id,reg_id,comname,comcontact,comemail,date_format(comyearend,'%b') as comyearend,comvatscheme,comvatduein,comcis from companies where companies.reg_id=$Reg_id order by comname;");
+$Limit = '1';
+
+if ($COOKIE->{PLAN} > 6) {
+	$Limit = '';
+}
+elsif ($COOKIE->{PLAN} > 4) {
+	$Limit = "limit 150";
+}
+elsif ($COOKIE->{PLAN} > 2) {
+	$Limit = "limit 15";
+}
+else {
+	$Limit = "limit 3";
+}
+
+$Companies = $dbh->prepare("select id,reg_id,comname,comcontact,comemail,date_format(comyearend,'%b') as comyearend,comvatscheme,comvatduein,comcis from companies where companies.reg_id=$Reg_id order by comname $Limit");
 $Companies->execute;
 
 $Market_Sectors = $dbh->prepare("select id,sector,frsrate from market_sectors");

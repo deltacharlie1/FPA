@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-$ACCESS_LEVEL = 5;
+$ACCESS_LEVEL = 1;
 
 #  Save new invoices for a bookkeeper's client
 
