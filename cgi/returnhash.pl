@@ -28,17 +28,17 @@ $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
 
 ($Reg_id,$Com_id) = split(/\+/,$COOKIE->{ACCT});
 
-#  first get the existing comsubtype in case we are updating
+#  gett the current setup
 
-$Companies = $dbh->prepare("select comsubtype from companies where reg_id=$Reg_id and id=$Com_id");
+$Companies = $dbh->prepare("select comsubtype,commerchantref,comcardref,comsubref from companies where reg_id=$Reg_id and id=$Com_id");
 $Companies->execute;
-$OldCompany = $Companies->fetchrow_hashref;
+$Company = $Companies->fetchrow_hashref;
 
-if ($FORM{sub} =~ /Del/i) {
-	$Sts = $dbh->do("update companies set comsublevel='$FORM{sub}' where reg_id=$Reg_id and id=$Com_id");
+if ($FORM{action} =~ /cancel/i) {
+	$Sts = $dbh->do("update companies set comsubtype='cancel' where reg_id=$Reg_id and id=$Com_id");
 }
-elsif ($FORM{sub} =~ /new/) {
-	$Sts = $dbh->do("update companies set comcardref='$FORM{sub}' where reg_id=$Reg_id and id=$Com_id");
+elsif ($FORM{action} =~ /card/) {
+	$Sts = $dbh->do("update companies set comcardref='card' where reg_id=$Reg_id and id=$Com_id");
 }
 else {
 	$Sts = $dbh->do("update companies set comsubtype='$FORM{sub}' where reg_id=$Reg_id and id=$Com_id");
@@ -64,12 +64,12 @@ $Hash = Digest->new("MD5");
 if ($Company->{comcardref}) {
 	$Hash->add($Termid.$Company->{commerchantref}.$Dte.'update'.$Secret);
 	$Hash_text = $Hash->hexdigest;
-	$JSON = "{ \"action\": \"update\", \"termid\": \"$Termid\", \"merchref\": \"$Company->{commerchantref}\", \"dte\": \"$Dte\", \"hash\": \"$Hash_text\", \"oldsubtype\": \"$OldCompany->{comsubtype}\" }";
+	$JSON = "{ \"action\": \"update\", \"termid\": \"$Termid\", \"merchref\": \"$Company->{commerchantref}\", \"dte\": \"$Dte\", \"hash\": \"$Hash_text\", \"oldsubtype\": \"$Company->{comsubtype}\" }";
 }
 else {
 	$Hash->add($Termid.$Company->{commerchantref}.$Dte.'register'.$Secret);
 	$Hash_text = $Hash->hexdigest;
-	$JSON = "{ \"action\": \"register\", \"termid\": \"$Termid\", \"merchref\": \"$Company->{commerchantref}\", \"dte\": \"$Dte\", \"hash\": \"$Hash_text\", \"oldsubtype\": \"$OldCompany->{comsubtype}\" }";
+	$JSON = "{ \"action\": \"register\", \"termid\": \"$Termid\", \"merchref\": \"$Company->{commerchantref}\", \"dte\": \"$Dte\", \"hash\": \"$Hash_text\", \"oldsubtype\": \"$Company->{comsubtype}\" }";
 }
 
 print "Content-Type: text/plain\n\n";
