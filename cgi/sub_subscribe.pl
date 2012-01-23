@@ -2,6 +2,20 @@
 
 #  Script to receive a subscription
 #  response comes in as xml
+$ACCESS_LEVEL = 1;
+
+#  script to display the registration screen tuned to reregistering
+
+use Checkid;
+$COOKIE = &checkid($ENV{HTTP_COOKIE},$ACCESS_LEVEL);
+
+@Cookie = split(/\;/,$ENV{HTTP_COOKIE});
+foreach (@Cookie) {
+        ($Name,$Value) = split(/\=/,$_);
+        $Name =~ s/^ //g;
+        $Value =~ tr/\"//d;
+        $Cookie{$Name} = $Value;
+}
 
 ($FORM{MERCHANTREF},$Old_subtype) = split(/\?/,$ENV{QUERY_STRING});		#  This is Merchantref
 
@@ -9,6 +23,10 @@ use LWP::UserAgent;
 use Digest;
 use DBI;
 $dbh = DBI->connect("DBI:mysql:fpa");
+unless ($COOKIE->{NO_ADS}) {
+        require "/usr/local/git/fpa/cgi/display_adverts.ph";
+        &display_adverts();
+}
 
 $Termid = '2645001';
 $Secret = 'CorunnaSecret';
@@ -29,7 +47,7 @@ $Subtype{fpa6} = 'FreePlus Bookkeeper Premium (&pound;20.00pm)';
 
 #  Get the company details
 
-$Companies = $dbh->prepare("select id,reg_id,comsublevel,comsubtype,commerchantref,comcardref,comsubref,comname from companies where commerchantref='$FORM{MERCHANTREF}'");
+$Companies = $dbh->prepare("select id,reg_id,comsublevel,comsubtype,commerchantref,comcardref,comsubref,comname,date_format(comsubdue,'%d-%b-%y') as subdue from companies where commerchantref='$FORM{MERCHANTREF}'");
 $Companies->execute;
 $Company = $Companies->fetchrow_hashref;
 $Companies->finish;
@@ -48,7 +66,7 @@ $Startdate =~ s/:.*//;
 #		 >0  - Change existing subscription to new comsubtype  (delete old add new)
 
 
-if ($Company->{comsublevel} =~ /Del/i) {		#  Delete existing subscription
+if ($Company->{comsubtype} =~ /cancel/i) {		#  Delete existing subscription
 
 	$Hash = Digest->new("MD5");
 	$Hash->add($Termid.$Company->{comsubref}.$Dte.$Secret);
@@ -83,19 +101,21 @@ EOD
 		$Res_content = $res->content;
 
 		if ($Res_content =~ /RESPONSE/i) {
-			$Status .= "<li>Your subscription is cancelled.  New subscription:- <b>$Subtype{$Company->{comsublevel}}</b></li>\n";
+			$Status .= "<p>Your subscription has been cancelled.</p><p>We are sorry to see you go but have reverted you to FreePlus Startup which is completely free to use.</p>\n";
 			$Company->{comsubtype} = $Company->{comsublevel};	# so as to display correct new subscription
 			$Sts = $dbh->do("update companies set comsublevel='00',comsubtype='',comsubref='',comsubdue='2010-01-01' where commerchantref='$Company->{commerchantref}'");
 			$Sts = $dbh->do("update registrations set regmembership='1' where reg_id=$Company->{reg_id}");
+			$Level = '0';
+			&update_cookiefile();
 
 #  update the database
 		}
 		else {
-			$Status .= "<li>Subscription not cancelled, please contact FreePlus Accounts Technical Support</li>\n";
+			$Status .= "<p>We are unable to cancel your subscription for some reason.&nbsp;&nbsp;Please contact FreePlus Accounts Technical Support if you require further assistance</p>\n";
 		}
 	}
 	else {
-		$Status .= "<li>Subscription not cancelled, please contact FreePlus Accounts Technical Support</li>\n";
+			$Status .= "<p>We are unable to cancel your subscription for some reason.&nbsp;&nbsp;Please contact FreePlus Accounts Technical Support if you require further assistance</p>\n";
 	}
 
 #  Delete the secure card
@@ -134,18 +154,19 @@ EOD
 
 		if ($Res_content =~ /RESPONSE/i) {
 
-			$Status .= "<li>Your card details  have been removed</li>\n";
+			$Status .= "<p>Your payment and  card details  have been removed</p>\n";
 			$Level = 0;
 			$Sts = $dbh->do("update companies set comsublevel='00',comsubtype='',comsubref='',commerchantref='',comcardref='' where commerchantref='$Company->{commerchantref}'");
 			$Sts = $dbh->do("update registrations set regmembership='1' where reg_id=$Company->{reg_id}");
+			&update_cookiefile();
 
 		}
 		else {
-			$Status .= "<li>Card Details not deleted, please contact FreePlus Accounts Technical Support</li>\n";
+			$Status .= "<p>Unfortunately we have not been able to remove your card details, please contact FreePlus Accounts Technical Support if your require further infomration</p>\n";
 		}
 	}
 	else {
-		$Status .= "<li>Card Details not deleted, please contact FreePlus Accounts Technical Support</li>\n";
+		$Status .= "<p>Unfortunately we have not been able to remove your card details, please contact FreePlus Accounts Technical Support if your require further infomration</p>\n";
 	}
 }
 elsif ($Company->{comsublevel} =~ /00/) {	#  New subscription
@@ -189,51 +210,20 @@ EOD
 
 		if ($Res_content =~ /RESPONSE/i) {
 
-			$Status .= "<li>Thank you, you are now subscribed to:- <b>$Subtype{$Company->{comsubtype}}</b></li>\n";
+			$Status .= "<p>Thank you for subscribing to FreePlus Accounts.</p><p>Your subscription choice of <b>$Subtype{$Company->{comsubtype}}</b> has now been set up and payment will be taken within the next 2 days</p>\n";
 			$Level = $Company->{comsubtype};
 			$Level =~ s/.+(\d)$/$1/;
 
-#  Allow logo & statements?
-
-			if ($Company->{comsubtype} =~ /fpa1/i) {
-				$Logo = "'2010-01-01'";
-				$Stmts = "'2010-01-01'";
-			}
-			else {
-				$Logo = "str_to_date('$Startdate','%d-%m-%Y')";
-				$Stmts = "str_to_date('$Startdate','%d-%m-%Y')";
-			}
-#  Do we add a user login?
-
-			if ($Company->{comsubtype} =~ /fpa2|fpa5/i) {
-				$Add_user = "1";
-			}
-			else {
-				$Add_user = "0";
-			}
-
-#  Do we add no ads, uploads etc ?
-
-			if ($Company->{comsubtype} =~ /fpa5|fpa6/i) {
-				$No_ads = "str_to_date('$Startdate','%d-%m-%Y')";
-				$Uplds = 524288;
-				$Keep_recs = "str_to_date('$Startdate','%d-%m-%Y')";
-			}
-			else {
-				$No_ads = "'2010-01-01'";
-				$Uplds = 0;
-				$Keep_recs = "'2010-01-01'";
-			}
-
-			$Sts = $dbh->do("update companies set comsublevel='$Level',comsubref='$Subref',comsubdue=str_to_date('$Startdate','%d-%m-%Y'),comno_ads=$No_ads,comuplds=$Uplds,comkeep_recs=$Keep_recs,compt_logo=$Logo,comstmts=$Stmts,comadd_user='$Add_user' where commerchantref='$Company->{commerchantref}'");
+			$Sts = $dbh->do("update companies set comsublevel='$Level',comsubref='$Subref',comsubdue=date_add(str_to_date('$Startdate','%d-%m-%Y'),interval 2 day),comadd_user='1' where commerchantref='$Company->{commerchantref}'");
 			$Sts = $dbh->do("update registrations set regmembership='$Membership[$Level]' where reg_id=$Company->{reg_id}");
+			&update_cookiefile();
 		}
 		else {
-			$Status .= "<li>Your subscription has not been accepted for some reason, please contact FreePlus Accounts Technical Support</li>\n";
+			$Status .= "Unfortunately your subscription has not been accepted for some reason, please contact FreePlus Accounts Technical Support if you require further information</li>\n";
 		}
 	}
 	else {
-		$Status .= "<li>Your subscription has not been accepted for some reason, please contact FreePlus Accounts Technical Support</li>\n";
+		$Status .= "Unfortunately your subscription has not been accepted for some reason, please contact FreePlus Accounts Technical Support if you require further information</li>\n";
 	}
 }
 elsif ($Company->{comsublevel} > 0) {		#  Updating subscription
@@ -260,6 +250,8 @@ EOD
 
 #  Now send it
 
+	$Status = "Thank you for updating your subscription, we have taken the following actions:-<ul>\n";
+
 	my $ua = LWP::UserAgent->new;
 	$ua->agent("FPA/0.1");
 
@@ -277,7 +269,14 @@ EOD
 
 #  Now add the new one
 
-			$Status .= "<li>Old Subscription Cancelled</li>\n";
+			$Status .= "<li>Your current subscription has been cancelled</li>\n";
+
+#  Temporarily set access to 1 (free) so that if the upgrade fails he reverts to free
+
+			$Sts = $dbh->do("update companies set comsublevel='00' where commerchantref='$Company->{commerchantref}'");
+			$Sts = $dbh->do("update registrations set regmembership='1' where reg_id=$Company->{reg_id}");
+			$Level = '0';
+			&update_cookiefile();
 
 			$Subref = $$.time;
 
@@ -318,7 +317,8 @@ EOD
 				$Res_content = $res->content;
 	
 				if ($Res_content =~ /RESPONSE/i) {
-					$Status .= "<li>New subscription is:- <b>$Subtype{$Company->{comsubtype}}</b></li>\n";
+					$Status .= "<li>Your new subscription, <b>$Subtype{$Company->{comsubtype}}</b>, has been set up</li>\n";
+					$Status .= "<li>The new payments will start on $Company->{subdue} and monthly thereafter</li></ul>\n";
 
 #  update the database
 					$Level = $Company->{comsubtype};
@@ -326,31 +326,37 @@ EOD
 
 					$Sts = $dbh->do("update companies set comsublevel='$Level',comsubref='$Subref' where commerchantref='$Company->{commerchantref}'");
 					$Sts = $dbh->do("update registrations set regmembership='$Membership[$Level]' where reg_id=$Company->{reg_id}");
+					&update_cookiefile();
 
 
 				}
 				else {
-					$Status .= "<li>New subsription not added, please contact FreePlus Accounts Technical Support</li>\n";
+					$Status .= "<li>Unfortunately we have not been able to set up your new subscription, please contact FreePlus Accounts Technical Support if you require further information</li>\n";
+					$Status .= "<li>In the meantime we have reverted you to FreePlus Startup which is completely free to use.</li></ul>\n";
 				}
 			}
 			else {
-				$Status .= "<li>New subsription not added, please contact FreePlus Accounts Technical Support</li>\n";
+				$Status .= "<li>Unfortunately we have not been able to set up your new subscription, please contact FreePlus Accounts Technical Support if you require further information</li>\n";
+				$Status .= "<li>In the meantime we have reverted you to FreePlus Startup which is completely free to use.</li></ul>\n";
 			}
 		}
 		else {
-			$Status .= "<li>Old Subscription not cancelled, please contact FreePlus Accounts Technical Support</li>\n";
+			$Status .= "<li>Unfortunately we have been unable to cancel your existing subscription, please contact FreePlus Accounts Technical Support</li></ul>\n";
 		}
 	}
 	else {
-		$Status .= "<li>Old Subscription not cancelled, please contact FreePlus Accounts Technical Support</li>\n";
+		$Status .= "<li>Unfortunately we have been unable to cancel your existing subscription, please contact FreePlus Accounts Technical Support</li></ul>\n";
 	}
 }
 use Template;
 $tt = Template->new({
-        INCLUDE_PATH => ['.','/usr/local/httpd/htdocs/fpa/lib']
+        INCLUDE_PATH => ['.','/usr/local/httpd/htdocs/fpa/lib'],
+	WRAPPER => 'header.tt'
 });
 
 $Vars = { company => $Company,
+	  title => $Cookie{'fpa-cookie'},
+	  cookie => $COOKIE,
 	  membership => $Subtype{$Company->{comsubtype}},
           status => $Status
 };
@@ -360,3 +366,23 @@ $tt->process('sub_subscribe.tt',$Vars);
 $dbh->disconnect;
 exit;
 
+sub update_cookiefile {
+open(FILE,"</projects/tmp/$Cookie{'fpa-cookie'}");
+while (<FILE>) {
+        chomp($_);
+        ($Key,$Value) = split(/\t/,$_);
+        $DATA{$Key} = $Value;
+}
+close(FILE);
+
+$DATA{PLAN} = $Membership[$Level];
+$DATA{ACCESS} = $Membership[$Level];
+
+unlink("/projects/tmp/$Cookie{'fpa-cookie'}");
+
+open(FILE,">/projects/tmp/$Cookie{'fpa-cookie'}");
+while(($Key,$Value) = each %DATA) {
+        print FILE "$Key\t$Value\n";
+}
+close(FILE);
+}

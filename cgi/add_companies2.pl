@@ -156,7 +156,7 @@ EOD
         	        $COAs = $dbh->prepare("select * from coas where coanominalcode='1150' and acct_id='$Reg_id+$New_com_id'");
                 	$COAs->execute;
 	                unless ($COAs->rows > 0) {
-        	                $dbh->do("insert into coas (acct_id,coanominalcode,coadesc,coatype,coareport) values ('$Reg_id+$New_com_id','1150','CIS Tax','Expenses','P & L')");
+        	                $dbh->do("insert into coas (acct_id,coanominalcode,coadesc,coatype,coagroup,coareport) values ('$Reg_id+$New_com_id','1150','CIS Tax','Expenses','1150','P & L')");
                 	}
 	                $COAs->finish;
 	        }

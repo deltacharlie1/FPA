@@ -1,29 +1,29 @@
-1000	Fixed Assets	Fixed Assets	Balance Sheet
-1100	Debtors	Current Assets	Balance Sheet
-1200	Bank Current	Current Assets	Balance Sheet
-1210	Bank Deposit	Current Assets	Balance Sheet
-1300	Cash	Current Assets	Balance Sheet
-1310	Cheques	Current Assets	Balance Sheet
-1400	VAT Input	Current Assets	Balance Sheet
-1500	Other Current Current Assets	Assets	Balance Sheet
-2000	Creditors	Current Liabilities	Balance Sheet
-2010	Credit Card	Current Liabilities	Balance Sheet
-2100	VAT Output	Current Liabilities	Balance Sheet
-2200	Other Current Liability	Current Liabilities	Balance Sheet
-2300	Long Term Liability	Longterm Liabilities	Balance Sheet
-3000	Share Capital	Capital	Balance Sheet
-3100	Retained Earnings	Capital	Balance Sheet
-4000	UK Sales	Income	P & L
-4100	EU Sales	Income	P & L
-4200	Export Sales	Income	P & L
-4300	Other Income	Income	P & L
-4310	Bank Interest	Income	P & L
-5000	Cost of Sales	Expenses	P & L
-6000	Other Expenses	Expenses	P & L
-6010	Bank Charges	Expenses	P & L
-6500	Dividends	Expenses	P & L
-6600	Corporation Tax	Expenses	P & L
-7000	Fixed Overheads	Expenses	P & L
-7500	Wages	Expenses	P & L
-7600	Payroll Taxes	Expenses	P & L
-8000	Bad Debts	Expenses	P & L
+1000	Fixed Assets	Fixed Assets	1000	Balance Sheet
+1100	Debtors	Current Assets	1100	Balance Sheet
+1200	Bank Current	Current Assets	1200	Balance Sheet
+1210	Bank Deposit	Current Assets	1210	Balance Sheet
+1300	Cash	Current Assets	1300	Balance Sheet
+1310	Cheques	Current Assets	1310	Balance Sheet
+1400	VAT Input	Current Assets	1400	Balance Sheet
+1500	Other Current Current Assets	Assets	1500	Balance Sheet
+2000	Creditors	Current Liabilities	2000	Balance Sheet
+2010	Credit Card	Current Liabilities	2010	Balance Sheet
+2100	VAT Output	Current Liabilities	2100	Balance Sheet
+2200	Other Current Liability	Current Liabilities	2200	Balance Sheet
+2300	Long Term Liability	Longterm Liabilities	2300	Balance Sheet
+3000	Share Capital	Capital	3000	Balance Sheet
+3100	Retained Earnings	Capital	3100	Balance Sheet
+4000	UK Sales	Income	4000	P & L
+4100	EU Sales	Income	4100	P & L
+4200	Export Sales	Income	4200	P & L
+4300	Other Income	Income	4300	P & L
+4310	Bank Interest	Income	4300	P & L
+5000	Cost of Sales	Expenses	5000	P & L
+6000	Other Expenses	Expenses	6000	P & L
+6010	Bank Charges	Expenses	6000	P & L
+6500	Dividends	Expenses	6500	P & L
+6600	Corporation Tax	Expenses	6600	P & L
+7000	Fixed Overheads	Expenses	7000	P & L
+7500	Wages	Expenses	7500	P & L
+7600	Payroll Taxes	Expenses	7600	P & L
+8000	Bad Debts	Expenses	8000	P & L

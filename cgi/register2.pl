@@ -178,11 +178,11 @@ EOD
 #  ... and create a set of nominal codes
 
 		open(DATA,"nominalcodes.txt");
-		$Coas = $dbh->prepare("insert into coas (acct_id,coanominalcode,coadesc,coatype,coareport,coabalance) values (?,?,?,?,?,?)");
+		$Coas = $dbh->prepare("insert into coas (acct_id,coanominalcode,coadesc,coatype,coagroup,coareport,coabalance) values (?,?,?,?,?,?,?)");
 		while (<DATA>) {
 			chomp($_);
 			@Coa = split(/\t/,$_);
-			$Coas->execute("$New_reg_id+$New_com_id",$Coa[0],$Coa[1],$Coa[2],$Coa[3],'0');
+			$Coas->execute("$New_reg_id+$New_com_id",$Coa[0],$Coa[1],$Coa[2],$Coa[3],$Coa[4],'0');
 		}
 		$Coas->finish;
 		close(DATA);

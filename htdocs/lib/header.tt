@@ -181,10 +181,10 @@ $(document).ready(function(){
         </li>
         <li class="admin"><a href="#"><span>Admin</span></a>
           <ul>
-            <li><a href="/cgi-bin/fpa/preferences.pl">Preferences</a></li>
 [%- IF cookie.BACCT == '1+1' -%]
-            <li><a href="#" onclick="window.open('/cgi-bin/fpa/subs.pl','subs','width=640,height=720,top=100,left=300,scrollbars=yes');">Subscriptions</a></li>
+            <li><a href="/cgi-bin/fpa/2subs.pl">My Account</a></li>
 [%- END -%]
+            <li><a href="/cgi-bin/fpa/preferences.pl">Preferences</a></li>
             <li><a href="#" onclick="view_comments();">View Feedback</a></li>
             <li><a href="#" onclick="$('#vcomment').dialog('open');">Add New Feedback</a></li>
             <li><a href="/cgi-bin/fpa/assign_invoices.pl">Assign Unlisted Invoices</a></li>
@@ -196,7 +196,7 @@ $(document).ready(function(){
         </li>
         <li class="help"><a href="/usermanual.pdf"><span>Help</span></a>
         </li>
-[% IF cookie.BUS == "1" -%]
+[% IF cookie.BUS == "1" AND cookie.ACCESS > 1 -%]
         <li class="bookkeeper"><a href="#"><span>Bookkeeper</span></a>
           <ul>
             <li><a href="/cgi-bin/fpa/list_companies.pl">List Companies</a></li>

@@ -2,6 +2,12 @@
 
 #  Script to record a secure card response.  This is the 'Secure Card URL' and is called by Worldnet
 #  response comes in as a get string
+$ACCESS_LEVEL = 1;
+
+#  script to display the registration screen tuned to reregistering
+
+use Checkid;
+$COOKIE = &checkid($ENV{HTTP_COOKIE},$ACCESS_LEVEL);
 
 $Buffer = $ENV{QUERY_STRING};
 
@@ -18,6 +24,10 @@ foreach $pair (@pairs) {
 
 use DBI;
 $dbh = DBI->connect("DBI:mysql:fpa");
+unless ($COOKIE->{NO_ADS}) {
+        require "/usr/local/git/fpa/cgi/display_adverts.ph";
+        &display_adverts();
+}
 
 $Membership[0] = 'FreePlus Startup (FREE)';
 $Membership[1] = 'FreePlus Standard (&pound;5.00pm)';
@@ -35,10 +45,9 @@ if ($FORM{RESPONSECODE} =~ /A/i) {
 
 #  Just store the card reference for this Merchantref  (assume hash is ok for now)
 
-	warn "\$Sts = \$dbh->do(\"update companies set comcardref='$FORM{CARDREFERENCE}' where commerchantref='$FORM{MERCHANTREF}'\")\n";
 	$Sts = $dbh->do("update companies set comcardref='$FORM{CARDREFERENCE}' where commerchantref='$FORM{MERCHANTREF}'");
 
-	unless ($Company->{comcardref}=~ /renew/) {		#  We are going further so just call sub_subscribe.pl with merchantref
+	unless ($Company->{comcardref}=~ /card/) {		#  We are going further so just call sub_subscribe.pl with merchantref
 
 		print<<EOD;
 Content-Type: text/hrml
@@ -55,12 +64,15 @@ EOD
 
 		use Template;
 		$tt = Template->new({
-			INCLUDE_PATH => ['.','/usr/local/httpd/htdocs/fpa/lib']
+			INCLUDE_PATH => ['.','/usr/local/httpd/htdocs/fpa/lib'],
+			WRAPPER => 'header.tt'
 		});
 
 		$Vars = { cardtype => $FORM{CARDTYPE},
 		          cardnumber => $FORM{MASKEDCARDNUMBER},
 		          expiry => $FORM{CARDEXPIRY},
+			  cookie => $COOKIE,
+			  title => 'Credit/Debit Card Details',
 			  company => $Company,
 			  membership => $Membership[$Company->{comsublevel}],
 			  status => "OK"
@@ -76,12 +88,15 @@ else {
 
 	use Template;
 	$tt = Template->new({
-		INCLUDE_PATH => ['.','/usr/local/httpd/htdocs/fpa/lib']
+		INCLUDE_PATH => ['.','/usr/local/httpd/htdocs/fpa/lib'],
+		WRAPPER => 'header.tt'
 	});
 
 	$Vars = { cardtype => $FORM{RESPONSECODE},
 	          cardnumber => $FORM{RESPONSETEXT},
 	          expiry => $FORM{CARDEXPIRY},
+		  cookie => $COOKIE,
+		  title => 'Credit/Debit Card Details',
 		  membership => $Membership[$Company->{comsublevel}],
 		  status => "Failed"
 	};
