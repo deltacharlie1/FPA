@@ -32,25 +32,25 @@ $User =~ s/^(.*?)\@.*/$1/;
 
 $Cookie = $Reg[2].$$;
 
-$Companies = $dbh->prepare("select comname,comcompleted,comvatscheme,comexpid,comyearend,frsrate,comvatqstart,comvatmsgdue,comyearendmsgdue,datediff(comvatmsgdue,now()),datediff(comyearend,now()),if(comfree>now(),'1',''),if(comno_ads>now(),'1',''),if(comrep_invs>now(),'1',''),if(comstmts>now(),'1',''),comuplds,if(compt_logo>now(),'1',''),if(comhmrc>now(),'1',''),comsuppt,comadd_user,comcis,combusiness from companies left join market_sectors on (combusiness=market_sectors.id) where companies.id=$Reg_com[1] and reg_id=$Reg_com[0]");
+$Companies = $dbh->prepare("select comname,comcompleted,comvatscheme,comexpid,comyearend,frsrate,comvatqstart,comvatmsgdue,comyearendmsgdue,datediff(comvatmsgdue,now()) as diffvatmsgdue,datediff(comyearend,now()) as diffyearenddue,comuplds,if(compt_logo>now(),'1','') as pt_logo,comadd_user,comcis,combusiness,comsublevel,datediff(comsubdue,now()) as subdue from companies left join market_sectors on (combusiness=market_sectors.id) where companies.id=$Reg_com[1] and reg_id=$Reg_com[0]");
 $Companies->execute;
-@Company = $Companies->fetchrow;
+$Company = $Companies->fetchrow_hashref;
 $Companies->finish;
 
-$Company[6] =~ s/(\d+)-(\d+)-(\d+)/$1,$2 - 1,$3/;
+$Company->{comvatstart} =~ s/(\d+)-(\d+)-(\d+)/$1,$2 - 1,$3/;
 
-if ($Company[2] !~ /N/i) {
+if ($Company->{comvatscheme} !~ /N/i) {
 
-	if ($Company[9] < 1) {			#  VAT Reminder due
+	if ($Company->{diffvatmsgdue} < 1) {			#  VAT Reminder due
 
-		$Dates = $dbh->prepare("select date_add('$Company[7]', interval 3 month),date_format(date_sub('$Company[7]',interval 1 day),'%m-%y'),date_format(last_day('$Company[7]'),'%d-%b-%y')");
+		$Dates = $dbh->prepare("select date_add('$Company->{comvatmsgdue}', interval 3 month),date_format(date_sub('$Company->{comvatmsgdue}',interval 1 day),'%m-%y'),date_format(last_day('$Company->{comvatmsgdue}'),'%d-%b-%y')");
 		$Dates->execute;
-		($Company[7],$Prev_qend,$VATduedate) = $Dates->fetchrow;
+		($Company->{comvatmsgdue},$Prev_qend,$VATduedate) = $Dates->fetchrow;
 		$Dates->finish;
 
 #  Update comvatmesgdue and comvatreminder
 
-		$Sts = $dbh->do("update companies set comvatmsgdue='$Company[7]',comvatreminder='1' where reg_id=$Reg_com[0] and id=$Reg_com[1]");
+		$Sts = $dbh->do("update companies set comvatmsgdue='$Company->{comvatmsgdue}',comvatreminder='1' where reg_id=$Reg_com[0] and id=$Reg_com[1]");
 
 #  Write reminder message
 
@@ -59,17 +59,23 @@ if ($Company[2] !~ /N/i) {
 	}
 }
 
-$ACCESS = $COOKIE->{PLAN} || $Company[12];
+$ACCESS = $COOKIE->{PLAN};
+unless ($Company->{comsublevel} > 0 && $Company->{subdue} >= 0) {
+	if ($ACCESS > 1) {
+		$Sts = $dbh->do("update registrations set regmembership='1' where reg_id=$Reg_com[0]");
+	}
+	$ACCESS = '1';
+}
 
 #############  Similar processing for Year End   ######################
 
-if ($Company[10] < 0) {
+if ($Company->{diffyearenddue} < 0) {
 
 	$Sts = $dbh->do("update companies set comyearendmsgdue=date_add(comyearend,interval 8 month),comyearend=date_add(comyearend,interval 1 year) where reg_id=$Reg_com[0] and id=$Reg_com[1]");
 
 #  Add a couple of reminders
 
-		$Dates = $dbh->prepare("select date_format(date_add('$Company[4]', interval 1 month),'%d-%b-%y'),date_format(date_add('$Company[4]',interval 10 month),'%d-%b-%y')");
+		$Dates = $dbh->prepare("select date_format(date_add('$Company->{comyearend}', interval 1 month),'%d-%b-%y'),date_format(date_add('$Company->{comyearend}',interval 10 month),'%d-%b-%y')");
 		$Dates->execute;
 		@Annual_date = $Dates->fetchrow;
 		$Dates->finish;
@@ -80,25 +86,35 @@ if ($Company[10] < 0) {
 
 }
 
+if ($ACCESS > 1) {
+
 #  Get the User defined account codes
 
-$Coas = $dbh->prepare("select coanominalcode,coadesc,coagroup from coas where acct_id='$Reg_com[0]+$Reg_com[1]' and coagroup=? order by coanominalcode");
-foreach $Coa ('4300','5000','6000','7000') {
-	$Coas->execute($Coa);
-	while (@Coa = $Coas->fetchrow) {
-		if ($Coa[1] =~ /^Other Exp/i && ! $Opt{$Coa}) {
-			$Opt{$Coa} .= "<option value='$Coa[0]' selected='selected'>$Coa[1]</option>";
-		}
-		else {
-			$Opt{$Coa} .= "<option value='$Coa[0]'>$Coa[1]</option>";
-		}
+	$Coas = $dbh->prepare("select coanominalcode,coadesc,coagroup from coas where acct_id='$Reg_com[0]+$Reg_com[1]' and coagroup=? order by coanominalcode");
+	foreach $Coa ('4300','5000','6000','7000') {
+		$Coas->execute($Coa);
+		while (@Coa = $Coas->fetchrow) {
+			if ($Coa[1] =~ /^Other Exp/i && ! $Opt{$Coa}) {
+				$Opt{$Coa} .= "<option value='$Coa[0]' selected='selected'>$Coa[1]</option>";
+			}
+			else {
+				$Opt{$Coa} .= "<option value='$Coa[0]'>$Coa[1]</option>";
+			}
+		}	
 	}
+	$Coas->finish;
 }
-$Coas->finish;
+else {
+	$Opt{4300} = "<option value='4300'>Other Income</option>";
+	$Opt{5000} = "<option value='5000'>Cost of Sales</option>";
+	$Opt{6000} = "<option value='6000' selected='seleted'>Other Expenses</option>";
+	$Opt{7000} = "<option value='7000'>Fixed Overheads</option>";
+}
+
 
 #  Set the correct FRS percentage
 
-$Company[5] = sprintf("%1.3f",$Company[5]/100);
+$Company->{frsrate} = sprintf("%1.3f",$Company->{frsrate}/100);
 
 use Digest;
 $SHA1_hash = Digest->new("SHA-1");
@@ -107,7 +123,7 @@ $Cookie = $SHA1_hash->hexdigest;
 
 $IP_Addr = $ENV{'REMOTE_ADDR'};
 open(COOKIE,">/projects/tmp/$Cookie");
-print COOKIE "IP\t$IP_Addr\nACCT\t$Reg_com[0]+$Reg_com[1]\nBACCT\t$Reg_com[0]+$Reg_com[1]\nID\t$COOKIE->{ID}\nPWD\t$COOKIE->{PWD}\nPLAN\t$COOKIE->{PLAN}\nVAT\t$Company[2]\nYEAREND\t$Company[4]\nUSER\t$User\nEXP\t$Company[3]\nFRS\t$Company[5]\nMIN\t$Company[6]\nMENU\t$COOKIE->{MENU}\nTAG\t$Company[0]\nBTAG\t$Company[0]\nACCESS\t$ACCESS\nNO_ADS\t$Company[12]\nREP_INVS\t$Company[13]\nSTMTS\t$Company[14]\nUPLDS\t$Company[15]\nPT_LOGO\t$Company[16]\nHMRC\t$Company[17]\nSUPPT\t$Company[18]\nCOOKIE\t$Cookie\nDB\tfpa\nADDU\t$Company[19]\nPREFS\t$COOKIE->{PREFS}\nCIS\t$Company[20]\nBUS\t$Company[21]\n4300\t$Opt{'4300'}\n5000\t$Opt{'5000'}\n6000\t$Opt{'6000'}\n7000\t$Opt{'7000'}\n";
+print COOKIE "IP\t$IP_Addr\nACCT\t$Reg_com[0]+$Reg_com[1]\nBACCT\t$Reg_com[0]+$Reg_com[1]\nID\t$COOKIE->{ID}\nPWD\t$COOKIE->{PWD}\nPLAN\t$COOKIE->{PLAN}\nVAT\t$Company->{comvatscheme}\nYEAREND\t$Company->{comyearend}\nUSER\t$User\nEXP\t$Company->{comexpid}\nFRS\t$Company->{frsrate}\nMIN\t$Company->{comvatstart}\nMENU\t$COOKIE->{MENU}\nTAG\t$Company->{comname}\nBTAG\t$Company->{comname}\nACCESS\t$ACCESS\nUPLDS\t$Company->{comuplds}\nPT_LOGO\t$Company->{pt_logo}\nCOOKIE\t$Cookie\nDB\tfpa\nADDU\t$Company->{comadd_user}\nPREFS\t$COOKIE->{PREFS}\nCIS\t$Company->{comcis}\nBUS\t$Company->{combusiness}\n4300\t$Opt{'4300'}\n5000\t$Opt{'5000'}\n6000\t$Opt{'6000'}\n7000\t$Opt{'7000'}\n";
 
 close(COOKIE);
 $COOKIE->{ACCT} = "$Reg_com[0]+$Reg_com[1]";
@@ -134,14 +150,14 @@ $Invoices->finish;
 #  Check to see if the company details and account details have been completed
 
 $Href = $Reg_com[3];
-unless ($Company[1]) {
+unless ($Company->{comcompleted}) {
 	$Href = "company_details.pl";
 }
 if ($Multi) {
 	print<<EOD;
 Content-Type: text/plain
 Set-Cookie: fpa-cookie=$Cookie; path=/;
-Set-Cookie: fpa-comname=$Company[0]; path=/;
+Set-Cookie: fpa-comname=$Company->{comname}; path=/;
 Set-Cookie: fpa-next_advert=0; path=/;
 Set-Cookie: fpa-last_advert=12; path=/;
 Status: 301
@@ -153,7 +169,7 @@ else {
 	print<<EOD;
 Content-Type: text/plain
 Set-Cookie: fpa-cookie=$Cookie; path=/;
-Set-Cookie: fpa-comname=$Company[0]; path=/;
+Set-Cookie: fpa-comname=$Company->{comname}; path=/;
 Set-Cookie: fpa-next_advert=0; path=/;
 Set-Cookie: fpa-last_advert=12; path=/;
 
