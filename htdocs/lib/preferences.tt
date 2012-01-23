@@ -24,6 +24,15 @@
     <td><label>Display Category field?</label></td>
     <td><span><input name="invcat" type="radio" id="invcatY" title="Display Category field" value="Y"[%- IF reg.regprefs.substr(3,1) == 'Y' -%] checked="checked"[%- END -%]/> Yes&nbsp;&nbsp;<input name="invcat" type="radio" id="invcatN" title="Hide Category Field" value="N"[%- IF reg.regprefs.substr(3,1) == 'N' -%] checked="checked"[%- END -%]/> No</span></td>
   </tr>
+[% IF cookie.PLAN > 5 -%]
+  <tr>
+    <td colspan="2"><h3>Uploads</h3></td>
+  </tr>
+  <tr>
+    <td><label>Display Uploads Button?</label></td>
+    <td><span><input name="comuplds" type="radio" id="comupldsY" title="Display Uploads Button" value="Y"[%- IF reg.regprefs.substr(4,1) == 'Y' -%] checked="checked"[%- END -%]/> Yes&nbsp;&nbsp;<input name="comuplds" type="radio" id="comupldsN" value="N"[%- IF reg.regprefs.substr(4,1) == 'N' -%] checked="checked"[%- END -%]/> No</span></td>
+  </tr>
+[% END -%]
 </table>
 </div>
 <div id="sidebar">

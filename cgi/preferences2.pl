@@ -27,7 +27,7 @@ foreach $pair (@pairs) {
 use DBI;
 $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
 
-$Prefs = $FORM{memwordcheck}.$FORM{timeout}.$FORM{invpaid}.$FORM{invcat};
+$Prefs = $FORM{memwordcheck}.$FORM{timeout}.$FORM{invpaid}.$FORM{invcat}.$FORM{comuplds};
 
 $Sts = $dbh->do("update registrations set regprefs='$Prefs' where regemail='$COOKIE->{ID}'");
 

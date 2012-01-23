@@ -8,7 +8,7 @@ use PDF::API2;
 #  Get the company name
 
 ($Reg_id,$Com_id) = split(/\+/,$COOKIE->{ACCT});
-$Companies= $dbh->prepare("select comname,comaddress,compostcode,comtel,comemail,comregno,comvatno,comlogo,date_format(curdate(),'%D %M %Y') from companies where reg_id=$Reg_id and id=$Com_id");
+$Companies= $dbh->prepare("select comname,comaddress,compostcode,comtel,comemail,comregno,comvatno,comlogo,date_format(curdate(),'%D %M %Y'),datediff(compt_logo,now()) from companies where reg_id=$Reg_id and id=$Com_id");
 $Companies->execute;
 @Company = $Companies->fetchrow;
 $Companies->finish;
@@ -51,7 +51,7 @@ $font = $pdf->corefont('Helvetica');
 $font_bold = $pdf->corefont('Helvetica Bold');
 $font_italic = $pdf->corefont('Helvetica Oblique');
 $font_bold_italic = $pdf->corefont('Helvetica BoldOblique');
-if ($COOKIE->{PT_LOGO} && $Company[7]) {
+if (($COOKIE->{PLAN} > 3 || $Company[9] > 0) && $Company[7]) {
 # $Img =~ s/([\\\"\'])/\\$1/g;
         use MIME::Base64;
         $Company[7] = decode_base64($Company[7]);

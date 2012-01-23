@@ -20,8 +20,8 @@
 <title>[% title -%]</title>
 <script type="text/javascript">
 $(document).ready(function(){
-[% IF cookie.UPLDS > 0 -%]
   $("#searchcus").watermark("Search");
+[% IF cookie.PLAN > 5 AND cookie.PREFS.substr(4,1) == 'Y' -%]
   $("#pifile").uploadify ({
     "uploader"       : "/js/uploadify.swf",
     "script"         : "/cgi-bin/fpa/uploadify.pl",
@@ -413,7 +413,7 @@ $(document).ready(function(){
         <td><span><input type="text" name="invcusref" id="pay_invcusref" value="" title="Supplier Reference"/></span></td>
       </tr>
       <tr>
-        <td colspan="2"><label style="text-align:left;padding-bottom:5px;">Description</label><textarea name="invdesc" id="pay_invdesc" cols="30" rows="2" title="Description of the payment" class="mandatory"></textarea>[%- IF cookie.UPLDS > 0 -%]&nbsp;&nbsp;<input id="pifile" name="pifile" type="file"/>[%- END -%]</td>
+        <td colspan="2"><label style="text-align:left;padding-bottom:5px;">Description</label><textarea name="invdesc" id="pay_invdesc" cols="30" rows="2" title="Description of the payment" class="mandatory"></textarea>[%- IF cookie.PLAN > 5 AND cookie.PREFS.substr(4,1) == 'Y' -%]&nbsp;&nbsp;<input id="pifile" name="pifile" type="file"/>[%- END -%]</td>
       </tr>
     </table>
   </form>

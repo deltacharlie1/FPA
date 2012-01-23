@@ -11,7 +11,7 @@ use PDF::TextBlock::Font;
 #  Get the company name
 
 ($Reg_id,$Com_id) = split(/\+/,$COOKIE->{ACCT});
-$Companies= $dbh->prepare("select comname,comaddress,compostcode,comtel,comemail,comregno,comvatno,comlogo from companies where reg_id=$Reg_id and id=$Com_id");
+$Companies= $dbh->prepare("select comname,comaddress,compostcode,comtel,comemail,comregno,comvatno,comlogo,datediff(compt_logo,now()) as pt_logo from companies where reg_id=$Reg_id and id=$Com_id");
 $Companies->execute;
 @Company = $Companies->fetchrow;
 $Companies->finish;
@@ -93,7 +93,7 @@ $font_bold = $pdf->corefont('Helvetica Bold');
 $font_bold_italic = $pdf->corefont('Helvetica BoldOblique');
 $font_italic = $pdf->corefont('Helvetica Oblique');
 
-if ($COOKIE->{PT_LOGO} && $Company[7]) {
+if (($COOKIE->{PLAN} > 3 || $Company[8] > 0) && $Company[7]) {
 	use MIME::Base64;
 	$Company[7] = decode_base64($Company[7]);
 

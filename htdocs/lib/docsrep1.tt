@@ -50,7 +50,7 @@
 </div>
 <div id="sidebar">
   <ul>
-[% IF cookie.UPLDS -%]
+[% IF cookie.PLAN > 5 AND cookie.PREFS.substr(4,1) == 'Y' -%]
     <li>
       <div>
         <a href="#" onclick="display_puform();">

@@ -98,9 +98,13 @@ create table companies (
   comadd_user int(10) unsigned not null default 0 comment 'number of new users that may be added',
   comkeep_recs date not null default '2010-01-01' comment 'Expiry date for keeping records for 6 years',
   comadvertise date not null default '2010-01-01' comment 'Allowed to advertise until this date',
-  comsubs date not null default '2010-01-01' comment 'Date subscription expires',
   comsublevel char(5) default '00' comment 'User/Bookkeeper subscription level',
   comcis char(3) not null default 'N' comment 'Whether or not this company is in the CIS scheme',
+  comsubdue date not null default '2010-01-01' comment 'Date subscription becomes due',
+  comsubtype varchar(10) not null default '' comment 'Subscription type eg fpa1,fpa2 etc',
+  commerchantref varchar(100) not null default '' comment 'Card processor subscriber reference',
+  comcardref varchar(100) not null default '' comment 'Secure card ref',
+  comsubref varchar(100) not null default '' comment 'Subscription ref',
   old_id int unsigned,
   index (reg_id)
 );
@@ -477,6 +481,21 @@ create table categories (
   id int unsigned not null auto_increment primary key,
   cat_code varchar(100) not null default '' comment 'Category Code',
   cat_description varchar(255) not null default '' comment 'Category Description'
+);
+
+drop table if exists subscriptions;
+create table subscriptions (
+  id int unsigned not null auto_increment primary key,
+  acct_id varchar(50) not null,
+  subdatepaid date comment 'date subscription paid',
+  subinvoiceno int comment 'payment invoice no',
+  subdescription varchar(120) not null default '' comment 'description of payment',
+  subnet decimal(10,2) not null default '0.00' comment 'Net subscription amount',
+  subvat decimal (10,2) not null default '0.00' comment 'VAT on subscription',
+  subauthcode varchar(12) not null default '' comment 'Auth Code return by card processor',
+  substatus varchar(12) not nul default '' comment 'Status of payment',
+  submerchantref varchar(50) comment 'Subscriber Merchantref',
+  subreason text comment 'reason for rejection/acceptance'
 );
 
 drop table if exists adverts;
