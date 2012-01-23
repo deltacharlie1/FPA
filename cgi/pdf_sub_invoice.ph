@@ -43,13 +43,18 @@ $text->text($Inv_desc);
 $text->translate(529,455);	#  Net Amount
 $text->text_right($Inv_net);
 
+if ($Inv_status =~ /^Due/i) {
+	$text->translate(70,415);	#  Due Remark
+	$text->text('Payment is due now - Thank you');
+}
+
 $text->translate(529,197);
 $text->text_right($Inv_net);
 
 $text->translate(529,163);
 $text->text_right($Inv_vat);
 
-my $Total = sprintf('%1.2f',$Amt + $Vat);
+my $Total = sprintf('%1.2f',$Inv_net + $Inv_vat);
 
 $text->font($font_bold,14);
 $text->translate(531,132);
@@ -70,7 +75,7 @@ if ($Inv_status =~ /paid/i) {
 	$text->transform(-translate => [240,292], -rotate => 24);
 	$text->text($Stamp_date);
 }
-else {
+elsif ($Inv_status =~ /overdue/i) {
 	$img = $pdf->image_png('/usr/local/git/fpa/htdocs/icons/overdue.png');
 	$g->image($img,150,250);
 }
