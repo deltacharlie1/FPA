@@ -196,7 +196,7 @@ $(document).ready(function(){
         </li>
         <li class="help"><a href="/usermanual.pdf"><span>Help</span></a>
         </li>
-[% IF cookie.BUS == "1" -%]
+[% IF cookie.BUS == "1" AND cookie.ACCESS > 1 -%]
         <li class="bookkeeper"><a href="#"><span>Bookkeeper</span></a>
           <ul>
             <li><a href="/cgi-bin/fpa/list_companies.pl">List Companies</a></li>
