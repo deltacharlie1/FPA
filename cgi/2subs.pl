@@ -24,6 +24,15 @@ unless ($COOKIE->{NO_ADS}) {
         &display_adverts();
 }
 
+open(XML,'</usr/local/git/fpa/other/cashflows') || warn "Could not open cashflos file\n";
+@Xmlstr = <XML>;
+close(XML);
+
+($Termid,$Secret,$URL) = @Xmlstr;
+chomp($Termid);
+chomp($Secret);
+chomp($URL);
+
 $Companies = $dbh->prepare("select comsublevel,comsubtype,commerchantref,comcardref from companies where reg_id=$Reg_id and id=$Com_id");
 $Companies->execute;
 $Company = $Companies->fetchrow_hashref;
@@ -48,6 +57,7 @@ $Vars = { cookie => $COOKIE,
 	  title => 'Subscriptions',
 	  membership => $Membership[$COOKIE->{ACCESS}],
 	  company => $Company,
+	  termid => $Termid,
 	  javascript => '<script type="text/javascript">
 function calc_hash(action) {
   $("#sub_action").val(action);
@@ -70,7 +80,7 @@ function calc_hash(action) {
      document.getElementById("sub_datetime").value = data[0].dte;
      document.getElementById("sub_hash").value = data[0].hash;
      if (/^0/.test($("#sub_current").val()) || action == "card") {
-       document.form1.action = "https://cashflows.worldnettps.com/merchant/securecardpage";
+       document.form1.action = "https://'.$URL.'.worldnettps.com/merchant/securecardpage";
      }
      else {
        document.form1.action = "/cgi-bin/fpa/sub_subscribe.pl?" + data[0].merchref + "?" + data[0].oldsubtype;

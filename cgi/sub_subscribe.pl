@@ -28,10 +28,19 @@ unless ($COOKIE->{NO_ADS}) {
         &display_adverts();
 }
 
+open(XML,'</usr/local/git/fpa/other/cashflows') || warn "Could not open cashflos file\n";
+@Xmlstr = <XML>;
+close(XML);
+
+($Termid,$Secret,$URL) = @Xmlstr;
+chomp($Termid);
+chomp($Secret);
+chomp($URL);
+
 #$Termid = '2645001';
 #$Secret = 'CorunnaSecret';
-$Termid = '2706001';
-$Secret = 'F1sherfolK';
+#$Termid = '2706001';
+#$Secret = 'F1sherfolK';
 
 $Membership[0] = '1';
 $Membership[1] = '3';
