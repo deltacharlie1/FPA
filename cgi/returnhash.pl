@@ -20,8 +20,10 @@ foreach $pair (@pairs) {
 $Dte = `date +%d-%m-%Y:%H:%M:%S:000`;
 chomp($Dte);
 
-$Termid = '2645001';
-$Secret = 'CorunnaSecret';
+# $Termid = '2645001';
+$Termid = '2706001';
+# $Secret = 'CorunnaSecret';
+ $Secret = 'F1sherfolK';
 
 use DBI;
 $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");

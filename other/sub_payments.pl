@@ -40,8 +40,10 @@ use MIME::Base64;
 
 require "/usr/local/git/fpa/cgi/pdf_sub_invoice.ph";
 
-$Termid = '2645001';
-$Secret = 'CorunnaSecret';
+#$Termid = '2645001';
+#$Secret = 'CorunnaSecret';
+$Termid = '2706001';
+$Secret = 'F1sherfolK';
 
 $Subrate[1] = '5.00';
 $Subrate[2] = '5.00';
@@ -113,24 +115,24 @@ EOD
 	my $ua = LWP::UserAgent->new;
 	$ua->agent("FPA/0.1");
 
-	my $req = HTTP::Request->new(POST => "https://testcashflows.worldnettps.com/merchant/xmlpayment");
+	my $req = HTTP::Request->new(POST => "https://cashflows.worldnettps.com/merchant/xmlpayment");
 	$req->content_type('text/xml');
 	$req->content($Content);
 
 	my $res = $ua->request($req);
 
-#	if ($res->is_success) {
+	if ($res->is_success) {
 
 
-#		my $Res_content = $res->content;
+		my $Res_content = $res->content;
 
 #		my $Res_content = '<ERROR><ERRORSTRING>Multiple payments for one period is not allowed</ERRORSTRING></ERROR>';
 #		my $Res_content = '<SUBSCRIPTIONPAYMENTRESPONSE><RESPONSECODE>A</RESPONSECODE><RESPONSETEXT>Authorised</RESPONSETEXT><APPROVALCODE>394381</APPROVALCODE><DATETIME>2012-01-23T14:03:14</DATETIME><HASH>1fef6c5a8cb20398abc7e9892bd6c4d4</HASH></SUBSCRIPTIONPAYMENTRESPONSE>';
-		my $Res_content = '<SUBSCRIPTIONPAYMENTRESPONSE><RESPONSECODE>D</RESPONSECODE><RESPONSETEXT>Declined</RESPONSETEXT><APPROVALCODE>394381</APPROVALCODE><DATETIME>2012-01-23T14:03:14</DATETIME><HASH>1fef6c5a8cb20398abc7e9892bd6c4d4</HASH></SUBSCRIPTIONPAYMENTRESPONSE>';
+#		my $Res_content = '<SUBSCRIPTIONPAYMENTRESPONSE><RESPONSECODE>D</RESPONSECODE><RESPONSETEXT>Declined</RESPONSETEXT><APPROVALCODE>394381</APPROVALCODE><DATETIME>2012-01-23T14:03:14</DATETIME><HASH>1fef6c5a8cb20398abc7e9892bd6c4d4</HASH></SUBSCRIPTIONPAYMENTRESPONSE>';
 
 		($XML_Result,$XML_Text,$XML_Auth) = ($Res_content =~ /^.*?CODE>(\w+)<\/RESPONSE.*?TEXT>(\w+)<\/RESPONSETEXT.*?CODE>(.*)?<\/APP.*$/);
 
-#	}
+	}
 
 	if ($Res_content =~ /ERROR/i) {
 
@@ -284,7 +286,7 @@ EOD
 					my $ua = LWP::UserAgent->new;
 					$ua->agent("FPA/0.1");
 
-					my $req = HTTP::Request->new(POST => "https://testcashflows.worldnettps.com/merchant/xmlpayment");
+					my $req = HTTP::Request->new(POST => "https://cashflows.worldnettps.com/merchant/xmlpayment");
 					$req->content_type('text/xml');
 					$req->content($Content);
 

@@ -28,8 +28,10 @@ unless ($COOKIE->{NO_ADS}) {
         &display_adverts();
 }
 
-$Termid = '2645001';
-$Secret = 'CorunnaSecret';
+#$Termid = '2645001';
+#$Secret = 'CorunnaSecret';
+$Termid = '2706001';
+$Secret = 'F1sherfolK';
 
 $Membership[0] = '1';
 $Membership[1] = '3';
@@ -91,7 +93,7 @@ EOD
 	my $ua = LWP::UserAgent->new;
 	$ua->agent("FPA/0.1");
 
-	my $req = HTTP::Request->new(POST => "https://testcashflows.worldnettps.com/merchant/xmlpayment");
+	my $req = HTTP::Request->new(POST => "https://cashflows.worldnettps.com/merchant/xmlpayment");
 	$req->content_type('text/xml');
 	$req->content($Content);
 
@@ -143,7 +145,7 @@ EOD
 	my $ua = LWP::UserAgent->new;
 	$ua->agent("FPA/0.1");
 
-	my $req = HTTP::Request->new(POST => "https://testcashflows.worldnettps.com/merchant/xmlpayment");
+	my $req = HTTP::Request->new(POST => "https://cashflows.worldnettps.com/merchant/xmlpayment");
 	$req->content_type('text/xml');
 	$req->content($Content);
 
@@ -198,7 +200,7 @@ EOD
 	my $ua = LWP::UserAgent->new;
 	$ua->agent("FPA/0.1");
 
-	my $req = HTTP::Request->new(POST => "https://testcashflows.worldnettps.com/merchant/xmlpayment");
+	my $req = HTTP::Request->new(POST => "https://cashflows.worldnettps.com/merchant/xmlpayment");
 	$req->content_type('text/xml');
 	$req->content($Content);
 
@@ -255,7 +257,7 @@ EOD
 	my $ua = LWP::UserAgent->new;
 	$ua->agent("FPA/0.1");
 
-	my $req = HTTP::Request->new(POST => "https://testcashflows.worldnettps.com/merchant/xmlpayment");
+	my $req = HTTP::Request->new(POST => "https://cashflows.worldnettps.com/merchant/xmlpayment");
 	$req->content_type('text/xml');
 	$req->content($Content);
 
@@ -306,7 +308,7 @@ EOD
 			my $ua = LWP::UserAgent->new;
 			$ua->agent("FPA/0.1");
 
-			my $req = HTTP::Request->new(POST => "https://testcashflows.worldnettps.com/merchant/xmlpayment");
+			my $req = HTTP::Request->new(POST => "https://cashflows.worldnettps.com/merchant/xmlpayment");
 			$req->content_type('text/xml');
 			$req->content($Content);
 
