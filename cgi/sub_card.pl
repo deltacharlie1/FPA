@@ -30,8 +30,12 @@ unless ($COOKIE->{NO_ADS}) {
 }
 
 $Membership[0] = 'FreePlus Startup (FREE)';
-$Membership[1] = 'FreePlus Standard (&pound;5.00pm)';
-$Membership[2] = 'FreePlus Premium (&pound;10.00pm)';
+$Membership[1] = 'FreePlus Bookkeeper Basic (&pound;5.00pm)';
+$Membership[2] = 'FreePlus Standard (&pound;5.00pm)';
+$Membership[3] = 'FreePlus Bookkeeper Standard (&pound;10.00pm)';
+$Membership[5] = 'FreePlus Premium (&pound;10.00pm)';
+$Membership[6] = 'FreePlus Bookkeeper Premium (&pound;20.00pm)';
+
 
 if ($FORM{RESPONSECODE} =~ /A/i) {
 

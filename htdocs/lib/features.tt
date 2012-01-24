@@ -1,7 +1,8 @@
 <h2>What FreePlus Accounts gives you</h2>
             <p> FreePlus Accounts provides a fully functional, totally free, online accounting system for any small business, including start-ups,  micro-businesses and sole traders. There is no time or use limit. Once you've signed up you can use the service as often as you want and for as long as you want with no charge. </p>
+            <p>For Accountants and Bookkeepers there is additional functionality that allows you to easily manage multiple accounts and to optimise data input so as to minimise some of the more time-consuming aspects of keeping accounts.</p>
             <p>
-              You have the option of signing up for some or all of the additional system features and there is a modest charge for each of these. You will not need to pay for any additional features to make the system usable and you are not required to take up any of the extra functionality if you do not want it. You will not be asked to make a subscription to any of the extra services and there are no automatic renewals. </p>
+              All users have the option of signing up for some or all of the additional system features and there is a modest charge for these. You will not need to pay for any additional features to make the system usable and you are not required to take up any of the extra functionality if you do not want it.</p>
             <h3 style="padding-bottom:0px;">See what you get with:</h3>
             <h2 style="margin-top:0px;">The core FreePlus Accounts system</h2>
             <ul>
@@ -50,57 +51,43 @@
               </ul>
             </ul>
             <h3>Optional additional features</h3>
+            <p>All of our optional features are available for a small monthly charge as follows:-</p>
+            <p><span style="font-weight:bold;text-decoration:underline;">FreePlus Standard User (&pound;5.00 per month)</span>
             <ul>
-              <table border="0" cellspacing="0" cellpadding="0" width="80%">
-<!--                <tr>
-                  <td>
-              <li>Prioritised support (response normally within 4 hours)</li>
-                  </td>
-                  <td><b>&pound;80</b> per year</td>
-                </tr>  -->
-                <tr>
-                  <td>
               <li>Customise invoices, quotations and statements with your logo</li>
-                  </td>
-                  <td><b>&pound;30</b> per year</td>
-                </tr>
-                <tr>
-                  <td>
-              <li>Access to your FreePlus Accounts logon for 1 additional user</li>
-                  </td>
-                  <td><b>&pound;50</b> per year</td>
-                </tr>
-                <tr>
-                  <td>
-              <li>Suppress advertising</li>
-                  </td>
-                  <td><b>&pound;50</b> per year</td>
-                </tr>
-                <tr>
-                  <td>
-              <li>Upload documents tagged to statements, purchase invoices etc</li>
-                  </td>
-                  <td nowrap="nowrap"><b>&pound;50</b> per 100MB</td>
-                </tr>
-                <tr>
-                  <td>
-              <li>All records held for 6 years</li>
-                  </td>
-                  <td><b>&pound;30</b> per year</td>
-                </tr>
-                <tr>
-                  <td>
-              <li>Advertise your business on FreePlus Accounts</li>
-                  </td>
-                  <td><b>&pound;30</b> per year</td>
-                </tr>
-              <tr>
-                <td>
-                <li>Alternatively, users may purchase all of the above features (including prioritised support) for a monthly premium, paid by Direct Debit, of</li>
-                </td>
-                <td valign="bottom" nowrap="nowrap"><b>&pound;12</b> per month</td>
-              </tr>
-                </table>
-            </ul>
+              <li>Raise and send statements</li>
+              <li>Add additional nominal accounts</li>
+              <li>An additional user logon for your accountant/bookkeeper</li>
+              <li>Prioritised email support (normally within one working day)</li>
+            </ul></p>
+            <p><span style="font-weight:bold;text-decoration:underline;">FreePlus Premium User (&pound;10.00 per month)</span>
+            <br/>Additionally:-
+            <ul>
+              <li>Data held for up to 6 years</li>
+              <li>Document Upload (5Mb per month)</li>
+              <li>No adverts</li>
+            </ul></p>
+            <p>Alternatively, for <span style="font-weight:bold;font-size:1.3em;color:#162e1c;">Accountants and Bookkeepers</span> who wish to easily manage multiple accounts</p>
+            <p><span style="font-weight:bold;text-decoration:underline;">FreePlus Bookkeeper Basic (&pound;5.00 per month)</span>
+            <ul>
+              <li>Add and manage up to 15 client accounts</li>
+              <li>Prioritised email support</li>
+            </ul></p> 
+            <p><span style="font-weight:bold;text-decoration:underline;">FreePlus Bookkeeper Standard (&pound;10.00 per month)</span>
+            <br/>Additionally:-
+            <ul>
+              <li>Add and manage up to 100 client accounts</li>
+              <li>Add additional nominal accounts</li>
+              <li>Statements</li>
+              <li>Customise invoices and statements with your own logo</li>
+            </ul></p>
+            <p><span style="font-weight:bold;text-decoration:underline;">FreePlus Bookkeeper Premium (&pound;20.00 per month)</span>
+            <br/>Additionally:-
+            <ul>
+              <li>Unlimited additonal client accounts</li>
+              <li>Data held for up to 6 years</li>
+              <li>Document upload (15Mb per month)</li>
+              <li>No adverts</li>
+            </ul></p>
             <p style="color:#999999;font-size:12px;font-style:italic;">(All prices are exclusive of VAT.)</p>
-            <p>Once registered simply go to our 'Additional Features' page, select the features you wish to add and follow the instructions.&nbsp;&nbsp;Alternatively you may <a href="contact-us">contact us</a> directly for additional information.</p>
+            <p>Once registered simply log on to your account, go to Admin -> My Account and select the subscription level that offers the features you desire.</p>

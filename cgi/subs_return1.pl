@@ -3,6 +3,9 @@
 #  Script to receive a secure card response and, if ok, create a subscription
 #  response comes in as a get string
 
+$Termid = '2706001';
+$Secret = 'F1sherfolK';
+
 $Buffer = $ENV{QUERY_STRING};
 
 @pairs = split(/&/,$Buffer);
@@ -44,7 +47,7 @@ if ($FORM{RESPONSECODE} =~ /A/i) {
 
 		use Digest;
 		$Hash = Digest->new("MD5");
-		$Hash->add('2645001'.$Company->{comsubtype}.$Company->{commerchantref}.$Company->{comsubtype}.$Company->{commerchantref}.$Dte.$Startdate.'CorunnaSecret');
+		$Hash->add($Termid.$Company->{comsubtype}.$Company->{commerchantref}.$Company->{comsubtype}.$Company->{commerchantref}.$Dte.$Startdate.$Secret);
 		$Hash_text = $Hash->hexdigest;
 
 #  Construct the xml to be posted
@@ -55,7 +58,7 @@ if ($FORM{RESPONSECODE} =~ /A/i) {
 <?xml version="1.0" encoding="UTF-8"?>
 <ADDSUBSCRIPTION>
   <MERCHANTREF>$Company->{comsubtype}$Company->{commerchantref}</MERCHANTREF>
-  <TERMINALID>2645001</TERMINALID>
+  <TERMINALID>$Termid</TERMINALID>
   <STOREDSUBSCRIPTIONREF>$Company->{comsubtype}</STOREDSUBSCRIPTIONREF>
   <SECURECARDMERCHANTREF>$Company->{commerchantref}</SECURECARDMERCHANTREF>
   <DATETIME>$Dte</DATETIME>
@@ -72,7 +75,7 @@ warn "$Content\n\n";
 		my $ua = LWP::UserAgent->new;
 		$ua->agent("FPA/0.1");
 
-		my $req = HTTP::Request->new(POST => "https://testcashflows.worldnettps.com/merchant/xmlpayment");
+		my $req = HTTP::Request->new(POST => "https://cashflows.worldnettps.com/merchant/xmlpayment");
 		$req->content_type('text/xml');
 		$req->content($Content);
 

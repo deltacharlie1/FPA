@@ -70,7 +70,7 @@ function calc_hash(action) {
      document.getElementById("sub_datetime").value = data[0].dte;
      document.getElementById("sub_hash").value = data[0].hash;
      if (/^0/.test($("#sub_current").val()) || action == "card") {
-       document.form1.action = "https://testcashflows.worldnettps.com/merchant/securecardpage";
+       document.form1.action = "https://cashflows.worldnettps.com/merchant/securecardpage";
      }
      else {
        document.form1.action = "/cgi-bin/fpa/sub_subscribe.pl?" + data[0].merchref + "?" + data[0].oldsubtype;
