@@ -19,7 +19,7 @@ unless ($COOKIE->{NO_ADS}) {
 
 ($Reg_id,$Com_id) = split(/\+/,$COOKIE->{ACCT});
 
-$Dates = $dbh->prepare("select date_sub(comyearend,interval 1 year) as tbend,date_sub(date_add(comyearend, interval 1 day), interval 2 year) as tbstart,date_format(date_sub(comyearend,interval 1 year),'%d %M %Y') as dispend,date_format(date_sub(date_add(comyearend, interval 1 day), interval 2 year),'%d %M %Y') as dispstart from companies where reg_id=$Reg_id and id=$Com_id");
+$Dates = $dbh->prepare("select date_sub(comyearend,interval 1 year) as tbend,date_sub(date_add(comyearend, interval 1 day), interval 2 year) as tbstart,date_format(date_sub(comyearend,interval 1 year),'%d %M %Y') as dispend,date_format(date_sub(date_add(comyearend, interval 1 day), interval 2 year),'%d %M %Y') as dispstart,date_format(date_sub(comyearend,interval 1 year),'%d-%b-%y') as repend,date_format(date_sub(date_add(comyearend, interval 1 day), interval 2 year),'%d-%b-%y') as repstart from companies where reg_id=$Reg_id and id=$Com_id");
 $Dates->execute;
 $Date = $Dates->fetchrow_hashref;
 $Dates->finish;
@@ -37,8 +37,7 @@ $tt = Template->new({
 $Vars = {
         title => 'Accounts - Coas',
 	cookie => $COOKIE,
-	dispstart => $Date->{dispstart},
-	dispend => $Date->{dispend},
+	repdate => $Date,
 	entries => $Coa
 };
 

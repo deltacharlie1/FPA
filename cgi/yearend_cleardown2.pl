@@ -45,22 +45,22 @@ foreach $Coaitem (@$Coa) {
 
 #  Make minus entry for amount in nominals
 
-	$Sts = $dbh->do("insert into transactions (acct_id,txncusname,txnmethod,txnamount,txndate,txntxntype,txnremarks,txntxnno) values ('$COOKIE->{ACCT}','$Coaitem->{coadesc}','$Coaitem->{nominalcode}','$Coaitem->{balance}','$Date->{fystart}','yearend','Year End adjst','$Txn_no')");
+	$Sts = $dbh->do("insert into transactions (acct_id,txncusname,txnmethod,txnamount,txndate,txntxntype,txnremarks,txntxnno) values ('$COOKIE->{ACCT}','$Coaitem->{coadesc}','$Coaitem->{nominalcode}','$Coaitem->{balance}','$Date->{tbend}','yearend','Year End adjst','$Txn_no')");
 	$New_txn_id = $dbh->last_insert_id(undef, undef, qw(transactions undef));
 	$Txn_no++;
 
-	$Sts = $dbh->do("insert into nominals (acct_id,link_id,nomamount,nomdate,nomcode) values ('$COOKIE->{ACCT}',$New_txn_id,0-'$Coaitem->{balance}','$Date->{fystart}','$Coaitem->{nominalcode}')");
+	$Sts = $dbh->do("insert into nominals (acct_id,link_id,nomamount,nomdate,nomcode,nomtype) values ('$COOKIE->{ACCT}',$New_txn_id,0-'$Coaitem->{balance}','$Date->{tbend}','$Coaitem->{nominalcode}','T')");
 
 	$Sts = $dbh->do("update coas set coabalance=coabalance-'$Coaitem->{balance}' where acct_id='$COOKIE->{ACCT}' and coanominalcode='$Coaitem->{nominalcode}'");
 }
 
 #  Now update Retained Earnings
 
-$Sts = $dbh->do("insert into transactions (acct_id,txncusname,txnmethod,txnamount,txndate,txntxntype,txnremarks,txntxnno) values ('$COOKIE->{ACCT}','Retained Earnings','3100','$Balance','$Date->{fystart}','yearend','Year End adjst','$Txn_no')");
+$Sts = $dbh->do("insert into transactions (acct_id,txncusname,txnmethod,txnamount,txndate,txntxntype,txnremarks,txntxnno) values ('$COOKIE->{ACCT}','Retained Earnings','3100','$Balance','$Date->{tbend}','yearend','Year End adjst','$Txn_no')");
 $New_txn_id = $dbh->last_insert_id(undef, undef, qw(transactions undef));
 $Txn_no++;
 
-$Sts = $dbh->do("insert into nominals (acct_id,link_id,nomamount,nomdate,nomcode) values ('$COOKIE->{ACCT}',$New_txn_id,0-'$Balance','$Date->{fystart}','3100')");
+$Sts = $dbh->do("insert into nominals (acct_id,link_id,nomamount,nomdate,nomcode,nomtype) values ('$COOKIE->{ACCT}',$New_txn_id,0-'$Balance','$Date->{tbend}','3100','T')");
 
 $Sts = $dbh->do("update coas set coabalance=coabalance+'$Balance' where acct_id='$COOKIE->{ACCT}' and coanominalcode='3100'");
 
@@ -74,6 +74,10 @@ $Balance = 0 - $Balance;
 $Balance = sprintf('%1.2f',$Balance);
 
 $Sts = $dbh->do("insert into audit_trails (acct_id,link_id,audtype,audaction,audtext,auduser) values ('$COOKIE->{ACCT}',$New_txn_id,'transactions','yearend','Transferred &pound;$Balance to Retained Earnings','$COOKIE->{USER}')");
+
+#  Finally write back the next txn no
+
+$Sts = $dbh->do("update companies set comnexttxn='$Txn_no' where reg_id=$Reg_id and id=$Com_id");
 
 print<<EOD;
 Content-Type: text/html

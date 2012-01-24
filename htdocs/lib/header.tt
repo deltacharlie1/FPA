@@ -181,7 +181,7 @@ $(document).ready(function(){
         </li>
         <li class="admin"><a href="#"><span>Admin</span></a>
           <ul>
-[%- IF cookie.BACCT == '1+1' -%]
+[%- IF cookie.BACCT == '1+1' OR cookie.BACCT == '4+3' -%]
             <li><a href="/cgi-bin/fpa/2subs.pl">My Account</a></li>
 [%- END -%]
             <li><a href="/cgi-bin/fpa/preferences.pl">Preferences</a></li>

@@ -1,6 +1,6 @@
 <div class="main" id="main">
 <h1>Year End Clear Down of P & L Accounts</h1>
-<h3>For the Financial Year <span style="padding:3px 20px;">[%- dispstart -%]</span> to <span style="padding:3px 20px;">[%- dispend -%]</span></h3>
+<h3>For the Financial Year <span style="padding:3px 20px;">[%- repdate.dispstart -%]</span> to <span style="padding:3px 20px;">[%- repdate.dispend -%]</span></h3>
   <table width="660" border="0" cellpadding="0" cellspacing="0" class="listing">
     <tr>
       <th>Nominal Code</th>
@@ -12,7 +12,7 @@
 [% class = [ "even","odd" ]; debits = 0; credits = 0 -%]
 [%- FOREACH entry IN entries -%]
   [%- ndx = loop.count % 2 -%]
-    <tr class="[%- class.$ndx -%]"[%- IF entry.balance != '0.00' -%] onclick="location.href='/cgi-bin/fpa/coa_drill_down.pl?filter=[%- entry.nominalcode -%]';"[%- END -%]>
+    <tr class="[%- class.$ndx -%]"[%- IF entry.balance != '0.00' -%] onclick="location.href='/cgi-bin/fpa/coa_drill_down.pl?filter=[%- entry.nominalcode -%]&tbstart=[%- repdate.repstart -%]&tbend=[%- repdate.repend -%]';"[%- END -%]>
       <td>[%- entry.nominalcode -%]</td>
       <td>[%- entry.coadesc -%]</td>
       <td>[%- entry.coatype -%]</td>

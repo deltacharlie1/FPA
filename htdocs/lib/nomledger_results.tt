@@ -36,7 +36,7 @@
     <tr class="[%- class.$ndx -%]"[%- IF entry.nomtype == "S" -%] onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- entry.link_id -%]'"[%- END -%]>
       <td>[%- entry.nomcode -%]</td>
       <td>[%- entry.coadesc | truncate(30) -%]</td>
-      <td>[%- entry.printdate -%]</td>
+      <td nowrap="nowrap">[%- entry.printdate -%]</td>
     [% IF entry.nomtype == "T" -%]
       <td>[%- entry.txndescr | truncate(70) -%]</td>
     [% ELSE -%]
