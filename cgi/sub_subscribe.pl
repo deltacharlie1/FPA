@@ -37,6 +37,8 @@ chomp($Termid);
 chomp($Secret);
 chomp($URL);
 
+open(LOG,">>/var/log/cashflows.log");
+
 #$Termid = '2645001';
 #$Secret = 'CorunnaSecret';
 #$Termid = '2706001';
@@ -102,7 +104,7 @@ EOD
 	my $ua = LWP::UserAgent->new;
 	$ua->agent("FPA/0.1");
 
-	my $req = HTTP::Request->new(POST => "https://cashflows.worldnettps.com/merchant/xmlpayment");
+	my $req = HTTP::Request->new(POST => "https://$URL.worldnettps.com/merchant/xmlpayment");
 	$req->content_type('text/xml');
 	$req->content($Content);
 
@@ -110,6 +112,8 @@ EOD
 
 	if ($res->is_success) {
 		$Res_content = $res->content;
+
+		print LOG $Company->{reg_id}."+".$Company->{id}." - ".$Res_content."\n";
 
 		if ($Res_content =~ /RESPONSE/i) {
 			$Status .= "<p>Your subscription has been cancelled.</p><p>We are sorry to see you go but have reverted you to FreePlus Startup which is completely free to use.</p>\n";
@@ -126,6 +130,9 @@ EOD
 		}
 	}
 	else {
+
+		print LOG $Company->{reg_id}."+".$Company->{id}." - Subscription Delete Failed\n";
+
 			$Status .= "<p>We are unable to cancel your subscription for some reason.&nbsp;&nbsp;Please contact FreePlus Accounts Technical Support if you require further assistance</p>\n";
 	}
 
@@ -154,7 +161,7 @@ EOD
 	my $ua = LWP::UserAgent->new;
 	$ua->agent("FPA/0.1");
 
-	my $req = HTTP::Request->new(POST => "https://cashflows.worldnettps.com/merchant/xmlpayment");
+	my $req = HTTP::Request->new(POST => "https://$URL.worldnettps.com/merchant/xmlpayment");
 	$req->content_type('text/xml');
 	$req->content($Content);
 
@@ -162,6 +169,8 @@ EOD
 	if ($res->is_success) {
 
 		$Res_content = $res->content;
+
+		print LOG $Company->{reg_id}."+".$Company->{id}." - ".$Res_content."\n";
 
 		if ($Res_content =~ /RESPONSE/i) {
 
@@ -177,6 +186,9 @@ EOD
 		}
 	}
 	else {
+
+		print LOG $Company->{reg_id}."+".$Company->{id}." - Subscription Card removal Failed\n";
+
 		$Status .= "<p>Unfortunately we have not been able to remove your card details, please contact FreePlus Accounts Technical Support if your require further infomration</p>\n";
 	}
 }
@@ -209,7 +221,7 @@ EOD
 	my $ua = LWP::UserAgent->new;
 	$ua->agent("FPA/0.1");
 
-	my $req = HTTP::Request->new(POST => "https://cashflows.worldnettps.com/merchant/xmlpayment");
+	my $req = HTTP::Request->new(POST => "https://$URL.worldnettps.com/merchant/xmlpayment");
 	$req->content_type('text/xml');
 	$req->content($Content);
 
@@ -219,13 +231,15 @@ EOD
 
 		$Res_content = $res->content;
 
+		print LOG $Company->{reg_id}."+".$Company->{id}." - ".$Res_content."\n";
+
 		if ($Res_content =~ /RESPONSE/i) {
 
-			$Status .= "<p>Thank you for subscribing to FreePlus Accounts.</p><p>Your subscription choice of <b>$Subtype{$Company->{comsubtype}}</b> has now been set up and payment will be taken within the next 2 days</p>\n";
+			$Status .= "<p>Thank you for subscribing to FreePlus Accounts.</p><p>Your subscription choice of <b>$Subtype{$Company->{comsubtype}}</b> has now been set up.&nbsp;&nbsp;We will not take your subscription for at least one day to give you time to try out the additional features.&nbsp;&nbsp;You may cancel at any time during that period without incurring any cost.</p>\n";
 			$Level = $Company->{comsubtype};
 			$Level =~ s/.+(\d)$/$1/;
 
-			$Sts = $dbh->do("update companies set comsublevel='$Level',comsubref='$Subref',comsubdue=date_add(str_to_date('$Startdate','%d-%m-%Y'),interval 2 day),comadd_user='1' where commerchantref='$Company->{commerchantref}'");
+			$Sts = $dbh->do("update companies set comsublevel='$Level',comsubref='$Subref',comsubdue=date_add(str_to_date('$Startdate','%d-%m-%Y'),interval 3 day),comadd_user='1' where commerchantref='$Company->{commerchantref}'");
 			$Sts = $dbh->do("update registrations set regmembership='$Membership[$Level]' where reg_id=$Company->{reg_id}");
 			&update_cookiefile();
 		}
@@ -234,6 +248,9 @@ EOD
 		}
 	}
 	else {
+
+		print LOG $Company->{reg_id}."+".$Company->{id}." - Subscription Add Failed\n";
+
 		$Status .= "Unfortunately your subscription has not been accepted for some reason, please contact FreePlus Accounts Technical Support if you require further information</li>\n";
 	}
 }
@@ -266,7 +283,7 @@ EOD
 	my $ua = LWP::UserAgent->new;
 	$ua->agent("FPA/0.1");
 
-	my $req = HTTP::Request->new(POST => "https://cashflows.worldnettps.com/merchant/xmlpayment");
+	my $req = HTTP::Request->new(POST => "https://$URL.worldnettps.com/merchant/xmlpayment");
 	$req->content_type('text/xml');
 	$req->content($Content);
 
@@ -275,6 +292,8 @@ EOD
 	if ($res->is_success) {
 
 		$Res_content = $res->content;
+
+		print LOG $Company->{reg_id}."+".$Company->{id}." - ".$Res_content."\n";
 
 		if ($Res_content =~ /RESPONSE/i) {
 
@@ -317,7 +336,7 @@ EOD
 			my $ua = LWP::UserAgent->new;
 			$ua->agent("FPA/0.1");
 
-			my $req = HTTP::Request->new(POST => "https://cashflows.worldnettps.com/merchant/xmlpayment");
+			my $req = HTTP::Request->new(POST => "https://$URL.worldnettps.com/merchant/xmlpayment");
 			$req->content_type('text/xml');
 			$req->content($Content);
 
@@ -327,6 +346,8 @@ EOD
 
 				$Res_content = $res->content;
 	
+				print LOG $Company->{reg_id}."+".$Company->{id}." - ".$Res_content."\n";
+
 				if ($Res_content =~ /RESPONSE/i) {
 					$Status .= "<li>Your new subscription, <b>$Subtype{$Company->{comsubtype}}</b>, has been set up</li>\n";
 					$Status .= "<li>The new payments will start on $Company->{subdue} and monthly thereafter</li></ul>\n";
@@ -347,6 +368,9 @@ EOD
 				}
 			}
 			else {
+
+			print LOG $Company->{reg_id}."+".$Company->{id}." - Subscription Add Failed\n";
+
 				$Status .= "<li>Unfortunately we have not been able to set up your new subscription, please contact FreePlus Accounts Technical Support if you require further information</li>\n";
 				$Status .= "<li>In the meantime we have reverted you to FreePlus Startup which is completely free to use.</li></ul>\n";
 			}
@@ -356,9 +380,15 @@ EOD
 		}
 	}
 	else {
+
+		print LOG $Company->{reg_id}."+".$Company->{id}." - Subscription Delete Failed\n";
+
 		$Status .= "<li>Unfortunately we have been unable to cancel your existing subscription, please contact FreePlus Accounts Technical Support</li></ul>\n";
 	}
 }
+
+close(LOG);
+
 use Template;
 $tt = Template->new({
         INCLUDE_PATH => ['.','/usr/local/httpd/htdocs/fpa/lib'],

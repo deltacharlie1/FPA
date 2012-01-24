@@ -20,10 +20,19 @@ foreach $pair (@pairs) {
 $Dte = `date +%d-%m-%Y:%H:%M:%S:000`;
 chomp($Dte);
 
+open(XML,'</usr/local/git/fpa/other/cashflows') || warn "Could not open cashflos file\n";
+@Xmlstr = <XML>;
+close(XML);
+
+($Termid,$Secret,$URL) = @Xmlstr;
+chomp($Termid);
+chomp($Secret);
+chomp($URL);
+
 # $Termid = '2645001';
-$Termid = '2706001';
+#$Termid = '2706001';
 # $Secret = 'CorunnaSecret';
- $Secret = 'F1sherfolK';
+# $Secret = 'F1sherfolK';
 
 use DBI;
 $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");

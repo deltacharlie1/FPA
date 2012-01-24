@@ -56,6 +56,8 @@ chomp($URL);
 #$Termid = '2706001';
 #$Secret = 'F1sherfolK';
 
+open(LOG,">>/var/log/cashflows.log");
+
 $Subrate[1] = '5.00';
 $Subrate[2] = '5.00';
 $Subrate[3] = '10.00';
@@ -137,43 +139,38 @@ EOD
 
 		my $Res_content = $res->content;
 
+                print LOG $Subscriber->{reg_id}."+".$Subscriber->{id}." - ".$Res_content."\n";
+
 #		my $Res_content = '<ERROR><ERRORSTRING>Multiple payments for one period is not allowed</ERRORSTRING></ERROR>';
 #		my $Res_content = '<SUBSCRIPTIONPAYMENTRESPONSE><RESPONSECODE>A</RESPONSECODE><RESPONSETEXT>Authorised</RESPONSETEXT><APPROVALCODE>394381</APPROVALCODE><DATETIME>2012-01-23T14:03:14</DATETIME><HASH>1fef6c5a8cb20398abc7e9892bd6c4d4</HASH></SUBSCRIPTIONPAYMENTRESPONSE>';
 #		my $Res_content = '<SUBSCRIPTIONPAYMENTRESPONSE><RESPONSECODE>D</RESPONSECODE><RESPONSETEXT>Declined</RESPONSETEXT><APPROVALCODE>394381</APPROVALCODE><DATETIME>2012-01-23T14:03:14</DATETIME><HASH>1fef6c5a8cb20398abc7e9892bd6c4d4</HASH></SUBSCRIPTIONPAYMENTRESPONSE>';
 
 		($XML_Result,$XML_Text,$XML_Auth) = ($Res_content =~ /^.*?CODE>(\w+)<\/RESPONSE.*?TEXT>(\w+)<\/RESPONSETEXT.*?CODE>(.*)?<\/APP.*$/);
 
-	}
-
-	if ($Res_content =~ /ERROR/i) {
-
-		print $Res_content."\n";
-
-	}
-	else {
+		unless ($Res_content =~ /ERROR/i) {
 
 #  Now process on the xml result
 
-		$Subs->execute("$Subscriber->{reg_id}+$Subscriber->{id}");
-		if ($Subs->rows < 1) {
-			$Sub->{difsubpaid} = 100;		#  spoof long time ago subscrition
-		}
-		else {
-			$Sub = $Subs->fetchrow_hashref;
-		}
+			$Subs->execute("$Subscriber->{reg_id}+$Subscriber->{id}");
+			if ($Subs->rows < 1) {
+				$Sub->{difsubpaid} = 100;		#  spoof long time ago subscrition
+			}
+			else {
+				$Sub = $Subs->fetchrow_hashref;
+			}
 
 #  Does he need to pay next sub?
 
-		if ($Sub->{difsubpaid} > 20 || $Sub->{substatus} =~ /Paid/i) {
-			if ($XML_Result =~ /A/i) {
-				$Sts = $dbh->do("insert into subscriptions (acct_id,subdatepaid,subinvoiceno,subdescription,subnet,subvat,subauthcode,substatus,submerchantref) values ('$Subscriber->{reg_id}+$Subscriber->{id}',now(),'$Orderid','$Subscription[$Subscriber->{comsublevel}]','$Subrate[$Subscriber->{comsublevel}]','$Vat','$XML_Auth','Paid','$Subscriber->{commerchantref}')");
+			if ($Sub->{difsubpaid} > 20 || $Sub->{substatus} =~ /Paid/i) {
+				if ($XML_Result =~ /A/i) {
+					$Sts = $dbh->do("insert into subscriptions (acct_id,subdatepaid,subinvoiceno,subdescription,subnet,subvat,subauthcode,substatus,submerchantref) values ('$Subscriber->{reg_id}+$Subscriber->{id}',now(),'$Orderid','$Subscription[$Subscriber->{comsublevel}]','$Subrate[$Subscriber->{comsublevel}]','$Vat','$XML_Auth','Paid','$Subscriber->{commerchantref}')");
 
 #  Update to comsubdue value
 
-				$Sts = $dbh->do("update companies set comsubdue=date_add(comsubdue,interval 1 month) where reg_id=$Subscriber->{reg_id} and id=$Subscriber->{id}");
+					$Sts = $dbh->do("update companies set comsubdue=date_add(comsubdue,interval 1 month) where reg_id=$Subscriber->{reg_id} and id=$Subscriber->{id}");
 
 ########################################  Send paid invoice email  ############################################
-				$Email_msg = sprintf<<EOD;
+					$Email_msg = sprintf<<EOD;
 Your FreePlus Accounts subscription invoice is attached. We have debited your card for the amount due.
 
 You can also access this invoice (and all your previous invoices) by logging in to your account and going to Admin -> My Account.
@@ -182,22 +179,22 @@ Thank you for your continued custom, it's very much appreciated.
 
 The FreePlus Accounts Support.
 EOD
-				$Inv_invoice_no = $Orderid;
-				$Inv_authcode = $XML_Auth;
-				$Inv_address = $Subscriber->{comname}."\n".$Subscriber->{comaddress}."  ".$Subscriber->{compostcode};
-				$Inv_desc = $Subscription[$Subscriber->{comsublevel}];
-				$Inv_net = $Subrate[$Subscriber->{comsublevel}];
-				$Inv_vat = $Vat;
-				$Inv_status = 'Paid';
+					$Inv_invoice_no = $Orderid;
+					$Inv_authcode = $XML_Auth;
+					$Inv_address = $Subscriber->{comname}."\n".$Subscriber->{comaddress}."  ".$Subscriber->{compostcode};
+					$Inv_desc = $Subscription[$Subscriber->{comsublevel}];
+					$Inv_net = $Subrate[$Subscriber->{comsublevel}];
+					$Inv_vat = $Vat;
+					$Inv_status = 'Paid';
 
-				&send_email();
+					&send_email();
 
-			}
-			else {
-				$Sts = $dbh->do("insert into subscriptions (acct_id,subdatepaid,subinvoiceno,subdescription,subnet,subvat,subauthcode,substatus,submerchantref,subreason) values ('$Subscriber->{reg_id}+$Subscriber->{id}',now(),'$Orderid','$Subscription[$Subscriber->{comsublevel}]','$Subrate[$Subscriber->{comsublevel}]','$Vat','$XML_Auth','Due','$Subscriber->{commerchantref}','$XML_Text')");
+				}
+				else {
+					$Sts = $dbh->do("insert into subscriptions (acct_id,subdatepaid,subinvoiceno,subdescription,subnet,subvat,subauthcode,substatus,submerchantref,subreason) values ('$Subscriber->{reg_id}+$Subscriber->{id}',now(),'$Orderid','$Subscription[$Subscriber->{comsublevel}]','$Subrate[$Subscriber->{comsublevel}]','$Vat','$XML_Auth','Due','$Subscriber->{commerchantref}','$XML_Text')");
 
 #######################################  Send due invoice email  ##########################################
-				$Email_msg = sprintf<<EOD;
+					$Email_msg = sprintf<<EOD;
 Your FreePlus Accounts subscription invoice is attached.
 
 We have not been able to debit your card for the amount due as the payment has been declined with the reason '$XML_Text' being given.
@@ -210,25 +207,25 @@ Thank you for your continued custom, it's very much appreciated.
 
 The FreePlus Accounts Support.
 EOD
-				$Inv_invoice_no = $Orderid;
-				$Inv_authcode = $XML_Auth;
-				$Inv_address = $Subscriber->{comname}."\n".$Subscriber->{comaddress}."  ".$Subscriber->{compostcode};
-				$Inv_desc = $Subscription[$Subscriber->{comsublevel}];
-				$Inv_net = $Subrate[$Subscriber->{comsublevel}];
-				$Inv_vat = $Vat;
-				$Inv_status = 'Due';
+					$Inv_invoice_no = $Orderid;
+					$Inv_authcode = $XML_Auth;
+					$Inv_address = $Subscriber->{comname}."\n".$Subscriber->{comaddress}."  ".$Subscriber->{compostcode};
+					$Inv_desc = $Subscription[$Subscriber->{comsublevel}];
+					$Inv_net = $Subrate[$Subscriber->{comsublevel}];
+					$Inv_vat = $Vat;
+					$Inv_status = 'Due';
+	
+					&send_email();
 
-				&send_email();
-
+				}
 			}
-		}
-		else {
-			if ($XML_Result =~ /A/i) {
-				$Sts = $dbh->do("update subscriptions set subdatepaid=now(),substatus='Paid',subauthcode='$XML_Auth',subreason='' where id=$Sub->{id}");
-				$Sts = $dbh->do("update companies set comsubdue=date_add(comsubdue,interval 1 month) where reg_id=$Subscriber->{reg_id} and id=$Subscriber->{id}");
+			else {
+				if ($XML_Result =~ /A/i) {
+					$Sts = $dbh->do("update subscriptions set subdatepaid=now(),substatus='Paid',subauthcode='$XML_Auth',subreason='' where id=$Sub->{id}");
+					$Sts = $dbh->do("update companies set comsubdue=date_add(comsubdue,interval 1 month) where reg_id=$Subscriber->{reg_id} and id=$Subscriber->{id}");
 
 ######################################  send paid email  #############################################
-				$Email_msg = sprintf<<EOD;
+					$Email_msg = sprintf<<EOD;
 Thank you, we have now taken payment for your subscription and have debited your card for the amount due.
 
 You can also access the previously sent invoice (and all earlier invoices) by logging in to your account and going to Admin -> My Account.
@@ -237,16 +234,16 @@ Thank you for your continued custom, it's very much appreciated.
 
 The FreePlus Accounts Support.
 EOD
-				$Inv_status = 'No Invoice';
+					$Inv_status = 'No Invoice';
 
-				&send_email();
-			}
-			else {
+					&send_email();
+				}
+				else {
 
-				if ($Subscriber->{difsubdue} < 0 && $Sub->{substatus} !~ /Overdue/i) {
-					$Sts = $dbh->do("update subscriptions set substatus='Overdue' where id=$Sub->{id}");
+					if ($Subscriber->{difsubdue} < 0 && $Sub->{substatus} !~ /Overdue/i) {
+						$Sts = $dbh->do("update subscriptions set substatus='Overdue' where id=$Sub->{id}");
 ######################################  send overdue email  ##########################################
-					$Email_msg = sprintf<<EOD;
+						$Email_msg = sprintf<<EOD;
 Hi, we've still not been able to take payment for your subscription, which is now overdue.
 
 If this is because your card has expired or for some other reason it would be helpful if you could update your card details by logging in to your account, going to Admin -> My Account and updating your card details.
@@ -259,32 +256,32 @@ You can also access this invoice (and all your previous invoices) by logging in 
 
 The FreePlus Accounts Support.
 EOD
-					$Inv_status = 'No Invoice';
+						$Inv_status = 'No Invoice';
 
-					&send_email();
-				}
-				elsif ($Subscriber->{difsubdue} < -3) {
-					$Sts = $dbh->do("update subscriptions set substatus='Cancelled' where id=$Sub->{id}");
-					$Sts = $dbh->do("update companies set compt_logo='2010-01-01',comsubdue='2010-01-01',comsublevel='00',comsubref='' where reg_id=$Subscriber->{reg_id} and id=$Subscriber->{id}");
-					$Sts = $dbh->do("update registrations set regmembership='1' where reg_id=$Subscriber->{reg_id}");
+						&send_email();
+					}
+					elsif ($Subscriber->{difsubdue} < -3) {
+						$Sts = $dbh->do("update subscriptions set substatus='Cancelled' where id=$Sub->{id}");
+						$Sts = $dbh->do("update companies set compt_logo='2010-01-01',comsubdue='2010-01-01',comsublevel='00',comsubref='' where reg_id=$Subscriber->{reg_id} and id=$Subscriber->{id}");
+						$Sts = $dbh->do("update registrations set regmembership='1' where reg_id=$Subscriber->{reg_id}");
 ##################################### send cancellation email  #######################################
-					$Email_msg = sprintf<<EOD;
+						$Email_msg = sprintf<<EOD;
 After a number of attempts we are still unable to debit your card for the amount due on your subscription.  Regretably, therefore, your subscription is now cancelled and you have been reverted back to the free system.
 
 If you think that there has been some error, please contact FreePlus Accounts Technical support at support\@freeplusaccounts.co.uk and we will look in to it for you.
 
 The FreePlus Accounts Support.
 EOD
-					$Inv_status = 'No Invoice';
+						$Inv_status = 'No Invoice';
 
-					&send_email();
+						&send_email();
 ##################################### do XML delete subscription  ####################################
 
-					$Hash = Digest->new("MD5");
-					$Hash->add($Termid.$Subscriber->{comsubref}.$Dte.$Secret);
-					$Hash_text = $Hash->hexdigest;
+						$Hash = Digest->new("MD5");
+						$Hash->add($Termid.$Subscriber->{comsubref}.$Dte.$Secret);
+						$Hash_text = $Hash->hexdigest;
 
-					$Content = sprintf<<EOD;
+						$Content = sprintf<<EOD;
 <?xml version="1.0" encoding="UTF-8"?>
 <DELETESUBSCRIPTION>
   <MERCHANTREF>$Subscriber->{comsubref}</MERCHANTREF>
@@ -294,34 +291,36 @@ EOD
 </DELETESUBSCRIPTION>
 EOD
 
-					my $ua = LWP::UserAgent->new;
-					$ua->agent("FPA/0.1");
+						my $ua = LWP::UserAgent->new;
+						$ua->agent("FPA/0.1");
 
-					my $req = HTTP::Request->new(POST => "https://$URL.worldnettps.com/merchant/xmlpayment");
-					$req->content_type('text/xml');
-					$req->content($Content);
+						my $req = HTTP::Request->new(POST => "https://$URL.worldnettps.com/merchant/xmlpayment");
+						$req->content_type('text/xml');
+						$req->content($Content);
+	
+						my $res = $ua->request($req);
+	
+						$Res_content = $res->content;
 
-					my $res = $ua->request($req);
-
-					$Res_content = $res->content;
-
-print "Delete - $Res_content\n";
-
-
-				}
-				else {
-					$Email_msg = sprintf<<EOD;
+                				print LOG $Company->{reg_id}."+".$Company->{id}." - ".$Res_content."\n";
+					}
+					else {
+						$Email_msg = sprintf<<EOD;
 This is just a quick message to let you know that we are still having a problem taking payment for your subscription, please contact Customer Support at support\@freeplusaccounts.co.uk to help resolve this issue.
 
 The FreePlus Accounts Support.
 EOD
-					$Inv_status = 'No Invoice';
+						$Inv_status = 'No Invoice';
 
-					&send_email();
-					print "Overdue but not cancelled\n";
+						&send_email();
+						print "Overdue but not cancelled\n";
+					}
 				}
 			}
 		}
+	}
+	else {
+		print LOG $Subscriber->{reg_id}."+".$Subscriber->{{id}." - xml payment failed\n";
 	}
 }
 $Subscribers->finish;
