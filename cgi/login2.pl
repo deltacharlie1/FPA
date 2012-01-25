@@ -53,7 +53,8 @@ else {
 		print<<EOD;
 Content-Type: text/html
 
-You have not yet confirmed your registration. Please do so first or click here if you would like us to send another registration email.
+<p>You have not yet confirmed your registration. Please do so by clicking on the link in the activation email we sent.</p>
+<p>If you no longer have your activation email you may request a new one by going to the registration page, entering your registered email address and clicking on the 'Just resend my activation email' link near the bottom of the form.</p>
 
 EOD
 	}
