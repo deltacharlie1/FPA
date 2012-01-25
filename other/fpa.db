@@ -493,9 +493,14 @@ create table subscriptions (
   subnet decimal(10,2) not null default '0.00' comment 'Net subscription amount',
   subvat decimal (10,2) not null default '0.00' comment 'VAT on subscription',
   subauthcode varchar(12) not null default '' comment 'Auth Code return by card processor',
-  substatus varchar(12) not nul default '' comment 'Status of payment',
+  substatus varchar(12) not null default '' comment 'Status of payment',
   submerchantref varchar(50) comment 'Subscriber Merchantref',
-  subreason text comment 'reason for rejection/acceptance'
+  subreason text comment 'reason for rejection/acceptance',
+  subinvtype char(1) not null default 'I' comment 'whether this is an incoice (I) or refund (R)',
+  subdateraised date comment 'date invoice raised',
+  subdatpayreceived date comment 'date payment was received',
+  subpaymentref varchar(20) not null default '' comment 'reference of payment receipt',
+  index sub1 (acct_id)
 );
 
 drop table if exists adverts;
