@@ -396,7 +396,7 @@ $tt = Template->new({
 });
 
 $Vars = { company => $Company,
-	  title => $Cookie{'fpa-cookie'},
+	  title => 'Subscriptions',
 	  cookie => $COOKIE,
 	  membership => $Subtype{$Company->{comsubtype}},
           status => $Status
