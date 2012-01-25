@@ -42,11 +42,11 @@ require "/usr/local/git/fpa/cgi/pdf_sub_invoice.ph";
 
 #  Get the current cashflows environment
 
-open(XML,'</usr/local/git/fpa/other/cashflows');
+open(XML,'</usr/local/git/fpa/other/cashflows') || print "Cannot open cashflows";
 @Xmlstr = <XML>;
 close(XML);
 
-($Termid,$Secret,$URL) = split(/\n/,@Xmlstr);
+($Termid,$Secret,$URL) = @Xmlstr;
 chomp($Termid);
 chomp($Secret);
 chomp($URL);
@@ -131,9 +131,12 @@ while ($Subscriber = $Subscribers->fetchrow_hashref) {
 </SUBSCRIPTIONPAYMENT>
 EOD
 
+print $Content."\n";
+
 	my $ua = LWP::UserAgent->new;
 	$ua->agent("FPA/0.1");
 
+print "	my \$req = HTTP::Request->new(POST => \"https://$URL.worldnettps.com/merchant/xmlpayment\")\n";
 	my $req = HTTP::Request->new(POST => "https://$URL.worldnettps.com/merchant/xmlpayment");
 	$req->content_type('text/xml');
 	$req->content($Content);
@@ -336,7 +339,7 @@ EOD
 		}
 	}
 	else {
-		print LOG $Subscriber->{reg_id}."+".$Subscriber->{{id}." - xml payment failed\n";
+		print LOG $Subscriber->{reg_id}."+".$Subscriber->{id}." - xml payment failed\n";
 	}
 }
 

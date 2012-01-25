@@ -50,13 +50,39 @@ while (( $Key,$Value) = each %FORM) {
         $FORM{$Key} = $Value;
 }
 
+#  Calculate how many new companies he can add
+
+
 ($Reg_id,$Com_id) = split(/\+/,$COOKIE->{ACCT});
+
+if ($COOKIE->{BUS} == 1 && $COOKIE->{ACCESS} > 6) {
+        $Limit = '10000';
+}
+elsif ($COOKIE->{BUS} == 1 && $COOKIE->{ACCESS} > 4) {
+        $Limit = "150";
+}
+elsif ($COOKIE->{BUS} == 1 && $COOKIE->{ACCESS} > 2) {
+        $Limit = "15";
+}
+elsif ($COOKIE->{BUS} == 1) {
+        $Limit = "3";
+}
+else {
+        $Limit = '1';
+}
+
+$Companies = $dbh->prepare("select id,reg_id,comname,comcontact,comemail,date_format(comyearend,'%b') as comyearend,comvatscheme,comvatduein,comcis from companies where companies.reg_id=$Reg_id order by comname limit $Limit");
+$Companies->execute;
+$Remaining = $Limit - $Companies->rows;
+$Companies->finish;
 
 $FORM{data} =~ s/<(?!\/).+?>//g;
 $FORM{data} =~ s/<\/tr>/\n/ig;
 $FORM{data} =~ s/<\/td>/\t/ig;
 
 @Companies = split(/\n/,$FORM{data});
+$#Companies = $Remaining;
+
 foreach $Company (@Companies) {
 	@Cell = split(/\t/,$Company);
 

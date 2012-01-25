@@ -16,23 +16,25 @@ unless ($COOKIE->{NO_ADS}) {
 
 ($Reg_id,$Com_id) = split(/\+/,$COOKIE->{ACCT});
 
-$Limit = '1';
-
-if ($COOKIE->{PLAN} > 6) {
-	$Limit = '';
+if ($COOKIE->{BUS} == 1 && $COOKIE->{ACCESS} > 6) {
+	$Limit = '10000';
 }
-elsif ($COOKIE->{PLAN} > 4) {
-	$Limit = "limit 150";
+elsif ($COOKIE->{BUS} == 1 && $COOKIE->{ACCESS} > 4) {
+	$Limit = "150";
 }
-elsif ($COOKIE->{PLAN} > 2) {
-	$Limit = "limit 15";
+elsif ($COOKIE->{BUS} == 1 && $COOKIE->{ACCESS} > 2) {
+	$Limit = "15";
+}
+elsif ($COOKIE->{BUS} == 1) {
+	$Limit = "3";
 }
 else {
-	$Limit = "limit 3";
+	$Limit = '1';
 }
 
-$Companies = $dbh->prepare("select id,reg_id,comname,comcontact,comemail,date_format(comyearend,'%b') as comyearend,comvatscheme,comvatduein,comcis from companies where companies.reg_id=$Reg_id order by comname $Limit");
+$Companies = $dbh->prepare("select id,reg_id,comname,comcontact,comemail,date_format(comyearend,'%b') as comyearend,comvatscheme,comvatduein,comcis from companies where companies.reg_id=$Reg_id order by comname limit $Limit");
 $Companies->execute;
+$Remaining = $Limit - $Companies->rows;
 
 $Market_Sectors = $dbh->prepare("select id,sector,frsrate from market_sectors");
 $Market_Sectors->execute;
@@ -56,7 +58,8 @@ var item_rows = [];
 var tbl;
 
 function display_table() {
-  var item_table = "";
+  var item_table = "";a
+  var remaining = '.$Remaining.';
   var vatqend = [];
   vatqend[1] = "Jan/Apr/Jul/Oct";
   vatqend[2] = "Feb/May/Aug/Nov";
@@ -95,26 +98,32 @@ function display_table() {
   document.getElementById("data").value = item_table;
 }
 
-function add_company() {
-  var errs;
-  if (validate_form("#form1")) {
-    var item_row;
-    item_row = [document.getElementById("company").value,document.getElementById("client").value,document.getElementById("email").value,document.getElementById("yearend").value,document.getElementById("vatscheme").value,document.getElementById("vatend").value,$("input:radio[name=cis]:checked").val(),document.getElementById("combusiness").value];
+function add_company() {a
+  if (remaining < 1) {
+    alert("You will need to upgrade your subscription before you can add further companies");
+  }
+  else {
+    remaining = remaining - 1;
+    var errs;
+    if (validate_form("#form1")) {
+      var item_row;
+      item_row = [document.getElementById("company").value,document.getElementById("client").value,document.getElementById("email").value,document.getElementById("yearend").value,document.getElementById("vatscheme").value,document.getElementById("vatend").value,$("input:radio[name=cis]:checked").val(),document.getElementById("combusiness").value];
 
-    item_rows.push(item_row);
-    display_table();
+      item_rows.push(item_row);
+      display_table();
 
-    document.getElementById("company").value = "";
-    document.getElementById("client").value = "";
-    document.getElementById("email").value = "";
-    document.getElementById("yearend").value = "";
-    document.getElementById("vatscheme").value = "N";
-    document.getElementById("vatend").value = "";
-    $("#cisN").attr("checked",true);
-    $("#sectors").hide();
-    $("#combusiness").removeClass("mandatory");
-    $("#vatend").removeClass("mandatory");
-    document.getElementById("combusiness").value = "";
+      document.getElementById("company").value = "";
+      document.getElementById("client").value = "";
+      document.getElementById("email").value = "";
+      document.getElementById("yearend").value = "";
+      document.getElementById("vatscheme").value = "N";
+      document.getElementById("vatend").value = "";
+      $("#cisN").attr("checked",true);
+      $("#sectors").hide();
+      $("#combusiness").removeClass("mandatory");
+      $("#vatend").removeClass("mandatory");
+      document.getElementById("combusiness").value = "";
+    }
   }
 }
 
