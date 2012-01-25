@@ -194,7 +194,11 @@ $(document).ready(function(){
         </li>
         <li class="print"><a href="#" onclick="print_display('[%- cookie.TAG -%]');"><span>Print</span></a>
         </li>
-        <li class="help"><a href="/usermanual.pdf"><span>Help</span></a>
+        <li class="help"><a href="#"><span>Help</span></a>
+          <ul>
+            <li><a href="/usermanual.pdf">Help Manual</a></li>
+            <li><a href="#" onclick="window.open('/cgi-bin/fpa/help_tutorials.pl','tutorials','width=700 height=900 top=50 left=200 scrollbars=yes');">Video Tutorials</a></li>
+          </ul>
         </li>
 [% IF cookie.BUS == "1" AND cookie.ACCESS > 1 -%]
         <li class="bookkeeper"><a href="#"><span>Bookkeeper</span></a>
