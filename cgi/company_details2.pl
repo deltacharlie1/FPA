@@ -104,7 +104,7 @@ else {
 		$COAs = $dbh->prepare("select * from coas where coanominalcode='1150' and acct_id='$COOKIE->{ACCT}'");
 		$COAs->execute;
 		unless ($COAs->rows > 0) {
-			$dbh->do("insert into coas (acct_id,coanominalcode,coadesc,coatype,coareport) values ('$COOKIE->{ACCT}','1150','CIS Tax','Expenses','P & L')");
+			$dbh->do("insert into coas (acct_id,coanominalcode,coadesc,coatype,coagroup,coareport) values ('$COOKIE->{ACCT}','1150','CIS Tax','Current Assets','1150','Balance Sheet')");
 		}
 		$COAs->finish;
 	}
