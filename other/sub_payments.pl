@@ -78,12 +78,6 @@ chomp($Dte);
 use DBI;
 my $dbh = DBI->connect("DBI:mysql:fpa");
 
-$Total_4000 = 0;
-$Total_2100 = 0;
-
-$Cancel_4000 = 0;
-$Cancel_2100 = 0;
-
 #  Get the laast subscription invoice
 
 $Thisdate = "23rd January 2012";
@@ -174,9 +168,6 @@ print "	my \$req = HTTP::Request->new(POST => \"https://$URL.worldnettps.com/mer
 				if ($XML_Result =~ /A/i) {
 					$Sts = $dbh->do("insert into subscriptions (acct_id,subdateraised,subinvoiceno,subdescription,subnet,subvat,subauthcode,substatus,submerchantref,subdatepaid) values ('$Subscriber->{reg_id}+$Subscriber->{id}',now(),'$Orderid','$Subscription[$Subscriber->{comsublevel}]','$Subrate[$Subscriber->{comsublevel}]','$Vat','$XML_Auth','Paid','$Subscriber->{commerchantref}',now())");
 
-					$Total_4000 += $Subrate[$Subscriber->{comsublevel}];
-					$Total_2100 += $Vat;
-
 #  Update to comsubdue value
 
 					$Sts = $dbh->do("update companies set comsubdue=date_add(comsubdue,interval 1 month) where reg_id=$Subscriber->{reg_id} and id=$Subscriber->{id}");
@@ -204,9 +195,6 @@ EOD
 				}
 				else {
 					$Sts = $dbh->do("insert into subscriptions (acct_id,subdateraised,subinvoiceno,subdescription,subnet,subvat,subauthcode,substatus,submerchantref,subreason) values ('$Subscriber->{reg_id}+$Subscriber->{id}',now(),'$Orderid','$Subscription[$Subscriber->{comsublevel}]','$Subrate[$Subscriber->{comsublevel}]','$Vat','$XML_Auth','Due','$Subscriber->{commerchantref}','$XML_Text')");
-
-					$Total_4000 += $Subrate[$Subscriber->{comsublevel}];
-					$Total_2100 += $Vat;
 
 #######################################  Send due invoice email  ##########################################
 					$Email_msg = sprintf<<EOD;
@@ -288,9 +276,6 @@ If you think that there has been some error, please contact FreePlus Accounts Te
 The FreePlus Accounts Support.
 EOD
 
-						$Cancel_4000 += $Subrate[$Subscriber->{comsublevel}];
-						$Cancel_2100 += $Vat;
-
 						$Inv_status = 'No Invoice';
 
 						&send_email();
@@ -341,30 +326,6 @@ EOD
 	else {
 		print LOG $Subscriber->{reg_id}."+".$Subscriber->{id}." - xml payment failed\n";
 	}
-}
-
-#  update cart of accounts
-
-if ($Total_4000) {
-	$Total_1100 = $Total_4000 + $Total_2100;
-
-	$Sts = $dbh->do("insert into nominals (acct_id,link_id,nomtype,nomcode,nomamount,nomdate) values ('1+1',0,'S','4000','$Total_4000',now())");
-	$Sts = $dbh-do("update coas set coabalance=coabalance+'$Total_4000' where acct_id='1+1' and coanominalcode='4000'");
-	$Sts = $dbh->do("insert into nominals (acct_id,link_id,nomtype,nomcode,nomamount,nomdate) values ('1+1',0,'S','2100','$Total_2100',now())");
-	$Sts = $dbh-do("update coas set coabalance=coabalance+'$Total_2100' where acct_id='1+1' and coanominalcode='2100'");
-	$Sts = $dbh->do("insert into nominals (acct_id,link_id,nomtype,nomcode,nomamount,nomdate) values ('1+1',0,'S','4110','$Total_1100',now())");
-	$Sts = $dbh-do("update coas set coabalance=coabalance+'$Total_1100' where acct_id='1+1' and coanominalcode='1100'");
-}
-
-if ($Cancel_4000) {
-	$Cancel_1100 = $Cancel_4000 + $Cancel_2100;
-
-	$Sts = $dbh->do("insert into nominals (acct_id,link_id,nomtype,nomcode,nomamount,nomdate) values ('1+1',0,'S','4000','$Cancel_4000',now())");
-	$Sts = $dbh-do("update coas set coabalance=coabalance+'$Cancel_4000' where acct_id='1+1' and coanominalcode='4000'");
-	$Sts = $dbh->do("insert into nominals (acct_id,link_id,nomtype,nomcode,nomamount,nomdate) values ('1+1',0,'S','2100','$Cancel_2100',now())");
-	$Sts = $dbh-do("update coas set coabalance=coabalance+'$Cancel_2100' where acct_id='1+1' and coanominalcode='2100'");
-	$Sts = $dbh->do("insert into nominals (acct_id,link_id,nomtype,nomcode,nomamount,nomdate) values ('1+1',0,'S','4110','$Cancel_1100',now())");
-	$Sts = $dbh-do("update coas set coabalance=coabalance+'$Cancel_1100' where acct_id='1+1' and coanominalcode='1100'");
 }
 
 $Subscribers->finish;
