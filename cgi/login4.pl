@@ -105,9 +105,9 @@ if ($ACCESS > 1) {
 	$Coas->finish;
 }
 else {
-	$Opt{4300} = "<option value='4300'>Other Income</option>";
+	$Opt{4300} = "<option value='4300'>Other Income</option><option value='4310'>Bank Interest</option>";
 	$Opt{5000} = "<option value='5000'>Cost of Sales</option>";
-	$Opt{6000} = "<option value='6000' selected='seleted'>Other Expenses</option>";
+	$Opt{6000} = "<option value='6000' selected='seleted'>Other Expenses</option><option value='6010'>Bank Charges</option>";
 	$Opt{7000} = "<option value='7000'>Fixed Overheads</option>";
 }
 
