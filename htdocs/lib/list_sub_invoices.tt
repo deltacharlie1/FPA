@@ -1,0 +1,35 @@
+<div class="main" id="main">
+<h1>Subscription Invoices</h1>
+[% INCLUDE page_select.tt -%]
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="listing">
+    <tr>
+      <th>Invoice</th>
+      <th>Auth Code</th>
+      <th>Description</th>
+      <th>Net</th>
+      <th>VAT</th>
+      <th>Raised</th>
+      <th>Paid</th>
+      <th>Status</th>
+    </tr>
+[% class = [ "even","odd" ] -%]
+[% FOREACH invoice IN invoices -%]
+  [%- ndx = loop.count % 2; -%]
+    <tr class="[%- class.$ndx -%]" onclick="location.href='/cgi-bin/fpa/print_sub_invoice.pl?[%- invoice.id -%]?[%- invoice.subinvoiceno -%]';">
+      <td>[%- invoice.subinvoiceno -%]</td>
+      <td>[%- invoice.subauthcode -%]</td>
+      <td>[%- invoice.subdescription | remove('\@.+') -%]</td>
+      <td style="text-align:right;">[%- invoice.subnet -%]</td>
+      <td style="text-align:right;">[%- invoice.subvat -%]</td>
+      <td>[%- invoice.dateraised -%]</td>
+      <td>[%- invoice.datepaid -%]</td>
+      <td>[%- invoice.substatus -%]</td>
+    </tr>
+[% END -%]
+  </table>
+</div>
+<div id="sidebar">
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+</div>
+</div>

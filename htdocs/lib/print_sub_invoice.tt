@@ -1,0 +1,19 @@
+<form name="form1" id="form1" method="post" action="/cgi-bin/fpa/email_invoice.pl">
+<input type="hidden" name="invid" id="invid" value="[%- invid -%]"/>
+<div class="main" id="main">
+<h1>Subscription Invoice No [%- invno -%]</h1>
+<iframe id="pdf" name="pdf" width="660" height="600" src="/cgi-bin/fpa/pdf_sub_invoice.pl?[%- invid -%]"></iframe>
+</div>
+<div id="sidebar">
+  <ul>
+    <li>
+      <div>
+          <input type="button" name="goback" id="goback" value="Previous Screen" onclick="location.href='/cgi-bin/fpa/list_sub_invoices.pl';"/>
+      </div>
+    </li>
+  </ul>
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+</div>
+</form>
+</div>

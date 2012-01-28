@@ -99,6 +99,7 @@ $Subscribers = $dbh->prepare("select id,reg_id,comsublevel,commerchantref,comcar
 $Subscribers->execute;
 while ($Subscriber = $Subscribers->fetchrow_hashref) {
 
+	$Inv_datepaid = '';
 	$Orderid++;		#  Increment the order id to the next invoice no
 	my $XML_Result = "";
 
@@ -181,6 +182,7 @@ Thank you for your continued custom, it's very much appreciated.
 The FreePlus Accounts Support.
 EOD
 					$Inv_invoice_no = $Orderid;
+					$Inv_datepaid = $Inv_date;
 					$Inv_authcode = $XML_Auth;
 					$Inv_address = $Subscriber->{comname}."\n".$Subscriber->{comaddress}."  ".$Subscriber->{compostcode};
 					$Inv_desc = $Subscription[$Subscriber->{comsublevel}];

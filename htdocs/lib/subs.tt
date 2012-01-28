@@ -104,13 +104,11 @@
 </div>
 <div id="sidebar">
   <ul>
-[% IF cookie.PLAN > 1 -%]
     <li>
       <div>
-        <input type="button" name="list" id="listinvoices" value="List Invoices" onclick="location.href='list_sub_invoices.pl';"/>
+        <input type="button" name="list" id="listinvoices" value="List Invoices" onclick="location.href='/cgi-bin/fpa/list_sub_invoices.pl';"/>
       </div>
     </li>
-[% END -%]
     <li>
       <div>
         <input type="button" name="subscribe" id="subscribe" value="Update Subscription" onclick="calc_hash('sub');"/>

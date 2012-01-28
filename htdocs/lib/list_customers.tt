@@ -36,6 +36,7 @@
         </a>
       </div>
     </li>
+[% IF cookie.ACCESS > 3 -%]
     <li>
       <div>
         <a href="#" onclick="send_statements();">
@@ -43,6 +44,7 @@
         </a>
       </div>
     </li>
+[% END -%]
   </ul>
   <div id="sidebar-ad">
 [% INCLUDE adverts.tt -%]

@@ -142,6 +142,7 @@
         </a>    
       </div>  
     </li>
+[% IF cookie.ACCESS > 3 -%]
     <li>    
       <div>   
         <a href="/cgi-bin/fpa/print_statement.pl?[%- cus.id -%]">
@@ -149,6 +150,7 @@
         </a>    
       </div>  
     </li>
+[% END -%]
   </ul>   
   <div id="sidebar-ad">
 [% INCLUDE adverts.tt -%]
