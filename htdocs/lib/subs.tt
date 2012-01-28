@@ -1,53 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link href="/css/new-css.css" rel="stylesheet" type="text/css" />
-<link rel="shortcut icon" href="/favicon.ico"/>
-<link rel="stylesheet" href="/css/jquery-ui.css" type="text/css"/>
-<script src="/js/jquery.js" type="text/javascript"></script>
-<script src="/js/jquery-ui.js" type="text/javascript"></script>
-<title>Subscriptions</title>
-<script type="text/javascript">
-function calc_hash() {
-  if (!$("input[@name=sub]:checked").val()) {
-    alert("You have not selected any subscription option!");
-  }
-  else {
-  $.ajax({
-    url: "/cgi-bin/fpa/returnhash.pl",
-    dataType: "json",
-    data: "sub=" + $("input:radio[name=sub]:checked").val(),
-    success: function( data ) {
-     document.getElementById("sub_action").value = data[0].action;
-     document.getElementById("sub_terminalid").value = data[0].termid;
-     document.getElementById("sub_merchantref").value = data[0].merchref;
-     document.getElementById("sub_datetime").value = data[0].dte;
-     document.getElementById("sub_hash").value = data[0].hash;
-     if (/00/.test($("#sub_current").val()) || /new/.test($("input:radio[name=sub]:checked").val())) {
-       document.form1.action = "https://cashflows.worldnettps.com/merchant/securecardpage";
-     }
-     else {
-       document.form1.action = "/cgi-bin/fpa/sub_subscribe.pl?" + data[0].merchref + "?" + data[0].oldsubtype;
-     }
-     document.form1.submit();
-   },
-   error: function( data,xhr ) {
-     alert("Unable to proceed - " + xhr);
-   }
- });
- }
-}
-
-</script>
-<style type="text/css">
-.subblock { background-color: #ced6c2; }
-</style>
-</head>
-<body style='margin:10px 10px;background-image:none;background-color:#ffffff;'>
-  <div style="display:inline;float:left;"><img src="/wp-content/themes/freeplusaccounts/images/logo.jpg" alt="Free Plus Accounts" /></div>
-  <div style="display:inline;vertical-align:top;"><img style="padding:10px 0 0 20px;vertical-align:top;" src="/wp-content/themes/freeplusaccounts/images/freeplustitle.png" alt="Free Plus Accounts" /><br/><h1 style="padding:20px 0 0 137px;color:#666666;font-weight:bold;">[%- cookie.TAG -%]</h1></div>
-  <div style="margin-left:45px;margin-right:0px;width:580px;">
+<div id="main" class="main">
   <form name="form1" id="form1" method="post">
   <input type="hidden" name="ACTION" id="sub_action" value=""/>
   <input type="hidden" name="TERMINALID" id="sub_terminalid" value=""/>
@@ -55,30 +6,25 @@ function calc_hash() {
   <input type="hidden" name="DATETIME" id="sub_datetime" value=""/>
   <input type="hidden" name="HASH" id="sub_hash" value=""/>
   <input type="hidden" name="current" id="sub_current" value="[%- company.comsublevel -%]"/>
-  <table style="padding:10px;" width="520"cellspacing="0" cellpadding="0" border="0" class="formtable">
-    <tr>
-      <td style="text-align:right;font-size:14px;" width="50%">Current Subscription Level:</td>
-      <td width="50%"><span style="font-size:14px;font-weight:bold;">[%- membership -%]</span></td>
-    </tr>
-  </table>
-  <br/>
-[% IF company.comsublevel > 0 -%]
-  <h2>Add/Change Card Details</h2>
-  <table width="520"cellspacing="0" cellpadding="0" border="0" class="formtable">
-    <tr>
-      <td width="180" valign="top"><label>Add/Change existing card</label></td>
-      <td width="30" valign="top"><input type="radio" name="sub" id="sub1" value="renew"/></td>
-      <td>Renew or change your existing card details</td>
-    </tr>
-  </table>
-  <br/>
+  <input type="hidden" name="action" id="sub_action" value=""/>
+[%- IF termid == '2645001' -%]
+  <div><div style="margin-left:auto;margin-right:auto;width:500px;text-align:center;" class="status">This page is for testing only, please do not use</div></div>
 [% END -%]
-  <h2>Upgrade Subscription</h2>
-  <table width="520"cellspacing="0" cellpadding="0" border="0" class="formtable">
+  <table style="padding:10px;" width="660" cellspacing="0" cellpadding="0" border="0" class="formtable">
+    <tr>
+      <td style="text-align:right;font-size:14px;" width="45%">Current Subscription Level:</td>
+      <td width="55%"><span style="font-size:14px;font-weight:bold;">[%- membership -%]</span></td>
+    </tr>
+  </table>
+  <br/>
+  <h2>Subscriptions</h2>
+  <table style="padding:15px 30px;" width="660" cellspacing="0" cellpadding="0" border="0" class="formtable">
+[% IF cookie.BUS == '1' -%]
     <tr>
       <td colspan="3" style="font-size:12px;font-weight:bold;text-decoration:underline;">For all users</td>
     <tr>
-[% IF company.comsublevel != 2 -%]
+[% END -%]
+[% IF cookie.ACCESS != 4 -%]
     <tr class="subblock">
       <td width="180" valign="top"><label>Standard (&pound;5.00 per month)</label></td>
       <td width="30" valign="top"><input type="radio" name="sub" id="subb" value="fpa2"/></td>
@@ -93,7 +39,7 @@ function calc_hash() {
       </td>
     </tr>
 [% END -%]
-[% IF company.comsublevel != 5 -%]
+[% IF cookie.ACCESS != 6 -%]
     <tr class="subblock">
       <td width="180" valign="top"><label>Premium (&pound;10.00 per month)</label></td>
       <td width="30" valign="top"><input type="radio" name="sub" id="subp" value="fpa5"/></td>
@@ -108,9 +54,9 @@ function calc_hash() {
 [% END -%]
 [% IF cookie.BUS == 1 -%]
     <tr>
-      <td colspan="3" style="font-size:12px;font-weight:bold;text-decoration:underline;">Alternatively, for Bookkeepers and Accountnts</td>
+      <td colspan="3" style="font-size:12px;font-weight:bold;text-decoration:underline;"><br/>Alternatively, for Bookkeepers and Accountnts</td>
     <tr>
-  [% IF company.comsublevel != 1 -%]
+  [% IF cookie.ACCESS != 3 -%]
     <tr class="subblock">
       <td width="180" valign="top"><label>Basic (&pound;5.00 per month)</label></td>
       <td width="30" valign="top"><input type="radio" name="sub" id="subc" value="fpa1"/></td>
@@ -122,7 +68,7 @@ function calc_hash() {
       </td>
     </tr>
   [% END -%]
-  [% IF company.comsublevel != 3 -%]
+  [% IF cookie.ACCESS != 5 -%]
     <tr class="subblock">
       <td width="180" valign="top"><label>Standard (&pound;10.00 per month)</label></td>
       <td width="30" valign="top"><input type="radio" name="sub" id="subd" value="fpa3"/></td>
@@ -136,7 +82,7 @@ function calc_hash() {
       </td>
     </tr>
   [% END -%]
-  [% IF company.comsublevel != 6 -%]
+  [% IF cookie.ACCESS != 8 -%]
     <tr class="subblock">
       <td width="180" valign="top"><label>Premium (&pound;20.00 per month)</label></td>
       <td width="30" valign="top"><input type="radio" name="sub" id="subd" value="fpa6"/></td>
@@ -151,24 +97,40 @@ function calc_hash() {
     </tr>
   [% END -%]
 [% END -%]
-  </table>
-[% IF company.comsublevel > 0 -%]
-  <br/>
-  <h2>Cancel Subscription</h2>
-  <table width="520"cellspacing="0" cellpadding="0" border="0" class="formtable">
     <tr>
-      <td width="180"><label>Cancel subscription</label></td>
-      <td width="30"><input type="radio" name="sub" id="subc" value="Del"/></td>
-      <td>Cancel an existing Subscription</td>
+      <td colspan="3" style="text-align:center;color:#666666;font-style:italic;font-size:10px;">(All prices exclude VAT at the current rate)</td>
     </tr>
-[% END -%]
   </table>
-<br/>
-  <div style="width:540px; text-align:center;">
-<span style="color:#666666;font-size:10px;font-style:italic;">(Please note that VAT will be added to the quoted subscription)</span><br/>
-    <input type="button" name="but1" id="but1" value="Submit Subscription Update" onclick="calc_hash();"/>
+</div>
+<div id="sidebar">
+  <ul>
+[% IF cookie.PLAN > 1 -%]
+    <li>
+      <div>
+        <input type="button" name="list" id="listinvoices" value="List Invoices" onclick="location.href='list_sub_invoices.pl';"/>
+      </div>
+    </li>
+[% END -%]
+    <li>
+      <div>
+        <input type="button" name="subscribe" id="subscribe" value="Update Subscription" onclick="calc_hash('sub');"/>
+      </div>
+    </li>
+[% IF cookie.PLAN > 1 -%]
+    <li>
+      <div>
+        <input type="button" name="card" id="card" value="Change Card Details" onclick="calc_hash('card');"/>
+      </div>
+    </li>
+    <li>
+      <div>
+        <input type="button" name="cancel" id="cancel" value="Cancel Subscription" onclick="calc_hash('cancel');"/>
+      </div>
+    </li>
+[% END -%]
+  </ul>
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
   </div>
-  </form>
-  </div>
-</body>
-</html>
+</div>
+</form>

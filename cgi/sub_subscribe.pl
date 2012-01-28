@@ -74,70 +74,8 @@ chomp($Dte);
 $Startdate = $Dte;
 $Startdate =~ s/:.*//;
 
-#  comsublevel = del - Cancel subscription & card
-#		 00  - New subscription - create new subscription and initial addpayment
-#		 >0  - Change existing subscription to new comsubtype  (delete old add new)
-
 
 if ($Company->{comsubtype} =~ /cancel/i) {		#  Delete existing subscription
-
-	$Hash = Digest->new("MD5");
-	$Hash->add($Termid.$Company->{comsubref}.$Dte.$Secret);
-	$Hash_text = $Hash->hexdigest;
-
-#  Construct the xml to be posted
-
-#  Note <MERCHANTREF> here is a reference for the actual subscription
-
-	$Content = sprintf<<EOD;
-<?xml version="1.0" encoding="UTF-8"?>
-<DELETESUBSCRIPTION>
-  <MERCHANTREF>$Company->{comsubref}</MERCHANTREF>
-  <TERMINALID>$Termid</TERMINALID>
-  <DATETIME>$Dte</DATETIME>
-  <HASH>$Hash_text</HASH>
-</DELETESUBSCRIPTION>
-EOD
-
-#  Now send it
-
-	my $ua = LWP::UserAgent->new;
-	$ua->agent("FPA/0.1");
-
-	my $req = HTTP::Request->new(POST => "https://$URL.worldnettps.com/merchant/xmlpayment");
-	$req->content_type('text/xml');
-	$req->content($Content);
-
-	my $res = $ua->request($req);
-
-	if ($res->is_success) {
-		$Res_content = $res->content;
-
-		print LOG $Company->{reg_id}."+".$Company->{id}." - ".$Res_content."\n";
-
-		if ($Res_content =~ /RESPONSE/i) {
-			$Status .= "<p>Your subscription has been cancelled.</p><p>We are sorry to see you go but have reverted you to FreePlus Startup which is completely free to use.</p>\n";
-			$Company->{comsubtype} = $Company->{comsublevel};	# so as to display correct new subscription
-			$Sts = $dbh->do("update companies set comsublevel='00',comsubtype='',comsubref='',comsubdue='2010-01-01' where commerchantref='$Company->{commerchantref}'");
-			$Sts = $dbh->do("update registrations set regmembership='1' where reg_id=$Company->{reg_id}");
-			$Level = '0';
-			&update_cookiefile();
-
-#  update the database
-		}
-		else {
-			$Status .= "<p>We are unable to cancel your subscription for some reason.&nbsp;&nbsp;Please contact FreePlus Accounts Technical Support if you require further assistance</p>\n";
-		}
-	}
-	else {
-
-		print LOG $Company->{reg_id}."+".$Company->{id}." - Subscription Delete Failed\n";
-
-			$Status .= "<p>We are unable to cancel your subscription for some reason.&nbsp;&nbsp;Please contact FreePlus Accounts Technical Support if you require further assistance</p>\n";
-	}
-
-#  Delete the secure card
-
 
 	$Hash = Digest->new("MD5");
 	$Hash->add($Termid.$Company->{commerchantref}.$Dte.$Company->{comcardref}.$Secret);
@@ -166,225 +104,40 @@ EOD
 	$req->content($Content);
 
 	my $res = $ua->request($req);
-	if ($res->is_success) {
 
-		$Res_content = $res->content;
+	$Res_content = $res->content;
 
-		print LOG $Company->{reg_id}."+".$Company->{id}." - ".$Res_content."\n";
+	print LOG $Company->{reg_id}."+".$Company->{id}." - Remove Card - ".$Res_content."\n";
 
-		if ($Res_content =~ /RESPONSE/i) {
-
-			$Status .= "<p>Your payment and  card details  have been removed</p>\n";
-			$Level = 0;
-			$Sts = $dbh->do("update companies set comsublevel='00',comsubtype='',comsubref='',commerchantref='',comcardref='' where commerchantref='$Company->{commerchantref}'");
-			$Sts = $dbh->do("update registrations set regmembership='1' where reg_id=$Company->{reg_id}");
-			&update_cookiefile();
-
-		}
-		else {
-			$Status .= "<p>Unfortunately we have not been able to remove your card details, please contact FreePlus Accounts Technical Support if your require further infomration</p>\n";
-		}
-	}
-	else {
-
-		print LOG $Company->{reg_id}."+".$Company->{id}." - Subscription Card removal Failed\n";
-
-		$Status .= "<p>Unfortunately we have not been able to remove your card details, please contact FreePlus Accounts Technical Support if your require further infomration</p>\n";
-	}
+	$Level = 0;
+	$Sts = $dbh->do("update companies set comsublevel='00',comsubtype='',comsubref='',commerchantref='',comcardref='',comsubdue='2010-01-01',compt_logo='2010-01-01',comuplds=0,comno_ads='2010-01-01' where commerchantref='$Company->{commerchantref}'");
+	$Sts = $dbh->do("update registrations set regmembership='1' where reg_id=$Company->{reg_id}");
+	$Status .= "<p>Your subscription has been cancelled.</p><p>We are sorry to see you go but have reverted you to FreePlus Startup which is completely free to use.</p>\n";
+	$Company->{comsubtype} = 'Del';		# so as to display correct new subscription
+	&update_cookiefile();
 }
 elsif ($Company->{comsublevel} =~ /00/) {	#  New subscription
 
-	$Subref = $$.time;
+	$Status .= "<p>Thank you for subscribing to FreePlus Accounts.</p><p>Your subscription choice of <b>$Subtype{$Company->{comsubtype}}</b> has now been set up.&nbsp;&nbsp;We will not take your subscription for at least one day to give you time to try out the additional features.&nbsp;&nbsp;You may cancel at any time during that period without incurring any cost.</p>\n";
+	$Level = $Company->{comsubtype};
+	$Level =~ s/.+(\d)$/$1/;
 
-	$Hash = Digest->new("MD5");
-	$Hash->add($Termid.$Subref.$Company->{comsubtype}.$Company->{commerchantref}.$Dte.$Startdate.$Secret);
-	$Hash_text = $Hash->hexdigest;
-
-#  Construct the xml to be posted
-
-#  Note <MERCHANTREF> here is a reference for the actual subscription
-#  As this is a new subscription we subscription due date to start date (today).  It will then be picked up[ by the daily payments run
-
-	$Content = sprintf<<EOD;
-<?xml version="1.0" encoding="UTF-8"?>
-<ADDSUBSCRIPTION>
-  <MERCHANTREF>$Subref</MERCHANTREF>
-  <TERMINALID>$Termid</TERMINALID>
-  <STOREDSUBSCRIPTIONREF>$Company->{comsubtype}</STOREDSUBSCRIPTIONREF>
-  <SECURECARDMERCHANTREF>$Company->{commerchantref}</SECURECARDMERCHANTREF>
-  <DATETIME>$Dte</DATETIME>
-  <STARTDATE>$Startdate</STARTDATE>
-  <HASH>$Hash_text</HASH>
-</ADDSUBSCRIPTION>
-EOD
-
-	my $ua = LWP::UserAgent->new;
-	$ua->agent("FPA/0.1");
-
-	my $req = HTTP::Request->new(POST => "https://$URL.worldnettps.com/merchant/xmlpayment");
-	$req->content_type('text/xml');
-	$req->content($Content);
-
-	my $res = $ua->request($req);
-
-	if ($res->is_success) {
-
-		$Res_content = $res->content;
-
-		print LOG $Company->{reg_id}."+".$Company->{id}." - ".$Res_content."\n";
-
-		if ($Res_content =~ /RESPONSE/i) {
-
-			$Status .= "<p>Thank you for subscribing to FreePlus Accounts.</p><p>Your subscription choice of <b>$Subtype{$Company->{comsubtype}}</b> has now been set up.&nbsp;&nbsp;We will not take your subscription for at least one day to give you time to try out the additional features.&nbsp;&nbsp;You may cancel at any time during that period without incurring any cost.</p>\n";
-			$Level = $Company->{comsubtype};
-			$Level =~ s/.+(\d)$/$1/;
-
-			$Sts = $dbh->do("update companies set comsublevel='$Level',comsubref='$Subref',comsubdue=date_add(str_to_date('$Startdate','%d-%m-%Y'),interval 3 day),comadd_user='1' where commerchantref='$Company->{commerchantref}'");
-			$Sts = $dbh->do("update registrations set regmembership='$Membership[$Level]' where reg_id=$Company->{reg_id}");
-			&update_cookiefile();
-		}
-		else {
-			$Status .= "Unfortunately your subscription has not been accepted for some reason, please contact FreePlus Accounts Technical Support if you require further information</li>\n";
-		}
-	}
-	else {
-
-		print LOG $Company->{reg_id}."+".$Company->{id}." - Subscription Add Failed\n";
-
-		$Status .= "Unfortunately your subscription has not been accepted for some reason, please contact FreePlus Accounts Technical Support if you require further information</li>\n";
-	}
+	$Sts = $dbh->do("update companies set comsublevel='$Level',comsubdue=date_add(str_to_date('$Startdate','%d-%m-%Y'),interval 3 day),comadd_user='1' where commerchantref='$Company->{commerchantref}'");
+	$Sts = $dbh->do("update registrations set regmembership='$Membership[$Level]' where reg_id=$Company->{reg_id}");
+	&update_cookiefile();
 }
 elsif ($Company->{comsublevel} > 0) {		#  Updating subscription
 
-#  First delete the existing subscription, then add the new one
-
-#  Delete
-
-	$Hash = Digest->new("MD5");
-	$Hash->add($Termid.$Company->{comsubref}.$Dte.$Secret);
-	$Hash_text = $Hash->hexdigest;
-
-#  Construct the xml to be posted
-
-	$Content = sprintf<<EOD;
-<?xml version="1.0" encoding="UTF-8"?>
-<DELETESUBSCRIPTION>
-  <MERCHANTREF>$Company->{comsubref}</MERCHANTREF>
-  <TERMINALID>$Termid</TERMINALID>
-  <DATETIME>$Dte</DATETIME>
-  <HASH>$Hash_text</HASH>
-</DELETESUBSCRIPTION>
-EOD
-
-#  Now send it
-
-	$Status = "Thank you for updating your subscription, we have taken the following actions:-<ul>\n";
-
-	my $ua = LWP::UserAgent->new;
-	$ua->agent("FPA/0.1");
-
-	my $req = HTTP::Request->new(POST => "https://$URL.worldnettps.com/merchant/xmlpayment");
-	$req->content_type('text/xml');
-	$req->content($Content);
-
-	my $res = $ua->request($req);
-
-	if ($res->is_success) {
-
-		$Res_content = $res->content;
-
-		print LOG $Company->{reg_id}."+".$Company->{id}." - ".$Res_content."\n";
-
-		if ($Res_content =~ /RESPONSE/i) {
-
-#  Now add the new one
-
-			$Status .= "<li>Your current subscription has been cancelled</li>\n";
-
-#  Temporarily set access to 1 (free) so that if the upgrade fails he reverts to free
-
-			$Sts = $dbh->do("update companies set comsublevel='00' where commerchantref='$Company->{commerchantref}'");
-			$Sts = $dbh->do("update registrations set regmembership='1' where reg_id=$Company->{reg_id}");
-			$Level = '0';
-			&update_cookiefile();
-
-			$Subref = $$.time;
-
-			$Hash = Digest->new("MD5");
-			$Hash->add($Termid.$Subref.$Company->{comsubtype}.$Company->{commerchantref}.$Dte.$Startdate.$Secret);
-			$Hash_text = $Hash->hexdigest;
-
-#  Construct the xml to be posted
-
-#  Note <MERCHANTREF> here is a reference for the actual subscription
-
-			$Content = sprintf<<EOD;
-<?xml version="1.0" encoding="UTF-8"?>
-<ADDSUBSCRIPTION>
-  <MERCHANTREF>$Subref</MERCHANTREF>
-  <TERMINALID>$Termid</TERMINALID>
-  <STOREDSUBSCRIPTIONREF>$Company->{comsubtype}</STOREDSUBSCRIPTIONREF>
-  <SECURECARDMERCHANTREF>$Company->{commerchantref}</SECURECARDMERCHANTREF>
-  <DATETIME>$Dte</DATETIME>
-  <STARTDATE>$Startdate</STARTDATE>
-  <HASH>$Hash_text</HASH>
-</ADDSUBSCRIPTION>
-EOD
-
-#  and send the card cancellation
-
-			my $ua = LWP::UserAgent->new;
-			$ua->agent("FPA/0.1");
-
-			my $req = HTTP::Request->new(POST => "https://$URL.worldnettps.com/merchant/xmlpayment");
-			$req->content_type('text/xml');
-			$req->content($Content);
-
-			my $res = $ua->request($req);
-
-			if ($res->is_success) {
-
-				$Res_content = $res->content;
-	
-				print LOG $Company->{reg_id}."+".$Company->{id}." - ".$Res_content."\n";
-
-				if ($Res_content =~ /RESPONSE/i) {
-					$Status .= "<li>Your new subscription, <b>$Subtype{$Company->{comsubtype}}</b>, has been set up</li>\n";
-					$Status .= "<li>The new payments will start on $Company->{subdue} and monthly thereafter</li></ul>\n";
+	$Status .= "<li>Your new subscription, <b>$Subtype{$Company->{comsubtype}}</b>, has been set up</li>\n";
+	$Status .= "<li>The new payments will start on $Company->{subdue} and monthly thereafter</li></ul>\n";
 
 #  update the database
-					$Level = $Company->{comsubtype};
-					$Level =~ s/.+(\d)$/$1/;
+	$Level = $Company->{comsubtype};
+	$Level =~ s/.+(\d)$/$1/;
 
-					$Sts = $dbh->do("update companies set comsublevel='$Level',comsubref='$Subref' where commerchantref='$Company->{commerchantref}'");
-					$Sts = $dbh->do("update registrations set regmembership='$Membership[$Level]' where reg_id=$Company->{reg_id}");
-					&update_cookiefile();
-
-
-				}
-				else {
-					$Status .= "<li>Unfortunately we have not been able to set up your new subscription, please contact FreePlus Accounts Technical Support if you require further information</li>\n";
-					$Status .= "<li>In the meantime we have reverted you to FreePlus Startup which is completely free to use.</li></ul>\n";
-				}
-			}
-			else {
-
-			print LOG $Company->{reg_id}."+".$Company->{id}." - Subscription Add Failed\n";
-
-				$Status .= "<li>Unfortunately we have not been able to set up your new subscription, please contact FreePlus Accounts Technical Support if you require further information</li>\n";
-				$Status .= "<li>In the meantime we have reverted you to FreePlus Startup which is completely free to use.</li></ul>\n";
-			}
-		}
-		else {
-			$Status .= "<li>Unfortunately we have been unable to cancel your existing subscription, please contact FreePlus Accounts Technical Support</li></ul>\n";
-		}
-	}
-	else {
-
-		print LOG $Company->{reg_id}."+".$Company->{id}." - Subscription Delete Failed\n";
-
-		$Status .= "<li>Unfortunately we have been unable to cancel your existing subscription, please contact FreePlus Accounts Technical Support</li></ul>\n";
-	}
+	$Sts = $dbh->do("update companies set comsublevel='$Level' where commerchantref='$Company->{commerchantref}'");
+	$Sts = $dbh->do("update registrations set regmembership='$Membership[$Level]' where reg_id=$Company->{reg_id}");
+	&update_cookiefile();
 }
 
 close(LOG);

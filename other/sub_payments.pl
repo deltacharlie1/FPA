@@ -95,7 +95,7 @@ $Subs = $dbh->prepare("select id,datediff(now(),subdatepaid) as difsubpaid,subst
 
 #  Get all due subscriptions
 
-$Subscribers = $dbh->prepare("select id,reg_id,comsublevel,commerchantref,comsubref,datediff(comsubdue,now()) as difsubdue,comname,comaddress,compostcode,regemail from companies left join registrations using (reg_id) where comsublevel>0 and comsubdue<>'2010-01-01' and datediff(comsubdue,now()) < 3");	#  ie subscription due within 2 days
+$Subscribers = $dbh->prepare("select id,reg_id,comsublevel,commerchantref,comcardref,datediff(comsubdue,now()) as difsubdue,comname,comaddress,compostcode,regemail from companies left join registrations using (reg_id) where comsublevel>0 and comsubdue<>'2010-01-01' and datediff(comsubdue,now()) < 3");	#  ie subscription due within 2 days
 $Subscribers->execute;
 while ($Subscriber = $Subscribers->fetchrow_hashref) {
 
@@ -103,34 +103,36 @@ while ($Subscriber = $Subscribers->fetchrow_hashref) {
 	my $XML_Result = "";
 
 	my $Vat = sprintf('%1.2f',$Subrate[$Subscriber->{comsublevel}] * 0.2);
-	my $Total = $Subrate[$Subscriber->{comsublevel}] + $Vat;
+	my $Total = sprintf('%1.2f',$Subrate[$Subscriber->{comsublevel}] + $Vat);
 
 #  Try and take the subscription
 
 	my $Hash = Digest->new("MD5");
-	$Hash->add($Termid.$Orderid.$Subscriber->{comsubref}.$Total.$Dte.$Secret);
+	$Hash->add($Termid.$Orderid.$Total.$Dte.$Secret);
 	my $Hash_text = $Hash->hexdigest;
 
 #  Construct the xml to be posted
 
 	my $Content = sprintf<<EOD;
 <?xml version="1.0" encoding="UTF-8"?>
-<SUBSCRIPTIONPAYMENT>
+<PAYMENT>
   <ORDERID>$Orderid</ORDERID>
   <TERMINALID>$Termid</TERMINALID>
   <AMOUNT>$Total</AMOUNT>
-  <SUBSCRIPTIONREF>$Subscriber->{comsubref}</SUBSCRIPTIONREF>
   <DATETIME>$Dte</DATETIME>
+  <CARDNUMBER>$Subscriber->{comcardref}</CARDNUMBER>
+  <CARDTYPE>SECURECARD</CARDTYPE>
   <HASH>$Hash_text</HASH>
-</SUBSCRIPTIONPAYMENT>
+  <CURRENCY>GBP</CURRENCY>
+  <TERMINALTYPE>2</TERMINALTYPE>
+  <TRANSACTIONTYPE>7</TRANSACTIONTYPE>
+  <DESCRIPTION>$Subscription[$Subscriber->{comsublevel}]</DESCRIPTION>
+</PAYMENT>
 EOD
-
-print $Content."\n";
 
 	my $ua = LWP::UserAgent->new;
 	$ua->agent("FPA/0.1");
 
-print "	my \$req = HTTP::Request->new(POST => \"https://$URL.worldnettps.com/merchant/xmlpayment\")\n";
 	my $req = HTTP::Request->new(POST => "https://$URL.worldnettps.com/merchant/xmlpayment");
 	$req->content_type('text/xml');
 	$req->content($Content);
@@ -143,10 +145,6 @@ print "	my \$req = HTTP::Request->new(POST => \"https://$URL.worldnettps.com/mer
 		my $Res_content = $res->content;
 
                 print LOG $Subscriber->{reg_id}."+".$Subscriber->{id}." - ".$Res_content."\n";
-
-#		my $Res_content = '<ERROR><ERRORSTRING>Multiple payments for one period is not allowed</ERRORSTRING></ERROR>';
-#		my $Res_content = '<SUBSCRIPTIONPAYMENTRESPONSE><RESPONSECODE>A</RESPONSECODE><RESPONSETEXT>Authorised</RESPONSETEXT><APPROVALCODE>394381</APPROVALCODE><DATETIME>2012-01-23T14:03:14</DATETIME><HASH>1fef6c5a8cb20398abc7e9892bd6c4d4</HASH></SUBSCRIPTIONPAYMENTRESPONSE>';
-#		my $Res_content = '<SUBSCRIPTIONPAYMENTRESPONSE><RESPONSECODE>D</RESPONSECODE><RESPONSETEXT>Declined</RESPONSETEXT><APPROVALCODE>394381</APPROVALCODE><DATETIME>2012-01-23T14:03:14</DATETIME><HASH>1fef6c5a8cb20398abc7e9892bd6c4d4</HASH></SUBSCRIPTIONPAYMENTRESPONSE>';
 
 		($XML_Result,$XML_Text,$XML_Auth) = ($Res_content =~ /^.*?CODE>(\w+)<\/RESPONSE.*?TEXT>(\w+)<\/RESPONSETEXT.*?CODE>(.*)?<\/APP.*$/);
 
@@ -265,7 +263,7 @@ EOD
 					}
 					elsif ($Subscriber->{difsubdue} < -3) {
 						$Sts = $dbh->do("update subscriptions set substatus='Cancelled' where id=$Sub->{id}");
-						$Sts = $dbh->do("update companies set compt_logo='2010-01-01',comsubdue='2010-01-01',comsublevel='00',comsubref='' where reg_id=$Subscriber->{reg_id} and id=$Subscriber->{id}");
+						$Sts = $dbh->do("update companies set compt_logo='2010-01-01',comsubdue='2010-01-01',comsublevel='00',comsubref='',comuplds=0,comno_ads='2010-01-01' where reg_id=$Subscriber->{reg_id} and id=$Subscriber->{id}");
 						$Sts = $dbh->do("update registrations set regmembership='1' where reg_id=$Subscriber->{reg_id}");
 ##################################### send cancellation email  #######################################
 						$Email_msg = sprintf<<EOD;
@@ -279,34 +277,6 @@ EOD
 						$Inv_status = 'No Invoice';
 
 						&send_email();
-##################################### do XML delete subscription  ####################################
-
-						$Hash = Digest->new("MD5");
-						$Hash->add($Termid.$Subscriber->{comsubref}.$Dte.$Secret);
-						$Hash_text = $Hash->hexdigest;
-
-						$Content = sprintf<<EOD;
-<?xml version="1.0" encoding="UTF-8"?>
-<DELETESUBSCRIPTION>
-  <MERCHANTREF>$Subscriber->{comsubref}</MERCHANTREF>
-  <TERMINALID>$Termid</TERMINALID>
-  <DATETIME>$Dte</DATETIME>
-  <HASH>$Hash_text</HASH>
-</DELETESUBSCRIPTION>
-EOD
-
-						my $ua = LWP::UserAgent->new;
-						$ua->agent("FPA/0.1");
-
-						my $req = HTTP::Request->new(POST => "https://$URL.worldnettps.com/merchant/xmlpayment");
-						$req->content_type('text/xml');
-						$req->content($Content);
-	
-						my $res = $ua->request($req);
-	
-						$Res_content = $res->content;
-
-                				print LOG $Company->{reg_id}."+".$Company->{id}." - ".$Res_content."\n";
 					}
 					else {
 						$Email_msg = sprintf<<EOD;
@@ -317,7 +287,6 @@ EOD
 						$Inv_status = 'No Invoice';
 
 						&send_email();
-						print "Overdue but not cancelled\n";
 					}
 				}
 			}

@@ -6,7 +6,7 @@
     </tr>
   </table>
   <br/>
-  <h2>Card Details Setup</h2>
+  <h2>Subscription Change</h2>
   <table width="660"cellspacing="0" cellpadding="0" border="0" class="formtable">
     <tr>
       <td align="center">[%- status -%]</td>

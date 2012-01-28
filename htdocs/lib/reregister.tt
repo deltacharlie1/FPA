@@ -27,16 +27,17 @@
     <td><span><input name="email" type="text" id="email" size="30" class="mandatory" title="Email Address" value="[%- reg.regemail -%]"/></span></td>
   </tr>
   <tr>
-    <td><label>Membership Plan</label></td>
-    <td>
-      <select name="plan" id="plan" size="1">
-        <option value="1"[%- IF reg.regmembership == '1' -%] selected="selected"[%- END -%]>FreePlus Startup  --  FREE!</option>
-<!--        <option value="3"[%- IF reg.regmembership == '3' -%] selected="selected"[%- END -%]>FreePlus Premium  --  &pound;10pm</option>  //-->
-<!--        <option value="4"[%- IF reg.regmembership == '4' -%] selected="selected"[%- END -%]>FreePlus Platinum  --  &pound;15pm</option>  //-->
-      </select>
-    </td>
+    <td><label>Subscription Level</label></td>
+    <td style="font-weight:bold;font-size:1.2em;">
+        [%- IF reg.regmembership == '1' -%]FreePlus Startup  --  FREE!
+[%- ELSIF reg.regmembership == '3' -%]FreePlus Bookkeeper Basic  --  &pound;5pm
+[%- ELSIF reg.regmembership == '4' -%]FreePlus Standard  --  &pound;5pm
+[%- ELSIF reg.regmembership == '5' -%]FreePlus Bookkeeper Standard  --  &pound;10pm
+[%- ELSIF reg.regmembership == '6' -%]FreePlus Premium  --  &pound;10pm
+[%- ELSIF reg.regmembership == '8' -%]FreePlus Bookkeeper Premium  --  &pound;15pm
+[%- END -%]
   </tr>
-  <tr>
+<!--  <tr>
     <td><label>Preferred Menu</label></td>
     <td>
       <select name="regmenu" id="regmenu" size="1">
@@ -44,6 +45,7 @@
         <option value="S"[%- IF reg.regmenu == 'S' -%] selected="selected"[%- END -%]>Simple Menu</option>
       </select>
     </td>
+  </tr>  -->
   <tr>
     <td><label>Email Opt In</label></td>
     <td>
@@ -52,7 +54,6 @@
         <option value="N"[%- IF reg.regoptin == 'N' -%] selected="selected"[%- END -%]>No - I wish to stop receiving emails</option>
       </select>
     </td>
-  </tr>
   </tr>
 </table>
 </div>

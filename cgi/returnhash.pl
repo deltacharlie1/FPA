@@ -29,11 +29,6 @@ chomp($Termid);
 chomp($Secret);
 chomp($URL);
 
-# $Termid = '2645001';
-#$Termid = '2706001';
-# $Secret = 'CorunnaSecret';
-# $Secret = 'F1sherfolK';
-
 use DBI;
 $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
 
