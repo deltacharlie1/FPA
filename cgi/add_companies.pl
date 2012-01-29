@@ -56,10 +56,10 @@ $Vars = {
         javascript => '<script type="text/javascript">
 var item_rows = [];
 var tbl;
+var remaining = '.$Remaining.';
 
 function display_table() {
-  var item_table = "";a
-  var remaining = '.$Remaining.';
+  var item_table = "";
   var vatqend = [];
   vatqend[1] = "Jan/Apr/Jul/Oct";
   vatqend[2] = "Feb/May/Aug/Nov";
@@ -98,7 +98,7 @@ function display_table() {
   document.getElementById("data").value = item_table;
 }
 
-function add_company() {a
+function add_company() {
   if (remaining < 1) {
     alert("You will need to upgrade your subscription before you can add further companies");
   }

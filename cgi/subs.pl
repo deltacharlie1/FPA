@@ -33,7 +33,7 @@ chomp($Termid);
 chomp($Secret);
 chomp($URL);
 
-$Companies = $dbh->prepare("select comsublevel,comsubtype,commerchantref,comcardref from companies where reg_id=$Reg_id and id=$Com_id");
+$Companies = $dbh->prepare("select comsublevel,comsubtype,commerchantref,comcardref,date_format(comsubdue,'%d-%b-%y') as subdue from companies where reg_id=$Reg_id and id=$Com_id");
 $Companies->execute;
 $Company = $Companies->fetchrow_hashref;
 $Companies->finish;

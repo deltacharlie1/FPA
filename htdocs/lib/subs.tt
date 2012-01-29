@@ -15,6 +15,12 @@
       <td style="text-align:right;font-size:14px;" width="45%">Current Subscription Level:</td>
       <td width="55%"><span style="font-size:14px;font-weight:bold;">[%- membership -%]</span></td>
     </tr>
+[% IF cookie.ACCESS > 1 -%]
+    <tr>
+      <td style="text-align:right;" width="45%">Current Until:</td>
+      <td width="55%"><span style="font-weight:bold;">[%- company.subdue -%]</span></td>
+    </tr>
+[% END -%]
   </table>
   <br/>
   <h2>Subscriptions</h2>

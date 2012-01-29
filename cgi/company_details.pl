@@ -60,7 +60,7 @@ $Invoice = $Invoices->fetchrow_hashref;
 $Invoices->finish;
 
 $Loadify = "";
-if ($COOKIE->{PT_LOGO} =~ /1/) {
+if ($COOKIE->{ACCESS} > 3 || $COOKIE->{PT_LOGO} =~ /1/) {
 	$Loadify1 = sprintf<<EOD;
   \$("#comlogo").uploadify({
     "uploader"    : "/js/uploadify.swf",
