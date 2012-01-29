@@ -155,16 +155,12 @@ EOD
 		@Date = $Dates->fetchrow;
 		$Dates->finish;
 
-#  See if any bonus features have been selected
+#  See if  we have a promotional code
 
-		$Bonusfeatures = "";
-		if ($FORM{ownlogo}) { $Bonusfeatures .= "compt_logo='$Date[0]',"; }
-		if ($FORM{uplds}) { $Bonusfeatures .= "comuplds='2048000',"; }
-		if ($FORM{stmts}) { $Bonusfeatures .= "comstmts='$Date[0]',"; }
-		if ($FORM{suppt}) { $Bonusfeatures .= "comsuppt='3',"; }
-		if ($FORM{addusr}) { $Bonusfeatures .= "comadd_user='1',"; }
-
-		$Sts = $dbh->do("update companies set $Bonusfeatures comexpid='$New_exp_id' where reg_id=$New_reg_id and id=$New_com_id");
+		if ($FORM{promo} =~ /^cms35$/i) {		#  Complete Marketing Services (bookkeeper)
+			$Sts = $dbh->do("update companies set comsublevel='3',comsubdue=date_add(now(),interval 30 day) where reg_id=$New_reg_id and id=$New_com_id");
+			$Sts = $dbh->do("update registrations set regmembership='5' where reg_id=$New_reg_id");
+		}
 
 #  Create the reg_com record
 

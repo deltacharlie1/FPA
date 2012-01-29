@@ -117,7 +117,7 @@
 [% IF cookie.PLAN > 1 -%]
     <li>
       <div>
-        <input type="button" name="card" id="card" value="Change Card Details" onclick="calc_hash('card');"/>
+        <input type="button" name="card" id="card" value="Update Card Details" onclick="calc_hash('card');"/>
       </div>
     </li>
     <li>

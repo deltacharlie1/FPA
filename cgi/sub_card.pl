@@ -51,40 +51,28 @@ if ($FORM{RESPONSECODE} =~ /A/i) {
 
 	$Sts = $dbh->do("update companies set comcardref='$FORM{CARDREFERENCE}' where commerchantref='$FORM{MERCHANTREF}'");
 
-	unless ($Company->{comcardref}=~ /card/) {		#  We are going further so just call sub_subscribe.pl with merchantref
-
-		print<<EOD;
-Content-Type: text/hrml
-Status: 301
-Location: /cgi-bin/fpa/sub_subscribe.pl?$FORM{MERCHANTREF}
-
-EOD
-	}
-	else {
-
 #  Inform the user that his card update has been successful
 
-		$FORM{CARDEXPIRY} =~ s/(\d\d)(\d\d)/$1\/$2/;
+	$FORM{CARDEXPIRY} =~ s/(\d\d)(\d\d)/$1\/$2/;
 
-		use Template;
-		$tt = Template->new({
-			INCLUDE_PATH => ['.','/usr/local/httpd/htdocs/fpa/lib'],
-			WRAPPER => 'header.tt'
-		});
+	use Template;
+	$tt = Template->new({
+		INCLUDE_PATH => ['.','/usr/local/httpd/htdocs/fpa/lib'],
+		WRAPPER => 'header.tt'
+	});
 
-		$Vars = { cardtype => $FORM{CARDTYPE},
-		          cardnumber => $FORM{MASKEDCARDNUMBER},
-		          expiry => $FORM{CARDEXPIRY},
-			  cookie => $COOKIE,
-			  title => 'Credit/Debit Card Details',
-			  company => $Company,
-			  membership => $Membership[$Company->{comsublevel}],
-			  status => "OK"
-		};
+	$Vars = { cardtype => $FORM{CARDTYPE},
+	          cardnumber => $FORM{MASKEDCARDNUMBER},
+	          expiry => $FORM{CARDEXPIRY},
+		  cookie => $COOKIE,
+		  title => 'Credit/Debit Card Details',
+		  company => $Company,
+		  membership => $Membership[$Company->{comsublevel}],
+		  status => "OK"
+	};
 
-		print "Content-Type: text/html\n\n";
-		$tt->process('sub_card.tt',$Vars);
-	}
+	print "Content-Type: text/html\n\n";
+	$tt->process('sub_card.tt',$Vars);
 }
 else {
 

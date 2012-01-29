@@ -106,15 +106,18 @@ while ($Subscriber = $Subscribers->fetchrow_hashref) {
 	my $Vat = sprintf('%1.2f',$Subrate[$Subscriber->{comsublevel}] * 0.2);
 	my $Total = sprintf('%1.2f',$Subrate[$Subscriber->{comsublevel}] + $Vat);
 
+#  If comcardref = something, ie we already have card details
+
+	if ($Subscriber->{comcardref}) {
 #  Try and take the subscription
 
-	my $Hash = Digest->new("MD5");
-	$Hash->add($Termid.$Orderid.$Total.$Dte.$Secret);
-	my $Hash_text = $Hash->hexdigest;
+		my $Hash = Digest->new("MD5");
+		$Hash->add($Termid.$Orderid.$Total.$Dte.$Secret);
+		my $Hash_text = $Hash->hexdigest;
 
 #  Construct the xml to be posted
 
-	my $Content = sprintf<<EOD;
+		my $Content = sprintf<<EOD;
 <?xml version="1.0" encoding="UTF-8"?>
 <PAYMENT>
   <ORDERID>$Orderid</ORDERID>
@@ -131,23 +134,30 @@ while ($Subscriber = $Subscribers->fetchrow_hashref) {
 </PAYMENT>
 EOD
 
-	my $ua = LWP::UserAgent->new;
-	$ua->agent("FPA/0.1");
+		my $ua = LWP::UserAgent->new;
+		$ua->agent("FPA/0.1");
 
-	my $req = HTTP::Request->new(POST => "https://$URL.worldnettps.com/merchant/xmlpayment");
-	$req->content_type('text/xml');
-	$req->content($Content);
+		my $req = HTTP::Request->new(POST => "https://$URL.worldnettps.com/merchant/xmlpayment");
+		$req->content_type('text/xml');
+		$req->content($Content);
 
-	my $res = $ua->request($req);
+		my $res = $ua->request($req);
+		$Res_success = $res->is_success;
+		$Res_content = $res->content;
+	}
+	else {
 
-	if ($res->is_success) {
+#  Still in free period so spoof xml request
 
+		$Res_success = '1';
+		$Res_content = '<PAYMENTRESPONSE><RESPONSECODE>D</RESPONSECODE><RESPONSETEXT>Card Details not yet entered</RESPONSETEXT><APPROVALCODE></APPROVALCODE><DATETIME>2012-01-28T19:02:08</DATETIME><AVSRESPONSE>U</AVSRESPONSE><CVVRESPONSE></CVVRESPONSE><HASH>a9970f6aec94972e3bfcf965ca807584</HASH></PAYMENTRESPONSE>';
+	}
 
-		my $Res_content = $res->content;
+	if ($Res_success) {
 
                 print LOG $Subscriber->{reg_id}."+".$Subscriber->{id}." - ".$Res_content."\n";
 
-		($XML_Result,$XML_Text,$XML_Auth) = ($Res_content =~ /^.*?CODE>(\w+)<\/RESPONSE.*?TEXT>(\w+)<\/RESPONSETEXT.*?CODE>(.*)?<\/APP.*$/);
+		($XML_Result,$XML_Text,$XML_Auth) = ($Res_content =~ /^.*?CODE>(\w+)<\/RESPONSE.*?TEXT>(.+)<\/RESPONSETEXT.*?CODE>(.*)?<\/APP.*$/);
 
 		unless ($Res_content =~ /ERROR/i) {
 
@@ -197,14 +207,15 @@ EOD
 					$Sts = $dbh->do("insert into subscriptions (acct_id,subdateraised,subinvoiceno,subdescription,subnet,subvat,subauthcode,substatus,submerchantref,subreason) values ('$Subscriber->{reg_id}+$Subscriber->{id}',now(),'$Orderid','$Subscription[$Subscriber->{comsublevel}]','$Subrate[$Subscriber->{comsublevel}]','$Vat','$XML_Auth','Due','$Subscriber->{commerchantref}','$XML_Text')");
 
 #######################################  Send due invoice email  ##########################################
+
 					$Email_msg = sprintf<<EOD;
 Your FreePlus Accounts subscription invoice is attached.
 
 We have not been able to debit your card for the amount due as the payment has been declined with the reason '$XML_Text' being given.
 
-For the timebeing your subscription is still valid but if you wish to continue using the additional FreePlus Accounts features would you pleas address this issue by logging in to your account, going to Admin -> My Account and updating your card details.  We will attempt to take payment again in the next day or so.
+Your subscription is still valid but if you wish to continue using the additional FreePlus Accounts features you will need to update your card details by logging in to your account, going to Admin -> My Account and updating those details within the next few days.  We will attempt to take payment again in the next day or so.
 
-You can also access this invoice (and all your previous invoices) by logging in to your account and going to Admin -> My Account.
+You can access this invoice (and any previous invoices) by logging in to your account and going to Admin -> My Account.
 
 Thank you for your continued custom, it's very much appreciated.
 

@@ -54,7 +54,11 @@
             </tr>
             <tr>
               <td valign="top"><label>How did you hear of Us?</label></td>
-              <td style="padding-left:15px;"><textarea style="background-color:#fff;border-top:2px solid #999999; border-left:2px solid #999999;border-bottom:1px solid #ffffff;border-right:1px solid #ffffff;" name="referer" id="referer" cols="25" rows="3" title="How did you hear about us?"></textarea></br><span style="color:#999999;font-size:10px;">(up to 200 characters)</td>
+              <td style="padding-left:15px;"><textarea style="background-color:#fff;border-top:2px solid #999999; border-left:2px solid #999999;border-bottom:1px solid #ffffff;border-right:1px solid #ffffff;" name="referer" id="referer" cols="25" rows="2" title="How did you hear about us?"></textarea></br><span style="color:#999999;font-size:10px;">(up to 200 characters)</td>
+            </tr>
+            <tr>
+              <td><label>Promotional Code</label></td>
+              <td><input name="promo" type="text" id="promo" size="10" title="Any Promotional Code you may have been given"/></td>
             </tr>
             <tr>
               <td colspan="2" align="center" ><span><input name="tc" type="checkbox" id="tc" value="checkbox" class="mandatory" title="Terms and Conditions" onclick="document.getElementById('but2').disabled = ! document.getElementById('but2').disabled;"/></span>
@@ -71,31 +75,6 @@
               </td>
             </tr>
           </table></div>
-<!--            <div id="bonusfeatures" title="Bonus Features" style="display:none;">
-              <table width="100%" cellpadding="4" cellspacing="0" border="0" class="formtable">
-                <tr>
-                  <td>As a bonus to our early users we are offering you the opportunity to try out selected additional features for up to 3 months.</td>
-                </tr>
-                <tr>
-                  <td>Simply de-select any features that you do <b>NOT</b> wish to try.</td>
-                </tr>
-                <tr>
-                  <td><label>Your own logo on invoices</label></td>
-                  <td><input type="checkbox" name="ownlogo" id="ownlogo" class="bonus" value="Y"/></td>
-                </tr>
-                <tr>
-                  <td><label>2MB worth of file uploads</label></td>
-                  <td><input type="checkbox" name="uplds" id="uplds" class="bonus" value="Y"/></td>
-                </tr>
-                <tr>
-                  <td><label>Advertise your Business<br/>(Please <a href="/contact-us">Contact Us</a> to set this up)</label></td>
-                  <td><input type="checkbox" name="advt" id="advt" class="bonus" value="Y"/></td>
-                </tr>
-                <tr>
-                  <td>Remember to click the Register button on the main screen!</td>
-                </tr>
-              </table>
-            </div>  -->
           </form>
         </tr>
       </table>

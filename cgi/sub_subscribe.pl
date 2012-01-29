@@ -118,11 +118,11 @@ EOD
 }
 elsif ($Company->{comsublevel} =~ /00/) {	#  New subscription
 
-	$Status .= "<p>Thank you for subscribing to FreePlus Accounts.</p><p>Your subscription choice of <b>$Subtype{$Company->{comsubtype}}</b> has now been set up.&nbsp;&nbsp;We will not take your subscription for at least one day to give you time to try out the additional features.&nbsp;&nbsp;You may cancel at any time during that period without incurring any cost.</p>\n";
+	$Status .= "<p>Thank you for subscribing to FreePlus Accounts.</p><p>Your subscription choice of <b>$Subtype{$Company->{comsubtype}}</b> has now been set up.</p><p>Your 30 day free period begins immediately and you may cancel at any time without incurring any cost.&nbsp;&nbsp;If, after that time, you wish to ocntinue using the additional features you will need to enter your credit/debit card details by going to 'My Account' and clicking on the 'Update Card Details' tab.&nbsp;&nbsp;To help you, we will send you a reminder email a few days before the free period is due to end.</p>\n";
 	$Level = $Company->{comsubtype};
 	$Level =~ s/.+(\d)$/$1/;
 
-	$Sts = $dbh->do("update companies set comsublevel='$Level',comsubdue=date_add(str_to_date('$Startdate','%d-%m-%Y'),interval 3 day),comadd_user='1' where commerchantref='$Company->{commerchantref}'");
+	$Sts = $dbh->do("update companies set comsublevel='$Level',comsubdue=date_add(str_to_date('$Startdate','%d-%m-%Y'),interval 30 day),comadd_user='1' where commerchantref='$Company->{commerchantref}'");
 	$Sts = $dbh->do("update registrations set regmembership='$Membership[$Level]' where reg_id=$Company->{reg_id}");
 	&update_cookiefile();
 }

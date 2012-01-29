@@ -43,9 +43,9 @@ $Company = $Companies->fetchrow_hashref;
 if ($FORM{action} =~ /cancel/i) {
 	$Sts = $dbh->do("update companies set comsubtype='cancel' where reg_id=$Reg_id and id=$Com_id");
 }
-elsif ($FORM{action} =~ /card/) {
-	$Sts = $dbh->do("update companies set comcardref='card' where reg_id=$Reg_id and id=$Com_id");
-}
+#elsif ($FORM{action} =~ /card/) {
+#	$Sts = $dbh->do("update companies set comcardref='card' where reg_id=$Reg_id and id=$Com_id");
+#}
 else {
 	$Sts = $dbh->do("update companies set comsubtype='$FORM{sub}' where reg_id=$Reg_id and id=$Com_id");
 }

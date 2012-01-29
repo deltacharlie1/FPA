@@ -79,7 +79,8 @@ function calc_hash(action) {
      document.getElementById("sub_merchantref").value = data[0].merchref;
      document.getElementById("sub_datetime").value = data[0].dte;
      document.getElementById("sub_hash").value = data[0].hash;
-     if (/^0/.test($("#sub_current").val()) || action == "card") {
+     if (action == "card") {
+
        document.form1.action = "https://'.$URL.'.worldnettps.com/merchant/securecardpage";
      }
      else {
