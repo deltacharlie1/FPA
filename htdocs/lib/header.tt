@@ -195,6 +195,9 @@ $(document).ready(function(){
         <li class="help"><a href="#"><span>Help</span></a>
           <ul>
             <li><a href="/usermanual.pdf">Help Manual</a></li>
+[% IF cookie.BUS == '1' -%]
+            <li><a href="/bkprmanual.pdf">Bookkeeper Additions Manual</a></li>
+[% END -%]
             <li><a href="#" onclick="window.open('/cgi-bin/fpa/help_tutorials.pl','tutorials','width=700 height=900 top=50 left=200 scrollbars=yes');">Video Tutorials</a></li>
           </ul>
         </li>
