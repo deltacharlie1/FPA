@@ -119,6 +119,7 @@ create table accounts (
   accsort varchar(50) not null default '' comment 'Sort Code',
   accacctno varchar(20) not null default '' comment 'Account No',
   acctswift varchar(20) not null default '' comment 'Account Swift Code no',
+  accnewrec char(1) not null default 'N' comment 'whether to use the new reconciliation programs Y - yes, N - no',
   old_id int unsigned,
   index (acct_id)
 );

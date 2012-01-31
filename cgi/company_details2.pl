@@ -176,10 +176,10 @@ else {
         $Accts->execute;
         if ($Accts->rows > 0) {         #  Existing Account
                 @Acct = $Accts->fetchrow;
-                $Sts = $dbh->do("update accounts set accname='$FORM{curname}',accsort='$FORM{cursort}',accacctno='$FORM{curacctno}' where acct_id='$COOKIE->{ACCT}' and id=$Acct[0]");
+                $Sts = $dbh->do("update accounts set accname='$FORM{curname}',accsort='$FORM{cursort}',accacctno='$FORM{curacctno}',accnewrec='$FORM{curnewrec}' where acct_id='$COOKIE->{ACCT}' and id=$Acct[0]");
         }
         else {                          #  New Account
-                $Sts = $dbh->do("insert into accounts (acct_id,acctype,accshort,accname,accsort,accacctno) values ('$COOKIE->{ACCT}','1200','Current','$FORM{curname}','$FORM{cursort}','$FORM{curacctno}')");
+                $Sts = $dbh->do("insert into accounts (acct_id,acctype,accshort,accname,accsort,accacctno,accnewrec) values ('$COOKIE->{ACCT}','1200','Current','$FORM{curname}','$FORM{cursort}','$FORM{curacctno}','$FORM{curnewrec}')");
         }
 
 #  Check to see if we have any Deposit Account data (ie a bank name)
@@ -188,10 +188,10 @@ else {
         $Accts->execute;
         if ($Accts->rows > 0) {         #  Existing Account
                 @Acct = $Accts->fetchrow;
-                $Sts = $dbh->do("update accounts set accname='$FORM{depname}',accsort='$FORM{depsort}',accacctno='$FORM{depacctno}' where acct_id='$COOKIE->{ACCT}' and id=$Acct[0]");
+                $Sts = $dbh->do("update accounts set accname='$FORM{depname}',accsort='$FORM{depsort}',accacctno='$FORM{depacctno}'accnewrec='$FORM{depnewrec}' where acct_id='$COOKIE->{ACCT}' and id=$Acct[0]");
         }
         else {                          #  New Account
-                $Sts = $dbh->do("insert into accounts(acct_id,acctype,accshort,accname,accsort,accacctno) values ('$COOKIE->{ACCT}','1210','Deposit','$FORM{depname}','$FORM{depsort}','$FORM{depacctno}')");
+                $Sts = $dbh->do("insert into accounts(acct_id,acctype,accshort,accname,accsort,accacctno,accnewrec) values ('$COOKIE->{ACCT}','1210','Deposit','$FORM{depname}','$FORM{depsort}','$FORM{depacctno}','$FORM{depnewrec}')");
         }
 
 #  Check to see if we have any Credit Card
@@ -200,10 +200,10 @@ else {
         $Accts->execute;
         if ($Accts->rows > 0) {         #  Existing Account
                 @Acct = $Accts->fetchrow;
-                $Sts = $dbh->do("update accounts set accname='$FORM{depname}' where acct_id='$COOKIE->{ACCT}' and id=$Acct[0]");
+                $Sts = $dbh->do("update accounts set accname='$FORM{cardname}',accnewrec='$FORM{cardnewrec}' where acct_id='$COOKIE->{ACCT}' and id=$Acct[0]");
         }
         else {                          #  New Account
-                $Sts = $dbh->do("insert into accounts(acct_id,acctype,accshort,accname) values ('$COOKIE->{ACCT}','2010','Card','$FORM{cardname}')");
+                $Sts = $dbh->do("insert into accounts(acct_id,acctype,accshort,accname,accnewrec) values ('$COOKIE->{ACCT}','2010','Card','$FORM{cardname}','$FORM{cardnewrec}')");
         }
 	$Accts->finish;
 

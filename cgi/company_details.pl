@@ -44,7 +44,7 @@ $Companies->execute($Reg_id,$Com_id);
 $Company = $Companies->fetchrow_hashref;
 unless ($Company->{comcis}) { $Company->{comcis} = 'N'; }
 
-$Accts = $dbh->prepare("select acctype,accname,accsort,accacctno from accounts where acct_id='$COOKIE->{ACCT}'");
+$Accts = $dbh->prepare("select acctype,accname,accsort,accacctno,accnewrec from accounts where acct_id='$COOKIE->{ACCT}'");
 $Accts->execute;
 $Acct = $Accts->fetchall_hashref('acctype');
 $Accts->finish;

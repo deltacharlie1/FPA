@@ -110,24 +110,28 @@
             <th>Bank Name</th>
             <th>Sort Code</th>
             <th>Account No</th>
+            <th>New Reconcile</th>
           </tr>
           <tr>
             <td>Current Account</td>
-            <td><span><input title="Current Acct Name" name="curname" type="text" id="curname" size="20" value="[%- cur.accname -%]"/></span></td>
-            <td><span><input title="Current Acct Sort Code" name="cursort" type="text" id="cursort" size="10" value="[%- cur.accsort -%]"/></span></td>
-            <td><span><input title="Current Acct No" name="curacctno" type="text" id="curacctno" size="10" value="[%- cur.accacctno -%]"/></span></td>
+            <td><span><input title="Current Acct Name" name="curname" type="text" id="curname" size="15" value="[%- cur.accname -%]"/></span></td>
+            <td><span><input title="Current Acct Sort Code" name="cursort" type="text" id="cursort" size="8" value="[%- cur.accsort -%]"/></span></td>
+            <td><span><input title="Current Acct No" name="curacctno" type="text" id="curacctno" size="8" value="[%- cur.accacctno -%]"/></span></td>
+            <td><span><input title="Old or New Reconciliation Method" name="curnewrec" type="radio" id="curnewrecN" value="N"[%- IF cur.accnewrec == 'N' -%] checked='checked'[%- END -%]/> No <input title="Old or New Reconciliation Method" name="curnewrec" type="radio" id="curnewrecY" value="Y"[%- IF cur.accnewrec == 'Y' -%] checked='checked'[%- END -%]/> Yes</span></td>
           </tr>
           <tr>
             <td>Deposit Account</td>
-            <td><span><input title="Deposit Acct Name" name="depname" type="text" id="depname" size="20" value="[%- dep.accname -%]"/></span></td>
-            <td><span><input title="Deposit Acct Sort Code" name="depsort" type="text" id="depsort" size="10" value="[%- dep.accsort -%]"/></span></td>
-            <td><span><input title="Deposit Acct No" name="depacctno" type="text" id="depacctno" size="10" value="[%- dep.accacctno -%]"/></span></td>
+            <td><span><input title="Deposit Acct Name" name="depname" type="text" id="depname" size="15" value="[%- dep.accname -%]"/></span></td>
+            <td><span><input title="Deposit Acct Sort Code" name="depsort" type="text" id="depsort" size="8" value="[%- dep.accsort -%]"/></span></td>
+            <td><span><input title="Deposit Acct No" name="depacctno" type="text" id="depacctno" size="8" value="[%- dep.accacctno -%]"/></span></td>
+            <td><span><input title="Old or New Reconciliation Method" name="depnewrec" type="radio" id="depnewrecN" value="N"[%- IF dep.accnewrec == 'N' -%] checked='checked'[%- END -%]/> No <input title="Old or New Reconciliation Method" name="depnewrec" type="radio" id="depnewrecY" value="Y"[%- IF dep.accnewrec == 'Y' -%] checked='checked'[%- END -%]/> Yes</span></td>
           </tr>
           <tr>
             <td>Credit Card</td>
-            <td><span><input title="Credit Card Name" name="cardname" type="text" id="cardname" size="20" value="[%- card.accname -%]"/></span></td>
+            <td><span><input title="Credit Card Name" name="cardname" type="text" id="cardname" size="15" value="[%- card.accname -%]"/></span></td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
+            <td><span><input title="Old or New Reconciliation Method" name="cardnewrec" type="radio" id="cardnewrecN" value="N"[%- IF card.accnewrec == 'N' -%] checked='checked'[%- END -%]/> No <input title="Old or New Reconciliation Method" name="cardnewrec" type="radio" id="cardnewrecY" value="Y"[%- IF card.accnewrec == 'Y' -%] checked='checked'[%- END -%]/> Yes</span></td>
           </tr>
         </table></div>
       </td>
