@@ -6,11 +6,11 @@
     <tr>
       <td nowrap="nowrap">Nominal Account<br/>
       <select name="nomcode" id="blk_nomcode" size="1">
+            <option value="1000">Fixed Assets</option>
+            <option value="1500">Other Current Assets</option>
             [% cookie.5000 -%]
             [% cookie.6000 -%]
             [% cookie.7000 -%]
-            <option value="1000">1000 - Fixed Assets</option>
-            <option value="1500">1500 - Other Current Assets</option>
           </select>
       </td>
       <td nowrap="nowrap">Payment Method<br/>
