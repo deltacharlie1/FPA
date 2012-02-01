@@ -117,7 +117,7 @@
       <td style="text-align:right;padding-right:40px;">[%- IF invoice.invtype == 'C'; 0 - invoice.totpaid | format('%1.2f'); ELSE; invoice.totpaid; END -%]</td>
     </tr>
   </table>
-<p>&nbsp;</p>
+<p>&nbsp;</p><div style="float:left">
 <h2>Payment History</h2>
   <table width="400" border="0" cellpadding="0" cellspacing="0" class="listing">
     <tr>
@@ -149,6 +149,15 @@
     </tr>
 [%- END -%]
   </table>
+</div>
+[% IF invoice.invnotes != '' -%]
+<div style="width:225px;float:right;margin-right:55px;">
+  <h2>Notes</h2>
+  <div style="padding:10px;border:1px solid #999999;color:#666666;">
+[% invoice.invnotes | replace('\n','<br/>') -%]
+  </div>
+</div>
+[% END -%]
 </div>
 <div id="sidebar">
 <ul>
@@ -205,6 +214,13 @@
     </li>   
   [% END -%]
 [%- END -%]
+    <li>
+      <div>
+        <a href="#" onclick="add_note('[%- invoice.id -%]');">
+         Add a Note
+        </a>
+      </div>
+    </li>
     <li>    
       <div>
         <a href="/cgi-bin/fpa/list_customer_invoices.pl?[%- invoice.cus_id -%]">
@@ -229,6 +245,12 @@
     <input type="hidden" name="id" id="w_id" value="[%- invoice.id -%]"/>
     <h3>Reason for Write-off</h3>
     <textarea name="cancelmsg" id="writeoffmsg" rows="2" cols="40" class="mandatory"></textarea>
+  </form
+</div>
+<div id="addnote" title="Add a Note" style="display:none;">
+  <form id="faddnote" name="faddnote">
+    <input type="hidden" name="id" id="n_id" value="[%- invoice.id -%]"/>
+    <textarea name="invnote" id="invnote" rows="6" cols="40" class="mandatory">[%- invoice.invnotes -%]</textarea>
   </form
 </div>
 </div>
