@@ -297,7 +297,7 @@ $g->stroke;
 $g->fillcolor("#000000");
 $text = $page->text();
 
-unless ($COOKIE->{PT_LOGO}) {
+unless ($logo) {
         $text->transform( -translate =>[90,760]);
         $text->font($font_italic, 8);
         $text->lead(12);
