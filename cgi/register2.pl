@@ -105,11 +105,9 @@ EOD
 
 #  But, first, let's get the Activation code for the email
 
-		$Dig = time().'.'.$$;
-
 		use Digest;
-		$Dig =  Digest->new("SHA-1");
-		$Dig->add($Dig);
+		$Dig =  Digest->new("MD5");
+		$Dig->add($FORM{email});
 		$Activecode = $Dig->hexdigest;
 
 		$Sts = $dbh->do("insert into registrations (regusername,regcompanyname,regemail,regpwd,regmemword,regactivecode,regregdate,reglastlogindate,regcountstartdate,regreferer) values ('$FORM{name}','$FORM{company}','$FORM{email}',password('$FORM{pwd1}'),'$FORM{mem1}','$Activecode',now(),now(),now(),'$FORM{referer}')");
@@ -136,12 +134,8 @@ Yours sincerely
 $FORM{company}
 EOD
 
-		$Sts = $dbh->do("insert into companies (reg_id,comname,comcontact,comemail,comvatqstart,comemailmsg,comstmtmsg,comdocsdir) values ($New_reg_id,'$FORM{company}','$FORM{name}','$FORM{email}','2010-01-01','$Emailmsg','$Stmtmsg','/projects/fpa_docs/$Activecode')");
+		$Sts = $dbh->do("insert into companies (reg_id,comname,comcontact,comemail,comvatqstart,comemailmsg,comstmtmsg) values ($New_reg_id,'$FORM{company}','$FORM{name}','$FORM{email}','2010-01-01','$Emailmsg','$Stmtmsg')");
 		$New_com_id = $dbh->last_insert_id(undef, undef, qw(companies undef));
-
-#  Create a docs directory
-
-		mkdir("/projects/fpa_docs/$Activecode");
 
 #  Create a 'customers' The owner (for expenses)
 

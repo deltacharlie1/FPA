@@ -60,7 +60,7 @@ $Subtype{fpa6} = 'FreePlus Bookkeeper Premium (&pound;20.00pm)';
 
 #  Get the company details
 
-$Companies = $dbh->prepare("select id,reg_id,comsublevel,comsubtype,commerchantref,comcardref,comsubref,comname,date_format(comsubdue,'%d-%b-%y') as subdue from companies where commerchantref='$FORM{MERCHANTREF}'");
+$Companies = $dbh->prepare("select id,reg_id,comsublevel,comsubtype,commerchantref,comcardref,comsubref,comname,date_format(comsubdue,'%d-%b-%y') as subdue,comdocsdir from companies where commerchantref='$FORM{MERCHANTREF}'");
 $Companies->execute;
 $Company = $Companies->fetchrow_hashref;
 $Companies->finish;
@@ -118,6 +118,18 @@ EOD
 }
 elsif ($Company->{comsublevel} =~ /00/) {	#  New subscription
 
+#  if a docsdir not already created, create one
+
+	unless ($Company->{comdocsdir}) {
+
+		$Hash = Digest->new("MD5");
+		$Hash->add($COOKIE->{ID});
+		$Hash_hex = $Hash->hexdigest;
+
+		$Sts = $dbh->do("update companies set comdocsdir='$Hash_hex' where commerchantref=$Company->{commerchantref}");
+		mkdir("/projects/fpa_docs/$Hash_hex");
+	}
+		
 	$Status .= "<p>Thank you for subscribing to FreePlus Accounts.</p><p>Your subscription choice of <b>$Subtype{$Company->{comsubtype}}</b> has now been set up.</p><p>Your 30 day free period begins immediately and you may cancel at any time without incurring any cost.&nbsp;&nbsp;If, after that time, you wish to ocntinue using the additional features you will need to enter your credit/debit card details by going to 'My Account' and clicking on the 'Update Card Details' tab.&nbsp;&nbsp;To help you, we will send you a reminder email a few days before the free period is due to end.</p>\n";
 	$Level = $Company->{comsubtype};
 	$Level =~ s/.+(\d)$/$1/;
