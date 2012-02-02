@@ -88,36 +88,36 @@
       </td>
     </tr>
     <tr>
-[% IF cookie.VAT == "N" -%]
       <td colspan="2" style="vertical-align:top;">Remarks<br/>[%- invoice.invremarks | replace('\n','<br/>')-%]</td>
-[% ELSE -%]
-      <td colspan="2" rowspan="2" style="vertical-align:top;">Remarks<br/>[%- invoice.invremarks | replace('\n','<br/>')-%]</td>
-[% END -%]
-        <td style="text-align:right;"><strong>Sub Total : </strong></td>
-        <td id="st" style="text-align:right;padding-right:40px;">[%- IF invoice.invtype == 'C'; 0 - invoice.invtotal | format('%1.2f'); ELSE; invoice.invtotal; END -%]</td>
-    </tr>
+      <td colspan="2" rowspan="2"><div style="float:right;">
+        <table border="0" cellpadding="2" cellspacing="2">
+          <tr>
+            <td style="text-align:right;"><strong>Sub Total : </strong></td>
+            <td id="st" style="text-align:right;padding-right:40px;">[%- IF invoice.invtype == 'C'; 0 - invoice.invtotal | format('%1.2f'); ELSE; invoice.invtotal; END -%]</td>
+          </tr>
 [% UNLESS cookie.VAT == "N" -%]
-    <tr>
-      <td style="text-align:right;"><strong>VAT : </strong></td>
-      <td id="vt" style="text-align:right;padding-right:40px;">[%- IF invoice.invtype == 'C'; 0 -invoice.invvat | format('%1.2f'); ELSE; invoice.invvat; END -%]</td>
-    </tr>
+          <tr>
+            <td style="text-align:right;"><strong>VAT : </strong></td>
+            <td id="vt" style="text-align:right;padding-right:40px;">[%- IF invoice.invtype == 'C'; 0 -invoice.invvat | format('%1.2f'); ELSE; invoice.invvat; END -%]</td>
+          </tr>
 [% END -%]
-    <tr>
-      <td colspan="2" style="text-align:right;">&nbsp;</td>
-      <td style="text-align:right;"><strong><span id="i3">Invoice</span> Total : </strong></td>
-      <td id="tt" style="text-align:right;padding-right:40px;">[%- IF invoice.invtype == 'C'; 0 - invoice.tottotal | format('%1.2f'); ELSE; invoice.tottotal; END -%]</td>
-    </tr>
-<!--    <tr>
-      <td colspan="4" style="text-align:center;"><hr style="width:90%;"/></td>
-    </tr>  //-->
-    <tr>
-      <td style="text-align:right;"><strong>Date of last Payment : </strong></td>
-      <td>[%- invoice.invpaiddate -%]</td>
+          <tr>
+            <td style="text-align:right;"><strong><span id="i3">Invoice</span> Total : </strong></td>
+            <td id="tt" style="text-align:right;padding-right:40px;">[%- IF invoice.invtype == 'C'; 0 - invoice.tottotal | format('%1.2f'); ELSE; invoice.tottotal; END -%]</td>
+          </tr>
+          <tr>
       <td style="text-align:right;"><strong>Total Paid to Date : </strong></td>
       <td style="text-align:right;padding-right:40px;">[%- IF invoice.invtype == 'C'; 0 - invoice.totpaid | format('%1.2f'); ELSE; invoice.totpaid; END -%]</td>
+          </tr>
+        </table></div>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align:right;vertical-align:bottom;"><strong>Date of last Payment : </strong></td>
+      <td style="vertical-align:bottom;">[%- invoice.invpaiddate -%]</td>
     </tr>
   </table>
-<p>&nbsp;</p>
+<p>&nbsp;</p><div style="float:left">
 <h2>Payment History</h2>
   <table width="400" border="0" cellpadding="0" cellspacing="0" class="listing">
     <tr>
@@ -149,6 +149,15 @@
     </tr>
 [%- END -%]
   </table>
+</div>
+[% IF invoice.invnotes != '' -%]
+<div style="width:225px;float:right;margin-right:55px;">
+  <h2>Notes</h2>
+  <div style="padding:10px;border:1px solid #999999;color:#666666;">
+[% invoice.invnotes | replace('\n','<br/>') -%]
+  </div>
+</div>
+[% END -%]
 </div>
 <div id="sidebar">
 <ul>
@@ -205,6 +214,13 @@
     </li>   
   [% END -%]
 [%- END -%]
+    <li>
+      <div>
+        <a href="#" onclick="add_note('[%- invoice.id -%]');">
+         Add a Note
+        </a>
+      </div>
+    </li>
     <li>    
       <div>
         <a href="/cgi-bin/fpa/list_customer_invoices.pl?[%- invoice.cus_id -%]">
@@ -229,6 +245,12 @@
     <input type="hidden" name="id" id="w_id" value="[%- invoice.id -%]"/>
     <h3>Reason for Write-off</h3>
     <textarea name="cancelmsg" id="writeoffmsg" rows="2" cols="40" class="mandatory"></textarea>
+  </form
+</div>
+<div id="addnote" title="Add a Note" style="display:none;">
+  <form id="faddnote" name="faddnote">
+    <input type="hidden" name="id" id="n_id" value="[%- invoice.id -%]"/>
+    <textarea name="invnote" id="invnote" rows="6" cols="40" class="mandatory">[%- invoice.invnotes -%]</textarea>
   </form
 </div>
 </div>

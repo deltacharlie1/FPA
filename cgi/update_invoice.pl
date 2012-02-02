@@ -17,7 +17,7 @@ unless ($COOKIE->{NO_ADS}) {
 }
 
 
-$Invoices = $dbh->prepare("select invoices.id,cus_id,invcusname,invtype,invcusaddr,date_format(invprintdate,'%d-%b-%y') as invprintdate,date_format(invduedate,'%d-%b-%y') as invduedate,invinvoiceno,invcuspostcode,invcusref,invcusregion,invcusterms,invcuscontact,invcusemail,invtotal,invvat,invtotal + invvat as tottotal,(invtotal*0.8+invvat) as cistotal,invstatus,invfpflag,invremarks,invitems,invitemcount,to_days(invprintdate) as printdays,to_days(invduedate) as duedays,invstatuscode,invpaid + invpaidvat as totpaid,date_format(invpaiddate,'%d-%b-%y') as invpaiddate,cusdefpaymethod,cuscis from invoices left join customers on (invoices.cus_id=customers.id and invoices.acct_id=customers.acct_id) where invoices.id=$Inv_id and invoices.acct_id='$COOKIE->{ACCT}'");
+$Invoices = $dbh->prepare("select invoices.id,cus_id,invcusname,invtype,invcusaddr,date_format(invprintdate,'%d-%b-%y') as invprintdate,date_format(invduedate,'%d-%b-%y') as invduedate,invinvoiceno,invcuspostcode,invcusref,invcusregion,invcusterms,invcuscontact,invcusemail,invtotal,invvat,invtotal + invvat as tottotal,(invtotal*0.8+invvat) as cistotal,invstatus,invfpflag,invremarks,invitems,invitemcount,to_days(invprintdate) as printdays,to_days(invduedate) as duedays,invstatuscode,invpaid + invpaidvat as totpaid,date_format(invpaiddate,'%d-%b-%y') as invpaiddate,cusdefpaymethod,cuscis,invnotes from invoices left join customers on (invoices.cus_id=customers.id and invoices.acct_id=customers.acct_id) where invoices.id=$Inv_id and invoices.acct_id='$COOKIE->{ACCT}'");
 $Invoices->execute;
 $Invoice = $Invoices->fetchrow_hashref;
 $Invoice->{firsttime} = $Action;
@@ -236,6 +236,34 @@ $(document).ready(function(){
       }
     }
   });
+  $("#addnote").dialog({
+    bgiframe: true,
+    autoOpen: false,
+    position: [200,100],
+    height: 250,
+    width: 400,
+    modal: true,
+    buttons: {
+      "Add Note": function() {
+        if(validate_form("#faddnote")) {
+          $.post("/cgi-bin/fpa/add_invoice_note.pl", $("form#faddnote").serialize(),function(data) {
+            if (/OK/.test(data)) {
+              $(this).dialog("close");
+              window.location.reload(true);
+            }
+            else {
+              responseText = data;
+              document.getElementById("dialog").innerHTML = responseText;
+              $("#dialog").dialog("open");
+            }
+          });
+        }
+      },
+      Cancel: function() {
+        $(this).dialog("close");
+      }
+    }
+  });
 });
 function get_amt(amtinvid,amtinvno,amtamt) {
   document.getElementById("i_id").value = amtinvid;
@@ -262,6 +290,10 @@ function cancel_invoice(invid) {
 function writeoff_invoice(invid) {
   $("#writeoffreason").dialog("open");
   document.getElementById("writeoffmsg").focus();
+}
+function add_note(invid) {
+  $("#addnote").dialog("open");
+  document.getElementById("invnote").focus();
 }
 function delete_invoice() {
   $.post("/cgi-bin/fpa/delete_invoice.pl", { id: "'.$Invoice->{id}.'" }, function(data) {
