@@ -231,7 +231,7 @@ $g->stroke;
 $g->fillcolor("#000000");
 $text = $page->text();
 
-unless ($COOKIE->{PT_LOGO}) {		#  include the freeplus text
+unless ($logo) {		#  include the freeplus text
         $text->transform( -translate =>[100,742]);
         $text->font($font_italic, 8);
         $text->lead(12);

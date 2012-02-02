@@ -25,79 +25,14 @@ Dear $Reg[1]
 
 Thank you for registering with FreePlus Accounts, we hope that you are finding it a useful service.
 
-Now that you have had a bit of time to try it out we would be very interested to get your views on how easy you find it and how well it meets your needs.  We would be grateful if you would just reply to this email, responding to each of the questions below by giving a score between 1 and 10 (1 being low and 10 being high) and adding any comments you may wish to make.
+From feedback that we receive, and from our own experience, we get many suggestions on how to make our system even better and so are constantly making small improvements.  All of these changes get announced in our newsletters, along with tips on how to get the best out of the system and special offers that our sponsors make so please make sure to read them so as to get the maximum benefit from the site.
 
-We guarantee to you that none of the information you give us will be passed on to any advertisers or third parties.  It will be used solely to help us enhance and improve what we hope is already a very good application.
-
-
-1.  How easy did you find it to discover our website?
-
-Your score for Q1  -  
+We are always keen to hear from you, particularly if you have any suggestions to make or would like to give us a testimonial that we can use.  You can do this very easily by just replying to this email or by logging in and leaving Feedback (Admin -> Add Feedback).
 
 
-2.  What was it that influenced you to try out FreePlus Accounts (please just put 'YES' against each point that applies)?
+Thank you once again,
 
-    -  that it is free?
-    -  that it is easy to use and meets your needs?
-    -  that it seems to offer a better alternative to your current accounting arrangement?
-
-
-3.  How easy was the registration process, including the speed with which you received your activation email?
-
-Your score for Q3  -  
-
-
-4.  How satisfied are you with the login procedure?  Would you prefer to do without the memorable word part?
-
-Your score for Q4  -  
-
-
-5.  How easy did you find it to enter the initial company details and do you feel that any other information should be required?
-
-Your score for Q5  -  
-
-
-6.  How well does the quotations/sales invoicing process meet your requirements?
-
-Your score for Q6  -  
-
-
-7.  How well does the purchase invoicing process meet your requirements?
-
-Your scors for Q7  -  
-
-
-8.  How easy do you find the bank reconciliation process?
-
-Your score for Q8  -  
-
-
-9.  If you have registered for VAT, how easy do you find the VAT return process?
-
-Your score for Q9  -  
-
-
-10.  How well do the reports and 'Front Page' give you a quick idea of the state of your business?  Are there any improvements you would like to see?
-
-Your score for Q10  -  
-
-
-11.  Overall, how good do you think FreePlus Accounts is for meeting your accounting needs?
-
-Your score for Q11  -  
-
-
-It would also be helpful to us if you would tell us what type of business you are (sole trader, limited company, VAT registered etc) and whether you have any employees.
-
-Thank you for the time you have taken to respond to this survey, your help now will help us to help others like you.
-
-Finally, if you like FreePlus Accounts, would you like to write a short testimonial in the section below that we can use on our website?
-
----------  Testimonial  ----------
-
-----------------------------------
-
-Thank you, once again,
+Best wishes and happy accounting
 
 Yours sincerely
 
