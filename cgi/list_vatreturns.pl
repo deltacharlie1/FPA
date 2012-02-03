@@ -30,7 +30,7 @@ unless ($COOKIE->{NO_ADS}) {
 
 
 unless ($FORM{rows}) {
-	$Vatreturns = $dbh->prepare("select id,perquarter,date_format(perstartdate,'%d-%b-%y') as perstartdate,date_format(perenddate,'%d-%b-%y') as perenddate,perbox5,date_format(perduedate,'%d-%b-%y') as perduedate,date_format(percompleted,'%d-%b-%y') as percompleted,date_format(perfiled,'%d-%b-%y') as perfiled,perstatus from vatreturns where acct_id='$COOKIE->{ACCT}' order by perquarter desc");
+	$Vatreturns = $dbh->prepare("select id,perquarter,date_format(perstartdate,'%d-%b-%y') as startdate,date_format(perenddate,'%d-%b-%y') as enddate,perbox5,date_format(perduedate,'%d-%b-%y') as perduedate,date_format(percompleted,'%d-%b-%y') as percompleted,date_format(perfiled,'%d-%b-%y') as perfiled,perstatus from vatreturns where acct_id='$COOKIE->{ACCT}' order by perenddate desc");
 
         $Vatreturns->execute;
         $FORM{numrows} = $Vatreturns->rows;
@@ -38,7 +38,7 @@ unless ($FORM{rows}) {
         $FORM{rows} = 24;
 }
 
-$Vatreturns = $dbh->prepare("select id,perquarter,date_format(perstartdate,'%d-%b-%y') as perstartdate,date_format(perenddate,'%d-%b-%y') as perenddate,perbox5,date_format(perduedate,'%d-%b-%y') as perduedate,date_format(percompleted,'%d-%b-%y') as percompleted,date_format(perfiled,'%d-%b-%y') as perfiled,perstatus from vatreturns where acct_id='$COOKIE->{ACCT}' order by perquarter desc limit $FORM{offset},$FORM{rows}");
+$Vatreturns = $dbh->prepare("select id,perquarter,date_format(perstartdate,'%d-%b-%y') as startdate,date_format(perenddate,'%d-%b-%y') as enddate,perbox5,date_format(perduedate,'%d-%b-%y') as perduedate,date_format(percompleted,'%d-%b-%y') as percompleted,date_format(perfiled,'%d-%b-%y') as perfiled,perstatus from vatreturns where acct_id='$COOKIE->{ACCT}' order by perenddate desc limit $FORM{offset},$FORM{rows}");
 $Vatreturns->execute;
 
 use Template;

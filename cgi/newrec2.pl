@@ -40,7 +40,7 @@ $Txns->finish;
 
 #  Then get all unpaid invoices
 
-$Invoices = $dbh->prepare("select id,invtype,date_format(invprintdate,'%d-%b-%y') as printdate,cus_id,invinvoiceno,invcusname,invdesc,(invtotal+invvat-invpaid-invpaidvat) as amtdue,invprintdate from invoices where acct_id='$COOKIE->{ACCT}' and invstatuscode>2 union select id,'vat',date_format(perstatusdate,'%d-%b-%y') as printdate,0,'','HMRC',concat('Quarter End ',perquarter) as invdesc,perbox5 as amtdue,perstatusdate as invprintdate from vatreturns where acct_id='$COOKIE->{ACCT}' and perstatus='Filed' order by invprintdate");
+$Invoices = $dbh->prepare("select id,invtype,date_format(invprintdate,'%d-%b-%y') as printdate,cus_id,invinvoiceno,invcusname,invdesc,(invtotal+invvat-invpaid-invpaidvat) as amtdue,invprintdate from invoices where acct_id='$COOKIE->{ACCT}' and invstatuscode>2 union select id,'vat',date_format(perstatusdate,'%d-%b-%y') as printdate,0,'','HMRC',concat('Quarter End ',perquarter) as invdesc,0-perbox5 as amtdue,perstatusdate as invprintdate from vatreturns where acct_id='$COOKIE->{ACCT}' and perstatus='Filed' order by invprintdate");
 $Invoices->execute;
 $Invoice = $Invoices->fetchall_arrayref({});
 $Invoices->finish;
@@ -244,8 +244,7 @@ $(document).ready(function(){
     drop: function(event,ui) {
       var invvalue = ($(ui.draggable).find(":nth-child(8)").last().text() * 1);
       var stmtvalue = (document.getElementById("p"+$(this).attr("id")).innerHTML * 1);
-
-      if ((/^-/.test(invvalue) && !/^-/.test(stmtvalue)) || (! /^-/.test(invvalue) && /^-/.test(stmtvalue))) {
+      if ($(this).attr("id") != "bnk0" && ((/^-/.test(invvalue) && !/^-/.test(stmtvalue)) || (! /^-/.test(invvalue) && /^-/.test(stmtvalue)))) {
         ui.draggable.draggable( "option", "revert", true );
         alert("Not a matching Credit/Debit");
       }
@@ -254,7 +253,7 @@ $(document).ready(function(){
         $("<tr></tr>").html( ui.draggable.html()+"<td onclick=\"revert(\'"+ui.draggable.attr("id")+"\',$(this),\'"+$(this).attr("id")+"\');\"><img src=\'/icons/delete.png\' width=\'12\' height=\'12\' alt=\'Delete\'/></td>" ).appendTo( this );
 
         var invdiff = (invvalue - stmtvalue).toFixed(2)
-	if ((invvalue >= 0 && invdiff > 0) || (invvalue < 0 && invdiff < 0)) {
+	if ($(this).attr("id") != "bnk0" && ((invvalue >= 0 && invdiff > 0) || (invvalue < 0 && invdiff < 0))) {
           $(ui.draggable).find(":nth-child(8)").text(invdiff);
           ui.draggable.draggable( "option", "revert", true );
           invvalue = (invvalue - invdiff).toFixed(2);
@@ -286,6 +285,7 @@ function revert(id,el,dropid) {
   var dropvalue = (el.parent().find(":nth-child(8)").last().text() * 1);
   var stmtremainder = (document.getElementById("p"+dropid).innerHTML * 1);
   diff = (diff * 1) + (dropvalue * 1);
+alert("5 - stmtdiff = " + diff.toFixed(2));
   document.getElementById("stmtdiff").innerHTML = diff.toFixed(2);
   diff = (dropvalue * 1) + (stmtremainder * 1);
   document.getElementById("p"+dropid).innerHTML = diff.toFixed(2);

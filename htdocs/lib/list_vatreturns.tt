@@ -17,8 +17,8 @@
   [%- ndx = loop.count % 2 -%]
     <tr class="[%- class.$ndx -%]" onclick="location.href='/cgi-bin/fpa/vatreturn.pl?[%- vatreturn.id -%]';">
       <td><a href="#">[%- vatreturn.perquarter -%]</a></td>
-      <td>[%- vatreturn.perstartdate -%]</td>
-      <td>[%- vatreturn.perenddate -%]</td>
+      <td>[%- vatreturn.startdate -%]</td>
+      <td>[%- vatreturn.enddate -%]</td>
       <td>[%- vatreturn.perbox5 -%]</td>
       <td>[%- vatreturn.perduedate -%]</td>
       <td>[%- vatreturn.percompleted -%]</td>

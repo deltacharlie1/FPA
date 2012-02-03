@@ -504,6 +504,34 @@ create table subscriptions (
   index sub1 (acct_id)
 );
 
+drop table if exists invoice_layouts;
+create table invoice_layouts (
+  id int unsigned not null auto_increment primary key,
+  acct_id varchar(50) not null default '',
+  layname varchar(20) not null default '' comment 'Name of the layout',
+  layfile varchar(100) not null default '' comment ' stored filename',
+  index lay1 (acct_id)
+);
+
+drop table if exists invoice_layout_items;
+create table invoice_layout_items (
+  id int unsigned not null auto_increment primary key,
+  acct_id varchar(50) not null default '',
+  layout_id int unsigned not null,
+  layiname varchar(20) not null default '' comment 'Name of the field',
+  layidbvar varchar(100) not null default '' comment 'db variable reference',
+  layitop smallint unsigned not null default 0 comment 'top left location of item',
+  layileft smallint unsigned not null default 0 comment 'top left of item',
+  layiwidth smallint unsigned not null default 50 comment 'with of text block',
+  layiheight smallint unsigned not null default 50 comment 'height of text block',
+  layisize smallint unsigned not null default 12 comment 'font size',
+  layibold char(1) not null default 'N' comment 'whether bold or not',
+  layijus char(1) not null default 'L' comment 'left/center/right justified',
+  layidisplay char(1) not null default 'N' comment 'whether to display or not',
+  index layi1 (acct_id),
+  index layi2 (layout_id)
+);
+
 drop table if exists adverts;
 create table adverts (
   id int unsigned not null auto_increment primary key,

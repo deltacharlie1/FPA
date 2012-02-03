@@ -112,9 +112,10 @@ $(document).ready(function(){
             <li><a href="/cgi-bin/fpa/list_invoices.pl?listorder=N">List Invoices</a></li>
             <li><a href="/cgi-bin/fpa/new_invoice.pl?S">Create New Invoice</a></li>
             <li><a href="/cgi-bin/fpa/new_invoice.pl?C">Create New Credit Note</a></li>
-        [% IF cookie.REP_INVS == "1" -%]
-            <li><a href="/cgi-bin/fpa/list_templates.pl">List Invoice Templates</a></li>
-[% END -%]
+        [% IF cookie.ACCESS > 3 -%]
+            <li><a href="/cgi-bin/fpa/list_invoice_layouts.pl">List Invoice Layouts</a></li>
+<!--            <li><a href="/cgi-bin/fpa/list_invoice_templates.pl">List Invoice Templates</a></li> -->
+        [% END -%]
             <li><a href="#" onclick="display_form('I');">Record Money In</a></li>
             <li><a href="/cgi-bin/fpa/list_customers.pl">List Customers</a></li>
             <li><a href="/cgi-bin/fpa/add_address.pl?C">Add New Customer</a></li>

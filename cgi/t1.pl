@@ -1,10 +1,20 @@
 #!/usr/bin/perl
+use Digest;
+use DBI;
+$dbh = DBI->connect("DBI:mysql:fpa");
+$Registrations = $dbh->prepare("select regemail from registrations");
+$Registrations->execute;
+while ($Registration = $Registrations->fetchrow_hashref) {
 
-$XML = '<RESPONSECODE>A</RESPONSECODE><RESPONSETEXT>Approved</RESPONSETEXT><APPROVALCODE>675673</APPROVALCODE><DATETIME>22-01-2012:22:41:34:000</DATETIME><HASHedbernmtyrw</HASH>';
+	$Hash = Digest->new("MD5");
+	$Hash->add($Registration->{regemail});
+	$Hash_hex = $Hash->hexdigest;
+	$FORM{$Hash_hex}++;
+}
 
-($Code,$Text,$Auth) = ($XML =~ /^.*?CODE>(\w+)<\/RESPONSE.*?TEXT>(\w+)<\/RESPONSETEXT.*?CODE>(.*)?<\/APP.*$/);
-
-print "Code = $Code\nText = $Text\nAuth = $Auth\n";
-
+foreach $Key (sort keys %FORM) {
+	print "$Key\t$FORM{$Key}\n";
+}
+$Registrations->finish;
+$dbh->disconnect;
 exit;
-
