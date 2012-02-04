@@ -74,6 +74,7 @@
   </form>
 </div>
 <h1>Reconcile Step 2 - Match</h1>
+<div id="wip">
 <table border="0" cellpadding="2" cellspacing="2" width="100%">
   <tr>
     <td style="text-align:right;font-weight:bold;">Closing Balance previous Statement = </td>
@@ -109,7 +110,7 @@
   [%- ndx = loop.count % 2 -%]
         <tr class="[%- class.$ndx -%] draggable" id="inv[%- invoice.id -%]">
           <td style="display:none;">[%- invoice.id -%]</td>
-          <td style="display:none;">pay</td>
+          <td style="display:none;">inv</td>
           <td nowrap="nowrap">[%- invoice.printdate -%]</td>
           <td>[%- invoice.invinvoiceno -%]</td>
           <td>[%- invoice.invtype -%]</td>
@@ -147,6 +148,22 @@
         </tr>
         </tbody>
 [% END -%]
+        <tbody id="tbod0">
+        <tr class="even" id="trbnk0" ondblclick="matchit(this);">
+          <td colspan="2">Contra Entry Bucket</td>
+          <td style="text-align:right;">0.00</td>
+          <td style="text-align:right;"><span id="pbnk0">0.00</span></td>
+        </tr>
+        <tr>
+          <td colspan="4">
+            <table width="336" cellpadding="0" cellspacing="0" class="listing droppable dropzone" id="bnk0">
+              <tr class="placeholder">
+                <td colspan="5"></td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        </tbody>
       </table>
     </td>
   </tr>
@@ -168,7 +185,7 @@
   [%- ndx = loop.count % 2 -%]
         <tr class="[%- class.$ndx -%] draggable" id="txn[%- txn.id -%]">
           <td style="display:none;">[%- txn.id -%]</td>
-          <td style="display:none;">rec</td>
+          <td style="display:none;">txn</td>
           <td nowrap="nowrap">[%- txn.tdate -%]</td>
           <td>&nbsp;</td>
           <td>[%- txn.txntxntype -%]</td>
@@ -182,16 +199,24 @@
   </tr>
 </table>
 </div>
+</div>
 <div id="sidebar">
   <ul>
     <li>
       <div>
         <form name="stmtform" id="stmtform" method="post" action="/cgi-bin/fpa/newrec3.pl" onsubmit="return submitit();">
           <input type="hidden" name="stmtdata" id="stmtdata" value=""/>
+          <input type="hidden" name="acctype" id="acctype" value="[%- acct.acctype -%]"/>
           <input type="submit" name="submit" id="submit" value="Accept &amp; Lock"/>
         </form> 
       </div>
     </li>
+    <li>
+       <input type="button" name="savewip" id="savewip" onclick="save_wip();" value="Save Work In Progress"/>
+   </li> 
+    <li>
+       <input type="button" name="getwip" id="getwip" onclick="get_wip();" value="Get Work In Progress"/>
+   </li> 
   </ul>
   <div id="sidebar-ad">
 [% INCLUDE adverts.tt -%]

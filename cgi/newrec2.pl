@@ -7,8 +7,6 @@ $ACCESS_LEVEL = 1;
 use Checkid;
 $COOKIE = &checkid($ENV{HTTP_COOKIE},$ACCESS_LEVEL);
 
-$Acctype = $ENV{QUERY_STRING};
-
 use CGI;
 use DBI;
 $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
@@ -33,7 +31,7 @@ while (( $Key,$Value) = each %FORM) {
 
 #  First get all unreconciled TRansactions
 
-$Txns = $dbh->prepare("select id,txntxntype,date_format(txndate,'%d-%b-%y') as tdate,link_id,txncusname,txnremarks,txnamount from transactions where txnselected<>'F' and txnmethod='1200' and acct_id='$COOKIE->{ACCT}' order by txndate");
+$Txns = $dbh->prepare("select id,txntxntype,date_format(txndate,'%d-%b-%y') as tdate,link_id,txncusname,txnremarks,txnamount from transactions where txnselected<>'F' and txnmethod='$FORM{acctype}' and acct_id='$COOKIE->{ACCT}' order by txndate");
 $Txns->execute;
 $Txn = $Txns->fetchall_arrayref({});
 $Txns->finish;
@@ -52,7 +50,7 @@ $FORM{stmt} =~ s/\'/\\\'/g;
 
 $Sts = $dbh->do("update tempstacks set f1='$FORM{stmt}',f2='$FORM{stmtno}' where acct_id='$COOKIE->{ACCT}' and caller='reconciliation'");
 
-$Accts = $dbh->prepare("select accounts.id,accounts.acctype,accname,accacctno,stastmtno,staclosebal,date_format(staclosedate,'%d-%b-%y') as staclosedate from accounts left join statements on (accounts.id=acc_id) where accounts.acct_id='$COOKIE->{ACCT}' and acctype='1200' order by statements.id desc limit 1");
+$Accts = $dbh->prepare("select accounts.id,accounts.acctype,accname,accacctno,stastmtno,staclosebal,date_format(staclosedate,'%d-%b-%y') as staclosedate from accounts left join statements on (accounts.id=acc_id) where accounts.acct_id='$COOKIE->{ACCT}' and acctype='$FORM{acctype}' order by statements.id desc limit 1");
 $Accts->execute;
 $Acct = $Accts->fetchrow_hashref;
 $Accts->finish;
@@ -189,7 +187,7 @@ $(document).ready(function(){
     buttons: {
   "Add Transaction": function() {
      var errs = "";
-     if ($("#stmt_cus_id").val() == "") {
+     if (!/4310|6010/.test($("#stmtpaycodes").val()) && $("#stmt_cus_id").val() == "") {
        errs = errs + "<li>You must enter a Customer/Supplier name</li>";
        errfocus = "stmt_cus_id";
      }
@@ -204,7 +202,7 @@ $(document).ready(function(){
        var trid = document.getElementById("stmtdropid").value;
        $("#"+trid).find(".placeholder").remove();
        if (/^Sup/.test($("#stmtcustype").val())) {
-         $("<tr></tr>").html("<td style=\'display:none;\'>"+$("#stmtcusid").val()+"</td><td style=\'display:none;\'>new</td><td nowrap=\'nowrap\'>"+$("#stmtpaytxndate").val()+"</td><td></td><td>"+$("#stmtpaycodes").val()+"</td><td>"+$("#stmt_cus_id").val()+"</td><td>"+$("#stmtdesc").val()+"</td><td>-"+$("#stmttxnamount").text()+"</td><td style=\'display:none;\'>-"+$("#stmtvat").text()+"</td><td style=\'display:none;\'>"+$("#stmtcusref").val()+"</td><td style=\'display:none;\'>"+$("#stmtitem_cat").val()+"</td><td onclick=\"revert(\'0\',$(this),\'"+trid+"\');\"><img src=\'/icons/delete.png\' width=\'12\' height=\'12\' alt=\'Delete\'/></td>").appendTo("#"+trid);
+         $("<tr></tr>").html("<td style=\'display:none;\'>"+$("#stmtcusid").val()+"</td><td style=\'display:none;\'>pur</td><td nowrap=\'nowrap\'>"+$("#stmtpaytxndate").val()+"</td><td></td><td>"+$("#stmtpaycodes").val()+"</td><td>"+$("#stmt_cus_id").val()+"</td><td>"+$("#stmtdesc").val()+"</td><td>-"+$("#stmttxnamount").text()+"</td><td style=\'display:none;\'>-"+$("#stmtvat").text()+"</td><td style=\'display:none;\'>"+$("#stmtcusref").val()+"</td><td style=\'display:none;\'>"+$("#stmtitem_cat").val()+"</td><td onclick=\"revert(\'0\',$(this),\'"+trid+"\');\"><img src=\'/icons/delete.png\' width=\'12\' height=\'12\' alt=\'Delete\'/></td>").appendTo("#"+trid);
          var diff = document.getElementById("stmtdiff").innerHTML;
          diff = (diff * 1) + ($("#stmttxnamount").text() * 1);
          if (diff == 0) {
@@ -215,7 +213,7 @@ $(document).ready(function(){
          diff = (diff * 1) + ($("#stmttxnamount").text() * 1);
        }
        else {
-         $("<tr></tr>").html("<td style=\'display:none;\'>"+$("#stmtcusid").val()+"</td><td style=\'display:none;\'>new</td><td nowrap=\'nowrap\'>"+$("#stmtinctxndate").val()+"</td><td></td><td>"+$("#stmtinccodes").val()+"</td><td>"+$("#stmt_cus_id").val()+"</td><td>"+$("#stmtdesc").val()+"</td><td>"+$("#stmttxnamount").text()+"</td><td style=\'display:none;\'>"+$("#stmtvat").text()+"</td><td style=\'display:none;\'>"+$("#stmtcusref").val()+"</td><td style=\'display:none;\'>"+$("#stmtitem_cat").val()+"</td><td onclick=\"revert(\'0\',$(this),\'"+trid+"\');\"><img src=\'/icons/delete.png\' width=\'12\' height=\'12\' alt=\'Delete\'/></td>").appendTo("#"+trid);
+         $("<tr></tr>").html("<td style=\'display:none;\'>"+$("#stmtcusid").val()+"</td><td style=\'display:none;\'>sal</td><td nowrap=\'nowrap\'>"+$("#stmtinctxndate").val()+"</td><td></td><td>"+$("#stmtinccodes").val()+"</td><td>"+$("#stmt_cus_id").val()+"</td><td>"+$("#stmtdesc").val()+"</td><td>"+$("#stmttxnamount").text()+"</td><td style=\'display:none;\'>"+$("#stmtvat").text()+"</td><td style=\'display:none;\'>"+$("#stmtcusref").val()+"</td><td style=\'display:none;\'>"+$("#stmtitem_cat").val()+"</td><td onclick=\"revert(\'0\',$(this),\'"+trid+"\');\"><img src=\'/icons/delete.png\' width=\'12\' height=\'12\' alt=\'Delete\'/></td>").appendTo("#"+trid);
          var diff = document.getElementById("stmtdiff").innerHTML;
          diff = (diff * 1) - ($("#stmttxnamount").text() * 1);
          if (diff == 0) {
@@ -227,6 +225,7 @@ $(document).ready(function(){
        }
        $("#p"+trid).html(diff.toFixed(2));
        $("#stmt_cus_id").val("");
+       $("#stmtcusid").val("0");
        $("#stmtcusref").val("");
        $("#stmtitem_cat").val("");
 
@@ -245,7 +244,7 @@ $(document).ready(function(){
       var invvalue = ($(ui.draggable).find(":nth-child(8)").last().text() * 1);
       var stmtvalue = (document.getElementById("p"+$(this).attr("id")).innerHTML * 1);
 
-      if ((/^-/.test(invvalue) && !/^-/.test(stmtvalue)) || (! /^-/.test(invvalue) && /^-/.test(stmtvalue))) {
+      if ($(this).attr("id") != "bnk0" && ((/^-/.test(invvalue) && !/^-/.test(stmtvalue)) || (! /^-/.test(invvalue) && /^-/.test(stmtvalue)))) {
         ui.draggable.draggable( "option", "revert", true );
         alert("Not a matching Credit/Debit");
       }
@@ -254,7 +253,7 @@ $(document).ready(function(){
         $("<tr></tr>").html( ui.draggable.html()+"<td onclick=\"revert(\'"+ui.draggable.attr("id")+"\',$(this),\'"+$(this).attr("id")+"\');\"><img src=\'/icons/delete.png\' width=\'12\' height=\'12\' alt=\'Delete\'/></td>" ).appendTo( this );
 
         var invdiff = (invvalue - stmtvalue).toFixed(2)
-	if ((invvalue >= 0 && invdiff > 0) || (invvalue < 0 && invdiff < 0)) {
+	if ($(this).attr("id") != "bnk0" && ((invvalue >= 0 && invdiff > 0) || (invvalue < 0 && invdiff < 0))) {
           $(ui.draggable).find(":nth-child(8)").text(invdiff);
           ui.draggable.draggable( "option", "revert", true );
           invvalue = (invvalue - invdiff).toFixed(2);
@@ -352,8 +351,28 @@ function calc_stmtvat() {
   document.getElementById("stmtnetamt").innerHTML = "(Net = " + netamt.toFixed(2) + ")";
 }
 function submitit() {
-  $("#stmtdata").val($("#dropblock").html());
-  return true;
+  var err = "";
+  $("#dropblock span").each(function() {
+    if (! /0.00/.test($(this).text())) {
+      err = "Warning not all remaining values are zero";
+    }
+  });
+  if (err.length > 0) {
+    alert(err);
+    return false;
+  }
+  else {
+    $("#stmtdata").val($("#dropblock").html());
+    return true;
+  }
+}
+function save_wip() {
+  $.post("/cgi-bin/fpa/save_wip.pl",{ "data" : escape($("#wip").html()) });
+}
+function get_wip() {
+  $.get("/cgi-bin/fpa/get_wip.pl", function(data) {
+    document.getElementById("wip").innerHTML = unescape(unescape(data));
+  });
 }
 </script>'
 };
