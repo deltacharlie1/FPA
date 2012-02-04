@@ -71,10 +71,10 @@
       </td>
     </tr>
     <tr>
-      <td clospan="4">
+      <td colspan="4">
   Clear after saving?&nbsp;<input type="radio" name="clear" id="clearY" value="Y" checked="checked"/>&nbsp;Yes&nbsp;&nbsp;<input type="radio" name="clear" id="clearN" value="N"/>&nbsp;No
       </td>
-    <tr>
+    </tr>
   </table>
   <p>&nbsp;</p>
   <h2>Purchases to be Added</h2>
