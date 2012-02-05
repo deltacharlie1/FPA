@@ -14,7 +14,23 @@ unless ($COOKIE->{NO_ADS}) {
 	&display_adverts();
 }
 
+$Coas = $dbh->prepare("select coabalance from coas where acct_id='$COOKIE->{ACCT}' and coanominalcode='3100'");
+$Coas->execute;
+$Coa = $Coas->fetchrow_hashref;
+$Coas->finish;
+
+#  See if we have any statements (in which case we cannot do opening balances for those bank accounts)
+
+$Stmts = $dbh->prepare("select count(acc_id) as cnt,acctype,accshort from accounts left join statements on (accounts.id=acc_id) where accounts.acct_id='$COOKIE->{ACCT}' group by acctype order by acctype");
+$Stmts->execute;
+$Stmt = $Stmts->fetchall_arrayref({});
+$Stmts->finish;
+
 ($Reg_id,$Com_id) = split(/\+/,$COOKIE->{ACCT});
+$Companies = $dbh->prepare("select date_format(date_sub(comyearend,interval 1 year),'%d-%b-%y') as yearend from companies where reg_id=$Reg_id and id=$Com_id");
+$Companies->execute;
+$Company = $Companies->fetchrow_hashref;
+$Companies->finish;
 
 use Template;
 $tt = Template->new({
@@ -26,6 +42,9 @@ $Vars = {
         title => 'Add Opening Balances',
 	cookie => $COOKIE,
 	focus => 'obdesc',
+	coas => $Coa,
+	companies => $Company,
+	stmts => $Stmt,
         javascript => '<style>
 .mand2 { background-color:#f8e8c8; }
 </style>
@@ -43,6 +62,9 @@ function process_balance() {
   $(".curr2").each(function() {
     if (! /^\d+?\.?\d?\d$/.test(this.value)) { errs = errs + "<li>Invalid Currency Field</li>"; }
   });
+  if ($("#blk_nomcode").val() == "0") {
+    errs = errs + "<li>Nominal Account not selected</li>";
+  }
   if (errs.length > 0) {
     document.getElementById("dialog").innerHTML = "You have the following errors<ol>" + errs + "</ol>";
     $("#dialog").dialog("open");
@@ -79,6 +101,16 @@ function display_table() {
 function add_balance() {
   var item_row;
   var amt = document.getElementById("obamt").value * 1;
+  var earnings = $("#balance").text() * 1;
+  var nomcode = $("#blk_nomcode").val() * 1;
+  if (nomcode < 2000) {
+    earnings = earnings + amt;
+  }
+  else {
+    earnings = earnings - amt;
+  }
+  document.getElementById("balance").innerHTML = earnings.toFixed(2);
+
   document.getElementById("obamt").value = amt.toFixed(2);
   item_row = [document.getElementById("blk_nomcode").value,document.getElementById("obdesc").value+" (Opening Balance)",document.getElementById("obamt").value];
 
@@ -86,6 +118,8 @@ function add_balance() {
   display_table();
   document.getElementById("obdesc").value = "";
   document.getElementById("obamt").value = "";
+  document.getElementById("obdesc").focus();
+  
 }
 
 function amd(row) {
@@ -116,7 +150,6 @@ function check_data() {
 print "Content-Type: text/html\n\n";
 $tt->process('bulk_opening_balances.tt',$Vars);
 
-$Customers->finish;
 $dbh->disconnect;
 exit;
 

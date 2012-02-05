@@ -2,24 +2,7 @@
 
 $ACCESS_LEVEL = 1;
 
-#  Save new invoices for a bookkeeper's client
-
-#  Column order is:-
-
-#  0 - Nominal Acct
-#  1 - Customer
-#  2 - Cus ID
-#  3 - Cus Cis (Y/N)
-#  4 - Description
-#  5 - Net Amount (VAT registered only)
-#  6 - VAT Amount (VAT Registered only)
-#  7 - Total
-#  8 - Invoice Date
-#  9 - Payment Method
-#  10 - Category
-#  11 - Reference
-#  12 - Paid in Full flag (Y/ )
-# 13 - Vat Rate
+#  Save new nominal codes
 
 use Checkid;
 $COOKIE = &checkid($ENV{HTTP_COOKIE},$ACCESS_LEVEL);
@@ -27,11 +10,6 @@ $COOKIE = &checkid($ENV{HTTP_COOKIE},$ACCESS_LEVEL);
 use CGI;
 use DBI;
 $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
-
-require "/usr/local/httpd/cgi-bin/fpa/process_invoice.ph";
-
-$Curdate = `date +%m-%Y`;
-chomp($Curdate);
 
 $Data = new CGI;
 %FORM = $Data->Vars;
@@ -48,50 +26,91 @@ while (( $Key,$Value) = each %FORM) {
 
 ($Reg_id,$Com_id) = split(/\+/,$COOKIE->{ACCT});
 
+$DATA{data} =~ tr/\r\n//d;
 $DATA{data} =~ s/<(?!\/).+?>//g;
 $DATA{data} =~ s/<\/tr>/\n/ig;
 $DATA{data} =~ s/<\/td>/\t/ig;
 
-@Invoices = split(/\n/,$DATA{data});
-foreach $Invoice (@Invoices) {
-        @bCell = split(/\t/,$Invoice);
+#  Get the account ids
 
-	if ($bCell[1]) {
+$Accts = $dbh->prepare("select id,acctype from accounts where acct_id='$COOKIE->{ACCT}'");
+$Accts->execute;
+$Acct = $Accts->fetchall_hashref('acctype');
+$Accts->finish;
 
-		$bCell[5] = $bCell[5] || $bCell[7];	#  Make sure that invtotal has got something in it
-		$FORM{id} = "";
-		$FORM{invitems} = "";
-		$FORM{invtype} = "S";
-		$FORM{invcoa} = $bCell[0];
-		$FORM{invcusname} = $bCell[1];
-		$FORM{cus_id} = $bCell[2];
-		$FORM{invdesc} = $bCell[4];
-		$FORM{invtotal} = sprintf('%1.2f',$bCell[5]);
-		$FORM{invvat} = sprintf('%1.2f',$bCell[6]);
-		$FORM{txnamount} = sprintf('%1.2f',$bCell[7]);
-		$FORM{invprintdate} = $bCell[8] || $Curdate;
-		$FORM{txnmethod} = $bCell[9];
-		$FORM{item_cat} = $bCell[10];
-		$FORM{invcusref} = $bCell[11];
-		$FORM{vatrate} = $bCell[13];;
+$Earnings = 0;
 
-		&save_invoice('final');
+#  Get the next transaction no
 
-                if ($bCell[12] =~ /Y/i) {        	#  Paid in Full?
-                        if ($bCell[3] =~ /Y/i) {	#  CIS Customer
-                                $FORM{invtotal} = sprintf('%1.2f',$bCell[5] * 0.8);
-                        	$FORM{txnamount} = $FORM{invtotal} + $bCell[6];
-                        }
-                        &money_in();
-                        &pay_invoice();
-                }
+$Companies = $dbh->prepare("select comnexttxn from companies where reg_id=$Reg_id and id=$Com_id");
+$Companies->execute;
+@Company = $Companies->fetchrow;
+
+@Nomcodes = split(/\n/,$DATA{data});
+foreach $Nomcode (@Nomcodes) {
+        @bCell = split(/\t/,$Nomcode);
+
+#  Update the COA
+
+	$Sts = $dbh->do("update coas set coabalance=coabalance + '$bCell[2]' where acct_id='$COOKIE->{ACCT}' and coanominalcode='$bCell[0]'");
+
+	if ($bCell[0] < 2000) {		#  Asset so add to Retained Earnings
+		$Earnings += $bCell[2];
+
+#  create a transaction record
+
+		$Sts = $dbh->do("insert into transactions (acct_id,txncusname,txnmethod,txnamount,txndate,txntxntype,txnremarks,txntxnno,txnselected) values ('$COOKIE->{ACCT}','Opening Balance','$bCell[0]','$bCell[2]',str_to_date('$DATA{obdate}','%d-%b-%y'),'income','$bCell[1]','$Company[0]','F')");
+		$New_txn_id = $dbh->last_insert_id(undef, undef, qw(transactions undef));
+		$Company[0]++;
+
+#  Add 2 nominal records
+
+		$Sts = $dbh->do("insert into nominals (acct_id,link_id,nomtype,nomcode,nomamount,nomdate) values ('$COOKIE->{ACCT}',$New_txn_id,'T','$bCell[0]','$bCell[2]',str_to_date('$DATA{obdate}','%d-%b-%y'))");
+		$Sts = $dbh->do("insert into nominals (acct_id,link_id,nomtype,nomcode,nomamount,nomdate) values ('$COOKIE->{ACCT}',$New_txn_id,'T','3100','$bCell[2]',str_to_date('$DATA{obdate}','%d-%b-%y'))");
+
+#  If this is 1200 or 1210 add an initial bank statment
+
+		if ($bCell[0] =~ /1200/) {
+			$Sts = $dbh->do("insert into statements (acct_id,acc_id,staclosebal,stastmtno,staclosedate,stanotxns,starec_no) values ('$COOKIE->{ACCT}',$Acct->{1200}->{id},'$bCell[2]','Opening Balance',str_to_date('$DATA{obdate}','%d-%b-%y'),'-1',0)");
+		}
+		if ($bCell[0] =~ /1210/) {
+			$Sts = $dbh->do("insert into statements (acct_id,acc_id,staclosebal,stastmtno,staclosedate,stanotxns,starec_no) values ('$COOKIE->{ACCT}',$Acct->{1210}->{id},'$bCell[2]','Opening Balance',str_to_date('$DATA{obdate}','%d-%b-%y'),'-1',0)");
+		}
+	}
+	else {
+		$Earnings -= $bCell[2];
+
+#  create a transaction record
+
+		$Sts = $dbh->do("insert into transactions (acct_id,txncusname,txnmethod,txnamount,txndate,txntxntype,txnremarks,txntxnno,txnselected) values ('$COOKIE->{ACCT}','Opening Balance','$bCell[0]',0-'$bCell[2]',str_to_date('$DATA{obdate}','%d-%b-%y'),'income','$bCell[1]','$Company[0]','F')");
+		$New_txn_id = $dbh->last_insert_id(undef, undef, qw(transactions undef));
+		$Company[0]++;
+
+#  Add 2 nominal records
+
+		$Sts = $dbh->do("insert into nominals (acct_id,link_id,nomtype,nomcode,nomamount,nomdate) values ('$COOKIE->{ACCT}',$New_txn_id,'T','$bCell[0]','$bCell[2]',str_to_date('$DATA{obdate}','%d-%b-%y'))");
+		$Sts = $dbh->do("insert into nominals (acct_id,link_id,nomtype,nomcode,nomamount,nomdate) values ('$COOKIE->{ACCT}',$New_txn_id,'T','3100',0-'$bCell[2]',str_to_date('$DATA{obdate}','%d-%b-%y'))");
+
 	}
 }
+
+#  Update the Retained Earnings COA
+
+$Sts = $dbh->do("update coas set coabalance=coabalance + '$Earnings' where acct_id='$COOKIE->{ACCT}' and coanominalcode='3100'");
+
+#  Update the next transaction no
+
+$Sts = $dbh->do("update companies set comnexttxn=comnexttxn+$Company[0] where reg_id=$Reg_id and id=$Com_id");
+
+#  Add an audit trail comment
+
+$Sts = $dbh->do("insert into audit_trails (acct_id,audtype,audaction,audtext,auduser) values ('$COOKIE->{ACCT}','opening balances','setup','Retained Earnings adjusted by &pound;$iEarnings for `Retained Earnings`','$COOKIE->{USER}')");
+
 $dbh->disconnect;
 print<<EOD;
 Content-Type: text/plain
 Status: 301
-Location: /cgi-bin/fpa/list_invoices.pl
+Location: /cgi-bin/fpa/trial_balance.pl
 
 EOD
 exit;

@@ -5,9 +5,13 @@
   <table width="660" border="0" cellpadding="0" cellspacing="0" class="formtable">
     <tr>
       <td>Nominal Account<br/>
-      <select name="nomcode" id="blk_nomcode" size="1">
-            <option value="1200" selected="selected">Bank Current Account</option>
-            <option value="1210">Bank Deposit Account</option>
+      <select name="nomcode" id="blk_nomcode" size="1" onchange="document.getElementById('obdesc').value = $('#blk_nomcode option:selected').text();">
+            <option value="0" selected="selected">-- Please Select --</option>
+[% FOREACH stmt IN stmts -%]
+  [%- UNLESS stmt.cnt > 0 -%] 
+            <option value="[%- stmt.acctype -%]">Bank [%- stmt.accshort -%] Account</option>
+  [%- END -%]
+[% END -%]
             <option value="1300">Cash</option>
             <option value="1000">Fixed Assets</option>
             <option value="1100">Debtors</option>
@@ -20,11 +24,14 @@
           </select>
       </td>
       <td>Date<br/>
-         <input name="obdate" id="obdate" size="9"/>
+         <input name="obdate" id="obdate" size="9" value="[%- companies.yearend -%]"/>
+      </td>
+      <td>Retained Earnings<br/>
+          <span id="balance" style="font-size:1.2em;font-weight:bold;">[%- coas.coabalance -%]</span>
       </td>
     </tr>
     <tr>
-      <td colspan="2">
+      <td colspan="3">
         <div style="float:left;"><table width="550" cellpadding="0" cellspacing="0" class="datatable">
           <tr>
             <td>&nbsp;Description<br/><input type="text" name="obdesc" id="obdesc" size="40" class="mand2" title="Description"/></td>
