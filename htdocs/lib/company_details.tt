@@ -166,7 +166,7 @@
     </li>
     <li>
       <div>
-        <a href="/cgi-bin/fpa/opening_balances.pl">
+        <a href="/cgi-bin/fpa/bulk_opening_balances.pl">
           Set Opening Balances
         </a>
       </div>
