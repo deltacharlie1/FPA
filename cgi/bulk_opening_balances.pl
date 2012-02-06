@@ -21,7 +21,7 @@ $Coas->finish;
 
 #  See if we have any statements (in which case we cannot do opening balances for those bank accounts)
 
-$Stmts = $dbh->prepare("select count(acc_id) as cnt,acctype,accshort from accounts left join statements on (accounts.id=acc_id) where accounts.acct_id='$COOKIE->{ACCT}' group by acctype order by acctype");
+$Stmts = $dbh->prepare("select count(acc_id) as cnt,acctype,accshort from accounts left join statements on (accounts.id=acc_id) where accounts.acct_id='$COOKIE->{ACCT}' and acctype<'2000' group by acctype order by acctype");
 $Stmts->execute;
 $Stmt = $Stmts->fetchall_arrayref({});
 $Stmts->finish;
