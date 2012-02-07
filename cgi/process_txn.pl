@@ -111,10 +111,10 @@ EOD
 
 		require "/usr/local/httpd/cgi-bin/fpa/process_purchase.ph";
 
-		&save_invoice();
+		&save_purchase();
 		unless ($Expense_type =~ /E/i) {	#  ie if not expenses
 			&money_out();
-			&pay_invoice();
+			&pay_purchase();
 		}
 		print<<EOD;
 Content-Type: text/plain

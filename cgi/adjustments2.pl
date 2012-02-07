@@ -167,7 +167,7 @@ else {
 	print<<EOD;
 Content-Type: text/plain
 
-OK-company_details.pl-
+OK-adjustments.pl-
 EOD
 }
 $dbh->disconnect;

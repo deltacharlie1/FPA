@@ -16,8 +16,9 @@
       <tbody id="stmtpaycodegp" style="display:none;">
       <tr>
         <td colspan="2">Allocate to<br/>
-          <select name="stmtpaycodes" id="stmtpaycodes" size="1">
+          <select name="stmtpaycodes" id="stmtpaycodes" size="1" onchange="upd_vat(this);">
             <option value="1000">Fixed Assets</option>
+            <option value="1300">Cash from Bank</option>
             <option value="1500">Other Current Assets</option>
             [% cookie.5000 -%]
             [% cookie.6000 -%]
@@ -31,7 +32,8 @@
       <tbody id="stmtinccodegp">
       <tr>
         <td colspan="2">Allocate to<br/>
-          <select name="stmtinccodes" id="stmtinccodes" size="1">
+          <select name="stmtinccodes" id="stmtinccodes" size="1" onchange="upd_vat(this);">
+            <option value="1300">Cash to Bank</option>
             <option value="4000" selected="selected">UK Sales</option>
             <option value="4100">EU Sales</option>
             <option value="4200">Non-EU Sales</option>

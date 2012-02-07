@@ -202,7 +202,7 @@ $(document).ready(function(){
        var trid = document.getElementById("stmtdropid").value;
        $("#"+trid).find(".placeholder").remove();
        if (/^Sup/.test($("#stmtcustype").val())) {
-         $("<tr></tr>").html("<td style=\'display:none;\'>"+$("#stmtcusid").val()+"</td><td style=\'display:none;\'>pur</td><td nowrap=\'nowrap\'>"+$("#stmtpaytxndate").val()+"</td><td></td><td>"+$("#stmtpaycodes").val()+"</td><td>"+$("#stmt_cus_id").val()+"</td><td>"+$("#stmtdesc").val()+"</td><td>-"+$("#stmttxnamount").text()+"</td><td style=\'display:none;\'>-"+$("#stmtvat").text()+"</td><td style=\'display:none;\'>"+$("#stmtcusref").val()+"</td><td style=\'display:none;\'>"+$("#stmtitem_cat").val()+"</td><td onclick=\"revert(\'0\',$(this),\'"+trid+"\');\"><img src=\'/icons/delete.png\' width=\'12\' height=\'12\' alt=\'Delete\'/></td>").appendTo("#"+trid);
+         $("<tr></tr>").html("<td style=\'display:none;\'>"+$("#stmtcusid").val()+"</td><td style=\'display:none;\'>pur</td><td nowrap=\'nowrap\'>"+$("#stmtpaytxndate").val()+"</td><td>"+document.getElementById("stmtvatrate").value+"</td><td>"+$("#stmtpaycodes").val()+"</td><td>"+$("#stmt_cus_id").val()+"</td><td>"+$("#stmtdesc").val()+"</td><td>-"+$("#stmttxnamount").text()+"</td><td style=\'display:none;\'>-"+$("#stmtvat").text()+"</td><td style=\'display:none;\'>"+$("#stmtcusref").val()+"</td><td style=\'display:none;\'>"+$("#stmtitem_cat").val()+"</td><td onclick=\"revert(\'0\',$(this),\'"+trid+"\');\"><img src=\'/icons/delete.png\' width=\'12\' height=\'12\' alt=\'Delete\'/></td>").appendTo("#"+trid);
          var diff = document.getElementById("stmtdiff").innerHTML;
          diff = (diff * 1) + ($("#stmttxnamount").text() * 1);
          if (diff == 0) {
@@ -213,7 +213,7 @@ $(document).ready(function(){
          diff = (diff * 1) + ($("#stmttxnamount").text() * 1);
        }
        else {
-         $("<tr></tr>").html("<td style=\'display:none;\'>"+$("#stmtcusid").val()+"</td><td style=\'display:none;\'>sal</td><td nowrap=\'nowrap\'>"+$("#stmtinctxndate").val()+"</td><td></td><td>"+$("#stmtinccodes").val()+"</td><td>"+$("#stmt_cus_id").val()+"</td><td>"+$("#stmtdesc").val()+"</td><td>"+$("#stmttxnamount").text()+"</td><td style=\'display:none;\'>"+$("#stmtvat").text()+"</td><td style=\'display:none;\'>"+$("#stmtcusref").val()+"</td><td style=\'display:none;\'>"+$("#stmtitem_cat").val()+"</td><td onclick=\"revert(\'0\',$(this),\'"+trid+"\');\"><img src=\'/icons/delete.png\' width=\'12\' height=\'12\' alt=\'Delete\'/></td>").appendTo("#"+trid);
+         $("<tr></tr>").html("<td style=\'display:none;\'>"+$("#stmtcusid").val()+"</td><td style=\'display:none;\'>sal</td><td nowrap=\'nowrap\'>"+$("#stmtinctxndate").val()+"</td><td>"+document.getElementById("stmtvatrate").value+"</td><td>"+$("#stmtinccodes").val()+"</td><td>"+$("#stmt_cus_id").val()+"</td><td>"+$("#stmtdesc").val()+"</td><td>"+$("#stmttxnamount").text()+"</td><td style=\'display:none;\'>"+$("#stmtvat").text()+"</td><td style=\'display:none;\'>"+$("#stmtcusref").val()+"</td><td style=\'display:none;\'>"+$("#stmtitem_cat").val()+"</td><td onclick=\"revert(\'0\',$(this),\'"+trid+"\');\"><img src=\'/icons/delete.png\' width=\'12\' height=\'12\' alt=\'Delete\'/></td>").appendTo("#"+trid);
          var diff = document.getElementById("stmtdiff").innerHTML;
          diff = (diff * 1) - ($("#stmttxnamount").text() * 1);
          if (diff == 0) {
@@ -373,6 +373,20 @@ function get_wip() {
   $.get("/cgi-bin/fpa/get_wip.pl", function(data) {
     document.getElementById("wip").innerHTML = unescape(unescape(data));
   });
+}
+function upd_vat(obj) {
+  if (/1300|4310|6010/.test(obj.value)) {
+    $("#stmt_cus_id").val("Bank");
+    $("#stmtvatrate").val("0");
+    calc_stmtvat();
+  }
+  else {
+    if ($("#stmt_cus_id").val() == "Bank") {
+      $("#stmt_cus_id").val("");
+    }
+    $("#stmtvatrate").val("0.2");
+    calc_stmtvat();
+  }
 }
 </script>'
 };

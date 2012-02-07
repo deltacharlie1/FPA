@@ -84,7 +84,7 @@ sub process_vat {
 	}
 }
 
-sub save_invoice {
+sub save_purchase {
 
 	my $Level = shift;		#  Is this a draft or final invoice?
 
@@ -339,7 +339,7 @@ sub money_out {
 	$Sts = $dbh->do("insert into audit_trails (acct_id,link_id,audtype,audaction,audtext,auduser) values ('$COOKIE->{ACCT}',$New_txn_id,'transactions','expense','Made payment of &pound;$Tot to $FORM{invcusname}','$COOKIE->{USER}')");
 }
 
-sub pay_invoice {
+sub pay_purchase {
 
 #  get the current balance of the invoice
 
