@@ -367,11 +367,34 @@ function submitit() {
   }
 }
 function save_wip() {
-  $.post("/cgi-bin/fpa/save_wip.pl",{ "data" : escape($("#wip").html()) });
+  $.post("/cgi-bin/fpa/save_wip.pl",{ "data" : escape($("#dropblock").html()) });
+  alert("Your Work in Progress has been saved");
 }
 function get_wip() {
   $.get("/cgi-bin/fpa/get_wip.pl", function(data) {
-    document.getElementById("wip").innerHTML = unescape(unescape(data));
+    document.getElementById("hiddenblock").innerHTML = unescape(unescape(data));
+  $("#hiddenblock table").each(function() {
+     if (! /placeholder/.test($(this).html())) {
+       var stmt_id = $(this).attr("id");
+       $(this).find("tr").each(function () {
+         var txntype = $(this).find("td:nth-child(2)").text();
+         var txn_id = txntype+$(this).find("td:first-child").text();
+         var txn_amt = $(this).find("td:nth-child(8)").text() * 1;
+         var rem_amt =  $("#p"+stmt_id).text() * 1;
+
+         var orig_amt =  $("#"+txn_id).find(":nth-child(8)").text() * 1;
+         $("#p"+stmt_id).text((rem_amt-txn_amt).toFixed(2));
+
+         if (orig_amt == txn_amt) {
+           $("#"+txn_id).draggable("disable");
+         }
+         else {
+           $("#"+txn_id).find(":nth-child(8)").text((orig_amt-rem_amt).toFixed(2));
+         }
+       });
+       $("#"+stmt_id).html($(this).html());
+    }
+  });
   });
 }
 function upd_vat(obj) {
