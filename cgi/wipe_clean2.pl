@@ -68,15 +68,15 @@ else {
 	$Sts = $dbh->do("delete from nominals where acct_id='$COOKIE->{ACCT}'");
 	$Sts = $dbh->do("delete from items where acct_id='$COOKIE->{ACCT}'");
 	$Sts = $dbh->do("delete from images where acct_id='$COOKIE->{ACCT}'");
+	$Sts = $dbh->do("update customers set cusbalance='0',cuscredit='0',cuslimit='0',cusremarks='' where acct_id='$COOKIE->{ACCT}'");
 
 	if ($FORM{rem2} =~ /Y/) {
-		$Sts = $dbh->do("delete from customers where acct_id='$COOKIE->{ACCT}'");
-	}
-	else {
-		$Sts = $dbh->do("update customers set cusbalance='0',cuscredit='0',cuslimit='0',cusremarks='' where acct_id='$COOKIE->{ACCT}'");
+		$Sts = $dbh->do("delete from customers where acct_id='$COOKIE->{ACCT}' and cusaddress<>'Expenses'");
 	}
 
 	$Sts = $dbh->do("update coas set coabalance='0' where acct_id='$COOKIE->{ACCT}'");
+
+	$Sts = $dbh->do("delete from coas where acct_id='$COOKIE->{ACCT}' and coanominalcode<>coagroup and coanominalcode not in ('4310','6010'");
 	$Sts = $dbh->do("update companies set cominvstats='0',comtxnstats='',comnetstats='',comvatcontrol='0',comnextsi='100001',comnextpi='500001',comnextpr='1001',comnocheques='0',comacccompleted='N',comnexttxn='1' where reg_id=$Reg_id and id=$Com_id");
 	print<<EOD;
 Content-Type: text/plain

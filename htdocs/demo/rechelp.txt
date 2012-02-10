@@ -1,0 +1,43 @@
+How to Carry out the Reconciliation
+
+Reconcle - Step 1
+-----------------
+1.  Click on th 'Open Statement' button to display the demo statement
+2.  Select the whole statement (wipe the mouse from bottom right to top left whilst holding down the left mouse button)
+3.  Save this selection to the clipboard (Ctrl+c)
+4.  Close the statement window.
+5.  Place the mouse cursor in the 'Paste Stetment Below' box.
+6.  Paste in the selection (Ctrl+V)
+7.  Click on the 'Reconcile - Step 2' tab
+
+Reconcile - Step 2
+------------------
+There are 3 'boxes' displayed on the screen in 2 columns.
+
+-  The top left box shows all invoices that have not yet been recorded as 'Paid'.
+-  The bottom left box shows transactions that have been recorded in FreePlus Accounts but not yet reconciled to a statement
+-  The right hand box shows all of the statement entries.  Under each entry is a white space and, to the right of each statement entry is a 'Remaining' Amount.
+
+The idea is to drag entries from the boxes on the left hand side and drop them into the white space under the relevant statement entry so that the 'Remaining' amount becomes zero (0.00).
+
+Once all 'Remaining' amounts are zero, the statement is reconciled and it may be saved and locked.
+
+To drag an entry, place the mouse over the entry, hold down the left mouse button, drag to where you want to drop it and then release the button.
+
+To remove that entry just click on the trash can symbol at the right.
+
+
+Notes on Entering New Sales/Purchase Details
+--------------------------------------------
+1.  There are some entries, for instance 'MYSOFT LTD' (first statement entry), that do not appear at all on the left hand side.  This is because, to date, no purchase details have yet been entered into FreePlus Accounts for these entries.  It is very easy to do this using the statement as the starting point.  Place the mouse over the statement entry and double click the left mouse button.  A small window will open up in the centre of the screen.
+
+With the cursor in the 'Supplier' field, press the down arrow key.  A list of suppliers and customers will be displayed.  If the supplier/customer is listed, select that name, otherwise just type in the new name, in this case 'MYSOFT'.  Complete any other details and then click the 'Add transaction' button.  an entry will be made in the white space below the statement entry and the 'Remaining' amount will fall to zero.
+
+2.  There are 2 'Picolo Primer' entries which, in fact, are just corrections and do not appear on the statement.  In order to get these removed (not essential but it removes inconsistencies), just drag each of the entries to the 'Contra Entry bucket' at the bottom of the statement.
+
+3.  There is a statement entry for £900 from Acme Group, but no correspondng, single, amount on the left hand side.  This is because this payment is, in fact made up from two invoices.  Just drag 2 Acme invoice entries from the top left box and drop them, one on top of the other, in the white space below the Acme Group statement entry.
+
+4.  There is a statement entry for £-1381.58 for Web Design People but they have invoiced us for £2000.  This invoice is being paid off in s stages.  Just drag the 'Web Design People' entry in the left-hand bottom box and drop it over the equivalent statement entry on the right.  The difference (£-618.42) will fly back to the Unreconciled transactions to show that this amount is still outstanding and the 'Remaining' amount will reduce to zero.
+
+
+

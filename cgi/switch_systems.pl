@@ -18,6 +18,10 @@ foreach (@Cookie) {
 	$Cookie{$Name} = $Value;
 }
 
+if ($COOKIE->{ACCT} == '4+3') {
+	`mysql fpa2 < /usr/local/git/fpa/other/fpa2.dmp`;
+}
+else {
 open(FILE,"</projects/tmp/$Cookie{'fpa-cookie'}");
 while (<FILE>) {
 	chomp($_);
@@ -42,7 +46,7 @@ while(($Key,$Value) = each %DATA) {
 	print FILE "$Key\t$Value\n";
 }
 close(FILE);
-
+}
 print<<EOD;
 Content-Type: text/html
 Status: 301
