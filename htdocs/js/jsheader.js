@@ -11,7 +11,7 @@ $(document).ready(function(){
       $.get('/cgi-bin/fpa/genrep2.pl', 
         { searchval: val, action: 'S' },
         function(data) {
-          document.getElementById("main").innerHTML = data;
+          $("#main").html(data);
         }, 'html'
       );
     }, ms);
@@ -105,7 +105,7 @@ $(document).ready(function(){
         if (document.getElementById("comtext").value.length > 0) {
           $.post("/cgi-bin/fpa/add_comment.pl", { comtext: document.getElementById("comtext").value, comgrade: document.getElementById("comgrade").value },function(data) {
             $("#dialog").dialog({ title: "Feedback Added"});
-            document.getElementById("dialog").innerHTML = data;
+            $("#dialog").html(data);
             errfocus = "comtext";
             $("#dialog").dialog("open");
             document.getElementById("comtext").value = "";
@@ -113,7 +113,7 @@ $(document).ready(function(){
           $(this).dialog("close");
        }
        else {
-          document.getElementById("dialog").innerHTML = "You have not entered any comment";
+          $("#dialog").html("You have not entered any comment");
           errfocus = "comtext";
           $("#dialog").dialog("open");
        }
@@ -141,7 +141,7 @@ $(document).ready(function(){
       "Save": function() {
         if (document.getElementById("remtext").value.length > 0) {
           $.post("/cgi-bin/fpa/add_reminder.pl", { remtext: document.getElementById("remtext").value, remgrade: document.getElementById("remgrade").value, remstartdate: document.getElementById("remstartdate").value, remenddate: document.getElementById("remenddate").value } ,function(data) {
-            document.getElementById("dialog").innerHTML = data;
+            $("#dialog").html(data);
             errfocus = "remtext";
             $("#dialog").dialog({ title: "Reminder Added"});
             $("#dialog").dialog("open");
@@ -152,7 +152,7 @@ $(document).ready(function(){
           $(this).dialog("close");
        }
        else {
-          document.getElementById("dialog").innerHTML = "You have not entered any message";
+          $("#dialog").html("You have not entered any message");
           errfocus = "remtext";
           $("#dialog").dialog("open");
        }
@@ -227,7 +227,7 @@ $(document).ready(function(){
             var href = ajax_return.split("-");
             var c_name = "fpa-cookie";
             var cookie = "";
-            if (document.getElementById("pifileQueue").innerHTML.length > 0 && parseInt(href[1]) > 0) {
+            if ($("#pifileQueue").html().length > 0 && parseInt(href[1]) > 0) {
               if (document.cookie.length>0) {
                 c_start=document.cookie.indexOf(c_name + "=");
                 if (c_start!=-1) {
@@ -261,7 +261,7 @@ $(document).ready(function(){
 function get_gen_results(action) {
   $.get("/cgi-bin/fpa/genrep2.pl",$("form#form1").serialize()+"&searchval="+document.getElementById("searchcus").value+"&action="+action ,
     function(data) {
-      document.getElementById("main").innerHTML = data;
+      $("#main").html(data);
     }
   );
 }
@@ -282,7 +282,7 @@ function gen_redisplay(action) {
 function set_logout() {
   document.cookie="fpa-cookie=; path=/;";
   $(".main").html("&nbsp;");
-  document.getElementById("dialog").innerHTML = "<h2>Auto Logout</h2><p>You have been automatically logged out of <b><i>FreePlus Accounts</i></b> because of extended inactivity.</p><p>Please click \'OK\' to return to the login page</p>";
+  $("#dialog").html("<h2>Auto Logout</h2><p>You have been automatically logged out of <b><i>FreePlus Accounts</i></b> because of extended inactivity.</p><p>Please click \'OK\' to return to the login page</p>");
   $("#dialog").dialog("option", "height", "260");
   $("#dialog").dialog("option", "buttons", { "OK": function() { window.location.href="/cgi-bin/fpa/login.pl"; } });
   $("#dialog").dialog("open");
@@ -293,7 +293,7 @@ function print_display(title) {
   }
   else {
     if ($("#results").length > 0) {
-      var $PrintHTML  = $("<h2>" + title + "</h2><h3>From: " + document.getElementById("tbstart").value + " To: " + document.getElementById("tbend").value + "</h3>" + document.getElementById("results").innerHTML);
+      var $PrintHTML  = $("<h2>" + title + "</h2><h3>From: " + document.getElementById("tbstart").value + " To: " + document.getElementById("tbend").value + "</h3>" + $("#results").html());
       $PrintHTML.jqprint();
     }
     else {
@@ -330,7 +330,7 @@ function validate_form(form) {
   });
   if (errs.length > 0) {
     errs = "You have the following error(s):-<ol>" + errs + "<\/ol>Please correct them before re-submitting";
-    document.getElementById("dialog").innerHTML = errs;
+    $("#dialog").html(errs);
     $("#dialog").dialog("open");
     return false;
   }
@@ -345,7 +345,7 @@ function setfocus() {
 function check_currency(obj) {
   if (obj.value.length > 0) {
     if (! /^-?\d+\.?\d?\d?$/.test(obj.value)) {
-      document.getElementById("dialog").innerHTML = obj.value + "is an invalid currency format, please correct";
+      $("#dialog").html(obj.value + "is an invalid currency format, please correct");
       $("#dialog").dialog("open");
       obj.value="";
       errfocus = obj.id;
@@ -387,11 +387,11 @@ function calc_vat(obj) {
       var vatvalue = totamt * vat / vatdiv;
       document.getElementById("pay_invvat").value = vatvalue.toFixed(2);
       var netamt = totamt - vatvalue;
-      document.getElementById("pay_netamt").innerHTML = "(Net = " + netamt.toFixed(2) + ")";
+      $("#pay_netamt").html("(Net = " + netamt.toFixed(2) + ")");
     }
     else {
       document.getElementById("pay_invvat").value = "";
-      document.getElementById("pay_netamt").innerHTML = "";
+      $("#pay_netamt").html("");
     }
   }
   else {
@@ -402,11 +402,11 @@ function calc_vat(obj) {
       var vatvalue = totamt * vat / vatdiv;
       document.getElementById("rec_invvat").value = vatvalue.toFixed(2);
       var netamt = totamt - vatvalue;
-      document.getElementById("rec_netamt").innerHTML = "(Net = " + netamt.toFixed(2) + ")";
+      $("#rec_netamt").html("(Net = " + netamt.toFixed(2) + ")");
     }
     else {
       document.getElementById("rec_invvat").value = "";
-      document.getElementById("rec_netamt").innerHTML = "";
+      $("#rec_netamt").html("");
     }
     if (typeof document.getElementById("rec_txnpaid") === "undefined") {
       calc_owed();
@@ -440,13 +440,13 @@ function display_form(io) {
 }
 function view_comments() {
   $.ajax({ url: "/cgi-bin/fpa/view_comments.pl", cache: false, success: function(data) {
-    document.getElementById("vcomments").innerHTML = data;
+    $("#vcomments").html(data);
     $("#vcomments").dialog("open");
   }});
 }
 function view_reminders() {
   $.ajax({ url: "/cgi-bin/fpa/view_reminders.pl", cache: false, success: function(data) {
-    document.getElementById("vreminders").innerHTML = data;
+    i$("#vreminders").html(data);
     $("#vreminders").dialog("open");
   }});
 }

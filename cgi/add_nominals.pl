@@ -67,7 +67,7 @@ function validate_nominal() {
   });
   if (errs.length > 0) {
     errfocus = "coadesc";
-    document.getElementById("dialog").innerHTML = "You have the following errors<ol>" + errs + "</ol>";
+    $("#dialog").html("You have the following errors<ol>" + errs + "</ol>");
     $("#dialog").dialog("open");
   }
   else {
@@ -95,7 +95,7 @@ function display_table() {
       item_table = item_table + "<td>&nbsp;</td>\\n</tr>";
     }
   }
-  document.getElementById("new").innerHTML = item_table;
+  $("#new").html(item_table);
   document.getElementById("nom_data").value = item_table;
   document.getElementById("coadesc").focus();
 }
@@ -117,7 +117,7 @@ function check_data() {
     return true;
   }
   else {
-    document.getElementById("dialog").innerHTML = "You have not entered any accounts!";
+    $("#dialog").html("You have not entered any accounts!");
     errfocus = "coadesc";
     $("#dialog").dialog("open");
     return false;

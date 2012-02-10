@@ -85,7 +85,7 @@ function showResponse(responseText, statusText) {
     location.href = "/cgi-bin/fpa/" + href[1];
   }
   else {
-    document.getElementById("dialog").innerHTML = responseText;
+    $("#dialog").html(responseText);
     $("#dialog").dialog("open");
     return false;
   }
@@ -96,13 +96,13 @@ function validate(formData,jqForm,options) {
 
     for (i=0; i<formData.length; i++) {
       if (formData[i].name == "invitems") {
-        formData[i].value = document.getElementById("div_html").innerHTML;
+        formData[i].value = $("#div_html").html();
       }
       if (formData[i].name == "invtotal") {
-        formData[i].value = document.getElementById("st").innerHTML;
+        formData[i].value = $("#st").html();
       }
       if (formData[i].name == "invvat") {
-        formData[i].value = document.getElementById("vt").innerHTML;
+        formData[i].value = $("#vt").html();
       }
     }
   }

@@ -49,7 +49,7 @@ function showResponse(responseText, statusText) {
     location.href = "/cgi-bin/fpa/" + href[2];
   }
   else {
-    document.getElementById("dialog").innerHTML = responseText;
+    $("#dialog").html(responseText);
     $("#dialog").dialog("open");
   }
 }
@@ -63,7 +63,7 @@ function delete_invoice() {
     }
     else {
       responseText = data;
-      document.getElementById("dialog").innerHTML = responseText;
+      $("#dialog").html(responseText);
       $("#dialog").dialog("open");
     }
   });

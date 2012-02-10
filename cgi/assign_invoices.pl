@@ -61,7 +61,7 @@ $(document).ready(function(){
 function get_results(action) {
   document.getElementById("action").value = action;
   $.get("/cgi-bin/fpa/assign_invoices_results.pl",$("form#form1").serialize() ,function(data) {
-    document.getElementById("results").innerHTML = data;
+    $("#results").html(data);
   });
 }
 function redisplay(action) {
@@ -82,7 +82,7 @@ function assign_invoices() {
     Errs = Errs + "<li>You have not selected any Invoices to re-assign<\/li>\n";
   }
   if (Errs.length > 0) {
-    document.getElementById("dialog").innerHTML = "You have the following errors:-\n<ol>" + Errs + "<\/ol>\nPlease correct and resubmit";
+    $("#dialog").html("You have the following errors:-\n<ol>" + Errs + "<\/ol>\nPlease correct and resubmit");
     $("#dialog").dialog("open");
   }
   else {

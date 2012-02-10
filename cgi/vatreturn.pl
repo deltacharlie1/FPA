@@ -140,7 +140,7 @@ $Vars = {
 <script type="text/javascript">
 function print_list() {
    $.get("/cgi-bin/fpa/print_vatreturn.pl",$("form#form1").serialize() ,function(data) {
-     document.getElementById("main").innerHTML = data;
+     $("#main").html(data);
      $("#vattabs").hide();
      $("#printtab").show();
    });
@@ -171,8 +171,8 @@ function calc_val(obj) {
 
     box5 = (box3 - box4).toFixed(2);
 
-    document.getElementById("box3").innerHTML = box3;
-    document.getElementById("box5").innerHTML = box5;
+    $("#box3").html(box3);
+    $("#box5").html(box5);
   }
 }
 </script>',

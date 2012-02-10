@@ -78,7 +78,7 @@ function showResponse(responseText, statusText) {
     location.href = "/cgi-bin/fpa/" + href[1];
   }
   else {
-    document.getElementById("dialog").innerHTML = responseText;
+    $("#dialog").html(responseText);
     $("#dialog").dialog("open");
   }
 }

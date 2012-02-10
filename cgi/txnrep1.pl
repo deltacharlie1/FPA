@@ -50,7 +50,7 @@ function get_results(action) {
     document.getElementById("offset").value = parts[1];
     document.getElementById("action").value = "S";
     document.getElementById("sumtotal").value = parts[4];
-    document.getElementById("results").innerHTML = parts[5];
+    $("#results").html(parts[5]);
   });
 }
 function redisplay(action) {
