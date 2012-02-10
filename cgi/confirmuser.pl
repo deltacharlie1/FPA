@@ -67,11 +67,11 @@ function showResponse(responseText, statusText) {
         }
         else {
                 if (responseText.length < 500) {
-                        document.getElementById("dialog").innerHTML = responseText;
+                        $("#dialog").html(responseText);
                         $("#dialog").dialog("open");
                 }
                 else {
-                        document.getElementById("login").innerHTML = responseText;
+                        $("#login").html(responseText);
                         var options = {
                                 beforeSubmit: validate,
                                 success:        showResponse
@@ -114,7 +114,7 @@ function validate() {
 
   if (errs.length > 0) {
     errs = "You have the following error(s):-<ol>" + errs + "<\/ol>Please correct them before re-submitting";
-    document.getElementById("dialog").innerHTML = errs;
+    $("#dialog").html(errs);
     $("#dialog").dialog("open");
     return false;
   }
@@ -122,13 +122,13 @@ function validate() {
     $.post("/cgi-bin/fpa/confirmuser2.pl", $("form#form1").serialize(),function(data) {
       if (/^OK/.test(data)) {
         var msg = data.split("-");
-        document.getElementById("dialog").innerHTML = data;
+        $("#dialog").html(data);
         $("#dialog").dialog("option","title","Information");
         $("#dialog").dialog("open");
         location.href="/cgi-bin/fpa/login.pl";
       }
       else {
-        document.getElementById("dialog").innerHTML = data;
+        $("#dialog").html(data);
         $("#dialog").dialog("open");
       }
     },"text");
@@ -192,11 +192,11 @@ function showResponse(responseText, statusText) {
         }
         else {
                 if (responseText.length < 500) {
-                        document.getElementById("dialog").innerHTML = responseText;
+                        $("#dialog").html(responseText);
                         $("#dialog").dialog("open");
                 }
                 else {
-                        document.getElementById("login").innerHTML = responseText;
+                        $("#login").html(responseText);
                         var options = {
                                 beforeSubmit: validate,
                                 success:        showResponse
@@ -271,7 +271,7 @@ function validate() {
 
   if (errs.length > 0) {
     errs = "You have the following error(s):-<ol>" + errs + "<\/ol>Please correct them before re-submitting";
-    document.getElementById("dialog").innerHTML = errs;
+    $("#dialog").html(errs);
     $("#dialog").dialog("open");
     return false;
   }
@@ -281,7 +281,7 @@ function validate() {
         location.href="/registered.html";
       }
       else {
-        document.getElementById("dialog").innerHTML = data;
+        $("#dialog").html(data);
         $("#dialog").dialog("open");
       }
     },"text");

@@ -66,7 +66,7 @@ function process_balance() {
     errs = errs + "<li>Nominal Account not selected</li>";
   }
   if (errs.length > 0) {
-    document.getElementById("dialog").innerHTML = "You have the following errors<ol>" + errs + "</ol>";
+    $("#dialog").html("You have the following errors<ol>" + errs + "</ol>");
     $("#dialog").dialog("open");
   }
   else {
@@ -94,7 +94,7 @@ function display_table() {
     }
     item_table = item_table + "<td style=\'text-align:center;\'><input type=\'button\' value=\'Amd\' onclick=\"amd(\'" + i + "\');\"/>&nbsp;<input type=\'button\' value=\'Del\' onclick=\"dlt(\'" + i + "\');\"/></td>\\n</tr>";
   }
-  document.getElementById("new").innerHTML = item_table;
+  $("#new").html(item_table);
   document.getElementById("blk_data").value = item_table;
 }
 
@@ -109,7 +109,7 @@ function add_balance() {
   else {
     earnings = earnings - amt;
   }
-  document.getElementById("balance").innerHTML = earnings.toFixed(2);
+  $("#balance").html(earnings.toFixed(2));
 
   document.getElementById("obamt").value = amt.toFixed(2);
   item_row = [document.getElementById("blk_nomcode").value,document.getElementById("obdesc").value+" (Opening Balance)",document.getElementById("obamt").value];
@@ -138,7 +138,7 @@ function check_data() {
     return true;
   }
   else {
-    document.getElementById("dialog").innerHTML = "You have not entered any Opening Balances!";
+    $("#dialog").html("You have not entered any Opening Balances!");
     errfocus = "obdesc";
     $("#dialog").dialog("open");
     return false;

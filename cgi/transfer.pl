@@ -62,7 +62,7 @@ function validate(formData,jqForm,options) {
   );
   if (errs.length > 0) {
     errs = "You have the following error(s):-<ol>" + errs + "<\/ol>Please correct them before re-submitting";
-    document.getElementById("dialog").innerHTML = errs;
+    $("#dialog").html(errs);
     $("#dialog").dialog("open");
     return false;
   }

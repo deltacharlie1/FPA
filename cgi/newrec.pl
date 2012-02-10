@@ -54,7 +54,7 @@ function validate_stmt() {
     errfocus = "stmt";
   }
   if (errs.length > 0) {
-    document.getElementById("dialog").innerHTML = "You have the following errors:-<ol>"+errs+"</ol>";
+    $("#dialog").html("You have the following errors:-<ol>"+errs+"</ol>");
     $("#dialog").dialog("open");
     return false;
   }

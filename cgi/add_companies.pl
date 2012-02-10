@@ -94,7 +94,7 @@ function display_table() {
     }
     item_table = item_table + "<td nowrap=\'nowrap\' style=\'text-align:center;\'><input type=\'button\' value=\'Amd\' onclick=\"amd(\'" + i + "\');\"/>&nbsp;<input type=\'button\' value=\'Del\' onclick=\"dlt(\'" + i + "\');\"/></td></tr>";
   }
-  document.getElementById("new").innerHTML = item_table;
+  $("#new").html(item_table);
   document.getElementById("data").value = item_table;
 }
 
@@ -156,7 +156,7 @@ function check_data() {
     return true;
   }
   else {
-    document.getElementById("dialog").innerHTML = "You have not entered any company details!";
+    $("#dialog").html("You have not entered any company details!");
     errfocus = "company";
     $("#dialog").dialog("open");
     return false;

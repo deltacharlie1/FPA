@@ -116,7 +116,7 @@ $(document).ready(function() {
 function change_nomcode(obj,id,descr) {
   $(obj).addClass("error");
   document.getElementById("cd_id").value = id;
-  document.getElementById("nomitemdesc").innerHTML = descr;
+  $("#nomitemdesc").html(descr);
   $("#changenomcode").dialog("open");
 }
 
