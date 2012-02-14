@@ -54,7 +54,7 @@ function showResponse(responseText, statusText) {
     location.href = "/cgi-bin/fpa/" + href[1];
   }
   else {
-    document.getElementById("dialog").innerHTML = responseText;
+    $("#dialog").html(responseText);
     $("#dialog").dialog("open");
   }
 }
@@ -71,7 +71,7 @@ function validate(formData,jqForm,options) {
       return false;
     }
     else {
-      var tot = parseFloat(document.getElementById("totamt").innerHTML);
+      var tot = parseFloat($("#totamt").html());
       var amt = parseFloat(document.getElementById("i_txnamount").value);
       if (tot != amt) {
         return confirm("Total value of selected invoices does not equal the amount being paid.\\nContinue anyway?");
@@ -83,7 +83,7 @@ function setfocus() {
   eval("document.getElementById(\'" + errfocus + "\').focus();");
 }
 function update_tot(obj) {
-  var tot = parseFloat(document.getElementById("totamt").innerHTML);
+  var tot = parseFloat($("#totamt").html());
   var amt = parseFloat(obj.value);
   if (obj.checked) {
     tot = (tot + amt).toFixed(2);
@@ -91,7 +91,7 @@ function update_tot(obj) {
   else {
     tot = (tot - amt).toFixed(2);
   }
-  document.getElementById("totamt").innerHTML = tot;
+  $("#totamt").html(tot);
 }
 </script>',
 };

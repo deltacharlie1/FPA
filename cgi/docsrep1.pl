@@ -91,7 +91,7 @@ function get_results(action) {
     document.getElementById("numrows").value = parts[0];
     document.getElementById("offset").value = parts[1];
     document.getElementById("action").value = "S";
-    document.getElementById("results").innerHTML = parts[4];
+    $("#results").html(parts[4]);
   });
 }
 function redisplay(action) {

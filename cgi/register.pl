@@ -64,11 +64,11 @@ function showResponse(responseText, statusText) {
         }
         else {
                 if (responseText.length < 500) {
-                        document.getElementById("dialog").innerHTML = responseText;
+                        $("#dialog").html(responseText);
                         $("#dialog").dialog("open");
                 }
                 else {
-                        document.getElementById("login").innerHTML = responseText;
+                        $("#login").html(responseText);
                         var options = {
                                 beforeSubmit: validate,
                                 success:        showResponse
@@ -153,7 +153,7 @@ function validate() {
 
   if (errs.length > 0) {
     errs = "You have the following error(s):-<ol>" + errs + "<\/ol>Please correct them before re-submitting";
-    document.getElementById("dialog").innerHTML = errs;
+    $("#dialog").html(errs);
     $("#dialog").dialog("open");
     return false;
   }
@@ -168,7 +168,7 @@ function validate() {
         location.href="/registered.html";
       }
       else {
-        document.getElementById("dialog").innerHTML = data;
+        $("#dialog").html(data);
         $("#dialog").dialog("open");
       }
     },"text");
@@ -190,7 +190,7 @@ function setfocus() {
 function reactivate() {
   if (document.getElementById("email").value == "") {
     errfocus = "email";
-    document.getElementById("dialog").innerHTML = "You must enter the email address with which you originally registered";
+    $("#dialog").html("You must enter the email address with which you originally registered");
     $("#dialog").dialog("open");
   }
   else {
@@ -200,7 +200,7 @@ function reactivate() {
         location.href="/registered.html";
       }
       else {
-        document.getElementById("dialog").innerHTML = data;
+        $("#dialog").html(data);
         $("#dialog").dialog("open");
       }
     },"text");

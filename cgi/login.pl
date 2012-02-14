@@ -63,11 +63,11 @@ function showResponse(responseText, statusText) {
 	}
 	else {
 		if (responseText.length < 500) {
-    			document.getElementById("dialog").innerHTML = responseText;
+    			$("#dialog").html(responseText);
 			$("#dialog").dialog("open");
 		}
 		else {
-			document.getElementById("frmlogin").innerHTML = responseText;
+			$("#frmlogin").html(responseText);
 			var options = {
 				beforeSubmit: validate,
 				success:	showResponse
@@ -94,13 +94,13 @@ function validate(formData,jqForm,options) {
 
   if (errs.length > 0) {
     errs = "You have the following error(s):-<ol>" + errs + "<\/ol>Please correct them before re-submitting";
-    document.getElementById("dialog").innerHTML = errs;
+    $("#dialog").html(errs);
     $("#dialog").dialog("open");
     return false;
   }
 }
 function setfocus() {
-	if (/log in again/i.test(document.getElementById("dialog").innerHTML)) {
+	if (/log in again/i.test($("#dialog").html())) {
 		location.href = "/cgi-bin/fpa/login.pl";
 	}
 	else {

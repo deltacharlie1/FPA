@@ -33,7 +33,7 @@ function showResponse(responseText, statusText) {
     location.href = "/cgi-bin/fpa/dashboard.pl";
   }
   else {
-    document.getElementById("dialog").innerHTML = responseText;
+    $("#dialog").html(responseText);
     $("#dialog").dialog("open");
   }
 }

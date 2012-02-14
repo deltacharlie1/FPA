@@ -42,7 +42,7 @@ function submit_form(type) {
         location.href = "/cgi-bin/fpa/" + href[1];
       }
       else {
-        document.getElementById("dialog").innerHTML = data;
+        $("#dialog").html(data);
         $("#dialog").dialog("open");
       }
     },"text");

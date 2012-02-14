@@ -18,6 +18,15 @@ unless ($COOKIE->{NO_ADS}) {
 
 $Data = new CGI;
 %FORM = $Data->Vars;
+while (( $Key,$Value) = each %FORM) {
+
+#  Remove any bad characters
+
+        $Value =~ s/\%2b/\+/ig;
+        $Value =~ tr/\\//d;
+        $Value =~ s/\'/\\\'/g;
+        $FORM{$Key} = $Value;
+}
 
 $Invoices = $dbh->prepare("select invtype,cus_id,invcoa,invtotal-invpaid,invvat-invpaidvat,invpaid,invstatuscode,invinvoiceno from invoices where id=$FORM{id} and acct_id='$COOKIE->{ACCT}'");
 $Invoices->execute;

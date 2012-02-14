@@ -105,7 +105,7 @@ $(document).ready(function(){
     else {
       $(".hidden").removeClass("hidden").addClass("visible");
     }
-    document.getElementById("dialog").innerHTML = "<p>Please note:-<\/p><p>You will need to log out and then log back in before any changes to the VAT scheme will take effect<\/p>";
+    $("#dialog").html("<p>Please note:-<\/p><p>You will need to log out and then log back in before any changes to the VAT scheme will take effect<\/p>");
     $("#dialog").dialog("open");
   });
 });
@@ -136,14 +136,14 @@ function validate() {
   );
   if (errs.length > 0) {
     errs = "You have the following error(s):-<ol>" + errs + "</ol>Please correct them before re-submitting";
-    document.getElementById("dialog").innerHTML = errs;
+    $("#dialog").html(errs);
     $("#dialog").dialog("open");
     return false;
   }
   else {
     $.post("/cgi-bin/fpa/company_details2.pl", $("#form1").serialize(),function(data) {
       if ( ! /^OK/.test(data)) {
-        document.getElementById("dialog").innerHTML = data;
+        $("#dialog").html(data);
         $("#dialog").dialog("open");
       }
       else {

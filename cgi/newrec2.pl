@@ -208,8 +208,8 @@ $(document).ready(function(){
          if (diff == 0) {
            $("#sidebar ul").show();
          }
-         document.getElementById("stmtdiff").innerHTML = diff.toFixed(2);
-         diff = document.getElementById("p"+trid).innerHTML;
+         $("#stmtdiff").html(diff.toFixed(2));
+         diff = $("#p"+trid).();
          diff = (diff * 1) + ($("#stmttxnamount").text() * 1);
        }
        else {
@@ -219,8 +219,8 @@ $(document).ready(function(){
          if (diff == 0) {
            $("#sidebar ul").show();
          }
-         document.getElementById("stmtdiff").innerHTML = diff.toFixed(2);
-         diff = document.getElementById("p"+trid).innerHTML;
+         $("#stmtdiff").html(diff.toFixed(2));
+         diff = $("#p"+trid).html();
          diff = (diff * 1) - ($("#stmttxnamount").text() * 1);
        }
        $("#p"+trid).html(diff.toFixed(2));
@@ -242,7 +242,7 @@ $(document).ready(function(){
     accept: ".draggable",
     drop: function(event,ui) {
       var invvalue = ($(ui.draggable).find(":nth-child(8)").last().text() * 1);
-      var stmtvalue = (document.getElementById("p"+$(this).attr("id")).innerHTML * 1);
+      var stmtvalue = ($("#p"+$(this).attr("id")).html() * 1);
 
       if ($(this).attr("id") != "bnk0" && ((/^-/.test(invvalue) && !/^-/.test(stmtvalue)) || (! /^-/.test(invvalue) && /^-/.test(stmtvalue)))) {
         ui.draggable.draggable( "option", "revert", true );
@@ -263,15 +263,15 @@ $(document).ready(function(){
           ui.draggable.draggable( "option", "revert", false );
           ui.draggable.draggable("disable");
         }
-        var diff = (document.getElementById("stmtdiff").innerHTML * 1);
+        var diff = ($("#stmtdiff").html() * 1);
         diff = (diff * 1) - (invvalue * 1);
         if (diff == 0) {
           $("#sidebar ul").show();
         }
-        document.getElementById("stmtdiff").innerHTML = diff.toFixed(2);
-        diff = document.getElementById("p"+$(this).attr("id")).innerHTML;
+        $("#stmtdiff").html(diff.toFixed(2));
+        diff = $("#p"+$(this).attr("id")).html();
         diff = (diff * 1) - (invvalue * 1);
-        document.getElementById("p"+$(this).attr("id")).innerHTML = diff.toFixed(2);
+        $("#p"+$(this).attr("id")).html() = diff.toFixed(2);
         if ($(this).find(":nth-child(2)").text() == "pay") {
           $(this).find(":nth-child(3)").text(($("#tr"+$(this).attr("id")).find(":nth-child(1)").first().text()));
         }
@@ -281,13 +281,13 @@ $(document).ready(function(){
   });
 });
 function revert(id,el,dropid) {
-  var diff = (document.getElementById("stmtdiff").innerHTML * 1);
+  var diff = ($("#stmtdiff").html() * 1);
   var dropvalue = (el.parent().find(":nth-child(8)").last().text() * 1);
-  var stmtremainder = (document.getElementById("p"+dropid).innerHTML * 1);
+  var stmtremainder = ($("#p"+dropid).html() * 1);
   diff = (diff * 1) + (dropvalue * 1);
-  document.getElementById("stmtdiff").innerHTML = diff.toFixed(2);
+  $("#stmtdiff").html(diff.toFixed(2));
   diff = (dropvalue * 1) + (stmtremainder * 1);
-  document.getElementById("p"+dropid).innerHTML = diff.toFixed(2);
+  $("#p"+dropid).html(diff.toFixed(2));
   if (id != "0") {
     var newvalue;
     var invvalue = ($("#"+id).find(":nth-child(8)").text() * 1);
@@ -348,7 +348,7 @@ function calc_stmtvat() {
   var vatvalue = (totamt * vat / vatdiv).toFixed(2);
   $("#stmtvat").text(vatvalue);
   var netamt = totamt - vatvalue;
-  document.getElementById("stmtnetamt").innerHTML = "(Net = " + netamt.toFixed(2) + ")";
+  $("#stmtnetamt").html("(Net = " + netamt.toFixed(2) + ")");
 }
 function submitit() {
   var err = "";

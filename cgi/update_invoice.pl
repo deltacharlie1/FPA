@@ -59,11 +59,11 @@ $(document).ready(function(){
       "No": function() { $(this).dialog("close"); }
     },
     close: function() {
-      document.getElementById("invitems").value = document.getElementById("div_html").innerHTML;
+      $("#invitems").value = document.getElementById("div_html").html();
       var submit_data = $(".newinvoice").serialize() + "&submit=" + action;
       $.post("/cgi-bin/fpa/save_invoice.pl",submit_data ,function(data) {
         if ( ! /^OK/.test(data)) {
-          document.getElementById("dialog").innerHTML = data;
+          $("#dialog").html(data);
           $("#dialog").dialog("open");
         }
         else {
@@ -83,10 +83,10 @@ function setfocus() {
 }
 function change_invtext(obj) {
   if (obj.value == "S") {
-    $(".invtext").each( function() { this.innerHTML = "Invoice"; });
+    $(".invtext").each( function() { $(this).html("Invoice"); });
   }
   else {
-    $(".invtext").each( function() { this.innerHTML = "Credit Note"; });
+    $(".invtext").each( function() { $(this).html("Credit Note"); });
   }
 }
 function submit_details(action) {
@@ -99,11 +99,11 @@ function submit_details(action) {
          $("#confirmdialog").dialog("open");
       }
       else {
-        var dg = document.getElementById("div_html").innerHTML.replace(/\+/gim,"%2B");
-        var submit_data = $(".newinvoice").serialize() + "&invtotal=" + escape(document.getElementById("st").innerHTML) + "&invvat=" + escape(document.getElementById("vt").innerHTML) + "&invitems=" + escape(dg) + "&submit=" + action;
+        var dg = $("#div_html").html().replace(/\+/gim,"%2B");
+        var submit_data = $(".newinvoice").serialize() + "&invtotal=" + escape($("#st").html()) + "&invvat=" + escape($("#vt").html()) + "&invitems=" + escape(dg) + "&submit=" + action;
         $.post("/cgi-bin/fpa/save_invoice.pl",submit_data ,function(data) {
           if ( ! /^OK/.test(data)) {
-            document.getElementById("dialog").innerHTML = data;
+            $("#dialog").html(data);
             $("#dialog").dialog("open");
           }
           else {
@@ -141,22 +141,22 @@ $(document).ready(function(){
       "Record Payment": function() {
         if(validate_form("#pay2form")) {
           if ($("#i_txnmethod option:selected").text() == \'Refund\') {
-            if (document.getElementById("i_txnamount").value == document.getElementById("i_amtowed").innerHTML) {
+            if (document.getElementById("i_txnamount").value == $("#i_amtowed").html()) {
               $.post("/cgi-bin/fpa/receive_invoice_refund.pl",$("form#pay2form").serialize() ,function(data) {
               $(this).dialog("close");
               window.location.reload(true); },"text");
             }
             else {
-              document.getElementById("dialog").innerHTML = "You cannot use the Refund option unless you are refunding the total owed.";
+              $("#dialog").html("You cannot use the Refund option unless you are refunding the total owed.");
               $("#dialog").dialog("open");
             }
           }
           else {
-            if (parseFloat(document.getElementById("i_txnamount").value) > parseFloat(document.getElementById("i_amtowed").innerHTML)) {
+            if (parseFloat(document.getElementById("i_txnamount").value) > parseFloat($("#i_amtowed").html())) {
               if (confirm("Paid Amount greater than Owed Amount, balance will be held on Account")) {
                 $.post("/cgi-bin/fpa/receive_invoice_payment.pl", $("#pay2form").serialize(),function(data) {
                 if ( ! /^OK/.test(data)) {
-                  document.getElementById("dialog").innerHTML = data;
+                  $("#dialog").html(data);
                   $("#dialog").dialog("open");
                 }
                 window.location.reload(true);
@@ -167,7 +167,7 @@ $(document).ready(function(){
             else {
               $.post("/cgi-bin/fpa/receive_invoice_payment.pl", $("form#pay2form").serialize(),function(data) {
                 if ( ! /^OK/.test(data)) {
-                  document.getElementById("dialog").innerHTML = data;
+                  $("#dialog").html(data);
                   $("#dialog").dialog("open");
                 }
                 window.location.reload(true);
@@ -198,7 +198,7 @@ $(document).ready(function(){
             }
             else {
               responseText = data;
-              document.getElementById("dialog").innerHTML = responseText;
+              $("#dialog").html(responseText);
               $("#dialog").dialog("open");
             }
           });
@@ -225,7 +225,7 @@ $(document).ready(function(){
             }
             else {
               responseText = data;
-              document.getElementById("dialog").innerHTML = responseText;
+              $("#dialog").html(responseText);
               $("#dialog").dialog("open");
             }
           });
@@ -253,7 +253,7 @@ $(document).ready(function(){
             }
             else {
               responseText = data;
-              document.getElementById("dialog").innerHTML = responseText;
+              $("#dialog").html(responseText);
               $("#dialog").dialog("open");
             }
           });
@@ -267,8 +267,8 @@ $(document).ready(function(){
 });
 function get_amt(amtinvid,amtinvno,amtamt) {
   document.getElementById("i_id").value = amtinvid;
-  document.getElementById("i_amtinvno").innerHTML = amtinvno;
-  document.getElementById("i_amtowed").innerHTML = parseFloat(amtamt).toFixed(2);
+  $("#i_amtinvno").html(amtinvno);
+  $("#i_amtowed").html(parseFloat(amtamt).toFixed(2));
   document.getElementById("i_txnamount").value = parseFloat(amtamt).toFixed(2);
   document.getElementById("i_invdesc").value = "Invoice " + amtinvno;
 //  document.getElementById("i_txnamount").focus();
@@ -276,8 +276,8 @@ function get_amt(amtinvid,amtinvno,amtamt) {
 }
 function get_refund(amtinvid,amtinvno,amtamt) {
   document.getElementById("r_id").value = amtinvid;
-  document.getElementById("r_amtinvno").innerHTML = amtinvno;
-  document.getElementById("r_amtowed").innerHTML = parseFloat(amtamt).toFixed(2);
+  $("#r_amtinvno").html(amtinvno);
+  $("#r_amtowed").html(parseFloat(amtamt).toFixed(2));
   document.getElementById("r_txnamount").value = parseFloat(amtamt).toFixed(2);
   document.getElementById("r_invdesc").value = "Refund against Invoice " + amtinvno;
 //  document.getElementById("r_txnamount").focus();
@@ -302,7 +302,7 @@ function delete_invoice() {
     }
     else {
       responseText = data;
-      document.getElementById("dialog").innerHTML = responseText;
+      $("#dialog").html(responseText);
       $("#dialog").dialog("open");
     }
   });

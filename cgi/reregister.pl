@@ -48,7 +48,7 @@ function check_optin() {
     $("#dialog").dialog("option", "title", "Warning");
     $("#dialog").dialog("option","height",300);
     $("#dialog").dialog("option","width",400);
-    document.getElementById("dialog").innerHTML = "<p>WARNING - It is a condition of using the free version of FreePlus Accounts that you accept advertising and our newsletter.&nbsp;&nbsp;If you choose to opt out of receiving the newsletter you will not longer have access to any part of the free version other than this registration screen.</p><p>In order to continue using FreePlus Accounts you will need to select a \'paid for\' option (not currently available) or continue to accept the newsletter.</p>";
+    $("#dialog").html("<p>WARNING - It is a condition of using the free version of FreePlus Accounts that you accept advertising and our newsletter.&nbsp;&nbsp;If you choose to opt out of receiving the newsletter you will not longer have access to any part of the free version other than this registration screen.</p><p>In order to continue using FreePlus Accounts you will need to select a \'paid for\' option (not currently available) or continue to accept the newsletter.</p>");
     $("#dialog").dialog("open");
   }
 }
@@ -58,7 +58,7 @@ function showResponse(responseText, statusText) {
     location.href = "/cgi-bin/fpa/" + href[1];
   }
   else {
-    document.getElementById("dialog").innerHTML = responseText;
+    $("#dialog").html(responseText);
     $("#dialog").dialog("open");
   }
 }
@@ -131,7 +131,7 @@ function reg_validate(formData,jqForm,options) {
   }
   if (errs.length > 0) {
     errs = "You have the following error(s):-<ol>" + errs + "<\/ol>Please correct them before re-submitting";
-    document.getElementById("dialog").innerHTML = errs;
+    $("#dialog").html(errs);
     $("#dialog").dialog("open");
     return false;
   }

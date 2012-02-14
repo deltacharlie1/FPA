@@ -69,7 +69,7 @@ $Vars = {
         javascript => '<script type="text/javascript">
 function get_amt(cusid,cusname,paymethod) {
   document.getElementById("cusid").value = cusid;
-  document.getElementById("cusname").innerHTML = cusname;
+  $("#cusname").html(cusname);
 
   switch(paymethod) {
     case "1300":

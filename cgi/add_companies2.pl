@@ -93,7 +93,7 @@ foreach $Company (@Companies) {
 		$Dig = time().'.'.$$;
 
 		use Digest;
-		$Dig =  Digest->new("SHA-1");
+		$Dig =  Digest->new("MD5");
 		$Dig->add($Dig);
 		$Activecode = $Dig->hexdigest;
 
@@ -128,12 +128,8 @@ EOD
 			$Last_day++;
 		}
 
-		$Sts = $dbh->do("insert into companies (reg_id,comname,comcontact,comemail,comvatqstart,comemailmsg,comstmtmsg,comdocsdir,comyearend,comcis,combusiness) values ($Reg_id,'$Cell[0]','$Cell[1]','$Cell[2]','2010-01-01','$Emailmsg','$Stmtmsg','/projects/fpa_docs/$Activecode','$Yr-$Month-$Last_day','$Cell[6]','$Cell[7]')");
+		$Sts = $dbh->do("insert into companies (reg_id,comname,comcontact,comemail,comvatqstart,comemailmsg,comstmtmsg,comyearend,comcis,combusiness) values ($Reg_id,'$Cell[0]','$Cell[1]','$Cell[2]','2010-01-01','$Emailmsg','$Stmtmsg','$Yr-$Month-$Last_day','$Cell[6]','$Cell[7]')");
 		$New_com_id = $dbh->last_insert_id(undef, undef, qw(companies undef));
-
-#  Create a docs directory
-
-		mkdir("/projects/fpa_docs/$Activecode");
 
 #  Now update the company record with the additional info
 
@@ -204,18 +200,18 @@ EOD
 #  ... and create a set of nominal codes
 
 		open(DATA,"nominalcodes.txt");
-		$Coas = $dbh->prepare("insert into coas (acct_id,coanominalcode,coadesc,coatype,coareport,coabalance) values (?,?,?,?,?,?)");
+		$Coas = $dbh->prepare("insert into coas (acct_id,coanominalcode,coadesc,coatype,coagroup,coareport,coabalance) values (?,?,?,?,?,?,?)");
 		while (<DATA>) {
 			chomp($_);
 			@Coa = split(/\t/,$_);
-			$Coas->execute("$Reg_id+$New_com_id",$Coa[0],$Coa[1],$Coa[2],$Coa[3],'0');
+			$Coas->execute("$Reg_id+$New_com_id",$Coa[0],$Coa[1],$Coa[2],$Coa[3],$Coa[4],'0');
 		}
 		$Coas->finish;
 		close(DATA);
 
 #  Do we need to set up the client as a registered user?
 
-		if ($Cell[2] =~ /\@/) {
+		if ($Cell[2] =~ /\@/ && $COOKIE->{BACCT} != '4+3') {
 
 #  Check that we don't already have this user
 

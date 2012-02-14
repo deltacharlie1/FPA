@@ -50,7 +50,7 @@ $(document).ready(function(){
   $("#form1").ajaxForm(options);
 });
 function ob_dialog() {
-  document.getElementById("dialog").innerHTML = "<p style=\'font-weight:normal;\'>Long Term Liabilities are long term loans, mortgages etc that have to be paid back over periods longer than one year</p>";
+  $("#dialog").html("<p style=\'font-weight:normal;\'>Long Term Liabilities are long term loans, mortgages etc that have to be paid back over periods longer than one year</p>");
   $("#dialog").dialog("option","title","Long Term Liabilities");
   $("#dialog").dialog("open");
 }
@@ -60,7 +60,7 @@ function showResponse(responseText, statusText) {
     location.href = "/cgi-bin/fpa/dashboard.pl";
   }
   else {
-    document.getElementById("dialog").innerHTML = responseText;
+    $("#dialog").html(responseText);
     $("#dialog").dialog("open");
   }
 }

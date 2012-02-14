@@ -40,7 +40,7 @@ $(document).ready(function(){
   $("#form1").ajaxForm(options);
 });
 function showResponse(responseText, statusText) {
-  document.getElementById("dialog").innerHTML = responseText;
+  $("#dialog").html(responseText);
   $("#dialog").dialog("open");
 }
 </script>'
