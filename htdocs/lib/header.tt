@@ -146,8 +146,6 @@ $(document).ready(function(){
         <li class="vat"><a href="#"><span>VAT</span></a>
           <ul>
             <li><a href="/cgi-bin/fpa/list_vatreturns.pl">List VAT Returns</a></li>
-            <li><a href="/cgi-bin/fpa/list_vats.pl?filter=2100">List VAT Outputs</a></li>
-            <li><a href="/cgi-bin/fpa/list_vats.pl?filter=1400">List VAT Inputs</a></li>
             <li><a href="/cgi-bin/fpa/vatreturn.pl">VAT Form 100</a></li>
           </ul>
         </li>

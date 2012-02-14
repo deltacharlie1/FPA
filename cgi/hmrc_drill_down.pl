@@ -28,6 +28,7 @@ foreach $pair (@pairs) {
         $Value =~ tr/\\\'//d;
         $FORM{$Name} = $Value;
 }
+if ($FORM{qstart} =~ /Up/i) { $FORM{qstart} = '01-Jan-10'; }
 $FORM{qstart} = $FORM{qstart} || '01-Jan-10';
 $FORM{qend} = $FORM{qend} || '31-Dec-29';
 
@@ -37,6 +38,7 @@ $tt = Template->new({
         INCLUDE_PATH => ['.','/usr/local/httpd/htdocs/fpa/lib'],
         WRAPPER => 'header.tt',
 });
+
 if ($COOKIE->{VAT} =~ /C/i) {		#  Cash Accounting
 
 	if ($FORM{boxno} =~ /box1/i) {
@@ -67,16 +69,30 @@ if ($COOKIE->{VAT} =~ /C/i) {		#  Cash Accounting
 		$Page_title = "EU Sales VAT";
 		$Template = "box";
 	}
+	elsif ($FORM{boxno} =~ /box3/i) {
+		unless ($FORM{numrows}) {
+			$Accruals = $dbh->prepare("select count(*),sum(acrvat) from vataccruals,inv_txns,invoices where vataccruals.acrtxn_id=inv_txns.id and vataccruals.acct_id=inv_txns.acct_id and inv_txns.inv_id=invoices.id and inv_txns.acct_id=invoices.acct_id and (acrnominalcode='4000' or acrnominalcode='4100' or acrnominalcode like '43%') and vr_id=$FORM{vrid} and vataccruals.acct_id='$COOKIE->{ACCT}' and $Daterange");
+			$Accruals->execute;
+       			($FORM{numrows},$FORM{vattotal}) = $Accruals->fetchrow;
+		        $FORM{offset} = 0;
+		       	$FORM{rows} = 24;
+		}
+		$Accruals = $dbh->prepare("select date_format(acrprintdate,'%d-%b-%y') as vatdate, invcusname,invinvoiceno,acrtype,acrvat as acramt,inv_txns.inv_id as inv_id from vataccruals,inv_txns,invoices where vataccruals.acrtxn_id=inv_txns.id and vataccruals.acct_id=inv_txns.acct_id and inv_txns.inv_id=invoices.id and inv_txns.acct_id=invoices.acct_id and (acrnominalcode='4000' or acrnominalcode='4100' or acrnominalcode like '43%') and vr_id=$FORM{vrid} and vataccruals.acct_id='$COOKIE->{ACCT}' and $Daterange order by acrprintdate limit $FORM{offset},$FORM{rows}");
+		$Accruals->execute;
+		$Col_header = "VAT Due";
+		$Page_title = "UK Sales VAT";
+		$Template = "box";
+	}
 	elsif ($FORM{boxno} =~ /box4/i) {
 		unless ($FORM{numrows}) {
-			$Accruals = $dbh->prepare("select count(*),sum(acrvat) from vataccruals,inv_txns,invoices where vataccruals.acrtxn_id=inv_txns.id and vataccruals.acct_id=inv_txns.acct_id and inv_txns.inv_id=invoices.id and inv_txns.acct_id=invoices.acct_id and (acrnominalcode='1000' or (acrnominalcode>='5000' and acrnominalcode<'7500')) and vr_id=$FORM{vrid} and vataccruals.acct_id='$COOKIE->{ACCT}' and $Daterange and acrvat<0");
+			$Accruals = $dbh->prepare("select count(*),sum(acrvat) from vataccruals,inv_txns,invoices where vataccruals.acrtxn_id=inv_txns.id and vataccruals.acct_id=inv_txns.acct_id and inv_txns.inv_id=invoices.id and inv_txns.acct_id=invoices.acct_id and (acrnominalcode like '10%' or (acrnominalcode>='5000' and acrnominalcode<'7500')) and vr_id=$FORM{vrid} and vataccruals.acct_id='$COOKIE->{ACCT}' and $Daterange and acrvat<0");
 			$Accruals->execute;
        			($FORM{numrows},$FORM{vattotal}) = $Accruals->fetchrow;
 			$FORM{vattotal} = 0 - $FORM{vattotal};
 		        $FORM{offset} = 0;
 		       	$FORM{rows} = 24;
 		}
-		$Accruals = $dbh->prepare("select date_format(acrprintdate,'%d-%b-%y') as vatdate, invcusname,invinvoiceno,acrtype,acrvat as acramt,inv_txns.inv_id as inv_id from vataccruals,inv_txns,invoices where vataccruals.acrtxn_id=inv_txns.id and vataccruals.acct_id=inv_txns.acct_id and inv_txns.inv_id=invoices.id and inv_txns.acct_id=invoices.acct_id and (acrnominalcode='1000' or (acrnominalcode>='5000' and acrnominalcode<'7500')) and vr_id=$FORM{vrid} and vataccruals.acct_id='$COOKIE->{ACCT}' and $Daterange and acrvat<0 order by acrprintdate limit $FORM{offset},$FORM{rows}");
+		$Accruals = $dbh->prepare("select date_format(acrprintdate,'%d-%b-%y') as vatdate, invcusname,invinvoiceno,acrtype,acrvat as acramt,inv_txns.inv_id as inv_id from vataccruals,inv_txns,invoices where vataccruals.acrtxn_id=inv_txns.id and vataccruals.acct_id=inv_txns.acct_id and inv_txns.inv_id=invoices.id and inv_txns.acct_id=invoices.acct_id and (acrnominalcode like '10%' or (acrnominalcode>='5000' and acrnominalcode<'7500')) and vr_id=$FORM{vrid} and vataccruals.acct_id='$COOKIE->{ACCT}' and $Daterange and acrvat<0 order by acrprintdate limit $FORM{offset},$FORM{rows}");
 		$Accruals->execute;
 		$Col_header = "VAT Refund";
 		$Page_title = "Purchases VAT";
@@ -84,13 +100,13 @@ if ($COOKIE->{VAT} =~ /C/i) {		#  Cash Accounting
 	}
 	elsif ($FORM{boxno} =~ /box5/i) {
 		unless ($FORM{numrows}) {
-			$Accruals = $dbh->prepare("select count(*),sum(acrvat) from vataccruals,inv_txns,invoices where vataccruals.acrtxn_id=inv_txns.id and vataccruals.acct_id=inv_txns.acct_id and inv_txns.inv_id=invoices.id and inv_txns.acct_id=invoices.acct_id and (acrnominalcode in ('1000','4000','4100') or (acrnominalcode>='4300' and acrnominalcode<'7500')) and vr_id=$FORM{vrid} and vataccruals.acct_id='$COOKIE->{ACCT}' and $Daterange");
+			$Accruals = $dbh->prepare("select count(*),sum(acrvat) from vataccruals,inv_txns,invoices where vataccruals.acrtxn_id=inv_txns.id and vataccruals.acct_id=inv_txns.acct_id and inv_txns.inv_id=invoices.id and inv_txns.acct_id=invoices.acct_id and (acrnominalcode like '10%' or acrnominalcode in ('4000','4100') or (acrnominalcode>='4300' and acrnominalcode<'7500')) and vr_id=$FORM{vrid} and vataccruals.acct_id='$COOKIE->{ACCT}' and $Daterange");
 			$Accruals->execute;
        			($FORM{numrows},$FORM{vattotal}) = $Accruals->fetchrow;
 	        	$FORM{offset} = 0;
 		       	$FORM{rows} = 24;
 		}
-		$Accruals = $dbh->prepare("select date_format(acrprintdate,'%d-%b-%y') as vatdate, invcusname,invinvoiceno,acrtype,acrtotal,acrvat as acramt,inv_txns.inv_id as inv_id from vataccruals,inv_txns,invoices where vataccruals.acrtxn_id=inv_txns.id and vataccruals.acct_id=inv_txns.acct_id and inv_txns.inv_id=invoices.id and inv_txns.acct_id=invoices.acct_id and (acrnominalcode in ('1000','4000','4100') or (acrnominalcode>='4300' and acrnominalcode<'7500')) and vr_id=$FORM{vrid} and vataccruals.acct_id='$COOKIE->{ACCT}' and $Daterange order by acrprintdate limit $FORM{offset},$FORM{rows}");
+		$Accruals = $dbh->prepare("select date_format(acrprintdate,'%d-%b-%y') as vatdate, invcusname,invinvoiceno,acrtype,acrtotal,acrvat as acramt,inv_txns.inv_id as inv_id from vataccruals,inv_txns,invoices where vataccruals.acrtxn_id=inv_txns.id and vataccruals.acct_id=inv_txns.acct_id and inv_txns.inv_id=invoices.id and inv_txns.acct_id=invoices.acct_id and (acrnominalcode like '10%' or acrnominalcode in ('4000','4100') or (acrnominalcode>='4300' and acrnominalcode<'7500')) and vr_id=$FORM{vrid} and vataccruals.acct_id='$COOKIE->{ACCT}' and $Daterange order by acrprintdate limit $FORM{offset},$FORM{rows}");
 		$Accruals->execute;
 		$Page_title = "VAT due to/from HMRC";
 		$Template = "box5";
@@ -111,14 +127,14 @@ if ($COOKIE->{VAT} =~ /C/i) {		#  Cash Accounting
 	}
 	elsif ($FORM{boxno} =~ /box7/i) {
 		unless ($FORM{numrows}) {
-			$Accruals = $dbh->prepare("select count(*),sum(acrtotal) from vataccruals,inv_txns,invoices where vataccruals.acrtxn_id=inv_txns.id and vataccruals.acct_id=inv_txns.acct_id and inv_txns.inv_id=invoices.id and inv_txns.acct_id=invoices.acct_id and (acrnominalcode='1000' or (acrnominalcode>='5000' and acrnominalcode<'7500')) and vr_id=$FORM{vrid} and vataccruals.acct_id='$COOKIE->{ACCT}' and $Daterange");
+			$Accruals = $dbh->prepare("select count(*),sum(acrtotal) from vataccruals,inv_txns,invoices where vataccruals.acrtxn_id=inv_txns.id and vataccruals.acct_id=inv_txns.acct_id and inv_txns.inv_id=invoices.id and inv_txns.acct_id=invoices.acct_id and (acrnominalcode like '10%' or (acrnominalcode>='5000' and acrnominalcode<'7500')) and vr_id=$FORM{vrid} and vataccruals.acct_id='$COOKIE->{ACCT}' and $Daterange");
 			$Accruals->execute;
        			($FORM{numrows},$FORM{vattotal}) = $Accruals->fetchrow;
 			$FORM{vattotal} = 0 - $FORM{vattotal};
 		        $FORM{offset} = 0;
 		       	$FORM{rows} = 24;
 		}
-		$Accruals = $dbh->prepare("select date_format(acrprintdate,'%d-%b-%y') as vatdate, invcusname,invinvoiceno,acrtype,acrtotal as acramt,inv_txns.inv_id as inv_id from vataccruals,inv_txns,invoices where vataccruals.acrtxn_id=inv_txns.id and vataccruals.acct_id=inv_txns.acct_id and inv_txns.inv_id=invoices.id and inv_txns.acct_id=invoices.acct_id and (acrnominalcode='1000' or (acrnominalcode>='5000' and acrnominalcode<'7500')) and vr_id=$FORM{vrid} and vataccruals.acct_id='$COOKIE->{ACCT}' and $Daterange order by acrprintdate limit $FORM{offset},$FORM{rows}");
+		$Accruals = $dbh->prepare("select date_format(acrprintdate,'%d-%b-%y') as vatdate, invcusname,invinvoiceno,acrtype,acrtotal as acramt,inv_txns.inv_id as inv_id from vataccruals,inv_txns,invoices where vataccruals.acrtxn_id=inv_txns.id and vataccruals.acct_id=inv_txns.acct_id and inv_txns.inv_id=invoices.id and inv_txns.acct_id=invoices.acct_id and (acrnominalcode like '10%' or (acrnominalcode>='5000' and acrnominalcode<'7500')) and vr_id=$FORM{vrid} and vataccruals.acct_id='$COOKIE->{ACCT}' and $Daterange order by acrprintdate limit $FORM{offset},$FORM{rows}");
 		$Accruals->execute;
 		$Col_header = "Purchases Net";
 		$Page_title = "Total Net Purchases";
@@ -129,13 +145,13 @@ else {			#  Standard Accunting Scheme
 
 	if ($FORM{boxno} =~ /box1/i) {
 		unless ($FORM{numrows}) {
-			$Accruals = $dbh->prepare("select count(*),sum(acrvat) from vataccruals left join invoices on (vataccruals.acrtxn_id=invoices.id and vataccruals.acct_id=invoices.acct_id) where acrnominalcode='4000' and vr_id=$FORM{vrid} and vataccruals.acct_id='$COOKIE->{ACCT}' and $Daterange");
+			$Accruals = $dbh->prepare("select count(*),sum(acrvat) from vataccruals left join invoices on (vataccruals.acrtxn_id=invoices.id and vataccruals.acct_id=invoices.acct_id) where (acrnominalcode='4000' or acrnominalcode like '43%') and vr_id=$FORM{vrid} and vataccruals.acct_id='$COOKIE->{ACCT}' and $Daterange");
 			$Accruals->execute;
        			($FORM{numrows},$FORM{vattotal}) = $Accruals->fetchrow;
 		        $FORM{offset} = 0;
 		       	$FORM{rows} = 24;
 		}
-		$Accruals = $dbh->prepare("select date_format(acrprintdate,'%d-%b-%y') as vatdate,invcusname,invinvoiceno,acrtype,acrvat as acramt,invoices.id as inv_id from vataccruals left join invoices on (vataccruals.acrtxn_id=invoices.id and vataccruals.acct_id=invoices.acct_id) where acrnominalcode='4000' and vr_id=$FORM{vrid} and vataccruals.acct_id='$COOKIE->{ACCT}' and $Daterange order by acrprintdate limit $FORM{offset},$FORM{rows}");
+		$Accruals = $dbh->prepare("select date_format(acrprintdate,'%d-%b-%y') as vatdate,invcusname,invinvoiceno,acrtype,acrvat as acramt,invoices.id as inv_id from vataccruals left join invoices on (vataccruals.acrtxn_id=invoices.id and vataccruals.acct_id=invoices.acct_id) where (acrnominalcode='4000' or acrnominalcode like '43%') and vr_id=$FORM{vrid} and vataccruals.acct_id='$COOKIE->{ACCT}' and $Daterange order by acrprintdate limit $FORM{offset},$FORM{rows}");
 		$Accruals->execute;
 		$Col_header = "VAT Due";
 		$Page_title = "UK Sales VAT";
@@ -155,16 +171,30 @@ else {			#  Standard Accunting Scheme
 		$Page_title = "EU Sales VAT";
 		$Template = "box";
 	}
+	elsif ($FORM{boxno} =~ /box3/i) {
+		unless ($FORM{numrows}) {
+			$Accruals = $dbh->prepare("select count(*),sum(acrvat) from vataccruals left join invoices on (vataccruals.acrtxn_id=invoices.id and vataccruals.acct_id=invoices.acct_id) where (acrnominalcode='4000' or acrnominlcode='4100' or acrnominalcode like '43%') and vr_id=$FORM{vrid} and vataccruals.acct_id='$COOKIE->{ACCT}' and $Daterange");
+			$Accruals->execute;
+       			($FORM{numrows},$FORM{vattotal}) = $Accruals->fetchrow;
+		        $FORM{offset} = 0;
+		       	$FORM{rows} = 24;
+		}
+		$Accruals = $dbh->prepare("select date_format(acrprintdate,'%d-%b-%y') as vatdate,invcusname,invinvoiceno,acrtype,acrvat as acramt,invoices.id as inv_id from vataccruals left join invoices on (vataccruals.acrtxn_id=invoices.id and vataccruals.acct_id=invoices.acct_id) where (acrnominalcode='4000' or acrnominalcode='4100' or acrnominalcode like '43%') and vr_id=$FORM{vrid} and vataccruals.acct_id='$COOKIE->{ACCT}' and $Daterange order by acrprintdate limit $FORM{offset},$FORM{rows}");
+		$Accruals->execute;
+		$Col_header = "VAT Due";
+		$Page_title = "UK Sales VAT";
+		$Template = "box";
+	}
 	elsif ($FORM{boxno} =~ /box4/i) {
 		unless ($FORM{numrows}) {
-			$Accruals = $dbh->prepare("select count(*),sum(acrvat) from vataccruals left join invoices on (vataccruals.acrtxn_id=invoices.id and vataccruals.acct_id=invoices.acct_id) where (acrnominalcode='1000' or (acrnominalcode>='5000' and acrnominalcode<'7500')) and vr_id=$FORM{vrid} and vataccruals.acct_id='$COOKIE->{ACCT}' and $Daterange");
+			$Accruals = $dbh->prepare("select count(*),sum(acrvat) from vataccruals left join invoices on (vataccruals.acrtxn_id=invoices.id and vataccruals.acct_id=invoices.acct_id) where (acrnominalcode like '10%' or (acrnominalcode>='5000' and acrnominalcode<'7500')) and vr_id=$FORM{vrid} and vataccruals.acct_id='$COOKIE->{ACCT}' and $Daterange");
 			$Accruals->execute;
        			($FORM{numrows},$FORM{vattotal}) = $Accruals->fetchrow;
 			$FORM{vattotal} = 0 - $FORM{vattotal};
 		        $FORM{offset} = 0;
 		       	$FORM{rows} = 24;
 		}
-		$Accruals = $dbh->prepare("select date_format(acrprintdate,'%d-%b-%y') as vatdate,invcusname,invinvoiceno,acrtype,acrvat as acramt,invoices.id as inv_id from vataccruals left join invoices on (vataccruals.acrtxn_id=invoices.id and vataccruals.acct_id=invoices.acct_id) where (acrnominalcode='1000' or (acrnominalcode>='5000' and acrnominalcode<'7500')) and vr_id=$FORM{vrid} and vataccruals.acct_id='$COOKIE->{ACCT}' and $Daterange order by acrprintdate limit $FORM{offset},$FORM{rows}");
+		$Accruals = $dbh->prepare("select date_format(acrprintdate,'%d-%b-%y') as vatdate,invcusname,invinvoiceno,acrtype,acrvat as acramt,invoices.id as inv_id from vataccruals left join invoices on (vataccruals.acrtxn_id=invoices.id and vataccruals.acct_id=invoices.acct_id) where (acrnominalcode like '10%' or (acrnominalcode>='5000' and acrnominalcode<'7500')) and vr_id=$FORM{vrid} and vataccruals.acct_id='$COOKIE->{ACCT}' and $Daterange order by acrprintdate limit $FORM{offset},$FORM{rows}");
 		$Accruals->execute;
 		$Col_header = "VAT Refund";
 		$Page_title = "Purchases VAT";
@@ -172,13 +202,13 @@ else {			#  Standard Accunting Scheme
 	}
 	elsif ($FORM{boxno} =~ /box5/i) {
 		unless ($FORM{numrows}) {
-			$Accruals = $dbh->prepare("select count(*),sum(acrvat) from vataccruals left join invoices on (vataccruals.acrtxn_id=invoices.id and vataccruals.acct_id=invoices.acct_id) where (acrnominalcode in ('1000','4000','4100') or (acrnominalcode>='4300' and acrnominalcode<'7500')) and vr_id=$FORM{vrid} and vataccruals.acct_id='$COOKIE->{ACCT}' and $Daterange");
+			$Accruals = $dbh->prepare("select count(*),sum(acrvat) from vataccruals left join invoices on (vataccruals.acrtxn_id=invoices.id and vataccruals.acct_id=invoices.acct_id) where (acrnominalcode like '10%' or acrnominalcode in ('4000','4100') or (acrnominalcode>='4300' and acrnominalcode<'7500')) and vr_id=$FORM{vrid} and vataccruals.acct_id='$COOKIE->{ACCT}' and $Daterange");
 			$Accruals->execute;
        			($FORM{numrows},$FORM{vattotal}) = $Accruals->fetchrow;
 	        	$FORM{offset} = 0;
 		       	$FORM{rows} = 24;
 		}
-		$Accruals = $dbh->prepare("select date_format(acrprintdate,'%d-%b-%y') as vatdate,invcusname,invinvoiceno,acrtype,acrvat as acramt,invoices.id as inv_id from vataccruals left join invoices on (vataccruals.acrtxn_id=invoices.id and vataccruals.acct_id=invoices.acct_id) where (acrnominalcode in ('1000','4000','4100') or (acrnominalcode>='4300' and acrnominalcode<'7500')) and vr_id=$FORM{vrid} and vataccruals.acct_id='$COOKIE->{ACCT}' and $Daterange order by acrprintdate limit $FORM{offset},$FORM{rows}");
+		$Accruals = $dbh->prepare("select date_format(acrprintdate,'%d-%b-%y') as vatdate,invcusname,invinvoiceno,acrtype,acrvat as acramt,invoices.id as inv_id from vataccruals left join invoices on (vataccruals.acrtxn_id=invoices.id and vataccruals.acct_id=invoices.acct_id) where (acrnominalcode  like '10%' or acrnominalcode in ('4000','4100') or (acrnominalcode>='4300' and acrnominalcode<'7500')) and vr_id=$FORM{vrid} and vataccruals.acct_id='$COOKIE->{ACCT}' and $Daterange order by acrprintdate limit $FORM{offset},$FORM{rows}");
 		$Accruals->execute;
 		$Page_title = "VAT due to/from HMRC";
 		$Template = "box5";
@@ -199,14 +229,14 @@ else {			#  Standard Accunting Scheme
 	}
 	elsif ($FORM{boxno} =~ /box7/i) {
 		unless ($FORM{numrows}) {
-			$Accruals = $dbh->prepare("select count(*),sum(acrtotal) from vataccruals left join invoices on (vataccruals.acrtxn_id=invoices.id and vataccruals.acct_id=invoices.acct_id) where (acrnominalcode='1000' or (acrnominalcode>='5000' and acrnominalcode<'7500')) and vr_id=$FORM{vrid} and vataccruals.acct_id='$COOKIE->{ACCT}' and $Daterange");
+			$Accruals = $dbh->prepare("select count(*),sum(acrtotal) from vataccruals left join invoices on (vataccruals.acrtxn_id=invoices.id and vataccruals.acct_id=invoices.acct_id) where (acrnominalcode like '10%' or (acrnominalcode>='5000' and acrnominalcode<'7500')) and vr_id=$FORM{vrid} and vataccruals.acct_id='$COOKIE->{ACCT}' and $Daterange");
 			$Accruals->execute;
        			($FORM{numrows},$FORM{vattotal}) = $Accruals->fetchrow;
 			$FORM{vattotal} = 0 - $FORM{vattotal};
 		        $FORM{offset} = 0;
 		       	$FORM{rows} = 24;
 		}
-		$Accruals = $dbh->prepare("select date_format(acrprintdate,'%d-%b-%y') as vatdate,invcusname,invinvoiceno,acrtype,acrtotal as acramt,invoices.id as inv_id from vataccruals left join invoices on (vataccruals.acrtxn_id=invoices.id and vataccruals.acct_id=invoices.acct_id) where (acrnominalcode='1000' or (acrnominalcode>='5000' and acrnominalcode<'7500')) and vr_id=$FORM{vrid} and vataccruals.acct_id='$COOKIE->{ACCT}' and $Daterange order by acrprintdate limit $FORM{offset},$FORM{rows}");
+		$Accruals = $dbh->prepare("select date_format(acrprintdate,'%d-%b-%y') as vatdate,invcusname,invinvoiceno,acrtype,acrtotal as acramt,invoices.id as inv_id from vataccruals left join invoices on (vataccruals.acrtxn_id=invoices.id and vataccruals.acct_id=invoices.acct_id) where (acrnominalcode like '10%' or (acrnominalcode>='5000' and acrnominalcode<'7500')) and vr_id=$FORM{vrid} and vataccruals.acct_id='$COOKIE->{ACCT}' and $Daterange order by acrprintdate limit $FORM{offset},$FORM{rows}");
 		$Accruals->execute;
 		$Col_header = "Purchases Net";
 		$Page_title = "Total Net Purchases";
