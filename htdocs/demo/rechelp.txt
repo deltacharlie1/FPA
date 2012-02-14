@@ -6,7 +6,7 @@ Reconcle - Step 1
 2.  Select the whole statement (wipe the mouse from bottom right to top left whilst holding down the left mouse button)
 3.  Save this selection to the clipboard (Ctrl+c)
 4.  Close the statement window.
-5.  Place the mouse cursor in the 'Paste Stetment Below' box.
+5.  Place the mouse cursor in the 'Paste Statement Below' box.
 6.  Paste in the selection (Ctrl+V)
 7.  Click on the 'Reconcile - Step 2' tab
 
