@@ -80,7 +80,8 @@ my $dbh = DBI->connect("DBI:mysql:fpa");
 
 #  Get the laast subscription invoice
 
-$Thisdate = "23rd January 2012";
+$Thisdate = `date +"%dth %B %Y"`;
+chomp($Thisdate);
 
 $Subs = $dbh->prepare("select subinvoiceno,date_format(now(),'%D %M %Y') as invdate from subscriptions order by subinvoiceno desc limit 1");
 $Subs->execute;
@@ -95,7 +96,7 @@ $Subs = $dbh->prepare("select id,datediff(now(),subdatepaid) as difsubpaid,subst
 
 #  Get all due subscriptions
 
-$Subscribers = $dbh->prepare("select id,reg_id,comsublevel,commerchantref,comcardref,datediff(comsubdue,now()) as difsubdue,comname,comaddress,compostcode,regemail from companies left join registrations using (reg_id) where comsublevel>0 and comsubdue<>'2010-01-01' and datediff(comsubdue,now()) < 3");	#  ie subscription due within 2 days
+$Subscribers = $dbh->prepare("select id,reg_id,comsublevel,commerchantref,comcardref,datediff(comsubdue,now()) as difsubdue,comname,comaddress,compostcode,regemail from companies left join registrations using (reg_id) where comsublevel>0 and datediff(comsubdue,now()) < 3");	#  ie subscription due within 2 days
 $Subscribers->execute;
 while ($Subscriber = $Subscribers->fetchrow_hashref) {
 
@@ -276,7 +277,7 @@ EOD
 					}
 					elsif ($Subscriber->{difsubdue} < -3) {
 						$Sts = $dbh->do("update subscriptions set substatus='Cancelled' where id=$Sub->{id}");
-						$Sts = $dbh->do("update companies set compt_logo='2010-01-01',comsubdue='2010-01-01',comsublevel='00',comsubref='',comuplds=0,comno_ads='2010-01-01' where reg_id=$Subscriber->{reg_id} and id=$Subscriber->{id}");
+						$Sts = $dbh->do("update companies set compt_logo='2010-01-01',comsublevel='00',comsubref='',comuplds=0,comno_ads='2010-01-01' where reg_id=$Subscriber->{reg_id} and id=$Subscriber->{id}");
 						$Sts = $dbh->do("update registrations set regmembership='1' where reg_id=$Subscriber->{reg_id}");
 ##################################### send cancellation email  #######################################
 						$Email_msg = sprintf<<EOD;
@@ -341,6 +342,8 @@ This is a multi-part message in MIME format.
 ------=_NextPart_000_001D_01C0B074.94357480
 Content-Type: text/plain;
         charset="iso-8859-1"
+
+to: $Subscribers->{regemail}
 
 $Email_msg
 

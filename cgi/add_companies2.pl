@@ -93,7 +93,7 @@ foreach $Company (@Companies) {
 		$Dig = time().'.'.$$;
 
 		use Digest;
-		$Dig =  Digest->new("SHA-1");
+		$Dig =  Digest->new("MD5");
 		$Dig->add($Dig);
 		$Activecode = $Dig->hexdigest;
 
@@ -128,12 +128,8 @@ EOD
 			$Last_day++;
 		}
 
-		$Sts = $dbh->do("insert into companies (reg_id,comname,comcontact,comemail,comvatqstart,comemailmsg,comstmtmsg,comdocsdir,comyearend,comcis,combusiness) values ($Reg_id,'$Cell[0]','$Cell[1]','$Cell[2]','2010-01-01','$Emailmsg','$Stmtmsg','/projects/fpa_docs/$Activecode','$Yr-$Month-$Last_day','$Cell[6]','$Cell[7]')");
+		$Sts = $dbh->do("insert into companies (reg_id,comname,comcontact,comemail,comvatqstart,comemailmsg,comstmtmsg,comyearend,comcis,combusiness) values ($Reg_id,'$Cell[0]','$Cell[1]','$Cell[2]','2010-01-01','$Emailmsg','$Stmtmsg','$Yr-$Month-$Last_day','$Cell[6]','$Cell[7]')");
 		$New_com_id = $dbh->last_insert_id(undef, undef, qw(companies undef));
-
-#  Create a docs directory
-
-		mkdir("/projects/fpa_docs/$Activecode");
 
 #  Now update the company record with the additional info
 
