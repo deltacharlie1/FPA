@@ -76,6 +76,31 @@ foreach $Row ($Rows) {
 		$FORM{invvat} = $Cells[8];
 		$FORM{invcusregion} = "UK";
 		$FORM{txnamount} = $Cells[7];
+
+		&save_purchase();
+		&money_out();
+		&pay_purchase();
+	}
+	elsif ($Cells[1] =~ /sal/i) }
+
+#  Money Out
+
+		$FORM{id} = '';
+		$FORM{invtype} = "S";
+		$FORM{cus_id} = $Cells[0];
+		$FORM{invprintdate} = $Cells[2];
+		$FORM{vatrate} = $Cells[3];
+		$FORM{invcoa} = $Cells[4];
+		$FORM{invcusname} = $Cells[5];
+		$FORM{invdesc} = $Cells[6];
+		$FORM{invtotal} = $Cells[7] - $Cells[8];
+		$FORM{invvat} = $Cells[8];
+		$FORM{invcusregion} = "UK";
+		$FORM{txnamount} = $Cells[7];
+
+		&save_invoice();
+		&money_in();
+		&pay_invoice();
 	}
 }
 
@@ -117,6 +142,9 @@ sub First_Row {
 	$Cell =~ s/\s*<td.*?>\s*//ig;
 	$Cell =~ s/\s*<\/td>\s*/\t/g;
 	$Cell =~ s/\<span.*?<\/span>//i;
+
+#  Get the txnamount
+
 	return $Cell;
 
 }
