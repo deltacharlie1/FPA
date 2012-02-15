@@ -7,6 +7,14 @@ $ACCESS_LEVEL = 4;
 use Checkid;
 $COOKIE = &checkid($ENV{HTTP_COOKIE},$ACCESS_LEVEL);
 
+@Cookie = split(/\;/,$ENV{HTTP_COOKIE});
+foreach (@Cookie) {
+        ($Name,$Value) = split(/\=/,$_);
+        $Name =~ s/^ //g;
+        $Value =~ tr/\"//d;
+        $Cookie{$Name} = $Value;
+}
+
 use CGI;
 use DBI;
 $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
@@ -55,6 +63,39 @@ foreach $Nomcode (@Nomcodes) {
 		}
 	}
 }
+
+#  Finally update the cookie fiel
+
+open(FILE,"</projects/tmp/$Cookie{'fpa-cookie'}");
+while (<FILE>) {
+        chomp($_);
+        ($Key,$Value) = split(/\t/,$_);
+        $CDATA{$Key} = $Value;
+}
+close(FILE);
+
+$Coas = $dbh->prepare("select coanominalcode,coadesc,coagroup from coas where acct_id='$COOKIE->{ACCT}' and coagroup=? order by coanominalcode");
+foreach $Coa ('4300','5000','6000','7000') {
+	$Coas->execute($Coa);
+	$CDATA{$Coa} = '';
+	while (@Coa = $Coas->fetchrow) {
+		if ($Coa[1] =~ /^Other Exp/i && ! $CDATA{$Coa}) {
+			$CDATA{$Coa} .= "<option value='$Coa[0]' selected='selected'>$Coa[1]</option>";
+		}
+		else {
+			$CDATA{$Coa} .= "<option value='$Coa[0]'>$Coa[1]</option>";
+		}
+	}
+}
+$Coas->finish;
+unlink("/projects/tmp/$Cookie{'fpa-cookie'}");
+
+open(FILE,">/projects/tmp/$Cookie{'fpa-cookie'}");
+while(($Key,$Value) = each %CDATA) {
+        print FILE "$Key\t$Value\n";
+}
+close(FILE);
+
 $dbh->disconnect;
 print<<EOD;
 Content-Type: text/plain

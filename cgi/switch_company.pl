@@ -118,7 +118,7 @@ $Company->{frsrate} = sprintf("%1.3f",$Company->{frsrate}/100);
 
 $IP_Addr = $ENV{'REMOTE_ADDR'};
 open(COOKIE,">/projects/tmp/$Cookie{'fpa-cookie'}");
-print COOKIE "IP\t$IP_Addr\nACCT\t$New_reg_id+$New_com_id\nBACCT\t$DATA{BACCT}\nID\t$DATA{ID}\nPWD\t$DATA{PWD}\nPLAN\t$DATA{PLAN}\nVAT\t$Company->{comvatscheme}\nYEAREND\t$Company->{comyearend}\nUSER\t$DATA{USER}\nEXP\t$Company->{comexpid}\nFRS\t$Company->{frsrate}\nMIN\t$Company->{comvatstart}\nMENU\t$DATA{MENU}\nTAG\t$Company->{comname}\nBTAG\t$DATA{BTAG}\nACCESS\t$DATA{ACCESS}\nUPLDS\t$DATA{UPLDS}}\nPT_LOGO\t$Company->{pt_logo}\nCOOKIE\t$Cookie\nDB\t$DATA{DB}\nADDU\t$Company->{comadd_user}\nPREFS\t$COOKIE->{PREFS}\nCIS\t$Company->{comcis}\nBUS\t$DATA{BUS}\n4300\t$Opt{'4300'}\n5000\t$Opt{'5000'}\n6000\t$Opt{'6000'}\n7000\t$Opt{'7000'}\n";
+print COOKIE "IP\t$IP_Addr\nACCT\t$New_reg_id+$New_com_id\nBACCT\t$DATA{BACCT}\nID\t$DATA{ID}\nPWD\t$DATA{PWD}\nPLAN\t$DATA{PLAN}\nVAT\t$Company->{comvatscheme}\nYEAREND\t$Company->{comyearend}\nUSER\t$DATA{USER}\nEXP\t$Company->{comexpid}\nFRS\t$Company->{frsrate}\nMIN\t$Company->{comvatstart}\nMENU\t$DATA{MENU}\nTAG\t$Company->{comname}\nBTAG\t$DATA{BTAG}\nACCESS\t$DATA{ACCESS}\nUPLDS\t$DATA{UPLDS}\nPT_LOGO\t$Company->{pt_logo}\nCOOKIE\t$Cookie\nDB\t$DATA{DB}\nADDU\t$Company->{comadd_user}\nPREFS\t$COOKIE->{PREFS}\nCIS\t$Company->{comcis}\nBUS\t$DATA{BUS}\n4300\t$Opt{'4300'}\n5000\t$Opt{'5000'}\n6000\t$Opt{'6000'}\n7000\t$Opt{'7000'}\n";
 
 close(FILE);
 
