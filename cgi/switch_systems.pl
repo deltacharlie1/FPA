@@ -30,16 +30,14 @@ while (<FILE>) {
 }
 close(FILE);
 
-if ($COOKIE->{ACCT} =~ /3\+2/i) {
-	$DATA{ACCT} = $DATA{BACCT};
-	$DATA{TAG} = $DATA{BTAG};
+unlink("/projects/tmp/$Cookie{'fpa-cookie'}");
+
+if ($DATA{DB} eq 'fpa') {
+	$DATA{DB} = 'fpa3';
 }
 else {
-	$DATA{ACCT} = "3+2";
-	$DATA{TAG} = "<span style='font-weight:bold;color:#A00000;'>-- Test Company --</span>";
+	$DATA{DB} = 'fpa';
 }
-
-unlink("/projects/tmp/$Cookie{'fpa-cookie'}");
 
 open(FILE,">/projects/tmp/$Cookie{'fpa-cookie'}");
 while(($Key,$Value) = each %DATA) {

@@ -104,7 +104,7 @@ if (($COOKIE->{PLAN} > 3 || $Company[8] > 0) && $Company[7]) {
 #  Get overdue icon
 
 $Stamp = $pdf->image_png('overdue.png');
-
+$Testonly = $pdf->image_png('/usr/local/git/fpa/htdocs/icons/testonly.png');
 #  Set out the first page
 
 &set_new_page;
@@ -201,8 +201,13 @@ else {
 
 #  See if we need an overdue stamp
 
-if ($Invoice[12] =~ /overdue/i && $Use_stamp =~ /Y/i) {
-	$g->image($Stamp,200,260);
+if ($COOKIE->{DB} eq 'fpa3') {
+	$g->image($Testonly,100,200);
+}
+else {
+	if ($Invoice[12] =~ /overdue/i && $Use_stamp =~ /Y/i) {
+		$g->image($Stamp,200,260);
+	}
 }
 
 my $PDF_doc = $pdf->stringify();

@@ -18,8 +18,6 @@ unless ($COOKIE->{NO_ADS}) {
 $Data = new CGI;
 %FORM = $Data->Vars;
 
-# print "Content-Type: text/plain\n\n";
-
 while (( $Key,$Value) = each %FORM) {
 
 #  Remove any bad characters
@@ -38,7 +36,7 @@ $Txns->finish;
 
 #  Then get all unpaid invoices
 
-$Invoices = $dbh->prepare("select id,invtype,date_format(invprintdate,'%d-%b-%y') as printdate,cus_id,invinvoiceno,invcusname,invdesc,(invtotal+invvat-invpaid-invpaidvat) as amtdue,invprintdate from invoices where acct_id='$COOKIE->{ACCT}' and invstatuscode>2 union select id,'vat',date_format(perstatusdate,'%d-%b-%y') as printdate,0,'','HMRC',concat('Quarter End ',perquarter) as invdesc,perbox5 as amtdue,perstatusdate as invprintdate from vatreturns where acct_id='$COOKIE->{ACCT}' and perstatus='Filed' order by invprintdate");
+$Invoices = $dbh->prepare("select id,invtype,date_format(invprintdate,'%d-%b-%y') as printdate,cus_id,invinvoiceno,invcusname,invdesc,(invtotal+invvat-invpaid-invpaidvat) as amtdue,invprintdate from invoices where acct_id='$COOKIE->{ACCT}' and invstatuscode>2 union select vatreturns.id,'vat',date_format(perstatusdate,'%d-%b-%y') as printdate,0,'vat','HMRC',concat('Quarter End ',perquarter) as invdesc,0-perbox5 as amtdue,perstatusdate as invprintdate from vatreturns where acct_id='$COOKIE->{ACCT}' and perstatus='Filed' order by invprintdate");
 $Invoices->execute;
 $Invoice = $Invoices->fetchall_arrayref({});
 $Invoices->finish;
@@ -127,6 +125,13 @@ $TSs->execute;
 $TS = $TSs->fetchrow_hashref;
 $TSs->finish;
 
+#  Get te laast statement close date to make sure that these entries are for a new statement
+
+$Stmts = $dbh->prepare("select datediff(str_to_date('@Stmt[0]->{date}','%d-%b-%y'),staclosedate) as stmtdiff from statements where acct_id='$COOKIE->{ACCT}' order by staclosedate desc limit 1");
+$Stmts->execute;
+$Last_Stmt = $Stmts->fetchrow_hashref;
+$Stmts->finish;
+
 use Template;
 $tt = Template->new({
         INCLUDE_PATH => ['.','/usr/local/httpd/htdocs/fpa/lib'],
@@ -140,6 +145,7 @@ $Vars = {
 	invoices => $Invoice,
 	txns => $Txn,
 	stmt => \@Stmt,
+	last_stmt => $Last_Stmt,
 	stack => $TS,
 	javascript => '<script type="text/javascript">
 var errfocus;
@@ -187,7 +193,7 @@ $(document).ready(function(){
     buttons: {
   "Add Transaction": function() {
      var errs = "";
-     if (!/4310|6010/.test($("#stmtpaycodes").val()) && $("#stmt_cus_id").val() == "") {
+     if (!(/6010/.test($("#stmtpaycodes").val()) || /4310/.test($("#stmtinccodes").val())) && $("#stmt_cus_id").val() == "") {
        errs = errs + "<li>You must enter a Customer/Supplier name</li>";
        errfocus = "stmt_cus_id";
      }
@@ -202,18 +208,27 @@ $(document).ready(function(){
        var trid = document.getElementById("stmtdropid").value;
        $("#"+trid).find(".placeholder").remove();
        if (/^Sup/.test($("#stmtcustype").val())) {
-         $("<tr></tr>").html("<td style=\'display:none;\'>"+$("#stmtcusid").val()+"</td><td style=\'display:none;\'>pur</td><td nowrap=\'nowrap\'>"+$("#stmtpaytxndate").val()+"</td><td>"+document.getElementById("stmtvatrate").value+"</td><td>"+$("#stmtpaycodes").val()+"</td><td>"+$("#stmt_cus_id").val()+"</td><td>"+$("#stmtdesc").val()+"</td><td>-"+$("#stmttxnamount").text()+"</td><td style=\'display:none;\'>-"+$("#stmtvat").text()+"</td><td style=\'display:none;\'>"+$("#stmtcusref").val()+"</td><td style=\'display:none;\'>"+$("#stmtitem_cat").val()+"</td><td onclick=\"revert(\'0\',$(this),\'"+trid+"\');\"><img src=\'/icons/delete.png\' width=\'12\' height=\'12\' alt=\'Delete\'/></td>").appendTo("#"+trid);
+         var purtype = "new pur";
+         if ($("#stmtpaycodes").val() == "6010") {
+           purtype = "chrgs";
+         }
+         $("<tr></tr>").html("<td style=\'display:none;\'>"+$("#stmtcusid").val()+"</td><td style=\'display:none;\'>"+purtype+"</td><td nowrap=\'nowrap\'>"+$("#stmtpaytxndate").val()+"</td><td>"+document.getElementById("stmtvatrate").value+"</td><td>"+$("#stmtpaycodes").val()+"</td><td>"+$("#stmt_cus_id").val()+"</td><td>"+$("#stmtdesc").val()+"</td><td>-"+$("#stmttxnamount").text()+"</td><td style=\'display:none;\'>-"+$("#stmtvat").text()+"</td><td style=\'display:none;\'>"+$("#stmtcusref").val()+"</td><td style=\'display:none;\'>"+$("#stmtitem_cat").val()+"</td><td onclick=\"revert(\'0\',$(this),\'"+trid+"\');\"><img src=\'/icons/delete.png\' width=\'12\' height=\'12\' alt=\'Delete\'/></td>").appendTo("#"+trid);
          var diff = document.getElementById("stmtdiff").innerHTML;
          diff = (diff * 1) + ($("#stmttxnamount").text() * 1);
          if (diff == 0) {
            $("#sidebar ul").show();
          }
          $("#stmtdiff").html(diff.toFixed(2));
-         diff = $("#p"+trid).();
+         diff = $("#p"+trid).html();
          diff = (diff * 1) + ($("#stmttxnamount").text() * 1);
+         $("#stmtpaycodes").val("6000").attr("selected",true);
        }
        else {
-         $("<tr></tr>").html("<td style=\'display:none;\'>"+$("#stmtcusid").val()+"</td><td style=\'display:none;\'>sal</td><td nowrap=\'nowrap\'>"+$("#stmtinctxndate").val()+"</td><td>"+document.getElementById("stmtvatrate").value+"</td><td>"+$("#stmtinccodes").val()+"</td><td>"+$("#stmt_cus_id").val()+"</td><td>"+$("#stmtdesc").val()+"</td><td>"+$("#stmttxnamount").text()+"</td><td style=\'display:none;\'>"+$("#stmtvat").text()+"</td><td style=\'display:none;\'>"+$("#stmtcusref").val()+"</td><td style=\'display:none;\'>"+$("#stmtitem_cat").val()+"</td><td onclick=\"revert(\'0\',$(this),\'"+trid+"\');\"><img src=\'/icons/delete.png\' width=\'12\' height=\'12\' alt=\'Delete\'/></td>").appendTo("#"+trid);
+         var purtype = "new inv";
+         if ($("#stmtinccodes").val() == "4310") {
+           purtype = "intr";
+         }
+         $("<tr></tr>").html("<td style=\'display:none;\'>"+$("#stmtcusid").val()+"</td><td style=\'display:none;\'>"+purtype+"</td><td nowrap=\'nowrap\'>"+$("#stmtinctxndate").val()+"</td><td>"+document.getElementById("stmtvatrate").value+"</td><td>"+$("#stmtinccodes").val()+"</td><td>"+$("#stmt_cus_id").val()+"</td><td>"+$("#stmtdesc").val()+"</td><td>"+$("#stmttxnamount").text()+"</td><td style=\'display:none;\'>"+$("#stmtvat").text()+"</td><td style=\'display:none;\'>"+$("#stmtcusref").val()+"</td><td style=\'display:none;\'>"+$("#stmtitem_cat").val()+"</td><td onclick=\"revert(\'0\',$(this),\'"+trid+"\');\"><img src=\'/icons/delete.png\' width=\'12\' height=\'12\' alt=\'Delete\'/></td>").appendTo("#"+trid);
          var diff = document.getElementById("stmtdiff").innerHTML;
          diff = (diff * 1) - ($("#stmttxnamount").text() * 1);
          if (diff == 0) {
@@ -222,13 +237,13 @@ $(document).ready(function(){
          $("#stmtdiff").html(diff.toFixed(2));
          diff = $("#p"+trid).html();
          diff = (diff * 1) - ($("#stmttxnamount").text() * 1);
+         $("#stmtinccodes").val("4300").attr("selected",true);
        }
        $("#p"+trid).html(diff.toFixed(2));
        $("#stmt_cus_id").val("");
        $("#stmtcusid").val("0");
        $("#stmtcusref").val("");
        $("#stmtitem_cat").val("");
-
        $(this).dialog("close");
      }
    }, 
@@ -271,7 +286,7 @@ $(document).ready(function(){
         $("#stmtdiff").html(diff.toFixed(2));
         diff = $("#p"+$(this).attr("id")).html();
         diff = (diff * 1) - (invvalue * 1);
-        $("#p"+$(this).attr("id")).html() = diff.toFixed(2);
+        $("#p"+$(this).attr("id")).html(diff.toFixed(2));
         if ($(this).find(":nth-child(2)").text() == "pay") {
           $(this).find(":nth-child(3)").text(($("#tr"+$(this).attr("id")).find(":nth-child(1)").first().text()));
         }
@@ -378,6 +393,9 @@ function get_wip() {
        var stmt_id = $(this).attr("id");
        $(this).find("tr").each(function () {
          var txntype = $(this).find("td:nth-child(2)").text();
+         if (txntype == "vat") {
+           txntype = "inv";
+         }
          var txn_id = txntype+$(this).find("td:first-child").text();
          var txn_amt = $(this).find("td:nth-child(8)").text() * 1;
          var rem_amt =  $("#p"+stmt_id).text() * 1;
