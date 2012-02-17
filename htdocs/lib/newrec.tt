@@ -2,6 +2,7 @@
 <form action="/cgi-bin/fpa/newrec2.pl" method="post" name="form1" id="form1" onsubmit="return validate_stmt();">
 <input type="hidden" name="acctype" id="acctype" value="[%- acct.acctype -%]"/>
 <h1>Reconcile Step 1 - Enter Statement</h1>
+[% USE accname = String(acct.accname) -%]
   <table width="660" border="0" cellpadding="0" cellspacing="0" class="formtable">
     <tr>
       <td width="40%"><label>Closing Balance as at <span style="border:1px solid #338a4d;padding:0 2px;">[%- acct.staclosedate -%]</span> on statement [%- acct.stastmtno -%] = </label></td>
@@ -12,7 +13,24 @@
       <td><input type="text" name="stmtno" id="stmtno" size="6" class="mandatory" value="[%- IF ts.f2 != ""; ts.f2; ELSE; acct.stastmtno+1; END -%]"/></td>
     </tr>
     <tr>
-      <td colspan="2">Paste statement below<br/><textarea name="stmt" id="stmt" cols="60" rows="20" class="mandatory">[%- ts.f1 -%]</textarea></td>
+      <td colspan="2">Paste <b>[%- acct.accname -%]</b> Spreadsheet into the field below<br/><textarea name="stmt" id="stmt" cols="50" rows="20" class="mandatory">[%- ts.f1 -%]</textarea>
+        <div style="float:right;padding-right:5px;">Bank Statement Source<br/>(Spreadsheet)
+          <table border='0' cellpadding='1' cellspacing='1' style="border:1px solid #999999;">
+            <tr>
+             <td>HSBC</td>
+             <td><input type="radio" name="source" id="source1" value="hsbc"[%- IF accname.lower.search('hsbc') -%] checked="checked" [%- END -%]/></td>
+            </tr>
+            <tr>
+             <td>Lloyds</td>
+             <td><input type="radio" name="source" id="source2" value="lloyds"[%- IF accname.lower.search('lloyd') -%] checked="checked" [%- END -%]/></td>
+            </tr>
+            <tr>
+             <td>Nat West</td>
+             <td><input type="radio" name="source" id="source3" value="natwest"[%- IF accname.lower.search('nat') -%] checked="checked" [%- END -%]/></td>
+            </tr>
+          </table>
+        </div>
+      </td>
     </tr>
   </table>
 </div>

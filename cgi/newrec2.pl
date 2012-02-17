@@ -53,21 +53,21 @@ $Accts->execute;
 $Acct = $Accts->fetchrow_hashref;
 $Accts->finish;
 
-if ($Acct->{accname} =~ /HSBC/i) {
+if ($FORM{source} =~ /HSBC/i) {
 	$Date_posn = "0";
 	$Desc_posn = "2";
 	$Outamt_posn = "3";
 	$Inamt_posn = "4";
 	$Bal_posn = "5";
 }
-elsif ($Acct->{accname} =~ /Lloyds/i) {
+elsif ($FORM{source} =~ /Lloyds/i) {
 	$Date_posn = "0";
 	$Desc_posn = "4";
 	$Outamt_posn = "5";
 	$Inamt_posn = "6";
 	$Bal_posn = "7";
 }
-elsif ($Acct->{accname} =~ /Nat\s*West/i) {
+elsif ($FORM{source} =~ /NatWest/i) {
 	$Date_posn = "0";
 	$Desc_posn = "2";
 	$Outamt_posn = "8";
