@@ -27,7 +27,7 @@ if ($FORM{type} =~ /unsubscribe/i) {
 	use DBI;
 	$dbh = DBI->connect("DBI:mysql:fpa");
 
-	$Sts = $dbh->do("update registrations set regoptin='N' where regemail='$FORM{email}'");
+	$Sts = $dbh->do("update registrations set regoptin='N',regmembership='0' where regemail='$FORM{email}'");
 	$dbh->disconnect;
 }
 
