@@ -76,7 +76,7 @@ $(document).ready(function(){
       buttons: {
         "Record Payment": function() {
           if (validate_form("#payform")) {
-            if (parseFloat($("#i_txnamount").value) > parseFloat(document.getElementById("amtowed").html())) {
+            if (parseFloat(document.getElementById("i_txnamount").value) > parseFloat($("#amtowed").html())) {
               if (confirm("Paid Amount greater than Owed Amount, balance will be held on Account")) {
                 $.post("/cgi-bin/fpa/make_purchase_payment.pl",$("form#payform").serialize() ,function(data) {
                 $(this).dialog("close");

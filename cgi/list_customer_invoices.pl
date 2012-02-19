@@ -53,8 +53,8 @@ $(document).ready(function(){
       modal: true,
       buttons: {
         "Record Payment": function() {
-          if(validate_form("#payform")) {
-            if (parseFloat($("#i_txnamount").value) > parseFloat(document.getElementById("amtowed").html())) {
+          if (validate_form("#payform")) {
+            if (parseFloat(document.getElementById("i_txnamount").value) > parseFloat($("#amtowed").html())) {
               if (confirm("Paid Amount greater than Owed Amount, balance will be held on Account")) {
                 $.post("/cgi-bin/fpa/receive_invoice_payment.pl", $("#payform").serialize(),function(data) {
                 if ( ! /^OK/.test(data)) {
