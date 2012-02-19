@@ -146,8 +146,6 @@ $(document).ready(function(){
         <li class="vat"><a href="#"><span>VAT</span></a>
           <ul>
             <li><a href="/cgi-bin/fpa/list_vatreturns.pl">List VAT Returns</a></li>
-            <li><a href="/cgi-bin/fpa/list_vats.pl?filter=2100">List VAT Outputs</a></li>
-            <li><a href="/cgi-bin/fpa/list_vats.pl?filter=1400">List VAT Inputs</a></li>
             <li><a href="/cgi-bin/fpa/vatreturn.pl">VAT Form 100</a></li>
           </ul>
         </li>
@@ -209,7 +207,7 @@ $(document).ready(function(){
             <li><a href="/cgi-bin/fpa/bulk_add_purchases.pl">Bulk Add Purchases</a></li>
             <li><a href="/cgi-bin/fpa/add_companies.pl">Add Companies</a></li>
             <li><a href="/cgi-bin/fpa/bulk_opening_balances.pl">Add Opening Balances</a></li>
-[% IF cookie.ACCT == '4+3' -%]
+[% IF cookie.BACCT == '4+3' -%]
             <li><a href="/demo/index.html" target="_new">Demo Reconciliation</a></li>
 [% END -%]
           </ul>
