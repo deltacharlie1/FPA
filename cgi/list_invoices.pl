@@ -88,7 +88,7 @@ $(document).ready(function(){
               }
             }
             else {
-              if (parseFloat(document.getElementById("i_txnamount").value) > parseFloat(i$("#amtowed").html())) {
+              if (parseFloat(document.getElementById("i_txnamount").value) > parseFloat($("#amtowed").html())) {
                 if (confirm("Paid Amount greater than Owed Amount, balance will be held on Account")) {
                   $.post("/cgi-bin/fpa/receive_invoice_payment.pl",$("form#form1").serialize() ,function(data) {
                   $(this).dialog("close");
