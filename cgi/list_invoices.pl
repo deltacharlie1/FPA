@@ -77,7 +77,7 @@ $(document).ready(function(){
         "Record Payment": function() {
           if (validate_form("#form1")) {
             if ($("#pay option:selected").text() == \'Refund\') {
-              if ($("#i_txnamount").value == document.getElementById("amtowed").html()) {
+              if (document.getElementById("i_txnamount").value == $("#amtowed").html()) {
                 $.post("/cgi-bin/fpa/receive_invoice_refund.pl",$("form#form1").serialize() ,function(data) {
                 $(this).dialog("close");
                 window.location.reload(true); },"text");
@@ -88,7 +88,7 @@ $(document).ready(function(){
               }
             }
             else {
-              if (parseFloat($("#i_txnamount").value) > parseFloat(document.getElementById("amtowed").html())) {
+              if (parseFloat(document.getElementById("i_txnamount").value) > parseFloat(i$("#amtowed").html())) {
                 if (confirm("Paid Amount greater than Owed Amount, balance will be held on Account")) {
                   $.post("/cgi-bin/fpa/receive_invoice_payment.pl",$("form#form1").serialize() ,function(data) {
                   $(this).dialog("close");
