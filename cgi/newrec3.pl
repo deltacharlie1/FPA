@@ -39,8 +39,6 @@ while (( $Key,$Value) = each %FORM) {
 require "/usr/local/git/fpa/cgi/process_invoice.ph";
 require "/usr/local/git/fpa/cgi/process_purchase.ph";
 
-print "Content-Type:text/plain\n\n";
-
 $Txn_ids = "";
 $New_data = "";
 $CFdate = '';
@@ -77,7 +75,12 @@ $Sts = $dbh->do("update tempstacks set f1='',f2='',f3='',f4='',f5='',f6='' where
 
 $Sts = $dbh->do("insert into audit_trails (acct_id,link_id,audtype,audaction,audtext,auduser) values ('$COOKIE->{ACCT}',$New_stmt_id,'newrec.pl','reconcile','$Stmt[4] $Stmt[5] account statement $FORM{newstmtno} reconciled with $No_txns items','$COOKIE->{USER}')");
 
+print<<EOD;
+Content-Type: text/html
+Status: 301
+Location: /cgi-bin/fpa/list_stmt_txns.pl?filter=$New_stmt_id
 
+EOD
 $dbh->disconnect;
 exit;
 sub Tbody {
@@ -93,9 +96,6 @@ sub Tbody {
 
 	$First_row =~ s/^.*?(<tr.*?>.*?<\/tr>)/&First_Row($1)/ei;
 	@First_row = split(/\t/,$First_row);
-print "=============================================================\n";
-print "@First_row\n";
-print "-------------------------------------------------------------\n";
 	if ($First_row[0] !~ /Contra/i) {
 		$CFdate = $First_row[0];
 		$No_txns++;
@@ -108,7 +108,6 @@ print "-------------------------------------------------------------\n";
 	while ($Rest =~ s/(<tr.*?>.*?<\/tr>)/&Cell($1)/eig) {}
 	$First_entry = '1';
 	foreach (@Txn) {
-		print $_."\n";
 		@Cells = split(/\t/,$_);
 
 		$Cells[7] =~ tr/-//d;
@@ -285,7 +284,6 @@ print "-------------------------------------------------------------\n";
 			}
 		}
 	}
-print "-------------------------------------------------------------\n\n";
 }
 
 sub First_Row {
