@@ -45,7 +45,7 @@ sub process_vat {
 #  Ignore if not registered for VAT
 
         return if ($COOKIE->{VAT} =~ /N/i);
-	return if ($COOKIE->{VAT} =~ /F/i && ($FORM{invcoa} !~ /1000/ || ($FORM{invcoa} =~ /1000/  && ($FORM{invtotal} + $FORM{invvat}) < 2000)));
+	return if ($COOKIE->{VAT} =~ /F/i && ($FORM{invcoa} !~ /^10/ || ($FORM{invcoa} =~ /^10/  && ($FORM{invtotal} + $FORM{invvat}) < 2000)));
 
 #  Otherwise do any VAT
 

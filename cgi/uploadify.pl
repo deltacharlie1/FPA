@@ -140,6 +140,9 @@ unless ($FORM{doc_type} =~ /LOGO/i) {
 
 	$Images = $dbh->prepare("insert into images (link_id,acct_id,imgdoc_type,imgfilename,imgext,imgdesc,imgthumb,imgimage,imgdate_saved) values (?,?,?,?,?,?,?,?,now())");
 
+#  Remove any spaces in filename
+
+	$FORM{Filename} =~ tr/ /_/;
 	$Images->bind_param(1,$FORM{doc_rec});
 	$Images->bind_param(2,"$COOKIE->{ACCT}");
 	$Images->bind_param(3,"$FORM{doc_type}");

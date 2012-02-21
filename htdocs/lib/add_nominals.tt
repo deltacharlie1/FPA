@@ -7,7 +7,8 @@
     <tr>
       <td nowrap="nowrap">Nominal Account Groups<br/>
       <select name="nomgrp" id="nom_nomcode" size="1" onchange="document.getElementById('coadesc').focus();">
-            <option value="4300" selected="selected">4300 - Other Income</option>
+            <option value="1000" selected="selected">1000 - Fixed Assets</option>
+            <option value="4300">4300 - Other Income</option>
             <option value="5000">5000 - Cost of Sales</option>
             <option value="6000">6000 - Other Expenses</option>
             <option value="7000">7000 - Fixed Overheads</option>

@@ -29,7 +29,7 @@ $Images->execute;
 $Images->finish;
 $dbh->disconnect;
 
-open(IMG,"</projects/fpa_docs".$Company->{comdocsdir}/$Image[2]);
+open(IMG,"</projects/fpa_docs".$Company->{comdocsdir}."/".$Image[2]);
 while(<IMG>) {
 	$Image[0] .= $_;
 }
