@@ -15,6 +15,7 @@
             <option value="1300">Cash</option>
             <option value="1000">Fixed Assets</option>
             <option value="1100">Debtors</option>
+            <option value="1500">Other Current Assets</option>
             <option value="2000">Creditors</option>
             <option value="1400">Net VAT Input</option>
             <option value="2100">Net VAT Output</option>

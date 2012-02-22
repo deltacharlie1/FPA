@@ -91,7 +91,7 @@ if ($FORM{doc_type} =~ /LOGO/i) {
 elsif ($FORM{Filename} =~ /(pdf|png|jpg|jpeg)$/i) {
 
 #  Create a thumbnail
-		
+	
 	$W1 = 30;
 	$H1 =int(30 * $height / $width);
 	$Img->Scale(width=>$W1,height=>$H1);
@@ -108,7 +108,9 @@ elsif ($FORM{Filename} =~ /(pdf|png|jpg|jpeg)$/i) {
 #  Get invoice details if this is a purchase invoice doc_type
 
 unless ($FORM{desc}) {
+
 	if ($FORM{doc_type} =~ /INV/i) {
+
 
 		$Invoices = $dbh->prepare("select invcusname,invcusref from invoices where id=$FORM{doc_rec} and acct_id='$COOKIE->{ACCT}'");
 		$Invoices->execute;
@@ -160,7 +162,7 @@ unless ($FORM{doc_type} =~ /LOGO/i) {
 	$Company = $Companies->fetchrow_hashref;
 	$Companies->finish;
 
-	open(IMG,">/projects/fpa_docs/".$Company->{comdocsdir}/$FORM{Filename});
+	open(IMG,">/projects/fpa_docs/".$Company->{comdocsdir}."/".$FORM{Filename}) || warn "unable to open file\n";
 	print IMG $Original;
 	close(IMG);
 

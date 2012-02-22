@@ -33,7 +33,7 @@ $Companies->execute;
 $Company = $Companies->fetchrow_hashref;
 $Companies->finish;
 
-unlink("/projects/fpa_docs/".$Company->{comdocsdir}/$Image->{imgfilename});
+unlink("/projects/fpa_docs/".$Company->{comdocsdir}."/".$Image->{imgfilename});
 
 #  Finally delete the reference to it
 
