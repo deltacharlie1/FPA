@@ -29,7 +29,6 @@ $Images->execute;
 $Images->finish;
 $dbh->disconnect;
 
-warn "open(IMG,\"</projects/fpa_docs/\".$Company->{comdocsdir}.\"/\".$Image[2])\n";
 open(IMG,"</projects/fpa_docs/".$Company->{comdocsdir}."/".$Image[2]) || warn "cannot open file\n";;
 while(<IMG>) {
 	$Image[0] .= $_;

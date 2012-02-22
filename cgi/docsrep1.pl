@@ -49,8 +49,38 @@ $(document).ready(function(){
     close: function(a,b) { window.location.reload(true); },
     modal: true
   });
+  $("#changedesc").dialog({
+    bgiframe: true,
+    autoOpen: false,
+    position: [200,100],
+    height: 200,
+    width: 400,
+    modal: true,
+    buttons: {
+      "Change Description": function() {
+        $.post("/cgi-bin/fpa/change_doc_desc.pl", $("#fchangedesc").serialize(),function(data) {
+          if ( ! /^OK/.test(data)) {
+            alert(data);
+          }
+          window.location.reload(true);
+        },"text");
+        $("td").removeClass("error");
+        $(this).dialog("close");
+      },
+      Cancel: function() {
+        $("td").removeClass("error");
+        $(this).dialog("close");
+      }
+    }
+  });
   redisplay("S");
 });
+function change_desc(obj,id,olddesc) {
+  $(obj).addClass("error");
+  document.getElementById("cd_id").value = id;
+  document.getElementById("newdesc").value = olddesc;
+  $("#changedesc").dialog("open");
+}
 function display_puform() {
   $("#pufile").uploadify ({
     "uploader"       : "/js/uploadify.swf",

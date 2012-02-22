@@ -91,7 +91,7 @@
       <td>[%- image.imgdate -%]</td>
       <td>[%- image.imgdesc -%]</td>
       <td>[%- image.imgfilename -%]</td>
-      <td style="text-align:center;" onclick="location.href='/cgi-bin/fpa/display_attach.pl?[%- image.id -%]';"><img src="/cgi-bin/fpa/display_thumb.pl?[%- image.imgthumb -%]"/></td>
+      <td style="text-align:center;" onclick="window.open('/cgi-bin/fpa/display_attach.pl?[%- image.id -%]','doc','top=50,left=200,width=600,height=800,scrollbars=yes');"><img src="/cgi-bin/fpa/display_thumb.pl?[%- image.imgthumb -%]"/></td>
       <td style="text-align:center;"><input type="button" name="pudel" id="pudel" value="Delete" onclick="pudel([%- image.id -%]);"/></td>
     </tr>
 [%- END -%]

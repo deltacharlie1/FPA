@@ -17,7 +17,6 @@ while (( $Key,$Value) = each %FORM) {
 	$Value =~ tr/\\//d;
 	$Value =~ s/\'/\\\'/g;
         $FORM{$Key} = $Value;
-#warn UPL "$Key = $Value\n";
 }
 
 #  Get the ACCT from the cookie file (cookie is passed as a parameter)
@@ -45,6 +44,7 @@ while (<$handle>) {
 
 unless ($FORM{doc_type} =~ /LOGO/i) {
 	if (length($Original) > $COOKIE->{UPLDS}) {
+
 		print<<EOD;
 Content-Type: text/plain
 
@@ -64,6 +64,7 @@ $Img = Image::Magick->new;
 
 $status = $Img->BlobToImage($Original);
 ($width,$height) = $Img->Get('width','height');	#  Get the dimensions
+
 
 if ($FORM{doc_type} =~ /LOGO/i) {
 	if ($width > 144 || $height > 48) {
