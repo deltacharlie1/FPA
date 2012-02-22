@@ -93,7 +93,9 @@ $(document).ready(function(){
             <li><a href="/cgi-bin/fpa/adduser.pl">Add New User</a></li>
   [% END -%]
 [%- END -%]
+[%- IF cookie.PLAN > 5 -%]
             <li><a href="/cgi-bin/fpa/docsrep1.pl">List Documents</a></li>
+[% END -%]
             <li><a href="/cgi-bin/fpa/list_coas.pl">Chart of Accounts</a></li>
             <li><a href="/cgi-bin/fpa/adjustments.pl?I">Adjustments In (<b> + </b>)</a></li>
             <li><a href="/cgi-bin/fpa/adjustments.pl?O">Adjustments Out (<b> - </b>)</a></li>
