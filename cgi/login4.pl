@@ -121,7 +121,7 @@ $DB = 'fpa';
 if ($Reg_com[0]==4 && $Reg_com[1]==3) { $DB='fpa2'; }
 
 use Digest;
-$SHA1_hash = Digest->new("SHA-1");
+$SHA1_hash = Digest->new("MD5");
 $SHA1_hash->add($Cookie);
 $Cookie = $SHA1_hash->hexdigest;
 
