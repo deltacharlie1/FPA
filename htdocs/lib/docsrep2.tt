@@ -3,7 +3,7 @@
     <tr>
       <th>Date</th>
       <th>Type</th>
-      <th>Description</th>
+      <th class="dbl">Description</th>
       <th>Filename</th>
       <th>Thumbnail</th>
       <th>Edit</th>
@@ -12,11 +12,11 @@
 [%- FOREACH doc IN docs -%]
   [%- ndx = loop.count % 2 -%]
     <tr class="[%- class.$ndx -%]">
-      <td onclick="location.href='/cgi-bin/fpa/display_attach.pl?[%- doc.id -%]';">[%- doc.imgdate -%]</td>
-      <td onclick="location.href='/cgi-bin/fpa/display_attach.pl?[%- doc.id -%]';">[%- doc.imgdoc_type -%]</td>
-      <td onclick="location.href='/cgi-bin/fpa/display_attach.pl?[%- doc.id -%]';">[%- doc.imgdesc -%]</td>
-      <td onclick="location.href='/cgi-bin/fpa/display_attach.pl?[%- doc.id -%]';">[%- doc.imgfilename -%]</td>
-      <td style="text-align:center;" onclick="location.href='/cgi-bin/fpa/display_attach.pl?[%- doc.id -%]';"><img src="/cgi-bin/fpa/display_thumb.pl?[%- doc.imgthumb -%]"/></td>
+      <td onclick="window.open('/cgi-bin/fpa/display_attach.pl?[%- doc.id -%]','doc','top=50,left=200,width=600,height=800,scrollbars=yes');">[%- doc.imgdate -%]</td>
+      <td onclick="window.open('/cgi-bin/fpa/display_attach.pl?[%- doc.id -%]','doc','top=50,left=200,width=600,height=800,scrollbars=yes');">[%- doc.imgdoc_type -%]</td>
+      <td ondblclick="change_desc(this,[%- doc.id -%],'[%- doc.imgdesc -%]');">[%- doc.imgdesc -%]</td>
+      <td onclick="window.open('/cgi-bin/fpa/display_attach.pl?[%- doc.id -%]','doc','top=50,left=200,width=600,height=800,scrollbars=yes');">[%- doc.imgfilename -%]</td>
+      <td style="text-align:center;" onclick="window.open('/cgi-bin/fpa/display_attach.pl?[%- doc.id -%]','doc','top=50,left=200,width=600,height=800,scrollbars=yes');"><img src="/cgi-bin/fpa/display_thumb.pl?[%- doc.imgthumb -%]"/></td>
       <td style="text-align:center;"><input type="button" value="Delete" onclick="docdel([%- doc.id -%]);"/></td>
     </tr>
 [%- END -%]

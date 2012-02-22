@@ -130,6 +130,8 @@ function amd(row) {
   dlt(row);
 }
 function dlt(row) {
+  var earnings =  ($("#balance").html() * 1) - item_rows[row][2];
+  $("#balance").html(earnings.toFixed(2));
   item_rows.splice(row,1);
   display_table();
 }

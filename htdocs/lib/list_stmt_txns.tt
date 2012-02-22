@@ -5,7 +5,7 @@
     <td style="padding:0 0 5px 20px;vertical-align:bottom;"><h2> - [%- stmt.accname -%] Account [%- stmt.accacctno -%] Stmt # [%- stmt.stastmtno -%]</h2></td>
     <td style="text-align:right;">
 [%- IF attach.imgthumb -%]
-<a href="/cgi-bin/fpa/display_attach.pl?[%- attach.id -%]"><img src="/cgi-bin/fpa/display_thumb.pl?[%- attach.imgthumb -%]"/></a>
+<a href="#" onclick="window.open('/cgi-bin/fpa/display_attach.pl?[%- attach.id -%]','doc','top=50,left=200,width=600,height=800,scrollbars=yes');"><img src="/cgi-bin/fpa/display_thumb.pl?[%- attach.imgthumb -%]"/></a>
 [%- ELSE -%]
 <input type="file" name="stfile" id="stfile"/>
 [%- END -%]</td>

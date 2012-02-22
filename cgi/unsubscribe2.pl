@@ -34,7 +34,19 @@ $Errs = "";
 
 #  Check the password
 
-if ($FORM{regpwd}) {
+if ($COOKIE->{BACCT} eq '1+1') {
+
+	$Regs = $dbh->prepare("select reg_id,regusername from registrations where reg_id=$Reg_id");
+	$Regs->execute;
+	if ($Regs->rows < 1) {
+		$Errs .= "<li>This account no longer exists (or cannot be found)</li>\n";
+	}
+	else {
+		@Reg = $Regs->fetchrow;
+	}
+	$Regs->finish;
+}
+elsif ($FORM{regpwd}) {
 
 	$Regs = $dbh->prepare("select reg_id,regusername from registrations where regpwd=password('$FORM{regpwd}') and reg_id=$Reg_id");
 	$Regs->execute;
