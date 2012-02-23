@@ -22,7 +22,14 @@ foreach $pair (@pairs) {
         $FORM{$Name} = $Value;
 }
 
-if ($FORM{type} =~ /unsubscribe/i) {
+#  First get the current membership to see if they can legitimately cancel emails
+
+$Regs = $dbh->prepare("select regmembership from registrations where regemail='$FORM{email}'");
+$Regs->execute;
+$Reg = $Regs->fetchrow_hashref;
+$Regs->finish;
+
+if ($FORM{type} =~ /unsubscribe/i && $Reg->{regmembership} < 6) {
 
 	use DBI;
 	$dbh = DBI->connect("DBI:mysql:fpa");

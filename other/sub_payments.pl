@@ -353,8 +353,7 @@ sub send_email {
         open(EMAIL,"| /usr/sbin/sendmail -t");
         print EMAIL<<EOD;
 From: FreePlus Accounts <fpainvoices\@corunna.com>
-To: doug.conran\@corunna.com
-Reply-To: Doug Conran <doug.conran\@corunna.com>
+To: $Subscriber->{regemail}
 Subject: Your FreePlus Subscription
 MIME-Version: 1.0
 Content-Type: multipart/mixed;
