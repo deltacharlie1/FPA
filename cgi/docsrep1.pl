@@ -16,6 +16,15 @@ unless ($COOKIE->{NO_ADS}) {
 	&display_adverts();
 }
 
+if ($COOKIE->{ACCESS} > 6) {
+	$Max = 15728640;
+}
+elsif ($COOKIE->{ACCESS} > 5) {
+	$Max = 4194304;
+}
+else {
+	$Max = 0;
+}
 
 #  Get a start and end (now) date
 
@@ -36,6 +45,8 @@ $Vars = {
 	focus => 'imgfilename',
         startdate => $Start_date,
         enddate => $End_date,
+	max => $Max,
+	remaining => $COOKIE->{UPLDS},
         javascript => '<script type="text/javascript"> 
 $(document).ready(function(){
   $("#startdate").datepicker({ minDate: new Date(2000,01 - 1,01) });
@@ -104,7 +115,7 @@ function display_puform() {
                            return true;
                          }
                       },
-    "onComplete"     : function(a,b,c,d,e) { document.getElementById("docdesc").value = ""; },
+    "onComplete"     : function(a,b,c,d,e) { document.getElementById("docdesc").value = ""; $("#pudialog").dialog("close"); },
     "auto"           : true
   });
   $("#pudialog").dialog("open");
