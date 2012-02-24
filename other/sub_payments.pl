@@ -72,7 +72,7 @@ $Subscription[6] = 'FreePlus Bookkeeper Premium @ '.chr(163).'20.00pm';
 
 $Inv_type = 'INVOICE';
 
-$Dte = `date +%d-%m-%Y:%H:%M:%S:000`;
+$Dte = `/bin/date +%d-%m-%Y:%H:%M:%S:000`;
 chomp($Dte);
 
 use DBI;
@@ -80,7 +80,8 @@ my $dbh = DBI->connect("DBI:mysql:fpa");
 
 #  Get the laast subscription invoice
 
-$Thisdate = "23rd January 2012";
+$Thisdate = `/bin/date +'%dth %B %Y'`;
+chomp($Thisdate);
 
 $Subs = $dbh->prepare("select subinvoiceno,date_format(now(),'%D %M %Y') as invdate from subscriptions order by subinvoiceno desc limit 1");
 $Subs->execute;
@@ -95,9 +96,14 @@ $Subs = $dbh->prepare("select id,datediff(now(),subdatepaid) as difsubpaid,subst
 
 #  Get all due subscriptions
 
-$Subscribers = $dbh->prepare("select id,reg_id,comsublevel,commerchantref,comcardref,datediff(comsubdue,now()) as difsubdue,comname,comaddress,compostcode,regemail from companies left join registrations using (reg_id) where comsublevel>0 and comsubdue<>'2010-01-01' and datediff(comsubdue,now()) < 3");	#  ie subscription due within 2 days
+$Todays_subs = 'Run Date: '.$Inv_date." - subscription calls:-\n\n";
+
+$Subscribers = $dbh->prepare("select id,reg_id,comsublevel,commerchantref,comcardref,datediff(comsubdue,now()) as difsubdue,comname,comaddress,compostcode,regemail from companies left join registrations using (reg_id) where comsublevel>0 and datediff(comsubdue,now()) < 3");	#  ie subscription due within 2 days
 $Subscribers->execute;
+
 while ($Subscriber = $Subscribers->fetchrow_hashref) {
+
+	$Todays_subs .= $Subscriber->{reg_id}.'+'.$Subscriber->{id}."\t-\t".$Subscriber->{comanme}.' ('.$Subscriber->{regemail}.')';
 
 	$Inv_datepaid = '';
 	$Orderid++;		#  Increment the order id to the next invoice no
@@ -179,6 +185,8 @@ EOD
 
 #  Update to comsubdue value
 
+					$Todays_subs .= " - paid\n";
+
 					$Sts = $dbh->do("update companies set comsubdue=date_add(comsubdue,interval 1 month) where reg_id=$Subscriber->{reg_id} and id=$Subscriber->{id}");
 
 ########################################  Send paid invoice email  ############################################
@@ -207,6 +215,8 @@ EOD
 					$Sts = $dbh->do("insert into subscriptions (acct_id,subdateraised,subinvoiceno,subdescription,subnet,subvat,subauthcode,substatus,submerchantref,subreason) values ('$Subscriber->{reg_id}+$Subscriber->{id}',now(),'$Orderid','$Subscription[$Subscriber->{comsublevel}]','$Subrate[$Subscriber->{comsublevel}]','$Vat','$XML_Auth','Due','$Subscriber->{commerchantref}','$XML_Text')");
 
 #######################################  Send due invoice email  ##########################################
+
+					$Todays_subs .= " - due\n";
 
 					$Email_msg = sprintf<<EOD;
 Your FreePlus Accounts subscription invoice is attached.
@@ -239,6 +249,8 @@ EOD
 					$Sts = $dbh->do("update companies set comsubdue=date_add(comsubdue,interval 1 month) where reg_id=$Subscriber->{reg_id} and id=$Subscriber->{id}");
 
 ######################################  send paid email  #############################################
+
+					$Todays_subs .= " - paid\n";
 					$Email_msg = sprintf<<EOD;
 Thank you, we have now taken payment for your subscription and have debited your card for the amount due.
 
@@ -257,6 +269,8 @@ EOD
 					if ($Subscriber->{difsubdue} < 0 && $Sub->{substatus} !~ /Overdue/i) {
 						$Sts = $dbh->do("update subscriptions set substatus='Overdue' where id=$Sub->{id}");
 ######################################  send overdue email  ##########################################
+
+					$Todays_subs .= " - overdue\n";
 						$Email_msg = sprintf<<EOD;
 Hi, we've still not been able to take payment for your subscription, which is now overdue.
 
@@ -276,9 +290,11 @@ EOD
 					}
 					elsif ($Subscriber->{difsubdue} < -3) {
 						$Sts = $dbh->do("update subscriptions set substatus='Cancelled' where id=$Sub->{id}");
-						$Sts = $dbh->do("update companies set compt_logo='2010-01-01',comsubdue='2010-01-01',comsublevel='00',comsubref='',comuplds=0,comno_ads='2010-01-01' where reg_id=$Subscriber->{reg_id} and id=$Subscriber->{id}");
+						$Sts = $dbh->do("update companies set compt_logo='2010-01-01',comsublevel='00',comsubref='',comuplds=0,comno_ads='2010-01-01' where reg_id=$Subscriber->{reg_id} and id=$Subscriber->{id}");
 						$Sts = $dbh->do("update registrations set regmembership='1' where reg_id=$Subscriber->{reg_id}");
 ##################################### send cancellation email  #######################################
+
+						$Todays_subs .= " - cancelled\n";
 						$Email_msg = sprintf<<EOD;
 After a number of attempts we are still unable to debit your card for the amount due on your subscription.  Regretably, therefore, your subscription is now cancelled and you have been reverted back to the free system.
 
@@ -292,6 +308,8 @@ EOD
 						&send_email();
 					}
 					else {
+
+						$Todays_subs .= " - still due\n";
 						$Email_msg = sprintf<<EOD;
 This is just a quick message to let you know that we are still having a problem taking payment for your subscription, please contact Customer Support at support\@freeplusaccounts.co.uk to help resolve this issue.
 
@@ -306,9 +324,21 @@ EOD
 		}
 	}
 	else {
+
+		$Todays_subs .= " - xml failed\n";
 		print LOG $Subscriber->{reg_id}."+".$Subscriber->{id}." - xml payment failed\n";
 	}
 }
+open(EMAIL,"| /usr/sbin/sendmail -t");
+print EMAIL<<EOD;
+From: FreePlus Accounts <fpainvoices\@corunna.com>
+To: doug.conran\@corunna.com
+Reply-To: Doug Conran <doug.conran\@corunna.com>
+Subject: FreePlus Subscriptions - $Inv_date
+
+$Todays_subs
+EOD
+close(EMAIL);
 
 $Subscribers->finish;
 $Subs->finish;
@@ -323,8 +353,7 @@ sub send_email {
         open(EMAIL,"| /usr/sbin/sendmail -t");
         print EMAIL<<EOD;
 From: FreePlus Accounts <fpainvoices\@corunna.com>
-To: doug.conran\@corunna.com
-Reply-To: Doug Conran <doug.conran\@corunna.com>
+To: $Subscriber->{regemail}
 Subject: Your FreePlus Subscription
 MIME-Version: 1.0
 Content-Type: multipart/mixed;
@@ -341,6 +370,8 @@ This is a multi-part message in MIME format.
 ------=_NextPart_000_001D_01C0B074.94357480
 Content-Type: text/plain;
         charset="iso-8859-1"
+
+to: $Subscribers->{regemail}
 
 $Email_msg
 

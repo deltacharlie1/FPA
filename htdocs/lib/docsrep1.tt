@@ -1,4 +1,15 @@
 <div class="main" id="main">
+<div id="changedesc" title="Change Description" style="display:none;">
+  <form id="fchangedesc" name="fchangedesc" action="">
+  <input type="hidden" name="id" id="cd_id" value=""/>
+  <table width="100%" border="0" cellpadding="0" cellspacing="0" class="formtable">
+    <tr>
+      <td><label>New Description</label></td>
+      <td><input type="text" name="newdesc" id="newdesc" size="40" value=""/></td>
+    </tr>
+  </table>
+  </form>
+</div>
 <div id="pudialog" style="display:none;" title="Upload a Document">
   <form id="puform" name="puform" method="post" action="/cgi-bin/fpa/uploadify.pl">
     <table width="100%" cellpadding="4" cellspacing="0" border="0" class="formtable">
@@ -20,6 +31,7 @@
 <input type="hidden" name="rows" id="rows" value="10"/>
 <input type="hidden" name="action" id="action" value="S"/>
 <h1>Documents List</h1>
+  <img style="padding:0 0 0 100px;" src="/cgi-bin/fpa/remaining_capacity.pl?[%- remaining -%]?[%- max -%]"/>
   <table width="660" border="0" cellpadding="0" cellspacing="0" class="formtable">
     <tr>
       <td><label>Date From</label></td>

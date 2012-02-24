@@ -69,7 +69,7 @@ else {
 		$FORM{id} = $i;
 		$FORM{txnamount} = sprintf("%1.2f",$FORM{txnamount});
 #		last if ($FORM{txnamount} >= 0);
-		&pay_invoice();
+		&pay_purchase();
 	}
 
 	print<<EOD;

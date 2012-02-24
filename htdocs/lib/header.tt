@@ -9,7 +9,7 @@
 <link rel="shortcut icon" href="/favicon.ico"/>
 <link rel="stylesheet" href="/css/jquery-ui.css" type="text/css"/>
 <script src="/js/jquery.js" type="text/javascript"></script>
-<script src="/js/jquery-ui.js" type="text/javascript"></script>
+<script src="/js/jquery-ui.min.js" type="text/javascript"></script>
 <script src="/js/jquery.watermark.js" type="text/javascript"></script>
 <link rel="stylesheet" href="/css/uploadify.css" type="text/css"/>
 <script type="text/javascript" src="/js/swfobject.js"></script>
@@ -72,8 +72,8 @@ $(document).ready(function(){
 </head>
 <body [%- IF focus -%][%- IF focus.search('location') -%] onload="[%- focus; -%]"[%- ELSE -%] onload="document.getElementById('[%- focus -%]').focus();"[%- END -%][%- END -%]>
   <div id="wrapper">
-    <div id="top">
-      <div class="company-name"><div>[%- cookie.TAG -%]</div>
+    <div id="top"[%- IF cookie.DB == 'fpa3' -%] style="background-color:#ee8888;"[%- END -%]>
+      <div class="company-name"><div[%- IF cookie.DB == 'fpa3' -%] style="border:3px solid #880000;padding:0px 10px;background-color:white;">TEST - [%- ELSE -%]>[%- END; cookie.TAG -%]</div>
         <div style='padding-top:6px;'>[%- cookie.adv1 -%]&nbsp;[%- cookie.adv3 -%]</div></div>
       <div style="float:right;width:220px">
         <div class="top-ad"><img src="/images/sponsor_logo.png"></div>
@@ -93,7 +93,9 @@ $(document).ready(function(){
             <li><a href="/cgi-bin/fpa/adduser.pl">Add New User</a></li>
   [% END -%]
 [%- END -%]
+[%- IF cookie.PLAN > 5 -%]
             <li><a href="/cgi-bin/fpa/docsrep1.pl">List Documents</a></li>
+[% END -%]
             <li><a href="/cgi-bin/fpa/list_coas.pl">Chart of Accounts</a></li>
             <li><a href="/cgi-bin/fpa/adjustments.pl?I">Adjustments In (<b> + </b>)</a></li>
             <li><a href="/cgi-bin/fpa/adjustments.pl?O">Adjustments Out (<b> - </b>)</a></li>
@@ -147,8 +149,6 @@ $(document).ready(function(){
         <li class="vat"><a href="#"><span>VAT</span></a>
           <ul>
             <li><a href="/cgi-bin/fpa/list_vatreturns.pl">List VAT Returns</a></li>
-            <li><a href="/cgi-bin/fpa/list_vats.pl?filter=2100">List VAT Outputs</a></li>
-            <li><a href="/cgi-bin/fpa/list_vats.pl?filter=1400">List VAT Inputs</a></li>
             <li><a href="/cgi-bin/fpa/vatreturn.pl">VAT Form 100</a></li>
           </ul>
         </li>
@@ -187,7 +187,7 @@ $(document).ready(function(){
             <li><a href="#" onclick="view_comments();">View Feedback</a></li>
             <li><a href="#" onclick="$('#vcomment').dialog('open');">Add New Feedback</a></li>
             <li><a href="/cgi-bin/fpa/assign_invoices.pl">Assign Unlisted Invoices</a></li>
-            <li><a href="/cgi-bin/fpa/switch_systems.pl">Switch to [%- IF cookie.ACCT == "3+2" -%]Live System[%- ELSE -%]Testbed[%- END -%]</a></li>
+            <li><a href="/cgi-bin/fpa/switch_systems.pl">Switch to [%- IF cookie.DB == 'fpa3' -%]Live System[%- ELSE -%]Testbed[%- END -%]</a></li>
             <li><a href="/cgi-bin/fpa/list_audit_trails.pl">Audit Trail</a></li>
           </ul>
         </li>
@@ -209,9 +209,11 @@ $(document).ready(function(){
             <li><a href="/cgi-bin/fpa/bulk_add_invoices.pl">Bulk Add Invoices</a></li>
             <li><a href="/cgi-bin/fpa/bulk_add_purchases.pl">Bulk Add Purchases</a></li>
             <li><a href="/cgi-bin/fpa/add_companies.pl">Add Companies</a></li>
-<!--            <li><a href="/cgi-bin/fpa/newrec.pl">Reconcile - Step 1</a></li>
-            <li><a href="/cgi-bin/fpa/newrec2.pl">Reconcile - Step 2</a></li>
--->          </ul>
+            <li><a href="/cgi-bin/fpa/bulk_opening_balances.pl">Add Opening Balances</a></li>
+[% IF cookie.BACCT == '4+3' -%]
+            <li><a href="/demo/index.html" target="_new">Demo Reconciliation</a></li>
+[% END -%]
+          </ul>
 [% END -%]
         </li>
         <li class="search"><span><input id="searchcus" /></span>

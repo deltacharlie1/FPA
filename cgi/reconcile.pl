@@ -94,19 +94,19 @@ $(document).ready(function() {
       }
     }
   );
-  document.getElementById("chkditems").innerHTML = ichkd.toFixed(2);
+  $("#chkditems").html(ichkd.toFixed(2));
 
   var ibal = 0;
   var ibf = 0;
   var icf = 0;
 
-  ibf = document.getElementById("thisbf").innerHTML;
+  ibf = $("#thisbf").html();
   if (document.getElementById("thiscf").value.length > 0) {
     icf = document.getElementById("thiscf").value;
   }
 
   ibal = parseFloat(icf) - parseFloat(ibf);
-  document.getElementById("staact").innerHTML = ibal.toFixed(2);
+  $("#staact").html(ibal.toFixed(2));
 });
 function showResponse(responseText, statusText) {
   window.location.reload(true);
@@ -133,7 +133,7 @@ function check_bals() {
     errs = errs + "<li>You must enter a Balance Brought Forward in the correct format<\/li>\n";
   }
   if (errs.length > 0) {
-    document.getElementById("dialog").innerHTML = "You have the following errors<ol>" + errs + "<\/ol>Please correct them";
+    $("#dialog").html("You have the following errors<ol>" + errs + "<\/ol>Please correct them");
     $("#dialog").dialog("open");
   }
   else {
@@ -141,13 +141,13 @@ function check_bals() {
     var ibf = 0;
     var icf = 0;
 
-    ibf = document.getElementById("thisbf").innerHTML;
+    ibf = $("#thisbf").html();
     if (document.getElementById("thiscf").value.length > 0) {
       icf = document.getElementById("thiscf").value;
     }
 
     ibal = parseFloat(icf) - parseFloat(ibf);
-    document.getElementById("staact").innerHTML = ibal.toFixed(2);
+    $("#staact").html(ibal.toFixed(2));
 
     $.get("/cgi-bin/fpa/reconcileupd1.pl", { f1: document.getElementById("thisno").value, f2: document.getElementById("thiscf").value, f3: document.getElementById("thiscfdate").value });
    }
@@ -159,7 +159,7 @@ function updstack() {
     errfocus = "thisno";
   }
   if (errs.length > 0) {
-    document.getElementById("dialog").innerHTML = "You have entered an invalid format:-<ol>" + errs + "<\/ol>Please correct and re-submit\n";
+    $("#dialog").html("You have entered an invalid format:-<ol>" + errs + "<\/ol>Please correct and re-submit\n");
     $("#dialog").dialog("open");
   }
   else {
@@ -181,7 +181,7 @@ function check_txn(obj) {
       }
     }
   );
-  document.getElementById("chkditems").innerHTML = itot.toFixed(2);
+  $("#chkditems").html(itot.toFixed(2));
 }
 function do_vatpayment () {
   $.post("/cgi-bin/fpa/vat_payment.pl", $("#form1").serialize(),function(data) {
@@ -199,7 +199,7 @@ function do_bankpayment() {
     errfocus = "thisch";
   }
   if (errs.length > 0) {
-    document.getElementById("dialog").innerHTML = "You have an invalid currency format:-<ol>" + errs + "<\/ol>Please correct and re-submit\n";
+    $("#dialog").html("You have an invalid currency format:-<ol>" + errs + "<\/ol>Please correct and re-submit\n");
     $("#dialog").dialog("open");
   }
   else {
@@ -210,8 +210,8 @@ function do_bankpayment() {
 }
 function validate() {
   if (validate_form("form1")) {
-    if (document.getElementById("staact").innerHTML != document.getElementById("chkditems").innerHTML) {
-      document.getElementById("dialog").innerHTML = "You have the following errors:-<ol><li>The value of checked items does not agree with your bank statement<\/li><\/ol> please correct";
+    if ($("#staact").html() != $("#chkditems").html()) {
+      $("#dialog").html("You have the following errors:-<ol><li>The value of checked items does not agree with your bank statement<\/li><\/ol> please correct");
       $("#dialog").dialog("open");
       return false;
     }
@@ -222,7 +222,7 @@ function validate() {
           location.href = "/cgi-bin/fpa/" + href[1];
         }
         else {
-          document.getElementById("dialog").innerHTML = data;
+          $("#dialog").html(data);
           $("#dialog").dialog("open");
           return false;
         }

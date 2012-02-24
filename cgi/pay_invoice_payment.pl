@@ -67,7 +67,7 @@ else {
 #	$FORM{txnamount} = 0 - $FORM{txnamount};
 
 	&money_out();
-	&pay_invoice();
+	&pay_purchase();
 	print<<EOD;
 Content-Type: text/plain
 

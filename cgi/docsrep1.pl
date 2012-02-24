@@ -16,6 +16,15 @@ unless ($COOKIE->{NO_ADS}) {
 	&display_adverts();
 }
 
+if ($COOKIE->{ACCESS} > 6) {
+	$Max = 15728640;
+}
+elsif ($COOKIE->{ACCESS} > 5) {
+	$Max = 4194304;
+}
+else {
+	$Max = 0;
+}
 
 #  Get a start and end (now) date
 
@@ -36,6 +45,8 @@ $Vars = {
 	focus => 'imgfilename',
         startdate => $Start_date,
         enddate => $End_date,
+	max => $Max,
+	remaining => $COOKIE->{UPLDS},
         javascript => '<script type="text/javascript"> 
 $(document).ready(function(){
   $("#startdate").datepicker({ minDate: new Date(2000,01 - 1,01) });
@@ -49,8 +60,38 @@ $(document).ready(function(){
     close: function(a,b) { window.location.reload(true); },
     modal: true
   });
+  $("#changedesc").dialog({
+    bgiframe: true,
+    autoOpen: false,
+    position: [200,100],
+    height: 200,
+    width: 400,
+    modal: true,
+    buttons: {
+      "Change Description": function() {
+        $.post("/cgi-bin/fpa/change_doc_desc.pl", $("#fchangedesc").serialize(),function(data) {
+          if ( ! /^OK/.test(data)) {
+            alert(data);
+          }
+          window.location.reload(true);
+        },"text");
+        $("td").removeClass("error");
+        $(this).dialog("close");
+      },
+      Cancel: function() {
+        $("td").removeClass("error");
+        $(this).dialog("close");
+      }
+    }
+  });
   redisplay("S");
 });
+function change_desc(obj,id,olddesc) {
+  $(obj).addClass("error");
+  document.getElementById("cd_id").value = id;
+  document.getElementById("newdesc").value = olddesc;
+  $("#changedesc").dialog("open");
+}
 function display_puform() {
   $("#pufile").uploadify ({
     "uploader"       : "/js/uploadify.swf",
@@ -74,7 +115,7 @@ function display_puform() {
                            return true;
                          }
                       },
-    "onComplete"     : function(a,b,c,d,e) { document.getElementById("docdesc").value = ""; },
+    "onComplete"     : function(a,b,c,d,e) { document.getElementById("docdesc").value = ""; $("#pudialog").dialog("close"); },
     "auto"           : true
   });
   $("#pudialog").dialog("open");
@@ -91,7 +132,7 @@ function get_results(action) {
     document.getElementById("numrows").value = parts[0];
     document.getElementById("offset").value = parts[1];
     document.getElementById("action").value = "S";
-    document.getElementById("results").innerHTML = parts[4];
+    $("#results").html(parts[4]);
   });
 }
 function redisplay(action) {

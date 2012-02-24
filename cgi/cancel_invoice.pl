@@ -18,6 +18,15 @@ unless ($COOKIE->{NO_ADS}) {
 
 $Data = new CGI;
 %FORM = $Data->Vars;
+while (( $Key,$Value) = each %FORM) {
+
+#  Remove any bad characters
+
+        $Value =~ s/\%2b/\+/ig;
+        $Value =~ tr/\\//d;
+        $Value =~ s/\'/\\\'/g;
+        $FORM{$Key} = $Value;
+}
 
 #  Check that nothing has yet been paid (if it has then the user will have to raise a separate credit note)
 

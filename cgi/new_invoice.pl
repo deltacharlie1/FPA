@@ -50,8 +50,8 @@ $(document).ready(function(){
       "No": function() { $(this).dialog("close"); }
     },
     close: function() {
-      var dg = document.getElementById("div_html").innerHTML.replace(/\+/gim,"%2B");
-      var submit_data = $(".newinvoice").serialize() + "&invtotal=" + escape(document.getElementById("st").innerHTML) + "&invvat=" + escape(document.getElementById("vt").innerHTML) + "&invitems=" + escape(dg) + "&submit=Final";
+      var dg = $("#div_html").html().replace(/\+/gim,"%2B");
+      var submit_data = $(".newinvoice").serialize() + "&invtotal=" + escape($("#st").html()) + "&invvat=" + escape($("#vt").html()) + "&invitems=" + escape(dg) + "&submit=Final";
       $.post("/cgi-bin/fpa/save_invoice.pl",submit_data ,function(data) {
         if ( ! /^OK/.test(data)) {
           alert(data);
@@ -74,13 +74,13 @@ $(document).ready(function(){
     buttons: {
       "Save Template": function() {
         if ($("#invtype").val() == "C") {
-          document.getElementById("dialog").innerHTML = "<p>You cannot create a template for a Credit Note</p>";
+          $("#dialog").html("<p>You cannot create a template for a Credit Note</p>");
           $("#dialog").dialog("open");
         }
         else { 
           if (validate_form("#form1")) {
-            var dg = document.getElementById("div_html").innerHTML.replace(/\+/igm,"%2B");
-            var submit_data = $(".newinvoice").serialize() + "&invtotal=" + escape(document.getElementById("st").innerHTML) + "&invvat=" + escape(document.getElementById("vt").innerHTML) + "&invitems=" + escape(dg) + "&submit=Template";
+            var dg = $("#div_html").html().replace(/\+/igm,"%2B");
+            var submit_data = $(".newinvoice").serialize() + "&invtotal=" + escape($("#st").html()) + "&invvat=" + escape($("#vt").html()) + "&invitems=" + escape(dg) + "&submit=Template";
             $.post("/cgi-bin/fpa/save_invoice.pl",submit_data ,function(data) {
               if ( ! /^OK/.test(data)) {
                 alert(data);
@@ -148,10 +148,10 @@ function goto_list() {
 }
 function change_invtext(obj) {
   if (obj.value == "S") {
-    $(".invtext").each( function() { this.innerHTML = "Invoice"; });
+    $(".invtext").each( function() { $(this).html("Invoice"); });
   }
   else {
-    $(".invtext").each( function() { this.innerHTML = "Credit Note"; });
+    $(".invtext").each( function() { $(this).html("Credit Note"); });
   }
 }
 function submit_details(action) {
@@ -164,8 +164,8 @@ function submit_details(action) {
          $("#confirmdialog").dialog("open");
       }
       else {
-        var dg = document.getElementById("div_html").innerHTML.replace(/\+/gim,"%2B");
-        var submit_data = $(".newinvoice").serialize() + "&invtotal=" + escape(document.getElementById("st").innerHTML) + "&invvat=" + escape(document.getElementById("vt").innerHTML) + "&invitems=" + escape(dg) + "&submit=" + action;
+        var dg = $("#div_html").html().replace(/\+/gim,"%2B");
+        var submit_data = $(".newinvoice").serialize() + "&invtotal=" + escape($("#st").html()) + "&invvat=" + escape($("#vt").html()) + "&invitems=" + escape(dg) + "&submit=" + action;
         $.post("/cgi-bin/fpa/save_invoice.pl",submit_data ,function(data) {
           if ( ! /^OK/.test(data)) {
             alert(data);

@@ -60,7 +60,7 @@ $Subtype{fpa6} = 'FreePlus Bookkeeper Premium (&pound;20.00pm)';
 
 #  Get the company details
 
-$Companies = $dbh->prepare("select id,reg_id,comsublevel,comsubtype,commerchantref,comcardref,comsubref,comname,date_format(comsubdue,'%d-%b-%y') as subdue,comdocsdir from companies where commerchantref='$FORM{MERCHANTREF}'");
+$Companies = $dbh->prepare("select id,reg_id,comsublevel,comsubtype,commerchantref,comcardref,comsubref,comname,date_format(comsubdue,'%d-%b-%y') as subdue,comdocsdir,comsubdue from companies where commerchantref='$FORM{MERCHANTREF}'");
 $Companies->execute;
 $Company = $Companies->fetchrow_hashref;
 $Companies->finish;
@@ -110,7 +110,7 @@ EOD
 	print LOG $Company->{reg_id}."+".$Company->{id}." - Remove Card - ".$Res_content."\n";
 
 	$Level = 0;
-	$Sts = $dbh->do("update companies set comsublevel='00',comsubtype='',comsubref='',commerchantref='',comcardref='',comsubdue='2010-01-01',compt_logo='2010-01-01',comuplds=0,comno_ads='2010-01-01' where commerchantref='$Company->{commerchantref}'");
+	$Sts = $dbh->do("update companies set comsublevel='00',comsubtype='',comsubref='',commerchantref='',comcardref='',compt_logo='2010-01-01',comuplds=0,comno_ads='2010-01-01' where commerchantref='$Company->{commerchantref}'");
 	$Sts = $dbh->do("update registrations set regmembership='1' where reg_id=$Company->{reg_id}");
 	$Status .= "<p>Your subscription has been cancelled.</p><p>We are sorry to see you go but have reverted you to FreePlus Startup which is completely free to use.</p>\n";
 	$Company->{comsubtype} = 'Del';		# so as to display correct new subscription
@@ -134,7 +134,12 @@ elsif ($Company->{comsublevel} =~ /00/) {	#  New subscription
 	$Level = $Company->{comsubtype};
 	$Level =~ s/.+(\d)$/$1/;
 
-	$Sts = $dbh->do("update companies set comsublevel='$Level',comsubdue=date_add(str_to_date('$Startdate','%d-%m-%Y'),interval 30 day),comadd_user='1' where commerchantref='$Company->{commerchantref}'");
+	if ($Company->{comsubdue} =~ /2010-01-01/)	{	#  ie he has not yet subscribed at all
+		$Sts = $dbh->do("update companies set comsublevel='$Level',comsubdue=date_add(str_to_date('$Startdate','%d-%m-%Y'),interval 30 day),comadd_user='1' where commerchantref='$Company->{commerchantref}'");
+	}
+	else {		#  we leave comsubdue as it was
+		$Sts = $dbh->do("update companies set comsublevel='$Level',comadd_user='1' where commerchantref='$Company->{commerchantref}'");
+	}
 	$Sts = $dbh->do("update registrations set regmembership='$Membership[$Level]' where reg_id=$Company->{reg_id}");
 	&update_cookiefile();
 }

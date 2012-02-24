@@ -79,7 +79,7 @@ else {
 	require "/usr/local/httpd/cgi-bin/fpa/process_purchase.ph";
 	$FORM{invtype} = "P";
 	&money_out();
-	&pay_invoice();
+	&pay_purchase();
 	print<<EOD;
 Content-Type: text/plain
 

@@ -86,19 +86,16 @@
       </div>
       
       <div class="social">
-      		
+        <div> 
           <script type="text/javascript"> Cufon.now(); </script>
-            
-          <div class="addthis_toolbox addthis_default_style " style="width:200px;">
-              <a class="addthis_button_tweet"></a>
-              <a class="addthis_counter addthis_pill_style" style="margin-top:0px;float:right;"></a>
-
 <!-- GeoTrust QuickSSL [tm] Smart Icon tag. Do not edit. -->
-              <div style="float:left;padding-top:8px;"><SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript" SRC="//smarticon.geotrust.com/si.js"></SCRIPT></div>
-              <div style="float:right;padding-top:5px;"><img src="/wp-content/themes/freeplusaccounts/images/icb_logo.png" width="58" height="60" alt="ICB"
-
+              <div style="padding:8px 5px 0 5px;float:right;"><SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript" SRC="//smarticon.geotrust.com/si.js"></SCRIPT></div>
+              <div style="padding:5px 5px 0 5px;float:right;"><img src="/wp-content/themes/freeplusaccounts/images/icb_logo.png" width="58" height="60" alt="ICB"/></div>
+              <div style="padding:15px 5px 0 5px;float:right"><a href="http://bit.ly/wLlo0G"><img src="/wp-content/themes/freeplusaccounts/images/twitter.jpg" alt="Twitter"/></a></div>
  <!-- end GeoTrust Smart Icon tag -->    
-          </div>
+        </div>
+        <div style="float:right;padding:10px 5px 0 0;"><a class="addthis_counter addthis_pill_style"></a></div>
+        <div style="float:right;padding:10px 0 0 5px;"> <a class="addthis_button_tweet"></a></div>
           <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=xa-4d9adfb82ccdc016"></script>
           
       </div>

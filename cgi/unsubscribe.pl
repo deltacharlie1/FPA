@@ -2,6 +2,13 @@
 
 $ACCESS_LEVEL = 0;
 
+use DBI;
+$dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
+unless ($COOKIE->{NO_ADS}) {
+        require "/usr/local/git/fpa/cgi/display_adverts.ph";
+        &display_adverts();
+}
+
 #  script to display Contact Details (for eventual updating)
 
 use Checkid;
@@ -33,7 +40,7 @@ function showResponse(responseText, statusText) {
     location.href = "/cgi-bin/fpa/dashboard.pl";
   }
   else {
-    document.getElementById("dialog").innerHTML = responseText;
+    $("#dialog").html(responseText);
     $("#dialog").dialog("open");
   }
 }

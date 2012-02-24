@@ -16,8 +16,9 @@
       <tbody id="stmtpaycodegp" style="display:none;">
       <tr>
         <td colspan="2">Allocate to<br/>
-          <select name="stmtpaycodes" id="stmtpaycodes" size="1">
+          <select name="stmtpaycodes" id="stmtpaycodes" size="1" onchange="upd_vat(this);">
             <option value="1000">Fixed Assets</option>
+            <option value="1300">Cash from Bank</option>
             <option value="1500">Other Current Assets</option>
             [% cookie.5000 -%]
             [% cookie.6000 -%]
@@ -31,7 +32,8 @@
       <tbody id="stmtinccodegp">
       <tr>
         <td colspan="2">Allocate to<br/>
-          <select name="stmtinccodes" id="stmtinccodes" size="1">
+          <select name="stmtinccodes" id="stmtinccodes" size="1" onchange="upd_vat(this);">
+            <option value="1300">Cash to Bank</option>
             <option value="4000" selected="selected">UK Sales</option>
             <option value="4100">EU Sales</option>
             <option value="4200">Non-EU Sales</option>
@@ -74,6 +76,12 @@
   </form>
 </div>
 <h1>Reconcile Step 2 - Match</h1>
+[% IF last_stmt.stmtdiff < 0 -%]
+<div class="status" style="margin-left:auto;margin-right:auto;width:400px;">
+WARNING - you cannot reconcile this statement as you already have a reconciled statement with entries on or after these ones.
+</div>
+[% END -%]
+<div id="wip">
 <table border="0" cellpadding="2" cellspacing="2" width="100%">
   <tr>
     <td style="text-align:right;font-weight:bold;">Closing Balance previous Statement = </td>
@@ -92,7 +100,7 @@
     <td style="font-weight:bold;"><span id="stmtdiff">[%- acct.newclose - acct.newopen | format('%1.2f') -%]</span></td>
   </tr>
   <tr>
-    <td style="vertical-align:top;"><h3>Unpaid Transactions</h3>
+    <td style="vertical-align:top;"><h3>Unpaid Invoices</h3>
       <table width="336" cellpadding="0" cellspacing="0" class="listing">
         <tr>
           <th style="display:none;">ID</th>
@@ -107,12 +115,13 @@
 [% class = [ "even","odd" ] -%]
 [% FOREACH invoice IN invoices -%]
   [%- ndx = loop.count % 2 -%]
+  [%- invtype = invoice.invtype; IF invtype.search('S'); invtype='Inv'; ELSIF invtype.search('P'); invtype='Pur'; END -%]
         <tr class="[%- class.$ndx -%] draggable" id="inv[%- invoice.id -%]">
           <td style="display:none;">[%- invoice.id -%]</td>
-          <td style="display:none;">pay</td>
+          <td style="display:none;">[%- invtype -%]</td>
           <td nowrap="nowrap">[%- invoice.printdate -%]</td>
           <td>[%- invoice.invinvoiceno -%]</td>
-          <td>[%- invoice.invtype -%]</td>
+          <td>[%- invtype -%]</td>
           <td>[%- invoice.invcusname | truncate(15) -%]</td>
           <td>[%- invoice.invdesc | truncate(20) -%]</td>
           <td style="text-align:right;[%- IF invoice.amtdue < 0 -%] color:#c80000;[%- END -%]">[%- invoice.amtdue -%]</td>
@@ -168,7 +177,7 @@
   </tr>
   <tr>
     <td style="vertical-align:top;"><h3>Un-reconciled Transactions</h3>
-      <table width="336" cellpadding="0" cellspacing="0" class="listing">
+      <table width="336" cellpadding="0" cellspacing="0" class="listing id="txns"">
         <tr>
           <th style="display:none;">ID</th>
           <th style="display:none;">Type</th>
@@ -184,7 +193,7 @@
   [%- ndx = loop.count % 2 -%]
         <tr class="[%- class.$ndx -%] draggable" id="txn[%- txn.id -%]">
           <td style="display:none;">[%- txn.id -%]</td>
-          <td style="display:none;">rec</td>
+          <td style="display:none;">txn</td>
           <td nowrap="nowrap">[%- txn.tdate -%]</td>
           <td>&nbsp;</td>
           <td>[%- txn.txntxntype -%]</td>
@@ -198,18 +207,33 @@
   </tr>
 </table>
 </div>
+</div>
 <div id="sidebar">
+[% IF last_stmt.stmtdiff >= 0 -%]
   <ul>
     <li>
       <div>
         <form name="stmtform" id="stmtform" method="post" action="/cgi-bin/fpa/newrec3.pl" onsubmit="return submitit();">
           <input type="hidden" name="stmtdata" id="stmtdata" value=""/>
+          <input type="hidden" name="txnmethod" id="stmt_txnmethod" value="[%- acct.acctype -%]"/>
+          <input type="hidden" name="newopen" id="newopen" value="[%- acct.newopen -%]"/>
+          <input type="hidden" name="newclose" id="newclose" value="[%- acct.newclose -%]"/>
+          <input type="hidden" name="newstmtno" id="newstmtno" value="[%- stack.f2 -%]"/>
           <input type="submit" name="submit" id="submit" value="Accept &amp; Lock"/>
         </form> 
       </div>
     </li>
+    <li>
+       <input type="button" name="savewip" id="savewip" onclick="save_wip();" value="Save Work In Progress"/>
+   </li> 
+    <li>
+       <input type="button" name="getwip" id="getwip" onclick="get_wip();" value="Get Work In Progress"/>
+   </li> 
   </ul>
+[% END -%]
   <div id="sidebar-ad">
 [% INCLUDE adverts.tt -%]
   </div>
 </div>
+<table width="340" cellpadding="0" cellspacing="0" class="listing" id="hiddenblock" style="display:none;">
+</table>

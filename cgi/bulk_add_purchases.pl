@@ -92,7 +92,7 @@ function process_invoice() {
     if (this.value.length < 1) { errs = errs + "<li>Empty " + this.title + "</li>"; }
   });
   if (errs.length > 0) {
-    document.getElementById("dialog").innerHTML = "You have the following errors<ol>" + errs + "</ol>";
+    $("#dialog").html("You have the following errors<ol>" + errs + "</ol>");
     $("#dialog").dialog("open");
   }
   else {
@@ -125,7 +125,7 @@ function display_table() {
     }
     item_table = item_table + "<td style=\'text-align:center;\'><input type=\'button\' value=\'Amd\' onclick=\"amd(\'" + i + "\');\"/>&nbsp;<input type=\'button\' value=\'Del\' onclick=\"dlt(\'" + i + "\');\"/></td>\\n</tr>";
   }
-  document.getElementById("new").innerHTML = item_table;
+  $("#new").html(item_table);
   document.getElementById("blk_data").value = item_table;
   document.getElementById("blk_invcusname").focus();
 }
@@ -185,7 +185,7 @@ function check_data() {
     return true;
   }
   else {
-    document.getElementById("dialog").innerHTML = "You have not entered any invoices!";
+    $("#dialog").html("You have not entered any invoices!");
     errfocus = "blk_invcusname";
     $("#dialog").dialog("open");
     return false;

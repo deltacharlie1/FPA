@@ -56,11 +56,11 @@ else {
 	require "/usr/local/httpd/cgi-bin/fpa/process_purchase.ph";
 
 	$FORM{txnamount} = $FORM{invtotal} + $FORM{invvat};
-	&save_invoice('final');
+	&save_purchase('final');
 
 	if ($FORM{invfpflag} =~ /Y/i) {		#  Paid in full?
 		&money_out();
-		&pay_invoice();
+		&pay_purchase();
 	}
 
         if ($FORM{submit} =~ /Print/i) {

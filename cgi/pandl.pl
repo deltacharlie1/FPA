@@ -207,7 +207,7 @@ function set_range(obj) {
 }
 function get_balances() {
    $.get("/cgi-bin/fpa/pandl_results.pl",$("form#form1").serialize() ,function(data) {
-     document.getElementById("results").innerHTML = data;
+     $("#results").html(data);
   });
 }
 function get_nom_details(nomcode) {

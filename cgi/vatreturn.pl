@@ -96,7 +96,7 @@ else {
         $Vataccs->execute;
         ($Vatreturn->{perbox2}) = $Vataccs->fetchrow;
 
-        $Vataccs = $dbh->prepare("select sum(acrvat) from vataccruals where acct_id='$COOKIE->{ACCT}' and $Date_Range and vr_id < 1 and (acrnominalcode='1000' or (acrnominalcode>='5000' and acrnominalcode<'7500'))");
+        $Vataccs = $dbh->prepare("select sum(acrvat) from vataccruals where acct_id='$COOKIE->{ACCT}' and $Date_Range and vr_id < 1 and (acrnominalcode like '10%' or (acrnominalcode>='5000' and acrnominalcode<'7500'))");
         $Vataccs->execute;
         ($Vatreturn->{perbox4}) = $Vataccs->fetchrow;
 	$Vatreturn->{perbox4} = 0 - $Vatreturn->{perbox4};	#  because it is already a negative number
@@ -105,7 +105,7 @@ else {
         $Vataccs->execute;
         ($Vatreturn->{perbox6}) = $Vataccs->fetchrow;
 
-        $Vataccs = $dbh->prepare("select sum(acrtotal) from vataccruals where acct_id='$COOKIE->{ACCT}' and $Date_Range and vr_id < 1 and (acrnominalcode='1000' or (acrnominalcode>='5000' and acrnominalcode<'7500'))");
+        $Vataccs = $dbh->prepare("select sum(acrtotal) from vataccruals where acct_id='$COOKIE->{ACCT}' and $Date_Range and vr_id < 1 and (acrnominalcode like '10%' or (acrnominalcode>='5000' and acrnominalcode<'7500'))");
         $Vataccs->execute;
         ($Vatreturn->{perbox7}) = $Vataccs->fetchrow;
         $Vatreturn->{perbox7} =~ tr/-//d;
@@ -114,7 +114,7 @@ else {
         $Vataccs->execute;
         ($Vatreturn->{perbox8}) = $Vataccs->fetchrow;
 
-        $Vataccs = $dbh->prepare("select sum(acrtotal) from vataccruals left join invoices on (invoices.id=vataccruals.acrtxn_id and invoices.acct_id=vataccruals.acct_id)  where vataccruals.acct_id='$COOKIE->{ACCT}' and $Date_Range and vr_id < 1 and(acrnominalcode='1000' or (acrnominalcode>='5000' and acrnominalcode<'7500')) and invcusregion='EU'");
+        $Vataccs = $dbh->prepare("select sum(acrtotal) from vataccruals left join invoices on (invoices.id=vataccruals.acrtxn_id and invoices.acct_id=vataccruals.acct_id)  where vataccruals.acct_id='$COOKIE->{ACCT}' and $Date_Range and vr_id < 1 and(acrnominalcode like '10%' or (acrnominalcode>='5000' and acrnominalcode<'7500')) and invcusregion='EU'");
         $Vataccs->execute;
         ($Vatreturn->{perbox9}) = $Vataccs->fetchrow;
         $Vatreturn->{perbox9} =~ tr/-//d;
@@ -140,7 +140,7 @@ $Vars = {
 <script type="text/javascript">
 function print_list() {
    $.get("/cgi-bin/fpa/print_vatreturn.pl",$("form#form1").serialize() ,function(data) {
-     document.getElementById("main").innerHTML = data;
+     $("#main").html(data);
      $("#vattabs").hide();
      $("#printtab").show();
    });
@@ -171,8 +171,8 @@ function calc_val(obj) {
 
     box5 = (box3 - box4).toFixed(2);
 
-    document.getElementById("box3").innerHTML = box3;
-    document.getElementById("box5").innerHTML = box5;
+    $("#box3").html(box3);
+    $("#box5").html(box5);
   }
 }
 </script>',

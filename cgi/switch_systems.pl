@@ -18,6 +18,10 @@ foreach (@Cookie) {
 	$Cookie{$Name} = $Value;
 }
 
+if ($COOKIE->{ACCT} == '4+3') {
+	`mysql fpa2 < /usr/local/git/fpa/other/fpa2.dmp`;
+}
+else {
 open(FILE,"</projects/tmp/$Cookie{'fpa-cookie'}");
 while (<FILE>) {
 	chomp($_);
@@ -26,23 +30,21 @@ while (<FILE>) {
 }
 close(FILE);
 
-if ($COOKIE->{ACCT} =~ /3\+2/i) {
-	$DATA{ACCT} = $DATA{BACCT};
-	$DATA{TAG} = $DATA{BTAG};
+unlink("/projects/tmp/$Cookie{'fpa-cookie'}");
+
+if ($DATA{DB} eq 'fpa') {
+	$DATA{DB} = 'fpa3';
 }
 else {
-	$DATA{ACCT} = "3+2";
-	$DATA{TAG} = "<span style='font-weight:bold;color:#A00000;'>-- Test Company --</span>";
+	$DATA{DB} = 'fpa';
 }
-
-unlink("/projects/tmp/$Cookie{'fpa-cookie'}");
 
 open(FILE,">/projects/tmp/$Cookie{'fpa-cookie'}");
 while(($Key,$Value) = each %DATA) {
 	print FILE "$Key\t$Value\n";
 }
 close(FILE);
-
+}
 print<<EOD;
 Content-Type: text/html
 Status: 301

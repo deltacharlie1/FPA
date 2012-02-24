@@ -54,10 +54,10 @@ function calc_total() {
     add_total = add_total + 30;
   }
   if (add_total == 0) {
-    document.getElementById("additions_total").innerHTML = add_total + ".00";
+    $("#additions_total").html(add_total + ".00");
   }
   else {
-    document.getElementById("additions_total").innerHTML = "&pound;" + add_total + ".00";
+    $("#additions_total").html("&pound;" + add_total + ".00");
   }
 }
 </script>',

@@ -10,32 +10,32 @@
     </tr>
   </table>
   <table width="660" border="0" cellpadding="0" cellspacing="0" class="formtable vattable">
-    <tr class="hilite" onclick="location.href='/cgi-bin/fpa/hmrc_drill_down.pl?vattotal=[%- vatreturn.perbox1 -%]&boxno=box1&vrid=[%- vatreturn.id -%]&qstart=[%- vatreturn.dispstart -%]&qend=[%- vatreturn.dispend -%]';">
-      <td><label>VAT due in this period on <b>sales</b> and other outputs (Box 1):</label></td>
+    <tr class="hilite">
+      <td onclick="location.href='/cgi-bin/fpa/hmrc_drill_down.pl?vattotal=[%- vatreturn.perbox1 -%]&boxno=box1&vrid=[%- vatreturn.id -%]&qstart=[%- vatreturn.dispstart -%]&qend=[%- vatreturn.dispend -%]';"><label>VAT due in this period on <b>sales</b> and other outputs (Box 1):</label></td>
       <td><span><input name="perbox1" type="text" id="perbox1" value="[%- vatreturn.perbox1 OR "0" | format('%1.2f') -%]" onchange="calc_val(this);"[%- IF vatreturn.id > 0 -%] readonly="readonly"[%- END -%]/></span></td>
     </tr>
-    <tr class="hilite" onclick="location.href='/cgi-bin/fpa/hmrc_drill_down.pl?vattotal=[%- vatreturn.perbox2 -%]&boxno=box2&vrid=[%- vatreturn.id -%]&qstart=[%- vatreturn.dispstart -%]&qend=[%- vatreturn.dispend -%]';">
-      <td><label>VAT due in this period on <b>acquisitions</b> from other <b>EC<br/>Member States</b> (Box 2):</label></td>
+    <tr class="hilite">
+      <td onclick="location.href='/cgi-bin/fpa/hmrc_drill_down.pl?vattotal=[%- vatreturn.perbox2 -%]&boxno=box2&vrid=[%- vatreturn.id -%]&qstart=[%- vatreturn.dispstart -%]&qend=[%- vatreturn.dispend -%]';"><label>VAT due in this period on <b>acquisitions</b> from other <b>EC<br/>Member States</b> (Box 2):</label></td>
       <td><span><input name="perbox2" type="text" id="perbox2" value="[%- vatreturn.perbox2 OR "0" | format('%1.2f') -%]" onchange="calc_val(this);"[%- IF vatreturn.id > 0 -%] readonly="readonly"[%- END -%]/></span></td>
     </tr>
     <tr>
       <td><label>Total VAT due <b>(the sum of boxed 1 and 2) (Box 3):</label></td>
       <td><b><span id="box3">[%- IF vatreturn.perbox1 == '0.00' AND vatreturn.perbox2 == '0.00' -%]Calculated Value[%- ELSE; vatreturn.perbox3 | format('%1.2f'); END -%]</span></b></td>
     </tr>
-    <tr class="hilite" onclick="location.href='/cgi-bin/fpa/hmrc_drill_down.pl?vattotal=[%- vatreturn.perbox4 -%]&boxno=box4&vrid=[%- vatreturn.id -%]&qstart=[%- vatreturn.dispstart -%]&qend=[%- vatreturn.dispend -%]';">
-      <td><label>VAT reclaimed in this period on <b>purchases</b> and other inputs<br/>includingacquisitions from the EC (Box 4):</label></td>
+    <tr class="hilite">
+      <td onclick="location.href='/cgi-bin/fpa/hmrc_drill_down.pl?vattotal=[%- vatreturn.perbox4 -%]&boxno=box4&vrid=[%- vatreturn.id -%]&qstart=[%- vatreturn.dispstart -%]&qend=[%- vatreturn.dispend -%]';"><label>VAT reclaimed in this period on <b>purchases</b> and other inputs<br/>includingacquisitions from the EC (Box 4):</label></td>
       <td><span><input name="perbox4" type="text" id="perbox4" value="[%- vatreturn.perbox4  OR "0" | remove('-') | format('%1.2f') -%]" onchange="calc_val(this);"[%- IF vatreturn.id > 0 -%] readonly="readonly"[%- END -%]/></span></td>
     </tr>
-    <tr class="hilite" onclick="location.href='/cgi-bin/fpa/hmrc_drill_down.pl?vattotal=[%- vatreturn.perbox5 -%]&boxno=box5&vrid=[%- vatreturn.id -%]&qstart=[%- vatreturn.dispstart -%]&qend=[%- vatreturn.dispend -%]';">
-      <td><label>Net VAT to be paid to HM Revenue &amp; Customs or reclaimed<br/>by you <b>(Difference between boxes 3 and 4)</b> (Box 5):</label></td>
+    <tr class="hilite">
+      <td onclick="location.href='/cgi-bin/fpa/hmrc_drill_down.pl?vattotal=[%- vatreturn.perbox5 -%]&boxno=box5&vrid=[%- vatreturn.id -%]&qstart=[%- vatreturn.dispstart -%]&qend=[%- vatreturn.dispend -%]';"><label>Net VAT to be paid to HM Revenue &amp; Customs or reclaimed<br/>by you <b>(Difference between boxes 3 and 4)</b> (Box 5):</label></td>
       <td><b><span id="box5">[%- IF vatreturn.perbox1 == '0.00' AND vatreturn.perbox4 == '0.00' -%]Calculated Value[%- ELSE; vatreturn.perbox5 | format('%1.2f'); END -%]</span></b></td>
     </tr>
-    <tr class="hilite" onclick="location.href='/cgi-bin/fpa/hmrc_drill_down.pl?vattotal=[%- vatreturn.perbox6 -%]&boxno=box6&vrid=[%- vatreturn.id -%]&qstart=[%- vatreturn.dispstart -%]&qend=[%- vatreturn.dispend -%]';">
-      <td><label>Total value of <b>sales</b> and all other outputs excluding any<br/>VAT. <b>Include your box 8 figure</b> (Box 6):</label></td>
+    <tr class="hilite">
+      <td onclick="location.href='/cgi-bin/fpa/hmrc_drill_down.pl?vattotal=[%- vatreturn.perbox6 -%]&boxno=box6&vrid=[%- vatreturn.id -%]&qstart=[%- vatreturn.dispstart -%]&qend=[%- vatreturn.dispend -%]';"><label>Total value of <b>sales</b> and all other outputs excluding any<br/>VAT. <b>Include your box 8 figure</b> (Box 6):</label></td>
       <td><span><input name="perbox6" type="text" id="perbox6" value="[%- vatreturn.perbox6 OR "0" | format('%d') -%]" onchange="calc_val(this);"[%- IF vatreturn.id > 0 -%] readonly="readonly"[%- END -%]/></span><br/><span class="vatgrey">Whole pounds only</span></td>
     </tr>
-    <tr class="hilite" onclick="location.href='/cgi-bin/fpa/hmrc_drill_down.pl?vattotal=[%- vatreturn.perbox7 -%]&boxno=box7&vrid=[%- vatreturn.id -%]&qstart=[%- vatreturn.dispstart -%]&qend=[%- vatreturn.dispend -%]';">
-      <td><label>Total value of <b>purchases</b> and all other inputs excluding any<br/>VAT. <b>Include your box 9 figure</b> (Box 7):</label></td>
+    <tr class="hilite">
+      <td onclick="location.href='/cgi-bin/fpa/hmrc_drill_down.pl?vattotal=[%- vatreturn.perbox7 -%]&boxno=box7&vrid=[%- vatreturn.id -%]&qstart=[%- vatreturn.dispstart -%]&qend=[%- vatreturn.dispend -%]';"><label>Total value of <b>purchases</b> and all other inputs excluding any<br/>VAT. <b>Include your box 9 figure</b> (Box 7):</label></td>
       <td><span><input name="perbox7" type="text" id="perbox7" value="[%- vatreturn.perbox7 OR "0" | format('%d') -%]" onchange="calc_val(this);"[%- IF vatreturn.id > 0 -%] readonly="readonly"[%- END -%]/></span><br/><span class="vatgrey">Whole pounds only</span></td>
     </tr>
     <tr>

@@ -73,11 +73,11 @@ foreach $Invoice (@Invoices) {
 		$FORM{invcusref} = $bCell[11];
 		$FORM{vatrate} = $bCell[13];;
 
-		&save_invoice('final');
+		&save_purchase('final');
 
                 if ($bCell[12] =~ /Y/i) {         #  Paid in Full?
                         &money_out();
-                        &pay_invoice();
+                        &pay_purchase();
                 }
 	}
 }

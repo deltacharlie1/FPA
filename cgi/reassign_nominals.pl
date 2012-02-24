@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-$ACCESS_LEVEL = 1;
+$ACCESS_LEVEL = 4;
 
 #  script to re-assign Nominal codes after creating additonal nominal accoounts
 

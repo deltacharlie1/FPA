@@ -54,11 +54,11 @@ function showResponse(responseText, statusText) {
     });
     $("#dialog").dialog( "option", "title", "Transaction Completed");
     $("#dialog").dialog( "option", "modal", true);
-    document.getElementById("dialog").innerHTML = responseText.replace(/OK-/i,"");
+    $("#dialog").html(responseText.replace(/OK-/i,""));
     $("#dialog").dialog("open");
   }
   else {
-    document.getElementById("dialog").innerHTML = responseText;
+    $("#dialog").html(responseText);
   }
 }
 function validate(formData,jqForm,options) {
@@ -72,11 +72,11 @@ function calc_tot() {
       tot = tot + parseFloat($(this).val());
     }
   });
-  document.getElementById("chktot").innerHTML = tot.toFixed(2);
+  $("#chktot").html(tot.toFixed(2));
   if (document.getElementById("tframt").value.length > 0) {
     tot = tot + parseFloat(document.getElementById("tframt").value);
   }
-  document.getElementById("tottot").innerHTML = tot.toFixed(2);
+  $("#tottot").html(tot.toFixed(2));
 }
 </script>'
 };

@@ -55,7 +55,7 @@ $(document).ready(function(){
       buttons: {
         "Record Payment": function() {
           if(validate_form("#payform")) {
-            if (parseFloat(document.getElementById("i_txnamount").value) > parseFloat(document.getElementById("amtowed").innerHTML)) {
+            if (parseFloat(document.getElementById("i_txnamount").value) > parseFloat($("#amtowed").html())) {
               if (confirm("Paid Amount greater than Owed Amount, balance will be held on Account")) {
                 $.post("/cgi-bin/fpa/pay_invoice_payment.pl", $("#payform").serialize(),function(data) {
                 if ( ! /^OK/.test(data)) {
@@ -142,8 +142,8 @@ function redisplay(action) {
 }
 function get_amt(amtinvid,amtinvno,amtamt) {
   document.getElementById("i_id").value = amtinvid;
-  document.getElementById("amtinvno").innerHTML = amtinvno;
-  document.getElementById("amtowed").innerHTML = parseFloat(amtamt).toFixed(2);
+  $("#amtinvno").html(amtinvno);
+  $("#amtowed").html(parseFloat(amtamt).toFixed(2));
   document.getElementById("i_txnamount").value = parseFloat(amtamt).toFixed(2);
   document.getElementById("i_invdesc").value = "Invoice " + amtinvno;
 //  document.getElementById("i_txnamount").focus();

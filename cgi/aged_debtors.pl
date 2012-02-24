@@ -181,12 +181,12 @@ function set_range(obj) {
 }
 function get_balances() {
    $.get("/cgi-bin/fpa/aged_debtors_results.pl",$("form#form1").serialize() ,function(data) {
-     document.getElementById("results").innerHTML = data;
+     $("#results").html(data);
   });
 }
 function print_list() {
    $.get("/cgi-bin/fpa/print_aged_debtors_results.pl",$("form#form1").serialize() ,function(data) {
-     document.getElementById("main").innerHTML = data;
+     $("#main").html(data);
      $("#htmltabs").hide();
      $("#printtab").show();
    });

@@ -45,7 +45,7 @@ sub process_vat {
 #  Ignore if not registered for VAT
 
         return if ($COOKIE->{VAT} =~ /N/i);
-	return if ($COOKIE->{VAT} =~ /F/i && ($FORM{invcoa} !~ /1000/ || ($FORM{invcoa} =~ /1000/  && ($FORM{invtotal} + $FORM{invvat}) < 2000)));
+	return if ($COOKIE->{VAT} =~ /F/i && ($FORM{invcoa} !~ /^10/ || ($FORM{invcoa} =~ /^10/  && ($FORM{invtotal} + $FORM{invvat}) < 2000)));
 
 #  Otherwise do any VAT
 
@@ -84,7 +84,7 @@ sub process_vat {
 	}
 }
 
-sub save_invoice {
+sub save_purchase {
 
 	my $Level = shift;		#  Is this a draft or final invoice?
 
@@ -339,7 +339,7 @@ sub money_out {
 	$Sts = $dbh->do("insert into audit_trails (acct_id,link_id,audtype,audaction,audtext,auduser) values ('$COOKIE->{ACCT}',$New_txn_id,'transactions','expense','Made payment of &pound;$Tot to $FORM{invcusname}','$COOKIE->{USER}')");
 }
 
-sub pay_invoice {
+sub pay_purchase {
 
 #  get the current balance of the invoice
 
