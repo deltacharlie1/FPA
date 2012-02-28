@@ -353,7 +353,7 @@ sub send_email {
         open(EMAIL,"| /usr/sbin/sendmail -t");
         print EMAIL<<EOD;
 From: FreePlus Accounts <fpainvoices\@corunna.com>
-To: $Subscriber->{regemail}
+To: doug.conran\@corunna.com
 Subject: Your FreePlus Subscription
 MIME-Version: 1.0
 Content-Type: multipart/mixed;
@@ -371,7 +371,7 @@ This is a multi-part message in MIME format.
 Content-Type: text/plain;
         charset="iso-8859-1"
 
-to: $Subscribers->{regemail}
+to: $Subscriber->{regemail}
 
 $Email_msg
 

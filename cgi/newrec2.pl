@@ -400,14 +400,16 @@ function get_wip() {
          var txn_amt = $(this).find("td:nth-child(8)").text() * 1;
          var rem_amt =  $("#p"+stmt_id).text() * 1;
 
-         var orig_amt =  $("#"+txn_id).find(":nth-child(8)").text() * 1;
-         $("#p"+stmt_id).text((rem_amt-txn_amt).toFixed(2));
+         if (rem_amt != 0) {
+           var orig_amt =  $("#"+txn_id).find(":nth-child(8)").text() * 1;
+           $("#p"+stmt_id).text((rem_amt-txn_amt).toFixed(2));
 
-         if (orig_amt == txn_amt) {
-           $("#"+txn_id).draggable("disable");
-         }
-         else {
-           $("#"+txn_id).find(":nth-child(8)").text((orig_amt-rem_amt).toFixed(2));
+           if (orig_amt == txn_amt) {
+             $("#"+txn_id).draggable("disable");
+           }
+           else {
+             $("#"+txn_id).find(":nth-child(8)").text((orig_amt-rem_amt).toFixed(2));
+           }
          }
        });
        $("#"+stmt_id).html($(this).html());
