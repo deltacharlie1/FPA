@@ -87,7 +87,8 @@ $Net = "";
 $Vat = "";
 $Total = "";
 
-$pdf = PDF::API2->new;
+$pdf = PDF::API2->open('/usr/local/git/fpa/htdocs/images/invoice_default_layout.pdf');
+$page = $pdf->openpage(1);
 $font = $pdf->corefont('Helvetica');
 $font_bold = $pdf->corefont('Helvetica Bold');
 $font_bold_italic = $pdf->corefont('Helvetica BoldOblique');
@@ -160,6 +161,7 @@ for $Row (@Row) {
 		$Total += $Cell[3] + $Cell[5];
 
 		if ($Ypos < 200) {
+			$page = $pdf->page();
 			&set_new_page;
 		}
 	}
@@ -220,9 +222,8 @@ sub set_new_page {
 
 ###  Form wide parameters  ###
 
-$page = $pdf->page();
-$page->mediabox('A4');
 $g = $page->gfx();
+$text = $page->text();
 
 #  Logo
 
@@ -230,152 +231,8 @@ if ($logo) {
 	$g->image($logo,43,709);
 }
 
-####################    Draw all lines and blocks   ##########################
-#  Invoice Type border
-
-$g->fillcolor("#eeeeee");
-$g->strokecolor("#000000");
-$g->rectxy(43,773,258,799);		#  Invoice Type box
-$g->rectxy(43,440,552,469);		#  Line Item Headings
-$g->fillstroke();		#  Needed at this point, else all rectangles are shaded
-
-#  Customer Address Block Rectangle
-
-$g->rectxy(43,550,284,669);
-
-#  Invoice conditions etc block
-
-$g->rectxy(312,525-$Ourref_addition,552,669);
-$g->move(312,640);
-$g->line(552,640);
-$g->move(312,609);
-$g->line(552,609);
-$g->move(312,580);
-$g->line(552,580);
-$g->move(312,551);
-$g->line(552,551);
-if ($Ourref_addition) {
-	$g->move(312,522);
-	$g->line(552,522);
-}
-$g->move(425,669);
-$g->line(425,525-$Ourref_addition);
-
-#  Line Item Block
-
-$g->rectxy(43,159,552,469);
-$g->move(479,469);
-$g->line(479,159);
-$g->move(433,469);
-$g->line(433,159);
-
-unless ($COOKIE->{VAT} =~ /N/i) {
-	$g->move(356,469);
-	$g->line(356,159);
-	$g->move(312,469);
-	$g->line(312,159);
-}
-
-#  Totals block
-
-if ($COOKIE->{VAT} =~ /N/i) {
-	$g->rectxy(312,131,552,159);
-	$g->move(479,159);
-	$g->line(479,131);
-}
-else {
-	$g->rectxy(312,75,552,159);
-	$g->move(312,131);
-	$g->line(552,131);
-	$g->move(312,103);
-	$g->line(552,103);
-	$g->move(433,159);
-	$g->line(433,75);
-}
-
-$g->stroke;
-
-###############    Standard Text   ###################
-
-#  Invoice type text
-
-$g->fillcolor("#000000");
-$text = $page->text();
-
-unless ($logo) {
-        $text->transform( -translate =>[90,760]);
-        $text->font($font_italic, 8);
-        $text->lead(12);
-        $text->text("Printed using");
-        $text->font($font_bold_italic,8);
-        $text->text(" FreePlus Accounts");
-        $text->cr();
-        $text->font($font_italic, 8);
-        $text->text("(www.freeplusaccounts.co.uk)");
-}
-
-$text->font($font_bold,11);
-$text->transform( -translate => [320,647]);
-$text->text($Invtext." No");
-$text->transform( -translate => [320,618]);
-$text->text($Invtext." Date");
-$text->transform( -translate => [320,589]);
-$text->text("Due By Date");
-$text->transform( -translate => [320,560]);
-$text->text("Terms");
-$text->transform( -translate => [320,531]);
-$text->text("$Ref_text Reference");
-if ($Ourref_addition) {
-	$text->transform( -translate => [320,502]);
-	$text->text("Our Reference");
-}
-$text->transform( -translate => [51,447]);
-$text->text("Description");
-
-if ($COOKIE->{VAT} =~ /N/i) {
-	$text->transform( -translate => [437,447]);
-	$text->text("Qty");
-
-	$text->transform( -translate => [482,447]);
-	$text->text("Total");
-}
-else {
-	$text->transform( -translate => [322,447]);
-	$text->text("Qty");
-
-	$text->transform( -translate => [361,447]);
-	$text->text("Net Amount");
-
-	$text->transform( -translate => [437,447]);
-	$text->text("VAT %");
-
-	$text->transform( -translate => [482,447]);
-	$text->text("VAT Amount");
-}
-
-if ($COOKIE->{VAT} =~ /N/i) {
-	$text->transform( -translate => [320,137]);
-	$text->text("Total");
-}
-else {
-	$text->transform( -translate => [320,137]);
-	$text->text("Net Total");
-
-	$text->transform( -translate => [320,109]);
-	$text->text("VAT Total");
-
-	$text->transform( -translate => [320,81]);
-	$text->text($Invtext." Total");
-}
-
 ############   Variable Data   ####################
 
-#  Invoice Type
-
-$text->transform( -translate => [151,779]);
-$text->font($font_bold, 20);
-$text->lead(24);
-$text->text_center($Invtype);
 $Line_len = 0;
 
 $text->font($font, 12);

@@ -188,7 +188,7 @@ else {
         $Accts->execute;
         if ($Accts->rows > 0) {         #  Existing Account
                 @Acct = $Accts->fetchrow;
-                $Sts = $dbh->do("update accounts set accname='$FORM{depname}',accsort='$FORM{depsort}',accacctno='$FORM{depacctno}'accnewrec='$FORM{depnewrec}' where acct_id='$COOKIE->{ACCT}' and id=$Acct[0]");
+                $Sts = $dbh->do("update accounts set accname='$FORM{depname}',accsort='$FORM{depsort}',accacctno='$FORM{depacctno},'accnewrec='$FORM{depnewrec}' where acct_id='$COOKIE->{ACCT}' and id=$Acct[0]");
         }
         else {                          #  New Account
                 $Sts = $dbh->do("insert into accounts(acct_id,acctype,accshort,accname,accsort,accacctno,accnewrec) values ('$COOKIE->{ACCT}','1210','Deposit','$FORM{depname}','$FORM{depsort}','$FORM{depacctno}','$FORM{depnewrec}')");

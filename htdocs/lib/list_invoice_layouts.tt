@@ -8,7 +8,7 @@
 [% class = [ "even","odd" ] -%]
 [%- FOREACH entry IN entries -%]
   [%- ndx = loop.count % 2 -%]
-    <tr class="[%- class.$ndx -%]" onclick="location.href='/cgi-bin/fpa/display_invoice_layout.pl.pl?id=[%- entry.id -%]';">
+    <tr class="[%- class.$ndx -%]" onclick="location.href='/cgi-bin/fpa/display_invoice_layout.pl?id=[%- entry.id -%]';">
       <td>[%- entry.layname -%]</td>
       <td>[%- entry.layfile -%]</td>
     </tr>

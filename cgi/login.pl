@@ -12,6 +12,9 @@ foreach (@Cookie) {
         $Cookie{$Name} = $Value;
 }
 
+#  Is this the local test system?
+
+
 $Cookie = $Cookie{'fpa-uid'};
 if ($Cookie) {
 	$Focus = 'pwd';
@@ -26,6 +29,9 @@ $tt = Template->new({
 });
 $Posts =  `php /usr/local/git/fpa/cgi/get_posts.php`;
 $Posts =~ s/https/http/g;
+if (`hostname -i` =~ /^192/) {
+	$Posts = "Local Test System";;
+}
 
 #	posts => `php /usr/local/git/fpa/cgi/get_posts.php`,
 

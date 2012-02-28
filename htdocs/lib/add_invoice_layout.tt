@@ -1,164 +1,85 @@
-<div class="main" id="main">
 <form action="/cgi-bin/fpa/add_invoice_layout2.pl" method="post" enctype="multipart/form-data" name="form1" id="form1" autocomplete="off">
+<div class="main" id="main">
+<input type="hidden" name="id" id="id" value="[%- lay.id OR '0' -%]"/>
 <h1>Invoice Layout Details</h1>
   <table width="660" border="0" cellpadding="0" cellspacing="0" class="formtable">
     <tr>
-      <td><label>Invoice Layout Name</label></td>
-      <td nowrap><span><input title="Layout Name" name="layname" type="text" id="layname" size="40" value="[%- layout.layname -%]" class="mandatory"/></span></td>
+      <td style="vertical-align:middle;"><label>Select Invoice Layout File (up to 30k pdf)</label></td>
+      <td><div style="vertical-align:middle;float:left;"><input name="layfile" id="layfile" type="file" size="30"/></div></td>
+    </tr>
+  </table><br/>
+  <h2>Select Invoice Items for Display</h2>
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="formtable">
+    <tr>
+      <td><label>Invoice Type</label></td>
+      <td style="text-align:center;"><input type="checkbox" name="a006" id="a006" value="invtype"/></td>
+      <td><label>My Address</label></td>
+      <td style="text-align:center;"><input type="checkbox" name="a012" id="a012" value="comaddress"/></td>
+      <td><label>My Phone No</label></td>
+      <td style="text-align:center;"><input type="checkbox" name="a018" id="a018" value="comtel"/></td>
+      <td><label>My Email</label></td>
+      <td style="text-align:center;"><input type="checkbox" name="a024" id="a024" value="comemail"/></td>
     </tr>
     <tr>
-      <td style="vertical-align:middle;"><label>Invoice Layout File (up to 30k pdf)</label></td>
-      <td><div style="vertical-align:middle;float:left;"><input name="layfile" id="layfile" type="file" size="30"/></div><div style="vertical-align:middle;float:left;padding-left:10px;">([%- layout.layfile -%])</td>
-    </tr>
-  </table>
-  <h2>Invoice Items</h2>
-  <table width="660" border="0" cellpadding="0" cellspacing="0" class="listing">
-    <tr>
-      <th>Name</th>
-      <th>Top</th>
-      <th>Left</th>
-      <th>Width</th>
-      <th>Height</th>
-      <th>Font Size</th>
-      <th>Bold?</th>
-      <th>Use?</th>
+      <td><label>Customer Address</label></td>
+      <td style="text-align:center;"><input type="checkbox" name="a030" id="a030" value="invcusaddress" checked="checked"/></td>
+      <td><label>Customer FAO</label></td>
+      <td style="text-align:center;"><input type="checkbox" name="a036" id="a036" value="invcuscontact"/></td>
+      <td><label>Invoice No</label></td>
+      <td style="text-align:center;"><input type="checkbox" name="a042" id="a042" value="invinvoiceno" checked="checked"/></td>
+      <td><label>Invoice Date</label></td>
+      <td style="text-align:center;"><input type="checkbox" name="a048" id="a048" value="invprintdate" checked="checked"/></td>
     </tr>
     <tr>
-      <td>Invoice Type</td>
-      <td><input type="text" name="a01" id="a01" size="5"
+      <td><label>Invoice Due Date</label></td>
+      <td style="text-align:center;"><input type="checkbox" name="a054" id="a054" value="invduedate"/></td>
+      <td><label>Terms</label></td>
+      <td style="text-align:center;"><input type="checkbox" name="a060" id="a060" value="invcusterms"/></td>
+      <td><label>Customer Reference</label></td>
+      <td style="text-align:center;"><input type="checkbox" name="a066" id="a066" value="invcusref"/></td>
+      <td><label>VAT Registration No</label></td>
+      <td style="text-align:center;"><input type="checkbox" name="a072" id="a072" value="comvatreg"/></td>
     </tr>
     <tr>
-      <td><label>Post Code</label></td>
-      <td><span><input title="Post Code" name="compostcode" type="text" id="compostcode" value="[%- client.compostcode -%]" class="mandatory"/></span></td>
+      <td><label>Remarks</label></td>
+      <td style="text-align:center;"><input type="checkbox" name="a078" id="a078" value="invremarks"/></td>
+      <td><label>Net Total</label></td>
+      <td style="text-align:center;"><input type="checkbox" name="a084" id="a084" value="nettotal" checked="checked"/></td>
+      <td><label>VAT Total</label></td>
+      <td style="text-align:center;"><input type="checkbox" name="a090" id="a090" value="vattotal" [%- UNLESS cookie.VAT == 'N' -%] checked="checked"[%- END -%]/></td>
+      <td><label>Invoice Total</label></td>
+      <td style="text-align:center;"><input type="checkbox" name="a096" id="a096" value="grosstotal" checked="checked"/></td>
     </tr>
     <tr>
-      <td><label>Telephone Number</label></td>
-      <td><span><input title="Telephone No" name="comtel" type="text" id="comtel" value="[%- client.comtel -%]"/></span></td>
+      <td><label>Company Registration</label></td>
+      <td style="text-align:center;"><input type="checkbox" name="a102" id="a102" value="comreg"/></td>
+      <td><label>Bank Sort Code</label></td>
+      <td style="text-align:center;"><input type="checkbox" name="a108" id="a108" value="accsort"/></td>
+      <td><label>Bank Account</label></td>
+      <td style="text-align:center;"><input type="checkbox" name="a114" id="a114" value="accacctno"/></td>
+      <td colspan="2">&nbsp;</td>
+    </tr>
+  </table><br/>
+  <h2>Select Invoice Line Items for Display</h2>
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="formtable">
+    <tr>
+      <td nowrap="nowrap"><label>Item Description</label></td>
+      <td style="text-align:center;"><input type="checkbox" name="a122" id="a122" value="itmdesc" checked="checked"/></td>
+      <td><label>Item Quantity</label></td>
+      <td style="text-align:center;"><input type="checkbox" name="a127" id="a127" value="itmqty"/></td>
+      <td><label>Item Unit Price</label></td>
+      <td style="text-align:center;"><input type="checkbox" name="a132" id="a132" value="itmunitprice"/></td>
+      <td><label>Item Net Total</label></td>
+      <td style="text-align:center;"><input type="checkbox" name="a136" id="a136" value="itmtotprice" checked="checked"/></td>
     </tr>
     <tr>
-      <td><label>Company Registration No</label></td>
-      <td><input name="comregno" type="text" id="comregno" value="[%- client.comregno -%]"/></td>
-    </tr>
-    <tr>
-      <td><label>Type of Business</label></td>
-      <td><span><select title="Type of Business" name="combusiness" id="combusiness" class="mandatory">
-          <option value="" [%- IF client.combusiness == '' -%] selected="selected" [%- END -%] >--  Please Select  --</option>
-[% FOREACH sector IN sectors -%]
-          <option value="[%- sector.id -%]"[%- IF client.combusiness == sector.id -%] selected="selected" [%- END -%] >[%- sector.sector | truncate(70) -%]</option>
-[% END -%]
-        </select></span>
-      </td>
-    </tr>
-    <tr>
-      <td><label>Registered for CIS?</label></td>
-      <td><input name="comcis" type="radio" id="comcisN" value="N"[%- IF client.comcis == 'N' -%] checked="checked"[%- END -%]/> No&nbsp;&nbsp;<input name="comcis" type="radio" id="comcisY" value="Y"[%- IF client.comcis == 'Y' -%] checked="checked"[%- END -%]/> Yes</td>
-    </tr>
-    <tr>
-      <td><label>VAT Accounting Scheme</label></td>
-      <td>
-        <select name="comvatscheme" id="comvatscheme">
-          <option value="N" [%- IF client.comvatscheme == 'N' -%] selected="selected" [%- END -%]>None</option>
-          <option value="S" [%- IF client.comvatscheme == 'S' -%] selected="selected" [%- END -%]>Standard Accounting</option>
-          <option value="C" [%- IF client.comvatscheme == 'C' -%] selected="selected" [%- END -%]>Cash Accounting</option>
-          <option value="SF" [%- IF client.comvatscheme == 'SF' -%] selected="selected" [%- END -%]>Fixed Rate Standard Scheme</option>
-          <option value="CF" [%- IF client.comvatscheme == 'CF' -%] selected="selected" [%- END -%]>Fixed Rate Cash Scheme</option>
-        </select>
-      </td>
-    </tr>
-    <tbody id="vat">
-    <tr>
-      <td [%- IF client.comvatscheme == 'N' -%] class="hidden" [%- ELSE -%] class="visible" [%- END -%]><label>Company VAT No</label></td>
-      <td [%- IF client.comvatscheme == 'N' -%] class="hidden" [%- ELSE -%] class="visible" [%- END -%]><span><input title="Company VAT No" name="comvatno" type="text" id="comvatno" value="[%- client.comvatno -%]" class="mandatory"/></span></td>
-    </tr>
-    <tr>
-      <td [%- IF client.comvatscheme == 'N' -%] class="hidden" [%- ELSE -%] class="visible" [%- END -%]><label>VAT Quarter End</label></td>
-      <td [%- IF client.comvatscheme == 'N' -%] class="hidden" [%- ELSE -%] class="visible" [%- END -%]><span><select title="VAT Quarter End" name="comvatduein" id="comvatduein" class="mandatory">
-          <option value="" [%- IF client.comvatduein == '' -%] selected="selected" [%- END -%]>-- Please Select --</option>
-          <option value="1" [%- IF client.comvatduein == '1' -%] selected="selected" [%- END -%]>Jan, Apr, Jul, Oct</option>
-          <option value="2" [%- IF client.comvatduein == '2' -%] selected="selected" [%- END -%]>Feb, May, Aug, Nov</option>
-          <option value="3" [%- IF client.comvatduein == '3' -%] selected="selected" [%- END -%]>Mar, Jun, Sep, Dec</option>
-        </select></span>
-      </td>
-    </tr>
-    </tbody>
-    <tr>
-      <td><label>Main Contact Name</label></td>
-      <td><input name="comcontact" type="text" id="comcontact" size="40" value="[%- client.comcontact -%]"/></td>
-    </tr>
-    <tr>
-      <td><label>Main Contact Email Address</label></td>
-      <td><input name="comemail" type="text" id="comemail" size="40" value="[%- client.comemail -%]"/></td>
-    </tr>
-    <tr>
-      <td><label>Accounting Year End Month</label></td>
-      <td><span><select title="Year End Month" name="comyearend" id="comyearend" class="mandatory">
-          <option value="" [%- IF client.comyearend == '0' -%] selected="selected" [%- END -%] >--  Please Select  --</option>
-[% FOREACH ye IN yearend -%]
-          <option value="[%- ye.dte -%]" [%- IF client.comyearend == ye.dte -%] selected="selected" [%- END -%] >[%- ye.month -%]</option>
-[% END -%]
-        </select></span>
-      </td>
-    </tr>
-[% IF invoice.count == 0 -%]
-    <tr>
-      <td><label>Next Sales Invoice No</label></td>
-      <td><span><input title="Next Sales Invoice No" name="comnextsi" type="text" id="comnextsi" size="8" value="[%- client.comnextsi %]" class="mandatory"/></span></td>
-    </tr>
-    <tr>
-      <td><label>Next Purchase Invoice Reference</label></td>
-      <td><span><input title="Next Purchase Invoice No" name="comnextpi" type="text" id="comnextpi" size="8" value="[%- client.comnextpi -%]" class="mandatory"/></span></td>
-    </tr>
-[% ELSE -%]
-<input type="hidden" name="comnextsi" id="comnextsi" value="[%- client.comnextsi %]"/>
-<input type="hidden" name="comnextpi" id="comnextpi" value="[%- client.comnextpi -%]"/>
-[% END -%]
-    <tr>
-<td colspan="2"><div id="silly"><b>- Bank Details -</b>
-        <table width="100%" border="0" cellpadding="0" cellspacing="0" class="datatable">
-          <tr>
-            <th>Account Type</th>
-            <th>Bank Name</th>
-            <th>Sort Code</th>
-            <th>Account No</th>
-            <th>New Reconcile</th>
-          </tr>
-          <tr>
-            <td>Current Account</td>
-            <td><span><input title="Current Acct Name" name="curname" type="text" id="curname" size="15" value="[%- cur.accname -%]"/></span></td>
-            <td><span><input title="Current Acct Sort Code" name="cursort" type="text" id="cursort" size="8" value="[%- cur.accsort -%]"/></span></td>
-            <td><span><input title="Current Acct No" name="curacctno" type="text" id="curacctno" size="8" value="[%- cur.accacctno -%]"/></span></td>
-            <td><span><input title="Old or New Reconciliation Method" name="curnewrec" type="radio" id="curnewrecN" value="N"[%- IF cur.accnewrec == 'N' -%] checked='checked'[%- END -%]/> No <input title="Old or New Reconciliation Method" name="curnewrec" type="radio" id="curnewrecY" value="Y"[%- IF cur.accnewrec == 'Y' -%] checked='checked'[%- END -%]/> Yes</span></td>
-          </tr>
-          <tr>
-            <td>Deposit Account</td>
-            <td><span><input title="Deposit Acct Name" name="depname" type="text" id="depname" size="15" value="[%- dep.accname -%]"/></span></td>
-            <td><span><input title="Deposit Acct Sort Code" name="depsort" type="text" id="depsort" size="8" value="[%- dep.accsort -%]"/></span></td>
-            <td><span><input title="Deposit Acct No" name="depacctno" type="text" id="depacctno" size="8" value="[%- dep.accacctno -%]"/></span></td>
-            <td><span><input title="Old or New Reconciliation Method" name="depnewrec" type="radio" id="depnewrecN" value="N"[%- IF dep.accnewrec == 'N' -%] checked='checked'[%- END -%]/> No <input title="Old or New Reconciliation Method" name="depnewrec" type="radio" id="depnewrecY" value="Y"[%- IF dep.accnewrec == 'Y' -%] checked='checked'[%- END -%]/> Yes</span></td>
-          </tr>
-          <tr>
-            <td>Credit Card</td>
-            <td><span><input title="Credit Card Name" name="cardname" type="text" id="cardname" size="15" value="[%- card.accname -%]"/></span></td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td><span><input title="Old or New Reconciliation Method" name="cardnewrec" type="radio" id="cardnewrecN" value="N"[%- IF card.accnewrec == 'N' -%] checked='checked'[%- END -%]/> No <input title="Old or New Reconciliation Method" name="cardnewrec" type="radio" id="cardnewrecY" value="Y"[%- IF card.accnewrec == 'Y' -%] checked='checked'[%- END -%]/> Yes</span></td>
-          </tr>
-        </table></div>
-      </td>
-    </tr>
-[% IF cookie.PLAN > 3 OR client.pt_logo > 0 -%]
-    <tr>
-      <td style="vertical-align:middle;"><label>Company Logo (up to 20k jpg or png, max size 144 x 48)</label></td>
-      <td><div style="vertical-align:middle;float:left;"><input name="comlogo" id="comlogo" type="file" size="30"/></div><div style="vertical-align:middle;float:left;padding-left:10px;">[%- IF client.comlogo != NULL -%]<img src="/cgi-bin/fpa/display_logo.pl"/>[%- END -%]</div></td>
-    </tr>
-[% END -%]
-    <tr>
-      <td style="vertical-align:top;"><label>Default Email Message</label></td>
-      <td><div style="width:260px;"><textarea title="Default Email Message" name="comemailmsg" cols="30" rows="4" wrap="physical" id="comemailmsg"/>[%- client.comemailmsg -%]</textarea></div></td>
-    </tr>
-    <tr>
-      <td style="vertical-align:top;"><label>Default Statement Message</label></td>
-      <td><div style="width:260px;"><textarea title="Default Statement Message" name="comstmtmsg" cols="30" rows="4" wrap="physical" id="comstmtmsg"/>[%- client.comstmtmsg -%]</textarea></div></td>
+      <td><label>Item VAT Rate</label></td>
+      <td style="text-align:center;"><input type="checkbox" name="a141" id="a141" value="itmvatrate"/></td>
+      <td><label>Item VAT Total</label></td>
+      <td style="text-align:center;"><input type="checkbox" name="a146" id="a146" value="itmvat" [%- UNLESS cookie.VAT == 'N' -%] checked="checked"[%- END -%]/></td>
+      <td><label>Item Total</label></td>
+      <td style="text-align:center;"><input type="checkbox" name="a151" id="a151" value="itmtotal" checked="checked"/></td>
+      <td colspan="2">&nbsp;</td>
     </tr>
   </table>
 </div>
@@ -166,19 +87,12 @@
   <ul>
     <li>
       <div>
-        <input type="button" name="save" id="save" value="Save these Details" onclick="validate();"/>
+        <input type="submit" name="save" id="save" value="Save these Details"/>
       </div>
     </li>
     <li>
       <div>
        <input type="reset" name="reset" id="reset" value="Start Again"/>
-      </div>
-    </li>
-    <li>
-      <div>
-        <a href="/cgi-bin/fpa/opening_balances.pl">
-          Set Opening Balances
-        </a>
       </div>
     </li>
   </ul>
