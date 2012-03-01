@@ -354,6 +354,7 @@ sub send_email {
         print EMAIL<<EOD;
 From: FreePlus Accounts <fpainvoices\@corunna.com>
 To: $Subscriber->{regemail}
+Bcc: doug.conran\@corunna.com
 Subject: Your FreePlus Subscription
 MIME-Version: 1.0
 Content-Type: multipart/mixed;
@@ -370,8 +371,6 @@ This is a multi-part message in MIME format.
 ------=_NextPart_000_001D_01C0B074.94357480
 Content-Type: text/plain;
         charset="iso-8859-1"
-
-to: $Subscribers->{regemail}
 
 $Email_msg
 

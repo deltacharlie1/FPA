@@ -88,6 +88,7 @@ else {
 		$COOKIE->{ACCT} = "$Reg[0]+$Company[0]";
 
 		$Sts = $dbh->do("delete from audit_trails where acct_id='$COOKIE->{ACCT}'");
+		$Sts = $dbh->do("delete from accounts where acct_id='$COOKIE->{ACCT}'");
 		$Sts = $dbh->do("delete from coas where acct_id='$COOKIE->{ACCT}'");
 		$Sts = $dbh->do("delete from customers where acct_id='$COOKIE->{ACCT}'");
 		$Sts = $dbh->do("delete from images where acct_id='$COOKIE->{ACCT}'");

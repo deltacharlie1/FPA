@@ -16,66 +16,6 @@ unless ($COOKIE->{NO_ADS}) {
 	&display_adverts();
 }
 
-
-#  Set up the array of hashes for company year end
-
-$Dates = $dbh->prepare("select date_format(now(),'%m'),date_format(now(),'%Y')");
-$Dates->execute;
-($This_month,$Year) = $Dates->fetchrow;
-
-$Year++;
-$Changed = "";
-my @YE;
-
-$Dates = $dbh->prepare("select date_format(last_day(str_to_date(?,'%c')),'%m-%d'),date_format(str_to_date(?,'%c'),'%M')");
-for $Month (1..12) {
-        if ($Month >= $This_month && ! $Changed) {
-                $Changed = "1";
-                $Year--;
-        }
-        $Dates->execute($Month,$Month);
-        @Date = $Dates->fetchrow;
-        push @YE,  { month => $Date[1], dte => "$Year-$Date[0]" };
-}
-$Dates->finish;
-
-$Companies = $dbh->prepare("select comname,comaddress,compostcode,comtel,combusiness,comregno,comvatno,comvatscheme,comcontact,comemail,comyearend,comvatduein,comnextsi,comnextpi,comcompleted,comacccompleted,comemailmsg,comstmtmsg,comlogo,comcis,datediff(compt_logo,now()) as pt_logo from companies where reg_id=? and id=?");
-$Companies->execute($Reg_id,$Com_id);
-$Company = $Companies->fetchrow_hashref;
-unless ($Company->{comcis}) { $Company->{comcis} = 'N'; }
-
-$Accts = $dbh->prepare("select acctype,accname,accsort,accacctno,accnewrec from accounts where acct_id='$COOKIE->{ACCT}'");
-$Accts->execute;
-$Acct = $Accts->fetchall_hashref('acctype');
-$Accts->finish;
-
-$Market_Sectors = $dbh->prepare("select id,sector,frsrate from market_sectors");
-$Market_Sectors->execute;
-$Sectors = $Market_Sectors->fetchall_arrayref({});
-$Market_Sectors->finish;
-
-$Invoices = $dbh->prepare("select count(*) as count from invoices where acct_id='$COOKIE->{ACCT}'");
-$Invoices->execute;
-$Invoice = $Invoices->fetchrow_hashref;
-$Invoices->finish;
-
-$Loadify = "";
-if ($COOKIE->{ACCESS} > 5) {
-	$Loadify1 = sprintf<<EOD;
-  \$("#layfile").uploadify({
-    "uploader"    : "/js/uploadify.swf",
-    "script"      : "/cgi-bin/fpa/uploadify.pl",
-    "cancelImg"   : "/js/cancel.png",
-    "scriptData"  : {"cookie" : "$COOKIE->{COOKIE}", "doc_type" : "LAYOUT" },
-    "buttonText"  : "Select Layout",
-    "fileExt"     : "layout*.pdf",
-    "fileDesc"    : "Invoice Layout Files (PDF)",
-    "sizeLimit"   : 30720,
-    "auto"        : false
-  });
-EOD
-}
-
 use Template;
 $tt = Template->new({
         INCLUDE_PATH => ['.','/usr/local/httpd/htdocs/fpa/lib'],
@@ -85,18 +25,31 @@ $tt = Template->new({
 $Vars = {
         title => 'Accounts - Invoice Layouts',
 	cookie => $COOKIE,
-	focus => 'layname',
-	client => $Company,
-	sectors => $Sectors,
-	yearend => \@YE,
-        cur => $Acct->{1200},
-        dep => $Acct->{1210},
-        card => $Acct->{2010},
-	invoice => $Invoice,
+	focus => 'a001',
         javascript => '<script type="text/javascript"> 
 var errfocus = "";
+var uploadparms = "doug";
 $(document).ready(function(){
-'.$Loadify1.'
+  $("#layfile").uploadify({
+    "uploader"    : "/js/uploadify.swf",
+    "script"      : "/cgi-bin/fpa/add_invoice_layout2.pl",
+    "cancelImg"   : "/js/cancel.png",
+    "scriptData"  : {"cookie" : "'.$COOKIE->{COOKIE}.'", "doc_type" : "LAYOUT" },
+    "buttonText"  : "Select Layout",
+    "fileExt"     : "layout*.pdf",
+    "fileDesc"    : "Invoice Layout Files (PDF)",
+    "sizeLimit"   : 30720,
+    "auto"        : false,
+    "onComplete" : function(a,b,c,d,e) {
+                     if (/Error/i.test(d)) {
+                       alert(d);
+                     }
+                     else {
+                       location.href="/cgi-bin/fpa/add_invoice_layout3.pl?" + d;
+                     }
+                   },
+    "removeCompleted" : true
+  });
 });
 function setfocus() {
   eval("document.getElementById(\'" + errfocus + "\').focus();");

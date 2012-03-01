@@ -2,15 +2,42 @@
 
 $ACCESS_LEVEL = 1;
 
-#  script to upload a document or image using jquery uploadify
+#  script to upload an invoice layout
 
 use CGI;
-use MIME::Base64;
+use DBI;
+
+%Settings = (
+  a001 => { table => 'invoices', source => 'invtype', alias => 'invtype', top => '842', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
+  a002 => { table => 'companies', source => 'concat(comname,"\\n",comaddress,"  ,compostcode)', alias => 'myaddress', top => '842', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
+  a003 => { table => 'companies', source => 'comtel', alias => 'mytel', top => '842', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
+  a004 => { table => 'companies', source => 'comemail', alias => 'myemail', top => '842', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
+  a005 => { table => 'invoices', source => 'concat(invcusname,"\\n",invcusaddr"  ",invcuspostcode)', alias => 'cusaddress', top => '842', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
+  a006 => { table => 'invoices', source => 'invcuscontact', alias => 'cusfao', top => '842', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
+  a007 => { table => 'invoices', source => 'invinvoiceno', alias => 'invoiceno', top => '842', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
+  a008 => { table => 'invoices', source => 'date_format(invprintdate,"%d-%b-%y")', alias => 'printdate', top => '842', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
+  a009 => { table => 'invoices', source => 'date_format(invduedate,"%d-%b-%y")', alias => 'duedate', top => '842', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
+  a010 => { table => 'invoices', source => 'invcusterms', alias => 'custerms', top => '842', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
+  a011 => { table => 'invoices', source => 'invcusref', alias => 'cusref', top => '842', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
+  a012 => { table => 'companies', source => 'comvatno', alias => 'vatno', top => '842', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
+  a013 => { table => 'invoices', source => 'invremarks', alias => 'remarks', top => '842', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
+  a014 => { table => '', source => 'calc', alias => 'nettotal', top => '842', left => '0', size => '12', bold => 'N', display => 'N', just => 'r' },
+  a015 => { table => '', source => 'calc', alias => 'vattotal', top => '842', left => '0', size => '12', bold => 'N', display => 'N', just => 'r' },
+  a016 => { table => '', source => 'calc', alias => 'invtotal', top => '842', left => '0', size => '12', bold => 'N', display => 'N', just => 'r' },
+  a017 => { table => 'companies', source => 'comregno', alias => 'regno', top => '842', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
+  a018 => { table => 'accounts', source => 'accsort', alias => 'sortcode', top => '842', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
+  a019 => { table => 'accountss', source => 'accacctno', alias => 'acctno', top => '842', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
+  a020 => { table => 'invoices', source => 'invitems', alias => 'items', top => '842', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
+  a021 => { table => '', source => 'calc', alias => 'desc', top => '842', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
+  a022 => { table => '', source => 'calc', alias => 'qty', top => '842', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
+  a023 => { table => '', source => 'calc', alias => 'price', top => '842', left => '0', size => '12', bold => 'N', display => 'N', just => 'r' },
+  a024 => { table => '', source => 'calc', alias => 'vatrate', top => '842', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
+  a025 => { table => '', source => 'calc', alias => 'vat', top => '842', left => '0', size => '12', bold => 'N', display => 'N', just => 'r' },
+  a026 => { table => '', source => 'calc', alias => 'itmtotal', top => '842', left => '0', size => '12', bold => 'N', display => 'N', just => 'r' },
+);
 
 $Data = new CGI;
 %FORM = $Data->Vars;
-
-print "Content-Type: text/plain\n\n";
 
 while (( $Key,$Value) = each %FORM) {
 
@@ -19,7 +46,10 @@ while (( $Key,$Value) = each %FORM) {
 	$Value =~ tr/\\//d;
 	$Value =~ s/\'/\\\'/g;
         $FORM{$Key} = $Value;
-print "$Key = $Value\n";
+warn "$Key = $Value\n";
+	if ($Key =~ /^a\d\d\d$/) {
+		$Settings{$Key}->{display} = 'Y';
+	}
 }
 
 #  Get the ACCT from the cookie file (cookie is passed as a parameter)
@@ -32,6 +62,7 @@ while (<COOKIE>) {
 	$Cookie{$Name} = $Value;
 }
 close(COOKIE);
+$dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
 ($Reg_id,$Com_id) = split(/\+/,$COOKIE->{ACCT});
 
 #  Get the uploaded raw data
@@ -43,126 +74,27 @@ while (<$handle>) {
         $Original .= $_;
 }
 
+if ($FORM{id} == 0) {
+
 #  Check that there is sufficient upload allowance
 
-unless ($FORM{doc_type} =~ /LOGO/i) {
-	if (length($Original) > $COOKIE->{UPLDS}) {
+	$Layouts = $dbh->prepare("select count(*) from invoice_layouts where acct_id='$COOKIE->{ACCT}'");
+	$Layouts->execute;
+	@Layout = $Layouts->fetchrow;
+	$Layouts->finish;
+}
 
-		print<<EOD;
+if (@Layout[0] > 4) {
+
+	print<<EOD;
 Content-Type: text/plain
 
-File size is larger than your remaining allowance - please upgrade before continuing
+Error! - you already have 5 invoice layouts
 EOD
-		exit;
-	}
 }
+else {
 
-use DBI;
-$dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
-
-use Image::Magick;
-$Img = Image::Magick->new;
-
-#  Convert image to an Image Magick object
-
-$status = $Img->BlobToImage($Original);
-($width,$height) = $Img->Get('width','height');	#  Get the dimensions
-
-if ($FORM{doc_type} =~ /LAYOUT/i) {
-	print "Layout\n";
-	exit;
-}
-elsif ($FORM{doc_type} =~ /LOGO/i) {
-	if ($width > 144 || $height > 48) {
-		if ($width > $height * 3) {
-			$W1 = 144;
-			$H1 = int(144 * $height / $width);
-		}
-		else {
-			$H1 = 48;
-			$W1 = int(48 * $width / $height);
-		}
-		$Img->Resize(width=>$W1,height=>$H1,blur=>'0');
-	}
-	$Logo = $Img->ImageToBlob(magick=>'jpg');
-
-	$Logo = encode_base64($Logo);
-
-#  ... and save it
-
-	$Companies = $dbh->prepare("update companies set comlogo=? where reg_id=$Reg_id and id=$Com_id");
-	$Companies->bind_param(1,$Logo);
-	$Companies->execute;
-
-}
-elsif ($FORM{Filename} =~ /(pdf|png|jpg|jpeg)$/i) {
-
-#  Create a thumbnail
-	
-	$W1 = 30;
-	$H1 =int(30 * $height / $width);
-	$Img->Scale(width=>$W1,height=>$H1);
-
-#  if length > 850 then first crop it
-
-	if ($H1 > 30) {
-		$Img->Crop(width=>$W1,height=>30,gravity=>'South');
-	}
-	$Img->Posterize(levels=>16,dither=>true);
-	$Img->Frame(geometry=>'1x1',fill=>'#800000');
-}
-
-#  Get invoice details if this is a purchase invoice doc_type
-
-unless ($FORM{desc}) {
-
-	if ($FORM{doc_type} =~ /INV/i) {
-
-
-		$Invoices = $dbh->prepare("select invcusname,invcusref from invoices where id=$FORM{doc_rec} and acct_id='$COOKIE->{ACCT}'");
-		$Invoices->execute;
-		@Invoice = $Invoices->fetchrow;
-		$Invoices->finish;
-		$FORM{desc} = "$Invoice[0] ($Invoice[1])";
-	}
-	elsif ($FORM{doc_type} =~ /STMT/i) {
-		$Stmts = $dbh->prepare("select stastmtno,accname,accacctno from statements left join accounts on (acc_id=accounts.id) where statements.id=$FORM{doc_rec} and statements.acct_id='$COOKIE->{ACCT}'");
-		$Stmts->execute;
-		@Stmt = $Stmts->fetchrow;
-		$Stmts->finish;
-		$FORM{desc} = "$Stmt[1] account $Stmt[2] (stmt # $Stmt[0])";
-	}
-}
-
-unless ($FORM{doc_type} =~ /LOGO/i) {
-
-#  determine the file extension
-
-	$Ext = $FORM{Filename};
-	$Ext =~ s/.*\.(.*)$/$1/;
-
-	$Thumb = $Img->ImageToBlob(magick=>'png');
-
-#  Convert Thumb to base64
-
-	$Thumb = encode_base64($Thumb);
-
-	$Images = $dbh->prepare("insert into images (link_id,acct_id,imgdoc_type,imgfilename,imgext,imgdesc,imgthumb,imgimage,imgdate_saved) values (?,?,?,?,?,?,?,?,now())");
-
-#  Remove any spaces in filename
-
-	$FORM{Filename} =~ tr/ /_/;
-	$Images->bind_param(1,$FORM{doc_rec});
-	$Images->bind_param(2,"$COOKIE->{ACCT}");
-	$Images->bind_param(3,"$FORM{doc_type}");
-	$Images->bind_param(4,"$FORM{Filename}");
-	$Images->bind_param(5,"$Ext");
-	$Images->bind_param(6,"$FORM{desc}");
-	$Images->bind_param(7,"$Thumb");
-#	$Images->bind_param(8,$Original);
-
-	$Images->execute;
-	$New_img_id = $dbh->last_insert_id(undef, undef, qw(images undef));
+#  See if this is a new image and, if so, whether he has reached his limit (5)
 
 	$Companies = $dbh->prepare("select comdocsdir from companies where reg_id=$Reg_id and id=$Com_id");
 	$Companies->execute;
@@ -173,38 +105,18 @@ unless ($FORM{doc_type} =~ /LOGO/i) {
 	print IMG $Original;
 	close(IMG);
 
-#  Calculate the remaining allowance
+	$Sts = $dbh->do("insert into invoice_layouts (acct_id,layfile) values ('$COOKIE->{ACCT}','/projects/fpa_docs/$Company->{comdocsdir}/$FORM{Filename}')");
+	$New_inv_id = $dbh->last_insert_id(undef, undef, qw(invoice_layouts undef));
 
-	$Allowance = $COOKIE->{UPLDS} - length($Original);
-	if ($Allowance < 0) {
-		$Allowance = 0;
+	while (($Key,$Value) = each %Settings) {
+		$Sts = $dbh->do("insert into invoice_layout_items (acct_id,link_id,lifldcode,litable,lisource,lialias,litop,lileft,lisize,libold,lidisplay,lijust) values ('$COOKIE->{ACCT}',$New_inv_id,'$Key','$Value->{table}','$Value->{source}','$Value->{alias}','$Value->{top}','$Value->{left}','$Value->{size}','$Value->{bold}','$Value->{display}','$Value->{just}')");
 	}
 
-#  Update the companies record
-
-	$Sts = $dbh->do("update companies set comuplds=$Allowance where reg_id=$Reg_id and id=$Com_id");
-
-#  Update the cookie file
-
-	$Cookie{UPLDS} = $Allowance;
-
-	unlink("/projects/tmp/$FORM{cookie}");
-
-	open(FILE,">/projects/tmp/$FORM{cookie}");
-	while(($Key,$Value) = each %Cookie) {
-        	print FILE "$Key\t$Value\n";
-	}
-	close(FILE);
-
-#  Finally write an audit trail remark
-
-	$Sts = $dbh->do("insert into audit_trails (acct_id,link_id,audtype,audaction,audtext,auduser) values ('$COOKIE->{ACCT}',$New_img_id,'display_attach.pl','attachment','Document $FORM{Filename} uploaded','$COOKIE->{USER}')");
-}
-
-$dbh->disconnect;
-print<<EOD;
+	print<<EOD;
 Content-Type: text/plain
 
-OK
+$New_inv_id
 EOD
+}
+$dbh->disconnect;
 exit;
