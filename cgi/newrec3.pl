@@ -165,6 +165,7 @@ sub Tbody {
 
 				$Sts = $dbh->do("insert into transactions (acct_id,txncusname,link_id,txnmethod,txnamount,txndate,txntxntype,txnremarks,txntxnno) values ('$COOKIE->{ACCT}','Bank Payment',$FORM{id},'$FORM{txnmethod}','$FORM{invtotal}',str_to_date('$FORM{invprintdate}','%d-%b-%y'),'bankint','Interest','$FORM{txnno}')");
 				my $New_txn_id = $dbh->last_insert_id(undef, undef, qw(transactions undef));
+				$Txn_ids .= $New_txn_id.",";
 
 #  ... and the inv_txn record
 
@@ -198,6 +199,7 @@ sub Tbody {
 
 				$Sts = $dbh->do("insert into transactions (acct_id,link_id,txncusname,txnmethod,txnamount,txndate,txntxntype,txnremarks,txntxnno) values ('$COOKIE->{ACCT}',$New_inv_id,'Bank Payment','$FORM{txnmethod}','$FORM{invtotal}',str_to_date('$FORM{invprintdate}','%d-%b-%y'),'bankexp','Charges','$FORM{txnno}')");
 				$New_txn_id = $dbh->last_insert_id(undef, undef, qw(transactions undef));
+				$Txn_ids .= $New_txn_id.",";
 
 
 				$Sts = $dbh->do("insert into inv_txns (acct_id,txn_id,inv_id,itnet,itvat,itdate,itmethod,itinvoiceno,ittxnno) values ('$COOKIE->{ACCT}',$New_txn_id,$New_inv_id,'$FORM{invtotal}','0',str_to_date('$FORM{invprintdate}','%d-%b-%y'),'$FORM{txnmethod}','unlisted','$FORM{txnno}')");
@@ -243,6 +245,7 @@ sub Tbody {
 
 				$Sts = $dbh->do("insert into transactions (acct_id,link_id,txncusname,txnmethod,txnamount,txndate,txntxntype,txnremarks,txntxnno) values ('$COOKIE->{ACCT}',$Cells[0],'VAT $Vatpay','1200','$FORM{invtotal}',str_to_date('$FORM{invprintdate}','%d-%b-%y'),'$Txndir','$FORM{invdesc}','$FORM{txnno}')");
 				$New_txn_id = $dbh->last_insert_id(undef, undef, qw(transactions undef));
+				$Txn_ids .= $New_txn_id.",";
 
 #  update the bank coa
 
