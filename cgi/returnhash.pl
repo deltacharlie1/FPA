@@ -62,7 +62,7 @@ unless ($Company->{commerchantref}) {
 	$Merchref->add($$.$COOKIE->{ID});
 	$Company->{commerchantref} = $Merchref->hexdigest;
 	$Sts = $dbh->do("update companies set commerchantref='$Company->{commerchantref}',comdocsdir='$Company->{commerchantref}' where reg_id=$Reg_id and id=$Com_id");
-	mkdir("/projects/fpa_docs/".$Company->{commerchantref);
+	mkdir("/projects/fpa_docs/".$Company->{commerchantref});
 }
 
 $dbh->disconnect;
