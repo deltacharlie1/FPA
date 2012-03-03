@@ -2,6 +2,10 @@ drop table if exists invoice_layouts;
 create table invoice_layouts (
   id int(10) unsigned not null auto_increment primary key,
   acct_id varchar(50) not null default '',
+  laydesc varchar(100) not null default '',
+  laydateformat varchar(20) not null default '%d-%b-%y',
+  layxoffset char(3) not null default '830',
+  layyoffset char(3) not null default '0',
   layfile varchar(120) not null default '',
   descwidth char(3) not null default '300',
   descheight char(3) not null default '300',

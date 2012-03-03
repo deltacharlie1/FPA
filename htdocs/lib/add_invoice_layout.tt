@@ -1,13 +1,31 @@
 <form method="post" name="layform" id="layform">
 <div class="main" id="main">
-<input type="hidden" name="id" id="id" value="[%- lay.id OR '0' -%]"/>
 <h1>Invoice Layout Details</h1>
   <table width="660" border="0" cellpadding="0" cellspacing="0" class="formtable">
     <tr>
+      <td><label>Layout Description</label></td>
+      <td><input type="text" name="laydesc" id="laydesc" size="30" value="[%- layout.laydesc -%]"/></td>
+    </tr>
+    <tr>
       <td style="vertical-align:middle;"><label>Select Invoice Layout File (up to 30k pdf)</label></td>
-      <td><div style="vertical-align:middle;float:left;"><input name="layfile" id="layfile" type="file" size="30"/></div></td>
+      <td><div style="vertical-align:middle;float:left;"><input name="layfile" id="layfile" type="file" size="30"/></div>[%- IF layout.layfile -%]<div style="float:left;height:20px;;padding:10px 0 0 15px;">([%- layout.layfile.remove('^.*/') -%])</div>[%- END -%]</td>
+    </tr>
+    <tr>
+      <td><label>Date Format</label></td>
+      <td><select name="laydateformat" id="laydateformat" size="1">
+            <option value="%d-%b-%y" selected="selected">dd-mmm-yy (01-Dec-11)</option>
+            <option value="%D %M $Y">DDnn Month Year ( 1st December 2011)</option>
+            <option value="%d/%m/%y">dd/mm/yy (01/12/11)</option>
+            <option value="%d/%m/%Y">dd/mm/YYYY (01/12/2011)</option>
+            <option value="%M %D, %Y">Month DDnn, Year (December 1st, 2011)</option>
+            <option value="%m/%d/%y">mm/dd/yy (12/01/11)</option>
+            <option value="%m/%d/%Y">mm/dd/YYYY (12/01/2011)</option>
+            <option value="%y-%m-%d">yy-mm-dd (11-12-01)</option>
+          </select>
+      </td>
     </tr>
   </table><br/>
+<input type="hidden" name="id" id="layid" value="[%- layout.id OR '0' -%]"/>
   <h2>Select Invoice Items for Display</h2>
   <table width="660" border="0" cellpadding="0" cellspacing="0" class="formtable">
     <tr>

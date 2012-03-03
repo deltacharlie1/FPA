@@ -8,32 +8,32 @@ use CGI;
 use DBI;
 
 %Settings = (
-  a001 => { name => 'Invoice Type', table => 'invoices', source => 'invtype', alias => 'invtype', top => '842', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
-  a002 => { name => 'My Address', table => 'companies', source => 'concat(comname,"\\\\n",comaddress,"  ",compostcode)', alias => 'myaddress', top => '842', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
-  a003 => { name => 'My Phone No', table => 'companies', source => 'comtel', alias => 'mytel', top => '842', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
-  a004 => { name => 'My Email Addr', table => 'companies', source => 'comemail', alias => 'myemail', top => '842', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
-  a005 => { name => 'Customer Addr', table => 'invoices', source => 'concat(invcusname,"\\\\n",invcusaddr,"  ",invcuspostcode)', alias => 'cusaddress', top => '842', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
-  a006 => { name => 'Customer FAO', table => 'invoices', source => 'invcuscontact', alias => 'cusfao', top => '842', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
-  a007 => { name => 'Invoice #', table => 'invoices', source => 'invinvoiceno', alias => 'invoiceno', top => '842', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
-  a008 => { name => 'Invoice Date', table => 'invoices', source => 'date_format(invprintdate,"%d-%b-%y")', alias => 'printdate', top => '842', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
-  a009 => { name => 'Due Date', table => 'invoices', source => 'date_format(invduedate,"%d-%b-%y")', alias => 'duedate', top => '842', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
-  a010 => { name => 'Terms', table => 'invoices', source => 'invcusterms', alias => 'custerms', top => '842', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
-  a011 => { name => 'Customer Ref', table => 'invoices', source => 'invcusref', alias => 'cusref', top => '842', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
-  a012 => { name => 'VAT Reg', table => 'companies', source => 'comvatno', alias => 'vatno', top => '842', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
-  a013 => { name => 'Remarks', table => 'invoices', source => 'invremarks', alias => 'remarks', top => '842', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
-  a014 => { name => 'Net Total', table => 'calc', source => 'calc', alias => 'nettotal', top => '842', left => '0', size => '12', bold => 'N', display => 'N', just => 'r' },
-  a015 => { name => 'VAT Total', table => 'calc', source => 'calc', alias => 'vattotal', top => '842', left => '0', size => '12', bold => 'N', display => 'N', just => 'r' },
-  a016 => { name => 'Invoice Total', table => 'calc', source => 'calc', alias => 'invtotal', top => '842', left => '0', size => '12', bold => 'N', display => 'N', just => 'r' },
-  a017 => { name => 'Company Reg', table => 'companies', source => 'comregno', alias => 'regno', top => '842', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
-  a018 => { name => 'Bank Sort Code', table => 'accounts', source => 'accsort', alias => 'sortcode', top => '842', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
-  a019 => { name => 'Bank Acct #', table => 'accountss', source => 'accacctno', alias => 'acctno', top => '842', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
-  a020 => { name => 'Item Description', table => 'items', source => '0', alias => 'desc', top => '842', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
-  a021 => { name => 'Item Quantity', table => 'items', source => '2', alias => 'qty', top => '842', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
-  a022 => { name => 'Item Unit Price', table => 'items', source => '1', alias => 'price', top => '842', left => '0', size => '12', bold => 'N', display => 'N', just => 'r' },
-  a023 => { name => 'Item Net Total', table => 'items', source => '3', alias => 'net', top => '842', left => '0', size => '12', bold => 'N', display => 'N', just => 'r' },
-  a024 => { name => 'Item VAT Rate', table => 'items', source => '4', alias => 'vrate', top => '842', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
-  a025 => { name => 'Item VAT Total', table => 'items', source => '5', alias => 'vat', top => '842', left => '0', size => '12', bold => 'N', display => 'N', just => 'r' },
-  a026 => { name => 'Item Total', table => 'items', source => '6', alias => 'itmtotal', top => '842', left => '0', size => '12', bold => 'N', display => 'N', just => 'r' },
+  a001 => { name => 'Invoice Type', table => 'invoices', source => 'invtype', alias => 'invtype', top => '0', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
+  a002 => { name => 'My Address', table => 'companies', source => 'concat(comname,"\\\\n",comaddress,"  ",compostcode)', alias => 'myaddress', top => '0', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
+  a003 => { name => 'My Phone No', table => 'companies', source => 'comtel', alias => 'mytel', top => '0', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
+  a004 => { name => 'My Email Addr', table => 'companies', source => 'comemail', alias => 'myemail', top => '0', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
+  a005 => { name => 'Customer Addr', table => 'invoices', source => 'concat(invcusname,"\\\\n",invcusaddr,"  ",invcuspostcode)', alias => 'cusaddress', top => '0', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
+  a006 => { name => 'Customer FAO', table => 'invoices', source => 'invcuscontact', alias => 'cusfao', top => '0', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
+  a007 => { name => 'Invoice #', table => 'invoices', source => 'invinvoiceno', alias => 'invoiceno', top => '0', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
+  a008 => { name => 'Invoice Date', table => 'invoices', source => 'date_format(invprintdate,"%d-%b-%y")', alias => 'printdate', top => '0', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
+  a009 => { name => 'Due Date', table => 'invoices', source => 'date_format(invduedate,"%d-%b-%y")', alias => 'duedate', top => '0', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
+  a010 => { name => 'Terms', table => 'invoices', source => 'invcusterms', alias => 'custerms', top => '0', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
+  a011 => { name => 'Customer Ref', table => 'invoices', source => 'invcusref', alias => 'cusref', top => '0', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
+  a012 => { name => 'VAT Reg', table => 'companies', source => 'comvatno', alias => 'vatno', top => '0', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
+  a013 => { name => 'Remarks', table => 'invoices', source => 'invremarks', alias => 'remarks', top => '0', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
+  a014 => { name => 'Net Total', table => 'calc', source => 'calc', alias => 'nettotal', top => '0', left => '0', size => '12', bold => 'N', display => 'N', just => 'r' },
+  a015 => { name => 'VAT Total', table => 'calc', source => 'calc', alias => 'vattotal', top => '0', left => '0', size => '12', bold => 'N', display => 'N', just => 'r' },
+  a016 => { name => 'Invoice Total', table => 'calc', source => 'calc', alias => 'invtotal', top => '0', left => '0', size => '12', bold => 'N', display => 'N', just => 'r' },
+  a017 => { name => 'Company Reg', table => 'companies', source => 'comregno', alias => 'regno', top => '0', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
+  a018 => { name => 'Bank Sort Code', table => 'accounts', source => 'accsort', alias => 'sortcode', top => '0', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
+  a019 => { name => 'Bank Acct #', table => 'accountss', source => 'accacctno', alias => 'acctno', top => '0', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
+  a020 => { name => 'Item Description', table => 'items', source => '0', alias => 'desc', top => '0', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
+  a021 => { name => 'Item Quantity', table => 'items', source => '2', alias => 'qty', top => '0', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
+  a022 => { name => 'Item Unit Price', table => 'items', source => '1', alias => 'price', top => '0', left => '0', size => '12', bold => 'N', display => 'N', just => 'r' },
+  a023 => { name => 'Item Net Total', table => 'items', source => '3', alias => 'net', top => '0', left => '0', size => '12', bold => 'N', display => 'N', just => 'r' },
+  a024 => { name => 'Item VAT Rate', table => 'items', source => '4', alias => 'vrate', top => '0', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
+  a025 => { name => 'Item VAT Total', table => 'items', source => '5', alias => 'vat', top => '0', left => '0', size => '12', bold => 'N', display => 'N', just => 'r' },
+  a026 => { name => 'Item Total', table => 'items', source => '6', alias => 'itmtotal', top => '0', left => '0', size => '12', bold => 'N', display => 'N', just => 'r' },
 );
 
 $Data = new CGI;
@@ -86,15 +86,41 @@ if ($FORM{id} == 0) {
 	$Layouts->execute;
 	@Layout = $Layouts->fetchrow;
 	$Layouts->finish;
-}
 
-if (@Layout[0] > 4) {
+	if (@Layout[0] > 4) {
 
-	print<<EOD;
+		print<<EOD;
 Content-Type: text/plain
 
 Error! - you already have 5 invoice layouts
 EOD
+	}
+	else {
+
+#  See if this is a new image and, if so, whether he has reached his limit (5)
+
+		$Companies = $dbh->prepare("select comdocsdir from companies where reg_id=$Reg_id and id=$Com_id");
+		$Companies->execute;
+		$Company = $Companies->fetchrow_hashref;
+		$Companies->finish;
+
+		open(IMG,">/projects/fpa_docs/".$Company->{comdocsdir}."/".$FORM{Filename}) || warn "unable to open file\n";
+		print IMG $Original;
+		close(IMG);
+
+		$Sts = $dbh->do("insert into invoice_layouts (acct_id,layfile,laydesc,laydateformat) values ('$COOKIE->{ACCT}','/projects/fpa_docs/$Company->{comdocsdir}/$FORM{Filename}','$FORM{laydesc}','$FORM{laydateformat}')");
+		$New_inv_id = $dbh->last_insert_id(undef, undef, qw(invoice_layouts undef));
+
+		while (($Key,$Value) = each %Settings) {
+			$Sts = $dbh->do("insert into invoice_layout_items (acct_id,link_id,lifldcode,lidispname,litable,lisource,lialias,litop,lileft,lisize,libold,lidisplay,lijust) values ('$COOKIE->{ACCT}',$New_inv_id,'$Key','$Value->{name}','$Value->{table}','$Value->{source}','$Value->{alias}','$Value->{top}','$Value->{left}','$Value->{size}','$Value->{bold}','$Value->{display}','$Value->{just}')");
+		}
+
+		print<<EOD;
+Content-Type: text/plain
+
+$New_inv_id
+EOD
+	}
 }
 else {
 
@@ -109,19 +135,18 @@ else {
 	print IMG $Original;
 	close(IMG);
 
-	$Sts = $dbh->do("insert into invoice_layouts (acct_id,layfile) values ('$COOKIE->{ACCT}','/projects/fpa_docs/$Company->{comdocsdir}/$FORM{Filename}')");
-	$New_inv_id = $dbh->last_insert_id(undef, undef, qw(invoice_layouts undef));
+	$Sts = $dbh->do("update invoice_layouts set layfile='/projects/fpa_docs/$Company->{comdocsdir}/$FORM{Filename}',laydesc='$FORM{laydesc}',laydateformat='$FORM{laydateformat}' where acct_id='$COOKIE->{ACCT}' and id=$FORM{id}");
 
 	while (($Key,$Value) = each %Settings) {
-		$Sts = $dbh->do("insert into invoice_layout_items (acct_id,link_id,lifldcode,lidispname,litable,lisource,lialias,litop,lileft,lisize,libold,lidisplay,lijust) values ('$COOKIE->{ACCT}',$New_inv_id,'$Key','$Value->{name}','$Value->{table}','$Value->{source}','$Value->{alias}','$Value->{top}','$Value->{left}','$Value->{size}','$Value->{bold}','$Value->{display}','$Value->{just}')");
+		$Sts = $dbh->do("update invoice_layout_items set lidisplay='$Value->{display}' where acct_id='$COOKIE->{ACCT}' and link_id=$FORM{id} and lifldcode='$Key'");
 	}
-warn "New id = $New_inv_id\n";
 
 	print<<EOD;
 Content-Type: text/plain
 
-$New_inv_id
+$FORM{id}
 EOD
 }
+
 $dbh->disconnect;
 exit;

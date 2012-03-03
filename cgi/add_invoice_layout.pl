@@ -16,6 +16,16 @@ unless ($COOKIE->{NO_ADS}) {
 	&display_adverts();
 }
 
+if ($ENV{QUERY_STRING} > 0) {
+	$Layouts = $dbh->prepare("select * from invoice_layouts where acct_id='$COOKIE->{ACCT}' and id=$ENV{QUERY_STRING}");
+	$Layouts->execute;
+	$Layout = $Layouts->fetchrow_hashref;
+	$Layouts->finish;
+}
+else {
+	$Layout->{id} = 0;
+}
+
 use Template;
 $tt = Template->new({
         INCLUDE_PATH => ['.','/usr/local/httpd/htdocs/fpa/lib'],
@@ -25,7 +35,8 @@ $tt = Template->new({
 $Vars = {
         title => 'Accounts - Invoice Layouts',
 	cookie => $COOKIE,
-	focus => 'a001',
+	focus => 'laydesc',
+	layout => $Layout,
         javascript => '<script type="text/javascript"> 
 var errfocus = "";
 var uploadparms = "doug";
