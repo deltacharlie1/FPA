@@ -15,7 +15,7 @@ unless ($COOKIE->{NO_ADS}) {
 }
 
 
-$Lays = $dbh->prepare("select '0' as id,'Default' as layname,'' as layfile union select id,layname,layfile from invoice_layouts where acct_id='$COOKIE->{ACCT}'");
+$Lays = $dbh->prepare("select id,layfile from invoice_layouts where acct_id='$COOKIE->{ACCT}'");
 $Lays->execute;
 
 use Template;
@@ -33,7 +33,7 @@ $Vars = {
 print "Content-Type: text/html\n\n";
 $tt->process('list_invoice_layouts.tt',$Vars);
 
-$Coas->finish;
+$Lays->finish;
 $dbh->disconnect;
 exit;
 

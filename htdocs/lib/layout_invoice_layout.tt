@@ -1,0 +1,29 @@
+<form name="layform" id="layform" method="post" onsubmit="return save_it();" action="/cgi-bin/fpa/add_invoice_layout4.pl">
+<div class="main" id="main">
+<input type="hidden" name="id" id="id" value="[%- layout.id -%]"/>
+<input type="hidden" name="data" id="data" value=""/>
+<h1>Invoice Layout Details</h1>
+<div style="position:relative;width:595px;height:842px;border:1px solid red;background-image: url(/cgi-bin/fpa/pdf2png.pl?[%- layout.id -%]);background-size:595px 842px;background-repeat:no-repeat;">
+<div id="notifier" style="position:absolute;display:none;border:1px solid #999999;padding:2px 4px;"></div>
+[% FOREACH item IN items -%]
+  [% IF item.lifldcode=='a020' -%]
+<div id="[%- item.lifldcode -%]" style="[%- IF item.lileft > 0 -%]top:[%- item.litop -%]px;left:[%- item.lileft -%]px;width:[%- layout.descwidth -%]px;height:[%- layout.descheight -%]px;[%- ELSE -%]top:[%- 20 * loop.count -%]px;[%- END -%]" class="draggable resizable bleft" title="[%- item.lidispname -%]">[%- item.lialias -%]</div>
+  [% ELSE -%]
+<div id="[%- item.lifldcode -%]" style="[%- IF item.lileft > 0 -%]top:[%- item.litop -%]px;left:[%- item.lileft -%]px;[%- ELSE -%]top:[%- 20 * loop.count -%]px;[%- END -%]" class="draggable [%- IF item.lijust=='l' -%]bleft[%- ELSIF item.lijust=='r' -%]bright[%- END -%]" title="[%- item.lidispname -%]">[%- item.lialias -%]</div>
+  [% END -%]
+[% END -%]
+</div>
+</div>
+<div id="sidebar">
+  <ul>
+    <li>
+      <div>
+        <input type="submit" name="save" id="save" value="Save Layout"/>
+      </div>
+    </li>
+  </ul>
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+  </div>
+</div>
+</form>

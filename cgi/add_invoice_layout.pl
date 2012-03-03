@@ -45,7 +45,7 @@ $(document).ready(function(){
                        alert(d);
                      }
                      else {
-                       location.href="/cgi-bin/fpa/add_invoice_layout3.pl?" + d;
+                       location.href="/cgi-bin/fpa/layout_invoice_layout.pl?" + d;
                      }
                    },
     "removeCompleted" : true
@@ -60,7 +60,6 @@ function setfocus() {
 print "Content-Type: text/html\n\n";
 $tt->process('add_invoice_layout.tt',$Vars);
 
-$Companies->finish;
 $dbh->disconnect;
 exit;
 

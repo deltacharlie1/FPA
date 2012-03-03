@@ -1,0 +1,29 @@
+drop table if exists invoice_layouts;
+create table invoice_layouts (
+  id int(10) unsigned not null auto_increment primary key,
+  acct_id varchar(50) not null default '',
+  layfile varchar(120) not null default '',
+  descwidth char(3) not null default '300',
+  descheight char(3) not null default '300',
+  index lay1 (acct_id)
+);
+drop table if exists invoice_layout_items;
+create table invoice_layout_items (
+  id int(10) unsigned not null auto_increment primary key,
+  acct_id varchar(50) not null default '',
+  link_id int(10) unsigned,
+  lifldcode char(4),
+  lidispname varchar(30),
+  litable varchar(20),
+  lisource text,
+  lialias varchar(20),
+  litop char(3),
+  lileft char(3),
+  liwidth char(3),
+  lisize char(2),
+  libold char(1) not null default 'N',
+  lidisplay char(1) not null default 'N',
+  lijust char(1) not null default 'l',
+  index li1 (acct_id)
+);
+
