@@ -16,7 +16,7 @@ unless ($COOKIE->{NO_ADS}) {
 
 ($Reg_id,$Com_id) = split(/\+/,$COOKIE->{ACCT});
 
-$Coas = $dbh->prepare("select coas.coanominalcode,coas.coadesc,concat(coas.coagroup,' - ',a.coadesc) as coagrp,coas.coatype,coas.coagroup,coas.coareport,'existing' as status from coas left join coas a on (coas.coagroup=a.coanominalcode and coas.acct_id=a.acct_id) where coas.acct_id='$COOKIE->{ACCT}' and coas.coagroup in ('4300','5000','6000','7000') order by coas.coanominalcode");
+$Coas = $dbh->prepare("select coas.coanominalcode,coas.coadesc,concat(coas.coagroup,' - ',a.coadesc) as coagrp,coas.coatype,coas.coagroup,coas.coareport,'existing' as status from coas left join coas a on (coas.coagroup=a.coanominalcode and coas.acct_id=a.acct_id) where coas.acct_id='$COOKIE->{ACCT}' and coas.coagroup in ('1000','1500','4300','5000','6000','7000') order by coas.coanominalcode");
 $Coas->execute;
 
 use Template;
@@ -37,11 +37,15 @@ $Vars = {
 var item_rows = [];
 var tbl;
 var nominals = new Array();
+nominals["1000"] = "1000 - Fixed Assets";
+nominals["1500"] = "1000 - Current Assets";
 nominals["4300"] = "4300 - Other Income";
 nominals["5000"] = "5000 - Cost of Sales";
 nominals["6000"] = "6000 - Other Expenses";
 nominals["7000"] = "7000 - Fixed Overheads";
 var nomtypes = new Array();
+nomtypes["1000"] = "Fixed Assets";
+nomtypes["1500"] = "Current Assets";
 nomtypes["4300"] = "Income";
 nomtypes["5000"] = "Expenses";
 nomtypes["6000"] = "Expenses";
@@ -102,7 +106,14 @@ function display_table() {
 
 function add_nominal() {
   var item_row;
-  item_row = ["&nbsp;",document.getElementById("coadesc").value,nominals[document.getElementById("nom_nomcode").value],nomtypes[document.getElementById("nom_nomcode").value],"new",document.getElementById("nom_nomcode").value,"P & L"];
+  var reptype = "";
+  if ($("#nom_nomcode").val() < 4000) {
+    reptype="Balance Sheet";
+  }
+  else {
+    reptype="P & L";
+  }
+  item_row = ["&nbsp;",document.getElementById("coadesc").value,nominals[document.getElementById("nom_nomcode").value],nomtypes[document.getElementById("nom_nomcode").value],"new",document.getElementById("nom_nomcode").value,reptype];
 
   item_rows.push(item_row);
   display_table();

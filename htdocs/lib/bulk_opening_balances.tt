@@ -5,23 +5,24 @@
   <table width="660" border="0" cellpadding="0" cellspacing="0" class="formtable">
     <tr>
       <td>Nominal Account<br/>
-      <select name="nomcode" id="blk_nomcode" size="1" onchange="document.getElementById('obdesc').value = $('#blk_nomcode option:selected').text();">
+      <select name="nomcode" id="blk_nomcode" size="1" onchange="document.getElementById('obdesc').value = $('#blk_nomcode option:selected').text().replace(/^.* - /,'');">
             <option value="0" selected="selected">-- Please Select --</option>
 [% FOREACH stmt IN stmts -%]
   [%- UNLESS stmt.cnt > 0 -%] 
-            <option value="[%- stmt.acctype -%]">Bank [%- stmt.accshort -%] Account</option>
+            <option value="[%- stmt.acctype -%]">[%- stmt.acctype -%] - Bank [%- stmt.accshort -%] Account</option>
   [%- END -%]
 [% END -%]
-            <option value="1300">Cash</option>
-            <option value="1000">Fixed Assets</option>
-            <option value="1100">Debtors</option>
-            <option value="1500">Other Current Assets</option>
-            <option value="2000">Creditors</option>
-            <option value="1400">Net VAT Input</option>
-            <option value="2100">Net VAT Output</option>
-            <option value="2200">Other Current Liabilities</option>
-            <option value="2300">Long term Liabilities</option>
-            <option value="3000">Share Capital</option>
+            <option value="1300">1300 - Cash</option>
+            <option value="1100">1100 - Debtors</option>
+            <option value="2000">2000 - Creditors</option>
+            <option value="1400">1400 - Net VAT Input</option>
+            <option value="2100">2100 - Net VAT Output</option>
+            <option value="2200">2200 - Other Current Liabilities</option>
+            <option value="2300">2300 - Long term Liabilities</option>
+            <option value="3000">3000 - Share Capital</option>
+[% FOREACH asset IN assets -%]
+            <option value="[%- asset.coanominalcode -%]">[%- asset.coanominalcode -%] - [%- asset.coadesc -%]</option>
+[% END -%]
           </select>
       </td>
       <td>Date<br/>
