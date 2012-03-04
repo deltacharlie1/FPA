@@ -19,6 +19,11 @@ $Coas->execute;
 $Coa = $Coas->fetchrow_hashref;
 $Coas->finish;
 
+$Assets = $dbh->prepare("select coanominalcode,coadesc from coas where acct_id='$COOKIE->{ACCT}' and coagroup in ('1000','1500') order by coanominalcode");
+$Assets->execute;
+$Asset = $Assets->fetchall_arrayref({});
+$Assets->finish;
+
 #  See if we have any statements (in which case we cannot do opening balances for those bank accounts)
 
 $Stmts = $dbh->prepare("select count(acc_id) as cnt,acctype,accshort from accounts left join statements on (accounts.id=acc_id) where accounts.acct_id='$COOKIE->{ACCT}' and acctype<'2000' group by acctype order by acctype");
@@ -45,6 +50,7 @@ $Vars = {
 	coas => $Coa,
 	companies => $Company,
 	stmts => $Stmt,
+	assets => $Asset,
         javascript => '<style>
 .mand2 { background-color:#f8e8c8; }
 </style>

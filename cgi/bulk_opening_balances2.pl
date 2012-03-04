@@ -106,6 +106,7 @@ $Sts = $dbh->do("update companies set comnexttxn=comnexttxn+$Company[0] where re
 
 $Sts = $dbh->do("insert into audit_trails (acct_id,audtype,audaction,audtext,auduser) values ('$COOKIE->{ACCT}','opening balances','setup','Retained Earnings adjusted by &pound;$iEarnings for `Retained Earnings`','$COOKIE->{USER}')");
 
+$Companies->finish;
 $dbh->disconnect;
 print<<EOD;
 Content-Type: text/plain
