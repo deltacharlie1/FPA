@@ -138,10 +138,20 @@
       <td><span><textarea title="Default Statement Message" name="cusstmtmsg" id="cusstmtmsg" cols="30" rows="2">[%- cus.cusstmtmsg -%]</textarea></span></td>
     </tr>
     <tr>
-[% IF custype == "C" and cookie.STMTS == "1" -%]
+[% IF custype == "C" and cookie.PLAN > 3 -%]
     <tr>
       <td><label>Automatic Statements</label></td>
       <td><input type="radio" name="cusautostmts" id="cusautostmtsy" value="Y" [%- IF cus.cusautostmts == 'Y' -%]checked="checked"[%- END -%]/> Yes&nbsp;&nbsp;<input type="radio" name="cusautostmts" id="cusautostmtsn" value='N' [%- IF cus.cusautostmts == 'N' -%]checked="checked"[%- END -%]/> No</td>
+    </tr>
+    <tr>
+      <td><label>Default Invoice Layout</label></td>
+      <td><select name="cuslayout" id="cuslayout" size="1">
+            <option value="0"[%- IF cus.cuslayout=='0' -%] selected="selected"[%- END -%]>Default Layout</option>
+  [% FOREACH layout IN layouts -%]
+            <option value="[%- layout.id -%]"[%- IF cus.cuslayout==layout.id -%] selected="selected"[%- END -%]>[%- layout.laydesc -%]</option>
+  [% END -%]
+          </select>
+      </td>
     </tr>
 [% END -%]
       <td colspan="2">&nbsp;</td>

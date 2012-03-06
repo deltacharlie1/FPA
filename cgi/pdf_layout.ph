@@ -1,30 +1,17 @@
-#!/usr/bin/perl
+sub pdf_invoice {
 
-$ACCESS_LEVEL = 1;
+$Inv_id = $_[0];
+$Use_stamp = $_[1];
+$Layout_id = $_[2];
 
-#  script to display  existing invoices
-
-#use Checkid;
-#$COOKIE = &checkid($ENV{HTTP_COOKIE},$ACCESS_LEVEL);
-
-$COOKIE->{DB} = 'fpa';
-use DBI;
-$dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
-#unless ($COOKIE->{NO_ADS}) {
-#	require "/usr/local/git/fpa/cgi/display_adverts.ph";
-#	&display_adverts();
-#}
-
-$COOKIE->{ACCT} = '1+1';
-$ENV{QUERY_STRING} = 1;
 #  get the layout
 
-$Layouts = $dbh->prepare("select * from invoice_layouts where acct_id='$COOKIE->{ACCT}' and id=$ENV{QUERY_STRING}");
+$Layouts = $dbh->prepare("select * from invoice_layouts where acct_id='$COOKIE->{ACCT}' and id=$Layout_id");
 $Layouts->execute;
 $Layout = $Layouts->fetchrow_hashref;
 $Layouts->finish;
 
-$LIs = $dbh->prepare("select * from invoice_layout_items where acct_id='$COOKIE->{ACCT}' and lidisplay='Y' and link_id=$ENV{QUERY_STRING}");
+$LIs = $dbh->prepare("select * from invoice_layout_items where acct_id='$COOKIE->{ACCT}' and lidisplay='Y' and link_id=$Layout_id");
 $LIs->execute;
 $LIT = $LIs->fetchall_arrayref({});
 $LIs->finish;
@@ -67,7 +54,7 @@ if ($A_sel) {
 }
 if ($I_sel) {
 	$I_sel .= ",invstatus";
-	$Invoices = $dbh->prepare("select $I_sel from invoices where acct_id='$COOKIE->{ACCT}' and invtype='S' order by id desc limit 1");
+	$Invoices = $dbh->prepare("select $I_sel from invoices where acct_id='$COOKIE->{ACCT}' and id=$Inv_id");
 	$Invoices->execute;
 	$invoices = $Invoices->fetchrow_hashref;
 	$Invoices->finish;
@@ -127,8 +114,6 @@ $pdf = PDF::API2->open($Layout->{layfile});
 $page = $pdf->openpage(1);
 $font = $pdf->corefont('Helvetica');
 $font_bold = $pdf->corefont('Helvetica Bold');
-$font_bold_italic = $pdf->corefont('Helvetica BoldOblique');
-$font_italic = $pdf->corefont('Helvetica Oblique');
 
 $Stamp = $pdf->image_png('overdue.png');
 $Testonly = $pdf->image_png('/usr/local/git/fpa/htdocs/icons/testonly.png');
@@ -139,7 +124,7 @@ $Testonly = $pdf->image_png('/usr/local/git/fpa/htdocs/icons/testonly.png');
 
 $invoices->{invitems} =~ s/^.*?<tr>//is;		#  Remove everything up to the first table row
 $invoices->{invitems} =~ s/^.*?<tr>//is;		#  Then again to remove all headers
-$invoices->{invitems}=~ s/<tr.*?>//gis;		#  Remove all row start tags
+$invoices->{invitems}=~ s/<tr.*?>//gis;			#  Remove all row start tags
 
 @Row = split(/\<\/tr\>/i,$invoices->{invitems});
 for $Row (@Row) {
@@ -162,6 +147,14 @@ for $Row (@Row) {
 		$Cell[5] =~ s/<br\/>//ig;
 
 		foreach $Item (@Items) {
+			$Item->{lisize} = '10';
+			if ($Item->{libold} =~ /Y/i) {
+				$text->font($font_bold,$Item->{lisize} );
+			}
+			else {
+				$text->font($font, $Item->{lisize});
+			}
+			$text->lead($Item->{lisize} + 2);
 			if ($Item->{lifldcode} =~ /a020/) {
 				$tb->y($Ypos);
 				$tb->text($Cell[0]);
@@ -196,6 +189,13 @@ for $Row (@Row) {
 $text->lead('28');
 
 foreach $Calc (@Calc) {
+	if ($Calc->{libold} =~ /Y/i) {
+		$text->font($font_bold,$Calc->{lisize} );
+	}
+	else {
+		$text->font($font, $Calc->{lisize});
+	}
+	$text->lead($Calc->{lisize} + 2);
 	$text->transform( -translate => [$Calc->{lileft}+$Calc->{liwidth}+10,830-$Calc->{litop}]);
 	$text->text_right(sprintf("%1.2f",${$Calc->{lialias}}));
 }
@@ -210,15 +210,10 @@ else {
 		$g->image($Stamp,200,260);
 	}
 }
-
-$PDF_doc = $pdf->stringify();
-
-print "Content-Type: application/pdf\n";
-print "Content-Disposition: inline; filename=invoice_$Invoice->{invinvoiceno}.pdf\n\n";
-print $PDF_doc."\n";
-
+my $PDF_doc = $pdf->stringify();
 $pdf->end;
-exit;
+return ($PDF_doc,$Invoice->{invinvoiceno});
+}
 
 sub set_new_page {
 
@@ -231,10 +226,15 @@ $text = $page->text();
 
 $Line_len = 0;
 
-$text->font($font, 12);
-$text->lead(14);
 
 foreach $Header (@Header) {
+	if ($Header->{libold} =~ /Y/i) {
+		$text->font($font_bold,$Header->{lisize} );
+	}
+	else {
+		$text->font($font, $Header->{lisize});
+	}
+	$text->lead($Header->{lisize} + 2);
 	$text->transform( -translate => [$Header->{lileft},830-$Header->{litop}]);
 	if ($Header->{lisource} =~ /concat/i) {	#  these are multi line
 		@Line = split(/\n/,${$Header->{litable}}->{$Header->{lialias}});
@@ -244,7 +244,12 @@ foreach $Header (@Header) {
 		}
 	}
 	else {
-		$text->text(${$Header->{litable}}->{$Header->{lialias}});
+		if ($Header->{lijust} =~ /r/i) {
+			$text->text_right(${$Header->{litable}}->{$Header->{lialias}});
+		}
+		else {
+			$text->text(${$Header->{litable}}->{$Header->{lialias}});
+		}
 	}
 }
 

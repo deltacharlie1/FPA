@@ -38,8 +38,13 @@ else {
 
 	use MIME::Base64;
 
-	require "/usr/local/httpd/cgi-bin/fpa/pdf_invoice.ph";
-	($PDF_data,$Invoice_no) = &pdf_invoice($FORM{invid},$FORM{pdfstamp});
+	if ($FORM{layid} > 0) {
+		require "/usr/local/httpd/cgi-bin/fpa/pdf_layout.ph";
+	}
+	else {
+		require "/usr/local/httpd/cgi-bin/fpa/pdf_invoice.ph";
+	}
+	($PDF_data,$Invoice_no) = &pdf_invoice($FORM{invid},$FORM{pdfstamp},$FORM{layid});
 
         $Encoded_msg = encode_base64($PDF_data);
 

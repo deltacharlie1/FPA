@@ -142,6 +142,20 @@
       <td><div style="vertical-align:middle;float:left;"><input name="comlogo" id="comlogo" type="file" size="30"/></div><div style="vertical-align:middle;float:left;padding-left:10px;">[%- IF client.comlogo != NULL -%]<img src="/cgi-bin/fpa/display_logo.pl"/>[%- END -%]</div></td>
     </tr>
 [% END -%]
+[% IF cookie.PLAN > 3 -%]
+    <tr>
+      <td><label>Default Invoice Layout</label></td>
+      <td><select name="comlayout" id="comlayout" size="1">
+            <option value="0"[%- IF client.comlayout=='0' -%] selected="selected"[%- END -%]>Default Layout</option>
+  [% FOREACH layout IN layouts -%]
+            <option value="[%- layout.id -%]"[%- IF client.comlayout==layout.id -%] selected="selected"[%- END -%]>[%- layout.laydesc -%]</option>
+  [% END -%]
+          </select>
+      </td>
+    </tr>
+[% ELSE -%]
+<input type="hidden" name="comlayout" id="comlayout" value="default"/>
+[% END -%]
     <tr>
       <td style="vertical-align:top;"><label>Default Email Message</label></td>
       <td><div style="width:260px;"><textarea title="Default Email Message" name="comemailmsg" cols="30" rows="4" wrap="physical" id="comemailmsg"/>[%- client.comemailmsg -%]</textarea></div></td>

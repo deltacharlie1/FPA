@@ -16,7 +16,12 @@ unless ($COOKIE->{NO_ADS}) {
 	&display_adverts();
 }
 
-
+if ($COOKIE->{PLAN} > 3) {
+	$Layouts = $dbh->prepare("select * from invoice_layouts where acct_id='$COOKIE->{ACCT}' order by id");
+	$Layouts->execute;
+	$Layout = $Layouts->fetchall_arrayref({});
+	$Layouts->finish;
+}
 if ($Cus_type =~ /^\d+$/) {
 	$Customers = $dbh->prepare("select id,cusname,cusaddress,cuspostcode,cusregion,custel,cuscontact,cusemail,custerms,cusdefpo,cusbank,cussortcode,cusacctno,cusdefpaymethod,cusbalance,cussales,cussupplier,cusremarks,cuslimit,cusdefcoa,cusdefvatrate,cusemailmsg,cusstmtmsg,cusautostmts,cuscis from customers where acct_id=? and id=?");
 	$Customers->execute("$COOKIE->{ACCT}",$ENV{QUERY_STRING});
@@ -56,6 +61,7 @@ $tt = Template->new({
 $Vars = {
         title => 'Accounts - Customer Details',
 	cookie => $COOKIE,
+	layouts => $Layout,
 	focus => 'cusname',
 	custype => $Cus_type,
 	cus => $Customer,

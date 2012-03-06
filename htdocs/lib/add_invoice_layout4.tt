@@ -1,0 +1,9 @@
+<div class="main" id="main">
+<h1>Invoice Layout Example</h1>
+<iframe id="pdf" name="pdf" style="width:610px;height:842px;" marginheight="0" marginwidth="0" src="/cgi-bin/fpa/pdf_invoice.pl?[%- invid -%]?[%- layid -%]"></iframe>
+</div>
+<div id="sidebar">
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+  </div>
+</div>

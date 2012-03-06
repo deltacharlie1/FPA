@@ -39,7 +39,7 @@ for $Month (1..12) {
 }
 $Dates->finish;
 
-$Companies = $dbh->prepare("select comname,comaddress,compostcode,comtel,combusiness,comregno,comvatno,comvatscheme,comcontact,comemail,comyearend,comvatduein,comnextsi,comnextpi,comcompleted,comacccompleted,comemailmsg,comstmtmsg,comlogo,comcis,datediff(compt_logo,now()) as pt_logo from companies where reg_id=? and id=?");
+$Companies = $dbh->prepare("select comname,comaddress,compostcode,comtel,combusiness,comregno,comvatno,comvatscheme,comcontact,comemail,comyearend,comvatduein,comnextsi,comnextpi,comcompleted,comacccompleted,comemailmsg,comstmtmsg,comlogo,comcis,datediff(compt_logo,now()) as pt_logo,comlayout from companies where reg_id=? and id=?");
 $Companies->execute($Reg_id,$Com_id);
 $Company = $Companies->fetchrow_hashref;
 unless ($Company->{comcis}) { $Company->{comcis} = 'N'; }
@@ -58,6 +58,11 @@ $Invoices = $dbh->prepare("select count(*) as count from invoices where acct_id=
 $Invoices->execute;
 $Invoice = $Invoices->fetchrow_hashref;
 $Invoices->finish;
+
+$Layouts = $dbh->prepare("select * from invoice_layouts where acct_id='$COOKIE->{ACCT}' order by id");
+$Layouts->execute;
+$Layout = $Layouts->fetchall_arrayref({});
+$Layouts->finish;
 
 $Loadify = "";
 if ($COOKIE->{ACCESS} > 3 || $COOKIE->{PT_LOGO} =~ /1/) {
@@ -89,6 +94,7 @@ $Vars = {
 	focus => 'comname',
 	client => $Company,
 	sectors => $Sectors,
+	layouts => $Layout,
 	yearend => \@YE,
         cur => $Acct->{1200},
         dep => $Acct->{1210},

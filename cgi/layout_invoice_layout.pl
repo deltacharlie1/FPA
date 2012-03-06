@@ -57,9 +57,31 @@ $Vars = {
 <script type="text/javascript"> 
 var errfocus = "";
 var uploadparms = "";
+var itemid = "";
 var itemwidth = "";
 var itemheight = "";
 $(document).ready(function(){
+  $("#laysettings").dialog({
+    bgiframe: true,
+    autoOpen: false,
+    position: [200,100],
+    height: 300,
+    width: 250,
+    modal: true,
+    buttons: {
+      "Save Settings": function() {
+        var left = $("#layleft").val();
+        if (/rgb\(177/i.test($("#"+itemid).css("border-right-color"))) {
+          left = $("#layleft").val() - $("#"+itemid).width() - 30;
+        }
+        $("#"+itemid).css({"top": $("#laytop").val()+"px", "left": left+"px", "height": $("#laysize").val()+"px", "font-size": $("#laysize").val()+"px", "font-weight": $("#laybold").val() } );
+        $(this).dialog("close");
+      },
+      Cancel: function() {
+        $(this).dialog("close");
+      }
+    }
+  });
   $(".draggable").draggable({
     cursor     : "pointer",
     start      : function() {
@@ -98,10 +120,31 @@ function setfocus() {
 function save_it() {
 var data = "";
   $(".draggable").each(function() {
-    data = data + $(this).attr("id") + "-" + $(this).position().top + "-" + $(this).position().left + "-" + $(this).width() + "-" + $(this).height() + "\\n";
+    data = data + $(this).attr("id") + "-" + $(this).position().top + "-" + $(this).position().left + "-" + $(this).width() + "-" + $(this).height() + "-" + $(this).css("font-weight") + "\\n";
   });
   $("#data").val(data);
-
+}
+function open_settings(id) {
+  itemid = id;
+  var dir = "";
+  if (/rgb\(177/i.test($("#"+id).css("border-right-color"))) {
+    $("#laydir").text("Right: ");
+    dir = "right";
+    var left = $("#"+id).position().left * 1;
+    var width = $("#"+id).width() * 1;
+    var right = left+width + 30;
+    $("#layleft").val(right);
+  }
+  else {
+    $("#laydir").text("Left: ");
+    dir = "left";
+    $("#layleft").val($("#"+id).position().left);
+  }
+  $("#laytop").val($("#"+id).position().top);
+  $("#laysize").val($("#"+id).height());
+  $("#laybold").val($("#"+id).css("font-weight"));
+  $("#laytop").focus();  
+  $("#laysettings").dialog("open");
 }
 </script>',
 };

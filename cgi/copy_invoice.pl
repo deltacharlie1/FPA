@@ -19,7 +19,7 @@ $Existing_no = $ENV{QUERY_STRING};
 
 #  Get the existing invoice
 
-my $Invoices = $dbh->prepare("select cus_id,invcusref,invtype,invcusname,invcusaddr,invcuspostcode,invcusregion,invcuscontact,invcusemail,invcusterms,invtotal,invvat,invitemcount,invitems,invdesc,invstatuscode from invoices where acct_id='$COOKIE->{ACCT}' and id=$Existing_no");
+my $Invoices = $dbh->prepare("select cus_id,invcusref,invtype,invcusname,invcusaddr,invcuspostcode,invcusregion,invcuscontact,invcusemail,invcusterms,invtotal,invvat,invitemcount,invitems,invdesc,invstatuscode,invremarks,invlayout from invoices where acct_id='$COOKIE->{ACCT}' and id=$Existing_no");
 $Invoices->execute;
 my @Invoice = $Invoices->fetchrow;
 $Invoices->finish;
@@ -49,7 +49,7 @@ for ($i=0; $i<15; $i++) {
 
 #  Next insert the new invoice
 
-$Sts = $dbh->do("insert into invoices (acct_id,cus_id,invcusref,invtype,invcusname,invcusaddr,invcuspostcode,invcusregion,invcuscontact,invcusemail,invcusterms,invcreated,invtotal,invvat,invstatus,invstatuscode,invstatusdate,invitemcount,invitems,invdesc) values ('$COOKIE->{ACCT}',$Invoice[0],'$Invoice[1]','$Invoice[2]','$Invoice[3]','$Invoice[4]','$Invoice[5]','$Invoice[6]','$Invoice[7]','$Invoice[8]','$Invoice[9]',now(),'$Invoice[10]','$Invoice[11]','Draft','1',now(),$Invoice[12],'$Invoice[13]','$Invoice[14]')");
+$Sts = $dbh->do("insert into invoices (acct_id,cus_id,invcusref,invtype,invcusname,invcusaddr,invcuspostcode,invcusregion,invcuscontact,invcusemail,invcusterms,invcreated,invtotal,invvat,invstatus,invstatuscode,invstatusdate,invitemcount,invitems,invdesc,invremarks,invlayout) values ('$COOKIE->{ACCT}',$Invoice[0],'$Invoice[1]','$Invoice[2]','$Invoice[3]','$Invoice[4]','$Invoice[5]','$Invoice[6]','$Invoice[7]','$Invoice[8]','$Invoice[9]',now(),'$Invoice[10]','$Invoice[11]','Draft','1',now(),$Invoice[12],'$Invoice[13]','$Invoice[14]','$Invoice[16]','$Invoice[17]')");
 
 #  Get the new id
 

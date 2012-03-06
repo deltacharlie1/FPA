@@ -15,7 +15,7 @@ unless ($COOKIE->{NO_ADS}) {
 }
 
 
-$Invoices = $dbh->prepare("select id,cus_id,invinvoiceno,invcusname,invtype,invcuscontact,invcusemail,invstatuscode from invoices where id=? and acct_id=?");
+$Invoices = $dbh->prepare("select id,cus_id,invinvoiceno,invcusname,invtype,invcuscontact,invcusemail,invstatuscode,invlayout from invoices where id=? and acct_id=?");
 $Invoices->execute($ENV{QUERY_STRING},"$COOKIE->{ACCT}");
 $Invoice = $Invoices->fetchrow_hashref;
 

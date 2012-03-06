@@ -16,7 +16,7 @@ unless ($COOKIE->{NO_ADS}) {
 }
 
 
-$Invoices = $dbh->prepare("select invoices.id as id,cus_id,invinvoiceno,invcusname,invtype,invcuscontact,invcusemail,invstatus,invstatuscode,cusemailmsg from invoices left join customers  on (cus_id=customers.id and invoices.acct_id=customers.acct_id) where invoices.id=? and invoices.acct_id=?");
+$Invoices = $dbh->prepare("select invoices.id as id,cus_id,invinvoiceno,invcusname,invtype,invcuscontact,invcusemail,invstatus,invstatuscode,cusemailmsg,invlayout from invoices left join customers  on (cus_id=customers.id and invoices.acct_id=customers.acct_id) where invoices.id=? and invoices.acct_id=?");
 $Invoices->execute($Inv_id,"$COOKIE->{ACCT}");
 $Invoice = $Invoices->fetchrow_hashref;
 $Invoice->{firsttime} = $Firsttime;	# required otherwise firsttime is undefined

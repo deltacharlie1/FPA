@@ -16,8 +16,14 @@ unless ($COOKIE->{NO_ADS}) {
 	&display_adverts();
 }
 
+if ($COOKIE->{PLAN} > 3) {
+	$Layouts = $dbh->prepare("select * from invoice_layouts where acct_id='$COOKIE->{ACCT}' order by id");
+	$Layouts->execute;
+	$Layout = $Layouts->fetchall_arrayref({});
+	$Layouts->finish;
+}
 
-$Invoices = $dbh->prepare("select invoices.id,cus_id,invcusname,invtype,invcusaddr,date_format(invprintdate,'%d-%b-%y') as invprintdate,date_format(invduedate,'%d-%b-%y') as invduedate,invinvoiceno,invcuspostcode,invcusref,invcusregion,invcusterms,invcuscontact,invcusemail,invtotal,invvat,invtotal + invvat as tottotal,(invtotal*0.8+invvat) as cistotal,invstatus,invfpflag,invremarks,invitems,invitemcount,to_days(invprintdate) as printdays,to_days(invduedate) as duedays,invstatuscode,invpaid + invpaidvat as totpaid,date_format(invpaiddate,'%d-%b-%y') as invpaiddate,cusdefpaymethod,cuscis,invnotes from invoices left join customers on (invoices.cus_id=customers.id and invoices.acct_id=customers.acct_id) where invoices.id=$Inv_id and invoices.acct_id='$COOKIE->{ACCT}'");
+$Invoices = $dbh->prepare("select invoices.id,cus_id,invcusname,invtype,invcusaddr,date_format(invprintdate,'%d-%b-%y') as invprintdate,date_format(invduedate,'%d-%b-%y') as invduedate,invinvoiceno,invcuspostcode,invcusref,invcusregion,invcusterms,invcuscontact,invcusemail,invtotal,invvat,invtotal + invvat as tottotal,(invtotal*0.8+invvat) as cistotal,invstatus,invfpflag,invremarks,invitems,invitemcount,to_days(invprintdate) as printdays,to_days(invduedate) as duedays,invstatuscode,invpaid + invpaidvat as totpaid,date_format(invpaiddate,'%d-%b-%y') as invpaiddate,cusdefpaymethod,cuscis,invnotes,invlayout from invoices left join customers on (invoices.cus_id=customers.id and invoices.acct_id=customers.acct_id) where invoices.id=$Inv_id and invoices.acct_id='$COOKIE->{ACCT}'");
 $Invoices->execute;
 $Invoice = $Invoices->fetchrow_hashref;
 $Invoice->{firsttime} = $Action;
@@ -38,6 +44,7 @@ if ($Invoice->{"invstatuscode"} == 1) {		#   Draft
 $Vars = {
         title => 'Accounts - Customers',
 	cookie => $COOKIE,
+	layouts => $Layout,
         vats => $Vat,
 	focus => 'desc',
 	invoice => $Invoice,

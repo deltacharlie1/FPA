@@ -51,6 +51,9 @@ while (( $Key,$Value) = each %FORM) {
 	}
 }
 
+$Settings{a008}->{source} =~ s/\%d-\%b-\%y/$FORM{laydateformat}/;
+$Settings{a009}->{source} =~ s/\%d-\%b-\%y/$FORM{laydateformat}/;
+
 #  Get the ACCT from the cookie file (cookie is passed as a parameter)
 
 open(COOKIE,"/projects/tmp/$FORM{cookie}");

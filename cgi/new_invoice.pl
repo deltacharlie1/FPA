@@ -13,8 +13,26 @@ unless ($COOKIE->{NO_ADS}) {
 	require "/usr/local/git/fpa/cgi/display_adverts.ph";
 	&display_adverts();
 }
-$Customers = $dbh->prepare("select id,cusname,cusaddress,cuspostcode,cusregion,cuscontact,cusemail,custerms,cusbalance,cuslimit,cusdefpo,cuscis,cusdefvatrate,cusdefpaymethod from customers where id=? and acct_id=?");
+
+if ($COOKIE->{PLAN} > 3) {
+	($Reg_id,$Com_id) = split(/\+/,$COOKIE->{ACCT});
+
+	$Companies = $dbh->prepare("select comlayout from companies where reg_id=$Reg_id and id=$Com_id");
+	$Companies->execute;
+	$Company = $Companies->fetchrow_hashref;
+	$Companies->finish;
+
+	$Layouts = $dbh->prepare("select * from invoice_layouts where acct_id='$COOKIE->{ACCT}' order by id");
+	$Layouts->execute;
+	$Layout = $Layouts->fetchall_arrayref({});
+	$Layouts->finish;
+}
+
+$Customers = $dbh->prepare("select id,cusname,cusaddress,cuspostcode,cusregion,cuscontact,cusemail,custerms,cusbalance,cuslimit,cusdefpo,cuscis,cusdefvatrate,cusdefpaymethod,cuslayout from customers where id=? and acct_id=?");
 $Customers->execute($ENV{QUERY_STRING},"$COOKIE->{ACCT}");
+$Customer = $Customers->fetchrow_hashref;
+
+unless ($Customer->{cuslayout} > 0) { $Customer->{cuslayout} = $Company->{comlayout}; }
 
 $Focus = "srch";
 if ($ENV{QUERY_STRING} =~ /^\d+$/) {
@@ -30,10 +48,12 @@ $tt = Template->new({
 $Vars = {
         title => 'Accounts - Customers',
 	cookie => $COOKIE,
+	company => $Company,
+	layouts => $Layout,
         vats => $Vat,
 	focus => $Focus,
 	invtype => $ENV{QUERY_STRING},
-	cus => $Customers->fetchrow_hashref,
+	cus => $Customer,
         javascript => '<script type="text/javascript" src="/js/add_lineitem.js"></script>
 <script type="text/javascript">
 var errfocus = "";

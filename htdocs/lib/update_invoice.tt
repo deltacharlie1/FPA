@@ -105,11 +105,20 @@
           <option value="1200"[%- IF invoice.cusdefpaymethod == "1200" -%] selected="selected"[%- END -%]>Bank Transfer</option>
         </select>
       </td>
-      <td colspan="2">&nbsp;<input type="hidden" name="invpdf" id="invpdf" value="Y"/></td>
-<!--
-      <td><label>Display Invoice PDF</label></td>
-      <td><input type="checkbox" name="invpdf" id="invpdf" value="Y" checked="checked"/></td>
-//-->
+[% IF cookie.PLAN > 3 -%]
+<input type="hidden" name="invpdf" id="invpdf" value="Y"/>
+      <td><label>Select Invoice Layout</label></td>
+      <td>
+        <select name="invlayout" id="invlayout" size="1">
+          <option value="0"[%- IF invoice.invlayout=='0' -%] selected="selected"[%- END -%]>Default Layout</option>
+  [% FOREACH layout IN layouts -%]
+          <option value="[%- layout.id -%]"[%- IF invoice.invlayout==layout.id -%] selected="selected"[%- END -%]>[%- layout.laydesc -%]</option>
+  [% END -%]
+        </select>
+     </td>
+[% ELSE -%]
+        <td colspan="2">&nbsp;<input type="hidden" name="invpdf" id="invpdf" value="Y"/><input type="hidden" name="invlayout" id="invlayout" value="0"/></td>
+[% END -%]
     </tr>
     <tr>
       <td colspan="4"><center><hr style="border-bottom:1px solid #233930;width:95%;"/></center></td>

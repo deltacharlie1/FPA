@@ -1,10 +1,11 @@
 <form method="post" name="layform" id="layform">
 <div class="main" id="main">
 <h1>Invoice Layout Details</h1>
+  <input type="hidden" name="dummy" id="dummy value=""/>
   <table width="660" border="0" cellpadding="0" cellspacing="0" class="formtable">
     <tr>
       <td><label>Layout Description</label></td>
-      <td><input type="text" name="laydesc" id="laydesc" size="30" value="[%- layout.laydesc -%]"/></td>
+      <td><input type="text" name="laydesc" id="laydesc" size="30" value="[%- layout.laydesc -%]" clas="mandatory"/></td>
     </tr>
     <tr>
       <td style="vertical-align:middle;"><label>Select Invoice Layout File (up to 30k pdf)</label></td>
@@ -13,14 +14,14 @@
     <tr>
       <td><label>Date Format</label></td>
       <td><select name="laydateformat" id="laydateformat" size="1">
-            <option value="%d-%b-%y" selected="selected">dd-mmm-yy (01-Dec-11)</option>
-            <option value="%D %M $Y">DDnn Month Year ( 1st December 2011)</option>
-            <option value="%d/%m/%y">dd/mm/yy (01/12/11)</option>
-            <option value="%d/%m/%Y">dd/mm/YYYY (01/12/2011)</option>
-            <option value="%M %D, %Y">Month DDnn, Year (December 1st, 2011)</option>
-            <option value="%m/%d/%y">mm/dd/yy (12/01/11)</option>
-            <option value="%m/%d/%Y">mm/dd/YYYY (12/01/2011)</option>
-            <option value="%y-%m-%d">yy-mm-dd (11-12-01)</option>
+            <option value="%d-%b-%y"[%- IF layout.laydateformat=='%d-%b-%y' -%] selected="selected"[%- END -%]>dd-mmm-yy (01-Dec-11)</option>
+            <option value="%D %M %Y"[%- IF layout.laydateformat=='%D %M %Y' -%] selected="selected"[%- END -%]>DDnn Month Year ( 1st December 2011)</option>
+            <option value="%d/%m/%y"[%- IF layout.laydateformat=='%d/%m/%y' -%] selected="selected"[%- END -%]>dd/mm/yy (01/12/11)</option>
+            <option value="%d/%m/%Y"[%- IF layout.laydateformat=='%d/%m/%Y' -%] selected="selected"[%- END -%]>dd/mm/YYYY (01/12/2011)</option>
+            <option value="%M %D, %Y"[%- IF layout.laydateformat=='%M %D, %Y' -%] selected="selected"[%- END -%]>Month DDnn, Year (December 1st, 2011)</option>
+            <option value="%m/%d/%y"[%- IF layout.laydateformat=='%m/%d/%y' -%] selected="selected"[%- END -%]>mm/dd/yy (12/01/11)</option>
+            <option value="%m/%d/%Y"[%- IF layout.laydateformat=='%m/%d/%Y' -%] selected="selected"[%- END -%]>mm/dd/YYYY (12/01/2011)</option>
+            <option value="%y-%m-%d"[%- IF layout.laydateformat=='%y-%m-%d' -%] selected="selected"[%- END -%]>yy-mm-dd (11-12-01)</option>
           </select>
       </td>
     </tr>
@@ -28,6 +29,7 @@
 <input type="hidden" name="id" id="layid" value="[%- layout.id OR '0' -%]"/>
   <h2>Select Invoice Items for Display</h2>
   <table width="660" border="0" cellpadding="0" cellspacing="0" class="formtable">
+[% IF layout.id=='0' -%]
     <tr>
       <td><label>Invoice Type</label></td>
       <td style="text-align:center;"><input type="checkbox" name="a001" id="a001" value="invtype"/></td>
@@ -75,29 +77,40 @@
       <td style="text-align:center;"><input type="checkbox" name="a018" id="a018" value="accsort"/></td>
       <td><label>Bank Account</label></td>
       <td style="text-align:center;"><input type="checkbox" name="a019" id="a019" value="accacctno"/></td>
-      <td colspan="2">&nbsp;</td>
-    </tr>
-  </table><br/>
-  <h2>Select Invoice Line Items for Display</h2>
-  <table width="660" border="0" cellpadding="0" cellspacing="0" class="formtable">
-    <tr>
       <td nowrap="nowrap"><label>Item Description</label></td>
       <td style="text-align:center;"><input type="checkbox" name="a020" id="a020" value="itmdesc" checked="checked"/></td>
+    </tr>
+    <tr>
       <td><label>Item Quantity</label></td>
       <td style="text-align:center;"><input type="checkbox" name="a021" id="a021" value="itmqty"/></td>
       <td><label>Item Unit Price</label></td>
       <td style="text-align:center;"><input type="checkbox" name="a022" id="a022" value="itmunitprice"/></td>
       <td><label>Item Net Total</label></td>
       <td style="text-align:center;"><input type="checkbox" name="a023" id="a023" value="itmtotprice" checked="checked"/></td>
-    </tr>
-    <tr>
       <td><label>Item VAT Rate</label></td>
       <td style="text-align:center;"><input type="checkbox" name="a024" id="a024" value="itmvatrate"/></td>
+    </tr>
+    <tr>
       <td><label>Item VAT Total</label></td>
       <td style="text-align:center;"><input type="checkbox" name="a025" id="a025" value="itmvat" [%- UNLESS cookie.VAT == 'N' -%] checked="checked"[%- END -%]/></td>
       <td><label>Item Total</label></td>
       <td style="text-align:center;"><input type="checkbox" name="a026" id="a026" value="itmtotal" checked="checked"/></td>
-      <td colspan="2">&nbsp;</td>
+      <td colspan="4">&nbsp;</td>
+    </tr>
+[% ELSE -%]
+    <tr>
+  [% FOREACH li IN lis -%]
+      <td><label>[%- li.lidispname -%]</label></td>
+      <td style="text-align:center;"><input type="checkbox" name="[%- li.lifldcode -%]" id="[%- li.lifldcode -%]" value="[%- li.lialias -%]"[%- IF li.lidisplay=='Y' -%] checked="checked"[%- END -%]/></td>
+    [% IF (loop.count - 1) % 4 == 3 -%]
+    </tr>
+    <tr>
+    [% END -%]
+  [% IF loop.last AND (loop.count - 1) % 4 != 3 -%]
+      <td colspan="[%- (3 - (loop.count - 1) % 4) * 2 -%]">&nbsp;</td>
+  [% END -%]
+  [%- END -%]
+[%- END-%]
     </tr>
   </table>
 </div>
@@ -105,7 +118,7 @@
   <ul>
     <li>
       <div>
-        <input type="button" name="save" id="save" value="Save these Details" onclick="$('#layfile').uploadifySettings( 'scriptData',{ 'uploadparms' : $('#layform').serialize() });$('#layfile').uploadifyUpload();"/>
+        <input type="button" name="save" id="save" value="Save these Details" onclick="check_send();"/>
       </div>
     </li>
     <li>

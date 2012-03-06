@@ -15,7 +15,7 @@ unless ($COOKIE->{NO_ADS}) {
 }
 
 
-$Lays = $dbh->prepare("select id,layfile from invoice_layouts where acct_id='$COOKIE->{ACCT}'");
+$Lays = $dbh->prepare("select id,laydesc,layfile from invoice_layouts where acct_id='$COOKIE->{ACCT}'");
 $Lays->execute;
 
 use Template;
