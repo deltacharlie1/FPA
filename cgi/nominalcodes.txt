@@ -5,7 +5,7 @@
 1300	Cash	Current Assets	1300	Balance Sheet
 1310	Cheques	Current Assets	1310	Balance Sheet
 1400	VAT Input	Current Assets	1400	Balance Sheet
-1500	Other Current Current Assets	Assets	1500	Balance Sheet
+1500	Other Current Assets	Current Assets	1500	Balance Sheet
 2000	Creditors	Current Liabilities	2000	Balance Sheet
 2010	Credit Card	Current Liabilities	2010	Balance Sheet
 2100	VAT Output	Current Liabilities	2100	Balance Sheet
