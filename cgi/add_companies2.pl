@@ -128,7 +128,7 @@ EOD
 			$Last_day++;
 		}
 
-		$Sts = $dbh->do("insert into companies (reg_id,comname,comcontact,comemail,comvatqstart,comemailmsg,comstmtmsg,comyearend,comcis,combusiness) values ($Reg_id,'$Cell[0]','$Cell[1]','$Cell[2]','2010-01-01','$Emailmsg','$Stmtmsg','$Yr-$Month-$Last_day','$Cell[6]','$Cell[7]')");
+		$Sts = $dbh->do("insert into companies (reg_id,comname,comcontact,comemail,comvatqstart,comemailmsg,comstmtmsg,comyearend,comcis,combusiness,bkprlevel) values ($Reg_id,'$Cell[0]','$Cell[1]','$Cell[2]','2010-01-01','$Emailmsg','$Stmtmsg','$Yr-$Month-$Last_day','$Cell[6]','$Cell[7]','$COOKIE->{ACCESS}')");
 		$New_com_id = $dbh->last_insert_id(undef, undef, qw(companies undef));
 
 #  Now update the company record with the additional info
