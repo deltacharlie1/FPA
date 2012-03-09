@@ -33,6 +33,8 @@
 [% FOREACH item IN items -%]
   [% IF item.lifldcode=='a020' -%]
 <div id="[%- item.lifldcode -%]" style="[%- IF item.lileft > 0 -%]top:[%- item.litop -%]px;left:[%- item.lileft -%]px;width:[%- layout.descwidth -%]px;height:[%- layout.descheight -%]px;[%- ELSE -%]top:[%- 20 * (loop.count - 1) -%]px;[%- END -%]" class="draggable resizable bleft" title="[%- item.lidispname -%]">[%- item.lialias -%]</div>
+  [% ELSIF item.lifldcode=='a013' -%]
+<div id="[%- item.lifldcode -%]" style="[%- IF item.lileft > 0 -%]top:[%- item.litop -%]px;left:[%- item.lileft -%]px;width:[%- layout.rmkwidth -%]px;height:[%- layout.rmkheight -%]px;[%- ELSE -%]top:[%- 20 * (loop.count - 1) -%]px;[%- END -%]" class="draggable resizable bleft" title="[%- item.lidispname -%]">[%- item.lialias -%]</div>
   [% ELSE -%]
 <div id="[%- item.lifldcode -%]" style="top:[%- IF item.lileft > 0; item.litop; ELSE; 20 * (loop.count - 1); END -%]px;left:[%- item.lileft -%]px;height:[%- item.lisize -%]px;font-size:[%- item.lisize -%]px;[%- IF item.libold=='Y' -%] font-weight:bold;[%- END -%]" class="draggable [%- IF item.lijust=='l' -%]bleft[%- ELSIF item.lijust=='r' -%]bright[%- END -%]" title="[%- item.lidispname -%]" ondblclick="open_settings('[%- item.lifldcode -%]');">[%- item.lialias -%]</div>
   [% END -%]

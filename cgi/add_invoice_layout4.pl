@@ -47,6 +47,9 @@ foreach $Row (@Rows) {
 	if ($Cols[0] =~ /a020/i) {
 		$Sts = $dbh->do("update invoice_layouts set descwidth='$Cols[3]',descheight='$Cols[4]' where acct_id='$COOKIE->{ACCT}' and id=$FORM{id}");
 	}
+	elsif ($Cols[0] =~ /a013/i) {
+		$Sts = $dbh->do("update invoice_layouts set rmkwidth='$Cols[3]',rmkheight='$Cols[4]' where acct_id='$COOKIE->{ACCT}' and id=$FORM{id}");
+	}
 }
 
 #  Get the last invoice to use as an example

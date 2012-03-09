@@ -50,13 +50,13 @@ else {
   { lifldcode => 'a017', lidispname => 'Company Reg', litable => 'companies', lisource => 'comregno', lialias => 'regno', litop => '0', lileft => '0', lisize => '12', libold => 'N', lidisplay => 'N', lijust => 'l' },
   { lifldcode => 'a018', lidispname => 'Bank Sort Code', litable => 'accounts', lisource => 'accsort', lialias => 'sortcode', litop => '0', lileft => '0', lisize => '12', libold => 'N', lidisplay => 'N', lijust => 'l' },
   { lifldcode => 'a019', lidispname => 'Bank Acct #', litable => 'accountss', lisource => 'accacctno', lialias => 'acctno', litop => '0', lileft => '0', lisize => '12', libold => 'N', lidisplay => 'N', lijust => 'l' },
-  { lifldcode => 'a020', lidispname => 'Item Description', litable => 'items', lisource => '0', lialias => 'desc', litop => '0', lileft => '0', lisize => '12', libold => 'N', lidisplay => 'N', lijust => 'l' },
-  { lifldcode => 'a021', lidispname => 'Item Quantity', litable => 'items', lisource => '2', lialias => 'qty', litop => '0', lileft => '0', lisize => '12', libold => 'N', lidisplay => 'N', lijust => 'l' },
-  { lifldcode => 'a022', lidispname => 'Item Unit Price', litable => 'items', lisource => '1', lialias => 'price', litop => '0', lileft => '0', lisize => '12', libold => 'N', lidisplay => 'N', lijust => 'r' },
-  { lifldcode => 'a023', lidispname => 'Item Net Total', litable => 'items', lisource => '3', lialias => 'net', litop => '0', lileft => '0', lisize => '12', libold => 'N', lidisplay => 'N', lijust => 'r' },
-  { lifldcode => 'a024', lidispname => 'Item VAT Rate', litable => 'items', lisource => '4', lialias => 'vrate', litop => '0', lileft => '0', lisize => '12', libold => 'N', lidisplay => 'N', lijust => 'l' },
-  { lifldcode => 'a025', lidispname => 'Item VAT Total', litable => 'items', lisource => '5', lialias => 'vat', litop => '0', lileft => '0', lisize => '12', libold => 'N', lidisplay => 'N', lijust => 'r' },
-  { lifldcode => 'a026', lidispname => 'Item Total', litable => 'items', lisource => '6', lialias => 'itmtotal', litop => '0', lileft => '0', lisize => '12', libold => 'N', lidisplay => 'N', lijust => 'r' }
+  { lifldcode => 'a020', lidispname => 'Item Description', litable => 'items', lisource => '0', lialias => 'desc', litop => '0', lileft => '0', lisize => '10', libold => 'N', lidisplay => 'N', lijust => 'l' },
+  { lifldcode => 'a021', lidispname => 'Item Quantity', litable => 'items', lisource => '2', lialias => 'qty', litop => '0', lileft => '0', lisize => '10', libold => 'N', lidisplay => 'N', lijust => 'l' },
+  { lifldcode => 'a022', lidispname => 'Item Unit Price', litable => 'items', lisource => '1', lialias => 'price', litop => '0', lileft => '0', lisize => '10', libold => 'N', lidisplay => 'N', lijust => 'r' },
+  { lifldcode => 'a023', lidispname => 'Item Net Total', litable => 'items', lisource => '3', lialias => 'net', litop => '0', lileft => '0', lisize => '10', libold => 'N', lidisplay => 'N', lijust => 'r' },
+  { lifldcode => 'a024', lidispname => 'Item VAT Rate', litable => 'items', lisource => '4', lialias => 'vrate', litop => '0', lileft => '0', lisize => '10', libold => 'N', lidisplay => 'N', lijust => 'l' },
+  { lifldcode => 'a025', lidispname => 'Item VAT Total', litable => 'items', lisource => '5', lialias => 'vat', litop => '0', lileft => '0', lisize => '10', libold => 'N', lidisplay => 'N', lijust => 'r' },
+  { lifldcode => 'a026', lidispname => 'Item Total', litable => 'items', lisource => '6', lialias => 'itmtotal', litop => '0', lileft => '0', lisize => '10', libold => 'N', lidisplay => 'N', lijust => 'r' }
 );
 
 }
@@ -99,12 +99,25 @@ $(document).ready(function(){
   });
 });
 function check_send() {
-  if ($("#layfileQueue").html() == "" || $("#laydesc").val() == "") {
-    alert("You must select a Layout File and enter a description");
+  if ($("#laydesc").val() == "") {
+    alert("You must enter a description when adding a layout file");
   }
   else {
-    $("#layfile").uploadifySettings( "scriptData",{ "uploadparms" : $("#layform").serialize() });
-    $("#layfile").uploadifyUpload();
+    if ($("#layfileQueue").html() == "") {
+        $.post("/cgi-bin/fpa/add_invoice_layout2.pl", "cookie='.$COOKIE->{COOKIE}.'&doc_type=LAYOUT&"+$("#layform").serialize(),function(data) {
+          if (/Error/i.test(data)) {
+            alert(data);
+          }
+          else {
+            location.href="/cgi-bin/fpa/layout_invoice_layout.pl?" + data;
+          }
+        },"text");
+
+    }
+    else {
+      $("#layfile").uploadifySettings( "scriptData",{ "uploadparms" : $("#layform").serialize() });
+      $("#layfile").uploadifyUpload();
+    }
   }
 }
 function setfocus() {

@@ -27,13 +27,13 @@ use DBI;
   a017 => { name => 'Company Reg', table => 'companies', source => 'comregno', alias => 'regno', top => '0', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
   a018 => { name => 'Bank Sort Code', table => 'accounts', source => 'accsort', alias => 'sortcode', top => '0', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
   a019 => { name => 'Bank Acct #', table => 'accountss', source => 'accacctno', alias => 'acctno', top => '0', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
-  a020 => { name => 'Item Description', table => 'items', source => '0', alias => 'desc', top => '0', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
-  a021 => { name => 'Item Quantity', table => 'items', source => '2', alias => 'qty', top => '0', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
-  a022 => { name => 'Item Unit Price', table => 'items', source => '1', alias => 'price', top => '0', left => '0', size => '12', bold => 'N', display => 'N', just => 'r' },
-  a023 => { name => 'Item Net Total', table => 'items', source => '3', alias => 'net', top => '0', left => '0', size => '12', bold => 'N', display => 'N', just => 'r' },
-  a024 => { name => 'Item VAT Rate', table => 'items', source => '4', alias => 'vrate', top => '0', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' },
-  a025 => { name => 'Item VAT Total', table => 'items', source => '5', alias => 'vat', top => '0', left => '0', size => '12', bold => 'N', display => 'N', just => 'r' },
-  a026 => { name => 'Item Total', table => 'items', source => '6', alias => 'itmtotal', top => '0', left => '0', size => '12', bold => 'N', display => 'N', just => 'r' },
+  a020 => { name => 'Item Description', table => 'items', source => '0', alias => 'desc', top => '0', left => '0', size => '10', bold => 'N', display => 'N', just => 'l' },
+  a021 => { name => 'Item Quantity', table => 'items', source => '2', alias => 'qty', top => '0', left => '0', size => '10', bold => 'N', display => 'N', just => 'l' },
+  a022 => { name => 'Item Unit Price', table => 'items', source => '1', alias => 'price', top => '0', left => '0', size => '10', bold => 'N', display => 'N', just => 'r' },
+  a023 => { name => 'Item Net Total', table => 'items', source => '3', alias => 'net', top => '0', left => '0', size => '10', bold => 'N', display => 'N', just => 'r' },
+  a024 => { name => 'Item VAT Rate', table => 'items', source => '4', alias => 'vrate', top => '0', left => '0', size => '10', bold => 'N', display => 'N', just => 'l' },
+  a025 => { name => 'Item VAT Total', table => 'items', source => '5', alias => 'vat', top => '0', left => '0', size => '10', bold => 'N', display => 'N', just => 'r' },
+  a026 => { name => 'Item Total', table => 'items', source => '6', alias => 'itmtotal', top => '0', left => '0', size => '10', bold => 'N', display => 'N', just => 'r' },
 );
 
 $Data = new CGI;
@@ -127,21 +127,25 @@ EOD
 }
 else {
 
-#  See if this is a new image and, if so, whether he has reached his limit (5)
+	if ($FORM{Filename}) {
+		$Companies = $dbh->prepare("select comdocsdir from companies where reg_id=$Reg_id and id=$Com_id");
+		$Companies->execute;
+		$Company = $Companies->fetchrow_hashref;
+		$Companies->finish;
 
-	$Companies = $dbh->prepare("select comdocsdir from companies where reg_id=$Reg_id and id=$Com_id");
-	$Companies->execute;
-	$Company = $Companies->fetchrow_hashref;
-	$Companies->finish;
 
-	open(IMG,">/projects/fpa_docs/".$Company->{comdocsdir}."/".$FORM{Filename}) || warn "unable to open file\n";
-	print IMG $Original;
-	close(IMG);
+		open(IMG,">/projects/fpa_docs/".$Company->{comdocsdir}."/".$FORM{Filename}) || warn "unable to open file\n";
+		print IMG $Original;
+		close(IMG);
 
-	$Sts = $dbh->do("update invoice_layouts set layfile='/projects/fpa_docs/$Company->{comdocsdir}/$FORM{Filename}',laydesc='$FORM{laydesc}',laydateformat='$FORM{laydateformat}' where acct_id='$COOKIE->{ACCT}' and id=$FORM{id}");
+		$Sts = $dbh->do("update invoice_layouts set layfile='/projects/fpa_docs/$Company->{comdocsdir}/$FORM{Filename}',laydesc='$FORM{laydesc}',laydateformat='$FORM{laydateformat}' where acct_id='$COOKIE->{ACCT}' and id=$FORM{id}");
+	}
+	else {
+		$Sts = $dbh->do("update invoice_layouts set laydesc='$FORM{laydesc}',laydateformat='$FORM{laydateformat}' where acct_id='$COOKIE->{ACCT}' and id=$FORM{id}");
+	}
 
 	while (($Key,$Value) = each %Settings) {
-		$Sts = $dbh->do("update invoice_layout_items set lidisplay='$Value->{display}' where acct_id='$COOKIE->{ACCT}' and link_id=$FORM{id} and lifldcode='$Key'");
+		$Sts = $dbh->do("update invoice_layout_items set lidisplay='$Value->{display}',lisource='$Value->{source}' where acct_id='$COOKIE->{ACCT}' and link_id=$FORM{id} and lifldcode='$Key'");
 	}
 
 	print<<EOD;

@@ -105,7 +105,7 @@ create table companies (
   commerchantref varchar(100) not null default '' comment 'Card processor subscriber reference',
   comcardref varchar(100) not null default '' comment 'Secure card ref',
   comsubref varchar(100) not null default '' comment 'Subscription ref',
-  comlayout varchar(100) not null default '0' comment 'Default invoice layout to use',
+  comlayout nt not null default 0 comment 'Default invoice layout to use',
   bkprlevel car(2) not null default '0', comment 'access level when created by bookkeeper',
   old_id int unsigned,
   index (reg_id)
@@ -184,6 +184,7 @@ create table customers (
   cusstmtmsg varchar(5000) not null default '' comment 'Default stmt meesage for this customer',
   cusautostmts char(1) not null default 'N' comment 'Whether to run auto statements for this customer',
   cuscis char(3) not null default 'N' comment 'Whether this customer is a CIS Contractor',
+  cuslayout int not null default 0,
   old_id int unsigned,
   index cus1 (acct_id),
   index cus2 (cusname)
@@ -231,7 +232,7 @@ create table invoices (
   invaccumtot decimal(6,0) not null default '0' comment 'the last number, ie max of invoices to be produced',
   invnextinvdate date not null default '2000-01-01' comment 'Date of next repeat invoice',
   invnotes text comment 'notes',
-  invlayout varchar(100) not null default '0',
+  invlayout int not null default 0,
   old_id int unsigned,
   index inv1 (acct_id),
   index inv2 (invinvoiceno)

@@ -5,7 +5,7 @@
   <table width="660" border="0" cellpadding="0" cellspacing="0" class="formtable">
     <tr>
       <td><label>Layout Description</label></td>
-      <td><input type="text" name="laydesc" id="laydesc" size="30" value="[%- layout.laydesc -%]" clas="mandatory"/></td>
+      <td><input type="text" name="laydesc" id="laydesc" size="30" value="[%- layout.laydesc -%]" class="mandatory"/></td>
     </tr>
     <tr>
       <td style="vertical-align:middle;"><label>Select Invoice Layout File (up to 30k pdf)</label></td>

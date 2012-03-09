@@ -9,6 +9,8 @@ create table invoice_layouts (
   layfile varchar(120) not null default '',
   descwidth char(3) not null default '300',
   descheight char(3) not null default '300',
+  rmkwidth char(3) not null default '100',
+  rmkheight char(3) not null default '60',
   index lay1 (acct_id)
 );
 drop table if exists invoice_layout_items;
@@ -30,4 +32,4 @@ create table invoice_layout_items (
   lijust char(1) not null default 'l',
   index li1 (acct_id)
 );
-
+alter table customers add column cuslayout int not null default 0;

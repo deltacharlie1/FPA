@@ -20,6 +20,11 @@ $LIs->finish;
 
 foreach $LI (@$LIT) {
 
+	if ($LI->{lifldcode} =~ /a013/i) {
+		$Yrmk = 830 - $LI->{litop};
+		$Xrmk = $Item->{lileft};
+	}
+
 	if ($LI->{litable} =~ /companies/i) {
 		$C_sel .= $LI->{lisource}." as ".$LI->{lialias}.",";
 	}
@@ -53,7 +58,7 @@ if ($A_sel) {
 	$Accts->finish;
 }
 if ($I_sel) {
-	$I_sel .= ",invstatus";
+	$I_sel .= ",invstatus,invtype";
 	$Invoices = $dbh->prepare("select $I_sel from invoices where acct_id='$COOKIE->{ACCT}' and id=$Inv_id");
 	$Invoices->execute;
 	$invoices = $Invoices->fetchrow_hashref;
@@ -80,24 +85,24 @@ use PDF::API2;
 use PDF::TextBlock;
 use PDF::TextBlock::Font;
 
-if ($Invoice->{invstatus} =~ /Draft/i) {
-	$Invoice->{invtype} = "DRAFT INVOICE";
+if ($invoices->{invstatus} =~ /Draft/i) {
+	$invoices->{invtype} = "DRAFT INVOICE";
 }
-if ($Invoice->{invtype} =~ /^C/) {
-	$Invoice->{invtype} = "CREDIT NOTE";
+if ($invoices->{invtype} =~ /^C/) {
+	$invoices->{invtype} = "CREDIT NOTE";
 }
-elsif ($Invoice->{invstatus} =~ /Quote/i) {
-	$Invoice->{invtype} = "QUOTATION";
+elsif ($invoices->{invstatus} =~ /Quote/i) {
+	$invoices->{invtype} = "QUOTATION";
 }
 else {
-	$Invoice->{invtype} = "INVOICE";
+	$invoices->{invtype} = "INVOICE";
 }
 
-if ($Invoice[3] == "0") {
-	$Invoice[3] = "Due Now";
+if ($invoices->{custerms} == "0") {
+	$invoices->{custerms} = "Due Now";
 }
-elsif ($Invoice[3] =~ /^\d+$/) {
-	$Invoice[3] .= " Days";
+elsif ($invoices->{custerms} =~ /^\d+$/) {
+	$invoices->{custerms} .= " Days";
 }
 
 $page = "";
@@ -147,7 +152,6 @@ for $Row (@Row) {
 		$Cell[5] =~ s/<br\/>//ig;
 
 		foreach $Item (@Items) {
-			$Item->{lisize} = '10';
 			if ($Item->{libold} =~ /Y/i) {
 				$text->font($font_bold,$Item->{lisize} );
 			}
@@ -177,7 +181,7 @@ for $Row (@Row) {
 		$vattotal += $Cell[5];
 		$invtotal += $Cell[3] + $Cell[5];
 
-		if ($Ypos < 200) {
+		if ($Ypos < $Item->{litop} - $Layout->{descheight} + 20) {
 			$page = $pdf->page();
 			&set_new_page;
 		}
@@ -185,8 +189,6 @@ for $Row (@Row) {
 }
 
 #  Finally, enter the totals
-
-$text->lead('28');
 
 foreach $Calc (@Calc) {
 	if ($Calc->{libold} =~ /Y/i) {
@@ -212,7 +214,7 @@ else {
 }
 my $PDF_doc = $pdf->stringify();
 $pdf->end;
-return ($PDF_doc,$Invoice->{invinvoiceno});
+return ($PDF_doc,$invoices->{invinvoiceno});
 }
 
 sub set_new_page {
@@ -226,33 +228,6 @@ $text = $page->text();
 
 $Line_len = 0;
 
-
-foreach $Header (@Header) {
-	if ($Header->{libold} =~ /Y/i) {
-		$text->font($font_bold,$Header->{lisize} );
-	}
-	else {
-		$text->font($font, $Header->{lisize});
-	}
-	$text->lead($Header->{lisize} + 2);
-	$text->transform( -translate => [$Header->{lileft},830-$Header->{litop}]);
-	if ($Header->{lisource} =~ /concat/i) {	#  these are multi line
-		@Line = split(/\n/,${$Header->{litable}}->{$Header->{lialias}});
-		foreach (@Line) {
-			$text->text($_);
-			$text->cr();
-		}
-	}
-	else {
-		if ($Header->{lijust} =~ /r/i) {
-			$text->text_right(${$Header->{litable}}->{$Header->{lialias}});
-		}
-		else {
-			$text->text(${$Header->{litable}}->{$Header->{lialias}});
-		}
-	}
-}
-
 #  Set the line item block settings
 
 foreach $Item (@Items) {
@@ -261,7 +236,7 @@ foreach $Item (@Items) {
 		$Xpos = $Item->{lileft};
 	}
 }
-$text->font($font,10);
+# $text->font($font,10);
 
 #  Now do the line items - set up the text block fiexed parameters
 
@@ -280,5 +255,53 @@ $tb = PDF::TextBlock->new({
    h     => $Layout->{descheight},
    align => 'left',
 });
+if ($I_sel =~ /invremarks/i) {
+	$rb = PDF::TextBlock->new({
+   pdf   => $pdf,
+   page  => $page,
+   fonts => {
+      default => PDF::TextBlock::Font->new({
+         pdf       => $pdf,
+         font      => $pdf->corefont( 'Helvetica' ),
+         size      => 10,
+      }),
+   },
+   x     => $Xrmk,
+   w     => $Layout->{rmkwidth},
+   h     => $Layout->{rmkheight},
+   align => 'left',
+});
+}
+
+foreach $Header (@Header) {
+	if ($Header->{libold} =~ /Y/i) {
+		$text->font($font_bold,$Header->{lisize} );
+	}
+	else {
+		$text->font($font, $Header->{lisize});
+	}
+	$text->lead($Header->{lisize} + 2);
+	$text->transform( -translate => [$Header->{lileft},830-$Header->{litop}]);
+	if ($Header->{lisource} =~ /concat/i) {	#  these are multi line
+		@Line = split(/\n/,${$Header->{litable}}->{$Header->{lialias}});
+		foreach (@Line) {
+			$text->text($_);
+			$text->cr();
+		}
+	}
+	elsif ($Header->{lifldcode} =~ /a013/i) {		#  This is a remark
+		$rb->y($Yrmk);
+		$rb->text(${$Header->{litable}}->{$Header->{lialias}});
+		($endw, $New_Ypos) = $rb->apply();
+	}
+	else {
+		if ($Header->{lijust} =~ /r/i) {
+			$text->text_right(${$Header->{litable}}->{$Header->{lialias}});
+		}
+		else {
+			$text->text(${$Header->{litable}}->{$Header->{lialias}});
+		}
+	}
+}
 }
 1;

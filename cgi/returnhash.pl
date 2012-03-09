@@ -36,7 +36,7 @@ $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
 
 #  gett the current setup
 
-$Companies = $dbh->prepare("select comsubtype,commerchantref,comcardref,comsubref from companies where reg_id=$Reg_id and id=$Com_id");
+$Companies = $dbh->prepare("select comsubtype,commerchantref,comcardref,comsubref,comdocsdir from companies where reg_id=$Reg_id and id=$Com_id");
 $Companies->execute;
 $Company = $Companies->fetchrow_hashref;
 
@@ -61,7 +61,13 @@ unless ($Company->{commerchantref}) {
 	$Merchref = Digest->new("MD5");
 	$Merchref->add($$.$COOKIE->{ID});
 	$Company->{commerchantref} = $Merchref->hexdigest;
-	$Sts = $dbh->do("update companies set commerchantref='$Company->{commerchantref}',comdocsdir='$Company->{commerchantref}' where reg_id=$Reg_id and id=$Com_id");
+	$Sts = $dbh->do("update companies set commerchantref='$Company->{commerchantref}' where reg_id=$Reg_id and id=$Com_id");
+}
+unless ($Company->{comdocsdir}) {
+	$Merchref = Digest->new("MD5");
+	$Merchref->add($$.$COOKIE->{ID});
+	$Company->{comdocsdir} = $Merchref->hexdigest;
+	$Sts = $dbh->do("update companies set comdocsdir='$Company->{comdocsdir}' where reg_id=$Reg_id and id=$Com_id");
 	mkdir("/projects/fpa_docs/".$Company->{commerchantref});
 }
 
