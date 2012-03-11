@@ -93,8 +93,14 @@ else {
 
 #  Update the other account nominal code
 
-	$Sts = $dbh->do("update coas set coabalance=coabalance - '$FORM{tframt}' where acct_id='$COOKIE->{ACCT}' and coanominalcode='$FORM{acc}'");
-	$Sts = $dbh->do("insert into nominals (acct_id,link_id,nomtype,nomcode,nomamount,nomdate) values ('$COOKIE->{ACCT}',$New_txn_id,'T','$FORM{acc}','$Contra_amt',str_to_date('$FORM{tfrdate}','%d-%b-%y'))");
+	if ($FORM{acc} =~ /2010/) {
+		$Sts = $dbh->do("update coas set coabalance=coabalance + '$FORM{tframt}' where acct_id='$COOKIE->{ACCT}' and coanominalcode='$FORM{acc}'");
+		$Sts = $dbh->do("insert into nominals (acct_id,link_id,nomtype,nomcode,nomamount,nomdate) values ('$COOKIE->{ACCT}',$New_txn_id,'T','$FORM{acc}',0-'$Contra_amt',str_to_date('$FORM{tfrdate}','%d-%b-%y'))");
+	}
+	else {
+		$Sts = $dbh->do("update coas set coabalance=coabalance - '$FORM{tframt}' where acct_id='$COOKIE->{ACCT}' and coanominalcode='$FORM{acc}'");
+		$Sts = $dbh->do("insert into nominals (acct_id,link_id,nomtype,nomcode,nomamount,nomdate) values ('$COOKIE->{ACCT}',$New_txn_id,'T','$FORM{acc}','$Contra_amt',str_to_date('$FORM{tfrdate}','%d-%b-%y'))");
+	}
 
 #  Create an audit trail record
         $FORM{tframt} =~ tr/-//d;
