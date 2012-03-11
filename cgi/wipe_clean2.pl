@@ -76,7 +76,7 @@ else {
 
 	$Sts = $dbh->do("update coas set coabalance='0' where acct_id='$COOKIE->{ACCT}'");
 
-	$Sts = $dbh->do("delete from coas where acct_id='$COOKIE->{ACCT}' and coanominalcode<>coagroup and coanominalcode not in ('4310','6010'");
+	$Sts = $dbh->do("delete from coas where acct_id='$COOKIE->{ACCT}' and coanominalcode<>coagroup and coanominalcode not in ('4310','6010')");
 	$Sts = $dbh->do("update companies set cominvstats='0',comtxnstats='',comnetstats='',comvatcontrol='0',comnextsi='100001',comnextpi='500001',comnextpr='1001',comnocheques='0',comacccompleted='N',comnexttxn='1' where reg_id=$Reg_id and id=$Com_id");
 	print<<EOD;
 Content-Type: text/plain

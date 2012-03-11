@@ -18,6 +18,7 @@
           <option value="2300">Reduction of Loan to company</option>
           <option value="3000">Increase in Share Capital</option>
 [% ELSE -%]
+          [% cookie.5000 | remove('selected=\'selected\'') -%]
           <option value="6000" selected="selected">Un-Specified</option>
           [% cookie.6000 | remove('selected=\'selected\'') -%]
           <option value="1000">Asset Depreciation</option>

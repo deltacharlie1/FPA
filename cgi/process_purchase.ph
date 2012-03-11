@@ -322,8 +322,14 @@ sub money_out {
 
 #  Bank, cash etc (adding a minus amount)
 
-	$Sts = $dbh->do("update coas set coabalance=coabalance + '$Txntot' where acct_id='$COOKIE->{ACCT}' and coanominalcode='$FORM{txnmethod}'");
-        $Sts = $dbh->do("insert into nominals (acct_id,link_id,nomtype,nomcode,nomamount,nomdate) values ('$COOKIE->{ACCT}',$New_txn_id,'T','$FORM{txnmethod}','$Txntot',str_to_date('$FORM{invprintdate}','%d-%b-%y'))");
+	if ($FORM{txnmethod} =~ /2010/) {
+		$Sts = $dbh->do("update coas set coabalance=coabalance - '$Txntot' where acct_id='$COOKIE->{ACCT}' and coanominalcode='$FORM{txnmethod}'");
+        	$Sts = $dbh->do("insert into nominals (acct_id,link_id,nomtype,nomcode,nomamount,nomdate) values ('$COOKIE->{ACCT}',$New_txn_id,'T','$FORM{txnmethod}',0-'$Txntot',str_to_date('$FORM{invprintdate}','%d-%b-%y'))");
+	}
+	else {
+		$Sts = $dbh->do("update coas set coabalance=coabalance + '$Txntot' where acct_id='$COOKIE->{ACCT}' and coanominalcode='$FORM{txnmethod}'");
+        	$Sts = $dbh->do("insert into nominals (acct_id,link_id,nomtype,nomcode,nomamount,nomdate) values ('$COOKIE->{ACCT}',$New_txn_id,'T','$FORM{txnmethod}','$Txntot',str_to_date('$FORM{invprintdate}','%d-%b-%y'))");
+	}
 
 #  Customer balance
 
