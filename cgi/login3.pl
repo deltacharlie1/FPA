@@ -71,7 +71,7 @@ else {
 	close(COOKIE);
 	print<<EOD;
 Content-Type: text/html
-Status: 301
+Status: 302
 Location: /cgi-bin/fpa/login4.pl?0
 Set-Cookie: fpa-cookie=$Cookie; path=/;
 

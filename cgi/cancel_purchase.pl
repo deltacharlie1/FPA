@@ -87,7 +87,7 @@ else {
 
 	print<<EOD;
 Content-Type: text/html
-Status: 301
+Status: 302
 Location: /cgi-bin/fpa/list_purchases.pl
 
 EOD

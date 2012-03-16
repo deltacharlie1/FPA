@@ -164,7 +164,7 @@ Set-Cookie: fpa-cookie=$Cookie; path=/;
 Set-Cookie: fpa-comname=$Company->{comname}; path=/;
 Set-Cookie: fpa-next_advert=0; path=/;
 Set-Cookie: fpa-last_advert=12; path=/;
-Status: 301
+Status: 302
 Location: /cgi-bin/fpa/$Href
 
 EOD

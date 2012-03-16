@@ -81,7 +81,7 @@ $Sts = $dbh->do("update companies set comnexttxn='$Txn_no' where reg_id=$Reg_id 
 
 print<<EOD;
 Content-Type: text/html
-Status: 301
+Status: 302
 Location: /cgi-bin/fpa/list_coas.pl
 
 EOD

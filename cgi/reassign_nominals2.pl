@@ -121,7 +121,7 @@ while (( $Key,$Value) = each %FORM) {
 
 print<<EOD;
 Content-Type: text/html
-Status: 301
+Status: 302
 Location: /cgi-bin/fpa/reassign_nominals.pl
 
 EOD

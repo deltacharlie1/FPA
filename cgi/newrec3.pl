@@ -77,7 +77,7 @@ $Sts = $dbh->do("insert into audit_trails (acct_id,link_id,audtype,audaction,aud
 
 print<<EOD;
 Content-Type: text/html
-Status: 301
+Status: 302
 Location: /cgi-bin/fpa/list_stmt_txns.pl?filter=$New_stmt_id
 
 EOD

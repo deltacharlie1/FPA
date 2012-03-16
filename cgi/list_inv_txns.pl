@@ -30,7 +30,7 @@ if ($Invoices->rows == 1) {
 
 	print<<EOD;
 Content-Type: text/html
-Status: 301
+Status: 302
 Location: /cgi-bin/fpa/update_$Prog.pl?$Invoice[0]
 
 EOD

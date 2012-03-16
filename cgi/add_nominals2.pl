@@ -102,7 +102,7 @@ close(FILE);
 $dbh->disconnect;
 print<<EOD;
 Content-Type: text/plain
-Status: 301
+Status: 302
 Location: /cgi-bin/fpa/add_nominals.pl
 
 EOD

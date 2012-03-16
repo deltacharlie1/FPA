@@ -127,98 +127,9 @@ $dbh->disconnect;
 
 print<<EOD;
 Content-Type: text/html
-Status: 301
+Status: 302
 Location: /cgi-bin/fpa/dashboard.pl
 
 EOD
 
-exit;
-#!/usr/bin/perl
-
-#  login script part 4 - set up the proper cookie file and display the opening screen
-
-use DBI;
-$dbh = DBI->connect("DBI:mysql:fpa");
-
-# ($Offset,$Multi) = split(/\?/,$ENV{QUERY_STRING});
-@Cookie = split(/\;/,$ENV{HTTP_COOKIE});
-foreach (@Cookie) {
-        ($Name,$Value) = split(/\=/,$_);
-        $Name =~ s/^ //g;
-        $Value =~ tr/\"//d;
-         $Cookie{$Name} = $Value;
-}
-open(COOKIE,"/projects/tmp/$Cookie{'fpa-cookie'}");
-while (<COOKIE>) {
-	chomp($_);
-	($Name,$Value) = split(/\t/,$_);
-	$COOKIE->{$Name} = $Value;
-}
-close(COOKIE);
-
-unlink("/projects/tmp/$Cookie{'fpa-cookie'}");
-
-$Reg_coms = $dbh->prepare("select reg2_id,com_id,comname,mlgdefmenu from reg_coms where reg1_id=$COOKIE->{REG} order by id");
-$Reg_coms->execute;
-
-$User = $COOKIE->{ID};
-$User =~ s/^(.*?)\@.*/$1/;
-@Reg_com = $Reg_coms->fetchrow;		#  Get the first entry which should be the original
-
-$Cookie = $Reg[2].$$;
-
-close(COOKIE);
-$COOKIE->{ACCT} = "$New_reg_id+$New_com_id";
-
-#  Update the visitcount
-
-$Regs = $dbh->do("update registrations set reglastlogindate=now(),regvisitcount=regvisitcount + 1 where reg_id=$New_reg_id");
-
-#  Update the status of any invoices
-
-$Invoices = $dbh->prepare("select to_days(invprintdate),to_days(invduedate),to_days(now()),invtotal,invvat,invpaid,invpaidvat,id from invoices where invstatuscode > '2' and not isnull(invduedate) and acct_id='$COOKIE->{ACCT}'");
-$Invoices->execute;
-while (@Invoice = $Invoices->fetchrow) {
-
-	if ($Invoice[1] < $Invoice[2]) {
-		$Sts = $dbh->do("update invoices set invstatus='Overdue',invstatuscode='9' where id=$Invoice[7] and acct_id='$COOKIE->{ACCT}'");
-	}
-	elsif (($Invoice[1] - $Invoice[2]) < ($Invoice[1] - $Invoice[0]) * 0.7) {
-		$Sts = $dbh->do("update invoices set invstatus='Due',invstatuscode='6' where id=$Invoice[7] and acct_id='$COOKIE->{ACCT}'");
-	}
-}
-$Invoices->finish;
-
-#  Check to see if the company details and account details have been completed
-
-$Href = $Reg_com[3];
-unless ($Company->{comcompleted}) {
-	$Href = "company_details.pl";
-}
-if ($Multi) {
-	print<<EOD;
-Content-Type: text/plain
-Set-Cookie: fpa-cookie=$Cookie; path=/;
-Set-Cookie: fpa-comname=$Company->{comname}; path=/;
-Set-Cookie: fpa-next_advert=0; path=/;
-Set-Cookie: fpa-last_advert=12; path=/;
-Status: 301
-Location: /cgi-bin/fpa/$Href
-
-EOD
-}
-else {
-	print<<EOD;
-Content-Type: text/plain
-Set-Cookie: fpa-cookie=$Cookie; path=/;
-Set-Cookie: fpa-comname=$Company->{comname}; path=/;
-Set-Cookie: fpa-next_advert=0; path=/;
-Set-Cookie: fpa-last_advert=12; path=/;
-
-XqQsOK-$Href
-
-EOD
-}
-$Reg_coms->finish;
-$dbh->disconnect;
 exit;

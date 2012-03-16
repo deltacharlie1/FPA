@@ -84,7 +84,7 @@ foreach $Invoice (@Invoices) {
 $dbh->disconnect;
 print<<EOD;
 Content-Type: text/plain
-Status: 301
+Status: 302
 Location: /cgi-bin/fpa/list_purchases.pl
 
 EOD

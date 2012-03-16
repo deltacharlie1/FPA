@@ -26,7 +26,7 @@ close(COOKIE);
 unless ($Cookie{'fpa-uid'} && $Cookie{'fpa-uid'} eq $COOKIE->{ID}) {
         print<<EOD;
 Content-Type: text/html
-Status: 301
+Status: 302
 Location: /fpa/error.html
 
 EOD

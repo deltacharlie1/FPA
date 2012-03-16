@@ -110,7 +110,7 @@ $Companies->finish;
 $dbh->disconnect;
 print<<EOD;
 Content-Type: text/plain
-Status: 301
+Status: 302
 Location: /cgi-bin/fpa/trial_balance.pl
 
 EOD

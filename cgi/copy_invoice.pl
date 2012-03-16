@@ -59,7 +59,7 @@ my $New_inv_id = $dbh->last_insert_id(undef, undef, qw(invoices undef));
 
 print<<EOD;
 Content-Type: text/html
-Status: 301
+Status: 302
 Location: /cgi-bin/fpa/update_invoice.pl?$New_inv_id
 
 EOD
