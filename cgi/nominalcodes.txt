@@ -12,7 +12,7 @@
 2200	Other Current Liability	Current Liabilities	2200	Balance Sheet
 2300	Long Term Liability	Longterm Liabilities	2300	Balance Sheet
 3000	Share Capital	Capital	3000	Balance Sheet
-3100	Retained Earnings	Capital	3100	Balance Sheet
+3100	Capital Account	Capital	3100	Balance Sheet
 4000	UK Sales	Income	4000	P & L
 4100	EU Sales	Income	4100	P & L
 4200	Export Sales	Income	4200	P & L
