@@ -33,7 +33,7 @@ foreach $pair (@pairs) {
 }
 
 use Digest;
-$Dig =  Digest->new("SHA-1");
+$Dig =  Digest->new("MD5");
 $Dig->add($FORM{email}.$COOKIE->{ACCT});
 $Activecode = $Dig->hexdigest;
 
