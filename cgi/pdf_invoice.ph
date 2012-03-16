@@ -87,7 +87,13 @@ $Net = "";
 $Vat = "";
 $Total = "";
 
-$pdf = PDF::API2->open('/usr/local/git/fpa/htdocs/images/invoice_default_layout.pdf');
+if ($COOKIE->{VAT} =~ /N/i) {
+	$pdf = PDF::API2->open('/usr/local/git/fpa/htdocs/images/default_nonvat_invoice_layout.pdf');
+}
+else {
+	$pdf = PDF::API2->open('/usr/local/git/fpa/htdocs/images/invoice_default_layout.pdf');
+}
+
 $page = $pdf->openpage(1);
 $font = $pdf->corefont('Helvetica');
 $font_bold = $pdf->corefont('Helvetica Bold');
@@ -232,6 +238,11 @@ if ($logo) {
 }
 
 ############   Variable Data   ####################
+
+$text->transform( -translate => [151,779]);
+$text->font($font_bold, 20);
+$text->lead(24);
+$text->text_center("$Invtype");
 
 $Line_len = 0;
 
