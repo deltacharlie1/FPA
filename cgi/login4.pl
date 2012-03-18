@@ -86,31 +86,21 @@ if ($Company->{diffyearenddue} < 0) {
 
 }
 
-if ($ACCESS > 1 || $Company->{bkprlevel} > 3) {
-
 #  Get the User defined account codes
 
-	$Coas = $dbh->prepare("select coanominalcode,coadesc,coagroup from coas where acct_id='$Reg_com[0]+$Reg_com[1]' and coagroup=? order by coanominalcode");
-	foreach $Coa ('4300','5000','6000','7000') {
-		$Coas->execute($Coa);
-		while (@Coa = $Coas->fetchrow) {
-			if ($Coa[1] =~ /^Other Exp/i && ! $Opt{$Coa}) {
-				$Opt{$Coa} .= "<option value='$Coa[0]' selected='selected'>$Coa[1]</option>";
-			}
-			else {
-				$Opt{$Coa} .= "<option value='$Coa[0]'>$Coa[1]</option>";
-			}
-		}	
-	}
-	$Coas->finish;
+$Coas = $dbh->prepare("select coanominalcode,coadesc,coagroup from coas where acct_id='$Reg_com[0]+$Reg_com[1]' and coagroup=? order by coanominalcode");
+foreach $Coa ('1000','1500','3100','4300','5000','6000','7000') {
+	$Coas->execute($Coa);
+	while (@Coa = $Coas->fetchrow) {
+		if ($Coa[1] =~ /^Other Exp/i && ! $Opt{$Coa}) {
+			$Opt{$Coa} .= "<option value='$Coa[0]' selected='selected'>$Coa[1]</option>";
+		}
+		else {
+			$Opt{$Coa} .= "<option value='$Coa[0]'>$Coa[1]</option>";
+		}
+	}	
 }
-else {
-	$Opt{4300} = "<option value='4300'>Other Income</option><option value='4310'>Bank Interest</option>";
-	$Opt{5000} = "<option value='5000'>Cost of Sales</option>";
-	$Opt{6000} = "<option value='6000' selected='seleted'>Other Expenses</option><option value='6010'>Bank Charges</option>";
-	$Opt{7000} = "<option value='7000'>Fixed Overheads</option>";
-}
-
+$Coas->finish;
 
 #  Set the correct FRS percentage
 

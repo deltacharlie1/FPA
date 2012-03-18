@@ -16,7 +16,7 @@ unless ($COOKIE->{NO_ADS}) {
 
 ($Reg_id,$Com_id) = split(/\+/,$COOKIE->{ACCT});
 
-$Coas = $dbh->prepare("select coas.coanominalcode,coas.coadesc,concat(coas.coagroup,' - ',a.coadesc) as coagrp,coas.coatype,coas.coagroup,coas.coareport,'existing' as status from coas left join coas a on (coas.coagroup=a.coanominalcode and coas.acct_id=a.acct_id) where coas.acct_id='$COOKIE->{ACCT}' and coas.coagroup in ('1000','1500','4300','5000','6000','7000') order by coas.coanominalcode");
+$Coas = $dbh->prepare("select coas.coanominalcode,coas.coadesc,concat(coas.coagroup,' - ',a.coadesc) as coagrp,coas.coatype,coas.coagroup,coas.coareport,'existing' as status from coas left join coas a on (coas.coagroup=a.coanominalcode and coas.acct_id=a.acct_id) where coas.acct_id='$COOKIE->{ACCT}' and coas.coagroup in ('1000','1500','3100','4300','5000','6000','7000') order by coas.coanominalcode");
 $Coas->execute;
 
 use Template;

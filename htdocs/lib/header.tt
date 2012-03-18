@@ -404,8 +404,8 @@ $(document).ready(function(){
         <td><label>Allocate to</label></td>
         <td>
           <select name="invcoa" id="pay_invcoa" size="1">
-            <option value="1000">Fixed Assets</option>
-            <option value="1500">Other Current Assets</option>
+            [% cookie.1000 -%]
+            [% cookie.1500 -%]
             [% cookie.5000 -%]
             [% cookie.6000 -%]
             [% cookie.7000 -%]
