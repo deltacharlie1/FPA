@@ -61,7 +61,7 @@ else {
 #  Create a SHA-1 hash of the cookie
 
 	use Digest;
-	$SHA1_hash = Digest->new("SHA-1");
+	$SHA1_hash = Digest->new("MD5");
 	$SHA1_hash->add($Cookie);
 	$Cookie = $SHA1_hash->hexdigest;
 
