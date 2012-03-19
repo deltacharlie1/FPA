@@ -19,7 +19,7 @@ $Coas->execute;
 $Coa = $Coas->fetchrow_hashref;
 $Coas->finish;
 
-$Assets = $dbh->prepare("select coanominalcode,coadesc from coas where acct_id='$COOKIE->{ACCT}' and coagroup in ('1000','1500') order by coanominalcode");
+$Assets = $dbh->prepare("select coanominalcode,coadesc from coas where acct_id='$COOKIE->{ACCT}' and coagroup in ('1000','1500','3100') order by coanominalcode");
 $Assets->execute;
 $Asset = $Assets->fetchall_arrayref({});
 $Assets->finish;
