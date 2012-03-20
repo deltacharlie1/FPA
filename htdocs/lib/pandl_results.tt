@@ -42,7 +42,7 @@
 [% profit = totincome - totexpenses -%]
     <tr>
       <td colspan="2" style="text-align:left;background:#ddd;"><label>Net Profit (Loss)</label></td>
-      <td style="border-bottom:3px double #5F7F6B;background:#ddd;"><b>[%- IF profit >= 0; profit; ELSE -%]([%- profit -%])[%- END -%]</b></td>
+      <td style="border-bottom:3px double #5F7F6B;background:#ddd;"><b>[%- IF profit >= 0; profit | format('%1.2f'); ELSE -%]([%- profit | format('%1.2f') -%])[%- END -%]</b></td>
       <td style="background:#ddd;">&nbsp;</td>
     </tr>
     <tr>
