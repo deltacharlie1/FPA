@@ -90,8 +90,14 @@ function display_table() {
           }
         }
       }
-      item_table = item_table + '<td nowrap="nowrap"><input value="Amd" type="button" onclick="amd(' + i +');"> <input value="Del" type="button" onclick="dlt(' + i + ');"/></td>\n';
-      item_table = item_table + '</tr>\n';
+      item_table = item_table + '<td nowrap="nowrap"><img src="/icons/inv_edit.jpg" title="Edit" onclick="amd(' + i +');"/><img src="/icons/inv_del.jpg" title="Delete" onclick="dlt(' + i + ');"/>';
+      if (i>0) {
+        item_table = item_table + '<img src="/icons/inv_up.jpg" title="Move Up" onclick="up(' + i +');"/>';
+      }
+      if (i<item_rows.length-1) {
+        item_table = item_table + '<img src="/icons/inv_down.jpg" title="Move Down" onclick="dn(' + i + ');"/>';
+      }
+      item_table = item_table + '</td>\n</tr>\n';
     }
   }
   item_table = item_table + '</table>\n';
@@ -203,4 +209,29 @@ function check_int(obj) {
     $("#dialog").dialog("open");
   }
 }
+Array.prototype.move_element = function(index, delta) {
 
+  var index2, temp_item;
+
+  if (index < 0 || index >= this.length) {
+    return false;
+  }
+  index2 = index + delta;
+
+  if (index2 < 0 || index2 >= this.length || index2 == index) {
+    return false;
+  }
+  temp_item = this[index2];
+  this[index2] = this[index];
+  this[index] = temp_item;
+
+  return true;
+}
+function up(row) {
+  item_rows.move_element(row,-1);
+  display_table();
+}
+function dn(row) {
+  item_rows.move_element(row,1);
+  display_table();
+}
