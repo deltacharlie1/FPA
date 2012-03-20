@@ -91,7 +91,7 @@ if ($COOKIE->{VAT} =~ /N/i) {
 	$pdf = PDF::API2->open('/usr/local/git/fpa/htdocs/images/default_nonvat_invoice_layout.pdf');
 }
 else {
-	$pdf = PDF::API2->open('/usr/local/git/fpa/htdocs/images/invoice_default_layout.pdf');
+	$pdf = PDF::API2->open('/usr/local/git/fpa/htdocs/images/default_vat_invoice_layout.pdf');
 }
 
 $page = $pdf->openpage(1);
