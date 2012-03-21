@@ -263,7 +263,7 @@ EOD
 
 #  Remove the Edit buttons td
 
-        	while ($FORM{invitems} =~ s/<td.*?input.*?\/td>//gim) {}
+        	while ($FORM{invitems} =~ s/<td.*?src=.*?\/td>//gim) {}
 
 #  We now (should have) the html line items without the edit buttons or header
 
