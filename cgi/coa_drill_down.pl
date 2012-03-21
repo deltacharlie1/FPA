@@ -49,7 +49,7 @@ unless ($FORM{numrows}) {
 $Nominals = $dbh->prepare("select nominals.id as nom_id,nominals.link_id as linkid,nominals.nomtype,nominals.nomcode,nominals.nomamount as amount,date_format(nominals.nomdate,'%d-%b-%y') as printdate,invinvoiceno,concat(invcusname,' (',invdesc,')') as invcusname,txntxnno,concat(txncusname,' (',txnremarks,')') as txncusname,invtype from nominals left join invoices on (nominals.link_id=invoices.id and nominals.acct_id=invoices.acct_id),nominals a left join transactions on (a.link_id=transactions.id and a.acct_id=transactions.acct_id) where nominals.id=a.id and nominals.acct_id=a.acct_id and nominals.nomcode='$FORM{filter}' and nominals.nomdate>=str_to_date('$FORM{tbstart}','%d-%b-%y') and nominals.nomdate<=str_to_date('$FORM{tbend}','%d-%b-%y') and nominals.acct_id='$COOKIE->{ACCT}' order by nominals.nomdate limit $FORM{offset},$FORM{rows}");
 $Nominals->execute;
 
-if ($FORM{filter} =~ /^(1|5|6|7|8)/) {
+if ($FORM{filter} =~ /^(10|5|6|7|8)/) {
 	$Adjsts = $dbh->prepare("select coanominalcode,coadesc from coas where acct_id='$COOKIE->{ACCT}' and (coanominalcode like '10%' or (coanominalcode>'4999' and coanominalcode<'9000')) order by coanominalcode");
 	$Adjsts->execute;
 	$Adjst = $Adjsts->fetchall_arrayref({});
