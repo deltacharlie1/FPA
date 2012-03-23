@@ -92,7 +92,7 @@ function display_table() {
         }
       }
     }
-    item_table = item_table + "<td nowrap=\'nowrap\' style=\'text-align:center;\'><input type=\'button\' value=\'Amd\' onclick=\"amd(\'" + i + "\');\"/>&nbsp;<input type=\'button\' value=\'Del\' onclick=\"dlt(\'" + i + "\');\"/></td></tr>";
+    item_table = item_table + "<td nowrap=\'nowrap\' style=\'text-align:center;\'><img src=\'/icons/inv_edit.png\' title=\'Edit\' onclick=\"amd(\'" + i + "\');\"/>&nbsp;<img src=\'/icons/inv_del.png\' title=\'Delete\' onclick=\"dlt(\'" + i + "\');\"/></td></tr>";
   }
   $("#new").html(item_table);
   document.getElementById("data").value = item_table;

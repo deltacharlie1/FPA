@@ -90,12 +90,12 @@ function display_table() {
           }
         }
       }
-      item_table = item_table + '<td nowrap="nowrap"><img src="/icons/inv_edit.jpg" title="Edit" onclick="amd(' + i +');"/><img src="/icons/inv_del.jpg" title="Delete" onclick="dlt(' + i + ');"/>';
+      item_table = item_table + '<td nowrap="nowrap"><img src="/icons/inv_edit.png" title="Edit" onclick="amd(' + i +');"/><img src="/icons/inv_del.png" title="Delete" onclick="dlt(' + i + ');"/>';
       if (i>0) {
-        item_table = item_table + '<img src="/icons/inv_up.jpg" title="Move Up" onclick="up(' + i +');"/>';
+        item_table = item_table + '<img src="/icons/inv_up.png" title="Move Up" onclick="up(' + i +');"/>';
       }
       if (i<item_rows.length-1) {
-        item_table = item_table + '<img src="/icons/inv_down.jpg" title="Move Down" onclick="dn(' + i + ');"/>';
+        item_table = item_table + '<img src="/icons/inv_down.png" title="Move Down" onclick="dn(' + i + ');"/>';
       }
       item_table = item_table + '</td>\n</tr>\n';
     }
