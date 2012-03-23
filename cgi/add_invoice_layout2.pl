@@ -34,6 +34,7 @@ use DBI;
   a024 => { name => 'Item VAT Rate', table => 'items', source => '4', alias => 'vrate', top => '0', left => '0', size => '10', bold => 'N', display => 'N', just => 'l' },
   a025 => { name => 'Item VAT Total', table => 'items', source => '5', alias => 'vat', top => '0', left => '0', size => '10', bold => 'N', display => 'N', just => 'r' },
   a026 => { name => 'Item Total', table => 'items', source => '6', alias => 'itmtotal', top => '0', left => '0', size => '10', bold => 'N', display => 'N', just => 'r' },
+  a027 => { name => 'Delivery Address', table => 'customers', source => 'cusdeliveryaddr', alias => 'delivaddr', top => '0', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' }
 );
 
 $Data = new CGI;

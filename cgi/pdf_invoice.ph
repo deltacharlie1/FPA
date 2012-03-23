@@ -236,8 +236,21 @@ $text = $page->text();
 if ($logo) {
 	$g->image($logo,43,709);
 }
+elsif ($COOKIE->{PLAN} < 6) {
+        $text->transform( -translate =>[80,742]);
+        $text->font($font_italic, 8);
+        $text->lead(12);
+        $text->text("Produced using");
+        $text->font($font_bold_italic,8);
+        $text->text(" FreePlus Accounts");
+        $text->cr();
+        $text->font($font_italic, 8);
+        $text->text("Free Accounting from");
+        $text->cr();
+        $text->text("www.freeplusaccounts.co.uk");
+}
 
-############   Variable Data   ####################
+############   Variable Data   ###################
 
 $text->transform( -translate => [151,779]);
 $text->font($font_bold, 20);
@@ -256,11 +269,10 @@ foreach (@Line) {
 		$Line_len = $width;
 	}
 }
-$Col = 532 - int($Line_len);
 
-$text->transform( -translate => [$Col,792]);
+$text->transform( -translate => [552,792]);
 foreach (@Line) {
-	$text->text($_);
+	$text->text_right($_);
 	$text->cr();
 }
 

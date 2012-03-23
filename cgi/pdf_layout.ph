@@ -37,9 +37,13 @@ foreach $LI (@$LIT) {
 	elsif ($LI->{litable} =~ /items/i  && $I_sel !~ /invitems/i) {
 		$I_sel .= 'invitems,';
 	}
+	elsif ($LI->{litable} =~ /customers/i) {
+		$S_sel .= $LI->{lisource}." as ".$LI->{lialias}.",";
+	}
 }
 
 chop($C_sel);
+chop($S_sel);
 chop($A_sel);
 chop($I_sel);
 
@@ -63,6 +67,14 @@ if ($I_sel) {
 	$Invoices->execute;
 	$invoices = $Invoices->fetchrow_hashref;
 	$Invoices->finish;
+}
+if ($S_sel) {
+	$Customers = $dbh->prepare("select $S_sel from invoices left join customers on(cus_id=customers.id) where invoices.acct_id='$COOKIE->{ACCT}' and invoices.id=$Inv_id");
+	$Customers->execute;
+	$customers = $Customers->fetchrow_hashref;
+	$Customers->finish;
+
+	$customers->{delivaddr} = $customers->{delivaddr} || $invoices->{cusaddress};
 }
 $dbh->disconnect;
 
@@ -282,7 +294,7 @@ foreach $Header (@Header) {
 	}
 	$text->lead($Header->{lisize} + 2);
 	$text->transform( -translate => [$Header->{lileft},830-$Header->{litop}]);
-	if ($Header->{lisource} =~ /concat/i) {	#  these are multi line
+	if ($Header->{lialias} =~ /addr/i) {	#  these are multi line
 		@Line = split(/\n/,${$Header->{litable}}->{$Header->{lialias}});
 		foreach (@Line) {
 			$text->text($_);

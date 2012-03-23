@@ -56,7 +56,8 @@ else {
   { lifldcode => 'a023', lidispname => 'Item Net Total', litable => 'items', lisource => '3', lialias => 'net', litop => '0', lileft => '0', lisize => '10', libold => 'N', lidisplay => 'N', lijust => 'r' },
   { lifldcode => 'a024', lidispname => 'Item VAT Rate', litable => 'items', lisource => '4', lialias => 'vrate', litop => '0', lileft => '0', lisize => '10', libold => 'N', lidisplay => 'N', lijust => 'l' },
   { lifldcode => 'a025', lidispname => 'Item VAT Total', litable => 'items', lisource => '5', lialias => 'vat', litop => '0', lileft => '0', lisize => '10', libold => 'N', lidisplay => 'N', lijust => 'r' },
-  { lifldcode => 'a026', lidispname => 'Item Total', litable => 'items', lisource => '6', lialias => 'itmtotal', litop => '0', lileft => '0', lisize => '10', libold => 'N', lidisplay => 'N', lijust => 'r' }
+  { lifldcode => 'a026', lidispname => 'Item Total', litable => 'items', lisource => '6', lialias => 'itmtotal', litop => '0', lileft => '0', lisize => '10', libold => 'N', lidisplay => 'N', lijust => 'r' },
+  { lifldcode => 'a027', lidispname => 'Delivery Address', litable => 'customers', lisource => 'cusdeliveryaddr', lialias => 'delivaddr', litop => '0', lileft => '0', lisize => '12', libold => 'N', lidisplay => 'N', lijust => 'l' },
 );
 
 }

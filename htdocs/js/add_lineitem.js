@@ -162,10 +162,20 @@ function add_row() {
 
   var item_row;
   if (vat_registered) {
-    item_row = [desc,price,qty,net,vatpercent,vat,gross,cat];
+    if (/^text$/i.test(cat)) {
+      item_row = [desc,'','','','','','',''];
+    }
+    else {
+      item_row = [desc,price,qty,net,vatpercent,vat,gross,cat];
+    }
   }
   else {
-    item_row = [desc,price,qty,net,gross,cat];
+    if (/^text$/i.test(cat)) {
+      item_row = [desc,'','','','',''];
+    }
+    else {
+      item_row = [desc,price,qty,net,gross,cat];
+    }
   }
   item_rows.push(item_row);
 
