@@ -185,6 +185,7 @@ create table customers (
   cusautostmts char(1) not null default 'N' comment 'Whether to run auto statements for this customer',
   cuscis char(3) not null default 'N' comment 'Whether this customer is a CIS Contractor',
   cuslayout int not null default 0,
+  cusdeliveryaddr text not null default '' comment 'delivery address for invoice layouts',
   old_id int unsigned,
   index cus1 (acct_id),
   index cus2 (cusname)

@@ -98,7 +98,7 @@ function display_table() {
         }
       }
     }
-    item_table = item_table + "<td style=\'text-align:center;\'><input type=\'button\' value=\'Amd\' onclick=\"amd(\'" + i + "\');\"/>&nbsp;<input type=\'button\' value=\'Del\' onclick=\"dlt(\'" + i + "\');\"/></td>\\n</tr>";
+    item_table = item_table + "<td style=\'text-align:center;\'><img src=\'/icons/inv_edit.png\' title=\'Edit\' onclick=\"amd(\'" + i + "\');\"/>&nbsp;<img src=\'/icons/inv_del.png\' title=\'Delete\' onclick=\"dlt(\'" + i + "\');\"/></td>\\n</tr>";
   }
   $("#new").html(item_table);
   document.getElementById("blk_data").value = item_table;

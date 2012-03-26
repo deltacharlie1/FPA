@@ -11,7 +11,7 @@ use PDF::TextBlock::Font;
 #  Get the company name
 
 ($Reg_id,$Com_id) = split(/\+/,$COOKIE->{ACCT});
-$Companies= $dbh->prepare("select comname,comaddress,compostcode,comtel,comemail,comregno,comvatno,comlogo from companies where reg_id=$Reg_id and id=$Com_id");
+$Companies= $dbh->prepare("select comname,comaddress,compostcode,comtel,comemail,comregno,comvatno,comlogo,datediff(compt_logo,now()) as pt_logo from companies where reg_id=$Reg_id and id=$Com_id");
 $Companies->execute;
 @Company = $Companies->fetchrow;
 $Companies->finish;
@@ -60,28 +60,12 @@ $font = $pdf->corefont('Helvetica');
 $font_bold = $pdf->corefont('Helvetica Bold');
 $font_italic = $pdf->corefont('Helvetica Oblique');
 $font_bold_italic = $pdf->corefont('Helvetica BoldOblique');
-if ($COOKIE->{PT_LOGO} && $Company[7]) {
-# $Img =~ s/([\\\"\'])/\\$1/g;
-	$Company[7] =~ s/\\\'/\'/g;
-	$Company[7] =~ s/\\\"/\"/g;
-#	$Company[7] =~ s/\\\\/\\/g;
+if (($COOKIE->{PLAN} > 3 || $Company[8] > 0) && $Company[7]) {
+        use MIME::Base64;
+        $Company[7] = decode_base64($Company[7]);
 
-#  Make the logo greyscale
-
-	my $gdimg = GD::Image->new($Company[7]);
-	my $i = 0;
-	my $t = $gdimg->colorsTotal;
-
-	while($i < $t) {
-		my( @c ) = $gdimg->rgb( $i );
-		my $g = .30 * $c[0] + .59 * $c[1] + .11 * $c[2];
-		$gdimg->colorDeallocate($i);
-		$gdimg->colorAllocate( $g, $g, $g );
-		$i++;
-	}
-
-	$logo = $pdf->image_gd($gdimg);
-
+        open IMG,"<",\$Company[7];
+        $logo = $pdf->image_jpeg(\*IMG);
 }
 
 #  Set out the first page
@@ -244,8 +228,8 @@ $g->stroke;
 $g->fillcolor("#000000");
 $text = $page->text();
 
-unless ($COOKIE->{PT_LOGO}) {
-	$text->transform( -translate =>[100,742]);
+unless ($COOKIE->{PLAN} > 5 || $logo) {
+	$text->transform( -translate =>[80,742]);
 	$text->font($font_italic, 8);
 	$text->lead(12);
 	$text->text("Produced using");
@@ -334,11 +318,10 @@ if ($Action =~ /O/i) {
 			$Line_len = $width;
 		}
 	}
-	$Col = 532 - int($Line_len);
-	$text->transform( -translate => [$Col,792]);
+	$text->transform( -translate => [552,792]);
 
 	foreach (@Line) {
-		$text->text($_);
+		$text->text_right($_);
 		$text->cr();
 	}
 

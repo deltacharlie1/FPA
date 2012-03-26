@@ -56,7 +56,8 @@ else {
   { lifldcode => 'a023', lidispname => 'Item Net Total', litable => 'items', lisource => '3', lialias => 'net', litop => '0', lileft => '0', lisize => '10', libold => 'N', lidisplay => 'N', lijust => 'r' },
   { lifldcode => 'a024', lidispname => 'Item VAT Rate', litable => 'items', lisource => '4', lialias => 'vrate', litop => '0', lileft => '0', lisize => '10', libold => 'N', lidisplay => 'N', lijust => 'l' },
   { lifldcode => 'a025', lidispname => 'Item VAT Total', litable => 'items', lisource => '5', lialias => 'vat', litop => '0', lileft => '0', lisize => '10', libold => 'N', lidisplay => 'N', lijust => 'r' },
-  { lifldcode => 'a026', lidispname => 'Item Total', litable => 'items', lisource => '6', lialias => 'itmtotal', litop => '0', lileft => '0', lisize => '10', libold => 'N', lidisplay => 'N', lijust => 'r' }
+  { lifldcode => 'a026', lidispname => 'Item Total', litable => 'items', lisource => '6', lialias => 'itmtotal', litop => '0', lileft => '0', lisize => '10', libold => 'N', lidisplay => 'N', lijust => 'r' },
+  { lifldcode => 'a027', lidispname => 'Delivery Address', litable => 'customers', lisource => 'cusdeliveryaddr', lialias => 'delivaddr', litop => '0', lileft => '0', lisize => '12', libold => 'N', lidisplay => 'N', lijust => 'l' },
 );
 
 }
@@ -83,9 +84,9 @@ $(document).ready(function(){
     "cancelImg"   : "/js/cancel.png",
     "scriptData"  : {"cookie" : "'.$COOKIE->{COOKIE}.'", "doc_type" : "LAYOUT" },
     "buttonText"  : "Select Layout",
-    "fileExt"     : "layout*.pdf",
-    "fileDesc"    : "Invoice Layout Files (PDF)",
-    "sizeLimit"   : 30720,
+    "fileExt"     : "*.pdf;*.jpg;*.png",
+    "fileDesc"    : "Invoice Layout Files (PDF,JPG,PNG)",
+    "sizeLimit"   : 61440,
     "auto"        : false,
     "onComplete" : function(a,b,c,d,e) {
                      if (/Error/i.test(d)) {
@@ -99,8 +100,8 @@ $(document).ready(function(){
   });
 });
 function check_send() {
-  if ($("#laydesc").val() == "") {
-    alert("You must enter a description when adding a layout file");
+  if ($("#laydesc").val() == "" || $("#layfileQueue").html() == "") {
+    alert("You must enter a description iand select a layout file when adding a new layout");
   }
   else {
     if ($("#layfileQueue").html() == "") {

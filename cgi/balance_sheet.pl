@@ -64,7 +64,13 @@ $Vars = {
 	Capital => $Capital,
 	CurrentLiabilities => $Current_Liabilities,
 	LongtermLiabilities => $Longterm_Liabilities,
-	javascript => '<script type="text/javascript">
+	javascript => '<style>
+h3 { font-size: 1.3em;
+     font-style: italic;
+     font-weight:bold;
+}
+</style>
+<script type="text/javascript">
 function print_list() {
    $.get("/cgi-bin/fpa/print_bs.pl",$("form#form1").serialize() ,function(data) {
      $("#main").html(data);

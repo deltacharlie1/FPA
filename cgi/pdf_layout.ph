@@ -21,7 +21,7 @@ $LIs->finish;
 foreach $LI (@$LIT) {
 
 	if ($LI->{lifldcode} =~ /a013/i) {
-		$Yrmk = 830 - $LI->{litop};
+		$Yrmk = 842 - $LI->{lisize} - $LI->{litop};
 		$Xrmk = $Item->{lileft};
 	}
 
@@ -37,9 +37,13 @@ foreach $LI (@$LIT) {
 	elsif ($LI->{litable} =~ /items/i  && $I_sel !~ /invitems/i) {
 		$I_sel .= 'invitems,';
 	}
+	elsif ($LI->{litable} =~ /customers/i) {
+		$S_sel .= $LI->{lisource}." as ".$LI->{lialias}.",";
+	}
 }
 
 chop($C_sel);
+chop($S_sel);
 chop($A_sel);
 chop($I_sel);
 
@@ -63,6 +67,14 @@ if ($I_sel) {
 	$Invoices->execute;
 	$invoices = $Invoices->fetchrow_hashref;
 	$Invoices->finish;
+}
+if ($S_sel) {
+	$Customers = $dbh->prepare("select $S_sel from invoices left join customers on(cus_id=customers.id) where invoices.acct_id='$COOKIE->{ACCT}' and invoices.id=$Inv_id");
+	$Customers->execute;
+	$customers = $Customers->fetchrow_hashref;
+	$Customers->finish;
+
+	$customers->{delivaddr} = $customers->{delivaddr} || $invoices->{cusaddress};
 }
 $dbh->disconnect;
 
@@ -198,7 +210,7 @@ foreach $Calc (@Calc) {
 		$text->font($font, $Calc->{lisize});
 	}
 	$text->lead($Calc->{lisize} + 2);
-	$text->transform( -translate => [$Calc->{lileft}+$Calc->{liwidth}+10,830-$Calc->{litop}]);
+	$text->transform( -translate => [$Calc->{lileft}+$Calc->{liwidth}+10,842-$Calc->{lisize}-$Calc->{litop}]);
 	$text->text_right(sprintf("%1.2f",${$Calc->{lialias}}));
 }
 
@@ -232,7 +244,7 @@ $Line_len = 0;
 
 foreach $Item (@Items) {
 	if ($Item->{lialias} =~ /desc/i) {
-		$Ypos = 830 - $Item->{litop};
+		$Ypos = 842 - $Item->{lisize} - $Item->{litop};
 		$Xpos = $Item->{lileft};
 	}
 }
@@ -281,8 +293,8 @@ foreach $Header (@Header) {
 		$text->font($font, $Header->{lisize});
 	}
 	$text->lead($Header->{lisize} + 2);
-	$text->transform( -translate => [$Header->{lileft},830-$Header->{litop}]);
-	if ($Header->{lisource} =~ /concat/i) {	#  these are multi line
+	$text->transform( -translate => [$Header->{lileft},842-$Header->{lisize}-$Header->{litop}]);
+	if ($Header->{lialias} =~ /addr/i) {	#  these are multi line
 		@Line = split(/\n/,${$Header->{litable}}->{$Header->{lialias}});
 		foreach (@Line) {
 			$text->text($_);

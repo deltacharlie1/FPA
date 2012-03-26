@@ -232,7 +232,7 @@ $g->fillcolor("#000000");
 $text = $page->text();
 
 unless ($logo) {		#  include the freeplus text
-        $text->transform( -translate =>[100,742]);
+        $text->transform( -translate =>[80,742]);
         $text->font($font_italic, 8);
         $text->lead(12);
         $text->text("Produced using");
@@ -321,11 +321,10 @@ foreach (@Line) {
 		$Line_len = $width;
 	}
 }
-$Col = 532 - int($Line_len);
 
-$text->transform( -translate => [$Col,792]);
+$text->transform( -translate => [552,792]);
 foreach (@Line) {
-	$text->text($_);
+	$text->text_right($_);
 	$text->cr();
 }
 

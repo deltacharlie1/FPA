@@ -34,6 +34,7 @@ use DBI;
   a024 => { name => 'Item VAT Rate', table => 'items', source => '4', alias => 'vrate', top => '0', left => '0', size => '10', bold => 'N', display => 'N', just => 'l' },
   a025 => { name => 'Item VAT Total', table => 'items', source => '5', alias => 'vat', top => '0', left => '0', size => '10', bold => 'N', display => 'N', just => 'r' },
   a026 => { name => 'Item Total', table => 'items', source => '6', alias => 'itmtotal', top => '0', left => '0', size => '10', bold => 'N', display => 'N', just => 'r' },
+  a027 => { name => 'Delivery Address', table => 'customers', source => 'cusdeliveryaddr', alias => 'delivaddr', top => '0', left => '0', size => '12', bold => 'N', display => 'N', just => 'l' }
 );
 
 $Data = new CGI;
@@ -90,7 +91,7 @@ if ($FORM{id} == 0) {
 	@Layout = $Layouts->fetchrow;
 	$Layouts->finish;
 
-	if (@Layout[0] > 4) {
+	if (@Layout[0] > 40) {
 
 		print<<EOD;
 Content-Type: text/plain
@@ -106,6 +107,16 @@ EOD
 		$Companies->execute;
 		$Company = $Companies->fetchrow_hashref;
 		$Companies->finish;
+		$Width = 595;
+		$Height = 842;
+
+		if ($FORM{Filename} !~ /pdf$/i) {
+			use Image::Magick;
+			$Img = Image::Magick->new;
+			$status = $Img->BlobToImage($Original);
+			($Width,$Height) = $Img->Get('width','height');
+			$Original = $Img->ImageToBlob(magick=>'pdf');
+		}
 
 		open(IMG,">/projects/fpa_docs/".$Company->{comdocsdir}."/".$FORM{Filename}) || warn "unable to open file\n";
 		print IMG $Original;
@@ -132,8 +143,7 @@ else {
 		$Companies->execute;
 		$Company = $Companies->fetchrow_hashref;
 		$Companies->finish;
-
-
+			
 		open(IMG,">/projects/fpa_docs/".$Company->{comdocsdir}."/".$FORM{Filename}) || warn "unable to open file\n";
 		print IMG $Original;
 		close(IMG);

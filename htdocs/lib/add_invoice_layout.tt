@@ -8,7 +8,7 @@
       <td><input type="text" name="laydesc" id="laydesc" size="30" value="[%- layout.laydesc -%]" class="mandatory"/></td>
     </tr>
     <tr>
-      <td style="vertical-align:middle;"><label>Select Invoice Layout File (up to 30k pdf)</label></td>
+      <td style="vertical-align:middle;"><label>Select Invoice Layout File (up to 60k pdf)</label></td>
       <td><div style="vertical-align:middle;float:left;"><input name="layfile" id="layfile" type="file" size="30"/></div>[%- IF layout.layfile -%]<div style="float:left;height:20px;;padding:10px 0 0 15px;">([%- layout.layfile.remove('^.*/') -%])</div>[%- END -%]</td>
     </tr>
     <tr>
@@ -45,57 +45,59 @@
       <td style="text-align:center;"><input type="checkbox" name="a005" id="a005" value="invcusaddress" checked="checked"/></td>
       <td><label>Customer FAO</label></td>
       <td style="text-align:center;"><input type="checkbox" name="a006" id="a006" value="invcuscontact"/></td>
+      <td><label>Delivery Address</label></td>
+      <td style="text-align:center;"><input type="checkbox" name="a027" id="a027" value="cusdeliveryaddr"/></td>
       <td><label>Invoice No</label></td>
       <td style="text-align:center;"><input type="checkbox" name="a007" id="a007" value="invinvoiceno" checked="checked"/></td>
-      <td><label>Invoice Date</label></td>
-      <td style="text-align:center;"><input type="checkbox" name="a008" id="a008" value="invprintdate" checked="checked"/></td>
     </tr>
     <tr>
+      <td><label>Invoice Date</label></td>
+      <td style="text-align:center;"><input type="checkbox" name="a008" id="a008" value="invprintdate" checked="checked"/></td>
       <td><label>Invoice Due Date</label></td>
       <td style="text-align:center;"><input type="checkbox" name="a009" id="a009" value="invduedate"/></td>
       <td><label>Terms</label></td>
       <td style="text-align:center;"><input type="checkbox" name="a010" id="a010" value="invcusterms"/></td>
       <td><label>Customer Reference</label></td>
       <td style="text-align:center;"><input type="checkbox" name="a011" id="a011" value="invcusref"/></td>
-      <td><label>VAT Registration No</label></td>
-      <td style="text-align:center;"><input type="checkbox" name="a012" id="a012" value="comvatreg"/></td>
     </tr>
     <tr>
+      <td><label>VAT Registration No</label></td>
+      <td style="text-align:center;"><input type="checkbox" name="a012" id="a012" value="comvatreg"/></td>
       <td><label>Remarks</label></td>
       <td style="text-align:center;"><input type="checkbox" name="a013" id="a013" value="invremarks"/></td>
       <td><label>Net Total</label></td>
       <td style="text-align:center;"><input type="checkbox" name="a014" id="a014" value="nettotal" checked="checked"/></td>
       <td><label>VAT Total</label></td>
       <td style="text-align:center;"><input type="checkbox" name="a015" id="a015" value="vattotal" [%- UNLESS cookie.VAT == 'N' -%] checked="checked"[%- END -%]/></td>
-      <td><label>Invoice Total</label></td>
-      <td style="text-align:center;"><input type="checkbox" name="a016" id="a016" value="grosstotal" checked="checked"/></td>
     </tr>
     <tr>
+      <td><label>Invoice Total</label></td>
+      <td style="text-align:center;"><input type="checkbox" name="a016" id="a016" value="grosstotal" checked="checked"/></td>
       <td><label>Company Registration</label></td>
       <td style="text-align:center;"><input type="checkbox" name="a017" id="a017" value="comreg"/></td>
       <td><label>Bank Sort Code</label></td>
       <td style="text-align:center;"><input type="checkbox" name="a018" id="a018" value="accsort"/></td>
       <td><label>Bank Account</label></td>
       <td style="text-align:center;"><input type="checkbox" name="a019" id="a019" value="accacctno"/></td>
-      <td nowrap="nowrap"><label>Item Description</label></td>
-      <td style="text-align:center;"><input type="checkbox" name="a020" id="a020" value="itmdesc" checked="checked"/></td>
     </tr>
     <tr>
+      <td nowrap="nowrap"><label>Item Description</label></td>
+      <td style="text-align:center;"><input type="checkbox" name="a020" id="a020" value="itmdesc" checked="checked"/></td>
       <td><label>Item Quantity</label></td>
       <td style="text-align:center;"><input type="checkbox" name="a021" id="a021" value="itmqty"/></td>
       <td><label>Item Unit Price</label></td>
       <td style="text-align:center;"><input type="checkbox" name="a022" id="a022" value="itmunitprice"/></td>
       <td><label>Item Net Total</label></td>
       <td style="text-align:center;"><input type="checkbox" name="a023" id="a023" value="itmtotprice" checked="checked"/></td>
-      <td><label>Item VAT Rate</label></td>
-      <td style="text-align:center;"><input type="checkbox" name="a024" id="a024" value="itmvatrate"/></td>
     </tr>
     <tr>
+      <td><label>Item VAT Rate</label></td>
+      <td style="text-align:center;"><input type="checkbox" name="a024" id="a024" value="itmvatrate"/></td>
       <td><label>Item VAT Total</label></td>
       <td style="text-align:center;"><input type="checkbox" name="a025" id="a025" value="itmvat" [%- UNLESS cookie.VAT == 'N' -%] checked="checked"[%- END -%]/></td>
       <td><label>Item Total</label></td>
       <td style="text-align:center;"><input type="checkbox" name="a026" id="a026" value="itmtotal" checked="checked"/></td>
-      <td colspan="4">&nbsp;</td>
+      <td colspan="2">&nbsp;</td>
     </tr>
 [% ELSE -%]
     <tr>
@@ -118,12 +120,7 @@
   <ul>
     <li>
       <div>
-        <input type="button" name="save" id="save" value="Save these Details" onclick="check_send();"/>
-      </div>
-    </li>
-    <li>
-      <div>
-       <input type="reset" name="reset" id="reset" value="Start Again"/>
+        <input type="button" name="save" id="save" value="Save Layout" onclick="check_send();"/>
       </div>
     </li>
   </ul>
