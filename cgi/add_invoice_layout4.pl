@@ -52,6 +52,13 @@ foreach $Row (@Rows) {
 	}
 }
 
+#  Get the layout description
+
+$Layouts = $dbh->prepare("select laydesc from invoice_layouts where acct_id='$COOKIE->{ACCT}' and id=$FORM{id}");
+$Layouts->execute;
+$Layout = $Layouts->fetchrow_hashref;
+$Layouts->finish;
+
 #  Get the last invoice to use as an example
 
 $Invoices = $dbh->prepare("select id from invoices where acct_id='$COOKIE->{ACCT}' and invtype='S' order by id desc limit 1");
@@ -69,7 +76,8 @@ $Vars = {
         title => 'Accounts - Invoice Layouts',
         cookie => $COOKIE,
 	invid => $Invoice->{id},
-        layid => $FORM{id}
+        layid => $FORM{id},
+        laydesc => $Layout->{laydesc}
 };
 
 print "Content-Type: text/html\n\n";

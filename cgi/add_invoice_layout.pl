@@ -84,9 +84,9 @@ $(document).ready(function(){
     "cancelImg"   : "/js/cancel.png",
     "scriptData"  : {"cookie" : "'.$COOKIE->{COOKIE}.'", "doc_type" : "LAYOUT" },
     "buttonText"  : "Select Layout",
-    "fileExt"     : "layout*.pdf",
-    "fileDesc"    : "Invoice Layout Files (PDF)",
-    "sizeLimit"   : 30720,
+    "fileExt"     : "*.pdf;*.jpg;*.png",
+    "fileDesc"    : "Invoice Layout Files (PDF,JPG,PNG)",
+    "sizeLimit"   : 61440,
     "auto"        : false,
     "onComplete" : function(a,b,c,d,e) {
                      if (/Error/i.test(d)) {
@@ -100,8 +100,8 @@ $(document).ready(function(){
   });
 });
 function check_send() {
-  if ($("#laydesc").val() == "") {
-    alert("You must enter a description when adding a layout file");
+  if ($("#laydesc").val() == "" || $("#layfileQueue").html() == "") {
+    alert("You must enter a description iand select a layout file when adding a new layout");
   }
   else {
     if ($("#layfileQueue").html() == "") {

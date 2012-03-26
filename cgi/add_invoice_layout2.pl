@@ -91,7 +91,7 @@ if ($FORM{id} == 0) {
 	@Layout = $Layouts->fetchrow;
 	$Layouts->finish;
 
-	if (@Layout[0] > 4) {
+	if (@Layout[0] > 40) {
 
 		print<<EOD;
 Content-Type: text/plain
@@ -107,6 +107,16 @@ EOD
 		$Companies->execute;
 		$Company = $Companies->fetchrow_hashref;
 		$Companies->finish;
+		$Width = 595;
+		$Height = 842;
+
+		if ($FORM{Filename} !~ /pdf$/i) {
+			use Image::Magick;
+			$Img = Image::Magick->new;
+			$status = $Img->BlobToImage($Original);
+			($Width,$Height) = $Img->Get('width','height');
+			$Original = $Img->ImageToBlob(magick=>'pdf');
+		}
 
 		open(IMG,">/projects/fpa_docs/".$Company->{comdocsdir}."/".$FORM{Filename}) || warn "unable to open file\n";
 		print IMG $Original;
@@ -133,8 +143,7 @@ else {
 		$Companies->execute;
 		$Company = $Companies->fetchrow_hashref;
 		$Companies->finish;
-
-
+			
 		open(IMG,">/projects/fpa_docs/".$Company->{comdocsdir}."/".$FORM{Filename}) || warn "unable to open file\n";
 		print IMG $Original;
 		close(IMG);

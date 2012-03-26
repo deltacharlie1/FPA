@@ -32,4 +32,6 @@ create table invoice_layout_items (
   lijust char(1) not null default 'l',
   index li1 (acct_id)
 );
+alter table companies add column comlayout int not null default 0;
 alter table customers add column cuslayout int not null default 0;
+alter table invoices add column invlayout int not null default 0;

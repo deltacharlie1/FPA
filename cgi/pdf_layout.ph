@@ -21,7 +21,7 @@ $LIs->finish;
 foreach $LI (@$LIT) {
 
 	if ($LI->{lifldcode} =~ /a013/i) {
-		$Yrmk = 830 - $LI->{litop};
+		$Yrmk = 842 - $LI->{lisize} - $LI->{litop};
 		$Xrmk = $Item->{lileft};
 	}
 
@@ -210,7 +210,7 @@ foreach $Calc (@Calc) {
 		$text->font($font, $Calc->{lisize});
 	}
 	$text->lead($Calc->{lisize} + 2);
-	$text->transform( -translate => [$Calc->{lileft}+$Calc->{liwidth}+10,830-$Calc->{litop}]);
+	$text->transform( -translate => [$Calc->{lileft}+$Calc->{liwidth}+10,842-$Calc->{lisize}-$Calc->{litop}]);
 	$text->text_right(sprintf("%1.2f",${$Calc->{lialias}}));
 }
 
@@ -244,7 +244,7 @@ $Line_len = 0;
 
 foreach $Item (@Items) {
 	if ($Item->{lialias} =~ /desc/i) {
-		$Ypos = 830 - $Item->{litop};
+		$Ypos = 842 - $Item->{lisize} - $Item->{litop};
 		$Xpos = $Item->{lileft};
 	}
 }
@@ -293,7 +293,7 @@ foreach $Header (@Header) {
 		$text->font($font, $Header->{lisize});
 	}
 	$text->lead($Header->{lisize} + 2);
-	$text->transform( -translate => [$Header->{lileft},830-$Header->{litop}]);
+	$text->transform( -translate => [$Header->{lileft},842-$Header->{lisize}-$Header->{litop}]);
 	if ($Header->{lialias} =~ /addr/i) {	#  these are multi line
 		@Line = split(/\n/,${$Header->{litable}}->{$Header->{lialias}});
 		foreach (@Line) {
