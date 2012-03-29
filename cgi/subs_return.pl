@@ -1,32 +1,20 @@
 #!/usr/bin/perl
 
-#$ACCESS_LEVEL = 0;
+warn "subs_validate = \n";
+print "Content-Type: text/plain\n\n";
 
-#  script to process registration update details
+use CGI;
+$Data = new CGI;
+%FORM = $Data->Vars;
 
-#use Checkid;
-#$COOKIE = &checkid($ENV{HTTP_COOKIE},$ACCESS_LEVEL);
+while (( $Key,$Value) = each %FORM) {
 
-#($Reg_id,$Com_id) = split(/\+/,$COOKIE->{ACCT});
-
-print "Content-Type: text/plain\n\nOK";
-
-read(STDIN, $Buffer, $ENV{'CONTENT_LENGTH'});
-
-warn "subs_validate = ".$Buffer."\n\n";
-
-@pairs = split(/&/,$Buffer);
-
-foreach $pair (@pairs) {
-
-        ($Name, $Value) = split(/=/, $pair);
-
-        $Value =~ tr/+/ /;
-        $Value =~ s/%([a-fA-F0-9][a-fA-F0-9])/pack("C",hex($1))/eg;
-        $Value =~ tr/\\//d;             #  Remove all back slashes
-        $Value =~ s/(\'|\")/\\$1/g;
-        $FORM{$Name} = $Value;
+        $Value =~ tr/\\//d;
+        $Value =~ s/\'/\\\'/g;
+        $FORM{$Key} = $Value;
+print "$Key = $Value\n";
 warn "$Key = $Value\n";
+
 }
 exit;
 

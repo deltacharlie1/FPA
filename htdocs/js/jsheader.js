@@ -446,7 +446,7 @@ function view_comments() {
 }
 function view_reminders() {
   $.ajax({ url: "/cgi-bin/fpa/view_reminders.pl", cache: false, success: function(data) {
-    i$("#vreminders").html(data);
+    $("#vreminders").html(data);
     $("#vreminders").dialog("open");
   }});
 }
