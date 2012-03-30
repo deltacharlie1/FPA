@@ -1,0 +1,24 @@
+<div id="main" class="main">
+  <table style="padding:10px;" width="660" cellspacing="0" cellpadding="0" border="0" class="formtable">
+    <tr>
+      <td style="text-align:right;font-size:14px;" width="45%">Current Subscription Level:</td>
+      <td width="55%"><span style="font-size:14px;font-weight:bold;">[%- membership -%]</span></td>
+    </tr>
+  </table>
+  <br/>
+  <h2>Your Subscription</h2>
+  <table style="padding:15px 30px;" width="660" cellspacing="0" cellpadding="0" border="0" class="formtable">
+    <tr>
+[% IF status == 'cancelled' -%]
+      <td>Your subscription has been cancelled and you will revert to [%- membership -%] on [%- company.comsubdue -%].</td>
+[% ELSE -%]
+      <td>Your subscription has been NOT been cancelled.</td>
+[% END -%]
+    </tr>
+  </table>
+</div>
+<div id="sidebar">
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+  </div>
+</div>

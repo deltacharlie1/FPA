@@ -1,26 +1,11 @@
 <div id="main" class="main">
-  <form name="form1" id="form1" method="post">
-  <input type="hidden" name="ACTION" id="sub_action" value=""/>
-  <input type="hidden" name="TERMINALID" id="sub_terminalid" value=""/>
-  <input type="hidden" name="MERCHANTREF" id="sub_merchantref" value=""/>
-  <input type="hidden" name="DATETIME" id="sub_datetime" value=""/>
-  <input type="hidden" name="HASH" id="sub_hash" value=""/>
-  <input type="hidden" name="current" id="sub_current" value="[%- company.comsublevel -%]"/>
-  <input type="hidden" name="action" id="sub_action" value=""/>
-[%- IF termid == '2645001' -%]
-  <div><div style="margin-left:auto;margin-right:auto;width:500px;text-align:center;" class="status">This page is for testing only, please do not use</div></div>
-[% END -%]
+  <form name="subs_form" id="subs_form" method="POST" action="/cgi-bin/fpa/subs2.pl">
+  <input type="hidden" name="subaction" id="subaction" value=""/>
   <table style="padding:10px;" width="660" cellspacing="0" cellpadding="0" border="0" class="formtable">
     <tr>
       <td style="text-align:right;font-size:14px;" width="45%">Current Subscription Level:</td>
       <td width="55%"><span style="font-size:14px;font-weight:bold;">[%- membership -%]</span></td>
     </tr>
-[% IF cookie.ACCESS > 1 -%]
-    <tr>
-      <td style="text-align:right;" width="45%">Current Until:</td>
-      <td width="55%"><span style="font-weight:bold;">[%- company.subdue -%]</span></td>
-    </tr>
-[% END -%]
   </table>
   <br/>
   <h2>Subscriptions</h2>
@@ -33,7 +18,7 @@
 [% IF cookie.ACCESS != 4 -%]
     <tr class="subblock">
       <td width="180" valign="top"><label>Standard (&pound;5.00 per month)</label></td>
-      <td width="30" valign="top"><input type="radio" name="sub" id="subb" value="fpa2"/></td>
+      <td width="30" valign="top"><input type="radio" name="sub" id="subb" value="2"/></td>
       <td>Includes:-
         <ul>
           <li>Your own logo on invoices and statements</li>
@@ -48,7 +33,7 @@
 [% IF cookie.ACCESS != 6 -%]
     <tr class="subblock">
       <td width="180" valign="top"><label>Premium (&pound;10.00 per month)</label></td>
-      <td width="30" valign="top"><input type="radio" name="sub" id="subp" value="fpa5"/></td>
+      <td width="30" valign="top"><input type="radio" name="sub" id="subp" value="4"/></td>
       <td>Additionally includes:-
         <ul>
           <li>Data held for 6 years</li>
@@ -60,12 +45,12 @@
 [% END -%]
 [% IF cookie.BUS == 1 -%]
     <tr>
-      <td colspan="3" style="font-size:12px;font-weight:bold;text-decoration:underline;"><br/>Alternatively, for Bookkeepers and Accountnts</td>
+      <td colspan="3" style="font-size:12px;font-weight:bold;text-decoration:underline;"><br/>Alternatively, for Bookkeepers and Accountants</td>
     <tr>
   [% IF cookie.ACCESS != 3 -%]
     <tr class="subblock">
       <td width="180" valign="top"><label>Basic (&pound;5.00 per month)</label></td>
-      <td width="30" valign="top"><input type="radio" name="sub" id="subc" value="fpa1"/></td>
+      <td width="30" valign="top"><input type="radio" name="sub" id="subc" value="1"/></td>
       <td>Includes:-
         <ul>
           <li>Add up to 15 client accounts</li>
@@ -77,7 +62,7 @@
   [% IF cookie.ACCESS != 5 -%]
     <tr class="subblock">
       <td width="180" valign="top"><label>Standard (&pound;10.00 per month)</label></td>
-      <td width="30" valign="top"><input type="radio" name="sub" id="subd" value="fpa3"/></td>
+      <td width="30" valign="top"><input type="radio" name="sub" id="subd" value="3"/></td>
       <td>Additionally includes:-
         <ul>
           <li>Add up to 150 client accounts</li>
@@ -91,7 +76,7 @@
   [% IF cookie.ACCESS != 8 -%]
     <tr class="subblock">
       <td width="180" valign="top"><label>Premium (&pound;20.00 per month)</label></td>
-      <td width="30" valign="top"><input type="radio" name="sub" id="subd" value="fpa6"/></td>
+      <td width="30" valign="top"><input type="radio" name="sub" id="subd" value="5"/></td>
       <td>Additionally includes:-
         <ul>
           <li>Unlimited client accounts</li>
@@ -117,18 +102,13 @@
     </li>
     <li>
       <div>
-        <input type="button" name="subscribe" id="subscribe" value="Update Subscription" onclick="calc_hash('sub');"/>
+        <input type="button" name="subscribe" id="subscribe" value="Update Subscription" onclick="check_select('S');"/>
       </div>
     </li>
 [% IF cookie.PLAN > 1 -%]
     <li>
       <div>
-        <input type="button" name="card" id="card" value="Update Card Details" onclick="calc_hash('card');"/>
-      </div>
-    </li>
-    <li>
-      <div>
-        <input type="button" name="cancel" id="cancel" value="Cancel Subscription" onclick="calc_hash('cancel');"/>
+        <input type="button" name="cancel" id="cancel" value="Cancel Subscription" onclick="check_select('C');"/>
       </div>
     </li>
     <li>

@@ -39,12 +39,11 @@ $Company = $Companies->fetchrow_hashref;
 $Companies->finish;
 $dbh->disconnect;
 
-$Membership[0] = 'FreePlus Startup (FREE) - No Adverts';
 $Membership[1] = 'FreePlus Startup (FREE)';
-$Membership[4] = 'FreePlus Standard (&pound;5.00pm)';
-$Membership[6] = 'FreePlus Premium (&pound;10.00pm)';
 $Membership[3] = 'FreePlus Bookkeeper Basic (&pound;5.00pm)';
+$Membership[4] = 'FreePlus Standard (&pound;5.00pm)';
 $Membership[5] = 'FreePlus Bookkeeper Standard (&pound;10.00pm)';
+$Membership[6] = 'FreePlus Premium (&pound;10.00pm)';
 $Membership[8] = 'FreePlus BookkeepersPremium (&pound;20.00pm)';
 
 use Template;
@@ -59,39 +58,13 @@ $Vars = { cookie => $COOKIE,
 	  company => $Company,
 	  termid => $Termid,
 	  javascript => '<script type="text/javascript">
-function calc_hash(action) {
-  $("#sub_action").val(action);
-  if (action == "sub" && !$("input[@name=sub]:checked").val()) {
+function check_select(button) {
+  if (button == "S" && ! $("input[@name=sub]:checked").val()) {
     alert("You have not selected any subscription option!");
   }
   else {
-  if (action=="cancel" && ! confirm("Please confirm that you wish to cancel your subscription")) {
-    alert("We are delighted that you have decided to stay with us!");
-    return false;
-  }
-  $.ajax({
-    url: "/cgi-bin/fpa/returnhash.pl",
-    dataType: "json",
-    data: "sub=" + $("input:radio[name=sub]:checked").val() + "&action=" + $("#sub_action").val(),
-    success: function( data ) {
-     document.getElementById("sub_action").value = data[0].action;
-     document.getElementById("sub_terminalid").value = data[0].termid;
-     document.getElementById("sub_merchantref").value = data[0].merchref;
-     document.getElementById("sub_datetime").value = data[0].dte;
-     document.getElementById("sub_hash").value = data[0].hash;
-     if (action == "card") {
-
-       document.form1.action = "https://'.$URL.'.worldnettps.com/merchant/securecardpage";
-     }
-     else {
-       document.form1.action = "/cgi-bin/fpa/sub_subscribe.pl?" + data[0].merchref + "?" + data[0].oldsubtype;
-     }
-     document.form1.submit();
-   },
-   error: function( data,xhr ) {
-     alert("Unable to proceed - " + xhr);
-   }
- });
+    $("#subaction").val(button);
+    document.forms["subs_form"].submit();;
  }
 }
 </script>

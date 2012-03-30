@@ -1,0 +1,9 @@
+  <table style="padding:10px;" width="960" cellspacing="0" cellpadding="0" border="0" class="formtable">
+    <tr>
+      <td style="text-align:right;font-size:14px;" width="45%">Current Subscription Level:</td>
+      <td width="55%"><span style="font-size:14px;font-weight:bold;">[%- membership -%]</span></td>
+    </tr>
+  </table>
+  <br/>
+  <h2>Add New Subscription</h2>
+  <iframe width="960" height="800" style="margin:0px;padding:0px;"  name="subs" id="subs" src="https://sandbox.gocardless.com/connect/subscriptions/new?[%- parms -%]"></iframe>

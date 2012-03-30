@@ -1,0 +1,26 @@
+<div id="main" class="main">
+  <table style="padding:10px;" width="660" cellspacing="0" cellpadding="0" border="0" class="formtable">
+    <tr>
+      <td style="text-align:right;font-size:14px;" width="45%">Current Subscription Level:</td>
+      <td width="55%"><span style="font-size:14px;font-weight:bold;">[%- membership -%]</span></td>
+    </tr>
+  </table>
+  <br/>
+  <h2>Your Subscription</h2>
+  <table style="padding:15px 30px;" width="660" cellspacing="0" cellpadding="0" border="0" class="formtable">
+    <tr>
+      <td>Thank you for subscribing to <b><i>[%- membership -%]</i></b>.&nbsp;&nbsp;Your application has been successful and we will email you shortly with a receipt.</td>
+    </tr>
+    <tr>
+      <td>Your reference for this subscription is:- <b>[%- company.comsubref -%]</b></td>
+    </tr>
+    <tr>
+      <td>Payment will be taken from your bank account on or about [%- company.subdue -%] and at monthly intervals thereafter.&nbsp;&nbsp;You may cancel your subscription at any point up until that date either directly through your bank or by clicking on the 'Cancel Subscription' tab on the 'My Account' page although cancellations within 3 working days of a payment date will only come in to effect after the next payment.</td>
+    </tr>
+  </table>
+</div>
+<div id="sidebar">
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+  </div>
+</div>
