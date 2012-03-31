@@ -60,61 +60,59 @@ $Subdue = $Start_date;
 $Subdue =~ s/T*$//;
 
 $State = "id=$COOKIE->{ACCT}&sublevel=$FORM{sub}&subdue=$Subdue";
-$State = CGI::escape($State);
 
 #  Set up strings to send to GCL
 
 @Sub_name=("FreePlus%20Free%20Edition","Bookkeeper%20Basic","FreePlus%20Standard","Bookkeeper%20Standard","FreePlus%20Premium","Bookkeeper%20Premium");
 @Sub_amt = ("0.00","5.00","5.00","10.00","10.00","20.00");
 
+$Url = "connect/subscriptions/new";
+
 if ($FORM{subaction} =~ /S/i) {
-	if ($Company->{comsubref}) {	#  Already a subscriber so just change subscription level (if different from existing
-		if ($Company->{comsublevel} != $FORM{sub}) {
-			print<<EOD;
-Content-Type: text/plain
+	if ($Company->{comsubref} && $Company->{comsublevel} != $FORM{sub}) {	#  Already a subscriber so  first cancel the existing one
+		$Url = "users/sign_in";
 
-No Change!
+		use LWP::UserAgent;
+	
+		my $ua = LWP::UserAgent->new;
+		my $req = HTTP::Request->new(PUT => "https://sandbox.gocardless.com/api/v1/subscriptions/$Company->{comsubref}/cancel");
+		$req->header('Content-Type' => 'text/plain');
+		$req->header('Content-Length' => '0');
+		$req->header('Accept' => 'application/xml');
+		$req->header('Authorization' => 'bearer 8bztbuIDFtSTNPZTgQ1ELVa/XCRQqc04tldN/8L4PpvfT4SK4GS93vKw4hkj6tCM');
 
-Sublevel = $Company->{comsublevel}
+		my $res = $ua->request($req);
 
-New Sub = $FORM{sub}
-EOD
+		$Res_content = $res->content;
+		if ($Res_content =~ /<status.*>cancelled<\/status>/is) {
+			$State .= "&cancellation=success&cancel_id=$Company->{comsubref}";
 		}
 		else {
-			print<<EOD;
-Content-Type: text/plain
-
-Subscription Changed
-
-Sublevel = $Company->{comsublevel}
-
-New Sub = $FORM{sub}
-EOD
+			$State .= "&cancellation=failure&cancel_id=$Company->{comsubref}";
 		}
 	}
-	else {				#  New subscriber so connect ot the Connect API
 
 #  Set up the parameters
 
-		use Digest::SHA qw(hmac_sha256_hex);
+	use Digest::SHA qw(hmac_sha256_hex);
+	$State = CGI::escape($State);
 
-		$client_id = 'sRjngasG1PNtIT06u33yZMu7ftXDaDe4ARaXFY2U8FYaDc_bGLmV7UAIme9KZczj';
-		$nonce = 'fpa'.$$;
-		$timestamp = `date +%Y-%m-%dT%T%Z`;
-		chomp($timestamp);
-		$timestamp =~ s/:/\%3A/g;
+	$client_id = 'sRjngasG1PNtIT06u33yZMu7ftXDaDe4ARaXFY2U8FYaDc_bGLmV7UAIme9KZczj';
+	$nonce = 'fpa'.$$;
+	$timestamp = `date +%Y-%m-%dT%T%Z`;
+	chomp($timestamp);
+	$timestamp =~ s/:/\%3A/g;
 
-		$Sub_text = "client_id=$client_id&nonce=$nonce&state=$State&subscription%5Bamount%5D=$Sub_amt[$FORM{sub}]&subscription%5Binterval_length%5D=1&subscription%5Binterval_unit%5D=month&subscription%5Bmerchant_id%5D=$Merchant_id&subscription%5Bname%5D=$Sub_name[$FORM{sub}]&subscription%5Bstart_at%5D=$Start_date&subscription%5Buser%5D%5Bemail%5D=$Company->{regemail}&subscription%5Buser%5D%5Bfirst_name%5D=$First_name&subscription%5Buser%5D%5Blast_name%5D=$Last_name&timestamp=$timestamp";
+	$Sub_text = "client_id=$client_id&nonce=$nonce&state=$State&subscription%5Bamount%5D=$Sub_amt[$FORM{sub}]&subscription%5Binterval_length%5D=1&subscription%5Binterval_unit%5D=month&subscription%5Bmerchant_id%5D=$Merchant_id&subscription%5Bname%5D=$Sub_name[$FORM{sub}]&subscription%5Bstart_at%5D=$Start_date&subscription%5Buser%5D%5Bemail%5D=$Company->{regemail}&subscription%5Buser%5D%5Bfirst_name%5D=$First_name&subscription%5Buser%5D%5Blast_name%5D=$Last_name&timestamp=$timestamp";
 
-		$Signature = hmac_sha256_hex( $Sub_text, $App_key );
+	$Signature = hmac_sha256_hex( $Sub_text, $App_key );
 
-		print<<EOD;
+	print<<EOD;
 Content-Type: text/html
 Status: 302
-Location: https://sandbox.gocardless.com/connect/subscriptions/new?client_id=$client_id&nonce=$nonce&signature=$Signature&$Sub_text
+Location: https://sandbox.gocardless.com/$Url?client_id=$client_id&nonce=$nonce&signature=$Signature&$Sub_text
 
 EOD
-	}
 }
 elsif ($FORM{subaction} =~ /C/i) {
 

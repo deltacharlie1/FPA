@@ -11,8 +11,9 @@
     <tr>
       <td>Thank you for subscribing to <b><i>[%- membership -%]</i></b>.&nbsp;&nbsp;Your application has been successful and we will email you shortly with a receipt.</td>
     </tr>
+[% cancellation -%]
     <tr>
-      <td>Your reference for this subscription is:- <b>[%- company.comsubref -%]</b></td>
+      <td>The reference for your new subscription is:- <b>[%- company.comsubref -%]</b></td>
     </tr>
     <tr>
       <td>Payment will be taken from your bank account on or about [%- company.subdue -%] and at monthly intervals thereafter.&nbsp;&nbsp;You may cancel your subscription at any point up until that date either directly through your bank or by clicking on the 'Cancel Subscription' tab on the 'My Account' page although cancellations within 3 working days of a payment date will only come in to effect after the next payment.</td>

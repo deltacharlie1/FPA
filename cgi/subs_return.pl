@@ -99,8 +99,6 @@ if ($Res_content =~ /success/i) {
 	$Company = $Companies->fetchrow_hashref;
 	$Companies->finish;
 
-warn "cookie = $COOKIE->{COOKIE}\n";
-
 	open(FILE,"</projects/tmp/$COOKIE->{COOKIE}");
 	while (<FILE>) {
         	chomp($_);
@@ -120,9 +118,18 @@ warn "cookie = $COOKIE->{COOKIE}\n";
 	}
 	close(FILE);
 
+	$Cancellation = '';
+	if ($STATE{cancellation} =~ /success/i) {
+		$Cancellation = "<tr><td>Your previous subscription, reference:- <b>$STATE{cancel_id}</b> has been cancelled</td></tr>";
+	}
+	elsif ($STATE{cancellation} =~ /failure/i) {
+		$Cancellation = "<tr><td>We have been unable to cancel your previous subscription, reference:- <b>$STATE{cancel_id}</b> for some reason.&nbsp;&nbsp;Please cancel it directly with your bank.&nbsp;&nbsp;If you have any problems please contact us quoting this reference number.</td></tr>";
+	}
+
 	$Vars = { cookie => $COOKIE,
           title => 'Subscriptions',
           membership => $Memtext[$STATE{sublevel}],
+	  cancellation => $Cancellation,
           company => $Company
 	};
 
