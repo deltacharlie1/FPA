@@ -1,9 +1,27 @@
 #!/usr/bin/perl
 
+$Facility = "test";
+if ($Facility =~ /live/i) {
+        $Client_id = 'L4s4jrtE8p0B9X2LOTxR_aE4V_rBNjyZEkkhBFlVV9Lhv2MYIISOuFGDhL6z2baD';                #  App identifief
+        $App_key = 'eTzWcFjDjsPpd_GhwWBH4ovB_MyYQJDr5snpHOeEohF6uamIVWMnLUE2yJ_Cfl_A';                  #  App secret
+        $Authorization = 'bearer 7koL7/6N7eexnQeYyZz24/r7pevUuO1tA6ZH+A0SjX0pDV42z/YXodG5KuIUdKfm';     #  Merchant access token
+        $Merchant_id = '0265HC17QC';                                                                    #  Merchant id
+	$Dom = '';
+}
+else {
+        $Client_id = 'sRjngasG1PNtIT06u33yZMu7ftXDaDe4ARaXFY2U8FYaDc_bGLmV7UAIme9KZczj';                #  App identifier
+        $App_key = '5hs3wSzzMuUarQFy_5Z2frezxymWhZK9dLEtkpDUBHBnjE7DjqJH1Js94MmR_6Fe';                  #  App secret
+        $Authorization = 'bearer 8bztbuIDFtSTNPZTgQ1ELVa/XCRQqc04tldN/8L4PpvfT4SK4GS93vKw4hkj6tCM';     #  Merchant access token
+        $Merchant_id = '0205HPKCHY';                                                                    #  Merchant Id
+	$Dom = 'sandbox.';
+}
+
 $ACCESS_LEVEL = 1;
 
 use Checkid;
 $COOKIE = &checkid($ENV{HTTP_COOKIE},$ACCESS_LEVEL);
+
+warn "Got cookie\n";
 
 ($Reg_id,$Com_id) = split(/\+/,$COOKIE->{ACCT});
 use DBI;
@@ -50,13 +68,11 @@ use LWP::UserAgent;
 
 my $ua = LWP::UserAgent->new;
 
-$Merchant_id = '0205HPKCHY';
-$App_key = '5hs3wSzzMuUarQFy_5Z2frezxymWhZK9dLEtkpDUBHBnjE7DjqJH1Js94MmR_6Fe';
-my $req = HTTP::Request->new(POST => "https://sandbox.gocardless.com/api/v1/confirm");
+my $req = HTTP::Request->new(POST => "https://".$Dom."gocardless.com/api/v1/confirm");
 $req->content_type('application/json');
 $req->header('Accept' => 'application/json');
-$req->header('Authorization' => 'bearer 8bztbuIDFtSTNPZTgQ1ELVa/XCRQqc04tldN/8L4PpvfT4SK4GS93vKw4hkj6tCM');
-$req->authorization_basic('sRjngasG1PNtIT06u33yZMu7ftXDaDe4ARaXFY2U8FYaDc_bGLmV7UAIme9KZczj','5hs3wSzzMuUarQFy_5Z2frezxymWhZK9dLEtkpDUBHBnjE7DjqJH1Js94MmR_6Fe');
+$req->header('Authorization' => $Authorization);
+$req->authorization_basic($Client_id,$App_key);
 $req->header('Content-Length' => $Confirm_length );
 $req->content($Confirm);
 
@@ -136,7 +152,14 @@ if ($Res_content =~ /success/i) {
 	print "Content-Type: text/html\n\n";
 	$tt->process('subs_return.tt',$Vars);
 }
+else {
+	print<<EOD;
+Content-Type: text/plain
 
+Unsuccessful return for subs_return
+
+EOD
+}
 $dbh->disconnect;
 # use DBI;
 

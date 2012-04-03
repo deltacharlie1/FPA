@@ -1,32 +1,48 @@
 #!/usr/bin/perl
 
-#$ACCESS_LEVEL = 0;
-
-#  script to process registration update details
-
-#use Checkid;
-#$COOKIE = &checkid($ENV{HTTP_COOKIE},$ACCESS_LEVEL);
-
-#($Reg_id,$Com_id) = split(/\+/,$COOKIE->{ACCT});
-
-print "Content-Type: text/plain\n\nOK";
-
 read(STDIN, $Buffer, $ENV{'CONTENT_LENGTH'});
 
-warn "subs_validate = ".$Buffer."\n\n";
-
-@pairs = split(/&/,$Buffer);
-
-foreach $pair (@pairs) {
-
-        ($Name, $Value) = split(/=/, $pair);
-
-        $Value =~ tr/+/ /;
-        $Value =~ s/%([a-fA-F0-9][a-fA-F0-9])/pack("C",hex($1))/eg;
-        $Value =~ tr/\\//d;             #  Remove all back slashes
-        $Value =~ s/(\'|\")/\\$1/g;
-        $FORM{$Name} = $Value;
-warn "$Key = $Value\n";
+$Buffer = <<EOD;
+{
+  "payload": {
+    "bills": [
+      {
+        "id": "020YADXY99",
+        "status": "paid",
+        "uri": "https://sandbox.gocardless.com/api/v1/bills/020YADXY99",
+        "source_type": "subscription",
+        "source_id": "0265CVX1E7",
+        "paid_at": "2012-04-03T15:00:46Z",
+        "payment_id": "022FERM4KV"
+      }
+    ],
+    "action": "paid",
+    "resource_type": "bill",
+    "signature": "9e72a82977e7761e563e952c29df8cb8031fd5c7ccebf6d075993dd08769e6d7"
+  }
 }
-exit;
+EOD
 
+use JSON;
+use DBI;
+$dbh = DBI->connect("DBI:mysql:fpa");
+
+$Payload = decode_json($Buffer);
+
+if ($Payload->{payload}->{action} =~ /paid/i && $Payload->{payload}->{resource_type} =~ /bill/i) {
+
+        foreach $bill (@{$Payload->{payload}->{bills}}) {
+		if ($bill->{source_type} =~ /subscription/i) {
+			$Sts = $dbh->do("update companies set comsubdue=date_add(comsubdue,interval 1 month) where comsubref='$bill->{source_id}'");
+		}
+        }
+}
+print<<EOD;
+Content-Type: text/plain
+Status: 200 OK
+
+
+EOD
+
+
+exit;

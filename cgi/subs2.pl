@@ -1,5 +1,21 @@
 #!/usr/bin/perl
 
+$Facility = "test";
+if ($Facility =~ /live/i) {
+	$Client_id = 'L4s4jrtE8p0B9X2LOTxR_aE4V_rBNjyZEkkhBFlVV9Lhv2MYIISOuFGDhL6z2baD';		#  App identifief
+	$App_key = 'eTzWcFjDjsPpd_GhwWBH4ovB_MyYQJDr5snpHOeEohF6uamIVWMnLUE2yJ_Cfl_A';			#  App secret
+	$Authorization = 'bearer 7koL7/6N7eexnQeYyZz24/r7pevUuO1tA6ZH+A0SjX0pDV42z/YXodG5KuIUdKfm';	#  Merchant access token
+	$Merchant_id = '0265HC17QC';									#  Merchant id
+	$Dom = '';
+}
+else {
+	$Client_id = 'sRjngasG1PNtIT06u33yZMu7ftXDaDe4ARaXFY2U8FYaDc_bGLmV7UAIme9KZczj';		#  App identifier
+	$App_key = '5hs3wSzzMuUarQFy_5Z2frezxymWhZK9dLEtkpDUBHBnjE7DjqJH1Js94MmR_6Fe';			#  App secret
+	$Authorization = 'bearer 8bztbuIDFtSTNPZTgQ1ELVa/XCRQqc04tldN/8L4PpvfT4SK4GS93vKw4hkj6tCM';	#  Merchant access token
+	$Merchant_id = '0205HPKCHY';									#  Merchant Id
+	$Dom = 'sandbox.';
+}
+
 $ACCESS_LEVEL = 1;
 
 #  script to process subscription change
@@ -34,18 +50,14 @@ foreach $pair (@pairs) {
 # warn "$Name = $Value\n";
 }
 
-$Merchant_id = '0205HPKCHY';
-$App_key = '5hs3wSzzMuUarQFy_5Z2frezxymWhZK9dLEtkpDUBHBnjE7DjqJH1Js94MmR_6Fe';
-
 #  Get his current subscription (comsubref).  If notthing there then this is a new sub
 
 use CGI;
 
-$Companies = $dbh->prepare("select comsublevel,comsubref,regemail,regusername from companies left join registrations using (reg_id) where reg_id=$Reg_id and id=$Com_id");
+$Companies = $dbh->prepare("select comsublevel,comsubref,regemail,regusername,comsubdue,datediff(comsubdue,now()) as daysbeforedue,date_add(comsubdue,interval 1 month) as subnextdue from companies left join registrations using (reg_id) where reg_id=$Reg_id and id=$Com_id");
 $Companies->execute;
 $Company = $Companies->fetchrow_hashref;
 $Companies->finish;
-$dbh->disconnect;
 
 ($First_name,$Last_name) = split(/\s+/,$Company->{regusername});
 $First_name = CGI::escape($First_name);
@@ -55,11 +67,6 @@ $Company->{regemail} = CGI::escape($Company->{regemail});
 $Start_date = `date --date="1 week" +%Y-%m-%dT%T%Z`;
 chomp($Start_date);
 $Start_date =~ s/:/\%3A/g;
-
-$Subdue = $Start_date;
-$Subdue =~ s/T*$//;
-
-$State = "id=$COOKIE->{ACCT}&sublevel=$FORM{sub}&subdue=$Subdue";
 
 #  Set up strings to send to GCL
 
@@ -71,15 +78,33 @@ $Url = "connect/subscriptions/new";
 if ($FORM{subaction} =~ /S/i) {
 	if ($Company->{comsubref} && $Company->{comsublevel} != $FORM{sub}) {	#  Already a subscriber so  first cancel the existing one
 		$Url = "users/sign_in";
+$Url = "connect/subscriptions/new";
+
+#  Calculate the next subscription due date
+
+		if ($Company->{daysbeforedue} < 3 && $Company->{daysbeforedue} >= 0) {
+
+#  sustitute nextsubdue date (because he will most likley already be committed to this month's sub)
+
+			$Start_date =~ s/^\d\d\d\d-\d\d-\d\d/$Company->{subnextdue}/;
+		}
+		else {
+			$Start_date =~ s/^\d\d\d\d-\d\d-\d\d/$Company->{comsubdue}/;
+		}
+
+		$Subdue = $Start_date;
+		$Subdue =~ s/T*$//;
+
+		$State = "id=$COOKIE->{ACCT}&sublevel=$FORM{sub}&subdue=$Subdue";
 
 		use LWP::UserAgent;
 	
 		my $ua = LWP::UserAgent->new;
-		my $req = HTTP::Request->new(PUT => "https://sandbox.gocardless.com/api/v1/subscriptions/$Company->{comsubref}/cancel");
+		my $req = HTTP::Request->new(PUT => "https://".$Dom."gocardless.com/api/v1/subscriptions/$Company->{comsubref}/cancel");
 		$req->header('Content-Type' => 'text/plain');
 		$req->header('Content-Length' => '0');
 		$req->header('Accept' => 'application/xml');
-		$req->header('Authorization' => 'bearer 8bztbuIDFtSTNPZTgQ1ELVa/XCRQqc04tldN/8L4PpvfT4SK4GS93vKw4hkj6tCM');
+		$req->header('Authorization' => $Authorization);
 
 		my $res = $ua->request($req);
 
@@ -91,26 +116,32 @@ if ($FORM{subaction} =~ /S/i) {
 			$State .= "&cancellation=failure&cancel_id=$Company->{comsubref}";
 		}
 	}
+	else {
+
+		$Subdue = $Start_date;
+		$Subdue =~ s/T*$//;
+
+		$State = "id=$COOKIE->{ACCT}&sublevel=$FORM{sub}&subdue=$Subdue";
+	}
 
 #  Set up the parameters
 
 	use Digest::SHA qw(hmac_sha256_hex);
 	$State = CGI::escape($State);
 
-	$client_id = 'sRjngasG1PNtIT06u33yZMu7ftXDaDe4ARaXFY2U8FYaDc_bGLmV7UAIme9KZczj';
 	$nonce = 'fpa'.$$;
 	$timestamp = `date +%Y-%m-%dT%T%Z`;
 	chomp($timestamp);
 	$timestamp =~ s/:/\%3A/g;
 
-	$Sub_text = "client_id=$client_id&nonce=$nonce&state=$State&subscription%5Bamount%5D=$Sub_amt[$FORM{sub}]&subscription%5Binterval_length%5D=1&subscription%5Binterval_unit%5D=month&subscription%5Bmerchant_id%5D=$Merchant_id&subscription%5Bname%5D=$Sub_name[$FORM{sub}]&subscription%5Bstart_at%5D=$Start_date&subscription%5Buser%5D%5Bemail%5D=$Company->{regemail}&subscription%5Buser%5D%5Bfirst_name%5D=$First_name&subscription%5Buser%5D%5Blast_name%5D=$Last_name&timestamp=$timestamp";
+	$Sub_text = "client_id=$Client_id&nonce=$nonce&state=$State&subscription%5Bamount%5D=$Sub_amt[$FORM{sub}]&subscription%5Binterval_length%5D=1&subscription%5Binterval_unit%5D=month&subscription%5Bmerchant_id%5D=$Merchant_id&subscription%5Bname%5D=$Sub_name[$FORM{sub}]&subscription%5Bstart_at%5D=$Start_date&subscription%5Buser%5D%5Bemail%5D=$Company->{regemail}&subscription%5Buser%5D%5Bfirst_name%5D=$First_name&subscription%5Buser%5D%5Blast_name%5D=$Last_name&timestamp=$timestamp";
 
 	$Signature = hmac_sha256_hex( $Sub_text, $App_key );
 
 	print<<EOD;
 Content-Type: text/html
 Status: 302
-Location: https://sandbox.gocardless.com/$Url?client_id=$client_id&nonce=$nonce&signature=$Signature&$Sub_text
+Location: https://${Dom}gocardless.com/$Url?client_id=$Client_id&nonce=$nonce&signature=$Signature&$Sub_text
 
 EOD
 }
@@ -133,11 +164,11 @@ elsif ($FORM{subaction} =~ /C/i) {
 	use LWP::UserAgent;
 
 	my $ua = LWP::UserAgent->new;
-	my $req = HTTP::Request->new(PUT => "https://sandbox.gocardless.com/api/v1/subscriptions/$Company->{comsubref}/cancel");
+	my $req = HTTP::Request->new(PUT => "https://".$Dom."gocardless.com/api/v1/subscriptions/$Company->{comsubref}/cancel");
 	$req->header('Content-Type' => 'text/plain');
 	$req->header('Content-Length' => '0');
 	$req->header('Accept' => 'application/xml');
-	$req->header('Authorization' => 'bearer 8bztbuIDFtSTNPZTgQ1ELVa/XCRQqc04tldN/8L4PpvfT4SK4GS93vKw4hkj6tCM');
+	$req->header('Authorization' => $Authorization);
 
 	my $res = $ua->request($req);
 
@@ -173,10 +204,9 @@ elsif ($FORM{subaction} =~ /C/i) {
 	print "Content-Type: text/html\n\n";
 	$tt->process('subs2_cancel.tt',$Vars);
 }
+$dbh->disconnect;
 exit;
 sub update_cookiefile {
-
-warn "cookie = $COOKIE->{COOKIE}\n";
 
 open(FILE,"</projects/tmp/$COOKIE->{COOKIE}");
 while (<FILE>) {
