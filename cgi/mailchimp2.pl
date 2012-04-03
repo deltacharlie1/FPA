@@ -24,6 +24,9 @@ foreach $pair (@pairs) {
 
 #  First get the current membership to see if they can legitimately cancel emails
 
+use DBI;
+$dbh = DBI->connect("DBI:mysql:fpa");
+
 $Regs = $dbh->prepare("select regmembership from registrations where regemail='$FORM{email}'");
 $Regs->execute;
 $Reg = $Regs->fetchrow_hashref;
