@@ -1,6 +1,7 @@
 #!/usr/bin/perl
 
-$Facility = "live";
+$Facility = `cat /usr/local/git/fpa/other/.gocardless`;
+chomp($Facility);
 if ($Facility =~ /live/i) {
 	$Client_id = 'L4s4jrtE8p0B9X2LOTxR_aE4V_rBNjyZEkkhBFlVV9Lhv2MYIISOuFGDhL6z2baD';		#  App identifief
 	$App_key = 'eTzWcFjDjsPpd_GhwWBH4ovB_MyYQJDr5snpHOeEohF6uamIVWMnLUE2yJ_Cfl_A';			#  App secret
