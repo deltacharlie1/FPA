@@ -93,9 +93,9 @@
       <td onclick="location.href='/cgi-bin/fpa/update_purchase.pl?[%- invoice.invid -%]';">[%- IF invoice.invtype == "R" -%]Refund[%- ELSE -%]Purch Inv[%- END -%]</td>
       <td onclick="location.href='/cgi-bin/fpa/update_purchase.pl?[%- invoice.invid -%]';">[%- invoice.invdesc | truncate(30) -%]</td>
       <td onclick="location.href='/cgi-bin/fpa/update_purchase.pl?[%- invoice.invid -%]';">[%- invoice.printdate -%]</td>
-      <td onclick="location.href='/cgi-bin/fpa/update_purchase.pl?[%- invoice.invid -%]';">[%- invoice.invamount | remove('-') -%]</td>
-      <td onclick="location.href='/cgi-bin/fpa/update_purchase.pl?[%- invoice.invid -%]';">[%- invoice.invpaid | remove('-') -%]</td>
-      <td onclick="location.href='/cgi-bin/fpa/update_purchase.pl?[%- invoice.invid -%]';">[%- IF invoice.invamount-invoice.invpaid != 0; invoice.invamount - invoice.invpaid | remove('-') | format('%1.2f'); ELSE -%]&nbsp;[%- END -%]</td>
+      <td style="text-align:right;"  onclick="location.href='/cgi-bin/fpa/update_purchase.pl?[%- invoice.invid -%]';">[%- invoice.invamount | remove('-') -%]</td>
+      <td style="text-align:right;" onclick="location.href='/cgi-bin/fpa/update_purchase.pl?[%- invoice.invid -%]';">[%- invoice.invpaid | remove('-') -%]</td>
+      <td style="text-align:right;" onclick="location.href='/cgi-bin/fpa/update_purchase.pl?[%- invoice.invid -%]';">[%- IF invoice.invamount-invoice.invpaid != 0; invoice.invamount - invoice.invpaid | remove('-') | format('%1.2f'); ELSE -%]&nbsp;[%- END -%]</td>
       <td onclick="location.href='/cgi-bin/fpa/update_purchase.pl?[%- invoice.invid -%]';">[%- invoice.invstatus -%]</td>
   [%- IF invoice.status != "Paid" AND invoice.invpaid > invoice.invamount -%]
     [%- IF invoice.invtype == "P" -%]

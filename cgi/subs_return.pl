@@ -22,8 +22,6 @@ $ACCESS_LEVEL = 1;
 use Checkid;
 $COOKIE = &checkid($ENV{HTTP_COOKIE},$ACCESS_LEVEL);
 
-warn "Got cookie\n";
-
 ($Reg_id,$Com_id) = split(/\+/,$COOKIE->{ACCT});
 use DBI;
 $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
@@ -106,7 +104,7 @@ if ($Res_content =~ /success/i) {
 	$Memtext[4] = 'FreePlus Premium (&pound;10.00pm)';
 	$Memtext[5] = 'FreePlus BookkeepersPremium (&pound;20.00pm)';
 
-	$Sts = $dbh->do("update companies set comsublevel='$STATE{sublevel}',comsubdue='$STATE{subdue}',comsubref='$FORM{resource_id}',comcardref='$FORM{resource_uri}' where reg_id=$Reg_id and id=$Com_id");
+	$Sts = $dbh->do("update companies set comsublevel=date_add('$STATE{sublevel}',interval 2 day),comsubdue='$STATE{subdue}',comsubref='$FORM{resource_id}',comcardref='$FORM{resource_uri}' where reg_id=$Reg_id and id=$Com_id");
 	$Sts = $dbh->do("update registrations set regmembership='$Membership[$STATE{sublevel}]' where reg_id=$Reg_id");
 
 #  Now get the details

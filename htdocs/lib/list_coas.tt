@@ -14,7 +14,7 @@
       <td>[%- entry.coanominalcode -%]</td>
       <td>[%- entry.coadesc | truncate(30) -%]</td>
       <td>[%- entry.coatype -%]</td>
-      <td>[%- entry.coabalance | format('%1.2f') -%]</td>
+      <td style="text-align:right;">[%- entry.coabalance | format('%1.2f') -%]</td>
     </tr>
 [%- END -%]
   </table>

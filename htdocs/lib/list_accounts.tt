@@ -20,8 +20,8 @@
       <td>[%- entry.accsort -%]</td>
       <td>[%- entry.accacctno -%]</td>
       <td>[%- entry.stastmtno -%]</td>
-      <td>[%- entry.staclosebal -%]</td>
-      <td>[%- entry.coabalance -%]</td>
+      <td style="text-align:right;">[%- entry.staclosebal -%]</td>
+      <td style="text-align:right;">[%- entry.coabalance -%]</td>
       <td style="text-align:center;"><a href='/cgi-bin/fpa/[%- IF entry.accnewrec == 'Y' -%]newrec[%- ELSE -%]reconcile[%- END -%].pl?[%- entry.acctype -%]'><img src='/images/reconcile.png' alt='Reconcile Account' title="Reconcile"/></a></td>
     </tr>
 [% END -%]

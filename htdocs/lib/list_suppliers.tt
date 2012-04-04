@@ -16,7 +16,7 @@
       <td onclick="location.href='/cgi-bin/fpa/list_supplier_purchases.pl?[%- entry.id -%]';">[%- entry.cusname | truncate(30) -%]</td>
       <td onclick="location.href='/cgi-bin/fpa/list_supplier_purchases.pl?[%- entry.id -%]';">[%- entry.cuspostcode | remove("\n.*") -%]</td>
       <td onclick="location.href='/cgi-bin/fpa/list_supplier_purchases.pl?[%- entry.id -%]';">[%- entry.cuscontact -%]</td>
-      <td onclick="location.href='/cgi-bin/fpa/list_supplier_purchases.pl?[%- entry.id -%]';">[%- 0 - entry.cusbalance | format('%1.2f') -%]</td>
+      <td style="text-align:right;"  onclick="location.href='/cgi-bin/fpa/list_supplier_purchases.pl?[%- entry.id -%]';">[%- 0 - entry.cusbalance | format('%1.2f') -%]</td>
       <td style="text-align:center;" nowrap="nowrap"><img src="/images/edit.png" title="Raise Purchase Invoice" onclick="location.href='/cgi-bin/fpa/new_purchase.pl?[%- entry.id -%]';"></td>
     </tr>
 [%- END -%]

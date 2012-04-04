@@ -23,10 +23,10 @@
       <td>[%- invoice.invinvoiceno -%]</td>
       <td>[%- invoice.invcusname -%]</td>
       <td>[%- invoice.invdesc | truncate(30) -%]</td>
-      <td>[%- invoice.invamount -%]</td>
-      <td>[%- invoice.printdate -%]</td>
-      <td>[%- invoice.invduedate -%]</td>
-      <td>[%- invoice.invpaid -%]</td>
+      <td style="text-align:right;">[%- invoice.invamount -%]</td>
+      <td style="text-align:right;">[%- invoice.printdate -%]</td>
+      <td style="text-align:right;">[%- invoice.invduedate -%]</td>
+      <td style="text-align:right;">[%- invoice.invpaid -%]</td>
       <td>
   [%- IF invoice.invstatus == 'Overdue' -%]<span style="color:#800000;font-weight:bold;">Overdue</span>[%- ELSE; invoice.invstatus; END -%]</td>
     </tr>

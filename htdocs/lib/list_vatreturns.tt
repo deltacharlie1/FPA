@@ -19,7 +19,7 @@
       <td><a href="#">[%- vatreturn.perquarter -%]</a></td>
       <td>[%- vatreturn.startdate -%]</td>
       <td>[%- vatreturn.enddate -%]</td>
-      <td>[%- vatreturn.perbox5 -%]</td>
+      <td style="text-align:right;">[%- vatreturn.perbox5 -%]</td>
       <td>[%- vatreturn.perduedate -%]</td>
       <td>[%- vatreturn.percompleted -%]</td>
       <td>[%- vatreturn.perfiled -%]</td>
