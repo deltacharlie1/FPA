@@ -32,23 +32,40 @@ while (( $Key,$Value) = each %FORM) {
 foreach $Row (@Rows) {
 	chomp($Row);
 
-#  Col0 - id, col1 - top, col2 - left, col3 width, col4, height col5 bold
+#  Col0 - id, col1 - top, col2 - left, col3 - width, col4 - height, col5 - bold, col6 - justify, col7 - display Y/N  (col6 is calculated)
 
-	@Cols = split('-',$Row);
+	@Col = split('-',$Row);
 
-	if ($Cols[5] =~ /bold/i) {
-		$Cols[5] = "Y";
+	if ($Col[5] =~ /bold/i) {
+		$Col[5] = "Y";
 	}
 	else {
-		$Cols[5] = "N";
+		$Col[5] = "N";
 	}
-	$Sts = $dbh->do("update invoice_layout_items set litop='$Cols[1]',lileft='$Cols[2]',liwidth='$Cols[3]',lisize='$Cols[4]',libold='$Cols[5]' where acct_id='$COOKIE->{ACCT}' and link_id=$FORM{id} and lifldcode='$Cols[0]'");
+	if ($Col[1]>=0 && $Col[1]<850 && $Col[2]>=0 && $Col[2]<600) {
+		$Col[7] = "Y";
+	}
+	else {
+		$Col[7] = "N";
+	}
+	$Sts = $dbh->do("update invoice_layout_items set litop='$Col[1]',lileft='$Col[2]',liwidth='$Col[3]',lisize='$Col[4]',libold='$Col[5]',lijust='$Col[6]',lidisplay='$Col[7]' where acct_id='$COOKIE->{ACCT}' and link_id=$FORM{id} and lifldcode='$Col[0]'");
+	unless ($Sts > 0) {
 
-	if ($Cols[0] =~ /a020/i) {
-		$Sts = $dbh->do("update invoice_layouts set descwidth='$Cols[3]',descheight='$Cols[4]' where acct_id='$COOKIE->{ACCT}' and id=$FORM{id}");
+#  We need to add a duplicated item, so first get the original
+
+		$Original_fldcode = substr($Col[0],0,4);
+		$Items = $dbh->prepare("select lidispname,litable,lisource,lialias from invoice_layout_items where acct_id='$COOKIE->{ACCT}' and link_id=$FORM{id} and lifldcode='$Original_fldcode'");
+		$Items->execute;
+		$Item = $Items->fetchrow_hashref;
+		$Items->finish;
+
+		$Sts = $dbh->do("insert into invoice_layout_items (acct_id,link_id,lifldcode,litop,lileft,liwidth,lisize,libold,lijust,lidisplay,lidispname,litable,lisource,lialias) values ('$COOKIE->{ACCT}',$FORM{id},'$Col[0]','$Col[1]','$Col[2]','$Col[3]','$Col[4]','$Col[5]','$Col[6]','$Col[7]','$Item->{lidispname}','$Item->{litable}','$Item->{lisource}','$Item->{lialias}')");
 	}
-	elsif ($Cols[0] =~ /a013/i) {
-		$Sts = $dbh->do("update invoice_layouts set rmkwidth='$Cols[3]',rmkheight='$Cols[4]' where acct_id='$COOKIE->{ACCT}' and id=$FORM{id}");
+	if ($Col[0] =~ /a020/i) {
+		$Sts = $dbh->do("update invoice_layouts set descwidth='$Col[3]',descheight='$Col[4]' where acct_id='$COOKIE->{ACCT}' and id=$FORM{id}");
+	}
+	elsif ($Col[0] =~ /a013/i) {
+		$Sts = $dbh->do("update invoice_layouts set rmkwidth='$Col[3]',rmkheight='$Col[4]' where acct_id='$COOKIE->{ACCT}' and id=$FORM{id}");
 	}
 }
 

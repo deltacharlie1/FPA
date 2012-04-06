@@ -100,7 +100,7 @@ $(document).ready(function(){
   });
 });
 function check_send() {
-  if ($("#laydesc").val() == "" || $("#layfileQueue").html() == "") {
+  if ($("#layid").val() == 0 && ($("#laydesc").val() == "" || $("#layfileQueue").html() == "")) {
     alert("You must enter a description iand select a layout file when adding a new layout");
   }
   else {

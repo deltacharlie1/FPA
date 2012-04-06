@@ -6,37 +6,49 @@
     <tr>
       <td><label>Top: </label></td>
       <td><input type="text" name="laytop" id="laytop" size="5" value=""/></td>
-    </tr>
-    <tr>
       <td><label><span id="laydir">Left: </span></label></td>
       <td><input type="text" name="layleft" id="layleft" size="5" value=""/></td>
     </tr>
     <tr>
       <td><label>Size: </label></td>
       <td><input type="text" name="laysize" id="laysize" size="5" value=""/></td>
-    </tr>
-    <tr>
       <td><label>Bold: </label></td>
       <td><select name="laybold" id="laybold" size="1">
-            <option value="normal">No</option>
+            <option value="normal" selected="selected">No</option>
             <option value="bold">Yes</option>
           </select>
       </td>
     </tr>
+    <tr>
+      <td colspan="2"><label>Justify: </label></td>
+      <td colspan="2"><select name="layjust" id="layjust" size="1">
+            <option value="bleft" selected="selected">Left</option>
+            <option value="bcentre">Centre</option>
+            <option value="bright">Right</option>
+         </selected>
+      </td>
+    </tr>
+    <tbody id="dupable"style="display:none;">
+      <tr>
+        <td colspan="4" style="text-align:center;">
+          <input type="button" id="dupbut" name="dupbut" value="Duplicate" onclick="dup_this();"/>
+        </td>
+      </tr>
+    </tbody>
   </table>
 </div>
 <input type="hidden" name="id" id="id" value="[%- layout.id -%]"/>
 <input type="hidden" name="data" id="data" value=""/>
 <h1>Invoice Layout Details</h1>
-<div style="position:relative;width:595px;height:842px;border:10px solid #cccccc;background-image: url(/cgi-bin/fpa/pdf2png.pl?[%- layout.id -%]);background-size:595px 842px;background-repeat:no-repeat;">
+<div id="invlayout"  style="position:relative;width:595px;height:842px;border:10px solid #cccccc;background-image: url(/cgi-bin/fpa/pdf2png.pl?[%- layout.id -%]);background-size:595px 842px;background-repeat:no-repeat;">
 <div id="notifier" style="position:absolute;display:none;border:1px solid #999999;padding:2px 4px;"></div>
 [% FOREACH item IN items -%]
   [% IF item.lifldcode=='a020' -%]
-<div id="[%- item.lifldcode -%]" style="[%- IF item.lileft > 0 -%]top:[%- item.litop -%]px;left:[%- item.lileft -%]px;width:[%- layout.descwidth -%]px;height:[%- layout.descheight -%]px;[%- ELSE -%]top:[%- 20 * (loop.count - 1) -%]px;[%- END -%]" class="draggable resizable bleft" title="[%- item.lidispname -%]">[%- item.lialias -%]</div>
+<div id="[%- item.lifldcode -%]" style="[%- IF item.lileft < 610 -%]top:[%- item.litop -%]px;left:[%- item.lileft -%]px;width:[%- layout.descwidth -%]px;height:[%- layout.descheight -%]px;[%- ELSE -%]top:[%- 20 * (loop.count - 1) -%]px;left:[%- item.lileft -%]px;[%- END -%]" class="draggable resizable bleft" title="[%- item.lidispname -%]">[%- item.lialias -%]</div>
   [% ELSIF item.lifldcode=='a013' -%]
-<div id="[%- item.lifldcode -%]" style="[%- IF item.lileft > 0 -%]top:[%- item.litop -%]px;left:[%- item.lileft -%]px;width:[%- layout.rmkwidth -%]px;height:[%- layout.rmkheight -%]px;[%- ELSE -%]top:[%- 20 * (loop.count - 1) -%]px;[%- END -%]" class="draggable resizable bleft" title="[%- item.lidispname -%]">[%- item.lialias -%]</div>
+<div id="[%- item.lifldcode -%]" style="[%- IF item.lileft < 610 -%]top:[%- item.litop -%]px;left:[%- item.lileft -%]px;width:[%- layout.rmkwidth -%]px;height:[%- layout.rmkheight -%]px;[%- ELSE -%]top:[%- 20 * (loop.count - 1) -%]px;left:[%- item.lileft -%]px;[%- END -%]" class="draggable resizable bleft" title="[%- item.lidispname -%]">[%- item.lialias -%]</div>
   [% ELSE -%]
-<div id="[%- item.lifldcode -%]" style="top:[%- IF item.lileft > 0; item.litop; ELSE; 20 * (loop.count - 1); END -%]px;left:[%- item.lileft -%]px;height:[%- item.lisize -%]px;font-size:[%- item.lisize -%]px;[%- IF item.libold=='Y' -%] font-weight:bold;[%- END -%]" class="draggable [%- IF item.lijust=='l' -%]bleft[%- ELSIF item.lijust=='r' -%]bright[%- END -%]" title="[%- item.lidispname -%]" ondblclick="open_settings('[%- item.lifldcode -%]');">[%- item.lialias -%]</div>
+<div id="[%- item.lifldcode -%]" style="top:[%- IF item.lileft < 610; item.litop; ELSE; 20 * (loop.count - 1); END -%]px;left:[%- item.lileft -%]px;height:[%- item.lisize -%]px;font-size:[%- item.lisize -%]px;[%- IF item.libold=='Y' -%] font-weight:bold;[%- END -%]" class="dupable draggable [%- IF item.lijust=='l' -%]bleft[%- ELSIF item.lijust=='r' -%]bright[%- END -%]" title="[%- item.lidispname -%]" ondblclick="open_settings('[%- item.lifldcode -%]');">[%- item.lialias -%]</div>
   [% END -%]
 [% END -%]
 </div>

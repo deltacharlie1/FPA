@@ -18,13 +18,13 @@ create table invoice_layout_items (
   id int(10) unsigned not null auto_increment primary key,
   acct_id varchar(50) not null default '',
   link_id int(10) unsigned,
-  lifldcode char(4),
+  lifldcode char(8),
   lidispname varchar(30),
   litable varchar(20),
   lisource text,
   lialias varchar(20),
-  litop char(3),
-  lileft char(3),
+  litop char(4),
+  lileft char(4),
   liwidth char(3),
   lisize char(2),
   libold char(1) not null default 'N',
@@ -32,6 +32,6 @@ create table invoice_layout_items (
   lijust char(1) not null default 'l',
   index li1 (acct_id)
 );
-alter table companies add column comlayout int not null default 0;
-alter table customers add column cuslayout int not null default 0;
-alter table invoices add column invlayout int not null default 0;
+# alter table companies add column comlayout int not null default 0;
+# alter table customers add column cuslayout int not null default 0;
+# alter table invoices add column invlayout int not null default 0;

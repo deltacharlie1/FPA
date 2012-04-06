@@ -21,8 +21,10 @@ $Layouts->execute;
 $Layout = $Layouts->fetchrow_hashref;
 $Layouts->finish;
 
-$LIs = $dbh->prepare("select * from invoice_layout_items where acct_id='$COOKIE->{ACCT}' and link_id=$ENV{QUERY_STRING} and lidisplay='Y' order by lifldcode");
+$LIs = $dbh->prepare("select * from invoice_layout_items where acct_id='$COOKIE->{ACCT}' and link_id=$ENV{QUERY_STRING} order by lifldcode");
 $LIs->execute;
+$Next_item = $LIs->rows;
+$Next_item++;
 $LI = $LIs->fetchall_arrayref({});
 $LIs->finish;
 
@@ -60,18 +62,24 @@ var uploadparms = "";
 var itemid = "";
 var itemwidth = "";
 var itemheight = "";
+var next_item = '.$Next_item.'
 $(document).ready(function(){
   $("#laysettings").dialog({
     bgiframe: true,
     autoOpen: false,
     position: [200,100],
     height: 300,
-    width: 250,
+    width: 280,
     modal: true,
     buttons: {
       "Save Settings": function() {
+        $("#"+itemid).removeClass("bleft bcentre bright");
+        $("#"+itemid).addClass($("#layjust").val());
         var left = $("#layleft").val();
-        if (/rgb\(177/i.test($("#"+itemid).css("border-right-color"))) {
+        if ($("#"+itemid).hasClass("bcentre")) {
+          left = $("#layleft").val() - parseInt(($("#"+itemid).width() - 30)/2);
+        }
+        if ($("#"+itemid).hasClass("bright")) {
           left = $("#layleft").val() - $("#"+itemid).width() - 30;
         }
         $("#"+itemid).css({"top": $("#laytop").val()+"px", "left": left+"px", "height": $("#laysize").val()+"px", "font-size": $("#laysize").val()+"px", "font-weight": $("#laybold").val() } );
@@ -120,7 +128,16 @@ function setfocus() {
 function save_it() {
 var data = "";
   $(".draggable").each(function() {
-    data = data + $(this).attr("id") + "-" + $(this).position().top + "-" + $(this).position().left + "-" + $(this).width() + "-" + $(this).height() + "-" + $(this).css("font-weight") + "\\n";
+    var just = "l";
+    if ($(this).hasClass("bcentre")) {
+      just = "c";
+    }
+    else {
+      if ($(this).hasClass("bright")) {
+        just = "r";
+      }
+    }
+    data = data + $(this).attr("id") + "-" + $(this).position().top + "-" + $(this).position().left + "-" + $(this).width() + "-" + $(this).height() + "-" + $(this).css("font-weight") + "-" + just + "\\n";
   });
   $("#data").val(data);
 }
@@ -144,7 +161,27 @@ function open_settings(id) {
   $("#laysize").val($("#"+id).height());
   $("#laybold").val($("#"+id).css("font-weight"));
   $("#laytop").focus();  
+  if ($("#"+id).hasClass("dupable")) {
+    $("#dupable").show();
+  }
+  else {
+    $("#dupable").hide();
+  }
   $("#laysettings").dialog("open");
+}
+function dup_this() {
+  var $clone = $("#"+itemid)
+      .clone()
+      .width($("#"+itemid).width())
+      .css("top",$("#"+itemid).position().top+15)
+      .css("left",$("#"+itemid).position().left+15)
+      .css("z-index","999999")
+      .height($("#"+itemid).height())
+      .attr("id", itemid+next_item)
+      .draggable();
+  next_item = next_item + 1;
+  $("#invlayout").prepend( $clone );   
+  $("#laysettings").dialog("close");
 }
 </script>',
 };
