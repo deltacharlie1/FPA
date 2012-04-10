@@ -1,3 +1,7 @@
+<div style="position:relative;">
+<div style="position:absolute;top:70px;left:200px;">
+<a href="/tutorials"><img src="/wp-content/themes/freeplusaccounts/images/starburst.gif"/></a>
+</div>
 <h1 style="width:600px;">Why use FreePlus Accounts?</h1>
 <p>FreePlus Accounts is a complete accounting application for small businesses, start-ups and sole traders that is <b>COMPLETELY FREE</b> to use for as long as you like and as often as you wish!&nbsp;&nbsp;Whether you just want to send out a few quotations and invoices or need a full-blown accounting system why not check out the great feature set <a href="/features">HERE</a> to see how it can help your business.</p>
 <h3 style="padding:0px;">If you are</h3>
@@ -50,5 +54,6 @@ See what some of our satisfied customers have to say
   </ul></div>
 <div style="position:relative;float:right;padding-right:13px;">
 <img style="position:absolute;top:-15px;" src="/wp-content/themes/freeplusaccounts/images/end_quotes.png"/>
+</div>
 </div>
 </div>
