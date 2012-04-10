@@ -7,7 +7,7 @@ $ACCESS_LEVEL = 1;
 use Checkid;
 $COOKIE = &checkid($ENV{HTTP_COOKIE},$ACCESS_LEVEL);
 
-($Invoice_id,$Layout_id) = split(/\?/,$ENV{QUERY_STRING});
+($Invoice_id,$Layout_id,$Testonly) = split(/\?/,$ENV{QUERY_STRING});
 
 use DBI;
 $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
@@ -22,7 +22,7 @@ if ($Layout_id > 0) {
 else {
 	require "/usr/local/httpd/cgi-bin/fpa/pdf_invoice.ph";
 }
-($PDF_data,$Invoice_no) = &pdf_invoice($Invoice_id,'Y',$Layout_id);
+($PDF_data,$Invoice_no) = &pdf_invoice($Invoice_id,'Y',$Layout_id,$Testonly);
 
 print "Content-Type: application/pdf\n";
 print "Content-Disposition: inline; filename=invoice_$Invoice_no.pdf\n\n";

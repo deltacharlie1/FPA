@@ -3,6 +3,7 @@ sub pdf_invoice {
 $Inv_id = $_[0];
 $Use_stamp = $_[1];
 $Layout_id = $_[2];
+$Testonly = $_[3];
 
 #  get the layout
 
@@ -216,7 +217,7 @@ foreach $Calc (@Calc) {
 
 #  See if we need an overdue stamp
 
-if ($COOKIE->{DB} eq 'fpa3') {
+if ($COOKIE->{DB} eq 'fpa3' || $Testonly =~ /T/i) {
 	$g->image($Testonly,100,200);
 }
 else {
