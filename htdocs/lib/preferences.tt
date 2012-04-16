@@ -27,6 +27,13 @@
   </tr>
 [% IF cookie.PLAN > 5 -%]
   <tr>
+    <td colspan="2"><h2>Adverts</h2></td>
+  </tr>
+  <tr>
+    <td><label>Display Adverts?</label></td>
+    <td><span><input name="comads" type="radio" id="comadsY" title="Display Adverts" value="Y"[%- IF reg.regprefs.substr(5,1) == 'Y' -%] checked="checked"[%- END -%]/> Yes&nbsp;&nbsp;<input name="comads" type="radio" id="comadsN" value="N"[%- IF reg.regprefs.substr(5,1) == 'N' -%] checked="checked"[%- END -%]/> No</span></td>
+  </tr>
+  <tr>
     <td colspan="2"><h2>Uploads</h2></td>
   </tr>
   <tr>

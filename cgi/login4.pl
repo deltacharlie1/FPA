@@ -117,7 +117,11 @@ $Cookie = $SHA1_hash->hexdigest;
 
 $IP_Addr = $ENV{'REMOTE_ADDR'};
 open(COOKIE,">/projects/tmp/$Cookie");
-print COOKIE "IP\t$IP_Addr\nACCT\t$Reg_com[0]+$Reg_com[1]\nBACCT\t$Reg_com[0]+$Reg_com[1]\nID\t$COOKIE->{ID}\nPWD\t$COOKIE->{PWD}\nPLAN\t$COOKIE->{PLAN}\nVAT\t$Company->{comvatscheme}\nYEAREND\t$Company->{comyearend}\nUSER\t$User\nEXP\t$Company->{comexpid}\nFRS\t$Company->{frsrate}\nMIN\t$Company->{comvatstart}\nMENU\t$COOKIE->{MENU}\nTAG\t$Company->{comname}\nBTAG\t$Company->{comname}\nACCESS\t$ACCESS\nUPLDS\t$Company->{comuplds}\nPT_LOGO\t$Company->{pt_logo}\nCOOKIE\t$Cookie\nDB\t$DB\nADDU\t$Company->{comadd_user}\nPREFS\t$COOKIE->{PREFS}\nCIS\t$Company->{comcis}\nBUS\t$Company->{combusiness}\n4300\t$Opt{'4300'}\n5000\t$Opt{'5000'}\n6000\t$Opt{'6000'}\n7000\t$Opt{'7000'}\n";
+print COOKIE "IP\t$IP_Addr\nACCT\t$Reg_com[0]+$Reg_com[1]\nBACCT\t$Reg_com[0]+$Reg_com[1]\nID\t$COOKIE->{ID}\nPWD\t$COOKIE->{PWD}\nPLAN\t$ACCESS\nVAT\t$Company->{comvatscheme}\nYEAREND\t$Company->{comyearend}\nUSER\t$User\nEXP\t$Company->{comexpid}\nFRS\t$Company->{frsrate}\nMIN\t$Company->{comvatstart}\nMENU\t$COOKIE->{MENU}\nTAG\t$Company->{comname}\nBTAG\t$Company->{comname}\nACCESS\t$ACCESS\nUPLDS\t$Company->{comuplds}\nPT_LOGO\t$Company->{pt_logo}\nCOOKIE\t$Cookie\nDB\t$DB\nADDU\t$Company->{comadd_user}\nPREFS\t$COOKIE->{PREFS}\nCIS\t$Company->{comcis}\nBUS\t$Company->{combusiness}\n4300\t$Opt{'4300'}\n5000\t$Opt{'5000'}\n6000\t$Opt{'6000'}\n7000\t$Opt{'7000'}\n";
+
+if ($ACCESS > 4 && substr($COOKIE->{PREFS},5,1) =~ /N/i) {
+	print COOKIE "NO_ADS\t1\n";
+}
 
 close(COOKIE);
 $COOKIE->{ACCT} = "$Reg_com[0]+$Reg_com[1]";

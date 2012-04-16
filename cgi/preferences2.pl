@@ -27,7 +27,7 @@ foreach $pair (@pairs) {
 use DBI;
 $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
 
-$Prefs = $FORM{memwordcheck}.$FORM{timeout}.$FORM{invpaid}.$FORM{invcat}.$FORM{comuplds};
+$Prefs = $FORM{memwordcheck}.$FORM{timeout}.$FORM{invpaid}.$FORM{invcat}.$FORM{comuplds}.$FORM{comads};
 
 $Sts = $dbh->do("update registrations set regprefs='$Prefs' where regemail='$COOKIE->{ID}'");
 
@@ -42,6 +42,13 @@ while (<FILE>) {
 close(FILE);
 
 $DATA{PREFS} = $Prefs;
+
+if ($FORM{comads} =~ /N/i) {
+	$DATA{NO_ADS} = "1";
+}
+else {
+	delete($DATA{NO_ADS});
+}
 
 unlink("/projects/tmp/$COOKIE->{COOKIE}");
 
