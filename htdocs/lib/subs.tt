@@ -21,7 +21,8 @@
       <td width="30" valign="top"><input type="radio" name="sub" id="subb" value="2"/></td>
       <td>Includes:-
         <ul>
-          <li>Your own logo on invoices and statements</li>
+          <li>Design your own invoice layouts</li>
+          <li>Your own logo on statements</li>
           <li>Print and send Statements</li>
           <li>Add Additional Nominal Accounts</li>
           <li>Additional User Login</li>

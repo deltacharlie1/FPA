@@ -55,7 +55,7 @@ foreach $pair (@pairs) {
 
 use CGI;
 
-$Companies = $dbh->prepare("select comsublevel,comsubref,regemail,regusername,comsubdue,datediff(comsubdue,now()) as daysbeforedue,date_add(comsubdue,interval 1 month) as subnextdue from companies left join registrations using (reg_id) where reg_id=$Reg_id and id=$Com_id");
+$Companies = $dbh->prepare("select comdocsdir,comsublevel,comsubref,regemail,regusername,comsubdue,datediff(comsubdue,now()) as daysbeforedue,date_add(comsubdue,interval 1 month) as subnextdue from companies left join registrations using (reg_id) where reg_id=$Reg_id and id=$Com_id");
 $Companies->execute;
 $Company = $Companies->fetchrow_hashref;
 $Companies->finish;
@@ -77,6 +77,18 @@ $Start_date =~ s/:/\%3A/g;
 $Url = "connect/subscriptions/new";
 
 if ($FORM{subaction} =~ /S/i) {
+
+#  first see if we need to create a new directory
+
+	unless ($Company->{comdocsdir}) {
+		use Digest::MD5;
+	        $Docsdir = Digest::MD5->new;
+	        $Docsdir->add($$.$COOKIE->{ID});
+	        $Company->{comdocsdir} = $Docsdir->hexdigest;
+	        $Sts = $dbh->do("update companies set comdocsdir='$Company->{comdocsdir}' where reg_id=$Reg_id and id=$Com_id");
+        	mkdir("/projects/fpa_docs/".$Company->{comdocsdir});
+	}
+
 	if ($Company->{comsubref} && $Company->{comsublevel} != $FORM{sub}) {	#  Already a subscriber so  first cancel the existing one
 		$Url = "users/sign_in";
 $Url = "connect/subscriptions/new";

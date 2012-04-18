@@ -4,6 +4,16 @@ $ACCESS_LEVEL = 1;
 
 #  script to display the registration screen tuned to reregistering
 
+#  0 - Memword Check
+#  1 - Login timeout
+#  2 - paid in full flag
+#  3 - display category field
+#  4 - display upload button
+#  5 - display adverts
+#
+#  regprefs is currently set by a database default of 'YYNYYY;
+
+
 use Checkid;
 $COOKIE = &checkid($ENV{HTTP_COOKIE},$ACCESS_LEVEL);
 
