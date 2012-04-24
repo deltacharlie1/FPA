@@ -1666,7 +1666,7 @@ class PHPMailer {
     } elseif ($this->ServerVar('SERVER_NAME') != '') {
       $result = $this->ServerVar('SERVER_NAME');
     } else {
-      $result = 'localhost.localdomain';
+      $result = 'corunna.com';
     }
 
     return $result;
