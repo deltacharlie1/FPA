@@ -1,0 +1,86 @@
+<div class="main" id="main">
+<h1>Journal Entries</h1>
+  <form name="form1" id="form1" method="post" action="/cgi-bin/fpa/bulk_journals2.pl" onsubmit="return check_data();">
+  <input type="hidden" name="data" id="data" value=""/>
+  <div style="float:left;">
+  <table border="0" cellpadding="0" cellspacing="0" class="formtable" style="padding:10px 20px 10px 20px;">
+    <tr>
+      <td><span class="hd">Date</span><br/>
+      <input type="text" name="adjstdate" id="adjstdate" size="8" class="mand2" title="Date of Adjustment" value="[%- today -%]"/></td>
+      <td colspan="2"><span class="hd">Description</span><br/>
+      <input type="text" name="adjstdesc" id="adjstdesc" size="30" class="mand2" title="Description"/></td>
+    </tr>
+    <tr>
+      <td><span class="hd">Debit Account</span><br/>
+        <select name="adjstdeb" id="adjstdeb" size="1" class="mand2" title="Debit Account" onchange="enable_cred();">
+          <option value="" selected="selected"><--  Select Debit Account --></option>
+[% FOREACH coa IN coas -%]
+          <option value="[%- coa.coanominalcode -%]" id="d[%- coa.coanominalcode -%]" class="[%- IF coa.coatype.match('Ass|Exp') -%]expx[%- ELSE -%]incx[%- END -%]">[%- coa.coanominalcode -%] - [%- coa.coadesc -%]</option>
+[% END -%]
+        </select>
+      </td>
+      <td><span class="hd">Debit Amount</span><br/>
+      <input type="text" name="adjstdebamt" id="adjstdebamt" size="10" class="mand2 currency" title="Debit Amount" onblur="check_currency(this);"/></td>
+      <td rowspan="2" align="center" valign="middle"><img src="/icons/add_button_over.png" title="Add Entry" onclick="add_entry();"/></td>
+    </tr>
+    <tr>
+      <td><span class="hd">Credit Account</span><br/>
+        <select name="adjstcred" id="adjstcred" class="mand2" title="Credit Account" size="1">
+          <option value="" selected="selected"><--  Select Credit Account --></option>
+[% FOREACH coa IN coas -%]
+          <option value="[%- coa.coanominalcode -%]" id="d[%- coa.coanominalcode -%]" class="[%- IF coa.coatype.match('Liab|Exp') -%]exp[%- ELSE -%]inc[%- END -%]">[%- coa.coanominalcode -%] - [%- coa.coadesc -%]</option>
+[% END -%]
+        </select>
+      </td>
+      <td><span class="hd">Credit Amount</span><br/>
+      <input type="text" name="adjstcredamt" id="adjstcredamt" size="10" class="mand2 currency" title="Credit Amount" onblur="check_currency(this);"/></td>
+    </tr>
+  </table>
+  </div>
+  <div style="float:right;">
+    <table style="font-weight:bold;padding:10px 20px 10px 20px;margin-right:40px;border:1px solid #999999;" border="0" cellpadding="2" cellspacing="2">
+      <tr>
+        <td>Total Debits</td>
+        <td style="text-align:right;" id="totdeb">0.00</td>
+      </tr>
+      <tr>
+        <td>Total Credits</td>
+        <td style="text-align:right;" id="totcred">0.00</td>
+      </tr>
+      <tr>
+        <td>Balance</td>
+        <td style="text-align:right;" id="bal">0.00</td>
+      </tr>
+    </table>
+  </div>
+  <div style="clear:both;"></div>
+  <p>&nbsp;</p>
+  <h2>Entries to be Added</h2>
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="listing">
+    <tr>
+      <th width="10%">Date</th>
+      <th width="45%">Description</th>
+      <th width="10%">Account</th>
+      <th width="10%">Debit</th>
+      <th style="display:none;">CR Acct</th>
+      <th style="display:none;">CR Amt</th>
+      <th width="10%">Credit</th>
+      <th width="15%">Edit</th>
+    </tr>
+    <tbody id="new">
+    </tbody>
+  </table>
+</div>
+<div id="sidebar">
+  <ul>    
+    <li>
+      <div>
+        <input type="submit" name="save" id="save" value="Save Entries"/>
+      </div>  
+    </li>   
+  </ul>   
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+</div>
+</form>
+</div>
