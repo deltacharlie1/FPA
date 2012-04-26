@@ -12,15 +12,15 @@
     </tr>
     <tr>
       <td><span class="hd">Debit Account</span><br/>
-        <select name="adjstdeb" id="adjstdeb" size="1" class="mand2" title="Debit Account" onchange="enable_cred();">
+        <select name="adjstdeb" id="adjstdeb" size="1" class="mand2" title="Debit Account">
           <option value="" selected="selected"><--  Select Debit Account --></option>
 [% FOREACH coa IN coas -%]
-          <option value="[%- coa.coanominalcode -%]" id="d[%- coa.coanominalcode -%]" class="[%- IF coa.coatype.match('Ass|Exp') -%]expx[%- ELSE -%]incx[%- END -%]">[%- coa.coanominalcode -%] - [%- coa.coadesc -%]</option>
+          <option value="[%- coa.coanominalcode -%]">[%- coa.coanominalcode -%] - [%- coa.coadesc -%]</option>
 [% END -%]
         </select>
       </td>
       <td><span class="hd">Debit Amount</span><br/>
-      <input type="text" name="adjstdebamt" id="adjstdebamt" size="10" class="mand2 currency" title="Debit Amount" onblur="check_currency(this);"/></td>
+      <input type="text" name="adjstdebamt" id="adjstdebamt" size="10" class="mand2 currency" title="Debit Amount" onblur="check_currency(this);document.getElementById('adjstcredamt').value=this.value;"/></td>
       <td rowspan="2" align="center" valign="middle"><img src="/icons/add_button_over.png" title="Add Entry" onclick="add_entry();"/></td>
     </tr>
     <tr>
@@ -28,7 +28,7 @@
         <select name="adjstcred" id="adjstcred" class="mand2" title="Credit Account" size="1">
           <option value="" selected="selected"><--  Select Credit Account --></option>
 [% FOREACH coa IN coas -%]
-          <option value="[%- coa.coanominalcode -%]" id="d[%- coa.coanominalcode -%]" class="[%- IF coa.coatype.match('Liab|Exp') -%]exp[%- ELSE -%]inc[%- END -%]">[%- coa.coanominalcode -%] - [%- coa.coadesc -%]</option>
+          <option value="[%- coa.coanominalcode -%]">[%- coa.coanominalcode -%] - [%- coa.coadesc -%]</option>
 [% END -%]
         </select>
       </td>

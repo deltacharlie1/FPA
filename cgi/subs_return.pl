@@ -104,7 +104,7 @@ if ($Res_content =~ /success/i) {
 	$Memtext[4] = 'FreePlus Premium (&pound;10.00pm)';
 	$Memtext[5] = 'FreePlus BookkeepersPremium (&pound;20.00pm)';
 
-	$Sts = $dbh->do("update companies set comsublevel='$STATE{sublevel}',comsubdue=date_add('$STATE{subdue}',interval 2 day),comsubref='$FORM{resource_id}',comcardref='$FORM{resource_uri}' where reg_id=$Reg_id and id=$Com_id");
+	$Sts = $dbh->do("update companies set comsublevel='$STATE{sublevel}',comsubdue=date_add('$STATE{subdue}',interval 6 day),comsubref='$FORM{resource_id}',comcardref='$FORM{resource_uri}' where reg_id=$Reg_id and id=$Com_id");
 	$Sts = $dbh->do("update registrations set regmembership='$Membership[$STATE{sublevel}]' where reg_id=$Reg_id");
 
 #  Now get the details

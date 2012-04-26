@@ -31,7 +31,7 @@ $tt = Template->new({
 });
 
 $Vars = {
-        title => 'Journal Entriess',
+        title => 'Journal Entries',
 	cookie => $COOKIE,
 	focus => 'adjstdesc',
 	coas => $COA,
@@ -43,7 +43,7 @@ $Vars = {
 <script type="text/javascript">
 $(document).ready(function() {
   $("#adjstdate").datepicker();
-  $("#adjstcred option").css("display","none");
+//  $("#adjstcred option").css("display","none");
 });
 
 function enable_cred() {
@@ -116,7 +116,9 @@ function add_entry() {
   }
   else {
     var item_row;
-    item_row = [$("#adjstdate").val(),$("#adjstdesc").val(),$("#adjstdeb").val(),$("#adjstdebamt").val(),$("#adjstcred").val(),$("#adjstcredamt").val()];
+    var debamt = ($("#adjstdebamt").val() * 1).toFixed(2);
+    var credamt = ($("#adjstcredamt").val() * 1).toFixed(2);
+    item_row = [$("#adjstdate").val(),$("#adjstdesc").val(),$("#adjstdeb").val(),debamt,$("#adjstcred").val(),credamt];
 
     item_rows.push(item_row);
     display_table();
