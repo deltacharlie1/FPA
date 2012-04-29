@@ -25,11 +25,11 @@ $text->fillcolor("#000000");
 
 $text->font($font,12);
 
-$text->translate(380,625);	#  Invoice No
+$text->translate(380,630);	#  Invoice No
 $text->text($Inv_invoice_no);
-$text->translate(380,601);	#  Invoice Date
+$text->translate(380,605);	#  Invoice Date
 $text->text($Inv_date);
-$text->translate(380,574);	#  Authcode
+$text->translate(380,578);	#  Authcode
 $text->text($Inv_authcode);
 
 $text->translate(65,625);
