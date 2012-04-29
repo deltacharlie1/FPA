@@ -39,27 +39,19 @@ $Vars = {
         javascript => '<style>
 .mand2 { background-color:#f8e8c8; }
 .hd { font-weight:bold;font-size:1.2em;padding-left:3px; }
+.topb { border-top:1px solid #337040 !important; }
 </style>
 <script type="text/javascript">
 $(document).ready(function() {
   $("#adjstdate").datepicker();
-//  $("#adjstcred option").css("display","none");
 });
 
-function enable_cred() {
-  if ($("#d"+$("#adjstdeb").val()).hasClass("incx")) {
-    $(".inc").css("display","none");
-    $(".exp").css("display","inline");
-  }
-  else {
-    $(".inc").css("display","inline");
-    $(".exp").css("display","none");
-  }
-}
-
+var ctrlacct = "";
+var ctrlamt = "";
 var item_rows = [];
 var tbl;
 var errfocus = "";
+var current_row = -1;
 
 function display_table() {
 
@@ -69,31 +61,54 @@ function display_table() {
   var item_table = "";
 
   var bkgd = ["odd","even"];
+  var bk_ndx = 0;
 
   for (var i=0; i<item_rows.length; i++) {
-    item_table = item_table + "<tr class=\'" + bkgd[i % 2] + "\'>";
-    item_table = item_table + "<td>" + item_rows[i][0] + "</td>";
-    item_table = item_table + "<td>" + item_rows[i][1] + "</td>";
-    item_table = item_table + "<td>" + item_rows[i][2] + "</td>";
-    item_table = item_table + "<td style=\'text-align:right;\'>" + item_rows[i][3] + "</td>";
-    item_table = item_table + "<td style=\'display:none;\'>" + item_rows[i][4] + "</td>";
-    item_table = item_table + "<td style=\'display:none;\'>" + item_rows[i][5] + "</td>";
-    item_table = item_table + "<td>&nbsp;</td>";
-    item_table = item_table + "<td nowrap=\'nowrap\' style=\'text-align:center;\'><img src=\'/icons/inv_edit.png\' title=\'Edit\' onclick=\"amd(\'" + i + "\');\"/>&nbsp;<img src=\'/icons/inv_del.png\' title=\'Delete\' onclick=\"dlt(\'" + i + "\');\"/></td></tr>";
-    item_table = item_table + "<tr class=\'" + bkgd[i % 2] + "\'>";
-    item_table = item_table + "<td>&nbsp;</td><td>&nbsp;</td>";
-    item_table = item_table + "<td>" + item_rows[i][4] + "</td><td>&nbsp;</td>";
-    item_table = item_table + "<td style=\'display:none;\'>&nbsp;</td><td style=\'display:none;\'>&nbsp;</td>";
-    item_table = item_table + "<td style=\'text-align:right;\'>" + item_rows[i][5] + "</td>";
-    item_table = item_table + "<td>&nbsp;</td></tr>";
+    var debamt = item_rows[i][3];
+    var credamt = item_rows[i][4];
+    var topline = "";
 
+    if (debamt=="0.00") { debamt="&nbsp;"; }
+    if (credamt=="0.00") { credamt="&nbsp;"; }
+
+    if (i>0) {
+      topline = " class=\'topb\'";
+    }
+
+    item_table = item_table + "<tr  class=\'" + bkgd[bk_ndx % 2] + "\'>";
+    item_table = item_table + "<td" + topline + ">" + item_rows[i][0] + "</td>";
+    item_table = item_table + "<td" + topline + ">" + item_rows[i][1] + "</td>";
+    item_table = item_table + "<td" + topline + ">" + item_rows[i][2] + "</td>";
+    item_table = item_table + "<td" + topline + " style=\'text-align:right;\'>" + debamt + "</td>";
+    item_table = item_table + "<td" + topline + " style=\'text-align:right;\'>" + credamt + "</td>";
+    item_table = item_table + "<td" + topline + " style=\'text-align:center;\'><img src=\'/icons/inv_del.png\' title=\'Delete\' onclick=\"dlt(\'" + i + "\');\"/></td></tr>";
+    
+    for (var j=0; j<item_rows[i][5].length; j++) {
+      bk_ndx = bk_ndx + 1;
+      var subrow = item_rows[i][5][j];
+      var debamt = subrow[1];
+      var credamt = subrow[2];
+
+      if (debamt=="0.00") { debamt="&nbsp;"; }
+      if (credamt=="0.00") { credamt="&nbsp;"; }
+      item_table = item_table + "<tr class=\'" + bkgd[bk_ndx % 2] + "\'>";
+      item_table = item_table + "<td>&nbsp;</td><td>&nbsp;</td>";
+      item_table = item_table + "<td>" + subrow[0] + "</td>";
+      item_table = item_table + "<td style=\'text-align:right;\'>" + debamt + "</td>";
+      item_table = item_table + "<td style=\'text-align:right;\'>" + credamt + "</td>";
+      item_table = item_table + "<td>&nbsp;</td></tr>";
+      totdeb = totdeb + (subrow[1] * 1);   
+      totcred = totcred + (subrow[2] * 1);   
+    }
     totdeb = totdeb + (item_rows[i][3] * 1);   
-    totcred = totcred + (item_rows[i][5] * 1);   
+    totcred = totcred + (item_rows[i][4] * 1);   
+
+    bk_ndx = bk_ndx + 1;
   }
   $("#new").html(item_table);
   $("#totdeb").html(totdeb.toFixed(2));
   $("#totcred").html(totcred.toFixed(2));
-  var bal = (totdeb - totcred).toFixed(2);
+  var bal = Math.abs((totdeb - totcred)).toFixed(2);
   $("#bal").html(bal);
   document.getElementById("data").value = item_table;
 }
@@ -101,48 +116,136 @@ function display_table() {
 function add_entry() {
   var errs = "";
   errfocus = "";
-  $(".mand2").each(function() {
-    if ($(this).val()=="") {
+  if (ctrlacct == "") {
+    if ($("#adjstdate").val()=="") {
+      errs = errs + "<li>No Date</li>\\n";
       if (errfocus == "") {
-        errfocus = this.id;
+        errfocus = "adjstdate";
       }
-      errs = errs + "<li>No " + this.title + "</li>\\n";
     }
-  });
-  if (errs != "") {
-    errs = "You have the following errors:-<ul>" + errs + "</ul>";
-    $("#dialog").html(errs);
-    $("#dialog").dialog("open");
+    if ($("#adjstdesc").val()=="") {
+      errs = errs + "<li> No Description</li>\\n";
+      if (errfocus == "") {
+        errfocus = "adjstdesc";
+      }
+    }
+    if ($("#adjstacct").val()=="") {
+      errs = errs + "<li>No Account Selected</li>\\n";
+      if (errfocus == "") {
+        errfocus = "adjstacct";
+      }
+    }
+    if ($("#adjstdebamt").val()=="" && $("#adjstcredamt").val()=="") {
+      errs = errs + "<li>Both Debit and Credit fields are empty</li>\\n";
+      if (errfocus == "") {
+        errfocus = "adjstdebamt";
+      }
+    }
+    if ($("#adjstdebamt").val()!="" && $("#adjstcredamt").val()!="") {
+      errs = errs + "<li>You cannot enter both a Debit and Credit amount for a single Nominal Account</li>\\n";
+      $("#adjstdebamt").val("");
+      $("#adjstcredamt").val("");
+      if (errfocus == "") {
+        errfocus = "adjstdebamt";
+      }
+    }
+    if (errs != "") {
+      errs = "You have the following errors:-<ul>" + errs + "</ul>";
+      $("#dialog").html(errs);
+      $("#dialog").dialog("open");
+    }
+    else {
+
+      current_row = current_row + 1;
+
+      var item_row;
+      var subrows = [];
+      var debamt = ($("#adjstdebamt").val() * 1).toFixed(2);
+      var credamt = ($("#adjstcredamt").val() * 1).toFixed(2);
+      item_row = [$("#adjstdate").val(),$("#adjstdesc").val(),$("#adjstacct option:selected").text(),debamt,credamt,subrows];
+
+      item_rows.push(item_row);
+      display_table();
+
+      ctrlacct = $("#adjstacct").val();
+      $("#adjstdate").datepicker("disable");
+      $("#adjstdesc").attr("readonly",true);
+      $("#adjstacct").val(-1);
+      if ($("#adjstdebamt").val()!="") {
+        $("#adjstdebamt").attr("readonly",true);
+        $("#adjstcredamt").val($("#adjstdebamt").val());
+        $("#adjstdebamt").val("");
+        ctrlamt = "adjstcredamt";
+      }
+      else {
+        $("#adjstdebamt").val($("#adjstcredamt").val());
+        $("#adjstcredamt").val("");
+        $("#adjstcredamt").attr("readonly",true);
+        ctrlamt = "adjstdebamt";
+      }
+      $("#"+ctrlamt).focus();
+    }
   }
   else {
-    var item_row;
-    var debamt = ($("#adjstdebamt").val() * 1).toFixed(2);
-    var credamt = ($("#adjstcredamt").val() * 1).toFixed(2);
-    item_row = [$("#adjstdate").val(),$("#adjstdesc").val(),$("#adjstdeb").val(),debamt,$("#adjstcred").val(),credamt];
+    if ($("#adjstacct").val()=="") {
+      errs = errs + "<li>No Account Selected</li>\\n";
+      if (errfocus == "") {
+        errfocus = "adjstacct";
+      }
+    }
+    if ( /cred/i.test(ctrlacct) && $("#adjstdebamt").val()=="") {
+      errs = errs + "<li>No Debit Amount</li>\\n";
+      if (errfocus == "") {
+        errfocus = "adjstdebamt";
+      }
+    }
+    if ( /deb/i.test(ctrlacct) && $("#adjstcredamt").val()=="") {
+      errs = errs + "<li>No Credit Amount</li>\\n";
+      if (errfocus == "") {
+        errfocus = "adjstdebamt";
+      }
+    }
+    var bal = ($("#bal").text() * 1).toFixed(2);
+    var amt = ($("#"+ctrlamt).val() * 1).toFixed(2);
+    if (bal - amt < 0) {
+      errs = errs + "<li>Entered Amount would take Balance to less than zero</li>\\n";
+      if (errfocus == "") {
+        $("#"+ctrlamt).val("");
+        errfocus = ctrlamt;
+      }
+    }
+    if (errs != "") {
+      errs = "You have the following errors:-<ul>" + errs + "</ul>";
+      $("#dialog").html(errs);
+      $("#dialog").dialog("open");
+    }
+    else {
+      var debamt = ($("#adjstdebamt").val() * 1).toFixed(2);
+      var credamt = ($("#adjstcredamt").val() * 1).toFixed(2);
+      var subrow;
+      subrow = [$("#adjstacct option:selected").text(),debamt,credamt];
 
-    item_rows.push(item_row);
-    display_table();
-
-    document.getElementById("adjstdesc").value = "";
-    document.getElementById("adjstcredamt").value = "";
-    document.getElementById("adjstdebamt").value = "";
-    $("#adjstdeb").val(-1);
-    $("#adjstcred").val(-1);
+      item_rows[current_row][5].push(subrow); 
+      display_table();
+      $("#"+ctrlamt).val("");
+      $("#adjstacct").val(-1);
+      $("#"+ctrlamt).focus();
+    }
   }
-}
-
-function amd(row) {
-  $("#adjstdate").val(item_rows[row][0]);
-  $("#adjstdesc").val(item_rows[row][1]);
-  $("#adjstdeb").val(item_rows[row][2]);
-  $("#adjstdebamt").val(item_rows[row][3]);
-  $("#adjstcred").val(item_rows[row][4]);
-  $("#adjstcredamt").val(item_rows[row][5]);
-
-  dlt(row);
+  if ($("#bal").html()=="0.00") {
+    ctrlacct = "";
+    ctrlamt="";
+    $("#adjstdate").datepicker("enable");
+    $("#adjstdesc").attr("readonly",false);
+    $("#adjstcredamt").attr("readonly",false);
+    $("#adjstdebamt").attr("readonly",false);
+    $("#adjstdesc").val("");
+    $("#adjstdesc").focus();
+  }
 }
 function dlt(row) {
   item_rows.splice(row,1);
+  current_row = current_row - 1;
   display_table();
 }
 function check_data() {

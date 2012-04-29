@@ -3,37 +3,27 @@
   <form name="form1" id="form1" method="post" action="/cgi-bin/fpa/bulk_journals2.pl" onsubmit="return check_data();">
   <input type="hidden" name="data" id="data" value=""/>
   <div style="float:left;">
-  <table border="0" cellpadding="0" cellspacing="0" class="formtable" style="padding:10px 20px 10px 20px;">
+  <table border="0" cellpadding="0" cellspacing="0" class="formtable" style="padding:10px 10px 10px 10px;">
     <tr>
       <td><span class="hd">Date</span><br/>
       <input type="text" name="adjstdate" id="adjstdate" size="8" class="mand2" title="Date of Adjustment" value="[%- today -%]"/></td>
-      <td colspan="2"><span class="hd">Description</span><br/>
-      <input type="text" name="adjstdesc" id="adjstdesc" size="30" class="mand2" title="Description"/></td>
+      <td colspan="3"><span class="hd">Description</span><br/>
+      <input type="text" name="adjstdesc" id="adjstdesc" size="35" class="mand2" title="Description"/></td>
     </tr>
     <tr>
-      <td><span class="hd">Debit Account</span><br/>
-        <select name="adjstdeb" id="adjstdeb" size="1" class="mand2" title="Debit Account">
-          <option value="" selected="selected"><--  Select Debit Account --></option>
+      <td><span class="hd">Debit</span><br/>
+      <input type="text" name="adjstdebamt" id="adjstdebamt" size="7" class="mand2 currency" title="Debit Amount" onblur="check_currency(this);"/></td>
+      <td><span class="hd">Credit</span><br/>
+      <input type="text" name="adjstcredamt" id="adjstcredamt" size="7" class="mand2 currency" title="Credit Amount" onblur="check_currency(this);"/></td>
+      <td><span class="hd">Account</span><br/>
+        <select name="adjstacct" id="adjstacct" size="1" class="mand2" title="Debit Account">
+          <option value="" selected="selected"><--  Select Account --></option>
 [% FOREACH coa IN coas -%]
           <option value="[%- coa.coanominalcode -%]">[%- coa.coanominalcode -%] - [%- coa.coadesc -%]</option>
 [% END -%]
         </select>
       </td>
-      <td><span class="hd">Debit Amount</span><br/>
-      <input type="text" name="adjstdebamt" id="adjstdebamt" size="10" class="mand2 currency" title="Debit Amount" onblur="check_currency(this);document.getElementById('adjstcredamt').value=this.value;"/></td>
-      <td rowspan="2" align="center" valign="middle"><img src="/icons/add_button_over.png" title="Add Entry" onclick="add_entry();"/></td>
-    </tr>
-    <tr>
-      <td><span class="hd">Credit Account</span><br/>
-        <select name="adjstcred" id="adjstcred" class="mand2" title="Credit Account" size="1">
-          <option value="" selected="selected"><--  Select Credit Account --></option>
-[% FOREACH coa IN coas -%]
-          <option value="[%- coa.coanominalcode -%]">[%- coa.coanominalcode -%] - [%- coa.coadesc -%]</option>
-[% END -%]
-        </select>
-      </td>
-      <td><span class="hd">Credit Amount</span><br/>
-      <input type="text" name="adjstcredamt" id="adjstcredamt" size="10" class="mand2 currency" title="Credit Amount" onblur="check_currency(this);"/></td>
+      <td align="center" valign="middle"><img src="/icons/add_button_over.png" title="Add Account" onclick="add_entry();"/></td>
     </tr>
   </table>
   </div>
@@ -55,17 +45,15 @@
   </div>
   <div style="clear:both;"></div>
   <p>&nbsp;</p>
-  <h2>Entries to be Added</h2>
+  <h2>Journals to be Added</h2>
   <table width="660" border="0" cellpadding="0" cellspacing="0" class="listing">
     <tr>
-      <th width="10%">Date</th>
-      <th width="45%">Description</th>
-      <th width="10%">Account</th>
-      <th width="10%">Debit</th>
-      <th style="display:none;">CR Acct</th>
-      <th style="display:none;">CR Amt</th>
-      <th width="10%">Credit</th>
-      <th width="15%">Edit</th>
+      <th width="12%">Date</th>
+      <th>Description</th>
+      <th>Account</th>
+      <th width="12%">Debit</th>
+      <th width="12%">Credit</th>
+      <th width="7%">Action</th>
     </tr>
     <tbody id="new">
     </tbody>
