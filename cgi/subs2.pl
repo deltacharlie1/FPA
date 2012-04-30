@@ -72,7 +72,7 @@ $Start_date =~ s/:/\%3A/g;
 #  Set up strings to send to GCL
 
 @Sub_name=("FreePlus%20Free%20Edition","Bookkeeper%20Basic","FreePlus%20Standard","Bookkeeper%20Standard","FreePlus%20Premium","Bookkeeper%20Premium");
-@Sub_amt = ("0.00","5.00","5.00","10.00","10.00","20.00");
+@Sub_amt = ("0.00","6.00","6.00","12.00","12.00","24.00");
 
 $Url = "connect/subscriptions/new";
 
