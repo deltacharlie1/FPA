@@ -28,8 +28,8 @@
       <td>&nbsp;</td>
       <td>&nbsp;</td>
       <td style="text-align:right;font-weight:bold;">[%- curdesc -%] Net Total</td>
-      <td style="font-weight:bold;text-align:right;border-bottom:3px double #333333;">[%- IF debits >= credits; debits.format('%1.2f') + credits.format('%1.2f') | remove('-') | format('%1.2f'); ELSE -%]&nbsp;[%- END -%]</td>
-      <td style="font-weight:bold;text-align:right;border-bottom:3px double #333333;">[%- IF credits > debits; credits.format('%1.2f') + debits.format('%1.2f') | remove('-') | format('%1.2f'); ELSE -%]&nbsp;[%- END -%]</td>
+      <td style="font-weight:bold;text-align:right;border-bottom:3px double #333333;">[%- IF debits >= credits; debits + credits | remove('-') | format('%1.2f'); ELSE -%]&nbsp;[%- END -%]</td>
+      <td style="font-weight:bold;text-align:right;border-bottom:3px double #333333;">[%- IF credits > debits; credits + debits | remove('-') | format('%1.2f'); ELSE -%]&nbsp;[%- END -%]</td>
     </tr>
   [% curcode = entry.nomcode; curdesc = entry.coadesc; debits = 0; credits = 0; END -%]
   [%- ctr = ctr+1; ndx = ctr % 2 -%]
@@ -76,8 +76,8 @@
       <td>&nbsp;</td>
       <td>&nbsp;</td>
       <td style="text-align:right;font-weight:bold;">[%- curdesc -%] Net Total</td>
-      <td style="font-weight:bold;text-align:right;border-bottom:3px double #333333;">[%- IF debits > credits; debits.format('%1.2f') + credits.format('%1.2f') | remove('-') | format('%1.2f'); ELSE -%]&nbsp;[%- END -%]</td>
-      <td style="font-weight:bold;text-align:right;border-bottom:3px double #333333;">[%- IF credits > debits; credits.format('%1.2f') + debits.format('%1.2f') | remove('-') | format('%1.2f'); ELSE -%]&nbsp;[%- END -%]</td>
+      <td style="font-weight:bold;text-align:right;border-bottom:3px double #333333;">[%- IF debits > credits; debits + credits | remove('-') | format('%1.2f'); ELSE -%]&nbsp;[%- END -%]</td>
+      <td style="font-weight:bold;text-align:right;border-bottom:3px double #333333;">[%- IF credits > debits; credits + debits | remove('-') | format('%1.2f'); ELSE -%]&nbsp;[%- END -%]</td>
     </tr>
   </table>
 </div>

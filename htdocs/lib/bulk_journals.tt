@@ -8,7 +8,7 @@
       <td><span class="hd">Date</span><br/>
       <input type="text" name="adjstdate" id="adjstdate" size="8" class="mand2" title="Date of Adjustment" value="[%- today -%]"/></td>
       <td colspan="3"><span class="hd">Description</span><br/>
-      <input type="text" name="adjstdesc" id="adjstdesc" size="35" class="mand2" title="Description"/></td>
+      <input type="text" name="adjstdesc" id="adjstdesc" size="35" class="mand2" title="Journal Description"/></td>
     </tr>
     <tr>
       <td><span class="hd">Debit</span><br/>
@@ -63,7 +63,7 @@
   <ul>    
     <li>
       <div>
-        <input type="submit" name="save" id="save" value="Save Entries"/>
+        <input type="submit" name="save" id="save" value="Save Journals"/>
       </div>  
     </li>   
   </ul>   

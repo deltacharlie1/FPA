@@ -45,7 +45,7 @@ foreach $Coaitem (@$Coa) {
 
 #  Make minus entry for amount in nominals
 
-	$Sts = $dbh->do("insert into transactions (acct_id,txncusname,txnmethod,txnamount,txndate,txntxntype,txnremarks,txntxnno) values ('$COOKIE->{ACCT}','$Coaitem->{coadesc}','$Coaitem->{nominalcode}','$Coaitem->{balance}','$Date->{tbend}','yearend','Year End adjst','$Txn_no')");
+	$Sts = $dbh->do("insert into transactions (acct_id,txncusname,txnmethod,txnamount,txndate,txntxntype,txnremarks,txntxnno) values ('$COOKIE->{ACCT}','$Coaitem->{coadesc}','$Coaitem->{nominalcode}','$Coaitem->{balance}','$Date->{tbend}','journal','Year End adjst','$Txn_no')");
 	$New_txn_id = $dbh->last_insert_id(undef, undef, qw(transactions undef));
 	$Txn_no++;
 
@@ -56,7 +56,7 @@ foreach $Coaitem (@$Coa) {
 
 #  Now update Retained Earnings
 
-$Sts = $dbh->do("insert into transactions (acct_id,txncusname,txnmethod,txnamount,txndate,txntxntype,txnremarks,txntxnno) values ('$COOKIE->{ACCT}','Retained Earnings','3100','$Balance','$Date->{tbend}','yearend','Year End adjst','$Txn_no')");
+$Sts = $dbh->do("insert into transactions (acct_id,txncusname,txnmethod,txnamount,txndate,txntxntype,txnremarks,txntxnno) values ('$COOKIE->{ACCT}','Retained Earnings','3100','$Balance','$Date->{tbend}','journal','Year End adjst','$Txn_no')");
 $New_txn_id = $dbh->last_insert_id(undef, undef, qw(transactions undef));
 $Txn_no++;
 
@@ -73,7 +73,7 @@ $Sts = $dbh->do("delete from reminders where acct_id='$COOKIE->{ACCT}' and remco
 $Balance = 0 - $Balance;
 $Balance = sprintf('%1.2f',$Balance);
 
-$Sts = $dbh->do("insert into audit_trails (acct_id,link_id,audtype,audaction,audtext,auduser) values ('$COOKIE->{ACCT}',$New_txn_id,'transactions','yearend','Transferred &pound;$Balance to Retained Earnings','$COOKIE->{USER}')");
+$Sts = $dbh->do("insert into audit_trails (acct_id,link_id,audtype,audaction,audtext,auduser) values ('$COOKIE->{ACCT}',$New_txn_id,'transactions','journal','Transferred &pound;$Balance to Retained Earnings','$COOKIE->{USER}')");
 
 #  Finally write back the next txn no
 
