@@ -210,7 +210,7 @@ $(document).ready(function(){
             <li><a href="/cgi-bin/fpa/bulk_add_purchases.pl">Bulk Add Purchases</a></li>
             <li><a href="/cgi-bin/fpa/add_companies.pl">Add Companies</a></li>
             <li><a href="/cgi-bin/fpa/bulk_opening_balances.pl">Add Opening Balances</a></li>
-  [% IF cookie.BACCT=='1+1' OR cookie.BACT=='92+93' OR cookie.BACT=='398+400' -%]
+  [% IF cookie.BACCT=='1+1' OR cookie.BACCT=='92+93' OR cookie.BACCT=='398+400' -%]
             <li><a href="/cgi-bin/fpa/bulk_journals.pl">Journal Adjustments</a></li>
   [% END -%]
   [% IF cookie.BACCT == '4+3' -%]
