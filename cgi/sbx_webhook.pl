@@ -2,6 +2,15 @@
 
 read(STDIN, $Buffer, $ENV{'CONTENT_LENGTH'});
 
+warn "Webhook - \n$Buffer\n";
+
+print<<EOD;
+Content-Type: text/plain
+Status: 200 OK
+
+EOD
+exit;
+
 use JSON;
 use DBI;
 use MIME::Base64;
@@ -119,7 +128,6 @@ $dbh->disconnect;
 print<<EOD;
 Content-Type: text/plain
 Status: 200 OK
-
 
 EOD
 

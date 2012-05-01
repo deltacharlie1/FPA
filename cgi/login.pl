@@ -1,7 +1,5 @@
 #!/usr/bin/perl
 
-warn "Calling login\n";
-
 #  script to test template toolkit
 
 $Err_msg = $ENV{QUERY_STRING};
