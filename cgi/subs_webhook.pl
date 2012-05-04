@@ -2,6 +2,29 @@
 
 read(STDIN, $Buffer, $ENV{'CONTENT_LENGTH'});
 
+$Buffer = <<EOD;
+{
+  "payload": {
+    "bills": [
+      {
+        "id": "doug1",
+        "status": "paid",
+        "uri": "https://sandbox.gocardless.com/api/v1/bills/abcde",
+        "amount": "6.0",
+       "amount_minus_fees": "5.94",
+        "source_type": "subscription",
+        "source_id": "026BBB78P2",
+        "paid_at": "2012-05-04T19:18:28Z",
+        "payment_id": 86
+      }
+    ],
+    "action": "paid",
+    "resource_type": "bill",
+    "signature": "dc6b94fffeb4637c176ddcd747b7210f81af3ce6821e80c28e4abdb59adfb2d0"
+  }
+}
+EOD
+
 use JSON;
 use DBI;
 use MIME::Base64;
@@ -17,8 +40,9 @@ $Subs->execute;
 @Sub = $Subs->fetchrow;
 $Subs->finish;
 $Subinvno = $Sub[0] + 1;
+$Pound = chr(163);
 
-@Sub_name = ("FreePlus Free Edition","Bookkeeper Basic","FreePlus Standard","Bookkeeper Standard","FreePlus Premium","Bookkeeper Premium");
+@Sub_name = ("FreePlus Free Edition \@ FREE","FreePlus Bookkeeper Basic \@ ${Pound}5.00pm","FreePlus Standard \@ ${Pound}5.00pm","FreePlus Bookkeeper Standard \@ $Pound10.00pm","FreePlus Premium \@ ${Pound}10.00pm","FreePlus Bookkeeper Premium \@ ${Pound}20.00pm");
 @Sub_amt = ("0.00","5.00","5.00","10.00","10.00","20.00");
 @Sub_vat = ("0.00","1.00","1.00","2.00","2.00","4.00");
 
@@ -32,6 +56,12 @@ if ($Payload->{payload}->{action} =~ /paid/i && $Payload->{payload}->{resource_t
 
                         $bill->{paid_at} =~ s/T*$//;
 
+#  Calculate the Net and VAT
+
+			$Net = sprintf('%1.2f',($bill->{amount} * 100) / 120);
+			$Vat = sprintf('%1.2f',$bill->{amount} - $Net);
+			$Fee = $bill->{amount} - $bill->{amount_minus_fees};
+
 #  Add a subscription invoice
 
                         $Companies = $dbh->prepare("select reg_id,id,comsublevel,comname,comaddress,compostcode,regemail,date_format('$bill->{paid_at}','%D %M %Y') as datepaid from companies left join registrations using (reg_id) where comsubref='$bill->{source_id}'");
@@ -39,7 +69,7 @@ if ($Payload->{payload}->{action} =~ /paid/i && $Payload->{payload}->{resource_t
                         $Company = $Companies->fetchrow_hashref;
                         $Companies->finish;
 
-                        $Sts = $dbh->do("insert into subscriptions (acct_id,subdateraised,subinvoiceno,subdescription,subnet,subvat,subauthcode,substatus,submerchantref,subdatepaid) values ('$Company->{reg_id}+$Company->{id}','$bill->{paid_at}','$Subinvno','$Sub_name[$Company->{comsublevel}]','$Sub_amt[$Company->{comsublevel}]','$Sub_vat[$Company->{comsublevel}]','$bill->{id}','Paid','$bill->{source_id}','$bill->{paid_at}')");
+                        $Sts = $dbh->do("insert into subscriptions (acct_id,subdateraised,subinvoiceno,subdescription,subnet,subvat,subfee,subauthcode,substatus,submerchantref,subdatepaid) values ('$Company->{reg_id}+$Company->{id}','$bill->{paid_at}','$Subinvno','$Sub_name[$Company->{comsublevel}]','$Net','$Vat','$Fee','$bill->{id}','Paid','$bill->{source_id}','$bill->{paid_at}')");
 
                         $Email_msg = sprintf<<EOD;
 FreePlus Accounts Invoice/Receipt
@@ -54,8 +84,8 @@ Subscription Details
 
     Invoice No:  $Subinvno
      Date Paid:  $Company->{datepaid}
-        Amount:  $Sub_amt[$Company->{comsublevel}]
-           VAT:  $Sub_vat[$Company->{comsublevel}]
+        Amount:  $Net
+           VAT:  $Vat
      Reference:  $bill->{id}
 
 Your invoice is attached to this email message and may also be accessed by logging in to FreePlus Accounts and selecting 'Admin' -> 'My Account'
@@ -67,8 +97,8 @@ EOD
                         $Inv_desc = $Sub_name[$Company->{comsublevel}];
                         $Inv_authcode = $bill->{id};
                         $Inv_address = $Company->{comname}."\n".$Company->{comaddress}."  ".$Company->{compostcode};
-                        $Inv_net = $Sub_amt[$Company->{comsublevel}];
-                        $Inv_vat = $Sub_vat[$Company->{comsublevel}];
+                        $Inv_net = $Net;
+                        $Inv_vat = $Vat;
                         $Inv_status = "Paid";
                         &send_email();
 
