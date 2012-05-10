@@ -227,7 +227,15 @@ function add_entry() {
 
       item_rows[current_row][5].push(subrow); 
       display_table();
-      $("#"+ctrlamt).val("");
+      var totdeb = ($("#totdeb").html() * 1);
+      var totcred = ($("#totcred").html() * 1);
+      var bal = Math.abs((totdeb - totcred)).toFixed(2);
+      if (bal > 0) {
+        $("#"+ctrlamt).val(bal);
+      }
+      else {
+        $("#"+ctrlamt).val("");
+      }
       $("#adjstacct").val(-1);
       $("#"+ctrlamt).focus();
 
@@ -254,9 +262,11 @@ function dlt(row) {
 function check_data() {
   if (document.getElementById("data").value.length > 1) {
     if ($("#bal").html() == "0.00" || confirm("Debits & Credits do not Balance!  Are you sure you want to continue?")) {
-      alert("Good to go!");
+      return true;
     }
-    return false;
+    else {
+      return false;
+    }
   }
   else {
     $("#dialog").html("You have not entered any journal entries!");
