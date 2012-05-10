@@ -67,8 +67,6 @@ if ($FORM{RESPONSECODE} =~ /A/i) {
 </ADDSUBSCRIPTION>
 EOD
 
-warn "$Content\n\n";
-
 #  Now send it
 
 		use LWP::UserAgent;
@@ -86,7 +84,6 @@ warn "$Content\n\n";
 #  update the database
 
 			$Res_content = $res->content;
-warn "$Res_content\n\n";
 
 			print "Content-Type: text/plain\n\n";
 			print $Res_content."\n";

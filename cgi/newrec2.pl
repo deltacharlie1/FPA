@@ -181,6 +181,7 @@ $(document).ready(function(){
         $("#cistext").hide();
         $("#cisamount").hide();
       }
+      calc_stmtvat();
     }
   });
   $("#stmtmatch").dialog({
