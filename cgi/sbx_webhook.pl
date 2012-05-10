@@ -7,8 +7,6 @@ Content-Type: text/plain
 Status: 200 OK
 
 EOD
-
-warn "Webhook - \n$Buffer\n";
 exit;
 
 use JSON;
@@ -128,7 +126,6 @@ $dbh->disconnect;
 print<<EOD;
 Content-Type: text/plain
 Status: 200 OK
-
 
 EOD
 

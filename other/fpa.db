@@ -499,6 +499,7 @@ create table subscriptions (
   subdescription varchar(120) not null default '' comment 'description of payment',
   subnet decimal(10,2) not null default '0.00' comment 'Net subscription amount',
   subvat decimal (10,2) not null default '0.00' comment 'VAT on subscription',
+  subfee decimal (10,2) not null default '0.00' comment 'Subscription fee',
   subauthcode varchar(12) not null default '' comment 'Auth Code return by card processor',
   substatus varchar(12) not null default '' comment 'Status of payment',
   submerchantref varchar(50) comment 'Subscriber Merchantref',
