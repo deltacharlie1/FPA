@@ -145,6 +145,7 @@ create table nominals (
   id int unsigned auto_increment primary key,
   acct_id varchar(50) not null default '',
   link_id int unsigned not null comment 'id of root transaction/invoice',
+  journal_id int(10) unsigned not null default 0 comment 'id of relevant journal entry',
   nomtype char(1) not null default '' comment ' whether link_id is transaction T or invoice I',
   nomcode varchar(10) not null default '' comment 'nominal code of this entry',
   nomamount decimal(20,2) not null default '0' comment 'amount for this coa entry',
@@ -537,6 +538,15 @@ create table invoice_layout_items (
   layidisplay char(1) not null default 'N' comment 'whether to display or not',
   index layi1 (acct_id),
   index layi2 (layout_id)
+);
+
+drop table if exists journals;
+create table journals (
+  id int unsigned not null auto_increment primary key,
+  acct_id varchar(50) not null default '',
+  joudate date comment 'journal date',
+  joudesc text comment 'journal description',
+  index jou1 (acct_id)
 );
 
 drop table if exists adverts;
