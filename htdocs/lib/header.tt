@@ -212,6 +212,7 @@ $(document).ready(function(){
             <li><a href="/cgi-bin/fpa/bulk_opening_balances.pl">Add Opening Balances</a></li>
   [% IF cookie.BACCT=='1+1' OR cookie.BACCT=='92+93' OR cookie.BACCT=='398+400' -%]
             <li><a href="/cgi-bin/fpa/bulk_journals.pl">Journal Adjustments</a></li>
+            <li><a href="/cgi-bin/fpa/jnlrep1.pl">Journal Analysis</a></li>
   [% END -%]
   [% IF cookie.BACCT == '4+3' -%]
             <li><a href="/demo/index.html" target="_new">Demo Reconciliation</a></li>

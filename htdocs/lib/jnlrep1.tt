@@ -1,0 +1,32 @@
+<div class="main" id="main">
+<form action="/cgi-bin/fpa/jnlrep2.pl" method="post" id="form1" autocomplete="off">
+<input type="hidden" name="numrows" id="numrows" value="0"/>
+<input type="hidden" name="offset" id="offset" value="0"/>
+<input type="hidden" name="rows" id="rows" value="15"/>
+<input type="hidden" name="action" id="action" value="S"/>
+<input type="hidden" name="sumtotal" id="sumtotal" value=0S"/>
+<h1>Journalis</h1>
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="formtable">
+    <tr>
+      <td><label>Date From</label></td>
+      <td><input name="startdate" type="text" id="startdate" size="9" value="[% startdate -%]" readonly="readonly" onchange="get_results('S');"/></td>
+      <td><label>Date To</label></td>
+      <td><input name="enddate" type="text" id="enddate" size="9" value="[% enddate -%]" readonly="readonly" onchange="get_results('S');"/></td>
+    </tr>
+    <tr>
+      <td><label>Journal Reference</label></td>
+      <td><input name="jnlref" type="text" id="jnlref" size="20" value="" onchange="get_results('S');"/></td>
+      <td><label>Description</label></td>
+      <td><input name="jnldesc" type="text" id="jnldesc" size="20" value="" onchange="get_results('S');"/></td>
+      <td colspan="2">&nbsp;</td>
+    </tr>
+  </table><br/>
+  <div id="results"></div>
+</div>
+<div id="sidebar">
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+  </div>
+</div>
+</form>
+</div>

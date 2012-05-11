@@ -257,6 +257,18 @@ function add_entry() {
 function dlt(row) {
   item_rows.splice(row,1);
   current_row = current_row - 1;
+  ctrlacct = "";
+  ctrlamt="";
+  $("#totdeb").html("0.00");
+  $("#totcred").html("0.00");
+  $("#adjstdate").datepicker("enable");
+  $("#adjstdesc").attr("readonly",false);
+  $("#adjstcredamt").parent().css("visibility","visible");
+  $("#adjstdebamt").parent().css("visibility","visible");
+  $("#adjstcredamt").val("");
+  $("#adjstdebamt").val("");
+  $("#adjstdesc").val("");
+  $("#adjstdesc").focus();
   display_table();
 }
 function check_data() {
