@@ -132,18 +132,35 @@ sub Tbody {
 			$FORM{invvat} = $Cells[8];
 			$FORM{invcusregion} = "UK";
 
-			if ($Cells[1] =~ /new inv/i) {
-				$FORM{id} = '';
-				$FORM{cus_id} = $Cells[0];
-				$FORM{invtype} = 'S';
-				&save_invoice('final');
+			if ($Cells[1] =~ /pur/i) {
+				if ($Cells[1] =~ /new pur/i) {
+					$FORM{id} = '';
+					$FORM{cus_id} = $Cells[0];
+					$FORM{invtype} = 'P';
+					&save_purchase();
+				}
+				if ($First_entry) {
+					&money_out();
+					$Txn_ids .= $New_txn_id.',';
+					$First_entry = '';
+				}
+				&pay_purchase();
 			}
-			elsif ($Cells[1] =~ /new pur/i) {
-				$FORM{id} = '';
-				$FORM{cus_id} = $Cells[0];
-				$FORM{invtype} = 'P';
-				&save_purchase();
+			elsif ($Cells[1] =~ /inv/i) {
+				if ($Cells[1] =~ /new inv/i) {
+					$FORM{id} = '';
+					$FORM{cus_id} = $Cells[0];
+					$FORM{invtype} = 'S';
+					&save_invoice('final');
+				}
+				if ($First_entry) {
+					&money_in();
+					$Txn_ids .= $New_txn_id.',';
+					$First_entry = '';
+				}
+				&pay_invoice();
 			}
+
 			elsif ($Cells[1] =~ /intr/i) {
 
 #  Get the next txn no
@@ -220,7 +237,7 @@ sub Tbody {
 				my $Vat = $Vats->fetchrow_hashref;
 				$Vats->finish;
 
-				$FORM{invtotal} = 0 - $FORM{invtotal};
+#				$FORM{invtotal} = 0 - $FORM{invtotal};
 
 				if ($FORM{invtotal} > 0) {
 				        $Vatpay = "Refund";
@@ -267,23 +284,6 @@ sub Tbody {
 
 
 				$Sts = $dbh->do("update companies set comvatcontrol=comvatcontrol + '$FORM{invtotal}' where reg_id=$Reg_id and id=$Com_id");
-			}
-
-			if ($Cells[1] =~ /inv/i) {
-				if ($First_entry) {
-					&money_in();
-					$Txn_ids .= $New_txn_id.',';
-					$First_entry = '';
-				}
-				&pay_invoice();
-			}
-			elsif ($Cells[1] =~ /pur/i) {
-				if ($First_entry) {
-					&money_out();
-					$Txn_ids .= $New_txn_id.',';
-					$First_entry = '';
-				}
-				&pay_purchase();
 			}
 		}
 	}

@@ -2,8 +2,6 @@
 
 read(STDIN, $Buffer, $ENV{'CONTENT_LENGTH'});
 
-warn "Webhook - \n$Buffer\n";
-
 print<<EOD;
 Content-Type: text/plain
 Status: 200 OK

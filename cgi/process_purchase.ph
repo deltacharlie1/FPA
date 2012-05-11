@@ -40,7 +40,7 @@ sub validate_customer {
 	}
 }
 
-sub process_vat {
+sub process_pur_vat {
 
 #  Ignore if not registered for VAT
 
@@ -69,6 +69,7 @@ sub process_vat {
         	        $Sts = $dbh->do("update companies set comvatcontrol=comvatcontrol - '$FORM{invvat}' where reg_id=$Reg_id and id=$Com_id");
 			my $Vatamt = 0 - $FORM{invvat};
 			my $Netamt = 0 - $FORM{invtotal};
+
 			$Sts = $dbh->do("insert into vataccruals (acct_id,acrtype,acrtotal,acrvat,acrprintdate,acrnominalcode,acrtxn_id) values ('$COOKIE->{ACCT}','P','$Netamt','$Vatamt',str_to_date('$FORM{invprintdate}','%d-%b-%y'),'$FORM{invcoa}',$Link_id)");
 		}
 	}
@@ -274,7 +275,7 @@ EOD
 
 #  Check to see whether we need to do the VAT
 
-	&process_vat('S',$FORM{id});
+	&process_pur_vat('S',$FORM{id});
 
 #  Update the customer balance
 
@@ -420,7 +421,7 @@ sub pay_purchase {
 		$FORM{invtotal} =~ tr/-//d;
 		$FORM{invvat} =~ tr/-//d;
 
-		&process_vat('C',$New_inv_txn_id);
+		&process_pur_vat('C',$New_inv_txn_id);
 
 #  write an audit trail record
 

@@ -52,6 +52,7 @@ while (@Customer = $Customers->fetchrow) {
 }
 $JSON =~ s/, $/  /;
 $JSON .=  "]";
+
 print $JSON;
 $Customers->finish;
 $dbh->disconnect;

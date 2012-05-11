@@ -57,7 +57,6 @@ $DATA{data} =~ s/<\/td>/\t/ig;
 
 @Nomcodes = split(/\n/,$DATA{data});
 foreach $Nomcode (@Nomcodes) {
-warn "$Nomcode\n";
         @bCell = split(/\t/,$Nomcode);
 
 	if ($bCell[4] =~ /new/i) {

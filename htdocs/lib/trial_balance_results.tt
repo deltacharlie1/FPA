@@ -13,11 +13,21 @@
       <td>[%- entry.nomcode -%]</td>
       <td>[%- entry.coadesc | truncate(30) -%]</td>
   [% IF entry.coatype.match('(?i)Assets|Expenses') -%]
+    [%- IF entry.balance < 0 -%]
+      <td>&nbsp;</td>
+      <td style="text-align:right;">[%- debits = debits + entry.balance; entry.balance | remove('-') | format('%1.2f') -%]</td>
+    [% ELSE -%]
       <td style="text-align:right;">[%- debits = debits + entry.balance; entry.balance | format('%1.2f') -%]</td>
       <td>&nbsp;</td>
-  [% ELSE -%]
+    [% END -%]
+  [%- ELSE -%]
+    [%- IF entry.balance < 0 -%]
+      <td style="text-align:right;">[%- credits = credits + entry.balance; entry.balance | remove('-') | format('%1.2f') -%]</td>
+      <td>&nbsp;</td>
+    [% ELSE -%]
       <td>&nbsp;</td>
       <td style="text-align:right;">[%- credits = credits + entry.balance; entry.balance | format('%1.2f') -%]</td>
+    [% END -%]
   [% END -%]
     </tr>
 [%- END -%]

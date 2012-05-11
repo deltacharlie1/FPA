@@ -48,7 +48,7 @@ sub validate_customer {
 	}
 }
 
-sub process_vat {
+sub process_inv_vat {
 
 #  Ignore if not registered for VAT
 
@@ -331,7 +331,7 @@ EOD
 
 #  Check to see whether we need to do the VAT
 
-		&process_vat('S',$FORM{id});
+		&process_inv_vat('S',$FORM{id});
 		my $Tot = $FORM{invtotal} + $FORM{invvat};
 
 #  Add to the relevant sales account
@@ -504,7 +504,7 @@ sub pay_invoice {
 
 #  deal with any VAT payments
 
-		&process_vat('C',$New_inv_txn_id);
+		&process_inv_vat('C',$New_inv_txn_id);
 
 #  write an audit trail record
 

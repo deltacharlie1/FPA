@@ -20,11 +20,19 @@
 [% class = [ "even","odd" ]; ndx = 0 -%]
 [% FOREACH entry IN entries -%]
   [%- ndx = loop.count % 2 -%]
+    [%- IF entry.acrtype=='J' -%]
+    <tr class="[%- class.$ndx -%]">
+      <td>[%- entry.vatdate -%]</td>
+      <td>[%- entry.joudesc -%] (JE - [%- entry.joujnlno -%])</td>
+      <td style="text-align:right;">[%- vat_output = vat_output - entry.acramt; entry.acramt | remove('-') -%]</td>
+    </tr>
+    [% ELSE -%]
     <tr class="[%- class.$ndx -%]" onclick="location.href='/cgi-bin/fpa/update_[%- IF entry.acrtype=='S' -%]invoice[%- ELSE -%]purchase[%- END -%].pl?[%- entry.inv_id -%]';">
       <td>[%- entry.vatdate -%]</td>
       <td>[%- entry.invcusname -%] (Invoice - [%- entry.invinvoiceno -%])</td>
       <td style="text-align:right;">[%- vat_output = vat_output - entry.acramt; entry.acramt | remove('-') -%]</td>
     </tr>
+    [% END -%]
 [% END -%]
 [% ndx = (ndx + 1) % 2 -%]
     <tr class="[%- class.$ndx -%]"><!--  onclick="location.href='/cgi-bin/fpa/add_address.pl?[%- entry.id -%]';" //-->
