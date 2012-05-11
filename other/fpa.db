@@ -546,6 +546,10 @@ create table journals (
   acct_id varchar(50) not null default '',
   joudate date comment 'journal date',
   joudesc text comment 'journal description',
+  jouacct varchar(50) not null default '' comment 'nominal account of main entry',
+  joutype varchar(10) not null default '' comment ' type of journal debit/credit',
+  jouamt decimal(10,2) not null default '0.00' comment 'amount of main entry',
+  joucount smallint not null default 0 comment 'count of number of entries for this journal',
   index jou1 (acct_id)
 );
 

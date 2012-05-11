@@ -85,7 +85,7 @@ else {
 	}
 }
 
-$Invoices = $dbh->prepare("select id,joudesc,joujnlno,date_format(joudate,'%d-%b-%y') as printdate from journals where $SQL order by joudate desc,joujnlno limit $FORM{offset},$FORM{rows}");
+$Invoices = $dbh->prepare("select id,joudesc,joujnlno,date_format(joudate,'%d-%b-%y') as printdate,jouacct,joutype,jouamt,joucount from journals where $SQL order by joudate desc,joujnlno limit $FORM{offset},$FORM{rows}");
 $Invoices->execute;
 
 use Template;

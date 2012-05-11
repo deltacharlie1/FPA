@@ -4,14 +4,22 @@
     <th>Date</th>
     <th>Jnl #</th>
     <th>Description</th>
+    <th>Account</th>
+    <th>Type</th>
+    <th>Amount</th>
+    <th># Entries</th>
   </tr>
 [% class = [ "even","odd" ] -%]
 [% FOREACH jnl IN jnls -%]
   [%- ndx = loop.count % 2 -%]
-  <tr class="[%- class.$ndx -%]">
-    <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- jnl.printdate -%]</td>
-    <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- jnl.joujnlno -%]</td>
-    <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- jnl.joudesc | truncate(30) -%]</td>
+  <tr class="[%- class.$ndx -%]" onclick="location.href='/cgi-bin/fpa/jnl_drill_down.pl?[%- jnl.id -%]';">
+    <td>[%- jnl.printdate -%]</td>
+    <td>[%- jnl.joujnlno -%]</td>
+    <td>[%- jnl.joudesc | truncate(30) -%]</td>
+    <td>[%- jnl.jouacct | truncate(30) -%]</td>
+    <td>[%- jnl.joutype -%]</td>
+    <td>[%- jnl.jouamt -%]</td>
+    <td>[%- jnl.joucount -%]</td>
   </tr>
 [% END -%]
 </table>

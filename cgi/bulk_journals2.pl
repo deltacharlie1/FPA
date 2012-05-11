@@ -53,6 +53,8 @@ $DATA{data} =~ s/<\/td>/\t/ig;
 
 #  0 - Date, 1 - Description, 2 - Account,  3 - Debit, 4 - Credit
 
+$New_jnl_id = 0;
+
 @Journals = split(/\n/,$DATA{data});
 foreach $Journal (@Journals) {
         @bCell = split(/\t/,$Journal);
@@ -61,6 +63,17 @@ foreach $Journal (@Journals) {
 #  if we have a date then it is a new journal
 
 	if ($bCell[0]) {
+
+#  First see if we need to update an open journal
+
+		if ($New_jnl_id) {
+			$Sts = $dbh->do("update journals set jouacct='$Main_acct',joutype='$Jnltype',jouamt='$Jnlamt',joucount=$Jnlcount where acct_id='$COOKIE->{ACCT}' and id=$New_jnl_id");
+		}
+		$New_jnl_id = 0;
+		$Main_acct = '';
+		$Jnltype = '';
+		$Jnlamt = '';
+		$Jnlcount = 0;
 
 #  Create a new journal entry
 
@@ -79,8 +92,21 @@ foreach $Journal (@Journals) {
 
 	}
 
+	$Jnlcount++;
+
 #  Get the account code
 
+	if ($bCell[3] > $Jnlamt) {
+		$Jnlamt = $bCell[3];
+		$Main_acct = $bCell[2];
+		$Jnltype = 'Debit';
+	}
+	elsif ($bCell[4] > $Jnlamt) {
+		$Jnlamt = $bCell[3];
+		$Main_acct = $bCell[2];
+		$Jnltype = 'Credit';
+	}
+	
 	$bCell[2] = substr($bCell[2],0,4);
 
 #  Sort out signs
@@ -100,7 +126,7 @@ foreach $Journal (@Journals) {
 		}
 	}
 
-	$Txnamount = $bCell[3] || $bCell[4];
+	$Txnamount = $bCell[3] || $bCell[4];		#  Amount has got to be either a debit or credit
 
 #  Add a transaction record if this is a 1200-1300 account
 
@@ -133,6 +159,9 @@ foreach $Journal (@Journals) {
 	$New_txn_id = '';
 
 }
+if ($New_jnl_id) {
+	$Sts = $dbh->do("update journals set jouacct='$Main_acct',joutype='$Jnltype',jouamt='$Jnlamt',joucount=$Jnlcount where acct_id='$COOKIE->{ACCT}' and id=$New_jnl_id");
+}
 
 #  finally update the next txn and next jnl nos in companies
 
@@ -142,7 +171,7 @@ $dbh->disconnect;
 print<<EOD;
 Content-Type: text/plain
 Status: 302
-Location: /cgi-bin/fpa/trial_balance.pl
+Location: /cgi-bin/fpa/jnlrep1.pl
 
 EOD
 exit;
