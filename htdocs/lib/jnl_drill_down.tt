@@ -29,7 +29,7 @@
       <td>[%- entry.nomcode -%]</td>
       <td>[%- entry.coadesc | truncate(30) -%]</td>
   [% IF entry.coatype.match('(?i)Assets|Expenses') -%]
-    [%- IF entry.balance < 0 -%]
+    [%- IF entry.nomamount < 0 -%]
       <td>&nbsp;</td>
       <td style="text-align:right;">[%- entry.nomamount | remove('-') | format('%1.2f') -%]</td>
     [% ELSE -%]
@@ -37,7 +37,7 @@
       <td>&nbsp;</td>
     [% END -%]
   [%- ELSE -%]
-    [%- IF entry.balance < 0 -%]
+    [%- IF entry.nomamount < 0 -%]
       <td style="text-align:right;">[%- entry.nomamount | remove('-') | format('%1.2f') -%]</td>
       <td>&nbsp;</td>
     [% ELSE -%]

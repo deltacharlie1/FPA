@@ -32,13 +32,13 @@ elsif ($FORM{type} =~ /^Purchase/i) {
 	$Customers = $dbh->prepare("select id,invinvoiceno from invoices where invinvoiceno like '$FORM{term}%' and invtype in ('P','R') and acct_id='$COOKIE->{ACCT}' order by invinvoiceno");
 }
 elsif ($FORM{type} =~ /^Supplier/i) {
-	$Customers = $dbh->prepare("select id,substring(cusname,1,30),cusdefcoa,cusdefvatrate from customers where cusname like '$FORM{term}%' and cussupplier='Y' and cusname<>'Unlisted' and acct_id='$COOKIE->{ACCT}' order by cusname");
+	$Customers = $dbh->prepare("select id,substring(cusname,1,30),cusdefcoa,cusdefvatrate from customers where cusname like '$FORM{term}%' and cussupplier='Y' and cusname<>'Unlisted' and cussuppress='N' and acct_id='$COOKIE->{ACCT}' order by cusname");
 }
 elsif ($FORM{type} =~ /^Customer/i) {
-	$Customers = $dbh->prepare("select id,substring(cusname,1,30),cusdefpaymethod,cusdefvatrate,cuscis from customers where cusname like '$FORM{term}%' and cussales='Y' and cusname<>'Unlisted' and acct_id='$COOKIE->{ACCT}' order by cusname");
+	$Customers = $dbh->prepare("select id,substring(cusname,1,30),cusdefpaymethod,cusdefvatrate,cuscis from customers where cusname like '$FORM{term}%' and cussales='Y' and cusname<>'Unlisted' and cussuppress='N' and acct_id='$COOKIE->{ACCT}' order by cusname");
 }
 else {
-	$Customers = $dbh->prepare("select id,substring(cusname,1,30),cusdefpaymethod,cusdefvatrate,cuscis from customers where cusname like '$FORM{term}%' and cusname<>'Unlisted' and acct_id='$COOKIE->{ACCT}' order by cusname");
+	$Customers = $dbh->prepare("select id,substring(cusname,1,30),cusdefpaymethod,cusdefvatrate,cuscis from customers where cusname like '$FORM{term}%' and cusname<>'Unlisted' and cussuppress='N' and acct_id='$COOKIE->{ACCT}' order by cusname");
 }
 $Customers->execute;
 

@@ -8,16 +8,18 @@
       <th>Contact</th>
       <th>Owed</th>
       <th>Actions</th>
+      <th>Suppressed?</th>
     </tr>
 [% class = [ "even","odd" ] -%]
 [%- FOREACH entry IN entries -%]
   [%- ndx = loop.count % 2 -%]
     <tr class="[%- class.$ndx -%]">
-      <td onclick="location.href='/cgi-bin/fpa/list_supplier_purchases.pl?[%- entry.id -%]';">[%- entry.cusname | truncate(30) -%]</td>
-      <td onclick="location.href='/cgi-bin/fpa/list_supplier_purchases.pl?[%- entry.id -%]';">[%- entry.cuspostcode | remove("\n.*") -%]</td>
-      <td onclick="location.href='/cgi-bin/fpa/list_supplier_purchases.pl?[%- entry.id -%]';">[%- entry.cuscontact -%]</td>
-      <td style="text-align:right;"  onclick="location.href='/cgi-bin/fpa/list_supplier_purchases.pl?[%- entry.id -%]';">[%- 0 - entry.cusbalance | format('%1.2f') -%]</td>
-      <td style="text-align:center;" nowrap="nowrap"><img src="/images/edit.png" title="Raise Purchase Invoice" onclick="location.href='/cgi-bin/fpa/new_purchase.pl?[%- entry.id -%]';"></td>
+      <td[%- IF entry.cussuppress=='Y' -%] style="color:#999999;"[%- END -%] onclick="location.href='/cgi-bin/fpa/list_supplier_purchases.pl?[%- entry.id -%]';">[%- entry.cusname | truncate(30) -%]</td>
+      <td[%- IF entry.cussuppress=='Y' -%] style="color:#999999;"[%- END -%] onclick="location.href='/cgi-bin/fpa/list_supplier_purchases.pl?[%- entry.id -%]';">[%- entry.cuspostcode | remove("\n.*") -%]</td>
+      <td[%- IF entry.cussuppress=='Y' -%] style="color:#999999;"[%- END -%] onclick="location.href='/cgi-bin/fpa/list_supplier_purchases.pl?[%- entry.id -%]';">[%- entry.cuscontact -%]</td>
+      <td style="text-align:right;[%- IF entry.cussuppress=='Y' -%] color:#999999;[%- END -%]"  onclick="location.href='/cgi-bin/fpa/list_supplier_purchases.pl?[%- entry.id -%]';">[%- 0 - entry.cusbalance | format('%1.2f') -%]</td>
+      <td style="text-align:center;[%- IF entry.cussuppress=='Y' -%] color:#999999;[%- END -%]" nowrap="nowrap"><img src="/images/edit.png" title="Raise Purchase Invoice" onclick="location.href='/cgi-bin/fpa/new_purchase.pl?[%- entry.id -%]';"></td>
+      <td style="text-align:center;[%- IF entry.cussuppress=='Y' -%] color:#999999;[%- END -%]">[%- IF entry.cussuppress=='Y' -%]Yes[%- ELSE -%]No[%- END -%]</td>
     </tr>
 [%- END -%]
   </table>
