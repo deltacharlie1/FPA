@@ -16,8 +16,20 @@ unless ($COOKIE->{NO_ADS}) {
 
 ($Reg_id,$Com_id) = split(/\+/,$COOKIE->{ACCT});
 
-$Customers = $dbh->prepare("select id,cusname from customers where acct_id='$COOKIE->{ACCT}' order by cusname");
-$Customers->execute;
+$Recpayments = $dbh->prepare("select * from recpayments where acct_id='$COOKIE->{ACCT}'");
+$Recpayments->execute;
+$Recpayment = $Recpayments->fetchall_arrayref({});
+$Recpayments->finish;
+
+$Accts = $dbh->prepare("select coanominalcode,coadesc from coas where acct_id='$COOKIE->{ACCT}' and coanominalcode like '12%' order by coanominalcode");
+$Accts->execute;
+$Acct = $Accts->fetchall_arrayref({});
+$Accts->finish;
+
+$Expenses = $dbh->prepare("select coanominalcode,coadesc from coas where acct_id='$COOKIE->{ACCT}' and coanominalcode > 4999 order by coanominalcode");
+$Expenses->execute;
+$Expense = $Expenses->fetchall_arrayref({});
+$Expenses->finish;
 
 use Template;
 $tt = Template->new({
@@ -26,10 +38,12 @@ $tt = Template->new({
 });
 
 $Vars = {
-        title => 'Add Invoicies',
+        title => 'Recurring Payments',
 	cookie => $COOKIE,
 	focus => 'blk_invcusname',
-	customers => $Customers->fetchall_arrayref({}),
+	recpayments => $Recpayment,
+	accts => $Acct,
+	expenses => $Expense,
         javascript => '<style>
 .mand2 { background-color:#f8e8c8; }
 </style>
@@ -41,7 +55,7 @@ $(document).ready(function () {
     minLength: 0,
     delay: 50,
     source: function (request,response) {
-      request.type = "Customers";
+      request.type = "Suppliers";
       $.ajax({
         url: "/cgi-bin/fpa/autosuggest.pl",
         dataType: "json",
@@ -55,19 +69,12 @@ $(document).ready(function () {
       $.get("/cgi-bin/fpa/getcustomer.pl",{ id: ui.item.id }, function(data) {
         document.getElementById("blk_invcus_id").value = data.id;
         document.getElementById("blk_invcusname").value = data.cusname;
-        document.getElementById("blk_invcuscis").value = data.cuscis;
-        if (data.cuscis == "Y") {
-          $("#blk_cis").show();
-        }
-        else {
-          $("#blk_cis").hide();
-        }
         document.getElementById("blk_invdesc").focus();
       });
     }
   });
 
-  $("#blk_invdate").datepicker();
+  $("#recnextdate").datepicker();
 });
 function calc_bvat() {
   if (document.getElementById("blk_netamt").value.length > 0) {
@@ -143,14 +150,13 @@ function add_invoice() {
   if ($("#blk_pfflag").attr("checked")) {
     pfflag = "Y";
   }
-  item_row = [document.getElementById("blk_nomcode").value,document.getElementById("blk_invcusname").value,document.getElementById("blk_invcus_id").value,document.getElementById("blk_invcuscis").value,document.getElementById("blk_invdesc").value,document.getElementById("blk_netamt").value,document.getElementById("blk_netvat").value,document.getElementById("blk_totamt").value,document.getElementById("blk_invdate").value,document.getElementById("blk_txnmethod").value,document.getElementById("blk_invcat").value,document.getElementById("blk_invref").value,pfflag,document.getElementById("blk_vatrate").value];
+  item_row = [document.getElementById("blk_nomcode").value,document.getElementById("blk_invcusname").value,document.getElementById("blk_invcus_id").value,"",document.getElementById("blk_invdesc").value,document.getElementById("blk_netamt").value,document.getElementById("blk_netvat").value,document.getElementById("blk_totamt").value,document.getElementById("blk_invdate").value,document.getElementById("blk_txnmethod").value,document.getElementById("blk_invcat").value,document.getElementById("blk_invref").value,pfflag,document.getElementById("blk_vatrate").value];
 
   item_rows.push(item_row);
   display_table();
   if ($("input[name=\'clear\']:checked").val() == "Y") {
     document.getElementById("blk_invcusname").value = "";
     document.getElementById("blk_invcus_id").value = "";
-    document.getElementById("blk_invcuscis").value = "N";
     document.getElementById("blk_invdesc").value = "";
     document.getElementById("blk_netamt").value = "";
     document.getElementById("blk_netvat").value = "";
@@ -166,7 +172,6 @@ function amd(row) {
   $("#blk_nomcode").val(item_rows[row][0]);
   $("#blk_invcusname").val(item_rows[row][1]);
   $("#blk_invcus_id").val(item_rows[row][2]);
-  $("#blk_invcuscis").val(item_rows[row][3]);
   $("#blk_invdesc").val(item_rows[row][4]);
   $("#blk_netamt").val(item_rows[row][5]);
   $("#blk_netvat").val(item_rows[row][6]);
@@ -204,7 +209,7 @@ function check_data() {
 };
 
 print "Content-Type: text/html\n\n";
-$tt->process('bulk_add_invoices.tt',$Vars);
+$tt->process('recpayments.tt',$Vars);
 
 $Customers->finish;
 $dbh->disconnect;
