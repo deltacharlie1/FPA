@@ -1,7 +1,7 @@
 <div class="main" id="main">
 <h1>Recurring Payments</h1>
-  <form name="form1" id="blk_form1" method="post" action="/cgi-bin/fpa/recpayments2.pl" onsubmit="return check_data();">
-  <input type="hidden" name="data" id="blk_data" value=""/>
+  <form name="form1" id="blk_form1">
+  <input type="hidden" name="init" id="recinit" value="I"/>
   <table width="660" border="0" cellpadding="0" cellspacing="0" class="formtable">
     <tr>
       <td><label>Supplier</label</td>
@@ -15,11 +15,12 @@
       <td><input type="text" name="recdesc" id="blk_recdesc" size="15" class="mand2" title="Description"/></td>
 [% IF cookie.VAT == 'N' -%]
       <td colspan="2">&nbsp;</td>
+      <input type="hidden" name="recvatrate" id="recvatrate" value="Z"/>
 [% ELSE -%]
       <td><label>VAT Rate</label></td>
       <td><select name="recvatrate" id="recvatrate" size="1" class="mand2">
             <option value="S" selected="selected">S - Standard Rate</option>
-            <option value="S">R - Reduced Rate</option>
+            <option value="R">R - Reduced Rate</option>
             <option value="Z">Z - Zero Rated/Exempt</option>
           </select
       </td>
@@ -50,7 +51,7 @@
           </select> 
       </td>
       <td><label>Allocate To</label></td>
-      <td><select name="rectxnmethod" id="rectxnmethod" size="1" class="mand2">
+      <td><select name="reccoa" id="reccoa" size="1" class="mand2">
 [% FOREACH expense IN expenses -%]
             <option value="[%- expense.coanominalcode -%]"[%- IF expense.coanominalcode=='6000' -%] selected="selected"[%- END -%]>[%- expense.coanominalcode -%] - [%- expense.coadesc -%]</option>
 [% END -%]
@@ -64,7 +65,7 @@
       <td><input type="text" name="recref" id="recref" size="20" value=""/></td>
     </tr>
     <tr>
-      <td colspan="4" style="text-align:center;"><input type="button" name="but1" id="but1" value=" Add Recurring Payment Details "/></td>
+      <td colspan="4" style="text-align:center;"><input type="button" name="but1" id="but1" value=" Create Recurring Payment " onclick="add_paymt();"/></td>
     </tr>
   </table>
   <p>&nbsp;</p>
