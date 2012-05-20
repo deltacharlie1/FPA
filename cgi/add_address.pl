@@ -23,7 +23,7 @@ if ($COOKIE->{PLAN} > 3) {
 	$Layouts->finish;
 }
 if ($Cus_type =~ /^\d+$/) {
-	$Customers = $dbh->prepare("select id,cusdeliveryaddr,cusname,cusaddress,cuspostcode,cusregion,custel,cuscontact,cusemail,custerms,cusdefpo,cusbank,cussortcode,cusacctno,cusdefpaymethod,cusbalance,cussales,cussupplier,cusremarks,cuslimit,cusdefcoa,cusdefvatrate,cusemailmsg,cusstmtmsg,cusautostmts,cuscis from customers where acct_id=? and id=?");
+	$Customers = $dbh->prepare("select id,cusdeliveryaddr,cusname,cusaddress,cuspostcode,cusregion,custel,cuscontact,cusemail,custerms,cusdefpo,cusbank,cussortcode,cusacctno,cusdefpaymethod,cusbalance,cussales,cussupplier,cusremarks,cuslimit,cusdefcoa,cusdefvatrate,cusemailmsg,cusstmtmsg,cusautostmts,cuscis,cussuppress from customers where acct_id=? and id=?");
 	$Customers->execute("$COOKIE->{ACCT}",$ENV{QUERY_STRING});
 	$Customer = $Customers->fetchrow_hashref;
 	$Customers->finish;

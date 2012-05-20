@@ -553,6 +553,23 @@ create table journals (
   index jou1 (acct_id)
 );
 
+drop table if exists recpayments;
+create table recpayments (
+  id int unsigned not null auto_increment primary key,
+  acct_id varchar(50) not null default '',
+  reccus_id int(10) unsigned comment 'supplier id',
+  recnextdate date comment 'date of next payment',
+  recfreq varchar(50) not null default '' comment 'mysql text ofr date add - frequency of payments',
+  rectype varchar(20) not null default '' comment 'type of payment eg DD, SO etc',
+  rectxnmethod varchar(6) not null default '1200' comment 'which bank account payment comes from',
+  reccoa varchar(6) not null default '6000' comment 'Expenses cateogory (acct)',
+  recdesc text comment 'description of payment',
+  recref text comment 'reference for payment',
+  recamount decimal (20,2) not null default '0.00' comment 'recurring payment amount',
+  recvatrate char(5) not null default 'Z' comment 'vat rate as a letter (,S,R,Z)',
+  index rec1 (acct_id)
+);
+
 drop table if exists adverts;
 create table adverts (
   id int unsigned not null auto_increment primary key,

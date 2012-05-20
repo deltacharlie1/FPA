@@ -67,7 +67,10 @@ $Vars = {
 	offset => $FORM{offset},
 	rows => $FORM{rows},
 	srch => $FORM{search},
-        javascript => '<script language="JavaScript">
+        javascript => '<style type="text/css">
+.suppressed { color:#999999; }
+</style>
+<script language="JavaScript">
 function redisplay(action) {
 
   numrows = ' . $FORM{numrows} . ';

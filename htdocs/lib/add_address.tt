@@ -158,6 +158,14 @@
       <td><span><textarea title="Delivery Address" name="cusdeliveryaddr" id="cusdeliveryaddr" cols="30" rows="3">[%- cus.cusdeliveryaddr -%]</textarea></span></td>
     </tr>
 [% END -%]
+    <tr>
+      <td><label>Suppress this Customer/Supplier?</label></td>
+      <td><select name="cussuppress" id="cussuppress" size="1">
+            <option value="N"[%- IF cus.cussuppress=='N' -%] selected="selected"[%- END -%]>No</option>
+            <option value="Y"[%- IF cus.cussuppress=='Y' -%] selected="selected"[%- END -%]>Yes</option>
+          </select>
+      </td>
+    </tr>
   </table>
 </div>
 <div id="sidebar">

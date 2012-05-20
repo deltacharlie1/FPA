@@ -9,17 +9,19 @@
       <th>Telephone</th>
       <th>Contact</th>
       <th>Relationship</th>
+      <th>Suppressed?</th>
     </tr>
 [% class = [ "even","odd" ] -%]
 [%- FOREACH entry IN entries -%]
   [%- ndx = loop.count % 2 -%]
-    <tr class="[%- class.$ndx -%]" onclick="location.href='/cgi-bin/fpa/add_address.pl?[%- entry.id -%]';">
+    <tr class="[%- class.$ndx; IF entry.cussuppressed=='Y' -%] suppressed[%- END -%]" onclick="location.href='/cgi-bin/fpa/add_address.pl?[%- entry.id -%]';">
       <td>[%- entry.cusname | truncate(20) -%]</td>
       <td>[%- entry.cusaddress | remove("\n.*") -%]</td>
       <td>[%- entry.cuspostcode -%]</td>
       <td>[%- entry.custel -%]</td>
       <td>[%- entry.cuscontact -%]</td>
       <td style="text-align:center;">[%- IF entry.cussales AND entry.cussupplier -%]Both[%- ELSIF entry.cussales -%]Sales[%- ELSIF entry.cussupplier -%]Supplier[%- END -%]</td>
+      <td style="text-align:center;">[%- IF entry.cussuppressed=='Y' -%]Yes[%- ELSE -%]No[%- END -%]</td>
     </tr>
 [%- END -%]
   </table>

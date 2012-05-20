@@ -49,7 +49,7 @@ unless ($FORM{rows}) {
 	$FORM{offset} = 0;
 	$FORM{rows} = 24;
 }
-$Customers = $dbh->prepare("select id,cusname,cusaddress,cuspostcode,cusregion,custel,cuscontact,cusbalance,cuslimit from customers where cusname $SQL and acct_id=? and cussupplier='Y' order by cusname limit $FORM{offset},$FORM{rows}");
+$Customers = $dbh->prepare("select id,cusname,cusaddress,cuspostcode,cusregion,custel,cuscontact,cusbalance,cuslimit,cussuppress from customers where cusname $SQL and acct_id=? and cussupplier='Y' order by cusname limit $FORM{offset},$FORM{rows}");
 $Customers->execute("$COOKIE->{ACCT}");
 
 use Template;
