@@ -16,7 +16,7 @@ unless ($COOKIE->{NO_ADS}) {
 
 ($Reg_id,$Com_id) = split(/\+/,$COOKIE->{ACCT});
 
-$Customers = $dbh->prepare("select id,cusname from customers where acct_id='$COOKIE->{ACCT}' order by cusname;");
+$Customers = $dbh->prepare("select id,cusname from customers where acct_id='$COOKIE->{ACCT}' order by cusname");
 $Customers->execute;
 
 use Template;

@@ -1,0 +1,96 @@
+<div class="main" id="main">
+<h1>Recurring Payments</h1>
+  <form name="form1" id="blk_form1">
+  <input type="hidden" name="init" id="recinit" value="I"/>
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="formtable">
+    <tr>
+      <td><label>Supplier</label</td>
+      <td><input type="text" name="invcusname" id="blk_invcusname" size="20" class="mand2" title="Supplier Name"/></td>
+          <input type="hidden" name="reccus_id" id="blk_reccus_id" value=""/>
+      <td><label>Total Amount</label></td>
+      <td><input type="text" name="totamt" id="blk_totamt" size="7" class="mand2" title="Total Amount" onblur="check_currency(this);"/></td>
+    </tr>
+    <tr>
+      <td><label>Description</label></td>
+      <td><input type="text" name="recdesc" id="blk_recdesc" size="15" class="mand2" title="Description"/></td>
+[% IF cookie.VAT == 'N' -%]
+      <td colspan="2">&nbsp;</td>
+      <input type="hidden" name="recvatrate" id="recvatrate" value="Z"/>
+[% ELSE -%]
+      <td><label>VAT Rate</label></td>
+      <td><select name="recvatrate" id="recvatrate" size="1" class="mand2">
+            <option value="S" selected="selected">S - Standard Rate</option>
+            <option value="R">R - Reduced Rate</option>
+            <option value="Z">Z - Zero Rated/Exempt</option>
+          </select
+      </td>
+[% END -%]
+    </tr>
+    <tr>
+      <td><label>Next Due</label></td>
+      <td><input type="text" name="recnextdate" id="recnextdate" size="8" class="mand2" title="Next Due date" readonly="readonly"/></td>
+      <td><label>Frequency</label></td>
+      <td><select name="recfreq" id="recfreq" size="1" class="mand2">
+            <option value="1">Weekly</option>
+            <option value="2">Fortnightly</option>
+            <option value="3">Every 28 days</option>
+            <option value="4">Every 30 days</option>
+            <option value="5" selected="selected">Monthly</option>
+            <option value="6">Quarterly</option>
+            <option value="7">Every 6 months</option>
+            <option value="8">Annually</option>
+          </select>
+      </td>
+    </tr>
+    <tr>
+      <td><label>Paid From</label></td>
+      <td><select name="rectxnmethod" id="rectxnmethod" size="1" class="mand2">
+[% FOREACH acct IN accts -%]
+            <option value="[%- acct.coanominalcode -%]"[%- IF acct.coanominalcode=='1200' -%] selected="selected"[%- END -%]>[%- acct.coanominalcode -%] - [%- acct.coadesc -%]</option>
+[% END -%]
+          </select> 
+      </td>
+      <td><label>Allocate To</label></td>
+      <td><select name="reccoa" id="reccoa" size="1" class="mand2">
+[% FOREACH expense IN expenses -%]
+            <option value="[%- expense.coanominalcode -%]"[%- IF expense.coanominalcode=='6000' -%] selected="selected"[%- END -%]>[%- expense.coanominalcode -%] - [%- expense.coadesc -%]</option>
+[% END -%]
+          </select> 
+      </td>
+    </tr>
+    <tr>
+      <td><label>Payment Type</label></td>
+      <td><input type="text" name="rectype" id="rectype" size="10" value=""/></td>
+      <td><label>Reference</label></td>
+      <td><input type="text" name="recref" id="recref" size="20" value=""/></td>
+    </tr>
+    <tr>
+      <td colspan="4" style="text-align:center;"><input type="button" name="but1" id="but1" value=" Create Recurring Payment " onclick="add_paymt();"/></td>
+    </tr>
+  </table>
+  <p>&nbsp;</p>
+  <h2>Existing Recurring Payments</h2>
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="listing">
+    <tr>
+      <th>Supplier</th>
+      <th>Description</th>
+      <th>Amount</th>
+[% UNLESS cookie.VAT == 'N' -%]
+      <th>VAT</br>Rate</th>
+[% END -%]
+      <th>Next Due</th>
+      <th>Frequency</th>
+      <th>Paid</br>From</th>
+      <th>Allocate</br>To</th>
+      <th>Action</th>
+    </tr>
+    <tbody id="new">
+    </tbody>
+  </table>
+</div>
+<div id="sidebar">
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+</div>
+</form>
+</div>

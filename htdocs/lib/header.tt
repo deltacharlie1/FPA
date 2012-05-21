@@ -100,9 +100,6 @@ $(document).ready(function(){
             <li><a href="/cgi-bin/fpa/adjustments.pl?I">Adjustments In (<b> + </b>)</a></li>
             <li><a href="/cgi-bin/fpa/adjustments.pl?O">Adjustments Out (<b> - </b>)</a></li>
             <li><a href="/cgi-bin/fpa/bulk_opening_balances.pl">Adjust Balances</a></li>
-[% IF cookie.ACCT == '1+1' -%]
-            <li><a href="/cgi-bin/fpa/add_features.pl">Add Extra Features</a></li>
-[% END -%]
 [% UNLESS cookie.ACCT == "3+2" -%]
             <li><a href="/cgi-bin/fpa/wipe_clean.pl">Delete All Data</a></li>
 [% END -%]
@@ -133,6 +130,9 @@ $(document).ready(function(){
             <li><a href="/cgi-bin/fpa/add_address.pl?S">Add New Supplier</a></li>
             <li><a href="#" onclick="display_form('E');">Record Expense</a></li>
             <li><a href="/cgi-bin/fpa/multi_purchases.pl?[%- cookie.EXP -%]">Pay Expenses</a></li>
+[% IF cookie.ACCESS > 3 -%]
+            <li><a href="/cgi-bin/fpa/recpayments.pl">Recurring Payments</a></li>
+[% END -%]
           </ul>
         </li>
         <li class="accounts"><a href="#"><span>Money</span></a>
