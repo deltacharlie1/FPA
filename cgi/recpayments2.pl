@@ -12,10 +12,6 @@ use CGI;
 $Data = new CGI;
 %FORM = $Data->Vars;
 
-while (($Key,$Value) = each %FORM) {
-	warn "$Key = $Value\n";
-}
-
 if ($FORM{init} =~ /U/i) {
 
 	$Errs = "";
@@ -54,7 +50,7 @@ elsif ($FORM{init} =~ /U/i) {
 
 @Freq = ("","Weekly","Fortnightly","Every 28 days","Every 30 days","Monthly","Quarterly","Every 6 months","Annually");
 
-$Recpayments = $dbh->prepare("select recpayments.id as rec_id,cusname,recdesc,recamount,recvatrate,date_format(recnextdate,'%d-%b-%y') as printdate,recfreq,rectxnmethod,reccoa from recpayments left join customers on (reccus_id=customers.id) where recpayments.acct_id='$COOKIE->{ACCT}' order by recnextdate desc");
+$Recpayments = $dbh->prepare("select recpayments.id as rec_id,cusname,recdesc,recamount,recvatrate,date_format(recnextdate,'%d-%b-%y') as printdate,recfreq,rectxnmethod,reccoa from recpayments left join customers on (reccus_id=customers.id and recpayments.acct_id=customers.acct_id) where recpayments.acct_id='$COOKIE->{ACCT}' order by recnextdate");
 $Recpayments->execute;
 
 print "Content-Type: text/plain\n\n";

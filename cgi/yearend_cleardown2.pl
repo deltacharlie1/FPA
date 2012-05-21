@@ -26,11 +26,11 @@ $Dates = $dbh->prepare("select date_add(date_sub(comyearend,interval 1 year),int
 $Dates->execute;
 $Date = $Dates->fetchrow_hashref;
 $Dates->finish;
-$Date->{tbstart} = '2011-07-01';
-$Date->{tbend} = '2012-06-30';
-$Date->{fystart} = '2012-07-01';
-$Date->{dispstart} = '01-Jul-11';
-$Date->{dispend} = '30-Jun-12';
+#$Date->{tbstart} = '2011-07-01';
+#$Date->{tbend} = '2012-06-30';
+#$Date->{fystart} = '2012-07-01';
+#$Date->{dispstart} = '01-Jul-11';
+#$Date->{dispend} = '30-Jun-12';
 
 
 $Coas = $dbh->prepare("select coas.coanominalcode as nominalcode,coadesc,coatype,sum(nominals.nomamount) as balance from coas left join nominals on (nominals.nomcode=coas.coanominalcode and nominals.acct_id=coas.acct_id) where nominals.nomdate>='$Date->{tbstart}' and nominals.nomdate<='$Date->{tbend}' and coanominalcode>'3999' and coas.acct_id='$COOKIE->{ACCT}' group by nominals.nomcode order by nominals.nomcode");
