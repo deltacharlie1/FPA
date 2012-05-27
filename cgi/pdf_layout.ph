@@ -23,7 +23,8 @@ foreach $LI (@$LIT) {
 
 	if ($LI->{lifldcode} =~ /a013/i) {
 		$Yrmk = 842 - $LI->{lisize} - $LI->{litop};
-		$Xrmk = $Item->{lileft};
+#		$Xrmk = $Item->{lileft};
+		$Xrmk = $LI->{lileft};
 	}
 
 	if ($LI->{litable} =~ /companies/i) {
@@ -134,7 +135,7 @@ $font = $pdf->corefont('Helvetica');
 $font_bold = $pdf->corefont('Helvetica Bold');
 
 $Stamp = $pdf->image_png('overdue.png');
-$Testonly = $pdf->image_png('/usr/local/git/fpa/htdocs/icons/testonly.png');
+$Testimg = $pdf->image_png('/usr/local/git/fpa/htdocs/icons/testonly.png');
 
 #  Set out the first page
 
@@ -149,7 +150,6 @@ for $Row (@Row) {
 	$Row =~ s/^.*?<td.*?>//is;
         $Row =~ s/<td.*?>//gis;
         @Cell = split(/\<\/td\>/i,$Row);
-
 	if ($Cell[0]) {
 
 #  remove any date/increment brackets
@@ -165,6 +165,7 @@ for $Row (@Row) {
 		$Cell[5] =~ s/<br\/>//ig;
 
 		foreach $Item (@Items) {
+
 			if ($Item->{libold} =~ /Y/i) {
 				$text->font($font_bold,$Item->{lisize} );
 			}
@@ -173,6 +174,7 @@ for $Row (@Row) {
 			}
 			$text->lead($Item->{lisize} + 2);
 			if ($Item->{lifldcode} =~ /a020/) {
+				$Litop = $Item->{litop};
 				$tb->y($Ypos);
 				$tb->text($Cell[0]);
 				($endw, $New_Ypos) = $tb->apply();
@@ -194,8 +196,8 @@ for $Row (@Row) {
 		$vattotal += $Cell[5];
 		$invtotal += $Cell[3] + $Cell[5];
 
-		if ($Ypos < $Item->{litop} - $Layout->{descheight} + 20) {
-			$page = $pdf->page();
+		if ($Ypos < 842 - $Litop - $Layout->{descheight} + 20) {
+			$page = $pdf->importpage($pdf,1,0);
 			&set_new_page;
 		}
 	}
@@ -218,7 +220,7 @@ foreach $Calc (@Calc) {
 #  See if we need an overdue stamp
 
 if ($COOKIE->{DB} eq 'fpa3' || $Testonly =~ /T/i) {
-	$g->image($Testonly,100,200);
+	$g->image($Testimg,100,200);
 }
 else {
 	if ($invoices->{invstatus} =~ /overdue/i && $Use_stamp =~ /Y/i) {

@@ -166,8 +166,8 @@ for $Row (@Row) {
 		$Vat += $Cell[5];
 		$Total += $Cell[3] + $Cell[5];
 
-		if ($Ypos < 200) {
-			$page = $pdf->page();
+		if ($Ypos < 170) {
+			$page = $pdf->importpage($pdf,1,0);
 			&set_new_page;
 		}
 	}
