@@ -25,6 +25,16 @@
           </select>
       </td>
     </tr>
+    <tr>
+      <td><label>Reverse Side Layout</label></td>
+      <td><select name="layreversefile" id="layreversefile" size="1">
+            <option value=""[%- IF layout.layreversefile=='' -%] selected="selected"[%- END -%]>None</option>
+[% FOREACH rev IN revs -%]
+            <option value="[%- rev.id -%]"[%- IF layout.layreversefile==rev.id -%] selected="selected"[%- END -%]>[%- rev.laydesc -%]</option>
+[% END -%]
+          </select>
+      </td>
+    </tr>
   </table>
 <input type="hidden" name="id" id="layid" value="[%- layout.id OR '0' -%]"/>
 </div>

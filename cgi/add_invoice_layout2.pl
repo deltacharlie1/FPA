@@ -122,7 +122,7 @@ EOD
 		print IMG $Original;
 		close(IMG);
 
-		$Sts = $dbh->do("insert into invoice_layouts (acct_id,layfile,laydesc,laydateformat) values ('$COOKIE->{ACCT}','/projects/fpa_docs/$Company->{comdocsdir}/$FORM{Filename}','$FORM{laydesc}','$FORM{laydateformat}')");
+		$Sts = $dbh->do("insert into invoice_layouts (acct_id,layfile,laydesc,laydateformat,layreversefile) values ('$COOKIE->{ACCT}','/projects/fpa_docs/$Company->{comdocsdir}/$FORM{Filename}','$FORM{laydesc}','$FORM{laydateformat}','$FORM{layreversefile}')");
 		$New_inv_id = $dbh->last_insert_id(undef, undef, qw(invoice_layouts undef));
 
 		while (($Key,$Value) = each %Settings) {
@@ -148,14 +148,10 @@ else {
 		print IMG $Original;
 		close(IMG);
 
-		$Sts = $dbh->do("update invoice_layouts set layfile='/projects/fpa_docs/$Company->{comdocsdir}/$FORM{Filename}',laydesc='$FORM{laydesc}',laydateformat='$FORM{laydateformat}' where acct_id='$COOKIE->{ACCT}' and id=$FORM{id}");
+		$Sts = $dbh->do("update invoice_layouts set layfile='/projects/fpa_docs/$Company->{comdocsdir}/$FORM{Filename}',laydesc='$FORM{laydesc}',laydateformat='$FORM{laydateformat}',layreversefile='$FORM{layreversefile}' where acct_id='$COOKIE->{ACCT}' and id=$FORM{id}");
 	}
 	else {
-		$Sts = $dbh->do("update invoice_layouts set laydesc='$FORM{laydesc}',laydateformat='$FORM{laydateformat}' where acct_id='$COOKIE->{ACCT}' and id=$FORM{id}");
-	}
-
-	while (($Key,$Value) = each %Settings) {
-		$Sts = $dbh->do("update invoice_layout_items set lidisplay='$Value->{display}',lisource='$Value->{source}' where acct_id='$COOKIE->{ACCT}' and link_id=$FORM{id} and lifldcode='$Key'");
+		$Sts = $dbh->do("update invoice_layouts set laydesc='$FORM{laydesc}',laydateformat='$FORM{laydateformat}',layreversefile='$FORM{layreversefile}' where acct_id='$COOKIE->{ACCT}' and id=$FORM{id}");
 	}
 
 	print<<EOD;

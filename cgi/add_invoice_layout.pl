@@ -16,6 +16,11 @@ unless ($COOKIE->{NO_ADS}) {
 	&display_adverts();
 }
 
+$Revs = $dbh->prepare("select id,laydesc from invoice_layouts where acct_id='$COOKIE->{ACCT}' order by id");
+$Revs->execute;
+$Rev = $Revs->fetchall_arrayref({});
+$Revs->finish;
+
 if ($ENV{QUERY_STRING} > 0) {
 	$Layouts = $dbh->prepare("select * from invoice_layouts where acct_id='$COOKIE->{ACCT}' and id=$ENV{QUERY_STRING}");
 	$Layouts->execute;
@@ -73,6 +78,7 @@ $Vars = {
 	cookie => $COOKIE,
 	focus => 'laydesc',
 	layout => $Layout,
+	revs => $Rev,
 	lis => $LI,
         javascript => '<script type="text/javascript"> 
 var errfocus = "";

@@ -130,6 +130,13 @@ $Vat = "";
 $Total = "";
 
 $pdf = PDF::API2->open($Layout->{layfile});
+if ($Layout->{layreversefile}) {
+	$Revs = $dbh->prepare("select layfile from invoice_layouts where acct_id='$COOKIE->{ACCT}' and id=$Layout->{layreversefile}");
+	$Revs->execute;
+	$Rev = $Revs->fetchrow_hashref;
+	$Revs->finish;
+	$Rev_pdf = PDF::API2->open($Rev->{layfile});
+}
 $page = $pdf->openpage(1);
 $font = $pdf->corefont('Helvetica');
 $font_bold = $pdf->corefont('Helvetica Bold');
@@ -197,6 +204,12 @@ for $Row (@Row) {
 		$invtotal += $Cell[3] + $Cell[5];
 
 		if ($Ypos < 842 - $Litop - $Layout->{descheight} + 20) {
+
+#  Is there a reverse side?
+
+			if ($Rev_pdf) {
+				$page = $pdf->importpage($Rev_pdf,1,0);
+			}
 			$page = $pdf->importpage($pdf,1,0);
 			&set_new_page;
 		}
@@ -216,16 +229,8 @@ foreach $Calc (@Calc) {
 	$text->transform( -translate => [$Calc->{lileft}+$Calc->{liwidth}+10,842-$Calc->{lisize}-$Calc->{litop}]);
 	$text->text_right(sprintf("%1.2f",${$Calc->{lialias}}));
 }
-
-#  See if we need an overdue stamp
-
-if ($COOKIE->{DB} eq 'fpa3' || $Testonly =~ /T/i) {
-	$g->image($Testimg,100,200);
-}
-else {
-	if ($invoices->{invstatus} =~ /overdue/i && $Use_stamp =~ /Y/i) {
-		$g->image($Stamp,200,260);
-	}
+if ($Rev_pdf) {
+	$page = $pdf->importpage($Rev_pdf,1,0);
 }
 my $PDF_doc = $pdf->stringify();
 $pdf->end;
@@ -316,6 +321,17 @@ foreach $Header (@Header) {
 		else {
 			$text->text(${$Header->{litable}}->{$Header->{lialias}});
 		}
+	}
+}
+
+#  See if we need an overdue stamp
+
+if ($COOKIE->{DB} eq 'fpa3' || $Testonly =~ /T/i) {
+	$g->image($Testimg,100,200);
+}
+else {
+	if ($invoices->{invstatus} =~ /overdue/i && $Use_stamp =~ /Y/i) {
+		$g->image($Stamp,200,260);
 	}
 }
 }
