@@ -72,7 +72,7 @@ else {
 		$Acctype{2300} = "Loan Repayment";
 		$Acctype{3000} = "Repayment of Share Capital";
 		$Acctype{6000} = "Un-specified Expense";
-		$Acctype{6500} = "Dividend";
+		$Acctype{3050} = "Dividend";
 		$Acctype{6600} = "Corporation Tax";
 		$Acctype{7500} = "Wages";
 		$Acctype{7600} = "Payroll Taxes";

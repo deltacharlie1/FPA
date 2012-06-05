@@ -24,7 +24,7 @@
           <option value="1000">Asset Depreciation</option>
           <option value="7500">Wages</option>
           <option value="7600">Payroll Taxes</option>
-          <option value="6500">Payment of Dividend</option>
+          <option value="3050">Payment of Dividend</option>
           <option value="6600">Payment of Corporation Tax</option>
           <option value="2300">Increase of Loan to company</option>
           <option value="3000">Reduction in Share Capital</option>
