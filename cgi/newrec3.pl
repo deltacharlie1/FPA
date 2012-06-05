@@ -2,7 +2,7 @@
 
 $ACCESS_LEVEL = 1;
 
-#  script to update Company Details
+#  script to carry out the actual reconcilation adding nominal acct records as needed
 
 use Checkid;
 $COOKIE = &checkid($ENV{HTTP_COOKIE},$ACCESS_LEVEL);
@@ -211,10 +211,10 @@ sub Tbody {
 				$Sts = $dbh->do("update companies set comnexttxn=comnexttxn+1 where reg_id=$Reg_id and id=$Com_id");
 
 #  Create a dummy invoice
-				$Sts = $dbh->do("insert into invoices (acct_id,invinvoiceno,invdesc,invcusregion,invcoa,invtotal,invpaid,invprintdate,invstatus,invstatuscode,invtype) values ('$COOKIE->{ACCT}','unlisted','Bank Charges','UK','6010','$FORM{invtotal}','$FORM{invtotal}',str_to_date('$FORM{invprintdate}','%d-%b-%y'),'Bank','2','BC')");
+				$Sts = $dbh->do("insert into invoices (acct_id,invinvoiceno,invdesc,invcusregion,invcoa,invtotal,invpaid,invprintdate,invstatus,invstatuscode,invtype) values ('$COOKIE->{ACCT}','unlisted','Bank Charges','UK','6010','0'-'$FORM{invtotal}','0'-'$FORM{invtotal}',str_to_date('$FORM{invprintdate}','%d-%b-%y'),'Bank','2','BC')");
         			my $New_inv_id = $dbh->last_insert_id(undef, undef, qw(invoices undef));
 
-				$Sts = $dbh->do("insert into transactions (acct_id,link_id,txncusname,txnmethod,txnamount,txndate,txntxntype,txnremarks,txntxnno) values ('$COOKIE->{ACCT}',$New_inv_id,'Bank Payment','$FORM{txnmethod}','$FORM{invtotal}',str_to_date('$FORM{invprintdate}','%d-%b-%y'),'bankexp','Charges','$FORM{txnno}')");
+				$Sts = $dbh->do("insert into transactions (acct_id,link_id,txncusname,txnmethod,txnamount,txndate,txntxntype,txnremarks,txntxnno) values ('$COOKIE->{ACCT}',$New_inv_id,'Bank Payment','$FORM{txnmethod}','0'-'$FORM{invtotal}',str_to_date('$FORM{invprintdate}','%d-%b-%y'),'bankexp','Charges','$FORM{txnno}')");
 				$New_txn_id = $dbh->last_insert_id(undef, undef, qw(transactions undef));
 				$Txn_ids .= $New_txn_id.",";
 
