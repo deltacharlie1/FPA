@@ -92,7 +92,7 @@ $(document).ready(function(){
     "buttonText"  : "Select Layout",
     "fileExt"     : "*.pdf;*.jpg;*.png",
     "fileDesc"    : "Invoice Layout Files (PDF,JPG,PNG)",
-    "sizeLimit"   : 61440,
+    "sizeLimit"   : 102400,
     "auto"        : false,
     "onComplete" : function(a,b,c,d,e) {
                      if (/Error/i.test(d)) {
