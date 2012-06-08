@@ -12,7 +12,7 @@
     <tr class="[%- class.$ndx -%]"[%- IF entry.balance != 'x.00' -%] onclick="location.href='/cgi-bin/fpa/coa_drill_down.pl?filter=[%- entry.nomcode -%]&tbstart=[%- tbstart -%]&tbend=[%- tbend -%]';"[%- END -%]>
       <td>[%- entry.nomcode -%]</td>
       <td>[%- entry.coadesc | truncate(30) -%]</td>
-  [% IF entry.coatype.match('(?i)Assets|Expenses') -%]
+  [% IF entry.coatype.match('(?i)Assets|Expenses') OR entry.nomcode=='3050' -%]
     [%- IF entry.balance < 0 -%]
       <td>&nbsp;</td>
       <td style="text-align:right;">[%- debits = debits + entry.balance; entry.balance | remove('-') | format('%1.2f') -%]</td>

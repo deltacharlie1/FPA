@@ -13,7 +13,6 @@
 2300	Long Term Liability	Longterm Liabilities	2300	Balance Sheet
 3000	Share Capital	Capital	3000	Balance Sheet
 3050	Dividends	Capital	3050	Balance Sheet
-3060	Drawings	Capital	3060	Balance Sheet
 3100	Capital Account	Capital	3100	Balance Sheet
 4000	UK Sales	Income	4000	P & L
 4100	EU Sales	Income	4100	P & L
