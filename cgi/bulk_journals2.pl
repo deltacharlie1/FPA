@@ -45,6 +45,12 @@ $Companies->finish;
 $Nexttxn = $Company->{comnexttxn};
 $Nextjnlno = $Company->{comnextjnl};
 
+#  Get existing coas
+
+$Coa_types = $dbh->prepare("select distinct coanominalcode,coatype,coareport from coas where acct_id='$COOKIE->{ACCT}'");
+$Coa_types->execute;
+$Coa_type = $Coa_types->fetchall_hashref('coanominalcode');
+$Coa_types->finish;
 
 $DATA{data} =~ s/\&nbsp;//g;
 $DATA{data} =~ s/<(?!\/).+?>//g;
@@ -72,7 +78,7 @@ foreach $Journal (@Journals) {
 		$New_jnl_id = 0;
 		$Main_acct = '';
 		$Jnltype = '';
-		$Jnlamt = '';
+		$Jnlamt = '0';
 		$Jnlcount = 0;
 
 #  Create a new journal entry
@@ -111,22 +117,32 @@ foreach $Journal (@Journals) {
 
 #  Sort out signs
 
-	$Txntype = "income";
-	$Vatcode = "4300";
-	if ($bCell[3]) {					#  Debit
-		if ($bCell[2] =~ /^2/ || $bCell[2] >= 5000) {
-			$bCell[3] = 0 - $bCell[3];
-		}
-	}
-	elsif ($bCell[4]) {					#  Credit
-		if ($bCell[2] < 2000 || $bCell[2] =~ /^4/) {
-			$bCell[4] = 0 - $bCell[4];
-			$Txntype = "expense";
-			$Vatcode = "6000";
-		}
-	}
+#  Determine the Type of the Acct:-
 
-	$Txnamount = $bCell[3] || $bCell[4];		#  Amount has got to be either a debit or credit
+#  Type A = Assets & Expenses
+#  		Debit reduces
+#  		Credit increases
+#
+#  Type B = Liabilities, Capital, Sales
+#  		Debit increases
+#  		Credit reduces
+
+	$Txnamount = $bCell[3] || $bCell[4];
+
+	if ($Coa_type->{$bCell[2]}->{coatype} =~ /Asset|Expense/i) {					#  Debit
+		$Txntype = "expense";
+		$Vatcode = "6000";
+		if ($bCell[4]) {
+			$Txnamount = 0 - $Txnamount;
+		}
+	}
+	else {					#  Credit
+		$Txntype = "income";
+		$Vatcode = "4300";
+		if ($bCell[3]) {
+			$Txnamount = 0 - $Txnamount;
+		}
+	}
 
 #  Add a transaction record if this is a 1200-1300 account
 
@@ -141,9 +157,9 @@ foreach $Journal (@Journals) {
 
 	if ($bCell[2] =~ /1400/ || $bCell[2] =~ /2100/) {
 
-		$Sts = $dbh->do("update companies set comvatcontrol=comvatcontrol + '$Txnamount' where reg_id=$Reg_id and id=$Com_id");
+		$Sts = $dbh->do("update companies set comvatcontrol=comvatcontrol - '$Txnamount' where reg_id=$Reg_id and id=$Com_id");
 
-		$Sts = $dbh->do("insert into vataccruals (acct_id,acrtype,acrvat,acrprintdate,acrnominalcode,acrtxn_id) values ('$COOKIE->{ACCT}','J','$Txnamount',str_to_date('$Jnl_date','%d-%b-%y'),'$Vatcode',$New_jnl_id)");
+		$Sts = $dbh->do("insert into vataccruals (acct_id,acrtype,acrvat,acrprintdate,acrnominalcode,acrtxn_id) values ('$COOKIE->{ACCT}','J','0'-'$Txnamount',str_to_date('$Jnl_date','%d-%b-%y'),'$Vatcode',$New_jnl_id)");
 	}
 
 #  Finally add the nominal entry and update coas

@@ -81,7 +81,7 @@ else {
 	$Txntype{1200} = "Bank Transfer";
 	$Txntype{1300} = "Cash";
 	$Txntype{1310} = "Cheque";
-	$Txntype{3100} = "Retained Earnings";
+	$Txntype{3100} = "Capital Account";
 
 #  Get the next transaction no
 
