@@ -248,7 +248,13 @@ $(document).ready(function(){
        $(this).dialog("close");
      }
    }, 
-  "Cancel": function() { $(this).dialog("close"); } 
+  "Cancel": function() {
+       $("#stmt_cus_id").val("");
+       $("#stmtcusid").val("0");
+       $("#stmtcusref").val("");
+       $("#stmtitem_cat").val("");
+       $(this).dialog("close");
+     } 
   }
 }); 
   $(".draggable").draggable({

@@ -30,8 +30,16 @@
       <td><input name="comregno" type="text" id="comregno" value="[%- client.comregno -%]"/></td>
     </tr>
     <tr>
+      <td><label>Sole Trader?</label></td>
+      <td><span><select title="Sole Trader" name="comsoletrader" id="comsoletrader">
+          <option value="N" [%- IF client.comsoletrader == 'N' -%] selected="selected" [%- END -%]>No</option>
+          <option value="Y" [%- IF client.comsoletrader == 'Y' -%] selected="selected" [%- END -%]>Yes</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
       <td><label>Type of Business</label></td>
-      <td><span><select title="Type of Business" name="combusiness" id="combusiness" class="mandatory">
+      <td><span><select title="Type of Business" name="combusiness" id="combusiness" class="mandatory" size="1" style="width:280px;">
           <option value="" [%- IF client.combusiness == '' -%] selected="selected" [%- END -%] >--  Please Select  --</option>
 [% FOREACH sector IN sectors -%]
           <option value="[%- sector.id -%]"[%- IF client.combusiness == sector.id -%] selected="selected" [%- END -%] >[%- sector.sector | truncate(70) -%]</option>

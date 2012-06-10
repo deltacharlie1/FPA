@@ -54,7 +54,7 @@ else {
   { lifldcode => 'a016', lidispname => 'Invoice Total', litable => 'calc', lisource => 'calc', lialias => 'invtotal', litop => '0', lileft => '0', lisize => '12', libold => 'N', lidisplay => 'N', lijust => 'r' },
   { lifldcode => 'a017', lidispname => 'Company Reg', litable => 'companies', lisource => 'comregno', lialias => 'regno', litop => '0', lileft => '0', lisize => '12', libold => 'N', lidisplay => 'N', lijust => 'l' },
   { lifldcode => 'a018', lidispname => 'Bank Sort Code', litable => 'accounts', lisource => 'accsort', lialias => 'sortcode', litop => '0', lileft => '0', lisize => '12', libold => 'N', lidisplay => 'N', lijust => 'l' },
-  { lifldcode => 'a019', lidispname => 'Bank Acct #', litable => 'accountss', lisource => 'accacctno', lialias => 'acctno', litop => '0', lileft => '0', lisize => '12', libold => 'N', lidisplay => 'N', lijust => 'l' },
+  { lifldcode => 'a019', lidispname => 'Bank Acct #', litable => 'accounts', lisource => 'accacctno', lialias => 'acctno', litop => '0', lileft => '0', lisize => '12', libold => 'N', lidisplay => 'N', lijust => 'l' },
   { lifldcode => 'a020', lidispname => 'Item Description', litable => 'items', lisource => '0', lialias => 'desc', litop => '0', lileft => '0', lisize => '10', libold => 'N', lidisplay => 'N', lijust => 'l' },
   { lifldcode => 'a021', lidispname => 'Item Quantity', litable => 'items', lisource => '2', lialias => 'qty', litop => '0', lileft => '0', lisize => '10', libold => 'N', lidisplay => 'N', lijust => 'l' },
   { lifldcode => 'a022', lidispname => 'Item Unit Price', litable => 'items', lisource => '1', lialias => 'price', litop => '0', lileft => '0', lisize => '10', libold => 'N', lidisplay => 'N', lijust => 'r' },

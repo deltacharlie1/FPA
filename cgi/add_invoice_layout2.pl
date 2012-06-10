@@ -26,7 +26,7 @@ use DBI;
   a016 => { name => 'Invoice Total', table => 'calc', source => 'calc', alias => 'invtotal', top => '0', left => '610', size => '12', bold => 'N', display => 'N', just => 'r' },
   a017 => { name => 'Company Reg', table => 'companies', source => 'comregno', alias => 'regno', top => '0', left => '610', size => '12', bold => 'N', display => 'N', just => 'l' },
   a018 => { name => 'Bank Sort Code', table => 'accounts', source => 'accsort', alias => 'sortcode', top => '0', left => '610', size => '12', bold => 'N', display => 'N', just => 'l' },
-  a019 => { name => 'Bank Acct #', table => 'accountss', source => 'accacctno', alias => 'acctno', top => '0', left => '610', size => '12', bold => 'N', display => 'N', just => 'l' },
+  a019 => { name => 'Bank Acct #', table => 'accounts', source => 'accacctno', alias => 'acctno', top => '0', left => '610', size => '12', bold => 'N', display => 'N', just => 'l' },
   a020 => { name => 'Item Description', table => 'items', source => '0', alias => 'desc', top => '0', left => '610', size => '10', bold => 'N', display => 'N', just => 'l' },
   a021 => { name => 'Item Quantity', table => 'items', source => '2', alias => 'qty', top => '0', left => '610', size => '10', bold => 'N', display => 'N', just => 'l' },
   a022 => { name => 'Item Unit Price', table => 'items', source => '1', alias => 'price', top => '0', left => '610', size => '10', bold => 'N', display => 'N', just => 'r' },
