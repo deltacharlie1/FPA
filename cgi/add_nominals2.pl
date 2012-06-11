@@ -23,14 +23,14 @@ $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
 
 $Coas = $dbh->prepare("select coanominalcode from coas where acct_id='$COOKIE->{ACCT}' and coagroup=? order by coanominalcode desc limit 1");
 
-foreach $Coa ('1000','1500','4300','5000','6000','7000') {
+foreach $Coa ('1000','1500','3100','4300','5000','6000','7000') {
 	$Coas->execute($Coa);
 	($Coa{$Coa}) = $Coas->fetchrow;
 }
 $Coas->finish;
 $CoaMax{'1000'} = 1090;
 $CoaMax{'1500'} = 1590;
-$CoaMax{'3100'} = 3400;
+$CoaMax{'3100'} = 3900;
 $CoaMax{'4300'} = 4900;
 $CoaMax{'5000'} = 5400;
 $CoaMax{'6000'} = 6400;

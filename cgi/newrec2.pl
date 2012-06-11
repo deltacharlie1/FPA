@@ -117,7 +117,13 @@ foreach $Row (@Rows) {
 
 #  Calculate the opening balance
 
-$Acct->{newopen} = @Stmt[0]->{balance} - @Stmt[0]->{amt} || 0;
+$Safety_count = 0;
+while (@Stmt[$Safety_count]->{balance} !~ /\d+/ && $Safety_count < 1000) {
+	$Acct->{newopen} -= @Stmt[$Safety_count]->{amt};
+	$Safety_count++;
+}
+
+$Acct->{newopen} += @Stmt[$Safety_count]->{balance} - @Stmt[$Safety_count]->{amt};
 $Acct->{newclose} = @Stmt[$#Stmt]->{balance} || 0;
 
 $TSs = $dbh->prepare("select f1,f2,f3 from tempstacks where acct_id='$COOKIE->{ACCT}' and caller='reconciliation'");
