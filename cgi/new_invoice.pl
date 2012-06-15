@@ -185,6 +185,7 @@ function submit_details(action) {
       }
       else {
         var dg = $("#div_html").html().replace(/\+/gim,"%2B");
+        escape($("#invremarks").html());
         var submit_data = $(".newinvoice").serialize() + "&invtotal=" + escape($("#st").html()) + "&invvat=" + escape($("#vt").html()) + "&invitems=" + escape(dg) + "&submit=" + action;
         $.post("/cgi-bin/fpa/save_invoice.pl",submit_data ,function(data) {
           if ( ! /^OK/.test(data)) {

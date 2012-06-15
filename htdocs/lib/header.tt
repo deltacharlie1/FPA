@@ -93,6 +93,9 @@ $(document).ready(function(){
             <li><a href="/cgi-bin/fpa/adduser.pl">Add New User</a></li>
   [% END -%]
 [%- END -%]
+[%- IF cookie.PLAN > 3 AND cookie.BUS !="1" -%]
+            <li><a href="/cgi-bin/fpa/bulk_journals.pl">Journal Adjustments</a></li>
+[% END -%]
 [%- IF cookie.PLAN > 5 -%]
             <li><a href="/cgi-bin/fpa/docsrep1.pl">List Documents</a></li>
 [% END -%]
@@ -158,6 +161,9 @@ $(document).ready(function(){
             <li><a href="/cgi-bin/fpa/dashboard.pl">Front Page</a></li>
             <li><a href="/cgi-bin/fpa/invrep1.pl?F">Invoice Analysis</a></li>
             <li><a href="/cgi-bin/fpa/txnrep1.pl?F">Transaction Analysis</a>
+[%- IF cookie.PLAN > 3 AND cookie.BUS !="1" -%]
+            <li><a href="/cgi-bin/fpa/jnlrep1.pl">Journal Analysis</a></li>
+[% END -%]
             <li><a href="/cgi-bin/fpa/trial_balance.pl?F">Trial Balance</a></li>
             <li><a href="#">Year End Reports<div style="float:right;padding-bottom:5px;"><img src="/icons/submenu_pointer.gif"/></div></a>
               <ul>
@@ -210,10 +216,8 @@ $(document).ready(function(){
             <li><a href="/cgi-bin/fpa/bulk_add_purchases.pl">Bulk Add Purchases</a></li>
             <li><a href="/cgi-bin/fpa/add_companies.pl">Add Companies</a></li>
             <li><a href="/cgi-bin/fpa/bulk_opening_balances.pl">Add Opening Balances</a></li>
-  [% IF cookie.BACCT=='1+1' OR cookie.BACCT=='92+93' OR cookie.BACCT=='398+400' -%]
             <li><a href="/cgi-bin/fpa/bulk_journals.pl">Journal Adjustments</a></li>
             <li><a href="/cgi-bin/fpa/jnlrep1.pl">Journal Analysis</a></li>
-  [% END -%]
   [% IF cookie.BACCT == '4+3' -%]
             <li><a href="/demo/index.html" target="_new">Demo Reconciliation</a></li>
   [% END -%]

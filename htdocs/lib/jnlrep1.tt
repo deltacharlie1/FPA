@@ -5,7 +5,7 @@
 <input type="hidden" name="rows" id="rows" value="15"/>
 <input type="hidden" name="action" id="action" value="S"/>
 <input type="hidden" name="sumtotal" id="sumtotal" value=0S"/>
-<h1>Journalis</h1>
+<h1>Journals</h1>
   <table width="660" border="0" cellpadding="0" cellspacing="0" class="formtable">
     <tr>
       <td><label>Date From</label></td>

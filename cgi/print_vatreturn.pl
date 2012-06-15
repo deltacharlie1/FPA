@@ -72,15 +72,24 @@ if ($COOKIE->{VAT} =~ /S/i) {
        	$Accruals = $dbh->prepare("select date_format(acrprintdate,'%d-%b-%y') as vatdate, invcusname,invinvoiceno,acrtype,acrvat as acramt,invoices.id as inv_id from vataccruals,invoices where vataccruals.acrtxn_id=invoices.id and vataccruals.acct_id=invoices.acct_id and vr_id=$FORM{id} and vataccruals.acct_id='$COOKIE->{ACCT}' order by acrprintdate");
 }
 else {
-       	$Accruals = $dbh->prepare("select date_format(acrprintdate,'%d-%b-%y') as vatdate, invcusname,invinvoiceno,acrtype,acrvat as acramt,inv_txns.inv_id as inv_id from vataccruals,inv_txns,invoices where vataccruals.acrtxn_id=inv_txns.id and vataccruals.acct_id=inv_txns.acct_id and inv_txns.inv_id=invoices.id and inv_txns.acct_id=invoices.acct_id and vr_id=$FORM{id} and vataccruals.acct_id='$COOKIE->{ACCT}' order by acrprintdate");
+#       	$Accruals = $dbh->prepare("select date_format(acrprintdate,'%d-%b-%y') as vatdate, invcusname,invinvoiceno,acrtype,acrvat as acramt,inv_txns.inv_id as inv_id from vataccruals,inv_txns,invoices where vataccruals.acrtxn_id=inv_txns.id and vataccruals.acct_id=inv_txns.acct_id and inv_txns.inv_id=invoices.id and inv_txns.acct_id=invoices.acct_id and vr_id=$FORM{id} and vataccruals.acct_id='$COOKIE->{ACCT}' order by acrprintdate");
+       	$Accruals = $dbh->prepare("select date_format(vataccruals.acrprintdate,'%d-%b-%y') as vatdate, invcusname,invinvoiceno,vataccruals.acrtype,vataccruals.acrvat as acramt,inv_txns.inv_id as inv_id,joudesc,joujnlno,vataccruals.acrnominalcode from vataccruals left join inv_txns on (inv_txns.acct_id=vataccruals.acct_id and inv_txns.id=vataccruals.acrtxn_id and acrtype<>'J') left join invoices on (inv_txns.acct_id=invoices.acct_id and inv_txns.inv_id=invoices.id),vataccruals a left join journals on (a.acrtxn_id=journals.id and a.acct_id=journals.acct_id and acrtype='J') where vataccruals.id=a.id and vataccruals.vr_id=$FORM{id} and vataccruals.acct_id='$COOKIE->{ACCT}' order by vataccruals.acrprintdate");
 }
 
 $Accruals->execute;
 while (@Accrual = $Accruals->fetchrow) {
-	$Accrual[4] =~ tr/-//d;
-	if ($Accrual[4] > 0) {
+	if ($Accrual[3] =~ /J/i) {
+		$Accrual[1] = substr($Accrual[6],0,21)." (Journal - $Accrual[7])";
+		if ($Accrual[4] > 0) {
+			$Accrual[3] = 'P';		#  Force it to purchase type
+		}
+	}
+	else {
 		$Accrual[1] = substr($Accrual[1],0,21)." (Invoice - $Accrual[2])";
-		if ($Accrual[3] =~ /P/i) {
+	}
+	if ($Accrual[4] != 0) {
+		if ($Accrual[8] > 4999) {		#  If expense then input and reverse sign
+			$Accrual[4] =sprintf('%1.2f',0 - $Accrual[4]);
 			$Input = $Accrual[4];
 			$Output = "";
 			$Tot_input += $Input;

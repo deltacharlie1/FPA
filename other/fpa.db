@@ -26,6 +26,7 @@ create table registrations (
   old_id int unsigned,
   reglastemail int not null default 0 comment 'count of last email sent',
   regprefs varchar(200) not null default 'YYNY' comment 'User preferences',
+  regmobile varchar(30) not null default '' comment 'Mobile number for mobile invoices',
   index (regemail)
 );
 
