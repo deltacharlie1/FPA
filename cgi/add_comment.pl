@@ -39,7 +39,7 @@ open(EMAIL,"| /usr/sbin/sendmail -t");
 print EMAIL <<EOD;
 From: FreePlus <doug.conran\@corunna.com>
 To: doug.conran\@corunna.com
-Subject: A FreePlus Comment haas been added
+Subject: A FreePlus Comment has been added
 
 The following comment has been added by $COOKIE->{ID}
 
