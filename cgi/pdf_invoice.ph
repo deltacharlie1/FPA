@@ -39,6 +39,12 @@ $Invoices->execute;
 @Invoice = $Invoices->fetchrow;
 $Invoices->finish;
 
+#  Strip rogue character before £
+
+for ($i=0;$i<$#Invoice;$i++) {
+	$Invoice[$i] =~ s/\xc2//g;
+}
+
 $Invtype = "";
 if ($Invoice[12] =~ /Draft/i) {
 	$Invtype = "DRAFT ";

@@ -32,8 +32,6 @@ $Data = new CGI;
 
 while (( $Key,$Value) = each %FORM) {
 
-	$Value =~ s/\xc2//g;		#  Remove extraneous character from pund sign
-
 #  Remove any bad characters
 
 	$Value =~ s/\%2b/\+/ig;
@@ -41,6 +39,8 @@ while (( $Key,$Value) = each %FORM) {
 	$Value =~ s/\'/\\\'/g;
         $FORM{$Key} = $Value;
 }
+
+$FORM{invitems} =~ s/\xa3/\xc2\xa3/g;
 
 #  Do some basic validation
 

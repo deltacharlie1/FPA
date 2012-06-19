@@ -69,6 +69,10 @@ if ($I_sel) {
 	$Invoices->execute;
 	$invoices = $Invoices->fetchrow_hashref;
 	$Invoices->finish;
+
+	while (($Key,$Value) = each %$invoices) {
+		$invoices->{$Key} =~ s/\xc2//g;
+	}
 }
 if ($S_sel) {
 	$Customers = $dbh->prepare("select $S_sel from invoices left join customers on(cus_id=customers.id) where invoices.acct_id='$COOKIE->{ACCT}' and invoices.id=$Inv_id");
