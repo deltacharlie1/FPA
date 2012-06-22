@@ -136,9 +136,6 @@ EOD
 		$FORM{invtype} = 'S';
 		$FORM{invcoa} = '4000';
 		$FORM{invcusregion} = 'UK';
-#		while (($Key,$Value) = each %FORM) {
-#			print " -- $Key = $Value\n";
-#		}
 
 		if ($HEADER{layout} =~ /Draft/i) {
 			&save_invoice('draft');
@@ -164,13 +161,7 @@ EOD
 				&pay_invoice();
 
 				if ($FORM{invcusemail}) {
-
-
-
-
-
-
-
+					&sendemail();
 				}
 			}
 		}
@@ -184,7 +175,6 @@ EOD
 		undef %INVOICE;
 		undef @LINES;
 	}
-
 	$dbh->disconnect;
 }
 
@@ -269,15 +259,13 @@ sub sendemail {
 
         $Encoded_msg = encode_base64($PDF_data);
 
-#To: $FORM{invcusemail}
-#Reply-To: $HEADER{comname} <$Company->{regemail}>
-#cc: $Company->{regemail}
         open(EMAIL,"| /usr/sbin/sendmail -t");
         print EMAIL<<EOD;
 From: $HEADER{comname} <fpainvoices\@corunna.com>
-To: doug.conran\@corunna.com
-Reply-To: doug.conran\@corunna.com
-Subject: $FORM{pdfsubj}
+To: $FORM{invcusemail}
+Reply-To: $HEADER{comname} <$Company->{regemail}>
+cc: $Company->{regemail}
+Subject: Invoice $Invoice_no from $HEADER{comname} is attached
 MIME-Version: 1.0
 Content-Type: multipart/mixed;
         boundary="----=_NextPart_000_001D_01C0B074.94357480"
@@ -294,7 +282,10 @@ This is a multi-part message in MIME format.
 Content-Type: text/plain;
         charset="iso-8859-1"
 
-$FORM{pdfmsg}
+Invoice $Invoice_no from $HEADER{comname} is attached to this email as a pdf attachment.
+
+This invoice is being emailed to you from the FreePlus Accounts Mobile Invoicing application.  To find out more about this please go to http://www.freeplusaccounts.co.uk
+
 
 ------=_NextPart_000_001D_01C0B074.94357480
 Content-Type: application/pdf;
