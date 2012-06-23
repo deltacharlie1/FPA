@@ -160,7 +160,7 @@ EOD
 				&money_in();
 				&pay_invoice();
 
-				if ($FORM{invcusemail}) {
+				if ($FORM{invcusemail} && $FORM{invcusemail} !~ /none/i) {
 					&sendemail();
 				}
 			}
