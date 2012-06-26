@@ -14,17 +14,16 @@
                 <li>Sales</li>
               <ul>
                 <li>Complete customer list</li>
-                <li>Ability to create standard invoices and send them as emails to your customers and/or to yourself for printing</li>
                 <li>Ability to create quotations and easily, at the click of a button, turn them in to invoices</li>
+                <li>Ability to create standard invoices and send them as emails to your customers and/or to yourself for printing</li>
                 <li>List of all sales invoices, with outstanding invoices separately identifiable</li>
                 <li>Tracking of payments received against invoice</li>
-                <li>Monthly statements</li>
               </ul>
               <li>Purchasing</li>
               <ul>
                 <li>List of all your suppliers</li>
-                <li>List of purchase invoices, with outstanding invoices separately identifiable</li>
-                <li>Log of purchase invoices</li>
+                <li>Create and list purchase invoices, with outstanding invoices separately identifiable</li>
+                <li>Raise Purchase Orders and convert them to purchase invoices</li>
                 <li>Tracking of expenses </li>
                 <li>Tracking of payments against expenses and purchase invoices</li>
               </ul>
@@ -33,7 +32,7 @@
                 <li>List of bank accounts and transactions against each (payments and receipts)</li>
                 <li>History of account statements</li>
                 <li>Records of bank account withdrawals, deposits and transfers </li>
-                <li>Bank reconciliations</li>
+                <li>Bank reconciliations including importing of bank generated statements</li>
               </ul>
               <li>VAT</li>
               <ul>
@@ -48,6 +47,7 @@
                 <li>Aged debtors/creditors</li>
                 <li>Nominal Ledger</li>
                 <li>VAT Reconciliation Report</li>
+                <li>All reports can be filtered by date range, including various pre-set ranges</li>
               </ul>
             </ul>
             <h3>Optional additional features</h3>
@@ -58,6 +58,8 @@
               <li>Customise quotations and statements with your logo</li>
               <li>Raise and send statements</li>
               <li>Add additional nominal accounts</li>
+              <li>Set up recurring payments</li>
+              <li>Make journal entries</li>
               <li>An additional user logon for your accountant/bookkeeper</li>
               <li>Prioritised email support (normally within one working day)</li>
             </ul></p>
@@ -66,7 +68,7 @@
             <ul>
               <li>Data held for up to 6 years</li>
               <li>Document Upload (5Mb per month)</li>
-              <li>No adverts</li>
+              <li>Elect to suppress adverts</li>
             </ul></p>
             <p>Alternatively, for <span style="font-weight:bold;font-size:1.3em;color:#162e1c;">Accountants and Bookkeepers</span> who wish to easily manage multiple accounts</p>
             <p><span style="font-weight:bold;text-decoration:underline;">FreePlus Bookkeeper Basic (&pound;5.00 per month)</span>
@@ -79,6 +81,7 @@
             <ul>
               <li>Add and manage up to 100 client accounts</li>
               <li>Add additional nominal accounts</li>
+              <li>Make journal entries</li>
               <li>Statements</li>
               <li>Customise invoices and statements with your own logo</li>
             </ul></p>
@@ -88,7 +91,7 @@
               <li>Unlimited additonal client accounts</li>
               <li>Data held for up to 6 years</li>
               <li>Document upload (15Mb per month)</li>
-              <li>No adverts</li>
+              <li>Elect to suppress adverts</li>
             </ul></p>
             <p style="color:#999999;font-size:12px;font-style:italic;">(All prices are exclusive of VAT.)</p>
             <p>Once registered simply log on to your account, go to Admin -> My Account and select the subscription level that offers the features you desire.</p>
