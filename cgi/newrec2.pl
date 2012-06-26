@@ -23,7 +23,7 @@ while (( $Key,$Value) = each %FORM) {
 #  Remove any bad characters
 
 	$Value =~ tr/\\//d;
-	$Value =~ s/\'/\\\'/g;
+#	$Value =~ s/\'/\\\'/g;
         $FORM{$Key} = $Value;
 }
 
@@ -44,9 +44,10 @@ $Invoices->finish;
 #  Check to see if we have an exisitng spreadsheet saved
 
 $FORM{stmt} =~ s/\\\'/\'/g;	#  strip out any exisitng escapes
-$FORM{stmt} =~ s/\'/\\\'/g;
+$FORM{stmt} =~ s/\'/\\\'/g;	#  then add thm back so we don't miss any
 
 $Sts = $dbh->do("update tempstacks set f1='$FORM{stmt}',f2='$FORM{stmtno}' where acct_id='$COOKIE->{ACCT}' and caller='reconciliation'");
+$FORM{stmt} =~ s/\\\'/\'/g;	#  and strip them out again
 
 $Accts = $dbh->prepare("select accounts.id,accounts.acctype,accname,accacctno,stastmtno,staclosebal,date_format(staclosedate,'%d-%b-%y') as staclosedate from accounts left join statements on (accounts.id=acc_id) where accounts.acct_id='$COOKIE->{ACCT}' and acctype='$FORM{acctype}' order by statements.id desc limit 1");
 $Accts->execute;
@@ -74,6 +75,13 @@ elsif ($FORM{source} =~ /NatWest/i) {
 	$Inamt_posn = "3";
 	$Bal_posn = "4";
 }
+elsif ($FORM{source} =~ /Santander/i) {
+	$Date_posn = "1";
+	$Desc_posn = "3";
+	$Outamt_posn = "6";
+	$Inamt_posn = "5";
+	$Bal_posn = "7";
+}
 else {
 	$Date_posn = "0";
 	$Desc_posn = "2";
@@ -83,7 +91,7 @@ else {
 }
 
 @Month = ('','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec');
-%hMonth = ('01','Jan','02','Feb','03','Mar','04','Apr','05','May','06','Jun','07','Jul','08','Aug','09','Sep','10','Oct','11','Nov','12','Dec');
+%hMonth = ('Jan','01','Feb','02','Mar','03','Apr','04','May','05','Jun','06','Jul','07','Aug','08','Sep','09','Oct','10','Nov','11','Dec','12');
 
 $Total = 0;
 
@@ -91,8 +99,16 @@ $FORM{stmt} =~ tr/\r//d;
 @Rows = split(/\n/,$FORM{stmt});
 foreach $Row (@Rows) {
 	chomp($Row);
-	next if ($Row =~ /Date.*Description/i);
 	@Cell = split(/\t/,$Row);
+	next unless ($Cell[$Date_posn] =~ /^(\d+\/\d+\/\d+|\d+-\w\w\w-\d+$)/i);
+
+#  Strip out any non curency characters
+
+	$Cell[$Outamt_posn] =~ tr/[0-9]\-\.//cd;
+	$Cell[$Inamt_posn] =~ tr/[0-9]\-\.//cd;
+	$Cell[$Bal_posn] =~ tr/[0-9]\-\.//cd;
+	$Cell[$Desc_posn] =~ s/^\'//;		#  strip out any excel text marker
+
 	if ($Cell[$Date_posn]) {
 		if ($Cell[$Outamt_posn] =~ /^\d/) {
 			$Cell[$Inamt_posn] = 0-$Cell[$Outamt_posn];
@@ -105,6 +121,7 @@ foreach $Row (@Rows) {
 		$Entry->{desc} = $Cell[$Desc_posn];
 		$Entry->{amt} = $Cell[$Inamt_posn];
 		$Entry->{balance} = $Cell[$Bal_posn];
+#		warn "\$Entry->{sortkey} = $Yr.$hMonth{$Month}.$Day\n";
 		$Entry->{sortkey} = $Yr.$hMonth{$Month}.$Day;
 
 		push(@uStmt,$Entry);
