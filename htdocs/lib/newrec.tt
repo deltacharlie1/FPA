@@ -28,6 +28,10 @@
              <td>Nat West</td>
              <td><input type="radio" name="source" id="source3" value="natwest"[%- IF accname.lower.search('nat') -%] checked="checked" [%- END -%]/></td>
             </tr>
+            <tr>
+             <td>Santander</td>
+             <td><input type="radio" name="source" id="source3" value="santander"[%- IF accname.lower.search('santan') -%] checked="checked" [%- END -%]/></td>
+            </tr>
           </table>
         </div>
       </td>
