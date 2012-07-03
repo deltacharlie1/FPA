@@ -1,9 +1,9 @@
 How to Carry out the Reconciliation
 
-Reconcle - Step 1
+Reconcile - Step 1
 -----------------
 1.  Click on th 'Open Statement' button to display the demo statement
-2.  Select the whole statement (wipe the mouse from bottom right to top left whilst holding down the left mouse button)
+2.  Select the whole statement (click on the small square above the row numbers and to the left of the column letters)
 3.  Save this selection to the clipboard (Ctrl+c)
 4.  Close the statement window.
 5.  Place the mouse cursor in the 'Paste Statement Below' box.
@@ -38,6 +38,5 @@ With the cursor in the 'Supplier' field, press the down arrow key.  A list of su
 3.  There is a statement entry for £900 from Acme Group, but no correspondng, single, amount on the left hand side.  This is because this payment is, in fact made up from two invoices.  Just drag 2 Acme invoice entries from the top left box and drop them, one on top of the other, in the white space below the Acme Group statement entry.
 
 4.  There is a statement entry for £-1381.58 for Web Design People but they have invoiced us for £2000.  This invoice is being paid off in s stages.  Just drag the 'Web Design People' entry in the left-hand bottom box and drop it over the equivalent statement entry on the right.  The difference (£-618.42) will fly back to the Unreconciled transactions to show that this amount is still outstanding and the 'Remaining' amount will reduce to zero.
-
 
 
