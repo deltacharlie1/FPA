@@ -27,13 +27,13 @@ use DBI;
   a017 => { name => 'Company Reg', table => 'companies', source => 'comregno', alias => 'regno', top => '0', left => '610', size => '12', bold => 'N', display => 'N', just => 'l' },
   a018 => { name => 'Bank Sort Code', table => 'accounts', source => 'accsort', alias => 'sortcode', top => '0', left => '610', size => '12', bold => 'N', display => 'N', just => 'l' },
   a019 => { name => 'Bank Acct #', table => 'accounts', source => 'accacctno', alias => 'acctno', top => '0', left => '610', size => '12', bold => 'N', display => 'N', just => 'l' },
-  a020 => { name => 'Item Description', table => 'items', source => '0', alias => 'desc', top => '0', left => '610', size => '10', bold => 'N', display => 'N', just => 'l' },
+  a020 => { name => 'Item Description', table => 'items', source => '0', alias => 'desc', top => '0', left => '610', size => '12', bold => 'N', display => 'N', just => 'l' },
   a021 => { name => 'Item Quantity', table => 'items', source => '2', alias => 'qty', top => '0', left => '610', size => '10', bold => 'N', display => 'N', just => 'l' },
-  a022 => { name => 'Item Unit Price', table => 'items', source => '1', alias => 'price', top => '0', left => '610', size => '10', bold => 'N', display => 'N', just => 'r' },
-  a023 => { name => 'Item Net Total', table => 'items', source => '3', alias => 'net', top => '0', left => '610', size => '10', bold => 'N', display => 'N', just => 'r' },
-  a024 => { name => 'Item VAT Rate', table => 'items', source => '4', alias => 'vrate', top => '0', left => '610', size => '10', bold => 'N', display => 'N', just => 'l' },
-  a025 => { name => 'Item VAT Total', table => 'items', source => '5', alias => 'vat', top => '0', left => '610', size => '10', bold => 'N', display => 'N', just => 'r' },
-  a026 => { name => 'Item Total', table => 'items', source => '6', alias => 'itmtotal', top => '0', left => '610', size => '10', bold => 'N', display => 'N', just => 'r' },
+  a022 => { name => 'Item Unit Price', table => 'items', source => '1', alias => 'price', top => '0', left => '610', size => '12', bold => 'N', display => 'N', just => 'r' },
+  a023 => { name => 'Item Net Total', table => 'items', source => '3', alias => 'net', top => '0', left => '610', size => '12', bold => 'N', display => 'N', just => 'r' },
+  a024 => { name => 'Item VAT Rate', table => 'items', source => '4', alias => 'vrate', top => '0', left => '610', size => '12', bold => 'N', display => 'N', just => 'l' },
+  a025 => { name => 'Item VAT Total', table => 'items', source => '5', alias => 'vat', top => '0', left => '610', size => '12', bold => 'N', display => 'N', just => 'r' },
+  a026 => { name => 'Item Total', table => 'items', source => '6', alias => 'itmtotal', top => '0', left => '610', size => '12', bold => 'N', display => 'N', just => 'r' },
   a027 => { name => 'Delivery Address', table => 'customers', source => 'cusdeliveryaddr', alias => 'delivaddr', top => '0', left => '610', size => '12', bold => 'N', display => 'N', just => 'l' }
 );
 

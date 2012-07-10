@@ -16,14 +16,14 @@ $Buffer =~ tr/+/ /;
 $Buffer =~ s/%([a-fA-F0-9][a-fA-F0-9])/pack("C",hex($1))/eg;
 
 # $Buffer = <<EOD;
-#<?xml version='1.0' encoding='UTF-8' standalone='yes' ?><freeplusinvoice><header><regmobile>07899988701</regmobile><comname>Corunna Systems Ltd</comname><layout>Invoice1</layout><invoice_count>1</invoice_count></header><invoice><invourref>M00002</invourref><invprintdate>21-Jun-12</invprintdate><invcusname>Conran Technology</invcusname><invcusaddr>8 Tupman Walk
-#Bury St Edmunds
-#Suffolk
-#
-#</invcusaddr><invcuspostcode>IP33 1AJ</invcuspostcode><invcusemail>doug.conran\@corunna.com</invcusemail><customer_telephone></customer_telephone><invcuscontact></invcuscontact><invcusref></invcusref><invcusterms>Paid</invcusterms><txnamount>369.00</txnamount><invremarks></invremarks><payment_method>Cash</payment_method><payment_action>Paid</payment_action><payment_currency>£</payment_currency><invtotal>314.50</invtotal><invvat>54.50</invvat><line_items><item><description>design assistance</description><price>60.00</price><qty>1</qty><net>60.00</net><vat_percent>20.00</vat_percent><vat_value>12.00</vat_value></item><item><description>design assistance for further accounting development</description><price>60.00</price><qty>3</qty><net>180.00</net><vat_percent>20.00</vat_percent><vat_value>36.00</vat_value></item><item><description>60 miles at 70p per mile</description><price>0.70</price><qty>60</qty><net>42.00</net><vat_percent>0.00</vat_percent><vat_value>0.00</vat_value></item><item><description>meals etc</description><price>32.50</price><qty>1</qty><net>32.50</net><vat_percent>20.00</vat_percent><vat_value>6.50</vat_value></item></line_items></invoice></freeplusinvoice>
+#<?xml version='1.0' encoding='UTF-8' standalone='yes' ?><freeplusinvoice><header><regmobile>07899988701</regmobile><comname>Corunna Systems Ltd</comname><layout>Invoice1</layout><invoice_count>1</invoice_count></header><invoice><invourref>M00002</invourref><invprintdate>03-Jul-12</invprintdate><invcusname>Air &amp; Cargo Services Ltd</invcusname><invcusaddr>Unit 5 Planet Centre
+#Feltham
+#Middx</invcusaddr><invcuspostcode>TW14 0LW</invcuspostcode><invcusemail>doug.conran@corunna.com</invcusemail><customer_telephone> </customer_telephone><invcuscontact>Carl Aspital</invcuscontact><invcusref> </invcusref><invcusterms>28 Days</invcusterms><txnamount>276.00</txnamount><invremarks></invremarks><txnmethod>Cash</txnmethod><payment_action>Paid</payment_action><payment_currency>£</payment_currency><invtotal>230.00</invtotal><invvat>46.00</invvat><line_items><item><description>Hosting for 3 months</description><price>230.00</price><qty>1</qty><net>230.00</net><vat_percent>20.00</vat_percent><vat_value>46.00</vat_value></item></line_items></invoice></freeplusinvoice>
 #EOD
 
 $Buffer =~ s/\xc2//g;
+
+# warn $Buffer."\n";
 
 #  Get rid of the freeplus xml tag
 
@@ -39,7 +39,7 @@ while ($Buffer =~ s/<header>(.*?)<\/header>/&process_set($1,\%HEADER)/sei) {}
 use DBI;
 $dbh = DBI->connect("DBI:mysql:fpa3");	#		<===   NOTE!!
 
-$Companies = $dbh->prepare("select reg_id,id,comvatscheme,regemail,regmembership,datediff(comsubdue,now()) as days_left from companies left join registrations using (reg_id) where comname='$HEADER{comname}' and regmobile='$HEADER{regmobile}'");
+$Companies = $dbh->prepare("select reg_id,id,comvatscheme,regemail,regmembership,datediff(comsubdue,now()) as days_left,comyearend from companies left join registrations using (reg_id) where comname='$HEADER{comname}' and regmobile='$HEADER{regmobile}'");
 $Companies->execute;
 
 if ($Companies->rows < 1) {
@@ -65,6 +65,7 @@ else {
 
 	while ($Buffer =~ s/<invoice>(.*?)<\/invoice>/&process_set($1,\%INVOICE)/sei) {
 		while (($Key, $Value) = each %INVOICE) {
+			$Value =~ s/\&amp;/\&/g;
 			$FORM{$Key} = $Value;
 		}
 
@@ -108,17 +109,37 @@ EOD
 #  Now process the invoice
 
 		$COOKIE->{ACCT} = $Company->{reg_id}.'+'.$Company->{id};
-		$COOKIE{VAT} = $Company->{comvatscheme};
+		$COOKIE->{VAT} = $Company->{comvatscheme};
+		$COOKIE->{YEAREND} = $Company->{comyearend};
+
+#  See if wwe already have this invoice/quotation
+
+		$MOurref = $FORM{invourref};
+		$MOurref =~ s/^\w//;		#  Strip off the M/Q
+
+		$Invoices = $dbh->prepare("select id,invstatuscode,cus_id,invdesc from invoices where acct_id='$COOKIE->{ACCT}' and (invourref='M$MOurref' or invourref='Q$MOurref')");
+		$Invoices->execute;
+		if ($Invoices->rows > 0) {
+			($FORM{id},$Invstatus,$FORM{cus_id},$FORM{invdesc}) = $Invoices->fetchrow;
+		}
+		else {
+			$FORM{id} = 0;
+		}
+		$Invoices->finish;
 
 #  Do we already have this customer
 
-		$FORM{cusid} = '0';
-		$Customers = $dbh->prepare("select id from customers where acct_id='$COOKIE-{ACCT}' and cusname='$INVOICE{invcusname}'");
-		$Customers->execute;
-		$Customer = $Customers->fetchrow_hashref;
-		$Customers->finish;
-		if ($Customer->{id} > 0) {
-			$FORM{cusid} = $Customer->{id};
+		unless ($FORM{cus_id}) {
+			$Customers = $dbh->prepare("select id from customers where acct_id='$COOKIE-{ACCT}' and cusname='$INVOICE{invcusname}'");
+			$Customers->execute;
+			$Customer = $Customers->fetchrow_hashref;
+			$Customers->finish;
+			if ($Customer->{id} > 0) {
+				$FORM{cus_id} = $Customer->{id};
+			}
+			else {
+				$FORM{cus_id} = 0;
+			}
 		}
 
 #  Do we have a special invoice layout
@@ -140,8 +161,13 @@ EOD
 		if ($HEADER{layout} =~ /Draft/i) {
 			&save_invoice('draft');
 		}
+		elsif ($FORM{invourref} =~ /^Q/i) {
+			&save_invoice('quote');
+		}
 		else {
-			&save_invoice('final');
+			unless ($Invstatus > 1) {
+				&save_invoice('final');
+			}
 
 #  Is is paid up?
 
@@ -159,11 +185,11 @@ EOD
 
 				&money_in();
 				&pay_invoice();
-
-				if ($FORM{invcusemail} && $FORM{invcusemail} !~ /none/i) {
-					&sendemail();
-				}
 			}
+		}
+
+		if ($FORM{invcusemail} && $FORM{invcusemail} !~ /none/i) {
+			&sendemail();
 		}
 
 		print <<EOD;
@@ -255,17 +281,18 @@ sub sendemail {
 	else {
 		require "/usr/local/httpd/cgi-bin/fpa/pdf_invoice.ph";
 	}
-	($PDF_data,$Invoice_no) = &pdf_invoice($FORM{id},'N',$FORM{invlayout});
+	($PDF_data,$Invoice_no) = &pdf_invoice($FORM{id},'Y',$FORM{invlayout},'T');
 
         $Encoded_msg = encode_base64($PDF_data);
 
         open(EMAIL,"| /usr/sbin/sendmail -t");
+# To: $FORM{invcusemail}
         print EMAIL<<EOD;
 From: $HEADER{comname} <fpainvoices\@corunna.com>
-To: $FORM{invcusemail}
+To: doug.conran\@corunna.com
 Reply-To: $HEADER{comname} <$Company->{regemail}>
 cc: $Company->{regemail}
-Subject: Invoice $Invoice_no from $HEADER{comname} is attached
+Subject: Invoice $FORM{invinvoiceno} from $HEADER{comname} is attached
 MIME-Version: 1.0
 Content-Type: multipart/mixed;
         boundary="----=_NextPart_000_001D_01C0B074.94357480"
@@ -282,17 +309,17 @@ This is a multi-part message in MIME format.
 Content-Type: text/plain;
         charset="iso-8859-1"
 
-Invoice $Invoice_no from $HEADER{comname} is attached to this email as a pdf attachment.
+Invoice $FORM{invinvoiceno} from $HEADER{comname} is attached to this email as a pdf attachment.
 
 This invoice is being emailed to you from the FreePlus Accounts Mobile Invoicing application.  To find out more about this please go to http://www.freeplusaccounts.co.uk
 
 
 ------=_NextPart_000_001D_01C0B074.94357480
 Content-Type: application/pdf;
-        name="$Invoice_no.pdf"
+        name="$FORM{invinvoiceno}.pdf"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment;
-        filename="$Invoice_no.pdf"
+        filename="$FORM{invinvoiceno}.pdf"
 
 $Encoded_msg 
 

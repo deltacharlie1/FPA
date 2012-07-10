@@ -213,7 +213,7 @@ EOD
 		}
 		else {				#  this is a new invoice so get the next invoice no and then save details
 
-			$Sts = $dbh->do("insert into invoices (acct_id,cus_id,invcusref,invtype,invcusname,invcusaddr,invcuspostcode,invcusregion,invcoa,invcuscontact,invcusemail,invcusterms,invremarks,invcreated,invstatus,invstatuscode,invstatusdate,invfpflag,invitemcount,invitems,invdesc,invtotal,invvat,invlayout) values ('$COOKIE->{ACCT}',$FORM{cus_id},'$FORM{invcusref}','$FORM{invtype}','$FORM{invcusname}','$FORM{invcusaddr}','$FORM{invcuspostcode}','$FORM{invcusregion}','$FORM{invcoa}','$FORM{invcuscontact}','$FORM{invcusemail}','$FORM{invcusterms}','$FORM{invremarks}',now(),'Draft','1',now(),'$FORM{invfpflag}',$FORM{invitemcount},'$FORM{invitems}','$FORM{invdesc}','$FORM{invtotal}','$FORM{invvat}','$FORM{invlayout}')");
+			$Sts = $dbh->do("insert into invoices (acct_id,cus_id,invcusref,invourref,invtype,invcusname,invcusaddr,invcuspostcode,invcusregion,invcoa,invcuscontact,invcusemail,invcusterms,invremarks,invcreated,invstatus,invstatuscode,invstatusdate,invfpflag,invitemcount,invitems,invdesc,invtotal,invvat,invlayout) values ('$COOKIE->{ACCT}',$FORM{cus_id},'$FORM{invcusref}','$FORM{invourref}','$FORM{invtype}','$FORM{invcusname}','$FORM{invcusaddr}','$FORM{invcuspostcode}','$FORM{invcusregion}','$FORM{invcoa}','$FORM{invcuscontact}','$FORM{invcusemail}','$FORM{invcusterms}','$FORM{invremarks}',now(),'Draft','1',now(),'$FORM{invfpflag}',$FORM{invitemcount},'$FORM{invitems}','$FORM{invdesc}','$FORM{invtotal}','$FORM{invvat}','$FORM{invlayout}')");
 			$FORM{id} = $dbh->last_insert_id(undef, undef, qw(invoices undef));
 		}
 	}
@@ -222,9 +222,9 @@ EOD
 
 #  OK - this is an existing record, we need to establish whether it is already a quote or a draft being turned in to a quote
 
-			my $Invoices = $dbh->prepare("select invstatus from invoices where id=$FORM{id} and acct_id='$COOKIE->{ACCT}'");
+			my $Invoices = $dbh->prepare("select invstatus,invinvoiceno from invoices where id=$FORM{id} and acct_id='$COOKIE->{ACCT}'");
 			$Invoices->execute;
-			($Currentstatus) = $Invoices->fetchrow;
+			($Currentstatus,$FORM{invinvoiceno}) = $Invoices->fetchrow;
 			$Invoices->finish;
 
 			if ($Currentstatus =~ /Quote/i) {	#  just ssave/update
@@ -234,18 +234,25 @@ EOD
 			else {		#  New quote so get next quote no and then save
 				&get_com_details();
 				$Ourref = 'QT'.$Company[6];
+				unless ($FORM{invourref}) {
+					$FORM{invourref} = $Ourref;
+				}
 				$Sts = $dbh->do("update companies set comnextpr=comnextpr+1 where reg_id=$Reg_id and id=$Com_id");
-				$Sts = $dbh->do("update invoices set invprintdate=str_to_date('$FORM{invprintdate}','%d-%b-%y'),invinvoiceno='$Ourref',invourref='$Ourref',invcusref='$FORM{invcusref}',invtype='$FORM{invtype}',invcusname='$FORM{invcusname}',invcusaddr='$FORM{invcusaddr}',invcuspostcode='$FORM{invcuspostcode}',invcusregion='$FORM{invcusregion}',invcoa='$FORM{invcoa}',invcuscontact='$FORM{invcuscontact}',invcusemail='$FORM{invcusemail}',invcusterms='$FORM{invcusterms}',invremarks='$FORM{invremarks}',invfpflag='$FORM{invfpflag}',invitemcount=$FORM{invitemcount},invitems='$FORM{invitems}',invdesc='$FORM{invdesc}',invtotal='$FORM{invtotal}',invvat='$FORM{invvat}',invlayout='$FORM{invlayout}' where id=$FORM{id} and acct_id='$COOKIE->{ACCT}'");
+				$Sts = $dbh->do("update invoices set invprintdate=str_to_date('$FORM{invprintdate}','%d-%b-%y'),invinvoiceno='$Ourref',invourref='$FORM{invourref}',invcusref='$FORM{invcusref}',invtype='$FORM{invtype}',invcusname='$FORM{invcusname}',invcusaddr='$FORM{invcusaddr}',invcuspostcode='$FORM{invcuspostcode}',invcusregion='$FORM{invcusregion}',invcoa='$FORM{invcoa}',invcuscontact='$FORM{invcuscontact}',invcusemail='$FORM{invcusemail}',invcusterms='$FORM{invcusterms}',invremarks='$FORM{invremarks}',invfpflag='$FORM{invfpflag}',invitemcount=$FORM{invitemcount},invitems='$FORM{invitems}',invdesc='$FORM{invdesc}',invtotal='$FORM{invtotal}',invvat='$FORM{invvat}',invlayout='$FORM{invlayout}' where id=$FORM{id} and acct_id='$COOKIE->{ACCT}'");
 			}
 		}
 		else {				#  this is a new invoice so get the next quotation no and then save details
 
 			&get_com_details();
 			$Ourref = 'QT'.$Company[6];
+				unless ($FORM{invourref}) {
+					$FORM{invourref} = $Ourref;
+				}
 			$Sts = $dbh->do("update companies set comnextpr=comnextpr+1 where reg_id=$Reg_id and id=$Com_id");
 
-			$Sts = $dbh->do("insert into invoices (acct_id,invprintdate,invourref,cus_id,invinvoiceno,invcusref,invtype,invcusname,invcusaddr,invcuspostcode,invcusregion,invcoa,invcuscontact,invcusemail,invcusterms,invremarks,invcreated,invstatus,invstatuscode,invstatusdate,invfpflag,invitemcount,invitems,invdesc,invtotal,invvat,invlayout) values ('$COOKIE->{ACCT}',str_to_date('$FORM{invprintdate}','%d-%b-%y'),'$Ourref',$FORM{cus_id},'$Ourref','$FORM{invcusref}','$FORM{invtype}','$FORM{invcusname}','$FORM{invcusaddr}','$FORM{invcuspostcode}','$FORM{invcusregion}','$FORM{invcoa}','$FORM{invcuscontact}','$FORM{invcusemail}','$FORM{invcusterms}','$FORM{invremarks}',now(),'Quote','1',now(),'$FORM{invfpflag}',$FORM{invitemcount},'$FORM{invitems}','$FORM{invdesc}','$FORM{invtotal}','$FORM{invvat}','$FORM{invlayout}')");
+			$Sts = $dbh->do("insert into invoices (acct_id,invprintdate,invourref,cus_id,invinvoiceno,invcusref,invtype,invcusname,invcusaddr,invcuspostcode,invcusregion,invcoa,invcuscontact,invcusemail,invcusterms,invremarks,invcreated,invstatus,invstatuscode,invstatusdate,invfpflag,invitemcount,invitems,invdesc,invtotal,invvat,invlayout) values ('$COOKIE->{ACCT}',str_to_date('$FORM{invprintdate}','%d-%b-%y'),'$FORM{invourref}',$FORM{cus_id},'$Ourref','$FORM{invcusref}','$FORM{invtype}','$FORM{invcusname}','$FORM{invcusaddr}','$FORM{invcuspostcode}','$FORM{invcusregion}','$FORM{invcoa}','$FORM{invcuscontact}','$FORM{invcusemail}','$FORM{invcusterms}','$FORM{invremarks}',now(),'Quote','1',now(),'$FORM{invfpflag}',$FORM{invitemcount},'$FORM{invitems}','$FORM{invdesc}','$FORM{invtotal}','$FORM{invvat}','$FORM{invlayout}')");
 			$FORM{id} = $dbh->last_insert_id(undef, undef, qw(invoices undef));
+			$FORM{invinvoiceno} = $Ourref;
 		}
 	}
 	else {					#  this is a finalised invoice so save additional fields and do additional processing
@@ -283,10 +290,10 @@ EOD
 		else {				#  New invoice so get the next invoice no
 
 			if ($FORM{invcusterms} =~ /^\d+$/) {		#  Calculate the due date
-				$Sts = $dbh->do("insert into invoices (acct_id,cus_id,invinvoiceno,invcusref,invtype,invcusname,invcusaddr,invcuspostcode,invcusregion,invcoa,invcuscontact,invcusemail,invcusterms,invremarks,invcreated,invstatus,invstatuscode,invstatusdate,invfpflag,invitemcount,invitems,invdesc,invtotal,invvat,invprintdate,invduedate,invyearend,invlayout) values ('$COOKIE->{ACCT}',$FORM{cus_id},'$FORM{invinvoiceno}','$FORM{invcusref}','$FORM{invtype}','$FORM{invcusname}','$FORM{invcusaddr}','$FORM{invcuspostcode}','$FORM{invcusregion}','$FORM{invcoa}','$FORM{invcuscontact}','$FORM{invcusemail}','$FORM{invcusterms}','$FORM{invremarks}',now(),'Printed','3',now(),'$FORM{invfpflag}',$FORM{invitemcount},'$FORM{invitems}','$FORM{invdesc}','$FORM{invtotal}','$FORM{invvat}',str_to_date('$FORM{invprintdate}','%d-%b-%y'),from_days(to_days(str_to_date('$FORM{invprintdate}','%d-%b-%y')) + '$FORM{invcusterms}'),'$COOKIE->{YEAREND}','$FORM{invlayout}')");
+				$Sts = $dbh->do("insert into invoices (acct_id,cus_id,invinvoiceno,invcusref,invourref,invtype,invcusname,invcusaddr,invcuspostcode,invcusregion,invcoa,invcuscontact,invcusemail,invcusterms,invremarks,invcreated,invstatus,invstatuscode,invstatusdate,invfpflag,invitemcount,invitems,invdesc,invtotal,invvat,invprintdate,invduedate,invyearend,invlayout) values ('$COOKIE->{ACCT}',$FORM{cus_id},'$FORM{invinvoiceno}','$FORM{invcusref}','$FORM{invourref}','$FORM{invtype}','$FORM{invcusname}','$FORM{invcusaddr}','$FORM{invcuspostcode}','$FORM{invcusregion}','$FORM{invcoa}','$FORM{invcuscontact}','$FORM{invcusemail}','$FORM{invcusterms}','$FORM{invremarks}',now(),'Printed','3',now(),'$FORM{invfpflag}',$FORM{invitemcount},'$FORM{invitems}','$FORM{invdesc}','$FORM{invtotal}','$FORM{invvat}',str_to_date('$FORM{invprintdate}','%d-%b-%y'),from_days(to_days(str_to_date('$FORM{invprintdate}','%d-%b-%y')) + '$FORM{invcusterms}'),'$COOKIE->{YEAREND}','$FORM{invlayout}')");
 			}
 			else {		#  just ignore due date
-				$Sts = $dbh->do("insert into invoices (acct_id,cus_id,invinvoiceno,invcusref,invtype,invcusname,invcusaddr,invcuspostcode,invcusregion,invcoa,invcuscontact,invcusemail,invcusterms,invremarks,invcreated,invstatus,invstatuscode,invstatusdate,invfpflag,invitemcount,invitems,invdesc,invtotal,invvat,invprintdate,invduedate,invyearend,invlayout) values ('$COOKIE->{ACCT}',$FORM{cus_id},'$FORM{invinvoiceno}','$FORM{invcusref}','$FORM{invtype}','$FORM{invcusname}','$FORM{invcusaddr}','$FORM{invcuspostcode}','$FORM{invcusregion}','$FORM{invcoa}','$FORM{invcuscontact}','$FORM{invcusemail}','$FORM{invcusterms}','$FORM{invremarks}',now(),'Printed','3',now(),'$FORM{invfpflag}',$FORM{invitemcount},'$FORM{invitems}','$FORM{invdesc}','$FORM{invtotal}','$FORM{invvat}',str_to_date('$FORM{invprintdate}','%d-%b-%y'),str_to_date('$FORM{invprintdate}','%d-%b-%y'),'$COOKIE->{YEAREND}','$FORM{invlayout}')");
+				$Sts = $dbh->do("insert into invoices (acct_id,cus_id,invinvoiceno,invcusref,invtype,invourref,invcusname,invcusaddr,invcuspostcode,invcusregion,invcoa,invcuscontact,invcusemail,invcusterms,invremarks,invcreated,invstatus,invstatuscode,invstatusdate,invfpflag,invitemcount,invitems,invdesc,invtotal,invvat,invprintdate,invduedate,invyearend,invlayout) values ('$COOKIE->{ACCT}',$FORM{cus_id},'$FORM{invinvoiceno}','$FORM{invcusref}','$FORM{invtype}','$FORM{invourref}','$FORM{invcusname}','$FORM{invcusaddr}','$FORM{invcuspostcode}','$FORM{invcusregion}','$FORM{invcoa}','$FORM{invcuscontact}','$FORM{invcusemail}','$FORM{invcusterms}','$FORM{invremarks}',now(),'Printed','3',now(),'$FORM{invfpflag}',$FORM{invitemcount},'$FORM{invitems}','$FORM{invdesc}','$FORM{invtotal}','$FORM{invvat}',str_to_date('$FORM{invprintdate}','%d-%b-%y'),str_to_date('$FORM{invprintdate}','%d-%b-%y'),'$COOKIE->{YEAREND}','$FORM{invlayout}')");
 			}
 			$FORM{id} = $dbh->last_insert_id(undef, undef, qw(invoices undef));
 		}

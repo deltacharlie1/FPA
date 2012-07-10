@@ -65,7 +65,8 @@ if ($A_sel) {
 }
 if ($I_sel) {
 	$I_sel .= ",invstatus,invtype";
-	$Invoices = $dbh->prepare("select $I_sel from invoices where acct_id='$COOKIE->{ACCT}' and id=$Inv_id");
+#	$Invoices = $dbh->prepare("select $I_sel from invoices where acct_id='$COOKIE->{ACCT}' and id=$Inv_id");
+	$Invoices = $dbh->prepare("select * from invoices where acct_id='$COOKIE->{ACCT}' and id=$Inv_id");
 	$Invoices->execute;
 	$invoices = $Invoices->fetchrow_hashref;
 	$Invoices->finish;
@@ -145,7 +146,7 @@ $page = $pdf->openpage(1);
 $font = $pdf->corefont('Helvetica');
 $font_bold = $pdf->corefont('Helvetica Bold');
 
-$Stamp = $pdf->image_png('overdue.png');
+$Overdue = $pdf->image_png('overdue.png');
 $Testimg = $pdf->image_png('/usr/local/git/fpa/htdocs/icons/testonly.png');
 
 #  Set out the first page
@@ -335,7 +336,10 @@ if ($COOKIE->{DB} eq 'fpa3' || $Testonly =~ /T/i) {
 }
 else {
 	if ($invoices->{invstatus} =~ /overdue/i && $Use_stamp =~ /Y/i) {
-		$g->image($Stamp,200,260);
+		$g->image($Overdue,200,260);
+	}
+	elsif ($invoices->{invstatus} =~ /^paid/i && $Use_stamp =~ /Y/i) {
+		$g->image($Paid,200,260);
 	}
 }
 }
