@@ -46,7 +46,7 @@ $Capital = $Coas->fetchall_arrayref({});
 $Coas->execute('Current Liabilities');
 $Current_Liabilities = $Coas->fetchall_arrayref({});
 $Coas->execute('Longterm Liabilities');
-$Longterm_Liabilties = $Coas->fetchall_arrayref({});
+$Longterm_Liabilities = $Coas->fetchall_arrayref({});
 
 use Template;
 $tt = Template->new({
