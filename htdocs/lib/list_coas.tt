@@ -1,20 +1,31 @@
 <div class="main" id="main">
+<div id="changedescr" title="Change Account Description" style="display:none;">
+  <form id="fchangedescr" name="fchangedate" action="">
+  <input type="hidden" name="id" id="cd_id" value=""/>
+  <table width="100%" border="0" cellpadding="0" cellspacing="0" class="formtable">
+    <tr>
+      <td><label>New Description</label></td>
+      <td><input type="text" name="newdescr" id="newdescr" size="30" value=""/></td>
+    </tr>
+  </table>
+  </form>
+</div>
 <h1>Chart of Accounts</h1>
   <table width="660" border="0" cellpadding="0" cellspacing="0" class="listing">
     <tr>
       <th>Nominal Code</th>
-      <th>Description</th>
+      <th class="dbl">Description</th>
       <th>Type</th>
       <th>Balance</th>
     </tr>
 [% class = [ "even","odd" ] -%]
 [%- FOREACH entry IN entries -%]
   [%- ndx = loop.count % 2 -%]
-    <tr class="[%- class.$ndx -%]"[%- IF entry.coabalance != '0.00' -%] onclick="location.href='/cgi-bin/fpa/coa_drill_down.pl?filter=[%- entry.coanominalcode -%]';"[%- END -%]>
-      <td>[%- entry.coanominalcode -%]</td>
-      <td>[%- entry.coadesc | truncate(30) -%]</td>
-      <td>[%- entry.coatype -%]</td>
-      <td style="text-align:right;">[%- entry.coabalance | format('%1.2f') -%]</td>
+    <tr class="[%- class.$ndx -%]">
+      <td [%- IF entry.coabalance != '0.00' -%] onclick="location.href='/cgi-bin/fpa/coa_drill_down.pl?filter=[%- entry.coanominalcode -%]';"[%- END -%]>[%- entry.coanominalcode -%]</td>
+      <td ondblclick="change_descr(this,[%- entry.id -%],'[%- entry.coadesc -%]');">[%- entry.coadesc | truncate(30) -%]</td>
+      <td [%- IF entry.coabalance != '0.00' -%] onclick="location.href='/cgi-bin/fpa/coa_drill_down.pl?filter=[%- entry.coanominalcode -%]';"[%- END -%]>[%- entry.coatype -%]</td>
+      <td style="text-align:right;" [%- IF entry.coabalance != '0.00' -%] onclick="location.href='/cgi-bin/fpa/coa_drill_down.pl?filter=[%- entry.coanominalcode -%]';"[%- END -%]>[%- entry.coabalance | format('%1.2f') -%]</td>
     </tr>
 [%- END -%]
   </table>
