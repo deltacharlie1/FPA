@@ -101,7 +101,19 @@ else {
         ($Vatreturn->{perbox4}) = $Vataccs->fetchrow;
 	$Vatreturn->{perbox4} = 0 - $Vatreturn->{perbox4};	#  because it is already a negative number
 
-        $Vataccs = $dbh->prepare("select sum(acrtotal) from vataccruals where acct_id='$COOKIE->{ACCT}' and $Date_Range and vr_id < 1 and (acrnominalcode in ('4000','4100','4200') or acrnominalcode like '43%')");
+#  If Fixed Rated Scheme then show vat inclusive totals, otherwise show VAT exclusive totals
+
+	if ($COOKIE->{VAT} =~ /F/i) {
+		if ($COOKIE->{VAT} =~ /C/i) {
+        		$Vataccs = $dbh->prepare("select sum(itnet+itvat) from vataccruals left join inv_txns on (acrtxn_id=inv_txns.id and vataccruals.acct_id=inv_txns.acct_id) where vataccruals.acct_id='$COOKIE->{ACCT}' and $Date_Range and vr_id < 1 and (acrnominalcode in ('4000','4100','4200') or acrnominalcode like '43%')");
+		}
+		else {
+        		$Vataccs = $dbh->prepare("select sum(invtotal+invvat) from vataccruals left join invoices on (acrtxn_id=invoices.id and vataccruals.acct_id=invoices.acct_id) where vataccruals.acct_id='$COOKIE->{ACCT}' and $Date_Range and vr_id < 1 and (acrnominalcode in ('4000','4100','4200') or acrnominalcode like '43%')");
+		}
+	}
+	else {
+        	$Vataccs = $dbh->prepare("select sum(acrtotal) from vataccruals where acct_id='$COOKIE->{ACCT}' and $Date_Range and vr_id < 1 and (acrnominalcode in ('4000','4100','4200') or acrnominalcode like '43%')");
+	}
         $Vataccs->execute;
         ($Vatreturn->{perbox6}) = $Vataccs->fetchrow;
 
