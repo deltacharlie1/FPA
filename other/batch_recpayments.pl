@@ -4,7 +4,7 @@
 
 require "/usr/local/git/fpa/cgi/process_purchase.ph";
 
-@Interval = ('7 day','14 day','28 day','30 day','1 month','3 month','6 month','1 year');
+@Interval = ('0 day','7 day','14 day','28 day','30 day','1 month','3 month','6 month','1 year');
 %Vatrate = ('S','1.2',
 	    'R','1.05',
 	    'Z','1');
