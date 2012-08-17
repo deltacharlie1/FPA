@@ -115,7 +115,7 @@ else {
 
 #	Create the transaction record
 
-	$Sts = $dbh->do("insert into transactions (acct_id,txncusname,txnmethod,txnamount,txndate,txntxntype,txnremarks,txntxnno) values ('$COOKIE->{ACCT}','Acct Adjustment','$FORM{paymethod}','$FORM{amtpaid}',str_to_date('$FORM{txndate}','%d-%b-%y'),'$Loan_direction','$FORM{rmks}','$FORM{txnno}')");
+	$Sts = $dbh->do("insert into transactions (acct_id,txncusname,txnmethod,txnamount,txndate,txntxntype,txnremarks,txntxnno) values ('$COOKIE->{ACCT}','Acct Adjustment','$FORM{paymethod}','$Txnamt',str_to_date('$FORM{txndate}','%d-%b-%y'),'$Loan_direction','$FORM{rmks}','$FORM{txnno}')");
 	$New_txn_id = $dbh->last_insert_id(undef, undef, qw(transactions undef));
 
 #  Update the paymethod coa/nominals

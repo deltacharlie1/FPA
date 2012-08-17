@@ -511,6 +511,9 @@ create table subscriptions (
   subdateraised date comment 'date invoice raised',
   subdatpayreceived date comment 'date payment was received',
   subpaymentref varchar(20) not null default '' comment 'reference of payment receipt',
+  subDDIref varchar(20) not null default '' comment 'DDI reference for payment received by FPA',
+  vatreturn_id int(11) not null default 0 comment 'id of vat return on which this payment appears',
+  stmt_id int(11) not null default 0 comment 'id of statement on which this payment appears',
   index sub1 (acct_id)
 );
 
