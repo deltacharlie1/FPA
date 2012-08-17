@@ -10,6 +10,9 @@ require "/usr/local/git/fpa/cgi/pdf_sub_invoice.ph";
 
 $dbh = DBI->connect("DBI:mysql:fpa");
 
+$Today = `date +%Y-%m-%d`;
+chomp($Today);
+
 #  Get the last invoice no
 
 $Subs = $dbh->prepare("select subinvoiceno from subscriptions order by id desc limit 1");
@@ -30,6 +33,8 @@ if ($Payload->{payload}->{action} =~ /paid/i && $Payload->{payload}->{resource_t
         foreach $bill (@{$Payload->{payload}->{bills}}) {
 		if ($bill->{source_type} =~ /subscription/i) {
 			$Sts = $dbh->do("update companies set comsubdue=date_add(comsubdue,interval 1 month) where comsubref='$bill->{source_id}'");
+
+			$bill->{paid_at} = $bill->{paid_at} || $Today;
 
                         $bill->{paid_at} =~ s/T*$//;
 
