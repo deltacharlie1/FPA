@@ -65,8 +65,8 @@ if ($A_sel) {
 }
 if ($I_sel) {
 	$I_sel .= ",invstatus,invtype";
-#	$Invoices = $dbh->prepare("select $I_sel from invoices where acct_id='$COOKIE->{ACCT}' and id=$Inv_id");
-	$Invoices = $dbh->prepare("select * from invoices where acct_id='$COOKIE->{ACCT}' and id=$Inv_id");
+	$Invoices = $dbh->prepare("select $I_sel from invoices where acct_id='$COOKIE->{ACCT}' and id=$Inv_id");
+#	$Invoices = $dbh->prepare("select * from invoices where acct_id='$COOKIE->{ACCT}' and id=$Inv_id");
 	$Invoices->execute;
 	$invoices = $Invoices->fetchrow_hashref;
 	$Invoices->finish;
@@ -272,7 +272,7 @@ $tb = PDF::TextBlock->new({
       default => PDF::TextBlock::Font->new({
          pdf       => $pdf,
          font      => $pdf->corefont( 'Helvetica' ),
-         size      => 10,
+         size      => 12,
       }),
    },
    x     => $Xpos,
@@ -288,7 +288,7 @@ if ($I_sel =~ /invremarks/i) {
       default => PDF::TextBlock::Font->new({
          pdf       => $pdf,
          font      => $pdf->corefont( 'Helvetica' ),
-         size      => 10,
+         size      => 12,
       }),
    },
    x     => $Xrmk,
