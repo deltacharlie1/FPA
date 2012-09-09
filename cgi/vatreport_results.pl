@@ -47,6 +47,7 @@ $tt = Template->new({
 });
 
 $Vars = {
+	 ads => $Adverts,
 	cookie => $COOKIE,
 	tbstart => $FORM{tbstart},
 	tbend => $FORM{tbend},

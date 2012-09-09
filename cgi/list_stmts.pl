@@ -47,6 +47,7 @@ $tt = Template->new({
 });
 
 $Vars = {
+	 ads => $Adverts,
         title => 'Accounts - Statements',
 	cookie => $COOKIE,
        numrows => $FORM{numrows},

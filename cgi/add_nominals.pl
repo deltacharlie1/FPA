@@ -26,6 +26,7 @@ $tt = Template->new({
 });
 
 $Vars = {
+	 ads => $Adverts,
         title => 'Add Nominal Codes',
 	cookie => $COOKIE,
 	focus => 'coadesc',

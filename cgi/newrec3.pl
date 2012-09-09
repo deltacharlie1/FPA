@@ -237,7 +237,12 @@ sub Tbody {
 				my $Vat = $Vats->fetchrow_hashref;
 				$Vats->finish;
 
-#				$FORM{invtotal} = 0 - $FORM{invtotal};
+				if ($Cells[1] =~ /vatp/i) {
+					$FORM{invtotal} = 0 - $Cells[7];
+				}
+				else {
+					$FORM{invtotal} = $Cells[7];
+				}
 
 				if ($FORM{invtotal} > 0) {
 				        $Vatpay = "Refund";

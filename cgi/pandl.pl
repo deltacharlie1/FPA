@@ -56,6 +56,7 @@ $tt = Template->new({
 });
 
 $Vars = {
+	 ads => $Adverts,
         title => 'P and L',
 	cookie => $COOKIE,
         daterange => $Reg,

@@ -22,6 +22,7 @@ $tt = Template->new({
 
 ##	errmsg => 'You must enter both your login id (your email address) and your password',
 $Vars = {
+	 ads => $Adverts,
 	title => 'Login - Step 1',
 	cookie => $Cookie,
 	javascript => '<script language="JavaScript">

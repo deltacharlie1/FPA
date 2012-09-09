@@ -99,6 +99,7 @@ $tt = Template->new({
 });
 
 $Vars = {
+	 ads => $Adverts,
 	cookie => $COOKIE,
 	docs => $Images->fetchall_arrayref({}),
 	numrows => $FORM{numrows},

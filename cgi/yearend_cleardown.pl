@@ -40,6 +40,7 @@ $tt = Template->new({
 });
 
 $Vars = {
+	 ads => $Adverts,
         title => 'Accounts - Coas',
 	cookie => $COOKIE,
 	repdate => $Date,

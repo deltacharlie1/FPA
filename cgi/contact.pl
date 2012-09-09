@@ -46,6 +46,7 @@ Please correct them and re-submit your message.
 EOD
 
 	$Vars = {
+	 ads => $Adverts,
 		title => 'Contact Us',
 		content => $Errs,
 		posts => $Posts
@@ -155,6 +156,7 @@ EOD
 EOD
 
 	$Vars = {
+	 ads => $Adverts,
 		title => 'Contact Us',
 		content => $Input,
 		posts => $Posts

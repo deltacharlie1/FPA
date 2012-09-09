@@ -2,6 +2,15 @@
 
 $ACCESS_LEVEL = 3;
 
+#  Processing =
+#
+#    ADD	to DEBIT account	=	DEBIT
+#    SUBRACT	from DEBIT Account	=	CREDIUT
+#
+#    ADD	to CREDIT Account	=	CREDIT
+#    SUBTRACT	from CREDIT Account	=	DEBIT
+#
+
 #  Save new invoices for a bookkeeper's client
 
 #  Column order is:-
@@ -129,7 +138,7 @@ foreach $Journal (@Journals) {
 
 	$Txnamount = $bCell[3] || $bCell[4];
 
-	if ($Coa_type->{$bCell[2]}->{coatype} =~ /Asset|Expense/i) {					#  Debit
+	if ($Coa_type->{$bCell[2]}->{coatype} =~ /Asset|Expense/i || $bCell[2] == 3050) {					#  Debit
 		$Txntype = "expense";
 		$Vatcode = "6000";
 		if ($bCell[4]) {

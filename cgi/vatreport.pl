@@ -55,6 +55,7 @@ $tt = Template->new({
 });
 
 $Vars = {
+	 ads => $Adverts,
         title => 'Vat Report',
 	cookie => $COOKIE,
 	daterange => $Reg,

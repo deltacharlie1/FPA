@@ -1,0 +1,15 @@
+drop table if exists adverts;
+create table adverts (
+  id int unsigned not null auto_increment primary key,
+  merchant text,
+  name varchar(1000),
+  track text,
+  thumb text,
+  image text,
+  price decimal(10,2) not null default '0.00',
+  cat varchar(30),
+  grp int not null default 1,
+  sector varchar(200) not null default 'all',
+  index sort_order (grp)
+);
+create unique index adname on adverts (name);

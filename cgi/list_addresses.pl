@@ -60,6 +60,7 @@ $tt = Template->new({
 });
 
 $Vars = {
+	 ads => $Adverts,
         title => 'Accounts - Customers',
 	cookie => $COOKIE,
 	entries => $Customers->fetchall_arrayref({}),

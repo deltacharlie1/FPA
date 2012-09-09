@@ -47,6 +47,7 @@ $tt = Template->new({
 });
 
 $Vars = {
+	 ads => $Adverts,
         title => 'Accounts - Invoice Templates',
 	cookie => $COOKIE,
 	invoices => $Invoices->fetchall_arrayref({}),

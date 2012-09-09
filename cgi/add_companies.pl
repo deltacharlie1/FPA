@@ -48,6 +48,7 @@ $tt = Template->new({
 });
 
 $Vars = {
+	 ads => $Adverts,
         title => 'Add Companies',
 	cookie => $COOKIE,
 	focus => 'company',

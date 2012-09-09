@@ -42,6 +42,7 @@ $tt = Template->new({
 print "Content-Type: text/html\n\n";
 if ($Invoice->{"invstatuscode"} == 1) {		#   Draft
 $Vars = {
+	 ads => $Adverts,
         title => 'Accounts - Customers',
 	cookie => $COOKIE,
 	layouts => $Layout,
@@ -129,6 +130,7 @@ function submit_details(action) {
 }
 else {		#  final
 $Vars = {
+	 ads => $Adverts,
         title => 'Accounts - Customers',
 	cookie => $COOKIE,
 	invoice => $Invoice,

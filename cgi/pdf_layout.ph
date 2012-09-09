@@ -65,8 +65,8 @@ if ($A_sel) {
 }
 if ($I_sel) {
 	$I_sel .= ",invstatus,invtype";
-#	$Invoices = $dbh->prepare("select $I_sel from invoices where acct_id='$COOKIE->{ACCT}' and id=$Inv_id");
-	$Invoices = $dbh->prepare("select * from invoices where acct_id='$COOKIE->{ACCT}' and id=$Inv_id");
+	$Invoices = $dbh->prepare("select $I_sel from invoices where acct_id='$COOKIE->{ACCT}' and id=$Inv_id");
+#	$Invoices = $dbh->prepare("select * from invoices where acct_id='$COOKIE->{ACCT}' and id=$Inv_id");
 	$Invoices->execute;
 	$invoices = $Invoices->fetchrow_hashref;
 	$Invoices->finish;
@@ -159,8 +159,14 @@ $invoices->{invitems}=~ s/<tr.*?>//gis;			#  Remove all row start tags
 
 @Row = split(/\<\/tr\>/i,$invoices->{invitems});
 for $Row (@Row) {
+
+	last if $Row =~ /\<\/table\>/i;
+
 	$Row =~ s/^.*?<td.*?>//is;
         $Row =~ s/<td.*?>//gis;
+
+warn $Row."\n\n";
+
         @Cell = split(/\<\/td\>/i,$Row);
 	if ($Cell[0]) {
 
@@ -207,6 +213,8 @@ for $Row (@Row) {
 		$nettotal += $Cell[3];
 		$vattotal += $Cell[5];
 		$invtotal += $Cell[3] + $Cell[5];
+
+		warn "if ($Ypos < 842 - $Litop - $Layout->{descheight} + 20) {\n";
 
 		if ($Ypos < 842 - $Litop - $Layout->{descheight} + 20) {
 

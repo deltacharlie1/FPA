@@ -36,7 +36,7 @@ $Txns->finish;
 
 #  Then get all unpaid invoices
 
-$Invoices = $dbh->prepare("select id,invtype,date_format(invprintdate,'%d-%b-%y') as printdate,cus_id,invinvoiceno,invcusname,invdesc,(invtotal+invvat-invpaid-invpaidvat) as amtdue,invprintdate from invoices where acct_id='$COOKIE->{ACCT}' and invstatuscode>2 union select vatreturns.id,'vat',date_format(perstatusdate,'%d-%b-%y') as printdate,0,'vat','HMRC',concat('Quarter End ',perquarter) as invdesc,0-perbox5 as amtdue,perstatusdate as invprintdate from vatreturns where acct_id='$COOKIE->{ACCT}' and perstatus='Filed' order by invprintdate");
+$Invoices = $dbh->prepare("select id,invtype,date_format(invprintdate,'%d-%b-%y') as printdate,cus_id,invinvoiceno,invcusname,invdesc,(invtotal+invvat-invpaid-invpaidvat) as amtdue,invprintdate from invoices where acct_id='$COOKIE->{ACCT}' and invstatuscode>2 union select vatreturns.id,if(perbox5<0,'vatr','vatp') as invtype,date_format(perstatusdate,'%d-%b-%y') as printdate,0,'vat','HMRC',concat('Quarter End ',perquarter) as invdesc,0-perbox5 as amtdue,perstatusdate as invprintdate from vatreturns where acct_id='$COOKIE->{ACCT}' and perstatus='Filed' order by invprintdate");
 $Invoices->execute;
 $Invoice = $Invoices->fetchall_arrayref({});
 $Invoices->finish;
@@ -100,7 +100,7 @@ $FORM{stmt} =~ tr/\r//d;
 foreach $Row (@Rows) {
 	chomp($Row);
 	@Cell = split(/\t/,$Row);
-	next unless ($Cell[$Date_posn] =~ /^(\d+\/\d+\/\d+|\d+-\w\w\w-\d+$)/i);
+	next unless ($Cell[$Date_posn] =~ /^(\d+\/\d+\/\d+|\d+.\w\w\w.\d+$)/i);
 
 #  Strip out any non curency characters
 
@@ -115,7 +115,7 @@ foreach $Row (@Rows) {
 		}
 
 		$Entry = {};
-		($Day,$Mth,$Yr) = $Cell[$Date_posn] =~ /(\d+)?[-\/](\w+)[-\/]2?0?(\d+)/;
+		($Day,$Mth,$Yr) = $Cell[$Date_posn] =~ /(\d+)?[-\/ ](\w+)[-\/ ]2?0?(\d+)/;
 		$Month = $Month[$Mth] || $Mth;
 		$Entry->{date} = "$Day-$Month-$Yr";
 		$Entry->{desc} = $Cell[$Desc_posn];
@@ -162,6 +162,7 @@ $tt = Template->new({
 });
 
 $Vars = {
+	 ads => $Adverts,
         title => 'Accounts - Reconciliations',
 	cookie => $COOKIE,
 	acct => $Acct,

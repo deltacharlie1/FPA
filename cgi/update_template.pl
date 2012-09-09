@@ -35,6 +35,7 @@ else {
 print "Content-Type: text/html\n\n";
 
 $Vars = {
+	 ads => $Adverts,
         title => 'Accounts - Customers',
 	cookie => $COOKIE,
         vats => $Vat,

@@ -23,6 +23,7 @@ $tt = Template->new({
 });
 
 $Vars = {
+	 ads => $Adverts,
         title => 'Accounts - Subscriptions',
 	cookie => $COOKIE,
 	invid => $Inv_id,

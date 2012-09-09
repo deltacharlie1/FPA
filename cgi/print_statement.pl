@@ -39,6 +39,7 @@ if ($Today[3] < 8) {
 }
 
 $Vars = {
+	 ads => $Adverts,
         title => 'Accounts - Customers',
 	cookie => $COOKIE,
 	cus => $Customer,

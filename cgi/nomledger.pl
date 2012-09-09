@@ -56,6 +56,7 @@ $tt = Template->new({
 });
 
 $Vars = {
+	 ads => $Adverts,
         title => 'Nominal Ledger',
 	cookie => $COOKIE,
 	daterange => $Reg,

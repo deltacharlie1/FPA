@@ -45,6 +45,7 @@ $tt = Template->new({
 });
 
 $Vars = {
+	 ads => $Adverts,
         title => 'List Companies',
 	cookie => $COOKIE,
 	companies => $Companies->fetchall_arrayref({})

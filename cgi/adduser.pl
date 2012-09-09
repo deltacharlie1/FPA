@@ -28,6 +28,7 @@ $tt = Template->new({
 });
 
 $Vars = {
+	 ads => $Adverts,
         title => 'Accounts - Add User',
 	cookie => $COOKIE,
 	focus => 'addusername',

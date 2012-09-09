@@ -29,6 +29,7 @@ $tt = Template->new({
 });
 
 $Vars = {
+	 ads => $Adverts,
         title => 'Accounts - Additional Features',
 	cookie => $COOKIE,
 	company => $Company,

@@ -25,6 +25,7 @@ $tt = Template->new({
 });
 
 $Vars = {
+	 ads => $Adverts,
         title => 'Accounts - Coas',
 	cookie => $COOKIE,
 	entries => $Coas->fetchall_arrayref({}),

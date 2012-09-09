@@ -28,6 +28,7 @@ $tt = Template->new({
 });
 
 $Vars = {
+	 ads => $Adverts,
         title => 'Accounts - Customers',
 	cookie => $COOKIE,
 	invoice => $Invoice,

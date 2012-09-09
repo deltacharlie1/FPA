@@ -90,6 +90,7 @@ $tt = Template->new({
 });
 
 $Vars = {
+	 ads => $Adverts,
         title => 'Accounts - Invoice Layouts',
         cookie => $COOKIE,
 	invid => $Invoice->{id},

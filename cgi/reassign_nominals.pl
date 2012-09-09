@@ -35,6 +35,7 @@ $tt = Template->new({
 });
 
 $Vars = {
+	 ads => $Adverts,
         title => 'Re-assign Nominal Codes',
 	cookie => $COOKIE,
 	coas => $Coa,

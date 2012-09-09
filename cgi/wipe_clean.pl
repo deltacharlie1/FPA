@@ -14,6 +14,7 @@ $tt = Template->new({
 });
 
 $Vars = {
+	 ads => $Adverts,
         title => 'Accounts - Wipe Clean',
 	cookie => $COOKIE,
         javascript => '<script type="text/javascript" src="/js/jquery-form.js"></script> 

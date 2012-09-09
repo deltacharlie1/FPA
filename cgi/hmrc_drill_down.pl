@@ -249,6 +249,7 @@ else {			#  Standard Accunting Scheme
 $Accrual = $Accruals->fetchall_arrayref({}),
 
 $Vars = {
+	 ads => $Adverts,
 	title => 'Accounts - VAT drill down',
 	cookie => $COOKIE,
 	pagetitle => $Page_title,

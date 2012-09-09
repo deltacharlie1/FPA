@@ -52,7 +52,8 @@ $tt = Template->new({
 	WRAPPER => 'header.tt'
         });
 
-$Vars = { cookie => $COOKIE,
+$Vars = {
+	 ads => $Adverts, cookie => $COOKIE,
 	  title => 'Subscriptions',
 	  membership => $Membership[$COOKIE->{ACCESS}],
 	  company => $Company,

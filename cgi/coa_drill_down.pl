@@ -75,6 +75,7 @@ $tt = Template->new({
 });
 
 $Vars = {
+	 ads => $Adverts,
        	title => 'Accounts - ' . $FORM{nomtitle},
 	cookie => $COOKIE,
 	pagetitle => $FORM{pagetitle},

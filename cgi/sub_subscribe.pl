@@ -165,7 +165,8 @@ $tt = Template->new({
 	WRAPPER => 'header.tt'
 });
 
-$Vars = { company => $Company,
+$Vars = {
+	 ads => $Adverts, company => $Company,
 	  title => 'Subscriptions',
 	  cookie => $COOKIE,
 	  membership => $Subtype{$Company->{comsubtype}},

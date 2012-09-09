@@ -25,6 +25,7 @@ $tt = Template->new({
 });
 
 $Vars = {
+	 ads => $Adverts,
         title => 'Accounts - Accounts',
 	cookie => $COOKIE,
 pagetitle => 'List of Accounts',

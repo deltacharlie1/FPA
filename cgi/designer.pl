@@ -15,6 +15,7 @@ $tt = Template->new({
 });
 
 $Vars = {
+	 ads => $Adverts,
         title => 'Design Template'
 };
 

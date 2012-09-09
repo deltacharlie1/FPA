@@ -44,6 +44,7 @@ $tt = Template->new({
 });
 
 $Vars = {
+	 ads => $Adverts,
         title => 'Add Opening Balances',
 	cookie => $COOKIE,
 	focus => 'obdesc',

@@ -40,6 +40,7 @@ $tt = Template->new({
 });
 
 $Vars = {
+	 ads => $Adverts,
         title => 'Accounts - List Documents',
 	cookie => $COOKIE,
 	focus => 'imgfilename',

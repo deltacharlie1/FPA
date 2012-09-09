@@ -43,6 +43,7 @@ else {
 	});
 
 	$Vars = {
+	 ads => $Adverts,
         	title => 'Accounts - Invoices',
 		cookie => $COOKIE,
 		invoices => $Invoices->fetchall_arrayref({})

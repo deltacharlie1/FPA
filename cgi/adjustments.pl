@@ -23,6 +23,7 @@ $tt = Template->new({
 });
 
 $Vars = {
+	 ads => $Adverts,
         title => 'Adjustments',
 	cookie => $COOKIE,
 	focus => 'amtpaid',
