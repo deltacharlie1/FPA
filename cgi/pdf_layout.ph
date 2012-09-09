@@ -280,7 +280,7 @@ $tb = PDF::TextBlock->new({
       default => PDF::TextBlock::Font->new({
          pdf       => $pdf,
          font      => $pdf->corefont( 'Helvetica' ),
-         size      => 10,
+         size      => 12,
       }),
    },
    x     => $Xpos,
@@ -296,7 +296,7 @@ if ($I_sel =~ /invremarks/i) {
       default => PDF::TextBlock::Font->new({
          pdf       => $pdf,
          font      => $pdf->corefont( 'Helvetica' ),
-         size      => 10,
+         size      => 12,
       }),
    },
    x     => $Xrmk,
