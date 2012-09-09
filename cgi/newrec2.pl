@@ -100,7 +100,7 @@ $FORM{stmt} =~ tr/\r//d;
 foreach $Row (@Rows) {
 	chomp($Row);
 	@Cell = split(/\t/,$Row);
-	next unless ($Cell[$Date_posn] =~ /^(\d+\/\d+\/\d+|\d+-\w\w\w-\d+$)/i);
+	next unless ($Cell[$Date_posn] =~ /^(\d+\/\d+\/\d+|\d+.\w\w\w.\d+$)/i);
 
 #  Strip out any non curency characters
 
@@ -115,7 +115,7 @@ foreach $Row (@Rows) {
 		}
 
 		$Entry = {};
-		($Day,$Mth,$Yr) = $Cell[$Date_posn] =~ /(\d+)?[-\/](\w+)[-\/]2?0?(\d+)/;
+		($Day,$Mth,$Yr) = $Cell[$Date_posn] =~ /(\d+)?[-\/ ](\w+)[-\/ ]2?0?(\d+)/;
 		$Month = $Month[$Mth] || $Mth;
 		$Entry->{date} = "$Day-$Month-$Yr";
 		$Entry->{desc} = $Cell[$Desc_posn];

@@ -159,6 +159,9 @@ $invoices->{invitems}=~ s/<tr.*?>//gis;			#  Remove all row start tags
 
 @Row = split(/\<\/tr\>/i,$invoices->{invitems});
 for $Row (@Row) {
+
+	last if $Row =~ /\<\/table\>/i;
+
 	$Row =~ s/^.*?<td.*?>//is;
         $Row =~ s/<td.*?>//gis;
         @Cell = split(/\<\/td\>/i,$Row);

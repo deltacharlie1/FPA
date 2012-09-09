@@ -121,7 +121,7 @@ function redisplay(action) {
       break;
   }
 
-  location.href = "/cgi-bin/fpa/list_customers.pl?numrows=" + numrows + "&offset=" + offset + "&rows=" + rows + "&search=" + srch;
+  location.href = "/cgi-bin/fpa/list_suppliers.pl?numrows=" + numrows + "&offset=" + offset + "&rows=" + rows + "&search=" + srch;
 }
 </script>',
 };
