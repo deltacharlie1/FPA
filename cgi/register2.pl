@@ -142,6 +142,10 @@ EOD
 		$Sts = $dbh->do("insert into customers (acct_id,cusname,cusaddress,cuscontact,cussupplier,cusemail) values ('$New_reg_id+$New_com_id','$FORM{name} Expenses','Expenses','$FORM{name}','Y','$FORM{email}')");
 		$New_exp_id = $dbh->last_insert_id(undef, undef, qw(customers undef));
 
+#  Update companies with expenses id
+
+		$Sts = $dbh->do("update companies set comexpid=$New_exp_id where reg_id=$New_reg_id and id=$New_com_id");
+
 #  Get bonus end date
 
 		$Dates = $dbh->prepare("select date_add(curdate(),interval 3 month)");
