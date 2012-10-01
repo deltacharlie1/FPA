@@ -117,10 +117,10 @@ else {
 }
 
 if ($Invitems_selected) {
-	$Invoices = $dbh->prepare("select cus_id,invoices.id as invid,invinvoiceno,invcusname,invtype,itmdesc as description,date_format(invprintdate,'%d-%b-%y') as printdate,date_format(invduedate,'%d-%b-%y') as duedate,(itmtotal+itmvat) as invamount,invstatus,(invpaid+invpaidvat) as invpaid,to_days(invprintdate) as printdays,to_days(invduedate) as duedays from invoices,items where invoices.id=items.inv_id and invoices.acct_id=items.acct_id and $SQL and invinvoiceno<>'unlisted' order by invprintdate desc,invinvoiceno desc limit $FORM{offset},$FORM{rows}");
+	$Invoices = $dbh->prepare("select cus_id,invoices.id as invid,invinvoiceno,invcusname,invtype,itmdesc as description,date_format(invprintdate,'%d-%b-%y') as printdate,date_format(invduedate,'%d-%b-%y') as duedate,(itmtotal+itmvat) as invamount,invstatus,(invpaid+invpaidvat) as invpaid,to_days(invprintdate) as printdays,to_days(invduedate) as duedays from invoices,items where invoices.id=items.inv_id and invoices.acct_id=items.acct_id and $SQL and invinvoiceno<>'unlisted' order by $FORM{invsort} desc limit $FORM{offset},$FORM{rows}");
 }
 else {
-	$Invoices = $dbh->prepare("select cus_id,invoices.id as invid,invinvoiceno,invcusname,invtype,invdesc as description,date_format(invprintdate,'%d-%b-%y') as printdate,date_format(invduedate,'%d-%b-%y') as duedate,(invtotal+invvat) as invamount,invstatus,(invpaid+invpaidvat) as invpaid,to_days(invprintdate) as printdays,to_days(invduedate) as duedays from invoices where $SQL and invinvoiceno<>'unlisted' order by invprintdate desc,invinvoiceno desc limit $FORM{offset},$FORM{rows}");
+	$Invoices = $dbh->prepare("select cus_id,invoices.id as invid,invinvoiceno,invcusname,invtype,invdesc as description,date_format(invprintdate,'%d-%b-%y') as printdate,date_format(invduedate,'%d-%b-%y') as duedate,(invtotal+invvat) as invamount,invstatus,(invpaid+invpaidvat) as invpaid,to_days(invprintdate) as printdays,to_days(invduedate) as duedays from invoices where $SQL and invinvoiceno<>'unlisted' order by $FORM{invsort} limit $FORM{offset},$FORM{rows}");
 }
 $Invoices->execute;
 

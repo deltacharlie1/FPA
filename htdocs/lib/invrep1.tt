@@ -50,7 +50,19 @@
     <tr>
       <td><label>Item Category</label></td>
       <td><input name="item_cat" type="text" id="item_cat" size="20" value="" onchange="get_results('S');"/></td>
-      <td colspan="2">&nbsp;</td>
+      <td><label>Sort Order</label></td>
+      <td>
+        <select name="invsort" id="invsort" size="1" onchange="get_results('S');">
+          <option value="invprintdate" selected="selected">Print Date (asc)</option>
+          <option value="invprintdate desc">Print Date (desc)</option>
+          <option value="invinvoiceno">Invoice # (asc)</option>
+          <option value="invinvoiceno desc">Invoice # (desc)</option>
+          <option value="invcusname">Customer Name (asc)</option>
+          <option value="invcusname desc">Customer Name (desc)</option>
+          <option value="binary invtotal+invvat">Invoice Total (asc)</option>
+          <option value="binary invtotal+invvat desc">Invoice Total (desc)</option>
+        </select>
+      </td>
     </tr>
   </table><br/>
   <div id="results"></div>

@@ -29,8 +29,20 @@
     <tr>
       <td><label>Transaction Description</label></td>
       <td><input name="invitem" type="text" id="invitem" size="20" value="" onchange="get_results('S');"/></td>
-      <td colspan="2">&nbsp;</td>
-    </tr>
+          <td><label>Sort Order</label></td>
+      <td>
+        <select name="txnsort" id="txnsort" size="1" onchange="get_results('S');">
+          <option value="txndate" selected="selected">Print Date (asc)</option>
+          <option value="txndate desc">Print Date (desc)</option>
+          <option value="txntxnno">Transaction # (asc)</option>
+          <option value="txntxnno desc">Transaction # (desc)</option>
+          <option value="txncusname">Customer Name (asc)</option>
+          <option value="txncusname desc">Customer Name (desc)</option>
+          <option value="txnamount">Transaction Total (asc)</option>
+          <option value="txnamount desc">Transaction Total (desc)</option>
+        </select>
+      </td>
+</tr>
   </table><br/>
   <div id="results"></div>
 </div>
