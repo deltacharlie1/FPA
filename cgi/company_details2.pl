@@ -75,14 +75,14 @@ else {
 	if ($Img) {
 		$Image1 = new GD::Image($Img);
 		($width,$height) = $Image1->getBounds();
-		if ($width > 144 || $height > 48) {
+		if ($width > 280 || $height > 95) {
 			if ($width > $height * 3) {
-				$W1 = 144;
-				$H1 = int(48 * $width / $height);
+				$W1 = 280;
+				$H1 = int(95 * $width / $height);
 			}
 			else {
-				$H1 = 48;
-				$W1 = int(144 * $height / $width);
+				$H1 = 95;
+				$W1 = int(280 * $height / $width);
 			}
 	
 			$Image2 = new GD::Image($W1,$H1);
