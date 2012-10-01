@@ -76,7 +76,7 @@ if ($COOKIE->{ACCESS} > 3 || $COOKIE->{PT_LOGO} =~ /1/) {
     "buttonText"  : "Select Logo",
     "fileExt"     : "*.jpg;*.png",
     "fileDesc"    : "Image Files (JPG,PNG)",
-    "sizeLimit"   : 20480,
+    "sizeLimit"   : 65536,
     "auto"        : true
   });
 EOD
