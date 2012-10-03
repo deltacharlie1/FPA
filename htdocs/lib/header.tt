@@ -36,7 +36,7 @@ $(document).ready(function(){
     vertical: false,
     scroll: 1,
     visible: 1,
-    auto: 7,
+    auto: 15,
     animation: 1000,
     wrap: "circular",
     initCallback: carl_initCallback
