@@ -37,14 +37,14 @@ unless ($COOKIE->{NO_ADS}) {
 
 
 unless ($FORM{rows}) {
-	$Invoices = $dbh->prepare("select cus_id,invoices.id as invid,invinvoiceno,invcusname,invtype,invdesc,date_format(invprintdate,'%d-%b-%y') as printdate,date_format(invduedate,'%d-%b-%y') as duedate,0 - (invtotal+invvat) as invamount,invstatus,0 - (invpaid+invpaidvat) as invpaid,to_days(invprintdate) as printdays,to_days(invduedate) as duedays,cusdefpaymethod,invcusref from invoices left join customers on (customers.id=cus_id) where invinvoiceno <> 'unlisted' and invtype='P' and invoices.acct_id='$COOKIE->{ACCT}' order by $Order");
+	$Invoices = $dbh->prepare("select cus_id,invoices.id as invid,invinvoiceno,invcusname,invtype,invdesc,date_format(invprintdate,'%d-%b-%y') as printdate,date_format(invduedate,'%d-%b-%y') as duedate,0 - (invtotal+invvat) as invamount,invstatus,0 - (invpaid+invpaidvat) as invpaid,to_days(invprintdate) as printdays,to_days(invduedate) as duedays,cusdefpaymethod,invcusref from invoices left join customers on (customers.id=cus_id) where invinvoiceno <> 'unlisted' and invtype in ('P','R') and invoices.acct_id='$COOKIE->{ACCT}' order by $Order");
         $Invoices->execute;
         $FORM{numrows} = $Invoices->rows;
         $FORM{offset} = 0;
         $FORM{rows} = 24;
 }
 
-$Invoices = $dbh->prepare("select cus_id,invoices.id as invid,invinvoiceno,invcusname,invtype,invdesc,date_format(invprintdate,'%d-%b-%y') as printdate,date_format(invduedate,'%d-%b-%y') as duedate,0 - (invtotal+invvat) as invamount,invstatus,0 - (invpaid+invpaidvat) as invpaid,to_days(invprintdate) as printdays,to_days(invduedate) as duedays,cusdefpaymethod,invcusref from invoices left join customers on (customers.id=cus_id) where invinvoiceno <> 'unlisted' and invtype='P' and invoices.acct_id='$COOKIE->{ACCT}' order by $Order limit $FORM{offset},$FORM{rows}");
+$Invoices = $dbh->prepare("select cus_id,invoices.id as invid,invinvoiceno,invcusname,invtype,invdesc,date_format(invprintdate,'%d-%b-%y') as printdate,date_format(invduedate,'%d-%b-%y') as duedate,0 - (invtotal+invvat) as invamount,invstatus,0 - (invpaid+invpaidvat) as invpaid,to_days(invprintdate) as printdays,to_days(invduedate) as duedays,cusdefpaymethod,invcusref from invoices left join customers on (customers.id=cus_id) where invinvoiceno <> 'unlisted' and invtype in ('P','R') and invoices.acct_id='$COOKIE->{ACCT}' order by $Order limit $FORM{offset},$FORM{rows}");
 $Invoices->execute;
 
 use Template;

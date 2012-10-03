@@ -2,8 +2,8 @@ sub pdf_statement {
 
 my $Cus_id = $_[0];
 
-use GD;
 use PDF::API2;
+use Image::Magick;
 
 #  Get the company name
 
@@ -58,6 +58,12 @@ if (($COOKIE->{PLAN} > 3 || $Company[9] > 0) && $Company[7]) {
 
         open IMG,"<",\$Company[7];
         $logo = $pdf->image_jpeg(\*IMG);
+
+	$IMlogo = Image::Magick->new;
+	$IMlogo->BlobToImage($Company[7]);
+
+	($gdwidth,$gdheight) = $IMlogo->Get('width','height');
+
 }
 
 #  Set out the first page
@@ -168,7 +174,7 @@ $Ypos =  495;
 #  Logo
 
 if ($logo) {
-	$g->image($logo,43,709);
+	$g->image($logo,43,721 - int($gdheight/2));
 }
 
 ####################    Draw all lines and blocks   ##########################

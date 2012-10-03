@@ -150,7 +150,7 @@ $TSs->finish;
 
 #  Get te laast statement close date to make sure that these entries are for a new statement
 
-$Stmts = $dbh->prepare("select datediff(str_to_date('@Stmt[0]->{date}','%d-%b-%y'),staclosedate) as stmtdiff from statements where acct_id='$COOKIE->{ACCT}' order by staclosedate desc limit 1");
+$Stmts = $dbh->prepare("select datediff(str_to_date('@Stmt[0]->{date}','%d-%b-%y'),staclosedate) as stmtdiff from statements left join accounts on (acc_id=accounts.id and atatements.acct_id=accounts.acct_id) where statements.acct_id='$COOKIE->{ACCT}' and statements.acctype='$FORM{acctype}' order by staclosedate desc limit 1");
 $Stmts->execute;
 $Last_Stmt = $Stmts->fetchrow_hashref;
 $Stmts->finish;

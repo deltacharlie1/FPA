@@ -67,14 +67,14 @@ $status = $Img->BlobToImage($Original);
 
 
 if ($FORM{doc_type} =~ /LOGO/i) {
-	if ($width > 144 || $height > 48) {
+	if ($width > 280 || $height > 95) {
 		if ($width > $height * 3) {
-			$W1 = 144;
-			$H1 = int(144 * $height / $width);
+			$W1 = 280;
+			$H1 = int(280 * $height / $width);
 		}
 		else {
-			$H1 = 48;
-			$W1 = int(48 * $width / $height);
+			$H1 = 95;
+			$W1 = int(95 * $width / $height);
 		}
 		$Img->Resize(width=>$W1,height=>$H1,blur=>'0');
 	}

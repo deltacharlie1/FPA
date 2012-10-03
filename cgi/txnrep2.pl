@@ -91,7 +91,7 @@ else {
 	}
 }
 
-$Invoices = $dbh->prepare("select id,txntxnno,txnamount,date_format(txndate,'%d-%b-%y') as printdate,txnmethod,txncusname,txnremarks from transactions where $SQL order by txndate desc,txntxnno desc limit $FORM{offset},$FORM{rows}");
+$Invoices = $dbh->prepare("select id,txntxnno,txnamount,date_format(txndate,'%d-%b-%y') as printdate,txnmethod,txncusname,txnremarks from transactions where $SQL order by $FORM{txnsort} limit $FORM{offset},$FORM{rows}");
 $Invoices->execute;
 
 use Template;
