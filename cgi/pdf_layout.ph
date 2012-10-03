@@ -104,9 +104,6 @@ use PDF::API2;
 use PDF::TextBlock;
 use PDF::TextBlock::Font;
 
-if ($invoices->{invstatus} =~ /Draft/i) {
-	$invoices->{invtype} = "DRAFT INVOICE";
-}
 if ($invoices->{invtype} =~ /^C/) {
 	$invoices->{invtype} = "CREDIT NOTE";
 }
@@ -115,6 +112,9 @@ elsif ($invoices->{invstatus} =~ /Quote/i) {
 }
 else {
 	$invoices->{invtype} = "INVOICE";
+}
+if ($invoices->{invstatus} =~ /Draft/i) {
+	$invoices->{invtype} = "DRAFT ".$invoices->{invtype};
 }
 
 if ($invoices->{custerms} == "0") {
