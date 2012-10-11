@@ -8,9 +8,17 @@ $dbh = DBI->connect("DBI:mysql:fpa");
 
 $Noms = $dbh->prepare("select sum(nomamount) from nominals where acct_id=? and nomcode=?");
 
-$COAs = $dbh->prepare("select id,acct_id,coanominalcode from coas");
+if ($ARGV[0]) {
+	$COAs = $dbh->prepare("select id,acct_id,coanominalcode from coas where acct_id='$ARGV[0]'");
+}
+else {
+	$COAs = $dbh->prepare("select id,acct_id,coanominalcode from coas");
+}
 $COAs->execute;
 while (@COA = $COAs->fetchrow) {
+
+	print "$COA[1]\n";
+
 	$Noms->execute("$COA[1]","$COA[2]");
 	($Sum) = $Noms->fetchrow;
 
