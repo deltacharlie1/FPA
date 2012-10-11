@@ -14,6 +14,7 @@ $tt = Template->new({
 });
 
 $Vars = {
+	 ads => $Adverts,
         title => 'Accounts - Upgrade Error',
 	cookie => $COOKIE
 };

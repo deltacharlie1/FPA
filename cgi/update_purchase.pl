@@ -47,6 +47,7 @@ else {
 }
 
 $Vars = {
+	 ads => $Adverts,
         title => 'Accounts - Suppliers',
 	cookie => $COOKIE,
         vats => $Vat,

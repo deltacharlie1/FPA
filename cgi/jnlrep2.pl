@@ -94,6 +94,7 @@ $tt = Template->new({
 });
 
 $Vars = {
+	 ads => $Adverts,
 	cookie => $COOKIE,
 	jnls => $Invoices->fetchall_arrayref({}),
 	numrows => $FORM{numrows},

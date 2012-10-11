@@ -144,6 +144,7 @@ $tt = Template->new({
 });
 
 $Vars = {
+	 ads => $Adverts,
         title => 'Accounts - VAT Return',
 	cookie => $COOKIE,
 	focus => 'perbox1',

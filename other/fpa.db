@@ -578,12 +578,17 @@ create table recpayments (
 drop table if exists adverts;
 create table adverts (
   id int unsigned not null auto_increment primary key,
-  sort int not null default 0,
-  adv1 text not null default '',
-  adv2 text not null default '',
-  adv3 text not null default '',
+  merchant text,
+  name text,
+  track text,
+  thumb text,
+  image text,
+  description text,
+  price decimal(10,2) not null default '0.00',
+  cat varchar(30),
+  grp int not null default 1,
   sector varchar(200) not null default 'all',
-  index sort_order (sort)
+  index sort_order (grp)
 );
 
 drop table if exists market_sectors;

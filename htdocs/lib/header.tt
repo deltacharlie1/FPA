@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 [%- USE date -%]
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
@@ -10,6 +10,8 @@
 <link rel="stylesheet" href="/css/jquery-ui.css" type="text/css"/>
 <script src="/js/jquery.js" type="text/javascript"></script>
 <script src="/js/jquery-ui.min.js" type="text/javascript"></script>
+<link rel="stylesheet" href="/css/jcarousel.css" type="text/css"/>
+<script type="text/javascript" src="/js/jquery.carouFredSel-6.0.6.js"></script>
 <script src="/js/jquery.watermark.js" type="text/javascript"></script>
 <link rel="stylesheet" href="/css/uploadify.css" type="text/css"/>
 <script type="text/javascript" src="/js/swfobject.js"></script>
@@ -20,7 +22,50 @@
 <title>[% title -%]</title>
 <script type="text/javascript">
 $(document).ready(function(){
+  var advert = $.cookie('fpa-next_advert') * 1;
+  var last = $.cookie('fpa-last_advert') * 1;
+  if (advert >= last) {
+    advert = 1;
+  }
+  else {
+    advert = advert + 1;
+  }
+  $.cookie('fpa-next_advert',advert, { path: '/' });
   $("#searchcus").watermark("Search");
+  $("#ulvads").carouFredSel({
+    auto: {
+      timeoutDuration: 5000
+   },
+    direction: "up",
+    items: 8,
+    auto: {
+      duration: 1000,
+      timeoutDuration: 8000,
+      easing: "swing",
+      items: 2,
+      pauseOnHover: true
+    },
+    align: "left",
+    start: 0,
+    height: 590,
+    width: 158 
+  
+});
+  $("#lhads").carouFredSel({
+      synchonise: ["#ulvads"],
+      width: 630,
+      items: {
+        visible: 6,
+        start: 0
+      },
+      auto: {
+        items: 2,
+        duration: 1000,
+        timeoutDuration: 8000,
+        easing: "swing",
+        pauseOnHover: true
+      }
+  });
 [% IF cookie.PLAN > 5 AND cookie.PREFS.substr(4,1) == 'Y' -%]
   $("#pifile").uploadify ({
     "uploader"       : "/js/uploadify.swf",
@@ -44,15 +89,6 @@ $(document).ready(function(){
 [% IF cookie.PREFS.substr(1,1) == 'Y' -%]
   setTimeout("set_logout()",1500000);
 [% END -%]
-  var advert = $.cookie('fpa-next_advert') * 1;
-  var last = $.cookie('fpa-last_advert') * 1;
-  if (advert >= last) {
-    advert = 1;
-  }
-  else {
-    advert = advert + 1;
-  }
-  $.cookie('fpa-next_advert',advert, { path: '/' });
 });
 </script>
 [% javascript %]
@@ -73,12 +109,20 @@ $(document).ready(function(){
 <body [%- IF focus -%][%- IF focus.search('location') -%] onload="[%- focus; -%]"[%- ELSE -%] onload="document.getElementById('[%- focus -%]').focus();"[%- END -%][%- END -%]>
   <div id="wrapper">
     <div id="top"[%- IF cookie.DB == 'fpa3' -%] style="background-color:#ee8888;"[%- END -%]>
-      <div class="company-name"><div[%- IF cookie.DB == 'fpa3' -%] style="border:3px solid #880000;padding:0px 10px;background-color:white;">TEST - [%- ELSE -%]>[%- END; cookie.TAG -%]</div>
-        <div style='padding-top:6px;'>[%- cookie.adv1 -%]&nbsp;[%- cookie.adv3 -%]</div></div>
-      <div style="float:right;width:220px">
-        <div class="top-ad"><img src="/images/sponsor_logo.png"></div>
-        <a href="/cgi-bin/fpa/logout.pl"><div id="logout"></div></a>
+      <div class="company-name">
+        <div[%- IF cookie.DB == 'fpa3' -%] style="border:3px solid #880000;padding:0px 10px;background-color:white;">TEST - [%- ELSE -%]>[%- END; cookie.TAG -%]</div>
+[% IF cookie.PLAN > 3 AND cookie.NO_ADS == '1' -%]
+        <div style="height:78px;width:630px;"></div>
+[% ELSE -%]
+        <div id="hads" style='height:78px;width:630px;padding-top:6px;overflow:hidden;border:1px solid #330000;background-color:#eaeadc;'>
+          <div id="lhads">
+  [%- hadfile='adverts/horiz/Advert' _ cookie.NEXT_AD _ '.tt'; PROCESS $hadfile -%]
+          </div>
+          <div style="float:none;clear:both;"></div>
+        </div>
+[% END -%]
       </div>
+        <a href="/cgi-bin/fpa/logout.pl"><div id="logout"></div></a>
     </div><!-- END top -->
 
     <div class="clear"></div>

@@ -218,33 +218,29 @@ $(document).ready(function(){
                 alert(data);
               }
               else {
+                if (document.getElementById("pifileQueue") != null) {
+                  var href = ajax_return.split("-");
+                  var c_name = "fpa-cookie";
+                  var cookie = "";
+                  if ($("#pifileQueue").html().length > 0 && parseInt(href[1]) > 0) {
+                    if (document.cookie.length>0) {
+                      c_start=document.cookie.indexOf(c_name + "=");
+                      if (c_start!=-1) {
+                        c_start=c_start + c_name.length+1;
+                        c_end=document.cookie.indexOf(";",c_start);
+                        if (c_end==-1) c_end=document.cookie.length;
+                        cookie = unescape(document.cookie.substring(c_start,c_end));
+                      }
+                    }
+                    $("#pifile").uploadifySettings("scriptData",{"cookie" : cookie, "doc_type" : "INV", "doc_rec" : href[1] },true );
+                    $("#pifile").uploadifyUpload(null,true);
+                  }
+                }
                 $(this).dialog("close");
-                window.location.reload(true);
+                location.href = "/cgi-bin/fpa/list_purchases.pl?listorder=N";
               }
             }
           });
-          if (document.getElementById("pifileQueue") != null) {
-            var href = ajax_return.split("-");
-            var c_name = "fpa-cookie";
-            var cookie = "";
-            if ($("#pifileQueue").html().length > 0 && parseInt(href[1]) > 0) {
-              if (document.cookie.length>0) {
-                c_start=document.cookie.indexOf(c_name + "=");
-                if (c_start!=-1) {
-                  c_start=c_start + c_name.length+1;
-                  c_end=document.cookie.indexOf(";",c_start);
-                  if (c_end==-1) c_end=document.cookie.length;
-                  cookie = unescape(document.cookie.substring(c_start,c_end));
-                }
-              }
-              $("#pifile").uploadifySettings("scriptData",{"cookie" : cookie, "doc_type" : "INV", "doc_rec" : href[1] },true );
-              $("#pifile").uploadifyUpload(null,true);
-            }
-            else {
-              window.location.reload(true);
-              $(this).dialog("close");
-            }
-          }
         }
       },
       Cancel: function() {

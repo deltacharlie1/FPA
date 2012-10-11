@@ -62,6 +62,7 @@ $Txns = $dbh->prepare("select id,invinvoiceno,date_format(invprintdate,'%d-%b-%y
 $Txns->execute;
 
 $Vars = {
+	 ads => $Adverts,
        	title => 'Accounts - ' . $Coa[0],
        	filter => $FORM{filter},
 	cookie => $COOKIE,

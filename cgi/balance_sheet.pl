@@ -55,6 +55,7 @@ $tt = Template->new({
 });
 
 $Vars = {
+	 ads => $Adverts,
         title => 'Accounts - Balance Sheet',
 	cookie => $COOKIE,
 	tbstart => $FORM{tbstart},

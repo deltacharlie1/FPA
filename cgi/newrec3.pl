@@ -86,6 +86,7 @@ exit;
 sub Tbody {
 
 	my $Tbody = $_[0];
+
 	$#Txn = -1;
 #  Extract the first row
 
@@ -95,6 +96,7 @@ sub Tbody {
 	$Rest = $2;
 
 	$First_row =~ s/^.*?(<tr.*?>.*?<\/tr>)/&First_Row($1)/ei;
+
 	@First_row = split(/\t/,$First_row);
 	if ($First_row[0] !~ /Contra/i) {
 		$CFdate = $First_row[0];
@@ -108,6 +110,7 @@ sub Tbody {
 	while ($Rest =~ s/(<tr.*?>.*?<\/tr>)/&Cell($1)/eig) {}
 	$First_entry = '1';
 	foreach (@Txn) {
+
 		@Cells = split(/\t/,$_);
 
 		$Cells[7] =~ tr/-//d;
@@ -134,6 +137,8 @@ sub Tbody {
 
 			if ($Cells[1] =~ /pur/i) {
 				if ($Cells[1] =~ /new pur/i) {
+					$FORM{txnamount} = $Cells[7];
+					$FORM{txnamount} =~ tr/-//d;
 					$FORM{id} = '';
 					$FORM{cus_id} = $Cells[0];
 					$FORM{invtype} = 'P';
@@ -237,7 +242,12 @@ sub Tbody {
 				my $Vat = $Vats->fetchrow_hashref;
 				$Vats->finish;
 
-#				$FORM{invtotal} = 0 - $FORM{invtotal};
+				if ($Cells[1] =~ /vatp/i) {
+					$FORM{invtotal} = 0 - $Cells[7];
+				}
+				else {
+					$FORM{invtotal} = $Cells[7];
+				}
 
 				if ($FORM{invtotal} > 0) {
 				        $Vatpay = "Refund";
@@ -302,7 +312,6 @@ sub First_Row {
 
 }
 sub Cell {
-
 	my $Cell = $_[0];
 	$Cell =~ s/.*?<tr.*?>(.*)?<\/tr>/$1/i;
 	$Cell =~ s/\s*<td.*?>\s*//ig;

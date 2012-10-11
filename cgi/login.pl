@@ -36,6 +36,7 @@ if (`hostname -i` =~ /^192/) {
 #	posts => `php /usr/local/git/fpa/cgi/get_posts.php`,
 
 $Vars = {
+	 ads => $Adverts,
 	title => 'Login',
 	cookie => $Cookie,
 	focus => $Focus,

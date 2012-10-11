@@ -45,6 +45,7 @@ $FORM{tbstart} =~ s/.*-//;
 $FORM{tbend} =~ s/.*-//;
 
 $Vars = {
+	 ads => $Adverts,
         title => 'Accounts - P and L',
 	cookie => $COOKIE,
 	syr1 => sprintf("%02d",$FORM{tbstart}),

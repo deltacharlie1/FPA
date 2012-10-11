@@ -50,6 +50,7 @@ $tt = Template->new({
 });
 
 $Vars = {
+	 ads => $Adverts,
         title => 'Accounts - Audit Trail',
 	cookie => $COOKIE,
        numrows => $FORM{numrows},

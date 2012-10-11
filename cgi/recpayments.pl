@@ -38,6 +38,7 @@ $tt = Template->new({
 });
 
 $Vars = {
+	 ads => $Adverts,
         title => 'Recurring Payments',
 	cookie => $COOKIE,
 	focus => 'blk_invcusname',

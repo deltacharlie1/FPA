@@ -1,5 +1,9 @@
-[% IF cookie.NO_ADS == '1' -%]
+[% IF cookie.PLAN > 3 AND cookie.NO_ADS == '1' -%]
 <div style="width:5px;height:600px;"></div>
 [% ELSE -%]
-[%- cookie.adv2 -%]
+ <div id="vads"style="display:block;height:600px;overflow:hidden;width:160px;border:1px solid #330000;background-color:#eaeadc;margin-top:0px;">
+   <div id="ulvads">
+[% vadfile='adverts/vert/Advert' _ cookie.NEXT_AD _ '.tt'; PROCESS $vadfile -%]
+  </div>
+</div>
 [% END -%]

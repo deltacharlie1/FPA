@@ -30,6 +30,7 @@ $tt = Template->new({
 });
 
 $Vars = {
+	 ads => $Adverts,
         title => 'Accounts - Transactions',
 	cookie => $COOKIE,
 tfrtype => $Tfrtype,

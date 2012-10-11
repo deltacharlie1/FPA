@@ -225,6 +225,7 @@ else {
 	
 	if ($Reg[1] =~ /P/i) {
 	        $Vars = {
+	 ads => $Adverts,
                 title => 'Registration Accepted',
                 client => { 'comname' => $FORM{company}, 'comcontact' => $FORM{name}, 'comemail' => $FORM{email}, 'comnextsi' => '100001', 'comnextpi' => '100001' }
 	        };

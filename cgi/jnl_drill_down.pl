@@ -31,6 +31,7 @@ $tt = Template->new({
 });
 
 $Vars = {
+	 ads => $Adverts,
        	title => 'Journal Detail',
 	cookie => $COOKIE,
 	jnl => $Journal,

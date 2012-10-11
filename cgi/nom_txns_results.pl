@@ -60,6 +60,7 @@ $tt = Template->new({
 });
 
 $Vars = {
+	 ads => $Adverts,
 	cookie => $COOKIE,
 	txns => $Txn,
 	numrows => $Txns->rows

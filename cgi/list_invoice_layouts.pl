@@ -25,6 +25,7 @@ $tt = Template->new({
 });
 
 $Vars = {
+	 ads => $Adverts,
         title => 'Invoice Layouts',
 	cookie => $COOKIE,
 	entries => $Lays->fetchall_arrayref({})

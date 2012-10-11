@@ -36,6 +36,7 @@ $tt = Template->new({
 #  Does exist so just ask for password confirmation
 
 		$Vars = {
+	 ads => $Adverts,
 			title => 'User Activation',
 			code => "$ENV{QUERY_STRING}",
 			focus => 'pwd1',
@@ -147,6 +148,7 @@ EOD
 	else {
 
 		$Vars = {
+	 ads => $Adverts,
 			title => 'User Activation',
 			code => "$ENV{QUERY_STRING}",
 			focus => 'pwd1',

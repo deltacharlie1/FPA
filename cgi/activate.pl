@@ -30,6 +30,7 @@ $Sts = $dbh->do("update registrations set reglastlogindate=now(),regactive='C',r
 #  ... and then display the ready to login screen
 
 	$Vars = {
+	 ads => $Adverts,
 		title => 'Activation',
 	};
 
@@ -45,6 +46,7 @@ else {
 #  This is not valid, either it is an incorrect activation code or the account has been deleted	
 
 	$Vars = {
+	 ads => $Adverts,
 		title => 'Activation Error',
 	};
 	print "Content-Type: text/html\n\n";

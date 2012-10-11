@@ -141,7 +141,8 @@ if ($Res_content =~ /success/i) {
 		$Cancellation = "<tr><td>We have been unable to cancel your previous subscription, reference:- <b>$STATE{cancel_id}</b> for some reason.&nbsp;&nbsp;Please cancel it directly with your bank.&nbsp;&nbsp;If you have any problems please contact us quoting this reference number.</td></tr>";
 	}
 
-	$Vars = { cookie => $COOKIE,
+	$Vars = {
+	 ads => $Adverts, cookie => $COOKIE,
           title => 'Subscriptions',
           membership => $Memtext[$STATE{sublevel}],
 	  cancellation => $Cancellation,

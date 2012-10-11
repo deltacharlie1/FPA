@@ -105,6 +105,7 @@ $tt = Template->new({
 });
 
 $Vars = {
+	 ads => $Adverts,
 	cookie => $COOKIE,
 	invoices => $Invoices->fetchall_arrayref({}),
 	GEN => "gen_",

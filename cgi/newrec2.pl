@@ -36,7 +36,7 @@ $Txns->finish;
 
 #  Then get all unpaid invoices
 
-$Invoices = $dbh->prepare("select id,invtype,date_format(invprintdate,'%d-%b-%y') as printdate,cus_id,invinvoiceno,invcusname,invdesc,(invtotal+invvat-invpaid-invpaidvat) as amtdue,invprintdate from invoices where acct_id='$COOKIE->{ACCT}' and invstatuscode>2 union select vatreturns.id,'vat',date_format(perstatusdate,'%d-%b-%y') as printdate,0,'vat','HMRC',concat('Quarter End ',perquarter) as invdesc,0-perbox5 as amtdue,perstatusdate as invprintdate from vatreturns where acct_id='$COOKIE->{ACCT}' and perstatus='Filed' order by invprintdate");
+$Invoices = $dbh->prepare("select id,invtype,date_format(invprintdate,'%d-%b-%y') as printdate,cus_id,invinvoiceno,invcusname,invdesc,(invtotal+invvat-invpaid-invpaidvat) as amtdue,invprintdate from invoices where acct_id='$COOKIE->{ACCT}' and invstatuscode>2 union select vatreturns.id,if(perbox5<0,'vatr','vatp') as invtype,date_format(perstatusdate,'%d-%b-%y') as printdate,0,'vat','HMRC',concat('Quarter End ',perquarter) as invdesc,0-perbox5 as amtdue,perstatusdate as invprintdate from vatreturns where acct_id='$COOKIE->{ACCT}' and perstatus='Filed' order by invprintdate");
 $Invoices->execute;
 $Invoice = $Invoices->fetchall_arrayref({});
 $Invoices->finish;
@@ -150,7 +150,7 @@ $TSs->finish;
 
 #  Get te laast statement close date to make sure that these entries are for a new statement
 
-$Stmts = $dbh->prepare("select datediff(str_to_date('@Stmt[0]->{date}','%d-%b-%y'),staclosedate) as stmtdiff from statements where acct_id='$COOKIE->{ACCT}' order by staclosedate desc limit 1");
+$Stmts = $dbh->prepare("select datediff(str_to_date('@Stmt[0]->{date}','%d-%b-%y'),staclosedate) as stmtdiff from statements left join accounts on (acc_id=accounts.id and atatements.acct_id=accounts.acct_id) where statements.acct_id='$COOKIE->{ACCT}' and statements.acctype='$FORM{acctype}' order by staclosedate desc limit 1");
 $Stmts->execute;
 $Last_Stmt = $Stmts->fetchrow_hashref;
 $Stmts->finish;
@@ -162,6 +162,7 @@ $tt = Template->new({
 });
 
 $Vars = {
+	 ads => $Adverts,
         title => 'Accounts - Reconciliations',
 	cookie => $COOKIE,
 	acct => $Acct,

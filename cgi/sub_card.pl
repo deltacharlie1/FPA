@@ -61,7 +61,8 @@ if ($FORM{RESPONSECODE} =~ /A/i) {
 		WRAPPER => 'header.tt'
 	});
 
-	$Vars = { cardtype => $FORM{CARDTYPE},
+	$Vars = {
+	 ads => $Adverts, cardtype => $FORM{CARDTYPE},
 	          cardnumber => $FORM{MASKEDCARDNUMBER},
 	          expiry => $FORM{CARDEXPIRY},
 		  cookie => $COOKIE,
@@ -84,7 +85,8 @@ else {
 		WRAPPER => 'header.tt'
 	});
 
-	$Vars = { cardtype => $FORM{RESPONSECODE},
+	$Vars = {
+	 ads => $Adverts, cardtype => $FORM{RESPONSECODE},
 	          cardnumber => $FORM{RESPONSETEXT},
 	          expiry => $FORM{CARDEXPIRY},
 		  cookie => $COOKIE,

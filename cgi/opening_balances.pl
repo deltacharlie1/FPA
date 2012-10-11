@@ -32,6 +32,7 @@ $tt = Template->new({
 });
 
 $Vars = {
+	 ads => $Adverts,
         title => 'Accounts - Opening Balances',
 	cookie => $COOKIE,
 	comacccompleted => $Company[0],

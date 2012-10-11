@@ -48,6 +48,7 @@ $tt = Template->new({
 });
 
 $Vars = {
+	 ads => $Adverts,
         title => 'Accounts - Vatreturns',
 	cookie => $COOKIE,
 	vatreturns => $Vatreturns->fetchall_arrayref({}),

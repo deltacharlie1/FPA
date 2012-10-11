@@ -104,9 +104,6 @@ use PDF::API2;
 use PDF::TextBlock;
 use PDF::TextBlock::Font;
 
-if ($invoices->{invstatus} =~ /Draft/i) {
-	$invoices->{invtype} = "DRAFT INVOICE";
-}
 if ($invoices->{invtype} =~ /^C/) {
 	$invoices->{invtype} = "CREDIT NOTE";
 }
@@ -115,6 +112,9 @@ elsif ($invoices->{invstatus} =~ /Quote/i) {
 }
 else {
 	$invoices->{invtype} = "INVOICE";
+}
+if ($invoices->{invstatus} =~ /Draft/i) {
+	$invoices->{invtype} = "DRAFT ".$invoices->{invtype};
 }
 
 if ($invoices->{custerms} == "0") {
@@ -164,6 +164,9 @@ for $Row (@Row) {
 
 	$Row =~ s/^.*?<td.*?>//is;
         $Row =~ s/<td.*?>//gis;
+
+warn $Row."\n\n";
+
         @Cell = split(/\<\/td\>/i,$Row);
 	if ($Cell[0]) {
 
@@ -210,6 +213,8 @@ for $Row (@Row) {
 		$nettotal += $Cell[3];
 		$vattotal += $Cell[5];
 		$invtotal += $Cell[3] + $Cell[5];
+
+		warn "if ($Ypos < 842 - $Litop - $Layout->{descheight} + 20) {\n";
 
 		if ($Ypos < 842 - $Litop - $Layout->{descheight} + 20) {
 

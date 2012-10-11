@@ -59,6 +59,7 @@ $tt = Template->new({
 });
 
 $Vars = {
+	 ads => $Adverts,
         title => 'Accounts - Customer Details',
 	cookie => $COOKIE,
 	layouts => $Layout,

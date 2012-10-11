@@ -31,6 +31,7 @@ $tt = Template->new({
 });
 
 $Vars = {
+	 ads => $Adverts,
         title => 'Accounts - Suppliers',
 	cookie => $COOKIE,
 	cus => $Customers->fetchrow_hashref,

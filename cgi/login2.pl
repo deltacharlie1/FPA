@@ -101,6 +101,7 @@ Set-Cookie: fpa-uid=$FORM{email}; path=/; expires=$User[4];
 
 EOD
 		$Vars = {
+	 ads => $Adverts,
 		        title => 'Login - Step 2',
 			char1 => $Sorted_nums[0],
 			char2 => $Sorted_nums[1],

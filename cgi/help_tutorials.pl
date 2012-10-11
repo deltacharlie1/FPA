@@ -13,7 +13,8 @@ $tt = Template->new({
 	WRAPPER => 'help_header.tt'
         });
 
-$Vars = { cookie => $COOKIE,
+$Vars = {
+	 ads => $Adverts, cookie => $COOKIE,
 	  title => 'Video Tutorials'
 };
 

@@ -31,6 +31,7 @@ $tt = Template->new({
 });
 
 $Vars = {
+	 ads => $Adverts,
         title => 'Accounts - Invoice Analysis',
 	cookie => $COOKIE,
 	focus => 'invcusname',

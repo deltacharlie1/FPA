@@ -1,0 +1,52 @@
+#vads  {
+    margin:0px;
+    padding:10px 0 0 5px;
+
+}
+#sidebar-ad a:focus,
+#sidebar-ad a:active {
+    outline: none;
+}
+#lhads  {
+    margin:0px;
+    padding:0px;
+    width: 630px;
+}
+
+/*   Rolling Advert layout
+
+   Horizontal
+   ----------
+   h_l  -  image
+   h_r  -  right group
+   h_n  -  name
+   h_g  -  lower group
+   h_p  -  price
+   h_m  -  more button
+
+   Vertical
+   --------
+   v_h  -  Header text
+   v_a  -  advert block
+   v_l  -  image
+   v_r  -  right block
+   v_m  -  more button
+   v_p  -  price
+   v_n  -  name
+   */
+
+.h_l {float:left;padding-left:10px;width:70px;}
+.h_r {position:relative;float:left;padding:3px 0px 0 5px;width:125px;}
+.h_n {width:115px;clear:both;display:block;padding:0px 4px 0 0;text-transform:none;font-size:10px;}
+.h_g {position:absolute;top:40px;width:120px;}
+.h_p {float:left;padding-top:8px;text-align:center;font-size:12px!important;font-weight:bold!important;}
+.h_m {float:right;padding:5px 0 0 0px;}
+
+.v_h {margin-left:-10px;text-align:center;}
+.v_a {margin-left:2px;padding-top:0px;width:150px;}
+.v_l {float:left;height:70px;width:70px;}
+.v_r {float:left;padding:10px 0px 0 10px;height:70px;width:65px;}
+.v_m {padding:10px 0 0 5px;}
+.v_p {font-weight:bold;padding-top:5px;text-align:center;}
+.v_n {height:45px;padding-top:5px;width:150px;clear:both;display:block;padding:10px 10px 0 0;font-size:0.8em;font-weight:normal;text-transform:none;}
+
