@@ -134,6 +134,8 @@ sub Tbody {
 
 			if ($Cells[1] =~ /pur/i) {
 				if ($Cells[1] =~ /new pur/i) {
+					$FORM{txnamount} = $Cells[7];
+					$FORM{txnamount} =~ tr/-//d;
 					$FORM{id} = '';
 					$FORM{cus_id} = $Cells[0];
 					$FORM{invtype} = 'P';
