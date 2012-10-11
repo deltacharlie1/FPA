@@ -1,30 +1,9 @@
-[% IF cookie.NO_ADS == '1' -%]
+[% IF cookie.PLAN > 3 AND cookie.NO_ADS == '1' -%]
 <div style="width:5px;height:600px;"></div>
 [% ELSE -%]
- <div id="vads" style="display:block;height:600px;overflow:hidden;width:160px;border:1px solid #330000;background-color:#eaeadc;margin-top:10px;">
-   <ul>
-     <li>
-       <div style="margin-left:-10px;text-align:center;">[%- ads.0.cat -%]</div>
-[% FOREACH ad IN ads -%]
-  [%-  ndx = (loop.count  - 1) % 4; IF  loop.count > 1 AND ndx == 0  -%]
-      </li>
-      <li>
-        <div style="margin-left:-10px;text-align:center;">[%- ad.cat -%]</div>
-  [% END -%]
-        <div style="margin-left:7px;padding-top:10px;height:130px;width:160px;">
-          <div style="float:left;width:70px;">
-            <a href="[%- ad.track -%]" target="_blank"><img src="[%- ad.thumb -%]" width="70" height="70"></a>
-          </div>
-          <div style="float:left;padding:10px 0px 0 10px;width:65px;">
-            <div style="font-weight:bold;padding-top:5px;text-align:center;">&pound;[%- ad.price -%]</div>
-            <div style="padding:10px 0 0 5px;"><a href="[%- ad.track -%]" target="_blank"><img src="/icons/buy_now_5.gif" border="0"></a></div>
-          </div>
-          <div style="width:150px;clear:both;display:block;padding:15px 10px 0 0;font-size:0.8em;font-weight:normal;text-transform:none;">
-[%- ad.name -%]
-        </div>
-      </div>
-[% END -%]
-    </li>
-  </ul>
+ <div id="vads"style="display:block;height:600px;overflow:hidden;width:160px;border:1px solid #330000;background-color:#eaeadc;margin-top:0px;">
+   <div id="ulvads">
+[% vadfile='adverts/vert/Advert' _ cookie.NEXT_AD _ '.tt'; PROCESS $vadfile -%]
+  </div>
 </div>
 [% END -%]

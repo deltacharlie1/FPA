@@ -583,6 +583,7 @@ create table adverts (
   track text,
   thumb text,
   image text,
+  description text,
   price decimal(10,2) not null default '0.00',
   cat varchar(30),
   grp int not null default 1,
