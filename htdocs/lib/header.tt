@@ -33,15 +33,12 @@ $(document).ready(function(){
   $.cookie('fpa-next_advert',advert, { path: '/' });
   $("#searchcus").watermark("Search");
   $("#ulvads").carouFredSel({
-    auto: {
-      timeoutDuration: 5000
-   },
     direction: "up",
     items: 8,
     auto: {
-      duration: 1000,
+      duration: 2000,
       timeoutDuration: 8000,
-      easing: "swing",
+      easing: "easeOutBounce",
       items: 2,
       pauseOnHover: true
     },
@@ -60,9 +57,9 @@ $(document).ready(function(){
       },
       auto: {
         items: 2,
-        duration: 1000,
+        duration: 2000,
         timeoutDuration: 8000,
-        easing: "swing",
+        easing: "easeOutBounce",
         pauseOnHover: true
       }
   });
