@@ -33,7 +33,7 @@ if ($FORM{qstart} =~ /Up/i) { $FORM{qstart} = '01-Jan-10'; }
 $FORM{qstart} = $FORM{qstart} || '01-Jan-10';
 $FORM{qend} = $FORM{qend} || '31-Dec-29';
 
-$Daterange = "acrprintdate>=str_to_date('$FORM{qstart}','%d-%b-%y') and acrprintdate<=str_to_date('$FORM{qend}','%d-%b-%y')";
+$Daterange = "acrprintdate<=str_to_date('$FORM{qend}','%d-%b-%y')";
 use Template;
 $tt = Template->new({
         INCLUDE_PATH => ['.','/usr/local/httpd/htdocs/fpa/lib'],
