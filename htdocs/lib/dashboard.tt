@@ -75,20 +75,18 @@
   <tr>
     <td style="vertical-align:top;">
   <div class="testimonials" style="width:360px;height:200px;">
-    <h2>Stats</h2>
-    <div id="carousel" class="jcarousel-skin-tango">
-      <ul>
-        <li><img src="/cgi-bin/fpa/display_stats.pl?Inv[%- company.cominvstats -%]"/></li>
-        <li><img src="/cgi-bin/fpa/display_stats.pl?Txn[%- company.comtxnstats -%]"/></li>
-        <li><img src="/cgi-bin/fpa/display_stats.pl?Net[%- company.comnetstats -%]"/></li>
-      </ul>
-      <div class="jcarousel-control" style="position:relative;top:-11px;height:15px;">
-        <ul>
-          <li><a href="#">1</a></li>
-          <li><a href="#">2</a></li>
-          <li><a href="#">3</a></li>
-        </ul>
-      </div>
+    <h2 style="margin-bottom:0px;">Stats</h2>
+      <div class="image_carousel">
+	<div id="foo5">
+          <img src="/cgi-bin/fpa/display_stats.pl?Inv[%- company.cominvstats -%]"/>
+          <img src="/cgi-bin/fpa/display_stats.pl?Txn[%- company.comtxnstats -%]"/>
+          <img src="/cgi-bin/fpa/display_stats.pl?Net[%- company.comnetstats -%]"/>
+	</div>
+	<div class="clearfix"></div>
+	<a class="prev" id="foo5_prev" href="#"><span>prev</span></a>
+	<a class="next" id="foo5_next" href="#"><span>next</span></a>
+	<div class="pagination" id="foo5_pag"></div>
+</div>
     </div>
   </div>
     </td>
