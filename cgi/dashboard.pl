@@ -70,55 +70,96 @@ $Vars = {
 	coa => $Coa,
 	company => $Company,
 	reminders => $Reminder,
-        javascript => '<link rel="stylesheet" type="text/css" href="/tango/skin.css" />
-<script type="text/javascript" src="/js/jquery.jcarousel.min.js"></script>
-<style type="text/css">
-.jcarousel-control {
-    text-align: center;
+        javascript => '<style type="text/css">
+.image_carousel {
+	padding: 2px 0 15px 30px;
+	position: relative;
 }
-.jcarousel-control  ul{
-    margin:0px;
-    padding:0px;
+.image_carousel img {
+	border: 1px solid #ccc;
+	background-color: white;
+	padding: 3px;
+	margin: 7px;
+	display: block;
+	float: left;
+	width:280px;
+	height:132px;
 }
-.jcarousel-control li {
-    display: inline;
-    list-style-type: none;
-    font-size: 75%;
-    text-decoration: none;
-    padding: 0 5px;
-    margin: 0 0 0px 0;
-    border: 1px solid #fff;
-    color: #eee;
-    background-color: #4088b8;
-    font-weight: bold;
+a.prev, a.next {
+	background: url(/icons/dash.png) no-repeat transparent;
+	width: 45px;
+	height: 50px;
+	display: block;
+	position: absolute;
+	top: 65px;
 }
-.jcarousel-control li a {
-    color: #eee;
-    text-decoration: none;
-    font-weight: bold;
-    display:inline;
+a.prev {			left: -10px;
+					background-position: 0 0; }
+a.prev:hover {		background-position: 0 -50px; }
+a.prev.disabled {	background-position: 0 -100px !important;  }
+a.next {			right: -10px;
+					background-position: -50px 0; }
+a.next:hover {		background-position: -50px -50px; }
+a.next.disabled {	background-position: -50px -100px !important;  }
+a.prev.disabled, a.next.disabled {
+	cursor: default;
 }
-.jcarousel-control a:focus,
-.jcarousel-control a:active {
-    outline: none;
+
+a.prev span, a.next span {
+	display: none;
+}
+.pagination {
+	text-align: center;
+	margin-right:30px;
+}
+.pagination a {
+	background: url(/icons/dash.png) 0 -300px no-repeat transparent;
+	width: 15px;
+	height: 15px;
+	margin: 0 5px 0 0;
+	display: inline-block;
+}
+.pagination a.selected {
+	background-position: -25px -300px;
+	cursor: default;
+}
+.pagination a span {
+	display: none;
+}
+.clearfix {
+	float: none;
+	clear: both;
 }
 </style>
 <script type="text/javascript">
 $(document).ready(function(){
   var width = (screen.availWidth > 1100) ? 1100 : screen.availWidth;
   var left = parseInt((screen.availWidth - ((screen.availWidth > 1100) ? 1100 : screen.availWidth)) / 2);
-  $("#carousel").jcarousel({ 
-     visible: 1, 
-     scroll: 1, 
-     initCallback: function(carousel) { $(".jcarousel-control li").bind("click", function() { 
-         carousel.scroll($.jcarousel.intval($(this).text())); 
-         return false; 
-       });
-     },
-    itemVisibleInCallback: function(carousel,li,idx,state) { $(".jcarousel-control li").each(function(index) { if (index == idx - 1) { $(this).attr("style","background-color:#800000;"); }});},
-    itemVisibleOutCallback: function(carousel,li,idx,state) { $(".jcarousel-control li").each(function(index) { if (index == idx - 1) { $(this).attr("style","background-color:#4088b8;"); }});}
-
-  });
+$("#foo5").carouFredSel({
+	circular	: false,
+	infinite	: false,
+	auto 		: false,
+	prev : {
+		button		: "#foo5_prev",
+		key		: "left",
+		items		: 1,
+		easing		: "easeInOutCubic",
+		duration	: 750
+	},
+	next : {
+		button		: "#foo5_next",
+		key		: "right",
+		items		: 1,
+		easing		: "easeInQuart",
+		duration	: 1500
+	},
+	pagination : {
+		container	: "#foo5_pag",
+		keys		: true,
+		easing		: "easeOutBounce",
+		duration	: 3000
+	}
+});
 //  self.moveTo(left,0);
 //  self.resizeTo(width,screen.availHeight);
 });
