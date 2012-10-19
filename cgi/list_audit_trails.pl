@@ -26,11 +26,6 @@ foreach $pair (@pairs) {
 
 use DBI;
 $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
-unless ($COOKIE->{NO_ADS}) {
-	require "/usr/local/git/fpa/cgi/display_adverts.ph";
-	&display_adverts();
-}
-
 
 unless ($FORM{rows}) {
 	$ATs = $dbh->prepare("select link_id,audtype,audaction,date_format(audstamp,'%d-%b-%y %H:%i') as audstamp,audtext,auduser from audit_trails where acct_id='$COOKIE->{ACCT}' order by audstamp desc");

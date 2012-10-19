@@ -24,11 +24,6 @@ foreach $pair (@pairs) {
 
 use DBI;
 $dbh = DBI->connect("DBI:mysql:fpa");
-unless ($COOKIE->{NO_ADS}) {
-        require "/usr/local/git/fpa/cgi/display_adverts.ph";
-        &display_adverts();
-}
-
 $Membership[0] = 'FreePlus Startup (FREE)';
 $Membership[1] = 'FreePlus Bookkeeper Basic (&pound;5.00pm)';
 $Membership[2] = 'FreePlus Standard (&pound;5.00pm)';

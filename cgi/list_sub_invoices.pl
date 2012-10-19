@@ -23,11 +23,6 @@ foreach $pair (@pairs) {
 
 use DBI;
 $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
-unless ($COOKIE->{NO_ADS}) {
-	require "/usr/local/git/fpa/cgi/display_adverts.ph";
-	&display_adverts();
-}
-
 unless ($FORM{rows}) {
 	$Invoices = $dbh->prepare("select id,subinvoiceno,date_format(subdatepaid,'%d-%b-%y') as datepaid,subdescription,subnet,subvat,subauthcode,substatus,date_format(subdateraised,'%d-%b-%y') as dateraised from subscriptions where acct_id='$COOKIE->{ACCT}' order by subdateraised desc");
         $Invoices->execute;

@@ -9,11 +9,6 @@ $COOKIE = &checkid($ENV{HTTP_COOKIE},$ACCESS_LEVEL);
 
 use DBI;
 $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
-unless ($COOKIE->{NO_ADS}) {
-	require "/usr/local/git/fpa/cgi/display_adverts.ph";
-	&display_adverts();
-}
-
 
 $Customers = $dbh->prepare("select id,cusname,cusaddress,cuspostcode,cusregion,custel,cuscontact,cusemail,custerms,cusbalance,cuscredit,cuslimit,cusdefpaymethod from customers where id=? and acct_id=?");
 $Customers->execute($ENV{QUERY_STRING},"$COOKIE->{ACCT}");

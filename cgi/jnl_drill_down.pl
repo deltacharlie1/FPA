@@ -9,11 +9,6 @@ $COOKIE = &checkid($ENV{HTTP_COOKIE},$ACCESS_LEVEL);
 
 use DBI;
 $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
-unless ($COOKIE->{NO_ADS}) {
-	require "/usr/local/git/fpa/cgi/display_adverts.ph";
-	&display_adverts();
-}
-
 $Journals = $dbh->prepare("select joujnlno,joudesc,date_format(joudate,'%d-%b-%y') as jnldate from journals where acct_id='$COOKIE->{ACCT}' and id=$ENV{QUERY_STRING}");
 $Journals->execute;
 $Journal = $Journals->fetchrow_hashref;

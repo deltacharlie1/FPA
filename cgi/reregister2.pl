@@ -30,22 +30,6 @@ $Errs = "";
 
 #  Email address exists
 
-unless ($FORM{email}) { $Errs .= "<li>No email address</li>\n"; }
-if ($FORM{email} && $FORM{email} !~ /^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/) { $Errs .= "<li>Email address in incorrect format</li>\n"; }
-if ($FORM{pwd1} && length($FORM{pwd1}) < 6) { $Errs .= "<li>your password is too short</li>\n"; }
-if ($FORM{pwd1} && $FORM{pwd1} ne $FORM{pwd2}) { $Errs .= "<li>Passwords do not match</li>\n"; }
-if ($FORM{mem1} && length($FORM{mem1}) < 8) { $Errs .= "<li>Memorable word is too short</li>\n"; }
-if ($FORM{mem1} =~ tr/[a-z][A-Z][0-9] //cd) { $Errs .= "<li>Your memorable word can only contain letters numbers or spaces</li>\n"; }
-if ($FORM{mem1} && $FORM{mem1} ne $FORM{mem2}) { $Errs .= "<li>Memorable Words do not match</li>\n"; }
-unless ($FORM{name}) { $Errs .= "<li>Name not entered</li>\n"; }
-
-use DBI;
-$dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
-unless ($COOKIE->{NO_ADS}) {
-	require "/usr/local/git/fpa/cgi/display_adverts.ph";
-	&display_adverts();
-}
-
 
 #  Check to see if we already have this email address
 

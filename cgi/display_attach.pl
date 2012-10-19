@@ -9,11 +9,6 @@ $COOKIE = &checkid($ENV{HTTP_COOKIE},$ACCESS_LEVEL);
 
 use DBI;
 $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
-unless ($COOKIE->{NO_ADS}) {
-	require "/usr/local/git/fpa/cgi/display_adverts.ph";
-	&display_adverts();
-}
-
 ($Reg_id,$Com_id) = split(/\+/,$COOKIE->{ACCT});
 
 $Companies = $dbh->prepare("select comdocsdir from companies where reg_id=$Reg_id and id=$Com_id");

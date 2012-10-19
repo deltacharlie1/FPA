@@ -11,11 +11,6 @@ $COOKIE = &checkid($ENV{HTTP_COOKIE},$ACCESS_LEVEL);
 
 use DBI;
 $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
-unless ($COOKIE->{NO_ADS}) {
-	require "/usr/local/git/fpa/cgi/display_adverts.ph";
-	&display_adverts();
-}
-
 $Revs = $dbh->prepare("select id,laydesc from invoice_layouts where acct_id='$COOKIE->{ACCT}' order by id");
 $Revs->execute;
 $Rev = $Revs->fetchall_arrayref({});

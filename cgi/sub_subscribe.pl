@@ -23,11 +23,6 @@ use LWP::UserAgent;
 use Digest;
 use DBI;
 $dbh = DBI->connect("DBI:mysql:fpa");
-unless ($COOKIE->{NO_ADS}) {
-        require "/usr/local/git/fpa/cgi/display_adverts.ph";
-        &display_adverts();
-}
-
 open(XML,'</usr/local/git/fpa/other/cashflows') || warn "Could not open cashflos file\n";
 @Xmlstr = <XML>;
 close(XML);

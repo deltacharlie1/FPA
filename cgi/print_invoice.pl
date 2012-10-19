@@ -10,11 +10,6 @@ $COOKIE = &checkid($ENV{HTTP_COOKIE},$ACCESS_LEVEL);
 
 use DBI;
 $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
-unless ($COOKIE->{NO_ADS}) {
-	require "/usr/local/git/fpa/cgi/display_adverts.ph";
-	&display_adverts();
-}
-
 
 $Invoices = $dbh->prepare("select invoices.id as id,cus_id,invinvoiceno,invcusname,invtype,invcuscontact,invcusemail,invstatus,invstatuscode,cusemailmsg,invlayout from invoices left join customers  on (cus_id=customers.id and invoices.acct_id=customers.acct_id) where invoices.id=? and invoices.acct_id=?");
 $Invoices->execute($Inv_id,"$COOKIE->{ACCT}");

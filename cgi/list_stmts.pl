@@ -23,11 +23,6 @@ foreach $pair (@pairs) {
 
 use DBI;
 $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
-unless ($COOKIE->{NO_ADS}) {
-	require "/usr/local/git/fpa/cgi/display_adverts.ph";
-	&display_adverts();
-}
-
 
 unless ($FORM{rows}) {
 	$Stmts = $dbh->prepare("select statements.id as stmtid,date_format(staclosedate,'%d-%b-%y') as tdate,stastmtno,staopenbal,staclosebal,stanotxns,accname,accacctno from statements left join accounts on (acc_id=accounts.id) where statements.acct_id='$COOKIE->{ACCT}' and stanotxns<>'-1' order by staclosedate desc");

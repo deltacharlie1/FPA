@@ -25,11 +25,6 @@ foreach $pair (@pairs) {
 
 use DBI;
 $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
-unless ($COOKIE->{NO_ADS}) {
-	require "/usr/local/git/fpa/cgi/display_adverts.ph";
-	&display_adverts();
-}
-
 
 $Sts = $dbh->do("update tempstacks set f1='$FORM{f1}',f2='$FORM{f2}',f3='$FORM{f3}',f4='$FORM{f4}',f5='$FORM{f5}',f6='$FORM{f6}' where acct_id='$COOKIE->{ACCT}' and caller='reconciliation'");
 

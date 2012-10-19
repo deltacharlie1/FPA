@@ -23,11 +23,6 @@ foreach $pair (@pairs) {
 
 use DBI;
 $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
-unless ($COOKIE->{NO_ADS}) {
-	require "/usr/local/git/fpa/cgi/display_adverts.ph";
-	&display_adverts();
-}
-
 
 unless ($FORM{rows}) {
 	$ATs = $dbh->prepare("select id,cusname,cusaddress,cuspostcode,cusregion,custel,cuscontact,cusbalance,cuscredit,cuslimit,cusdefpaymethod from customers where cusname $SQL and acct_id=? and cussales='Y'");

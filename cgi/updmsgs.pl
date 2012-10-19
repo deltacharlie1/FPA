@@ -22,11 +22,6 @@ EOD
 
 use DBI;
 $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
-unless ($COOKIE->{NO_ADS}) {
-	require "/usr/local/git/fpa/cgi/display_adverts.ph";
-	&display_adverts();
-}
-
 $Sts = $dbh->do("update companies set comemailmsg='$Emailmsg',comstmtmsg='$Stmtmsg' where id=1");
 $Sts = $dbh->do("update customers set cusemailmsg='$Emailmsg',cusstmtmsg='$Stmtmsg' where acct_id='1+1'");
 $dbh->disconnect;

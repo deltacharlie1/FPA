@@ -9,11 +9,6 @@ $COOKIE = &checkid($ENV{HTTP_COOKIE},$ACCESS_LEVEL);
 
 use DBI;
 $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
-unless ($COOKIE->{NO_ADS}) {
-	require "/usr/local/git/fpa/cgi/display_adverts.ph";
-	&display_adverts();
-}
-
 
 require "/usr/local/httpd/cgi-bin/fpa/pdf_statement.ph";
 ($PDF_data,$Date) = &pdf_statement($ENV{QUERY_STRING});

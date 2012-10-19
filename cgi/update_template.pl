@@ -9,11 +9,6 @@ $COOKIE = &checkid($ENV{HTTP_COOKIE},$ACCESS_LEVEL);
 
 use DBI;
 $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
-unless ($COOKIE->{NO_ADS}) {
-	require "/usr/local/git/fpa/cgi/display_adverts.ph";
-	&display_adverts();
-}
-
 
 $Invoices = $dbh->prepare("select id,cus_id,invcusname,invcusaddr,date_format(invnextinvdate,'%d-%b-%y') as printdate,invcuspostcode,invcusref,invcusregion,invcusterms,invcuscontact,invcusemail,invtotal,invvat,invtotal + invvat as tottotal,invremarks,invitems,invitemcount,invrepeatfreq,invemailmsg from invoice_templates where id=$ENV{QUERY_STRING} and acct_id='$COOKIE->{ACCT}'");
 $Invoices->execute;

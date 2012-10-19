@@ -32,11 +32,6 @@ foreach $pair (@pairs) {
 
 use DBI;
 $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
-unless ($COOKIE->{NO_ADS}) {
-	require "/usr/local/git/fpa/cgi/display_adverts.ph";
-	&display_adverts();
-}
-
 
 $Coas = $dbh->prepare("select nominals.nomcode,nominals.nomtype,nominals.link_id,coadesc,coatype,nominals.nomamount as balance,date_format(nominals.nomdate,'%d-%b-%y') as printdate,concat(txncusname,' (',txnremarks,')') as txndescr,concat(invcusname,' (',invdesc,')') as invdescr from nominals left join coas on (nominals.nomcode=coas.coanominalcode and nominals.acct_id=coas.acct_id) left join transactions on (nominals.link_id=transactions.id and nominals.acct_id=transactions.acct_id) left join invoices on (nominals.link_id=invoices.id and nominals.acct_id=invoices.acct_id) where str_to_date('$FORM{tbstart}','%d-%b-%y')<=nominals.nomdate and str_to_date('$FORM{tbend}','%d-%b-%y')>=nominals.nomdate and nominals.acct_id='$COOKIE->{ACCT}' order by nominals.nomcode,nominals.nomdate");
 $Coas->execute;

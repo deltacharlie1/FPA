@@ -9,11 +9,6 @@ $COOKIE = &checkid($ENV{HTTP_COOKIE},$ACCESS_LEVEL);
 
 use DBI;
 $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
-unless ($COOKIE->{NO_ADS}) {
-	require "/usr/local/git/fpa/cgi/display_adverts.ph";
-	&display_adverts();
-}
-
 
 $Invoices = $dbh->prepare("select id,cus_id,invinvoiceno,invcusname,invtype,invcuscontact,invcusemail,invstatuscode,invlayout from invoices where id=? and acct_id=?");
 $Invoices->execute($ENV{QUERY_STRING},"$COOKIE->{ACCT}");

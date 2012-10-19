@@ -7,15 +7,6 @@ $ACCESS_LEVEL = 1;
 use Checkid;
 $COOKIE = &checkid($ENV{HTTP_COOKIE},$ACCESS_LEVEL);
 
-use DBI;
-$dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
-
-unless ($COOKIE->{NO_ADS}) {
-        require "/usr/local/git/fpa/cgi/display_adverts.ph";
-        &display_adverts();
-}
-$dbh->disconnect;
-
 use Template;
 $tt = Template->new({
         INCLUDE_PATH => ['.','/usr/local/httpd/htdocs/fpa/lib'],

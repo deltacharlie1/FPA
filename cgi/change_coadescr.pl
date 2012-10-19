@@ -23,11 +23,6 @@ while (( $Key,$Value) = each %FORM) {
 
 use DBI;
 $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
-unless ($COOKIE->{NO_ADS}) {
-	require "/usr/local/git/fpa/cgi/display_adverts.ph";
-	&display_adverts();
-}
-
 $Sts = $dbh->do("update coas set coadesc='$FORM{newdescr}' where acct_id='$COOKIE->{ACCT}' and id=$FORM{id}");
 
 $Sts = $dbh->do("insert into audit_trails (acct_id,link_id,audtype,audaction,audtext,auduser) values ('$COOKIE->{ACCT}',$FORM{id},'','change','COA Description changed to $FORM{newdescr}','$COOKIE->{USER}')");

@@ -23,11 +23,6 @@ foreach $pair (@pairs) {
 
 use DBI;
 $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
-unless ($COOKIE->{NO_ADS}) {
-	require "/usr/local/git/fpa/cgi/display_adverts.ph";
-	&display_adverts();
-}
-
 
 unless ($FORM{rows}) {
 	$Invoices = $dbh->prepare("select cus_id,id as invid,invcusname,invcuspostcode,invdesc,date_format(invnextinvdate,'%d-%b-%y') as printdate,invrepeatfreq,(invtotal+invvat) as invamount from invoice_templates where acct_id='$COOKIE->{ACCT}' order by invnextinvdate");

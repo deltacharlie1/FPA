@@ -239,7 +239,7 @@
         </a>
       </div>
     </li>
-[% IF cookie.REP_INVS == "1" -%]
+[% IF cookie.ACCESS > 3 -%]
     <li>
       <div>
         <a href="#" onclick="submit_details('Template');">

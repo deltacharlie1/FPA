@@ -11,11 +11,6 @@ $COOKIE = &checkid($ENV{HTTP_COOKIE},$ACCESS_LEVEL);
 
 use DBI;
 $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
-unless ($COOKIE->{NO_ADS}) {
-        require "/usr/local/git/fpa/cgi/display_adverts.ph";
-        &display_adverts();
-}
-
 # $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
 
 $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
