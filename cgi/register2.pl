@@ -244,7 +244,9 @@ Someone claiming to be $FORM{name} has used this email address to register for a
 
 http://www.freeplusaccounts.co.uk/cgi-bin/fpa/activate.pl?$Activecode
 
-This code will only be valid for 24 hours from the time of registration and may be safely ignored if you are not the person registering.
+This code will be valid for 72 hours from the time of registration and may be safely ignored if you are not the person registering.
+
+By activating this account you are agreeing to our Terms & Conditions and, in particular, you are opting in to receive our newsletters which will contain advertisements from our carefully selected partners.  You are also agreeing to accept advertising on the different accounting screens.  Both of these features may be switched off by payment of a small subscription as laid out in our 'Features' page.
 
 (If you are unable to click on the link above please copy it and then paste it into the Address bar of your browser.)
 
@@ -268,8 +270,9 @@ Content-Transfer-Encoding: 7bit
 <body>
 <p>Someone claiming to be $FORM{name} has used this email address to register for a <b><i>FreePlus Accounts</i></b> account.&nbsp;&nbsp;If you are this person you will need to activate your account by going to the following link:-</p>
 <p><a href="http://$Host/cgi-bin/fpa/activate.pl?$Activecode">http://www.freeplusaccounts.co.uk/cgi-bin/fpa/activate.pl?$Activecode</a></p>
-<p>This code will only be valid for 24 hours from the time of registration and may be safely ignored if you are not the person registering.<br />
-(If you are unable to click on the link above please copy it and then paste it into the Address bar of your browser)</p>
+<p>This code will be valid for 72 hours from the time of registration and may be safely ignored if you are not the person registering.</p>
+<p>By activating this account you are agreeing to our Terms & Conditions and, in particular, you are opting in to receive our newsletters which will contain advertisements from our carefully selected partners.  You are also agreeing to accept advertising on the different accounting screens.  Both of these features may be switched off by payment of a small subscription as laid out in our 'Features' page.</p>
+<p>(If you are unable to click on the link above please copy it and then paste it into the Address bar of your browser)</p>
 <p>May we take this opportunity of thanking you for your interest in the <b><i>FreePlus Accounts</i></b> service and we hope that you will find it useful.</p>
 <p>Yours Sincerely</p>
 <p>FreePlus Accounts</p>
