@@ -7,6 +7,16 @@ $ACCESS_LEVEL = 1;
 use Checkid;
 $COOKIE = &checkid($ENV{HTTP_COOKIE},$ACCESS_LEVEL);
 
+use DBI;
+$dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
+($Reg_id,$Com_id) = split(/\+/,$COOKIE->{ACCT});
+
+$Ctypes = $dbh->prepare("select comsoletrader from companies where reg_id=$Reg_id and id=$Com_id");
+$Ctypes->execute;
+$Ctype = $Ctypes->fetchrow_hashref;
+$Ctypes->finish;
+$dbh->disconnect;
+
 use Template;
 $tt = Template->new({
         INCLUDE_PATH => ['.','/usr/local/httpd/htdocs/fpa/lib'],
@@ -18,6 +28,7 @@ $Vars = {
         title => 'Adjustments',
 	cookie => $COOKIE,
 	focus => 'amtpaid',
+	ctype => $Ctype->{comsoletrader},
 	loantype => $ENV{QUERY_STRING},
         loan => $Coa->{'2300'},
         shares => $Coa->{'3000'},
