@@ -2,8 +2,9 @@ sub pdf_invoice {
 
 $Inv_id = $_[0];
 $Use_stamp = $_[1];
-$Layout_id = $_[2];
-$Testonly = $_[3];
+$Tplt = $_[2];
+$Layout_id = $_[3];
+$Testonly = $_[4];
 
 #  get the layout
 
@@ -65,8 +66,8 @@ if ($A_sel) {
 }
 if ($I_sel) {
 	$I_sel .= ",invstatus,invtype";
-	$Invoices = $dbh->prepare("select $I_sel from invoices where acct_id='$COOKIE->{ACCT}' and id=$Inv_id");
-#	$Invoices = $dbh->prepare("select * from invoices where acct_id='$COOKIE->{ACCT}' and id=$Inv_id");
+	$Invoices = $dbh->prepare("select $I_sel from invoice${Tplt}s where acct_id='$COOKIE->{ACCT}' and id=$Inv_id");
+#	$Invoices = $dbh->prepare("select * from invoice${Tplt}s where acct_id='$COOKIE->{ACCT}' and id=$Inv_id");
 	$Invoices->execute;
 	$invoices = $Invoices->fetchrow_hashref;
 	$Invoices->finish;
@@ -76,7 +77,7 @@ if ($I_sel) {
 	}
 }
 if ($S_sel) {
-	$Customers = $dbh->prepare("select $S_sel from invoices left join customers on(cus_id=customers.id) where invoices.acct_id='$COOKIE->{ACCT}' and invoices.id=$Inv_id");
+	$Customers = $dbh->prepare("select $S_sel from invoice${Tplt}s left join customers on(cus_id=customers.id) where invoice${Tplt}s.acct_id='$COOKIE->{ACCT}' and invoice${Tplt}s.id=$Inv_id");
 	$Customers->execute;
 	$customers = $Customers->fetchrow_hashref;
 	$Customers->finish;
@@ -165,8 +166,6 @@ for $Row (@Row) {
 	$Row =~ s/^.*?<td.*?>//is;
         $Row =~ s/<td.*?>//gis;
 
-warn $Row."\n\n";
-
         @Cell = split(/\<\/td\>/i,$Row);
 	if ($Cell[0]) {
 
@@ -213,8 +212,6 @@ warn $Row."\n\n";
 		$nettotal += $Cell[3];
 		$vattotal += $Cell[5];
 		$invtotal += $Cell[3] + $Cell[5];
-
-		warn "if ($Ypos < 842 - $Litop - $Layout->{descheight} + 20) {\n";
 
 		if ($Ypos < 842 - $Litop - $Layout->{descheight} + 20) {
 

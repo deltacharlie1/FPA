@@ -2,6 +2,7 @@ sub pdf_invoice {
 
 $Invoice_id = $_[0];
 $Use_stamp = $_[1];
+$Tplt = $_[2];
 
 use GD;
 use PDF::API2;
@@ -34,7 +35,7 @@ $Vats->finish;
 
 #  Now get the invoice data
 
-$Invoices = $dbh->prepare("select invinvoiceno,date_format(invprintdate,'%d %b %Y'),date_format(invduedate,'%d %b %Y'),invcusterms,invcusref,invcusname,invcusaddr,invcuspostcode,invcuscontact,invitems,invremarks,date_format(curdate(),'%d %b %Y'),invstatus,invtype,invourref,cuscis from invoices left join customers on (cus_id=customers.id) where invoices.id=$Invoice_id and invoices.acct_id='$COOKIE->{ACCT}'");
+$Invoices = $dbh->prepare("select invinvoiceno,date_format(invprintdate,'%d %b %Y'),date_format(invduedate,'%d %b %Y'),invcusterms,invcusref,invcusname,invcusaddr,invcuspostcode,invcuscontact,invitems,invremarks,date_format(curdate(),'%d %b %Y'),invstatus,invtype,invourref,cuscis from invoice${Tplt}s left join customers on (cus_id=customers.id) where invoice${Tplt}s.id=$Invoice_id and invoice${Tplt}s.acct_id='$COOKIE->{ACCT}'");
 $Invoices->execute;
 @Invoice = $Invoices->fetchrow;
 $Invoices->finish;

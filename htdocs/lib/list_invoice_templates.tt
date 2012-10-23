@@ -1,0 +1,33 @@
+[% USE date -%]
+<div class="main" id="main">
+<h1>Invoice Template List</h1>
+[% INCLUDE page_select.tt -%]
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="listing">
+    <tr>
+      <th>Customer</th>
+      <th>Post Code</th>
+      <th>Description</th>
+      <th>Total</th>
+      <th>Next Due</th>
+      <th>Frequency</th>
+    </tr>
+[% class = [ "even","odd" ] -%]
+[%- FOREACH invoice IN invoices -%]
+  [%- ndx = loop.count % 2 -%]
+  [%- invfreq = invoice.invrepeatfreq -%]
+    <tr class="[%- class.$ndx -%]" onclick="location.href='/cgi-bin/fpa/update_invoice_template.pl?[%- invoice.invid -%]';">
+      <td>[%- invoice.invcusname -%]</td>
+      <td>[%- invoice.invcuspostcode -%]</td>
+      <td>[%- invoice.invdesc | truncate(30) -%]</td>
+      <td>[%- invoice.invamount -%]</td>
+      <td>[%- invoice.printdate -%]</td>
+      <td>[%- invoice.invrepeatfreq -%]</td>
+    </tr>
+[% END -%]
+  </table>
+</div>
+<div id="sidebar">
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+</div>
+</div>

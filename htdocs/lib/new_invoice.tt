@@ -1,31 +1,5 @@
 <div class="main" id="main">
 [% USE date(format = '%d-%b-%y') %]
-<div id="template" style="text-align:left;z-index:10100;display:none;" title="Invoice Frequency Details">
-<form id="repeat_details" form="repeat_details" class="newinvoice">
-  <table width="100%" border="0" cellpadding="0" cellspacing="0" class="formtable">
-    <tr>
-      <td><label>Repeat Frequency</label></td>
-      <td>
-        <select name="invrepeatfreq" id="invrepeatfreq" size="1">
-          <option value="" selected="selected">Immediate</option>
-          <option value="S">Once Only</option>
-          <option value="1">Monthly</option>
-          <option value="3">Quarterly</option>
-          <option value="12">Annually</option>
-        </select>
-      </td>
-    </tr>
-    <tr>
-      <td><label>Invoice Next Due</label></td>
-      <td><input type="text" name="invnextinvdate" id="invnextinvdate" size="10" value="[%- today.format -%]" readonly="readonly"/></td>
-    </tr>
-    <tr>
-      <td style="vertical-align:top;"><label>Email Message</label></td>
-      <td><textarea name="invemailmsg" id="invemailmsg" cols="20" rows="3"></textarea></td>
-    </tr>
-  </table>
-</form>
-</div>
 <div id="confirmdialog" style="text-align:left;z-index:10100;" title="Please Confirm">Is this a new customer?<p>Would you like to save these customer details for further invoices?</p></div>
 <form action="/cgi-bin/fpa/save_invoice.pl" method="post" name="form1" id="form1" class="newinvoice">
 <input type="hidden" name="cus_id" id="x_cus_id" value="[%- cus.id -%]"/>
@@ -266,15 +240,6 @@
         </a>
       </div>
     </li>
-[% IF cookie.ACCESS > 3 -%]
-    <li>
-      <div>
-        <a href="#" onclick="submit_details('Template');">
-         Save Invoice Template
-        </a>
-      </div>
-    </li>
-[% END -%]
   </ul>   
   <div id="sidebar-ad">
 [% INCLUDE adverts.tt -%]

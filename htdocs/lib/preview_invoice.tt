@@ -6,7 +6,7 @@
   </tr>
   <tr>
     <td>
-      <iframe id="pdf" name="pdf" width="100%" height="600" src="/cgi-bin/fpa/pdf_invoice.pl?[%- invoice.id -%]?[%- invoice.invlayout -%]"></iframe>
+      <iframe id="pdf" name="pdf" width="100%" height="600" src="/cgi-bin/fpa/pdf_invoice.pl?[%- invoice.id -%]?[%- invoice.invlayout -%]?[%- tplt -%]"></iframe>
     </td>
   </tr>
 </table>
@@ -15,7 +15,7 @@
   <ul>
     <li>
       <div>
-        <a href="/cgi-bin/fpa/update_invoice.pl?[%- invoice.id -%]">
+        <a href="/cgi-bin/fpa/update_invoice[%- tplt -%].pl?[%- invoice.id -%]">
          Close
         </a>
       </div>

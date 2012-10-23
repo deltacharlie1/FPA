@@ -1,64 +1,43 @@
 <div class="main" id="main">
 [%- USE date(format = '%d-%b-%y') %]
-[%- IF invoice.invtype == "C"; invtext = "Credit Note"; ELSIF invoice.invstatus == "Quote"; invtext = "Quotation"; ELSE; invtext = "Invoice"; END -%]
-<div id="template" style="text-align:left;z-index:10100;display:none;" title="Invoice Frequency Details">
-<form id="repeat_details" form="repeat_details" class="newinvoice">
-  <table width="100%" border="0" cellpadding="0" cellspacing="0" class="formtable">
-    <tr>
-      <td><label>Repeat Frequency</label></td>
-      <td>
-        <select name="invrepeatfreq" id="invrepeatfreq" size="1">
-          <option value="" selected="selected">Immediate</option>
-          <option value="S">Once Only</option>
-          <option value="1">Monthly</option>
-          <option value="3">Quarterly</option>
-          <option value="12">Annually</option>
-        </select>
-      </td>
-    </tr>
-    <tr>
-      <td><label>Invoice Next Due</label></td>
-      <td><input type="text" name="invnextinvdate" id="invnextinvdate" size="10" value="[%- today.format -%]" readonly="readonly"/></td>
-    </tr>
-    <tr>
-      <td style="vertical-align:top;"><label>Email Message</label></td>
-      <td><textarea name="invemailmsg" id="invemailmsg" cols="20" rows="3"></textarea></td>
-    </tr>
-  </table>
-</form>
-</div>
-<div id="confirmdialog" style="text-align:left;z-index:10100;" title="Please Confirm">Is this a new customer?<p>Would you like to save these customer details for further invoices?</p></div>
-<form action="/cgi-bin/fpa/save_invoice.pl" method="post" name="form1" id="form1" class="newinvoice">
+<form action="/cgi-bin/fpa/save_invoice_template.pl" method="post" name="form1" id="form1" class="newinvoice">
 <input type="hidden" name="id" id="x_id" value="[%- invoice.id -%]"/>
 <input type="hidden" name="cus_id" id="x_cus_id" value="[%- invoice.cus_id -%]"/>
 <input type="hidden" name="invitemcount" id="invitemcount" value="[%- invoice.invitemcount -%]"/>
 <input type="hidden" name="invitems" id="invitems" value=""/>
-<input type="hidden" name="invinvoiceno" id="x_invinvoiceno" value="[%- invoice.invinvoiceno -%]"/>
 <input type="hidden" name="item_tt" id="item_tt" value="[%- invoice.tottotal -%]"/>
-<input type="hidden" name="invstatus" id="x_invstatus" value="[%- invoice.invstatus -%]"/>
 <input type="hidden" name="cuscis" id="cuscis" value="[%- invoice.cuscis -%]"/>
-<div class="status">[%- UNLESS invoice.invstatus == "Quote"; invoice.invstatus; END -%] <span class="invtext">[%- invtext | remove(" No") -%]</span></div>
+<div class="status" style="width:250px;">Recurring Invoice Template</div>
   <table width="660" border="0" cellpadding="0" cellspacing="0" class="formtable">
     <tr>
       <td><label>Company Name</label></td>
       <td><input title="Company Name" name="invcusname" type="text" id="x_invcusname" size="20" value="[%- invoice.invcusname -%]" class="mandatory"/></td>
       <td><label>Invoice Type</label></td>
       <td>
-        <select name="invtype" id="invtype" onchange="change_invtext(this);" size="1">
-          <option value="S" [%- IF invoice.invtype == "S" -%]selected="selected"[%- END -%]>Sales Invoice</option>
-          <option value="C" [%- IF invoice.invtype == "C" -%]selected="selected"[%- END -%]>Credit Note</option>
+        <select name="invtype" id="invtype" size="1">
+          <option value="S" selected="selected">Recurring Sales Invoice</option>
         </select>
       </td>
     </tr>
     <tr>
       <td style="vertical-align:top;" rowspan="2"><label>Address</label></td>
       <td rowspan="2"><textarea title="Address" name="invcusaddr" id="x_invcusaddr" cols="20" rows="3">[%- invoice.invcusaddr -%]</textarea></td>
-      <td style="vertical-align:top;padding-top:9px;"><label><span class="invtext">[%- invtext -%]</span> Date</label></td>
-      <td style="vertical-align:top;"><input type="text" name="invprintdate" id="x_invprintdate" readonly="readonly" size="9" value="[%- date.format -%]"/></td>
+      <td style="vertical-align:top;padding-top:9px;"><label>Next Print Date</label></td>
+      <td style="vertical-align:top;"><input type="text" name="invprintdate" id="x_invprintdate" readonly="readonly" size="9" value="[%- invoice.printdate -%]"/></td>
     </tr>
     <tr>
-      <td style="vertical-align:top;" nowrap="nowrap"><label><span class="invtext">[%- invtext -%]</span> Number</label></td>
-      <td style="vertical-align:top;color:#800000;font-weight:bold;">[%- invoice.invinvoiceno -%]</td>
+      <td style="vertical-align:top;" nowrap="nowrap"><label>Frequency</label></td>
+      <td style="vertical-align:top;">
+        <select name="invrepeatfreq" id="invrepeatfreq" size="1">
+          <option value="Weekly"[%- IF invoice.invrepeatfreq=='Weekly' -%] selected = "selected"[%- END -%]>Weekly</option>
+          <option value="Monthly"[%- IF invoice.invrepeatfreq=='Monthly' -%] selected = "selected"[%- END -%]>Monthly</option>
+          <option value="Last Day of Month"[%- IF invoice.invrepeatfreq=='Last Day of Month' -%] selected = "selected"[%- END -%]>Monthly (Last Day)</option>
+          <option value="First Day of Month"[%- IF invoice.invrepeatfreq=='First Day of Month' -%] selected = "selected"[%- END -%]>Monthly (First Day)</option>
+          <option value="Quarterly"[%- IF invoice.invrepeatfreq=='Quarterly' -%] selected = "selected"[%- END -%]>Quarterly</option>
+          <option value="Biannually"[%- IF invoice.invrepeatfreq=='Biannually' -%] selected = "selected"[%- END -%]>Biannually</option>
+          <option value="Annually"[%- IF invoice.invrepeatfreq=='Annually' -%] selected = "selected"[%- END -%]>Annually</option>
+
+      </td>
     </tr>
     <tr>
       <td><label>Post Code</label></td>
@@ -176,23 +155,58 @@
       </td>
     </tr>
     <tr>
-      <td colspan="2" rowspan="3">Remarks<br/><textarea name="invremarks" id="remarks" cols="35" rows="2">[%- invoice.invremarks -%]</textarea></td>
+      <td colspan="2" rowspan="3">Remarks<br/><textarea name="invremarks" id="remarks" cols="30" rows="2">[%- invoice.invremarks -%]</textarea></td>
       <td style="text-align:right;"><strong>Sub Total : </strong></td>
-      <td id="st" style="text-align:right;padding-right:40px;">[%- invoice.invtotal | remove('-') -%]</td>
+      <td id="st" style="text-align:right;padding-right:80px;">[%- invoice.invtotal | remove('-') -%]</td>
     </tr>
     <tr>
 [% IF cookie.VAT == "N" -%]
       <td colspan="2">&nbsp;<div id="vt"></div></td>
 [% ELSE -%]
       <td style="text-align:right;"><strong>VAT : </strong></td>
-      <td id="vt" style="text-align:right;padding-right:40px;">[%- invoice.invvat | remove('-') -%]</td>
+      <td id="vt" style="text-align:right;padding-right:80px;">[%- invoice.invvat | remove('-') -%]</td>
 [% END -%]
     </tr>
     <tr>
       <td style="text-align:right;"><strong><span class="invtext">[%- invtext -%]</span> Total : </strong></td>
-      <td id="tt" style="text-align:right;padding-right:40px;">[%- invoice.tottotal | remove('-') -%]</td>
+      <td id="tt" style="text-align:right;padding-right:80px;">[%- invoice.tottotal | remove('-') -%]</td>
     </tr>
-  </table>
+    <tr>
+      <td colspan="4"><center><hr style="border-bottom:1px solid #233930;width:95%;"/></center></td>
+    </tr>
+  <tr>
+    <td colspan="4"><h2>Additional Information</h2></td>
+  </tr>
+  <tr>
+    <td colspan="4">
+      <table width="450" cellpadding="0" cellspacing="0" border="0" style="border:1px dotted #999999;">
+        <tr>
+          <td colspan="4" style="font-weight:bold;font-size:1.1em;">Invoice Counter</td>
+        </tr>
+        <tr>
+          <td><label>Next Invoice</label></td>
+          <td><input type="text" name="invnextinv" id="invnextinv" size="3" value="[%- invoice.invnextinv -%]"/></td>
+          <td><label>Last Invoice</label></td>
+          <td><input type="text" name="invlastinv" id="invlastinv" size="5" value="[%- invoice.invlastinv -%]"]"/></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="1"><label>Subject</label></td>
+    <td colspan="3"><input type="text" name="invemailsubj" id="invemailsubj" size="40" value="[%- invoice.invemailsubj -%]"/></td>
+  </tr>
+  <tr>
+    <td colspan="1" style="vertical-align:top;"><label>Message</label></td>
+    <td colspan="3">
+      <textarea name="invemailmsg" id="invemailmsg" cols="40" rows="6">[%- invoice.invemailmsg  -%]</textarea>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="1"><label>Copy to Self?</label></td>
+    <td colspan="3" nowrap="nowrap"><input type="checkbox" name="invemailcopy" id="invemailcopy" value="Y" checked="checked"/>
+  </tr>
+</table>
 </td>
 </tr>
 </table>
@@ -202,43 +216,23 @@
     <li>    
       <div>   
         <a href="#" onclick="submit_details('Final');">
-         Save &amp; Finalise Invoice
+         Save
         </a>
       </div>  
     </li>   
-    <li>
-      <div>
-        <a href="#" onclick="submit_details('Quote');">
-         Print as Quotation
-        </a>
-      </div>  
-    </li>
     <li>  
       <div>   
         <a href="#" onclick="submit_details('Preview');">
-         Preview / Save Draft
+         Preview
         </a>
       </div>  
     </li>   
-    <li>
-      <div>
-        <a href="/cgi-bin/fpa/update_invoice.pl?[%- invoice.id -%]">
-          Start Again
-        </a>
-      </div>
-    </li>
     <li>    
       <div>   
-        <input type="submit" name="submit" id="delete" value="Delete Invoice"/>
+        <a href="#" onclick="submit_details('Delete');">
+         Delete this Template
       </div>  
     </li>   
-    <li>
-      <div>
-        <a href="/cgi-bin/fpa/list_customer_invoices.pl?[%- invoice.cus_id -%]">
-          Invoice List
-        </a>
-      </div>
-    </li>
   </ul>   
   <div id="sidebar-ad">
 [% INCLUDE adverts.tt -%]

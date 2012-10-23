@@ -25,14 +25,14 @@ use DBI;
 $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
 
 unless ($FORM{rows}) {
-	$Invoices = $dbh->prepare("select cus_id,id as invid,invcusname,invcuspostcode,invdesc,date_format(invnextinvdate,'%d-%b-%y') as printdate,invrepeatfreq,(invtotal+invvat) as invamount from invoice_templates where acct_id='$COOKIE->{ACCT}' order by invnextinvdate");
+	$Invoices = $dbh->prepare("select cus_id,id as invid,invcusname,invcuspostcode,invdesc,date_format(invprintdate,'%d-%b-%y') as printdate,invrepeatfreq,(invtotal+invvat) as invamount from invoice_templates where acct_id='$COOKIE->{ACCT}' order by invprintdate");
         $Invoices->execute;
         $FORM{numrows} = $Invoices->rows;
         $FORM{offset} = 0;
         $FORM{rows} = 24;
 }
 
-	$Invoices = $dbh->prepare("select cus_id,id as invid,invcusname,invcuspostcode,invdesc,date_format(invnextinvdate,'%d-%b-%y') as printdate,invrepeatfreq,(invtotal+invvat) as invamount from invoice_templates where acct_id='$COOKIE->{ACCT}' order by invnextinvdate limit $FORM{offset},$FORM{rows}");
+	$Invoices = $dbh->prepare("select cus_id,id as invid,invcusname,invcuspostcode,invdesc,date_format(invprintdate,'%d-%b-%y') as printdate,invrepeatfreq,(invtotal+invvat) as invamount from invoice_templates where acct_id='$COOKIE->{ACCT}' order by invprintdate limit $FORM{offset},$FORM{rows}");
 $Invoices->execute;
 
 use Template;
@@ -117,7 +117,7 @@ function redisplay(action) {
 };
 
 print "Content-Type: text/html\n\n";
-$tt->process('list_templates.tt',$Vars);
+$tt->process('list_invoice_templates.tt',$Vars);
 
 $Invoices->finish;
 $dbh->disconnect;

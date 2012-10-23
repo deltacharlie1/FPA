@@ -223,11 +223,18 @@
     </li>
     <li>    
       <div>
+        <a href="/cgi-bin/fpa/new_invoice_template.pl?[%- invoice.id -%]">
+         Create Recurring Invoice 
+        </a>
+      </div>  
+    </li>
+    <li>    
+      <div>
         <a href="/cgi-bin/fpa/list_customer_invoices.pl?[%- invoice.cus_id -%]">
          Customer Invoice List 
         </a>
       </div>  
-    </li>   
+    </li>
   </ul>   
   <div id="sidebar-ad">
 [% INCLUDE adverts.tt -%]
