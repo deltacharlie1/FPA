@@ -13,11 +13,12 @@ use DBI;
 $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
 if ($Layout_id > 0) {
 	require "/usr/local/httpd/cgi-bin/fpa/pdf_layout.ph";
+	($PDF_data,$Invoice_no) = &pdf_invoicel($Invoice_id,'Y',$Tplt,$Layout_id,$Testonly);
 }
 else {
 	require "/usr/local/httpd/cgi-bin/fpa/pdf_invoice.ph";
+	($PDF_data,$Invoice_no) = &pdf_invoice($Invoice_id,'Y',$Tplt,$Layout_id,$Testonly);
 }
-($PDF_data,$Invoice_no) = &pdf_invoice($Invoice_id,'Y',$Tplt,$Layout_id,$Testonly);
 
 print "Content-Type: application/pdf\n";
 print "Content-Disposition: inline; filename=invoice_$Invoice_no.pdf\n\n";

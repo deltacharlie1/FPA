@@ -1,4 +1,4 @@
-sub pdf_invoice {
+sub pdf_invoicel {
 
 $Inv_id = $_[0];
 $Use_stamp = $_[1];
@@ -53,10 +53,10 @@ chop($I_sel);
 ($Reg_id,$Com_id) = split(/\+/,$COOKIE->{ACCT});
 
 if ($C_sel) {
-	$Companies = $dbh->prepare("select $C_sel from companies where reg_id=$Reg_id and id=$Com_id");
-	$Companies->execute;
-	$companies = $Companies->fetchrow_hashref;
-	$Companies->finish;
+	$PCompanies = $dbh->prepare("select $C_sel from companies where reg_id=$Reg_id and id=$Com_id");
+	$PCompanies->execute;
+	$companies = $PCompanies->fetchrow_hashref;
+	$PCompanies->finish;
 }
 if ($A_sel) {
 	$Accts = $dbh->prepare("select $A_sel from accounts where acct_id='$COOKIE->{ACCT}' and acctype='1200'");
@@ -66,25 +66,25 @@ if ($A_sel) {
 }
 if ($I_sel) {
 	$I_sel .= ",invstatus,invtype";
-	$Invoices = $dbh->prepare("select $I_sel from invoice${Tplt}s where acct_id='$COOKIE->{ACCT}' and id=$Inv_id");
-#	$Invoices = $dbh->prepare("select * from invoice${Tplt}s where acct_id='$COOKIE->{ACCT}' and id=$Inv_id");
-	$Invoices->execute;
-	$invoices = $Invoices->fetchrow_hashref;
-	$Invoices->finish;
+	$PInvoices = $dbh->prepare("select $I_sel from invoice${Tplt}s where acct_id='$COOKIE->{ACCT}' and id=$Inv_id");
+#	$PInvoices = $dbh->prepare("select * from invoice${Tplt}s where acct_id='$COOKIE->{ACCT}' and id=$Inv_id");
+	$PInvoices->execute;
+	$invoices = $PInvoices->fetchrow_hashref;
+	$PInvoices->finish;
 
 	while (($Key,$Value) = each %$invoices) {
 		$invoices->{$Key} =~ s/\xc2//g;
 	}
 }
 if ($S_sel) {
-	$Customers = $dbh->prepare("select $S_sel from invoice${Tplt}s left join customers on(cus_id=customers.id) where invoice${Tplt}s.acct_id='$COOKIE->{ACCT}' and invoice${Tplt}s.id=$Inv_id");
-	$Customers->execute;
-	$customers = $Customers->fetchrow_hashref;
-	$Customers->finish;
+	$PCustomers = $dbh->prepare("select $S_sel from invoice${Tplt}s left join customers on(cus_id=customers.id) where invoice${Tplt}s.acct_id='$COOKIE->{ACCT}' and invoice${Tplt}s.id=$Inv_id");
+	$PCustomers->execute;
+	$customers = $PCustomers->fetchrow_hashref;
+	$PCustomers->finish;
 
 	$customers->{delivaddr} = $customers->{delivaddr} || $invoices->{cusaddress};
 }
-$dbh->disconnect;
+# $dbh->disconnect;
 
 #  Now go through and split out the header and item items
 
@@ -147,12 +147,12 @@ $page = $pdf->openpage(1);
 $font = $pdf->corefont('Helvetica');
 $font_bold = $pdf->corefont('Helvetica Bold');
 
-$Overdue = $pdf->image_png('overdue.png');
+$Overdue = $pdf->image_png('../cgi/overdue.png');
 $Testimg = $pdf->image_png('/usr/local/git/fpa/htdocs/icons/testonly.png');
 
 #  Set out the first page
 
-&set_new_page;
+&set_new_lpage;
 
 $invoices->{invitems} =~ s/^.*?<tr>//is;		#  Remove everything up to the first table row
 $invoices->{invitems} =~ s/^.*?<tr>//is;		#  Then again to remove all headers
@@ -166,20 +166,20 @@ for $Row (@Row) {
 	$Row =~ s/^.*?<td.*?>//is;
         $Row =~ s/<td.*?>//gis;
 
-        @Cell = split(/\<\/td\>/i,$Row);
-	if ($Cell[0]) {
+        @PCell = split(/\<\/td\>/i,$Row);
+	if ($PCell[0]) {
 
 #  remove any date/increment brackets
 
-		$Cell[0] =~ s/\[(\%|\+|\-) //g;
-		$Cell[0] =~ s/ (\%|\+|\-)\]//g;
+		$PCell[0] =~ s/\[(\%|\+|\-) //g;
+		$PCell[0] =~ s/ (\%|\+|\-)\]//g;
 
 #  Convert ampersands
 
-		$Cell[0] =~ s/\&amp;/\&/ig;
-		$Cell[0] =~ s/<br\/>/\n/ig;
-		$Cell[3] =~ s/<br\/>//ig;
-		$Cell[5] =~ s/<br\/>//ig;
+		$PCell[0] =~ s/\&amp;/\&/ig;
+		$PCell[0] =~ s/<br\/>/\n/ig;
+		$PCell[3] =~ s/<br\/>//ig;
+		$PCell[5] =~ s/<br\/>//ig;
 
 		foreach $Item (@Items) {
 
@@ -193,25 +193,25 @@ for $Row (@Row) {
 			if ($Item->{lifldcode} =~ /a020/) {
 				$Litop = $Item->{litop};
 				$tb->y($Ypos);
-				$tb->text($Cell[0]);
+				$tb->text($PCell[0]);
 				($endw, $New_Ypos) = $tb->apply();
 			}
 			else {
 				if ($Item->{lijust} =~ /r/) {
 					$text->transform( -translate => [$Item->{lileft}+$Item->{liwidth}+10,$Ypos]);
-					$text->text_right($Cell[$Item->{lisource}]);
+					$text->text_right($PCell[$Item->{lisource}]);
 				}
 				else {
 					$text->transform( -translate => [$Item->{lileft},$Ypos]);
-					$text->text($Cell[$Item->{lisource}]);
+					$text->text($PCell[$Item->{lisource}]);
 				}
 			}
 		}
 
 		$Ypos = $New_Ypos - 25;
-		$nettotal += $Cell[3];
-		$vattotal += $Cell[5];
-		$invtotal += $Cell[3] + $Cell[5];
+		$nettotal += $PCell[3];
+		$vattotal += $PCell[5];
+		$invtotal += $PCell[3] + $PCell[5];
 
 		if ($Ypos < 842 - $Litop - $Layout->{descheight} + 20) {
 
@@ -221,7 +221,7 @@ for $Row (@Row) {
 				$page = $pdf->importpage($Rev_pdf,1,0);
 			}
 			$page = $pdf->importpage($pdf,1,0);
-			&set_new_page;
+			&set_new_lpage;
 		}
 	}
 }
@@ -247,12 +247,13 @@ $pdf->end;
 return ($PDF_doc,$invoices->{invinvoiceno});
 }
 
-sub set_new_page {
+sub set_new_lpage {
 
 ###  Form wide parameters  ###
 
 $g = $page->gfx();
 $text = $page->text();
+$text->font($font,10);
 
 ############   Variable Data   ####################
 

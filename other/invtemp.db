@@ -35,11 +35,12 @@ create table invoice_templates (
   `invyearend` varchar(20) NOT NULL DEFAULT '' COMMENT 'Invoice Yearend reporting period',
   `invnotes` text,
   `invlayout` int(11) NOT NULL DEFAULT '0',
-  invrepeatfreq varchar(20) not null default 'Monthly' comment ' the frequency with which the invoice is to be repeated week, month, year etc',
+  invrepeatfreq varchar(20) not null default '2' comment ' the frequency with which the invoice is to be repeated week, month, year etc',
   invnextinv decimal(6,0) not null default '1' comment ' the number of the next invoice',
   invlastinv decimal(6,0) not null default '999999' comment 'the last number, ie max of invoices to be produced',
   invemailsubj varchar(100) not null default '' comment 'email subject',
   invemailmsg varchar(5000) not null default '' comment 'message to place on email',
+  invemailcopy varchar(5) not null default 'Y' comment 'copy invoice to self',
   old_id int unsigned,
   PRIMARY KEY (`id`),
   index invtemp1 (acct_id)

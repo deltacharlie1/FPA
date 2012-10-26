@@ -18,7 +18,7 @@ if ($COOKIE->{PLAN} > 3) {
 	$Layouts->finish;
 }
 
-$Invoices = $dbh->prepare("select invoice_templates.id,cus_id,invcusname,invcusaddr,invcuspostcode,invcusref,date_format(invoice_templates.invprintdate,'%d-%b-%y') as printdate,invcusregion,invcusterms,invcuscontact,invcusemail,invtotal,invvat,invtotal + invvat as tottotal,(invtotal*0.8+invvat) as cistotal,invstatus,invfpflag,invremarks,invitems,invitemcount,cusdefpaymethod,cuscis,invlayout,invrepeatfreq,invnextinv,invlastinv,invemailsubj,invemailmsg from invoice_templates left join customers on (invoice_templates.cus_id=customers.id and invoice_templates.acct_id=customers.acct_id) where invoice_templates.id=$Inv_id and invoice_templates.acct_id='$COOKIE->{ACCT}'");
+$Invoices = $dbh->prepare("select invoice_templates.id,cus_id,invcusname,invcusaddr,invcuspostcode,invcusref,date_format(invoice_templates.invprintdate,'%d-%b-%y') as printdate,invcusregion,invcusterms,invcuscontact,invcusemail,invtotal,invvat,invtotal + invvat as tottotal,(invtotal*0.8+invvat) as cistotal,invstatus,invfpflag,invremarks,invitems,invitemcount,cusdefpaymethod,cuscis,invlayout,invrepeatfreq,invnextinv,invlastinv,invemailsubj,invemailmsg,invemailcopy from invoice_templates left join customers on (invoice_templates.cus_id=customers.id and invoice_templates.acct_id=customers.acct_id) where invoice_templates.id=$Inv_id and invoice_templates.acct_id='$COOKIE->{ACCT}'");
 $Invoices->execute;
 $Invoice = $Invoices->fetchrow_hashref;
 

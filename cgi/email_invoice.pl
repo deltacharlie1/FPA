@@ -35,11 +35,12 @@ else {
 
 	if ($FORM{layid} > 0) {
 		require "/usr/local/httpd/cgi-bin/fpa/pdf_layout.ph";
+		($PDF_data,$Invoice_no) = &pdf_invoicel($FORM{invid},$FORM{pdfstamp},$FORM{layid});
 	}
 	else {
 		require "/usr/local/httpd/cgi-bin/fpa/pdf_invoice.ph";
+		($PDF_data,$Invoice_no) = &pdf_invoice($FORM{invid},$FORM{pdfstamp},$FORM{layid});
 	}
-	($PDF_data,$Invoice_no) = &pdf_invoice($FORM{invid},$FORM{pdfstamp},$FORM{layid});
 
         $Encoded_msg = encode_base64($PDF_data);
 

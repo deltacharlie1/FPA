@@ -117,7 +117,7 @@ if (($COOKIE->{PLAN} > 3 || $Company[8] > 0) && $Company[7]) {
 
 #  Get overdue icon
 
-$Stamp = $pdf->image_png('overdue.png');
+$Stamp = $pdf->image_png('../cgi/overdue.png');
 $Testonly = $pdf->image_png('/usr/local/git/fpa/htdocs/icons/testonly.png');
 #  Set out the first page
 

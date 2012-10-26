@@ -24,9 +24,9 @@ while ($Recpayment = $Recpayments->fetchrow_hashref) {
 	if ($COOKIE->{ACCT} ne $Recpayment->{acct_id}) {
 		$COOKIE->{ACCT} = $Recpayment->{acct_id};
 		($Reg_id,$Com_id) = split(/\+/,$COOKIE->{ACCT});
-		$Companies = $dbh->prepare("select comvatscheme from companies where reg_id=$Reg_id and id=$Com_id");
-		$Companies->execute;
-		$Company = $Companies->fetchrow_hashref;
+		$BCompanies = $dbh->prepare("select comvatscheme from companies where reg_id=$Reg_id and id=$Com_id");
+		$BCompanies->execute;
+		$Company = $BCompanies->fetchrow_hashref;
 		$COOKIE->{VAT} = $Company->{comvatscheme};
 	}
 
@@ -63,7 +63,7 @@ while ($Recpayment = $Recpayments->fetchrow_hashref) {
 
 }
 
-$Companies->finish;
+$BCompanies->finish;
 $Recpayments->finish;
 $dbh->disconnect;
 exit;

@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-$ACCESS_LEVEL = 1;
+$ACCESS_LEVEL = 3;
 
 #  script to add an invoice template
 
@@ -82,7 +82,7 @@ else {
 #  Save the record
 
 	        if ($FORM{id}) {                #  We are updating an existing invoice/credit note
-        	        $Sts = $dbh->do("update invoice_templates set invcusref='$FORM{invcusref}',invtype='$FORM{invtype}',invcusname='$FORM{invcusname}',invcusaddr='$FORM{invcusaddr}',invcuspostcode='$FORM{invcuspostcode}',invcusregion='$FORM{invcusregion}',invcoa='$FORM{invcoa}',invcuscontact='$FORM{invcuscontact}',invcusemail='$FORM{invcusemail}',invcusterms='$FORM{invcusterms}',invremarks='$FORM{invremarks}',invfpflag='$FORM{invfpflag}',invitemcount=$FORM{invitemcount},invitems='$Items',invdesc='$FORM{invdesc}',invtotal='$FORM{invtotal}',invvat='$FORM{invvat}',invlayout='$FORM{invlayout}',invprintdate=str_to_date('$FORM{invprintdate}','%d-%b-%y'),invrepeatfreq='$FORM{invrepeatfreq}',invnextinv='$FORM{invnextinv}',invlastinv='$FORM{invlastinv}',invemailsubj='$FORM{invemailsubj}',invemailmsg='$FORM{invemailmsg}' where id=$FORM{id} and acct_id='$COOKIE->{ACCT}'");
+        	        $Sts = $dbh->do("update invoice_templates set invcusref='$FORM{invcusref}',invtype='$FORM{invtype}',invcusname='$FORM{invcusname}',invcusaddr='$FORM{invcusaddr}',invcuspostcode='$FORM{invcuspostcode}',invcusregion='$FORM{invcusregion}',invcoa='$FORM{invcoa}',invcuscontact='$FORM{invcuscontact}',invcusemail='$FORM{invcusemail}',invcusterms='$FORM{invcusterms}',invremarks='$FORM{invremarks}',invfpflag='$FORM{invfpflag}',invitemcount=$FORM{invitemcount},invitems='$Items',invdesc='$FORM{invdesc}',invtotal='$FORM{invtotal}',invvat='$FORM{invvat}',invlayout='$FORM{invlayout}',invprintdate=str_to_date('$FORM{invprintdate}','%d-%b-%y'),invrepeatfreq='$FORM{invrepeatfreq}',invnextinv='$FORM{invnextinv}',invlastinv='$FORM{invlastinv}',invemailsubj='$FORM{invemailsubj}',invemailmsg='$FORM{invemailmsg}',invemailcopy='$FORM{invemailcopy}' where id=$FORM{id} and acct_id='$COOKIE->{ACCT}'");
 	        }
 
 		if ($FORM{submit} =~ /Preview/i) {

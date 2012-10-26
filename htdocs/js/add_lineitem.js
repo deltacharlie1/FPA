@@ -162,7 +162,7 @@ function add_row() {
 
   var item_row;
   if (vat_registered) {
-    if (/^text$/i.test(cat)) {
+    if (/^0.00$/i.test(price)) {
       item_row = [desc,'','','','','','',''];
     }
     else {
@@ -170,7 +170,7 @@ function add_row() {
     }
   }
   else {
-    if (/^text$/i.test(cat)) {
+    if (/^0.00$/i.test(price)) {
       item_row = [desc,'','','','',''];
     }
     else {

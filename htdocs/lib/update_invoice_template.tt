@@ -29,13 +29,13 @@
       <td style="vertical-align:top;" nowrap="nowrap"><label>Frequency</label></td>
       <td style="vertical-align:top;">
         <select name="invrepeatfreq" id="invrepeatfreq" size="1">
-          <option value="Weekly"[%- IF invoice.invrepeatfreq=='Weekly' -%] selected = "selected"[%- END -%]>Weekly</option>
-          <option value="Monthly"[%- IF invoice.invrepeatfreq=='Monthly' -%] selected = "selected"[%- END -%]>Monthly</option>
-          <option value="Last Day of Month"[%- IF invoice.invrepeatfreq=='Last Day of Month' -%] selected = "selected"[%- END -%]>Monthly (Last Day)</option>
-          <option value="First Day of Month"[%- IF invoice.invrepeatfreq=='First Day of Month' -%] selected = "selected"[%- END -%]>Monthly (First Day)</option>
-          <option value="Quarterly"[%- IF invoice.invrepeatfreq=='Quarterly' -%] selected = "selected"[%- END -%]>Quarterly</option>
-          <option value="Biannually"[%- IF invoice.invrepeatfreq=='Biannually' -%] selected = "selected"[%- END -%]>Biannually</option>
-          <option value="Annually"[%- IF invoice.invrepeatfreq=='Annually' -%] selected = "selected"[%- END -%]>Annually</option>
+          <option value="1"[%- IF invoice.invrepeatfreq=='1' -%] selected = "selected"[%- END -%]>Weekly</option>
+          <option value="2"[%- IF invoice.invrepeatfreq=='2' -%] selected = "selected"[%- END -%]>Monthly</option>
+          <option value="3"[%- IF invoice.invrepeatfreq=='3' -%] selected = "selected"[%- END -%]>Monthly (Last Day)</option>
+          <option value="4"[%- IF invoice.invrepeatfreq=='4' -%] selected = "selected"[%- END -%]>Monthly (First Day)</option>
+          <option value="5"[%- IF invoice.invrepeatfreq=='5' -%] selected = "selected"[%- END -%]>Quarterly</option>
+          <option value="6"[%- IF invoice.invrepeatfreq=='6' -%] selected = "selected"[%- END -%]>Biannually</option>
+          <option value="7"[%- IF invoice.invrepeatfreq=='7' -%] selected = "selected"[%- END -%]>Annually</option>
 
       </td>
     </tr>
@@ -76,14 +76,15 @@
       <td><input title="Email Address" name="invcusemail" type="text" id="x_invcusemail" value="[%- invoice.invcusemail -%]" siz="20"/></td>
     </tr>
     <tr>
-      <td><label>Paid in Full?</label></td>
+<!--      <td><label>Paid in Full?</label></td>
       <td><input type="radio" name="invfpflag" id="fpn" value="N"[%- IF cookie.PREFS.substr(2,1) == 'N' -%] checked="checked"[%- END -%] onclick="$('#fp_type').css('visibility','hidden');"/>&nbsp;No&nbsp;&nbsp;<input type="radio" name="invfpflag" id="fpy" value="Y"[%- IF cookie.PREFS.substr(2,1) == 'Y' -%] checked="checked"[%- END -%] onclick="$('#fp_type').css('visibility','visible');"/>&nbsp;&nbsp;Yes<span id="fp_type" style="visibility:hidden;">&nbsp;&nbsp;
         <select name="txnmethod" id="pay_method" size="1">
           <option value="1300"[%- IF invoice.cusdefpaymethod == "1300" -%] selected="selected"[%- END -%]>Cash</option>
           <option value="1310"[%- IF invoice.cusdefpaymethod == "1310" -%] selected="selected"[%- END -%]>Cheque</option>
           <option value="1200"[%- IF invoice.cusdefpaymethod == "1200" -%] selected="selected"[%- END -%]>Bank Transfer</option>
         </select>
-      </td>
+      </td>  -->
+      <td colspan="2">&nbsp;<input type="hidden" name="invfpflag" id="fpn" value="N"/></td>
 [% IF cookie.PLAN > 3 -%]
 <input type="hidden" name="invpdf" id="invpdf" value="Y"/>
       <td><label>Select Invoice Layout</label></td>
@@ -204,7 +205,7 @@
   </tr>
   <tr>
     <td colspan="1"><label>Copy to Self?</label></td>
-    <td colspan="3" nowrap="nowrap"><input type="checkbox" name="invemailcopy" id="invemailcopy" value="Y" checked="checked"/>
+    <td colspan="3" nowrap="nowrap"><input type="checkbox" name="invemailcopy" id="invemailcopy" value="Y"[%- IF invoice.invemailcopy=='Y' -%] checked="checked"[%- END -%]/>
   </tr>
 </table>
 </td>
