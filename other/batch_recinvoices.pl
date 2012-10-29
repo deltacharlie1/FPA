@@ -12,6 +12,7 @@ $COOKIE->{ACCT} = '';
 $COOKIE->{USER} = "auto invoices";
 $No_of_Invoiceis = 0;
 $Invoices_text = '';
+$Ctr = 0;
 
 use DBI;
 use MIME::Base64;
@@ -25,18 +26,20 @@ $RecInvoices = $dbh->prepare("select *,date_format(invprintdate,'%d-%b-%y') as p
 $RecInvoices->execute;
 
 while ($RecInvoice = $RecInvoices->fetchrow_hashref) {
+	$Ctr++;
 
 #  Get new company's VAT scheme
 
 	if ($COOKIE->{ACCT} ne $RecInvoice->{acct_id}) {
 		if ($COOKIE->{ACCT}) {
+
         		open(SUMEMAIL,"| /usr/sbin/sendmail -t");
 		        print SUMEMAIL<<EOD;
 From: Auto-Invoices <fpainvoices\@corunna.com>
-To: dougconran\@btinternet.com;dconran\@localhost
+To: dconran
 Subject: $No_of_Invoices FreePlus Invoices have been generated for you
 
-The following invoices have been automatically genetated for oyu today:-
+The following invoices have been automatically generated for you today:-
 
 $Invoices_Text
 
@@ -83,6 +86,7 @@ EOD
 
 		$FORM{invitems} =~ s/\[\# (.+?) #\]/&sub_format($1,$RecInvoice->{invmonth},$RecInvoice->{invyear})/esmg;
 		$FORM{invremarks} =~ s/\[\# (.+?) #\]/&sub_format($1,$RecInvoice->{invmonth},$RecInvoice->{invyear})/esmg;
+		$FORM{invdesc} =~ s/\[\# (.+?) #\]/&sub_format($1,$RecInvoice->{invmonth},$RecInvoice->{invyear})/esmg;
 
 		&save_invoice('final');
 
@@ -90,9 +94,14 @@ EOD
 
 		$FORM{invemailsubj} =~ s/\[\# (.+?) #\]/&sub_format($1,$RecInvoice->{invmonth},$RecInvoice->{invyear})/esmg;
 		$FORM{invemailmsg} =~ s/\[\# (.+?) #\]/&sub_format($1,$RecInvoice->{invmonth},$RecInvoice->{invyear})/esmg;
+		$BTot = sprintf('%1.2f',$FORM{invtotal}+$FORM{invvat});
+		$Invoices_Text .=<<EOD;
+   $FORM{invinvoiceno}  -  $FORM{invcusname}
+				($BTot)		-  $FORM{invdesc}
 
-		$Invoices_Text .= "   $FORM{invinvoiceno}  -  $FORM{invcusname}\n";
+EOD
 
+		$No_of_Invoices++;
 		&send_email;
 
 #  Then update or delete the template for the next run
@@ -105,6 +114,25 @@ EOD
 		}
 	}
 }
+if ($COOKIE->{ACCT}) {
+
+	open(SUMEMAIL,"| /usr/sbin/sendmail -t");
+        print SUMEMAIL<<EOD;
+From: Auto-Invoices <fpainvoices\@corunna.com>
+To: dconran
+Subject: $No_of_Invoices FreePlus Invoices have been generated for you
+
+The following invoices have been automatically generated for you today:-
+
+$Invoices_Text
+
+Thank you for using FreePlus Accounts
+
+The FreePlus Accounts team
+EOD
+	close(SUMEMAIL);
+}
+
 $BCompanies->finish;
 $RecInvoices->finish;
 $dbh->disconnect;
@@ -172,12 +200,12 @@ sub send_email {
         open(EMAIL,"| /usr/sbin/sendmail -t");
         print EMAIL<<EOD;
 From: $BCompany->{comname} <fpainvoices\@corunna.com>
-To: dougconran\@btinternet.com;dconran\@localhost
+To: dconran
 Reply-To: $BCompany->{comname} <$BCompany->{regemail}>
 EOD
 	if ($FORM{invemailcopy} =~ /Y/i) {
 		print EMAIL <<EOD;
-cc: dconran\@127.0.0.1
+cc: dconran
 EOD
 	}
 	print EMAIL <<EOD;
@@ -185,7 +213,7 @@ Subject: $FORM{invemailsubj}
 MIME-Version: 1.0
 Content-Type: multipart/mixed;
         boundary="----=_NextPart_000_001D_01C0B074.94357480"
-Message-Id: <$$>
+Message-Id: <$$.$Ctr>
 From: $BCompany->{comname} <$BCompany->{regemail}> 
 X-Priority: 3
 X-Mailer: Postfix v2.0
