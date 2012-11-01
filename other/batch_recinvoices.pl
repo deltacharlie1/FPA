@@ -36,7 +36,7 @@ while ($RecInvoice = $RecInvoices->fetchrow_hashref) {
         		open(SUMEMAIL,"| /usr/sbin/sendmail -t");
 		        print SUMEMAIL<<EOD;
 From: Auto-Invoices <fpainvoices\@corunna.com>
-To: dconran
+To: $BCompany->{regemail}
 Subject: $No_of_Invoices FreePlus Invoices have been generated for you
 
 The following invoices have been automatically generated for you today:-
@@ -119,7 +119,7 @@ if ($COOKIE->{ACCT}) {
 	open(SUMEMAIL,"| /usr/sbin/sendmail -t");
         print SUMEMAIL<<EOD;
 From: Auto-Invoices <fpainvoices\@corunna.com>
-To: dconran
+To: $BCompany->{regemail}
 Subject: $No_of_Invoices FreePlus Invoices have been generated for you
 
 The following invoices have been automatically generated for you today:-
@@ -200,12 +200,12 @@ sub send_email {
         open(EMAIL,"| /usr/sbin/sendmail -t");
         print EMAIL<<EOD;
 From: $BCompany->{comname} <fpainvoices\@corunna.com>
-To: dconran
+To: $FORM{invcusemail}
 Reply-To: $BCompany->{comname} <$BCompany->{regemail}>
 EOD
 	if ($FORM{invemailcopy} =~ /Y/i) {
 		print EMAIL <<EOD;
-cc: dconran
+cc: $BCompany->{regemail}
 EOD
 	}
 	print EMAIL <<EOD;
