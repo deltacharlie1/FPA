@@ -1,5 +1,11 @@
 #!/usr/bin/perl
 
+#  This process creates an invoice and increments the subdue field by 1 month for each 'withdrawn' API update
+#  received.  We receive a 'witdrawn' update when the money is about to be placed in our bank account.
+#
+#  We can safely ignore any cancelled subscriptions because the sub will effectively lapse if the subdue field
+#  has not been updated.
+
 read(STDIN, $Buffer, $ENV{'CONTENT_LENGTH'});
 
 use JSON;
