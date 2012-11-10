@@ -285,16 +285,16 @@ function set_logout() {
 }
 function print_display(title) {
   if ($("#print_listing").length > 0) {
-    $(".listing").jqprint();
+    $("#print_listing").printElement({printMode:'popup'});
   }
   else {
     if ($("#results").length > 0) {
-      var $PrintHTML  = $("<h2>" + title + "</h2><h3>From: " + document.getElementById("tbstart").value + " To: " + document.getElementById("tbend").value + "</h3>" + $("#results").html());
-      $PrintHTML.jqprint();
+      $(".listing").printElement({printMode:'popup'});
     }
     else {
       if ($("#main").length > 0) {
         $("#main").jqprint();
+        $("#main").printElement({printMode:'popup'});
       }
       else {
         window.print();

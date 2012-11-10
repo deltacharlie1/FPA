@@ -44,7 +44,12 @@
   <ul id="htmltabs">
     <li>
       <div>
-          <input type="button" name="save" id="list" value="List Ledger Entries" onclick="print_list();"/>
+          <input type="button" name="save" id="list" value="List Ledger Entries" onclick="print_list('P');"/>
+      </div>
+    </li>
+    <li>
+      <div>
+          <input type="button" name="save" id="csv" value="List as csv" onclick="print_list('C');"/>
       </div>
     </li>
   </ul>

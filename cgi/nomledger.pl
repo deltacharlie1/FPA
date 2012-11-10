@@ -182,8 +182,8 @@ function get_balances() {
      $("#results").html(data);
   });
 }
-function print_list() {
-   $.get("/cgi-bin/fpa/print_nomledger_results.pl",$("form#form1").serialize() ,function(data) {
+function print_list(list) {
+   $.get("/cgi-bin/fpa/print_nomledger_results.pl",$("form#form1").serialize()+"&list="+list ,function(data) {
      $("#main").html(data);
      $("#htmltabs").hide();
      $("#printtab").show();
