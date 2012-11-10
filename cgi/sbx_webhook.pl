@@ -7,7 +7,10 @@ Content-Type: text/plain
 Status: 200 OK
 
 EOD
-exit;
+
+# warn "\n\n$Buffer\n\n";
+# exit;
+
 
 use JSON;
 use DBI;
@@ -15,7 +18,7 @@ use MIME::Base64;
 
 require "/usr/local/git/fpa/cgi/pdf_sub_invoice.ph";
 
-$dbh = DBI->connect("DBI:mysql:fpa");
+$dbh = DBI->connect("DBI:mysql:fpa3");
 
 #  Get the last invoice no
 
@@ -62,7 +65,33 @@ $Buffer = <<EOD;
 }
 EOD
 
+$Buffer = <<EOD;
+{
+  "payload": {
+    "bills": [
+      {
+        "id": "02N6EEHH34",
+        "status": "withdrawn",
+        "uri": "https://sandbox.gocardless.com/api/v1/bills/02N6EEHH34",
+        "amount": "20.0",
+        "amount_minus_fees": "19.8",
+        "source_type": "subscription",
+        "source_id": "026BBB78P2"
+      }
+    ],
+    "resource_type": "bill",
+    "action": "withdrawn",
+    "signature": "2f4af16965a6d967f1751ccf8b9d5a6ff7e5f85c8d6adfdc90fd1762bb1636ba"
+  }
+}
+EOD
 # warn "Webhook - Buffer = $Buffer\n";
+
+#  Get today's date
+
+$Tomorrow = `date -d "tomorrow" +%Y-%m-%d`;
+chomp($Tomorrow);
+print $Tomorrow."\n";
 
 @Sub_name = ("FreePlus Free Edition","Bookkeeper Basic","FreePlus Standard","Bookkeeper Standard","FreePlus Premium","Bookkeeper Premium");
 @Sub_amt = ("0.00","5.00","5.00","10.00","10.00","20.00");
@@ -70,14 +99,19 @@ EOD
 
 $Payload = decode_json($Buffer);
 
-if ($Payload->{payload}->{action} =~ /paid/i && $Payload->{payload}->{resource_type} =~ /bill/i) {
+if ($Payload->{payload}->{action} =~ /withdrawn/i && $Payload->{payload}->{resource_type} =~ /bill/i) {
 
        foreach $bill (@{$Payload->{payload}->{bills}}) {
 		if ($bill->{source_type} =~ /subscription/i) {
-#			$Sts = $dbh->do("update companies set comsubdue=date_add(comsubdue,interval 1 month) where comsubref='$bill->{source_id}'");
+			$Sts = $dbh->do("update companies set comsubdue=date_add(comsubdue,interval 1 month) where comsubref='$bill->{source_id}'");
 # 			warn "Webhook - \$Sts = \$dbh->do(\"update companies set comsubdue=date_add(comsubdue,interval 1 month) where comsubref='$bill->{source_id}'\")\n";
 
-			$bill->{paid_at} =~ s/T*$//;
+			$bill->{paid_at} = $Tomorrow;
+			$Bill_net = sprintf("%1.2f",$bill->{amount} * 0.8);
+			$Bill_vat = $bill->{amount} - $Bill_net;
+
+			$Fee_net = sprintf("%1.2f",$bill->{amount_minus_fees} * 0.8);
+			$Fees_vat = $bill->{amount_minus_fees} - $Fees_net;
 
 #  Get various company details
 
@@ -86,7 +120,7 @@ if ($Payload->{payload}->{action} =~ /paid/i && $Payload->{payload}->{resource_t
 			$Company = $Companies->fetchrow_hashref;
 			$Companies->finish;
 
-#			$Sts = $dbh->do("insert into subscriptions (acct_id,subdateraised,subinvoiceno,subdescription,subnet,subvat,subauthcode,substatus,submerchantref,subdatepaid) values ('$Company->{reg_id}+$Company->{id}','$bill->{paid_at}','$Subinvno','$Sub_name[$Company->{comsublevel}]','$Sub_amt[$Company->{comsublevel}]','$Sub_vat[$Company->{comsublevel}]','$bill->{id}','Paid','$bill->{source_id}','$bill->{paid_at}')");
+			$Sts = $dbh->do("insert into subscriptions (acct_id,subdateraised,subinvoiceno,subdescription,subnet,subvat,subauthcode,substatus,submerchantref,subdatepaid) values ('$Company->{reg_id}+$Company->{id}','$bill->{paid_at}','$Subinvno','$Sub_name[$Company->{comsublevel}]','$Sub_amt[$Company->{comsublevel}]','$Sub_vat[$Company->{comsublevel}]','$bill->{id}','Paid','$bill->{source_id}','$bill->{paid_at}')");
 
 			$Email_msg = sprintf<<EOD;
 FreePlus Accounts Invoice/Receipt

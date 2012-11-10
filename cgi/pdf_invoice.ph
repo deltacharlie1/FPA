@@ -4,6 +4,8 @@ $Invoice_id = $_[0];
 $Use_stamp = $_[1];
 $Tplt = $_[2];
 
+$Tplt = "";
+
 use GD;
 use PDF::API2;
 use PDF::TextBlock;
