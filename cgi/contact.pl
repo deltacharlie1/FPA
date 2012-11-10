@@ -62,7 +62,7 @@ else {
 	open(EMAIL,"| /usr/sbin/sendmail -F \"FreePlus Accounts\" -f \"freeplus\@corunna.com\" -t");
 
 	print EMAIL <<EOD;
-To: dconran\@localhost
+To: doug.conran\@corunna.com
 Subject: $FORM{subject} (for $FORM{recipient})
 
 From $FORM{name} <$FORM{email}>
