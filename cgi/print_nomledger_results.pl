@@ -47,9 +47,7 @@ Content-Type: text/plain\n\n
 <pre id="print_listing">
 EOD
 
-if ($FORM{list} =~ /P/i) {
-
-	format STDOUT_TOP =
+format STDOUT_TOP =
 @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<   Nominal Ledger Period:  @>>>>>>>> to @<<<<<<<<
 $COOKIE->{TAG},$FORM{tbstart},$FORM{tbend}
 
@@ -60,12 +58,12 @@ Code  Account            Date       Item Description                            
 ------------------------------------------------------------------------------------------------------------------------------------
 .
 
-	format STDOUT =
+format STDOUT =
 @<<<  @<<<<<<<<<<<<<<<<  @<<<<<<<<  @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<  @>>>>>>>>>  @>>>>>>>>>
 $Coaitem->{nomcode},$Coaitem->{coadesc},$Coaitem->{printdate},$Coadescr,$Debit,$Credit
 .
 
-	format SUMMARY = 
+format SUMMARY = 
                                                                                                             ----------------------
                                                                                                 Sub Total   @>>>>>>>>>  @>>>>>>>>>
 $Tot_debits,$Tot_credits
@@ -76,110 +74,74 @@ $Curdesc,$Net_debits,$Net_credits
 
 .
 
-	foreach $Coaitem (@$Coa) {
+foreach $Coaitem (@$Coa) {
 
-		if ($Coaitem->{nomcode} !~ /$Curcode/i) {
-			if ($Tot_debits + $Tot_credits >= 0) {
-				$Net_debits = sprintf('%1.2f',$Tot_debits + $Tot_credits);
-				$Net_credits = "";
-			}
-			else {
-				$Net_credits = sprintf('%1.2f',$Tot_debits + $Tot_credits);
-				$Net_credits =~ tr/-//d;
-				$Net_debits = "";
-			}
-
-			$Tot_debits =~ tr/-//d;
-			$Tot_credits =~ tr/-//d;
-
-			if ($Tot_debits > 0) { $Tot_debits = sprintf('%1.2f',$Tot_debits); }
-			if ($Tot_credits > 0) { $Tot_credits = sprintf('%1.2f',$Tot_credits); }
-
-			write SUMMARY;
-
-			$Tot_debits = "";
-			$Tot_credits = "";
-
-			$Curcode = $Coaitem->{nomcode};
-			$Curdesc = $Coaitem->{coadesc};
-		}
-
-		if ($Coaitem->{nomtype} =~ /T/i) {
-			$Coadescr = $Coaitem->{txndescr};
+	if ($Coaitem->{nomcode} !~ /$Curcode/i) {
+		if ($Tot_debits + $Tot_credits >= 0) {
+			$Net_debits = sprintf('%1.2f',$Tot_debits + $Tot_credits);
+			$Net_credits = "";
 		}
 		else {
-			$Coadescr = $Coaitem->{invdescr};
+			$Net_credits = sprintf('%1.2f',$Tot_debits + $Tot_credits);
+			$Net_credits =~ tr/-//d;
+			$Net_debits = "";
 		}
 
-		if ($Coaitem->{coatype} =~ /Assets|Expenses/i) {
-			if ($Coaitem->{balance} >= 0) {
-				$Debit = $Coaitem->{balance};
-				$Credit = "";
-			}
-			else {
-				$Credit = $Coaitem->{balance};
-				$Debit = "";
-			}
-		}
-		else {
-			if ($Coaitem->{balance} >= 0) {
-				$Credit = $Coaitem->{balance};
-				$Debit = "";
-			}
-			else {
-				$Debit = $Coaitem->{balance};
-				$Credit = "";
-			}
-		}
-		$Tot_debits += $Debit;
-		$Tot_credits += $Credit;
+		$Tot_debits =~ tr/-//d;
+		$Tot_credits =~ tr/-//d;
 
-		$Debit =~ tr/-//d;
-		$Credit =~ tr/-//d;
+		if ($Tot_debits > 0) { $Tot_debits = sprintf('%1.2f',$Tot_debits); }
+		if ($Tot_credits > 0) { $Tot_credits = sprintf('%1.2f',$Tot_credits); }
 
-		write;
+		write SUMMARY;
+
+		$Tot_debits = "";
+		$Tot_credits = "";
+
+		$Curcode = $Coaitem->{nomcode};
+		$Curdesc = $Coaitem->{coadesc};
 	}
-	write SUMMARY;
-	$Coadescr = "";
-	$Debit = "";
-	$Credit = "";
+
+	if ($Coaitem->{nomtype} =~ /T/i) {
+		$Coadescr = $Coaitem->{txndescr};
+	}
+	else {
+		$Coadescr = $Coaitem->{invdescr};
+	}
+
+	if ($Coaitem->{coatype} =~ /Assets|Expenses/i) {
+		if ($Coaitem->{balance} >= 0) {
+			$Debit = $Coaitem->{balance};
+			$Credit = "";
+		}
+		else {
+			$Credit = $Coaitem->{balance};
+			$Debit = "";
+		}
+	}
+	else {
+		if ($Coaitem->{balance} >= 0) {
+			$Credit = $Coaitem->{balance};
+			$Debit = "";
+		}
+		else {
+			$Debit = $Coaitem->{balance};
+			$Credit = "";
+		}
+	}
+	$Tot_debits += $Debit;
+	$Tot_credits += $Credit;
+
+	$Debit =~ tr/-//d;
+	$Credit =~ tr/-//d;
+
 	write;
 }
-else {
-	print "\"Code\",\"Account\",\"Date\",\"Item Description\",\"Debit\",\"Credit\"\n";
-	foreach $Coaitem (@$Coa) {
-
-		if ($Coaitem->{nomtype} =~ /T/i) {
-			$Coadescr = $Coaitem->{txndescr};
-		}
-		else {
-			$Coadescr = $Coaitem->{invdescr};
-		}
-
-		if ($Coaitem->{coatype} =~ /Assets|Expenses/i) {
-			if ($Coaitem->{balance} >= 0) {
-				$Debit = $Coaitem->{balance};
-				$Credit = "";
-			}
-			else {
-				$Credit = 0 - $Coaitem->{balance};
-				$Debit = "";
-			}
-		}
-		else {
-			if ($Coaitem->{balance} >= 0) {
-				$Credit = 0 - $Coaitem->{balance};
-				$Debit = "";
-			}
-			else {
-				$Debit = $Coaitem->{balance};
-				$Credit = "";
-			}
-		}
-		print "\"$Coaitem->{nomcode}\",\"$Coaitem->{coadesc}\",\"$Coaitem->{printdate}\",\"$Coadescr\",$Debit,$Credit\n";
-	}
-
-}
+write SUMMARY;
+$Coadescr = "";
+$Debit = "";
+$Credit = "";
+write;
 print "</pre></div>\n";
 
 $Coas->finish;

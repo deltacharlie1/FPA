@@ -183,11 +183,17 @@ function get_balances() {
   });
 }
 function print_list(list) {
-   $.get("/cgi-bin/fpa/print_nomledger_results.pl",$("form#form1").serialize()+"&list="+list ,function(data) {
-     $("#main").html(data);
-     $("#htmltabs").hide();
-     $("#printtab").show();
-   });
+  if (list == "C") {
+    location.href="/cgi-bin/fpa/csv_nomledger_results.pl";
+  }
+  else {
+
+    $.get("/cgi-bin/fpa/print_nomledger_results.pl",$("form#form1").serialize(),function(data) {
+      $("#main").html(data);
+      $("#htmltabs").hide();
+      $("#printtab").show();
+    });
+  }
 }
 </script>'
 };

@@ -19,7 +19,6 @@ foreach $pair (@pairs) {
         $Value =~ s/%([a-fA-F0-9][a-fA-F0-9])/pack("C",hex($1))/eg;
         $Value =~ tr/\\\'//d;
         $FORM{$Name} = $Value;
-warn "$Name = $Value\n";
 }
 
 use DBI;
