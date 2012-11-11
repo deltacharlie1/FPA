@@ -184,7 +184,7 @@ function get_balances() {
 }
 function print_list(list) {
   if (list == "C") {
-    location.href="/cgi-bin/fpa/csv_nomledger_results.pl";
+    location.href="/cgi-bin/fpa/csv_nomledger_results.pl?"+$("form#form1").serialize();
   }
   else {
 
