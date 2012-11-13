@@ -26,6 +26,9 @@ foreach $pair (@pairs) {
 
 ###  Validation
 
+use DBI;
+$dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
+
 $Errs = "";
 
 #  Email address exists
