@@ -62,6 +62,9 @@ function redisplay(action) {
     get_results(action.substring(0,1));
   }
 }
+function download_csv() {
+  location.href="/cgi-bin/fpa/csv_invrep.pl?" + $("form#form1").serialize();
+}
 </script>'
 };
 

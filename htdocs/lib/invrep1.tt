@@ -74,6 +74,13 @@
        <input type="reset" name="reset" id="reset" value="Start Again"/>
       </div>
     </li>
+[% IF cookie.PLAN > 3 -%]
+    <li>
+      <div>
+          <input type="button" name="save" id="csv" value="Download as csv" onclick="download_csv();"/>
+      </div>
+    </li>
+[% END -%]
   </ul>
   <div id="sidebar-ad">
 [% INCLUDE adverts.tt -%]

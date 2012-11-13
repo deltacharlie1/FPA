@@ -2,7 +2,12 @@ sub pdf_invoicel {
 
 $Inv_id = $_[0];
 $Use_stamp = $_[1];
-$Tplt = $_[2];
+if ($_[2] =~ /_template/) {
+        $Tplt = $_[2];
+}
+else {
+        $Tplt = "";
+}
 $Layout_id = $_[3];
 $Testonly = $_[4];
 

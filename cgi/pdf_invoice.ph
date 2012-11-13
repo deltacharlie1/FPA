@@ -2,9 +2,13 @@ sub pdf_invoice {
 
 $Invoice_id = $_[0];
 $Use_stamp = $_[1];
-$Tplt = $_[2];
 
-$Tplt = "";
+if ($_[2] =~ /_template/) {
+	$Tplt = $_[2];
+}
+else {
+	$Tplt = "";
+}
 
 use GD;
 use PDF::API2;
