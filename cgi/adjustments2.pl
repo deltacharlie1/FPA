@@ -65,6 +65,7 @@ else {
 		$Acctype{2300} = "Loan Increase";
 		$Acctype{3000} = "Increase in Share Capital";
 		$Acctype{4300} = "Un-specified Income";
+		$Acctype{4310} = "Bank Interest";
 	}
 	else {
 		$Loan_direction = "expense";
@@ -82,7 +83,7 @@ else {
 		$Acctype{7500} = "Wages";
 		$Acctype{7600} = "Payroll Taxes";
 	}
-	if ($FORM{paytype} =~ /1000|2300|3000/) {
+	if ($FORM{paytype} =~ /1000|2300|3000|43/) {
 		$Nomamt = $Txnamt;
 	}
 	else {

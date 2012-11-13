@@ -65,6 +65,7 @@ sub process_inv_vat {
 	my $Scheme = shift;	#  Scheme = S or C
 	my $Link_id = shift;	#  This is the invoice id
 
+	$Netdue = $FORM{invtotal};	#  Needs to be global
 	my $Vatdue = $FORM{invvat}; 	#  get the VAT into a temporary variable (in case it is a FRS scheme)
 
 	if ($COOKIE->{VAT} =~ /F/i) {
@@ -72,6 +73,7 @@ sub process_inv_vat {
 #  Calculate the reduced VAT.  VAT due = FRS percentage of GROSS value (ie invtotal + invvat)
 
 		$Vatdue = sprintf("%1.2f",($FORM{invtotal} + $FORM{invvat}) * $COOKIE->{FRS});
+		$Netdue = sprintf("%1.2f",($FORM{invtotal} + $FORM{invvat}) - $Vatdue);
 	}
 	if ($Scheme =~ /S/i) {		#  At point of invoicing
 
@@ -90,7 +92,7 @@ sub process_inv_vat {
         		($Reg_id,$Com_id) = split(/\+/,$COOKIE->{ACCT});
 			$Sts = $dbh->do("update companies set comvatcontrol=comvatcontrol + '$Vatdue' where reg_id=$Reg_id and id=$Com_id");
 
-			$Sts = $dbh->do("insert into vataccruals (acct_id,acrtype,acrtotal,acrvat,acrprintdate,acrnominalcode,acrtxn_id) values ('$COOKIE->{ACCT}','S','$FORM{invtotal}','$Vatdue',str_to_date('$FORM{invprintdate}','%d-%b-%y'),'$FORM{invcoa}',$Link_id)");
+			$Sts = $dbh->do("insert into vataccruals (acct_id,acrtype,acrtotal,acrvat,acrprintdate,acrnominalcode,acrtxn_id) values ('$COOKIE->{ACCT}','S','$Netdue','$Vatdue',str_to_date('$FORM{invprintdate}','%d-%b-%y'),'$FORM{invcoa}',$Link_id)");
 		}
 	}
 	elsif ($Scheme =~ /C/i && $COOKIE->{VAT} =~ /C/i) {		#  At point of Paying
@@ -100,7 +102,7 @@ sub process_inv_vat {
        		($Reg_id,$Com_id) = split(/\+/,$COOKIE->{ACCT});
 		$Sts = $dbh->do("update companies set comvatcontrol=comvatcontrol + '$Vatdue' where reg_id=$Reg_id and id=$Com_id");
 
-		$Sts = $dbh->do("insert into vataccruals (acct_id,acrtype,acrtotal,acrvat,acrprintdate,acrnominalcode,acrtxn_id) values ('$COOKIE->{ACCT}','S','$FORM{invtotal}','$Vatdue',str_to_date('$FORM{invprintdate}','%d-%b-%y'),'$FORM{invcoa}',$Link_id)");
+		$Sts = $dbh->do("insert into vataccruals (acct_id,acrtype,acrtotal,acrvat,acrprintdate,acrnominalcode,acrtxn_id) values ('$COOKIE->{ACCT}','S','$Netdue','$Vatdue',str_to_date('$FORM{invprintdate}','%d-%b-%y'),'$FORM{invcoa}',$Link_id)");
 	}
 }
 
@@ -346,8 +348,8 @@ EOD
 		unless ($FORM{txntype}) {
 			$FORM{txntype} = $FORM{invcoa};
 		}
-		$Sts = $dbh->do("update coas set coabalance=coabalance + '$FORM{invtotal}' where acct_id='$COOKIE->{ACCT}' and coanominalcode='$FORM{txntype}'");
-		$Sts = $dbh->do("insert into nominals (acct_id,link_id,nomtype,nomcode,nomamount,nomdate) values ('$COOKIE->{ACCT}',$FORM{id},'S','$FORM{txntype}','$FORM{invtotal}',str_to_date('$FORM{invprintdate}','%d-%b-%y'))");
+		$Sts = $dbh->do("update coas set coabalance=coabalance + '$iNetdue' where acct_id='$COOKIE->{ACCT}' and coanominalcode='$FORM{txntype}'");
+		$Sts = $dbh->do("insert into nominals (acct_id,link_id,nomtype,nomcode,nomamount,nomdate) values ('$COOKIE->{ACCT}',$FORM{id},'S','$FORM{txntype}','$Netdue',str_to_date('$FORM{invprintdate}','%d-%b-%y'))");
 
 #  Update the customer balance
 
