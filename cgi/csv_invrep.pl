@@ -86,6 +86,7 @@ if ($COOKIE->{VAT} =~ /N/) {
 		print<<EOD;
 "$Invoice->{printdate}","$Invoice->{invinvoiceno}","$Invoice->{invtype}","$Invoice->{invcusname}","$Invoice->{description}",$Invoice->{invamount},"$Invoice->{invstatus}",$Invoice->{invpaid}
 EOD
+	}
 }
 else {
 	print "\"Date\",\"Invoice\",\"Type\",\"Customer\",\"Description\",\"Net\",\"VAT\",\"Gross\",\"Status\",\"Paid\"\n";
