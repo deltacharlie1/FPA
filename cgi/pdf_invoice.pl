@@ -7,7 +7,7 @@ $ACCESS_LEVEL = 1;
 use Checkid;
 $COOKIE = &checkid($ENV{HTTP_COOKIE},$ACCESS_LEVEL);
 
-($Invoice_id,$Layout_id,$Tplt,$Testonly) = split(/\?/,$ENV{QUERY_STRING});
+($Invoice_id,$PDFstamp,$Layout_id,$Tplt,$Testonly) = split(/\?/,$ENV{QUERY_STRING});
 
 use DBI;
 $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");

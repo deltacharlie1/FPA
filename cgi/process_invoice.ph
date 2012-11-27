@@ -124,6 +124,7 @@ sub save_invoice {
 		$FORM{invtotal} = 0 - $FORM{invtotal};
 		$FORM{invvat} = 0 - $FORM{invvat};
 	}
+	$Netdue = $FORM{invtotal};	#  Needs to be global
 #  Set up the Amd/Del buttons on the line items
 
 	if ($FORM{invitems}) {
