@@ -35,11 +35,11 @@ else {
 
 	if ($FORM{layid} > 0) {
 		require "/usr/local/httpd/cgi-bin/fpa/pdf_layout.ph";
-		($PDF_data,$Invoice_no) = &pdf_invoicel($FORM{invid},$FORM{pdfstamp},$FORM{layid});
+		($PDF_data,$Invoice_no) = &pdf_invoicel($FORM{invid},$FORM{pdfstamp},'',$FORM{layid});
 	}
 	else {
 		require "/usr/local/httpd/cgi-bin/fpa/pdf_invoice.ph";
-		($PDF_data,$Invoice_no) = &pdf_invoice($FORM{invid},$FORM{pdfstamp},$FORM{layid});
+		($PDF_data,$Invoice_no) = &pdf_invoice($FORM{invid},$FORM{pdfstamp},'',$FORM{layid});
 	}
 
         $Encoded_msg = encode_base64($PDF_data);
@@ -61,7 +61,8 @@ MIME-Version: 1.0
 Content-Type: multipart/mixed;
         boundary="----=_NextPart_000_001D_01C0B074.94357480"
 Message-Id: <$Checkid::Cookie{'fpa-cookie'}>
-From: $COOKIE->{TAG} <$COOKIE->{ID}> 
+From: invoices\@corunna.com
+Reply-To: $COOKIE->{TAG} <$COOKIE->{ID}> 
 X-Priority: 3
 X-Mailer: Postfix v2.0
 X-MimeOLE: Produced By Microsoft MimeOLE V5.50.4133.2400

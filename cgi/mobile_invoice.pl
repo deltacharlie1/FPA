@@ -277,11 +277,12 @@ sub sendemail {
 
 	if ($FORM{invlayout} > 0) {
 		require "/usr/local/httpd/cgi-bin/fpa/pdf_layout.ph";
+		($PDF_data,$Invoice_no) = &pdf_invoice1($FORM{id},'Y','',$FORM{invlayout},'T');
 	}
 	else {
 		require "/usr/local/httpd/cgi-bin/fpa/pdf_invoice.ph";
+		($PDF_data,$Invoice_no) = &pdf_invoice($FORM{id},'Y','',$FORM{invlayout},'T');
 	}
-	($PDF_data,$Invoice_no) = &pdf_invoice($FORM{id},'Y',$FORM{invlayout},'T');
 
         $Encoded_msg = encode_base64($PDF_data);
 

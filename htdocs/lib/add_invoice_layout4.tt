@@ -7,7 +7,7 @@
   <ul>
     <li>
       <div>
-        <a href="/cgi-bin/fpa/layout_invoice_layout.pl?[%- layid -%]"  name="save" id="save">Change Layout</a>
+        <a href="/cgi-bin/fpa/layout_invoice_layout.pl?Y?[%- layid -%]"  name="save" id="save">Change Layout</a>
       </div>
     </li>
   </ul>
