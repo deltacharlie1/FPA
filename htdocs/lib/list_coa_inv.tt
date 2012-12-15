@@ -48,7 +48,7 @@
 [% class = [ "even","odd" ] -%]
 [%- FOREACH entry IN entries -%]
   [%- ndx = loop.count % 2 -%]
-  [%- IF entry.invtype == 'S'; iprog = 'invoice'; itxt = 'Inv'; ELSE; iprog = 'purchase'; itxt = 'Pur'; END -%]
+  [%- IF entry.invtype == 'S'; iprog = 'invoice'; itxt = 'Inv'; ELSIF entry.invtype == 'C'; iprog = 'invoice'; itxt = 'CR'; ELSIF entry.invtype == 'P'; iprog = 'purchase'; itxt = 'Pur'; ELSIF entry.invtype == 'R'; iprog = 'purchase'; itxt = 'Rfd'; ELSE; iprog = ''; itxt = ''; END -%]
   [%- IF entry.nomtype == 'S' -%]
     <tr class="[%- class.$ndx -%]">
       <td[%- IF nomcodes.defined AND nomcodes.size() > 0 -%] ondblclick="change_nomcode(this,[%- entry.nom_id -%],'[%- entry.invcusname | truncate(25) -%]');"[%- END -%]>[%- entry.printdate -%]</td>
