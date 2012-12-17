@@ -140,19 +140,20 @@ $Net = "";
 $Vat = "";
 $Total = "";
 
-$pdf = PDF::API2->open($Layout->{layfile});
+$pdf = PDF::API2->open("$Layout->{layfile}");
 if ($Layout->{layreversefile}) {
 	$Revs = $dbh->prepare("select layfile from invoice_layouts where acct_id='$COOKIE->{ACCT}' and id=$Layout->{layreversefile}");
 	$Revs->execute;
 	$Rev = $Revs->fetchrow_hashref;
 	$Revs->finish;
-	$Rev_pdf = PDF::API2->open($Rev->{layfile});
+	$Rev_pdf = PDF::API2->open("$Rev->{layfile}");
 }
 $page = $pdf->openpage(1);
 $font = $pdf->corefont('Helvetica');
 $font_bold = $pdf->corefont('Helvetica Bold');
 
 $Overdue = $pdf->image_png('../cgi/overdue.png');
+$Paid = $pdf->image_png('/usr/local/git/fpa/htdocs/icons/paid.png');
 $Testimg = $pdf->image_png('/usr/local/git/fpa/htdocs/icons/testonly.png');
 
 #  Set out the first page
@@ -244,9 +245,11 @@ foreach $Calc (@Calc) {
 	$text->transform( -translate => [$Calc->{lileft}+$Calc->{liwidth}+10,842-$Calc->{lisize}-$Calc->{litop}]);
 	$text->text_right(sprintf("%1.2f",${$Calc->{lialias}}));
 }
+
 if ($Rev_pdf) {
 	$page = $pdf->importpage($Rev_pdf,1,0);
 }
+
 my $PDF_doc = $pdf->stringify();
 $pdf->end;
 return ($PDF_doc,$invoices->{invinvoiceno});
@@ -291,6 +294,7 @@ $tb = PDF::TextBlock->new({
    h     => $Layout->{descheight},
    align => 'left',
 });
+
 if ($I_sel =~ /invremarks/i) {
 	$rb = PDF::TextBlock->new({
    pdf   => $pdf,

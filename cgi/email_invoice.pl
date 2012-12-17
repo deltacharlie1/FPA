@@ -61,7 +61,7 @@ MIME-Version: 1.0
 Content-Type: multipart/mixed;
         boundary="----=_NextPart_000_001D_01C0B074.94357480"
 Message-Id: <$Checkid::Cookie{'fpa-cookie'}>
-From: invoices\@corunna.com
+From: $COOKIE->{TAG} <invoices\@corunna.com>
 Reply-To: $COOKIE->{TAG} <$COOKIE->{ID}> 
 X-Priority: 3
 X-Mailer: Postfix v2.0
