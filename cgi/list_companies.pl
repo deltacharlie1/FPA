@@ -26,7 +26,7 @@ else {
 }
 
 if ($COOKIE->{BACCT} == '1+1') {
-	$Companies = $dbh->prepare("select distinct companies.id,companies.reg_id,companies.comname,comcontact,comemail,count(invinvoiceno)as comyearend,comvatscheme,comvatduein,concat(companies.reg_id,'+',companies.id) as comcis from companies left join invoices on (concat(companies.reg_id,'+',companies.id)=invoices.acct_id) group by comname order by comname desc");
+	$Companies = $dbh->prepare("select distinct companies.id,companies.reg_id,companies.comname,comcontact,comemail,count(invinvoiceno)as comyearend,comvatscheme,comvatduein,concat(companies.reg_id,'+',companies.id) as comcis from companies left join invoices on (concat(companies.reg_id,'+',companies.id)=invoices.acct_id) where  reg_id=1223 group by comname order by comname desc");
 }
 else {
 	$Companies = $dbh->prepare("select distinct companies.id,companies.reg_id,companies.comname,comcontact,comemail,date_format(comyearend,'%b') as comyearend,comvatscheme,comvatduein,comcis from companies left join reg_coms on (companies.id=com_id)  where (reg_coms.reg1_id=$Reg_id or reg_coms.reg2_id=$Reg_id) order by comname $Limit");

@@ -78,17 +78,17 @@ else {
 #  6.  Subtract from the Debtors control (1100) and Sales Control (4000,4100,4200) coas
 
 		$Sts = $dbh->do("update coas set coabalance=coabalance - $Tot where coanominalcode='1100' and acct_id='$COOKIE->{ACCT}'");
-	        $Sts = $dbh->do("insert into nominals (acct_id,link_id,nomtype,nomcode,nomamount,nomdate) values ('$COOKIE->{ACCT}',$FORM{id},'S','1100','-$Tot',now())");
+#	        $Sts = $dbh->do("insert into nominals (acct_id,link_id,nomtype,nomcode,nomamount,nomdate) values ('$COOKIE->{ACCT}',$FORM{id},'S','1100','-$Tot',now())");
 
 
 		$Sts = $dbh->do("update coas set coabalance=coabalance - $Invoice[3] where coanominalcode='$Invoice[2]' and acct_id='$COOKIE->{ACCT}'");
-	        $Sts = $dbh->do("insert into nominals (acct_id,link_id,nomtype,nomcode,nomamount,nomdate) values ('$COOKIE->{ACCT}',$FORM{id},'S','$Invoice[2]','-$Invoice[3]',now())");
+#	        $Sts = $dbh->do("insert into nominals (acct_id,link_id,nomtype,nomcode,nomamount,nomdate) values ('$COOKIE->{ACCT}',$FORM{id},'S','$Invoice[2]','-$Invoice[3]',now())");
 
 #  7.  VAT
 
 		unless ($COOKIE->{VAT} =~ /N/) {
 			$Sts = $dbh->do("update coas set coabalance=coabalance - $Invoice[4] where coanominalcode='2100' and acct_id='$COOKIE->{ACCT}'");
-	        	$Sts = $dbh->do("insert into nominals (acct_id,link_id,nomtype,nomcode,nomamount,nomdate) values ('$COOKIE->{ACCT}',$FORM{id},'S','2100','-$Invoice[4]',now())");
+#	        	$Sts = $dbh->do("insert into nominals (acct_id,link_id,nomtype,nomcode,nomamount,nomdate) values ('$COOKIE->{ACCT}',$FORM{id},'S','2100','-$Invoice[4]',now())");
 			if ($COOKIE->{VAT} =~ /S/) {
 
 #  Delete from VAT accruals and deduct from comvatcontrol
@@ -96,6 +96,9 @@ else {
 				$Sts = $dbh->do("delete from vataccruals where acct_id='$COOKIE->{ACCT}' and acrtxn_id=$FORM{id}");
 			}
 		}
+#  Delete entries from the nominal ledger
+
+		$Sts = $dbh->do("delete from nominals where acct_id='$COOKIE->{ACCT}' and nomtype='S' and link_id=$FORM{id}");
 
 #  8.  Delete any entries in the items table
 
