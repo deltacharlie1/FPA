@@ -1,5 +1,5 @@
     <div class="leftcol largecol">
-<center><div style="border:1px solid #d2944e;color:#87441c;background-color:#ffd9a6;margin:5px;font-size:18px;font-weight:normal;padding:10px;z-index:2;text-align:center;width:600px;">The system will be unavailable for about 30 minutes from 8pm today, Sunday, whilst we carry out some routine maintenance</div></center>
+<!-- <center><div style="border:1px solid #d2944e;color:#87441c;background-color:#ffd9a6;margin:5px;font-size:18px;font-weight:normal;padding:10px;z-index:2;text-align:center;width:600px;">The system will be unavailable for about 30 minutes from 8pm today, Sunday, whilst we carry out some routine maintenance</div></center> //-->
       <div id="frmlogin">
         <form action="/cgi-bin/fpa/login2.pl" method="post" name="form1" id="form1">
           <table width="100%" border="0" cellspacing="0" cellpadding="4">
