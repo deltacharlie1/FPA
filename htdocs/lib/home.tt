@@ -2,7 +2,7 @@
 <div style="position:absolute;top:70px;left:200px;">
 <a href="#" onclick="window.open('/lessons/invlayout/invlayout.html','invlayout','width=680,height=520,top=100,left=400');"><img src="/wp-content/themes/freeplusaccounts/images/starburst2.png"/></a>
 </div>
-<center><div style="border:1px solid #d2944e;color:#87441c;background-color:#ffd9a6;margin:5px;font-size:18px;font-weight:normal;padding:10px;z-index:2;text-align:center;width:600px;">The system will be unavailable for about 30 minutes from 8pm today, Sunday, whilst we carry out some routine maintenance</div></center>
+<!-- <center><div style="border:1px solid #d2944e;color:#87441c;background-color:#ffd9a6;margin:5px;font-size:18px;font-weight:normal;padding:10px;z-index:2;text-align:center;width:600px;">The system will be unavailable for about 30 minutes from 8pm today, Sunday, whilst we carry out some routine maintenance</div></center>  //-->
 <h1 style="width:600px;">Why use FreePlus Accounts?</h1>
 <p>FreePlus Accounts is a complete accounting application for small businesses, start-ups and sole traders that is <b>COMPLETELY FREE</b> to use for as long as you like and as often as you wish!&nbsp;&nbsp;Whether you just want to send out a few quotations and invoices or need a full-blown accounting system why not check out the great feature set <a href="/features">HERE</a> to see how it can help your business.</p>
 <h3 style="padding:0px;">If you are</h3>
