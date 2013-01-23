@@ -86,6 +86,16 @@ $(document).ready(function(){
 [% IF cookie.PREFS.substr(1,1) == 'Y' -%]
   setTimeout("set_logout()",1500000);
 [% END -%]
+[% IF cookie.BACCT == '1+1' -%]
+  $("#getadd").dialog({
+    bgiframe: true,
+    autoOpen: false,
+    position: [200,100],
+    height: 200,
+    width: 400,
+    modal: true,
+  });
+[% END -%]
 });
 </script>
 [% javascript %]
@@ -252,7 +262,11 @@ $(document).ready(function(){
 [% IF cookie.BUS == "1" AND cookie.ACCESS > 1 -%]
         <li class="bookkeeper"><a href="#"><span>Bookkeeper</span></a>
           <ul>
+  [% IF cookie.BACCT == '1+1' -%]
+            <li><a href="#" onclick='$("#getadd").dialog("open");'>List Companies</a></li>
+  [% ELSE -%]
             <li><a href="/cgi-bin/fpa/list_companies.pl">List Companies</a></li>
+  [% END -%]
             <li><a href="/cgi-bin/fpa/bulk_add_invoices.pl">Bulk Add Invoices</a></li>
             <li><a href="/cgi-bin/fpa/bulk_add_purchases.pl">Bulk Add Purchases</a></li>
             <li><a href="/cgi-bin/fpa/add_companies.pl">Add Companies</a></li>
@@ -475,5 +489,20 @@ $(document).ready(function(){
     </table>
   </form>
 </div>
+[% IF cookie.BACCT == '1+1' -%]
+<div id="getadd" title="Get Email">
+  <form id="fgetadd" name="fgetadd" method="post" action="/cgi-bin/fpa/list_companies.pl">
+    <table width="100%" cellpadding="4" cellspacing="0" border="0" class="formtable">
+      <tr class="notexpenses">
+        <td><label>Reg Email</label></td>
+        <td><input id="regemail" name="regemail"/></td>
+      </tr>
+      <tr>
+        <td align="center" colspan="2"><input type="submit" name="submit" value="Submit"/></td>
+      </tr>
+    </table>
+  </form>
+</div>
+[% END -%]
 </body>
 </html>
