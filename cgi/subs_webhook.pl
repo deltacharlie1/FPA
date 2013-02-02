@@ -151,6 +151,16 @@ EOD
 
 EOD
         close(EMAIL);
+
+        open(DOUGMAIL,"| /usr/sbin/sendmail -t");
+        print DOUGMAIL<<EOD;
+From: FreePlus Accounts <fpainvoices\@corunna.com>
+To: doug.conran\@corunna.com
+Subject: JSON subscription
+
+$Payload
+EOD
+close(DOUGMAIL);
 }
 
 
