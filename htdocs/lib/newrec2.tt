@@ -137,12 +137,29 @@ WARNING - you cannot reconcile this statement as you already have a reconciled s
           <th>Amt</th>
           <th>Remaining</th>
         </tr>
-[% FOREACH entry IN stmt -%]
+[% GCtot==0; FOREACH entry IN stmt -%]
         <tbody id="tbod[%- loop.count -%]">
         <tr class="even" id="trbnk[%- loop.count -%]" ondblclick="matchit(this);">
           <td nowrap="nowrap">[%- entry.date -%]</td>
           <td>[%- entry.desc | truncate(40) -%]</td>
           <td style="text-align:right;">[%- entry.amt | format('%1.2f') -%]</td>
+  [% IF entry.desc.search('GOCARDLESS') AND cookie.ACCT == '1+1' -%]
+         <td style="text-align:right;">0.00</td>
+        </tr>
+        <tr>
+          <td colspan="4">
+            <table width="336" cellpadding="0" cellspacing="0" class="listing droppable dropzone" id="bnk[%- loop.count -%]">
+              <tr class="placeholder">
+                <td style="display:none;"></td>
+                <td style="display:none;">gocardless</td>
+                <td nowrap="nowrap">[%- entry.date -%]</td>
+                <td>[%- entry.desc | truncate(40) -%]</td>
+                <td style="text-align:right;">[%- entry.amt | format('%1.2f'); GCtot=GCtot+entry.amt -%]</td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+  [% ELSE -%]
           <td style="text-align:right;[%- IF entry.amt < 0 -%] color:#c80000;[%- END -%]"><span id="pbnk[%- loop.count -%]">[%- entry.amt | format('%1.2f') -%]</span></td>
         </tr>
         <tr>
@@ -154,7 +171,11 @@ WARNING - you cannot reconcile this statement as you already have a reconciled s
             </table>
           </td>
         </tr>
+  [% END -%]
         </tbody>
+[% END -%]
+[%- IF cookie.ACCT=='1+1' -%]
+        <input type="hidden" name="gctot" id="gctot" value="[%- GCtot | format('%1.2f') -%]"/>
 [% END -%]
         <tbody id="tbod0">
         <tr class="even" id="trbnk0" ondblclick="matchit(this);">

@@ -36,6 +36,19 @@ while (( $Key,$Value) = each %FORM) {
 
 # warn "$FORM{stmtdata}\n";
 
+if ($COOKIE->{ACCT} == '1+1') {
+
+#  Get the gocardless customer details
+
+	$GCCustomers = $dbh->prepare("select id,cusname,cusdefvatrate,cusdefcoa from customers where acct_id='$COOKIE->{ACCT}' and cusname like 'gocardless sub%'");
+	$GCCustomers->execute;
+	$GCCustomer = $GCCustomers->fetchrow_hashref;
+	$GCCustomers->finish;
+
+	$GCvatrate = $GCCustomer->{cusdefvatrate} * 100;
+	$GCvatrate .= '%';
+}
+
 require "/usr/local/git/fpa/cgi/process_invoice.ph";
 require "/usr/local/git/fpa/cgi/process_purchase.ph";
 
@@ -43,11 +56,57 @@ $Txn_ids = "";
 $New_data = "";
 $CFdate = '';
 $No_txns = 0;
+$GCdate = '';
+$GCdesc = '';
+$GCgross = 0;
+$GCcount = 0;
 
 $FORM{stmtdata} =~ tr/\r\n//d;
 @Txn;
 
 while ($FORM{stmtdata} =~ s/^.*?(<tbody id.*?<\/tbody>.*?<\/tbody>)/&Tbody($1)/oegi) {}
+
+if ($GCdesc && $COOKIE->{ACCT} == '1+1') {
+
+	$GCnet = sprintf('%1.2f',$GCgross / (1+$GCCustomer->{cusdefvatrate}));
+	$GCvat = $GCgross - $GCnet;
+
+	$FORM{id} = 0;
+	$FORM{cus_id} = $GCCustomer->{id};
+	$FORM{invprintdate} = $GCdate;
+	$FORM{vatrate} = $GCCustomer->{cusdefvatrate};
+	$FORM{invcoa} = $GCCustomer->{cusdefcoa};
+	$FORM{invcoa} = '4000';
+	$FORM{invcusname} = $GCCustomer->{cusname};
+	$FORM{invdesc} = 'GoCardless subs';
+	$FORM{invitems} = <<EOD;
+<table id="itemstable" class="items" width="610" border="0" cellpadding="0" cellspacing="0">
+  <tbody>
+    <tr>
+      <th width="280">Description</th>
+      <th style="text-align: right;" width="50">Unit<br>Price</th>
+      <th style="text-align: right;" width="30">Qty</th>
+      <th style="text-align: right;" width="50">Sub<br>Total</th>
+      <th style="text-align: center;" width="30">VAT<br>Rate</th>
+      <th style="text-align: right;" width="40">VAT<br>Amt</th>
+      <th style="text-align: right;" width="60">Total</th>
+    </tr>
+  </tbody>
+  <tbody id="items">
+$GCdesc
+  </tbody>
+</table>
+EOD
+	$FORM{txnamount} = $GCgross;
+	$FORM{invtotal} = $GCnet;
+	$FORM{invvat} = $GCvat;
+	$FORM{invcusregion} = "UK";
+	$FORM{invtype} = 'S';
+	&save_invoice('final');
+	&money_in();
+	$Txn_ids .= $New_txn_id.',';
+	&pay_invoice();
+}
 
 #  Create the most recent statement entry
 
@@ -121,6 +180,28 @@ sub Tbody {
 #  This is easy, just add the txn id to the txn_ids list
 
 			$Txn_ids .= $Cells[0].",";
+		}
+		elsif ($Cells[1] =~ /gocardless/i && $COOKIE->{ACCT} == '1+1') {
+
+#  Calculate the VAT
+
+			$GCnet = sprintf('%1.2f',$Cells[4] / (1+$GCCustomer->{cusdefvatrate}));
+			$GCvat = sprintf('%1.2f',$Cells[4] - $GCnet);
+
+			$GCdate = $Cells[2];
+			$GCdesc .= <<EOD;
+<tr>
+  <td>$Cells[2] - $Cells[3]</td>
+  <td class="txtright">$GCnet</td>
+  <td class="txtright">1</td>
+  <td class="txtright">$GCnet</td>
+  <td class="txtcenter">$GCvatrate</td>
+  <td class="txtright">$GCvat</td>
+  <td class="txtright">$Cells[4]</td>
+</tr>
+EOD
+
+			$GCgross += $Cells[4];
 		}
 		else {
 

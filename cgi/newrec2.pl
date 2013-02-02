@@ -145,11 +145,14 @@ $TSs->finish;
 
 #  Get te laast statement close date to make sure that these entries are for a new statement
 
-$Stmts = $dbh->prepare("select datediff(str_to_date('@Stmt[0]->{date}','%d-%b-%y'),staclosedate) as stmtdiff from statements left join accounts on (acc_id=accounts.id and atatements.acct_id=accounts.acct_id) where statements.acct_id='$COOKIE->{ACCT}' and statements.acctype='$FORM{acctype}' order by staclosedate desc limit 1");
+$Stmts = $dbh->prepare("select datediff(str_to_date('@Stmt[0]->{date}','%d-%b-%y'),staclosedate) as stmtdiff from statements left join accounts on (acc_id=accounts.id and statements.acct_id=accounts.acct_id) where statements.acct_id='$COOKIE->{ACCT}' and accounts.acctype='$FORM{acctype}' order by staclosedate desc limit 1");
 $Stmts->execute;
 $Last_Stmt = $Stmts->fetchrow_hashref;
 $Stmts->finish;
 
+if ($COOKIE->{ACCT} == '1+1') {
+	$GCcalc = '$("#stmtdiff").text($("#stmtdiff").text() - $("#gctot").val());';
+}
 use Template;
 $tt = Template->new({
         INCLUDE_PATH => ['.','/usr/local/httpd/htdocs/fpa/lib'],
@@ -169,7 +172,7 @@ $Vars = {
 	javascript => '<script type="text/javascript">
 var errfocus;
 var absvalue = '.$Total.';
-$(document).ready(function(){
+$(document).ready(function(){'.$GCcalc.'
 //  $("#sidebar ul").hide();
   $(".stmttxndate").datepicker();
   $("#stmt_cus_id").autocomplete({
