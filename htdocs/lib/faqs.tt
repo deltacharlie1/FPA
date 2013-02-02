@@ -48,7 +48,7 @@ How do I know the accounting information is accurate?
 Does FreePlus Accounts meet recognised accounting standards?
 </div>
 <div class="accordionContent">
-<p>The service is designed to provide small businesses with everything they need to manage their accounts, including VAT returns, and to make it simpler for business people to keep accurate and up-to-date accounting records. Official approvals and accreditations, such as those awarded by the Institute of Bookkeepers and other organisations, may be applied for by FreePlus Accounts.</p>
+<p>The service is designed to provide small businesses with everything they need to manage their accounts, including VAT returns, and to make it simpler for business people to keep accurate and up-to-date accounting records Accounts has been accredited by the Institute of Bookkeepers.</p>
 </div>
 </div>
 <h3>Using the Service</h3>
@@ -85,5 +85,13 @@ How do I advertise my business on FreePlus Accounts?
 <p>To advertise your business, you will need to purchase advertising credits. Look for the information on how to do this when you log out of FreePlus Accounts, or contact us by email with your request.</p>
 <p>Advertising is generally charged for, but from time to time you may be given advertising credits that offer you some advertising for free.</p>
 </div>
+</div>
+<h3>Technical Questions</h3>
+<div class="border"><div class="accordionButton">The link in my Activation Email doesn't work</div>
+<div class="accordionContent">
+<p>In all probability this is because your account has already been activated.&nbsp;&nbsp;The first thing to do is to try and login.</p></div>
+<div class="accordionButton accordionButtontop">I get an error when logging in</div>
+<div class="accordionContent">
+<p>Make sure that your <b>'CAPS LOCK'</b> is not on, both your login id and password are case sensitive.&nbsp;&nbsp;If you continue to have problems.&nbsp;&nbsp;If you continue to have problems, request a new password by clicking on the link just below the password input field.&nbsp;&nbsp;When you receive this email, copy and paste both your login id and password into the relevant input fields in the login screen.</p></div>
 </div>
 </div>
