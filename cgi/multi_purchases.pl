@@ -13,7 +13,7 @@ $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
 $Customers = $dbh->prepare("select id,cusname,cusaddress,cuspostcode,cusregion,custel,cuscontact,cusemail,custerms,cusbalance,cuscredit,cuslimit,cusdefpaymethod from customers where id=? and acct_id=?");
 $Customers->execute($ENV{QUERY_STRING},"$COOKIE->{ACCT}");
 
-$Invoices = $dbh->prepare("select id as invid,invinvoiceno,invdesc,date_format(invprintdate,'%d-%b-%y') as invprintdate,date_format(invduedate,'%d-%b-%y') as invduedate,invtotal,invvat,(invtotal+invvat-invpaid-invpaidvat) as invdue,invstatus,to_days(invprintdate) as printdays,to_days(invduedate) as duedays from invoices where cus_id=? and acct_id=? and invstatuscode > 2 order by invtype,invstatuscode desc,invprintdate desc");
+$Invoices = $dbh->prepare("select id as invid,invinvoiceno,invdesc,date_format(invprintdate,'%d-%b-%y') as printdate,date_format(invduedate,'%d-%b-%y') as invduedate,invtotal,invvat,(invtotal+invvat-invpaid-invpaidvat) as invdue,invstatus,to_days(invprintdate) as printdays,to_days(invduedate) as duedays from invoices where cus_id=? and acct_id=? and invstatuscode > 2 order by invtype,invstatuscode desc,invprintdate desc");
 $Invoices->execute($ENV{QUERY_STRING},"$COOKIE->{ACCT}");
 $Numrows = $Invoices->rows;
 $Rows = 24;

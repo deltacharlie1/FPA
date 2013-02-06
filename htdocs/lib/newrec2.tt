@@ -1,11 +1,23 @@
 <div class="main" id="main">
+<div id="changedate" title="Change Txn Date" style="display:none;">
+  <form id="fchangedate" name="fchangedate" action="">
+  <input type="hidden" name="id" id="cd_id" value=""/>
+  <input type="hidden" name="acctype" id="acctype" value="[%- acct.acctype -%]"/>
+  <table width="100%" border="0" cellpadding="0" cellspacing="0" class="formtable">
+    <tr>
+      <td><label>New Date</label></td>
+      <td><input type="text" name="newdate" id="newdate" size="9" value="" readonly="readonly"/></td>
+    </tr>
+  </table>
+  </form>
+</div>
 <div id="stmtmatch" title="Money In" style="display:none;">
   <form id="stmtform2" name="stmtform2">
     <input type="hidden" name="stmttype" id="stmttype" value="In"/>
     <input type="hidden" name="stmtcustype" id="stmtcustype" value="Customers"/>
     <input type="hidden" name="stmtcusid" id="stmtcusid" value="0"/>
     <input type="hidden" name="stmtamt" id="stmtamt" value="0.00"/>
-    <input type="hidden" name="stmttxnmethod" id="stmttxnmethod" value="1200"/>
+    <input type="hidden" name="stmttxnmethod" id="stmttxnmethod" value="[%- acct.acctype -%]"/>
     <input type="hidden" name="stmtdropid" id="stmtdropid" value=""/>
     <table width="100%" cellpadding="2" cellspacing="0" border="0" class="formtable" id="stmttable">
       <tr>
@@ -202,7 +214,7 @@ WARNING - you cannot reconcile this statement as you already have a reconciled s
         <tr>
           <th style="display:none;">ID</th>
           <th style="display:none;">Type</th>
-          <th>Date</th>
+          <th class='dbl'>Date</th>
           <th>&nbsp;</th>
           <th>Type</th>
           <th>Customer</th>
@@ -215,7 +227,7 @@ WARNING - you cannot reconcile this statement as you already have a reconciled s
         <tr class="[%- class.$ndx -%] draggable" id="txn[%- txn.id -%]">
           <td style="display:none;">[%- txn.id -%]</td>
           <td style="display:none;">txn</td>
-          <td nowrap="nowrap">[%- txn.tdate -%]</td>
+          <td nowrap="nowrap" ondblclick="change_date(this,[%- txn.id -%],'[%- txn.tdate -%]','[%- txn.txnamount -%]');">[%- txn.tdate -%]</td>
           <td>&nbsp;</td>
           <td>[%- txn.txntxntype -%]</td>
           <td>[%- txn.txncusname | truncate(15) -%]</td>

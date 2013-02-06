@@ -22,6 +22,21 @@ while (( $Key,$Value) = each %FORM) {
         $FORM{$Key} = $Value;
 }
 
+#  Check to see if we have an exisitng spreadsheet saved
+
+$FORM{stmt} =~ s/\\\'/\'/g;	#  strip out any exisitng escapes
+$FORM{stmt} =~ s/\'/\\\'/g;	#  then add thm back so we don't miss any
+
+if ($FORM{acctype}) {
+	$Sts = $dbh->do("update tempstacks set f1='$FORM{stmt}',f2='$FORM{stmtno}',f4='$FORM{acctype}' where acct_id='$COOKIE->{ACCT}' and caller='reconciliation'");
+}
+else {
+	$TSs = $dbh->prepare("select f1,f2,f4 from tempstacks where acct_id='$COOKIE->{ACCT}' and caller='reconciliation'");
+	$TSs->execute;
+	($FORM{stmt},$FORM{stmtno},$FORM{acctype}) = $TSs->fetchrow;
+	$TSs->finish;
+}
+
 #  First get all unreconciled TRansactions
 
 $Txns = $dbh->prepare("select id,txntxntype,date_format(txndate,'%d-%b-%y') as tdate,link_id,txncusname,txnremarks,txnamount from transactions where txnselected<>'F' and txnmethod='$FORM{acctype}' and acct_id='$COOKIE->{ACCT}' order by txndate");
@@ -36,12 +51,6 @@ $Invoices->execute;
 $Invoice = $Invoices->fetchall_arrayref({});
 $Invoices->finish;
 
-#  Check to see if we have an exisitng spreadsheet saved
-
-$FORM{stmt} =~ s/\\\'/\'/g;	#  strip out any exisitng escapes
-$FORM{stmt} =~ s/\'/\\\'/g;	#  then add thm back so we don't miss any
-
-$Sts = $dbh->do("update tempstacks set f1='$FORM{stmt}',f2='$FORM{stmtno}' where acct_id='$COOKIE->{ACCT}' and caller='reconciliation'");
 $FORM{stmt} =~ s/\\\'/\'/g;	#  and strip them out again
 
 $Accts = $dbh->prepare("select accounts.id,accounts.acctype,accname,accacctno,stastmtno,staclosebal,date_format(staclosedate,'%d-%b-%y') as staclosedate from accounts left join statements on (accounts.id=acc_id) where accounts.acct_id='$COOKIE->{ACCT}' and acctype='$FORM{acctype}' order by statements.id desc limit 1");
@@ -89,6 +98,7 @@ else {
 %hMonth = ('Jan','01','Feb','02','Mar','03','Apr','04','May','05','Jun','06','Jul','07','Aug','08','Sep','09','Oct','10','Nov','11','Dec','12');
 
 $Total = 0;
+warn "\n\n";
 
 $FORM{stmt} =~ tr/\r//d;
 @Rows = split(/\n/,$FORM{stmt});
@@ -173,6 +183,32 @@ $Vars = {
 var errfocus;
 var absvalue = '.$Total.';
 $(document).ready(function(){'.$GCcalc.'
+  $("#newdate").datepicker({ maxDate: new Date() });
+  $("#changedate").dialog({
+    bgiframe: true,
+    autoOpen: false,
+    position: [200,100],
+    height: 200,
+    width: 300,
+    modal: true,
+    buttons: {
+      "Change Date": function() {
+        $.post("/cgi-bin/fpa/change_txn_date.pl", $("#fchangedate").serialize(),function(data) {
+          if ( ! /^OK/.test(data)) {
+            alert(data);
+          }
+          window.location.href="/cgi-bin/fpa/newrec2.pl";
+//          window.location.reload(true);
+        },"text");
+        $("td").removeClass("error");
+        $(this).dialog("close");
+      },
+      Cancel: function() {
+        $("td").removeClass("error");
+        $(this).dialog("close");
+      }
+    }
+  });
 //  $("#sidebar ul").hide();
   $(".stmttxndate").datepicker();
   $("#stmt_cus_id").autocomplete({
@@ -324,6 +360,18 @@ $(document).ready(function(){'.$GCcalc.'
     }
   });
 });
+function change_date(obj,id,olddate,initval) {
+  if ($(obj).parent().find(":last-child").text() == initval) {
+    $(obj).addClass("error");
+    document.getElementById("cd_id").value = id;
+    document.getElementById("newdate").value = olddate;
+    $("#changedate").dialog("open");
+  }
+  else {
+    $("#dialog").html("You cannot change the date of a transaction that is (part) reconciled.");
+    $("#dialog").dialog("open");
+  }
+}
 function revert(id,el,dropid) {
   var diff = ($("#stmtdiff").html() * 1);
   var dropvalue = (el.parent().find(":nth-child(8)").last().text() * 1);
