@@ -158,7 +158,7 @@ From: FreePlus Accounts <fpainvoices\@corunna.com>
 To: doug.conran\@corunna.com
 Subject: JSON subscription
 
-$Payload
+$Buffer
 EOD
 close(DOUGMAIL);
 }
