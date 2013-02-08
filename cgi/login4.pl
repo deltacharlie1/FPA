@@ -154,6 +154,7 @@ unless ($Company->{comcompleted}) {
 if ($Multi) {
 	print<<EOD;
 Content-Type: text/plain
+Set-Cookie: fpa-uid=$COOKIE->{ID}; path=/;
 Set-Cookie: fpa-cookie=$Cookie; path=/;
 Set-Cookie: fpa-comname=$Company->{comname}; path=/;
 Set-Cookie: fpa-next_advert=0; path=/;
