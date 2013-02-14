@@ -278,6 +278,7 @@ function gen_redisplay(action) {
 function set_logout() {
   document.cookie="fpa-cookie=; path=/;";
   $(".main").html("&nbsp;");
+  $("#dialog").dialog("option","title","Information");
   $("#dialog").html("<h2>Auto Logout</h2><p>You have been automatically logged out of <b><i>FreePlus Accounts</i></b> because of extended inactivity.</p><p>Please click \'OK\' to return to the login page</p>");
   $("#dialog").dialog("option", "height", "260");
   $("#dialog").dialog("option", "buttons", { "OK": function() { window.location.href="/cgi-bin/fpa/login.pl"; } });
@@ -289,7 +290,12 @@ function print_display(title) {
   }
   else {
     if ($("#results").length > 0) {
-      $(".listing").printElement({printMode:'popup'});
+      if ($(".listing").length > 0 ) {
+        $(".listing").printElement({printMode:'popup'});
+      }
+      else {
+        $("#results").printElement({printMode:'popup'});
+      }
     }
     else {
       if ($("#main").length > 0) {

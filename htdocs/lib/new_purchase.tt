@@ -81,7 +81,6 @@
       <td colspan="3"><input type="radio" name="invfpflag" id="fpn" value="N" checked="checked" onclick="$('#fp_type').css('visibility','hidden');"/>&nbsp;No&nbsp;&nbsp;<input type="radio" name="invfpflag" id="fpy" value="Y" onclick="$('#fp_type').css('visibility','visible');"/>&nbsp;&nbsp;Yes<span id="fp_type" style="visibility:hidden;">&nbsp;&nbsp;
         <select name="txnmethod" id="txnmethod" size="1">
           <option value="1300" selected="selected">Cash</option>
-          <option value="1310">Cheque</option>
           <option value="1200">Bank Transfer</option>
           <option value="2010">Credit Card</option>
         </select>

@@ -2,16 +2,16 @@
 <table border="0" cellpadding="4" cellspacing="4" width="100%">
   <tr>
     <td style="vertical-align:top;">
-  <div class="testimonials" style="width:360px;height:146px;">
+  <div class="testimonials" style="width:360px;height:240px;">
       <h2>Reminders</h2>
 [% IF reminders.size > 0 -%]
-    <div style="overflow:auto; width:100%;height:162px;padding-top:0px;">
+    <div style="overflow:auto; width:100%;height:210px;padding-top:0px;">
       <table border="0" cellpadding="0" cellspacing="0" width="100%" class="listing">
   [% class = [ "even","odd" ] -%]
   [% FOREACH reminder IN reminders -%]
     [%- ndx = loop.count % 2 -%]
         <tr class="[%- class.$ndx -%]"[%- IF reminder.remgrade == 'H' -%] style="background-color:#f9dfc3;"[%- END -%] -%]>
-          <td>[%- reminder.remtext; IF reminder.remcode == 'GEN' -%]<div style="float:right;"><a href="#" onclick="delete_reminder('[%- reminder.id -%]');"><img src="/icons/delete.png" width="12" height="12"></a></div>[%- END -%]</td>
+          <td>[%- reminder.remtext; IF reminder.remcode.search('GEN') -%]<div style="float:right;"><a href="#" onclick="delete_reminder('[%- reminder.id -%]');"><img src="/icons/delete.png" width="12" height="12"></a></div>[%- END -%]</td>
         </tr>
   [% END -%]
       </table>
@@ -22,7 +22,7 @@
   </div>
     </td>
     <td rowspan="2" style="vertical-align:top;">
-      <div class="testimonials" style="width:280px;height:376px;">
+      <div class="testimonials" style="width:280px;height:476px;">
         <h2>Key Balances</h2>
         <table width="100%" border="0" cellpadding="0" cellspacing="0" class="balances">
           <tr class="hilite" onclick="location.href='/cgi-bin/fpa/coa_drill_down.pl?filter=1200';">
@@ -51,7 +51,7 @@
           </tr>
         </table><br/>
           <h2>Overdue Invoices</h2>
-        <div style="overflow:auto; width:100%;height:150px;padding-top:0px;">
+        <div style="overflow:auto; width:100%;height:230px;padding-top:0px;">
           <table border="0" cellpadding="0" cellspacing="0" width="100%" class="listing">
             <tr>
               <th>Inv No</th>

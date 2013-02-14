@@ -270,6 +270,7 @@ $(document).ready(function(){
             <li><a href="/cgi-bin/fpa/bulk_add_invoices.pl">Bulk Add Invoices</a></li>
             <li><a href="/cgi-bin/fpa/bulk_add_purchases.pl">Bulk Add Purchases</a></li>
             <li><a href="/cgi-bin/fpa/add_companies.pl">Add Companies</a></li>
+            <li><a href="/cgi-bin/fpa/invite_existing_user.pl">Invite Existing User</a></li>
             <li><a href="/cgi-bin/fpa/bulk_opening_balances.pl">Add Opening Balances</a></li>
             <li><a href="/cgi-bin/fpa/bulk_journals.pl">Journal Adjustments</a></li>
             <li><a href="/cgi-bin/fpa/jnlrep1.pl">Journal Analysis</a></li>

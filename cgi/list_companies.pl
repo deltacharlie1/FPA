@@ -27,13 +27,18 @@ else {
 
 if ($COOKIE->{BACCT} == '1+1') {
 
+warn "In 1+1 processing\n";
 	use CGI;
 	$Data = new CGI;
 	%FORM = $Data->Vars;
 
+	warn "\$Companies = \$dbh->prepare(\"select distinct companies.id,companies.reg_id,companies.comname,comcontact,comemail,comyearend,comvatscheme,comvatduein,concat(companies.reg_id,'+',companies.id) as comcis from companies left join registrations using (reg_id) where regemail='$FORM{regemail}' order by comname desc\")\n";
 	$Companies = $dbh->prepare("select distinct companies.id,companies.reg_id,companies.comname,comcontact,comemail,comyearend,comvatscheme,comvatduein,concat(companies.reg_id,'+',companies.id) as comcis from companies left join registrations using (reg_id) where regemail='$FORM{regemail}' order by comname desc");
 }
 else {
+
+warn "In other processing\n";
+
 	$Companies = $dbh->prepare("select distinct companies.id,companies.reg_id,companies.comname,comcontact,comemail,date_format(comyearend,'%b') as comyearend,comvatscheme,comvatduein,comcis from companies left join reg_coms on (companies.id=com_id)  where (reg_coms.reg1_id=$Reg_id or reg_coms.reg2_id=$Reg_id) order by comname $Limit");
 }
 $Companies->execute;

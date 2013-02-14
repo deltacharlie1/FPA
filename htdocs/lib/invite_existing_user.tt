@@ -1,0 +1,52 @@
+<div class="main" id="main">
+<h1>Send Invitation to Existing User</h1>
+  <form name="form1" id="form1" method="post" action="/cgi-bin/fpa/invite_existing_user2.pl">
+  <input type="hidden" name="data" id="data" value=""/>
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="formtable">
+    <tr>
+      <td nowrap="nowrap"><label>Email Address of User</label></td>
+      <td><span><input type="text" name="email" id="email" size="30" class="mandatory" title="User's Email Address"/></span></td>
+    </tr>
+  </table>
+  <p>&nbsp;</p>
+  <h2>Existing Companies</h2>
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="listing">
+    <tr>
+      <th>Company</th>
+      <th>Client</th>
+      <th>Email</th>
+      <th>Year End</th>
+      <th>VAT Scheme</th>
+      <th>VAT Q End</th>
+      <th>CIS?</th>
+    </tr>
+[% class = [ "even","odd" ]; vatq = [ "","Jan/Apr/Jul/Oct/","Feb/May/Jul/Nov","Mar/Jun/Aug/Dec" ] -%]
+[%- FOREACH company IN companies -%]
+  [%- ndx = loop.count % 2; vatdue = company.comvatduein -%]
+    <tr class="[%- class.$ndx -%]" onclick="location.href='/cgi-bin/fpa/switch_company.pl?[%- company.id -%]?[%- company.reg_id -%]';" >
+      <td>[%- company.comname -%]</td>
+      <td>[%- company.comcontact -%]</td>
+      <td>[%- company.regemail -%]</td>
+      <td align="center">[%- company.comyearend -%]</td>
+      <td align="center">[%- company.comvatscheme -%]</td>
+      <td>[%- vatq.$vatdue -%]</td>
+      <td align="center">[%- company.comcis -%]</td>
+    </tr>
+[%- END -%]
+  </table>
+</div>
+<div id="sidebar">
+  <ul>    
+    <li>
+      <div>
+        <a href='#' onclick='send_invite();'>
+          Send Invitation
+        </a>
+      </div>  
+    </li>   
+  </ul>   
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+</div>
+</form>
+</div>

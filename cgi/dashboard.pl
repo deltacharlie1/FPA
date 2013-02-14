@@ -9,6 +9,15 @@ $ACCESS_LEVEL = 0;
 use Checkid;
 $COOKIE =  &checkid($ENV{HTTP_COOKIE},$ACCESS_LEVEL);
 
+if ($ENV{QUERY_STRING} =~ /INV/) {
+	$Invite_js =<<EOD;
+
+  \$("#dialog").dialog("option","title","Information");
+  \$("#dialog").html("Your accounts may now be managed by your bookkeeper");
+  \$("#dialog").dialog("open");
+EOD
+}
+
 use DBI;
 $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
 ($Reg_id,$Com_id) = split(/\+/,$COOKIE->{ACCT});
@@ -154,11 +163,11 @@ $("#foo5").carouFredSel({
 		easing		: "easeOutBounce",
 		duration	: 3000
 	}
-});
+});'.$Invite_js.'
 //  self.moveTo(left,0);
 //  self.resizeTo(width,screen.availHeight);
 });
-</script>',
+</script>'
 };
 
 
