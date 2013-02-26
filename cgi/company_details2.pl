@@ -67,7 +67,7 @@ else {
 
 #  Get existing details
 
-	$Companies = $dbh->prepare("select comvatscheme,comcis from companies where reg_id=$Reg_id and id=$Com_id");
+	$Companies = $dbh->prepare("select comvatscheme,combusiness,comcis from companies where reg_id=$Reg_id and id=$Com_id");
 	$Companies->execute;
 	$Company = $Companies->fetchrow_hashref;
 	$Companies->finish;
@@ -136,15 +136,22 @@ else {
 			$year++;
 		}
 		if (length($VAT_due) < 2) { $VAT_due = '0'.$VAT_due; }
+
+		if ($FORM{comvatscheme} =~ /F/i && $Company->{combusiness} !~ /$FORM{combusiness}/) {
+			$Mkts = $dbh->prepare("select frsrate from market_sectors where id=$FORM{combusiness}");
+			$Mkts->execute;
+			($FORM{comfrsrate}) = $Mkts->fetchrow;
+			$Mkts->finish;
+		}
 	}
 
 #  Check whether we have an image to upload
 
 	if ($Img) {
-		$Sts = $dbh->do("update companies set comname='$FORM{comname}',comregno='$FORM{comregno}',comaddress='$FORM{comaddress}',compostcode='$FORM{compostcode}',comtel='$FORM{comtel}',combusiness='$FORM{combusiness}',comcontact='$FORM{comcontact}',comemail='$FORM{comemail}',comyearend='$FORM{comyearend}',comnextsi='$FORM{comnextsi}',comnextpi='$FORM{comnextpi}',comvatscheme='$FORM{comvatscheme}',comvatno='$FORM{comvatno}',comvatduein='$FORM{comvatduein}',comvatmsgdue='$year-$VAT_due-01',comlogo='$Img',comcompleted='1',comemailmsg='$FORM{comemailmsg}',comstmtmsg='$FORM{comstmtmsg}',comcis='$FORM{comcis}',comlayout='$FORM{comlayout}',comsoletrader='$FORM{comsoletrader}' where reg_id=$Reg_id and id=$Com_id");
+		$Sts = $dbh->do("update companies set comname='$FORM{comname}',comregno='$FORM{comregno}',comaddress='$FORM{comaddress}',compostcode='$FORM{compostcode}',comtel='$FORM{comtel}',combusiness='$FORM{combusiness}',comcontact='$FORM{comcontact}',comemail='$FORM{comemail}',comyearend='$FORM{comyearend}',comnextsi='$FORM{comnextsi}',comnextpi='$FORM{comnextpi}',comvatscheme='$FORM{comvatscheme}',comfrsrate='$FORM{comfrsrate}',comvatno='$FORM{comvatno}',comvatduein='$FORM{comvatduein}',comvatmsgdue='$year-$VAT_due-01',comlogo='$Img',comcompleted='1',comemailmsg='$FORM{comemailmsg}',comstmtmsg='$FORM{comstmtmsg}',comcis='$FORM{comcis}',comlayout='$FORM{comlayout}',comsoletrader='$FORM{comsoletrader}' where reg_id=$Reg_id and id=$Com_id");
 	}
 	else {
-		$Sts = $dbh->do("update companies set comname='$FORM{comname}',comregno='$FORM{comregno}',comaddress='$FORM{comaddress}',compostcode='$FORM{compostcode}',comtel='$FORM{comtel}',combusiness='$FORM{combusiness}',comcontact='$FORM{comcontact}',comemail='$FORM{comemail}',comyearend='$FORM{comyearend}',comnextsi='$FORM{comnextsi}',comnextpi='$FORM{comnextpi}',comvatscheme='$FORM{comvatscheme}',comvatno='$FORM{comvatno}',comvatduein='$FORM{comvatduein}',comvatmsgdue='$year-$VAT_due-01',comcompleted='1',comemailmsg='$FORM{comemailmsg}',comstmtmsg='$FORM{comstmtmsg}',comcis='$FORM{comcis}',comlayout='$FORM{comlayout}',comsoletrader='$FORM{comsoletrader}' where reg_id=$Reg_id and id=$Com_id");
+		$Sts = $dbh->do("update companies set comname='$FORM{comname}',comregno='$FORM{comregno}',comaddress='$FORM{comaddress}',compostcode='$FORM{compostcode}',comtel='$FORM{comtel}',combusiness='$FORM{combusiness}',comcontact='$FORM{comcontact}',comemail='$FORM{comemail}',comyearend='$FORM{comyearend}',comnextsi='$FORM{comnextsi}',comnextpi='$FORM{comnextpi}',comvatscheme='$FORM{comvatscheme}',comfrsrate='$FORM{comfrsrate}',comvatno='$FORM{comvatno}',comvatduein='$FORM{comvatduein}',comvatmsgdue='$year-$VAT_due-01',comcompleted='1',comemailmsg='$FORM{comemailmsg}',comstmtmsg='$FORM{comstmtmsg}',comcis='$FORM{comcis}',comlayout='$FORM{comlayout}',comsoletrader='$FORM{comsoletrader}' where reg_id=$Reg_id and id=$Com_id");
 	}
 
 #  update the dividends/drawings coa

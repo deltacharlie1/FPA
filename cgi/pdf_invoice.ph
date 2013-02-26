@@ -158,6 +158,7 @@ for $Row (@Row) {
 			$text->text_right($Cell[2]);
 			$text->transform( -translate => [544,$Ypos]);
 			$text->text_right($Cell[4]);
+			$Total += $Cell[3];
 		}
 		else {
 			$text->transform( -translate => [348,$Ypos]);
@@ -168,6 +169,8 @@ for $Row (@Row) {
 			$text->text_right($Cell[4]);
 			$text->transform( -translate => [544,$Ypos]);
 			$text->text_right($Cell[5]);
+			$Vat += $Cell[5];
+			$Total += $Cell[3] + $Cell[5];
 		}
 
 		$tb->y($Ypos);
@@ -176,8 +179,6 @@ for $Row (@Row) {
 
 		$Ypos -= 25;
 		$Net += $Cell[3];
-		$Vat += $Cell[5];
-		$Total += $Cell[3] + $Cell[5];
 
 		if ($Ypos < 170) {
 			$page = $pdf->importpage($pdf,1,0);

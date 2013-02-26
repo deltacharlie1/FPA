@@ -68,6 +68,7 @@ create table companies (
   comnextpr varchar(80) not null default '1001' comment 'Next Proforma Invoice No',
   comnexttxn varchar(80) not null default '1'comment 'Next Transaction Number',
   comvatscheme varchar(10) not null default 'N' comment 'VAT scheme, can be one of N - None, C - Cash, S - Standard',
+  comfrsrate varchar(5) not null default '20.00' comment 'FRS vat rate',
   comvatno varchar(250) not null default '' comment 'Company VAT Registration No',
   comvatcontrol decimal(20,2) not null comment 'VAT control total actually owed to/from HMRC',
   comvatduein char(1) not null default '0' comment 'VAT Quarter End',

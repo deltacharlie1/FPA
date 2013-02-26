@@ -78,6 +78,10 @@
         </select></span>
       </td>
     </tr>
+    <tr>
+      <td [%- IF client.comvatscheme.search('F') -%] class="visible" [%- ELSE -%] class="hidden" [%- END -%]><label>FRS Rate</label></td>
+      <td [%- IF client.comvatscheme.search('F') -%] class="visible" [%- ELSE -%] class="hidden" [%- END -%]><span><input title="FRS Rate" name="comfrsrate" type="text" id="comfrsrate" value="[%- client.comfrsrate -%]" size="5"/>%</span></td>
+    </tr>
     </tbody>
     <tr>
       <td><label>Main Contact Name</label></td>

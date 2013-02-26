@@ -34,7 +34,7 @@ for $Month (1..12) {
 }
 $Dates->finish;
 
-$Companies = $dbh->prepare("select comname,comaddress,compostcode,comtel,combusiness,comregno,comvatno,comvatscheme,comcontact,comemail,comyearend,comvatduein,comnextsi,comnextpi,comcompleted,comacccompleted,comemailmsg,comstmtmsg,comlogo,comcis,datediff(compt_logo,now()) as pt_logo,comlayout,comsoletrader from companies where reg_id=? and id=?");
+$Companies = $dbh->prepare("select comname,comaddress,compostcode,comtel,combusiness,comregno,comvatno,comvatscheme,comfrsrate,comcontact,comemail,comyearend,comvatduein,comnextsi,comnextpi,comcompleted,comacccompleted,comemailmsg,comstmtmsg,comlogo,comcis,datediff(compt_logo,now()) as pt_logo,comlayout,comsoletrader from companies where reg_id=? and id=?");
 $Companies->execute($Reg_id,$Com_id);
 $Company = $Companies->fetchrow_hashref;
 unless ($Company->{comcis}) { $Company->{comcis} = 'N'; }
