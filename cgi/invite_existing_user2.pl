@@ -152,7 +152,7 @@ Content-Transfer-Encoding: 7bit
 </head>
 <body>
 <p>$Company->{regcompanyname} has invited you to join their accountancy practice.  If you accept this invitation you will need to activate this login id by going to the following link:-</p>
-<p><a href="http://$Host/cgi-bin/fpa/invite_existing_user3.pl?$Activecode">http://www.freeplusaccounts.co.uk/cgi-bin/fpa/invite_existing_user3.pl?$Activecode</a></p>
+<p><a href="http://www.freeplusaccounts.co.uk/cgi-bin/fpa/invite_existing_user3.pl?$Activecode">http://www.freeplusaccounts.co.uk/cgi-bin/fpa/invite_existing_user3.pl?$Activecode</a></p>
 <p>This code will only be valid for 72 hours from the time of this message and may be safely ignored if you do not wish to accept this invitation.<br />
 (If you are unable to click on the link above please copy it and then paste it into the Address bar of your browser)</p>
 <p>When you next log in to your account, if you have not already activated this invitation, you will find an invitation reminder with a link that you may also click on.</p>
