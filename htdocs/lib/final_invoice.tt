@@ -244,14 +244,14 @@
   <form id="fcancelreason" name="fcancelreason">
     <input type="hidden" name="id" id="f_id" value="[%- invoice.id -%]"/>
     <h3>Reason for Voiding</h3>
-    <textarea name="cancelmsg" id="cancelmsg" rows="2" cols="40" class="mandatory"></textarea>
+    <textarea title="Voiding Reason" name="cancelmsg" id="voidmsg" rows="2" cols="40" class="mandatory"></textarea>
   </form
 </div>
 <div id="writeoffreason" title="Write-off Invoice" style="display:none;">
   <form id="fwriteoffreason" name="fwriteoffreason">
     <input type="hidden" name="id" id="w_id" value="[%- invoice.id -%]"/>
     <h3>Reason for Write-off</h3>
-    <textarea name="cancelmsg" id="writeoffmsg" rows="2" cols="40" class="mandatory"></textarea>
+    <textarea title="Write-off Reason" name="cancelmsg" id="writeoffmsg" rows="2" cols="40" class="mandatory"></textarea>
   </form
 </div>
 <div id="addnote" title="Add a Note" style="display:none;">

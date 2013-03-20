@@ -195,7 +195,11 @@ $(document).ready(function(){
     modal: true,
     buttons: {
       "Void Invoice": function() {
-        if(validate_form("#fcancelreason")) {
+        if(document.getElementById("voidmsg").value == "") {
+          $("#dialog").html("You must enter a reason for voiding this invoice");
+          $("#dialog").dialog("open");
+        }
+        else {
           $.post("/cgi-bin/fpa/cancel_invoice.pl", $("form#fcancelreason").serialize(),function(data) {
             if (/OK/.test(data)) {
               location.href = "/cgi-bin/fpa/list_customer_invoices.pl?' . $Invoice->{cus_id} . '";
@@ -222,7 +226,11 @@ $(document).ready(function(){
     modal: true,
     buttons: {
       "Write-off Invoice": function() {
-        if(validate_form("#fcancelreason")) {
+        if(document.getElementById("writeoffmsg").value == "") {
+          $("#dialog").html("You must enter a reason for this write-off");
+          $("#dialog").dialog("open");
+        }
+        else {
           $.post("/cgi-bin/fpa/writeoff_invoice.pl", $("form#fwriteoffreason").serialize(),function(data) {
             if (/OK/.test(data)) {
               location.href = "/cgi-bin/fpa/list_customer_invoices.pl?' . $Invoice->{cus_id} . '";

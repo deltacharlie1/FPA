@@ -14,16 +14,17 @@
 [% class = [ "even","odd" ] -%]
 [% FOREACH invoice IN invoices -%]
   [%- ndx = loop.count % 2 -%]
+  [%- IF invoice.invtype.search('P|R'); invtype = 'purchase'; ELSE; invtype = 'invoice'; END -%]
   <tr class="[%- class.$ndx -%]">
-    <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invinvoiceno -%]</td>
-    <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invtype -%]</td>
-    <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invcusname -%]</td>
-    <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.description | truncate(30) -%]</td>
-    <td style="text-align:right;" onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invamount | remove('-') -%]</td>
-    <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.printdate -%]</td>
-    <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.duedate -%]</td>
-    <td style="text-align:right;" onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invpaid | remove('-') -%]</td>
-    <td onclick="location.href='/cgi-bin/fpa/update_invoice.pl?[%- invoice.invid -%]';">[%- invoice.invstatus -%]</td>
+    <td onclick="location.href='/cgi-bin/fpa/update_[%- invtype -%].pl?[%- invoice.invid -%]';">[%- invoice.invinvoiceno -%]</td>
+    <td onclick="location.href='/cgi-bin/fpa/update_[%- invtype -%].pl?[%- invoice.invid -%]';">[%- invoice.invtype -%]</td>
+    <td onclick="location.href='/cgi-bin/fpa/update_[%- invtype -%].pl?[%- invoice.invid -%]';">[%- invoice.invcusname -%]</td>
+    <td onclick="location.href='/cgi-bin/fpa/update_[%- invtype -%].pl?[%- invoice.invid -%]';">[%- invoice.description | truncate(30) -%]</td>
+    <td style="text-align:right;" onclick="location.href='/cgi-bin/fpa/update_[%- invtype -%].pl?[%- invoice.invid -%]';">[%- invoice.invamount | remove('-') -%]</td>
+    <td onclick="location.href='/cgi-bin/fpa/update_[%- invtype -%].pl?[%- invoice.invid -%]';">[%- invoice.printdate -%]</td>
+    <td onclick="location.href='/cgi-bin/fpa/update_[%- invtype -%].pl?[%- invoice.invid -%]';">[%- invoice.duedate -%]</td>
+    <td style="text-align:right;" onclick="location.href='/cgi-bin/fpa/update_[%- invtype -%].pl?[%- invoice.invid -%]';">[%- invoice.invpaid | remove('-') -%]</td>
+    <td onclick="location.href='/cgi-bin/fpa/update_[%- invtype -%].pl?[%- invoice.invid -%]';">[%- invoice.invstatus -%]</td>
   </tr>
 [% END -%]
 </table>
