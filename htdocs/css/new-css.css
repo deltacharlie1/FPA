@@ -403,6 +403,12 @@ button {
 }
 .even { background-color:#D2ECD5; 
 }
+.disabled { color:#aaaaaa !important; }
+.enabled {
+	color:#7c0101 !important;
+	font-weight:bold !important;
+}
+
 .odd:hover, .even:hover, .hilite:hover {
 	cursor:pointer;
 	background-color: #a6cfcf;

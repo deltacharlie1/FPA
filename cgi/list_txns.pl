@@ -31,15 +31,27 @@ else {
 use DBI;
 $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
 
+if($COOKIE->{VAT} =~ /N/) {
+	$Stdate = "2010-01-01";
+}
+else {
+	$Vatreturns = $dbh->prepare("select perenddate from vatreturns where acct_id='$COOKIE->{ACCT}' order by perenddate desc limit 1");
+	$Vatreturns->execute;
+	$Vatreturn = $Vatreturns->fetchrow_hashref;
+	$Vatreturns->finish;
+
+	$Stdate = $Vatreturn->{perenddate};
+}
+
 unless ($FORM{rows}) {
-	$Txns = $dbh->prepare("select date_format(txndate,'%d-%b-%y') as tdate,concat(txncusname,' (',txnremarks,')') as txncusname,txnamount,coadesc,txntxnno from transactions left join coas on (txnmethod=coanominalcode) where $Filter and transactions.acct_id='$COOKIE->{ACCT}' and coas.acct_id='$COOKIE->{ACCT}' order by txndate desc,txntxnno desc");
+	$Txns = $dbh->prepare("select stmt_id,transactions.id,date_format(txndate,'%d-%b-%y') as tdate,concat(txncusname,' (',txnremarks,')') as txncusname,txnamount,coadesc,txntxnno from transactions left join coas on (txnmethod=coanominalcode) where $Filter and transactions.acct_id='$COOKIE->{ACCT}' and coas.acct_id='$COOKIE->{ACCT}' order by txndate desc,txntxnno desc");
 	$Txns->execute;
 	$FORM{numrows} = $Txns->rows;
 	$FORM{offset} = 0;
 	$FORM{rows} = 24;
 }
 
-$Txns = $dbh->prepare("select date_format(txndate,'%d-%b-%y') as tdate,concat(txncusname,' (',txnremarks,')') as txncusname,txnamount,coadesc,txntxnno from transactions left join coas on (txnmethod=coanominalcode) where $Filter and transactions.acct_id='$COOKIE->{ACCT}' and coas.acct_id='$COOKIE->{ACCT}' order by txndate desc,txntxnno desc limit $FORM{offset},$FORM{rows}");
+$Txns = $dbh->prepare("select stmt_id,datediff(txndate,'$Stdate') as datediff,transactions.id,date_format(txndate,'%d-%b-%y') as tdate,concat(txncusname,' (',txnremarks,')') as txncusname,txnamount,coadesc,txntxnno from transactions left join coas on (txnmethod=coanominalcode) where $Filter and transactions.acct_id='$COOKIE->{ACCT}' and coas.acct_id='$COOKIE->{ACCT}' order by txndate desc,txntxnno desc limit $FORM{offset},$FORM{rows}");
 $Txns->execute;
 
 use Template;
@@ -59,8 +71,41 @@ $Vars = {
 
 	entries => $Txns->fetchall_arrayref({}),
         javascript => '<script type="text/javascript">
+var errfocus;
+$(document).ready(function() {
+  $("#newdate").datepicker({ maxDate: new Date() });
+  $("#changedate").dialog({
+    bgiframe: true,
+    autoOpen: false,
+    position: [200,100],
+    height: 200,
+    width: 300,
+    modal: true,
+    buttons: {
+      "Change Date": function() {
+        $.post("/cgi-bin/fpa/change_txn_date.pl", $("#fchangedate").serialize(),function(data) {
+          if ( ! /^OK/.test(data)) {
+            alert(data);
+          }
+          window.location.reload(true);
+        },"text");
+        $("td").removeClass("error");
+        $(this).dialog("close");
+      },
+      Cancel: function() {
+        $("td").removeClass("error");
+        $(this).dialog("close");
+      }
+    }
+  });
+});
+function change_date(obj,id,olddate) {
+  $(obj).addClass("error");
+  document.getElementById("cd_id").value = id;
+  document.getElementById("newdate").value = olddate;
+  $("#changedate").dialog("open");
+}
 function redisplay(action) {
-
   numrows = ' . $FORM{numrows} . ';
   offset = ' . $FORM{offset} . ';
   rows = ' . $FORM{rows} . ';

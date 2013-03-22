@@ -52,7 +52,7 @@ $dbh->disconnect;
 print<<EOD;
 Content-Type: text/html
 Status: 302
-Location: /cgi-bin/fpa/reconcile.pl?$Acctype
+Location: /cgi-bin/fpa/list_txns.pl
 
 EOD
 exit;

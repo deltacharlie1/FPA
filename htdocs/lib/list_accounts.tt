@@ -11,7 +11,7 @@
       <th>Current Bal</th>
       <th>Reconcile</th>
     </tr>
-[% class = [ "even","odd" ] -%]
+[% class = [ "odd","even" ] -%]
 [% FOREACH entry IN entries -%]
   [%- ndx = loop.count % 2 -%]
     <tr class="[%- class.$ndx -%]" onclick="location.href='/cgi-bin/fpa/list_txns.pl?filter=[%- entry.acctype -%]';">

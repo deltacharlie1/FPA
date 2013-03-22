@@ -23,7 +23,7 @@ $Vars = {
 	 ads => $Adverts,
         title => 'Accounts - Accounts',
 	cookie => $COOKIE,
-pagetitle => 'List of Accounts',
+	pagetitle => 'List of Accounts',
 	entries => $Accts->fetchall_arrayref({})
 };
 

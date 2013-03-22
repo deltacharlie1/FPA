@@ -1,25 +1,46 @@
 <div class="main" id="main">
+[% USE date -%]
+<div id="changedate" title="Change Txn Date" style="display:none;">
+  <form id="fchangedate" name="fchangedate" action="">
+  <input type="hidden" name="id" id="cd_id" value=""/>
+  <table width="100%" border="0" cellpadding="0" cellspacing="0" class="formtable">
+    <tr>
+      <td><label>New Date</label></td>
+      <td><input type="text" name="newdate" id="newdate" size="9" value="" readonly="readonly"/></td>
+    </tr>
+  </table>
+  </form>
+</div>
 <h1>Transaction List</h1>
 [% INCLUDE page_select.tt -%]
   <table width="660" border="0" cellpadding="0" cellspacing="0" class="listing">
     <tr>
       <th>Txn #</th>
-      <th>Date</th>
+      <th class="dbl">Date</th>
       <th>Account</th>
-      <th>Detail</th>
+      <th class="dbl">Detail</th>
       <th>Paid Out</th>
       <th>Paid In</th>
     </tr>
 [% class = [ "even","odd" ] -%]
 [%- FOREACH entry IN entries -%]
   [%- ndx = loop.count % 2 -%]
-    <tr class="[%- class.$ndx -%]"><!--  onclick="location.href='/cgi-bin/fpa/add_address.pl?[%- entry.id -%]';" //-->
+    <tr class="[%- class.$ndx -%]">
+  [% IF entry.datediff < 0 OR entry.stmt_id > 0 -%]
       <td>[%- entry.txntxnno -%]</td>
       <td>[%- entry.tdate -%]</td>
       <td>[%- entry.coadesc -%]</td>
       <td>[%- entry.txncusname | truncate(70) -%]</td>
       <td style="text-align:right;">[%- IF entry.txnamount < 0; entry.txnamount | remove('-'); ELSE -%]&nbsp;[%- END -%]</td>
       <td style="text-align:right;">[%- IF entry.txnamount >= 0; entry.txnamount; ELSE -%]&nbsp;[%- END -%]</td>
+  [% ELSE -%]
+      <td class="enabled">[%- entry.txntxnno -%]</td>
+      <td class="enabled" ondblclick="change_date(this,[%- entry.id -%],'[%- entry.tdate -%]');">[%- entry.tdate -%]</td>
+      <td class="enabled">[%- entry.coadesc -%]</td>
+      <td class="enabled" ondblclick="if (confirm('Continue to delete this record')) { location.href='/cgi-bin/fpa/reverse_txns.pl?[%- entry.id -%]?[%- entry.txnmethod -%]'; }">[%- entry.txncusname | truncate(70) -%]</td>
+      <td class="enabled" style="text-align:right;">[%- IF entry.txnamount < 0; entry.txnamount | remove('-'); ELSE -%]&nbsp;[%- END -%]</td>
+      <td class="enabled" style="text-align:right;">[%- IF entry.txnamount >= 0; entry.txnamount; ELSE -%]&nbsp;[%- END -%]</td>
+  [% END -%]
     </tr>
 [%- END -%]
   </table>
