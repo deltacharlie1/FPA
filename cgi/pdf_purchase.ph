@@ -140,12 +140,18 @@ if ($Invoice[10]) {
 
 $text->lead('28');
 $text->transform( -translate => [544,137]);
-$text->text_right(sprintf("%1.2f",$Net));
-$text->cr();
-$text->text_right(sprintf("%1.2f",$Vat));
-$text->cr();
-$text->font($font_bold,12);
-$text->text_right(sprintf("%1.2f",$Total));
+if ($COOKIE->{VAT} =~ /N/i) {
+	$text->font($font_bold,12);
+	$text->text_right(sprintf("%1.2f",$Net));
+}
+else {
+	$text->text_right(sprintf("%1.2f",$Net));
+	$text->cr();
+	$text->text_right(sprintf("%1.2f",$Vat));
+	$text->cr();
+	$text->font($font_bold,12);
+	$text->text_right(sprintf("%1.2f",$Total));
+}
 
 my $PDF_doc = $pdf->stringify();
 $pdf->end;
@@ -211,13 +217,22 @@ unless ($COOKIE->{VAT} =~ /N/i) {
 
 #  Totals block
 
-$g->rectxy(312,75,552,159);
-$g->move(312,131);
-$g->line(552,131);
-$g->move(312,103);
-$g->line(552,103);
-$g->move(433,159);
-$g->line(433,75);
+if ($COOKIE->{VAT} =~ /N/i) {
+	$g->rectxy(312,131,552,159);
+	$g->move(312,131);
+	$g->line(552,131);
+	$g->move(433,131);
+	$g->line(433,159);
+}
+else {
+	$g->rectxy(312,75,552,159);
+	$g->move(312,131);
+	$g->line(552,131);
+	$g->move(312,103);
+	$g->line(552,103);
+	$g->move(433,159);
+	$g->line(433,75);
+}
 
 $g->stroke;
 
@@ -264,6 +279,9 @@ if ($COOKIE->{VAT} =~ /N/i) {
 
 	$text->transform( -translate => [482,447]);
 	$text->text("Total");
+
+	$text->transform( -translate => [320,137]);
+	$text->text("$Invtext Total");
 }
 else {
 	$text->transform( -translate => [322,447]);
@@ -277,16 +295,16 @@ else {
 
 	$text->transform( -translate => [482,447]);
 	$text->text("VAT Amount");
+
+	$text->transform( -translate => [320,137]);
+	$text->text("Net Total");
+
+	$text->transform( -translate => [320,109]);
+	$text->text("VAT Total");
+
+	$text->transform( -translate => [320,81]);
+	$text->text($Invtext." Total");
 }
-
-$text->transform( -translate => [320,137]);
-$text->text("Net Total");
-
-$text->transform( -translate => [320,109]);
-$text->text("VAT Total");
-
-$text->transform( -translate => [320,81]);
-$text->text($Invtext." Total");
 
 ############   Variable Data   ####################
 
