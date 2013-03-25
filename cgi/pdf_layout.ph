@@ -32,7 +32,9 @@ foreach $LI (@$LIT) {
 #		$Xrmk = $Item->{lileft};
 		$Xrmk = $LI->{lileft};
 	}
-
+	elsif ($LI->{lifldcode} =~ /a020/) {
+		$Litop = 842 - $LI->{lisize} - $LI->{litop};
+	}
 	if ($LI->{litable} =~ /companies/i) {
 		$C_sel .= $LI->{lisource}." as ".$LI->{lialias}.",";
 	}
@@ -169,6 +171,17 @@ for $Row (@Row) {
 
 	last if $Row =~ /\<\/table\>/i;
 
+	if ($Ypos < 842 - $Litop - $Layout->{descheight} + 20) {
+
+#  Is there a reverse side?
+
+		if ($Rev_pdf) {
+			$page = $pdf->importpage($Rev_pdf,1,0);
+		}
+		$page = $pdf->importpage($pdf,1,0);
+		&set_new_lpage;
+	}
+
 	$Row =~ s/^.*?<td.*?>//is;
         $Row =~ s/<td.*?>//gis;
 
@@ -218,17 +231,6 @@ for $Row (@Row) {
 		$nettotal += $PCell[3];
 		$vattotal += $PCell[5];
 		$invtotal += $PCell[3] + $PCell[5];
-
-		if ($Ypos < 842 - $Litop - $Layout->{descheight} + 20) {
-
-#  Is there a reverse side?
-
-			if ($Rev_pdf) {
-				$page = $pdf->importpage($Rev_pdf,1,0);
-			}
-			$page = $pdf->importpage($pdf,1,0);
-			&set_new_lpage;
-		}
 	}
 }
 

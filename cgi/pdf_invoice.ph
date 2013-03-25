@@ -135,6 +135,11 @@ $Invoice[9] =~ s/<tr.*?>//gis;		#  Remove all row start tags
 
 @Row = split(/\<\/tr\>/i,$Invoice[9]);
 for $Row (@Row) {
+	if ($Ypos < 170) {
+		$page = $pdf->importpage($pdf,1,0);
+		&set_new_page;
+	}
+
 	$Row =~ s/^.*?<td.*?>//is;
         $Row =~ s/<td.*?>//gis;
         @Cell = split(/\<\/td\>/i,$Row);
@@ -180,10 +185,6 @@ for $Row (@Row) {
 		$Ypos -= 25;
 		$Net += $Cell[3];
 
-		if ($Ypos < 170) {
-			$page = $pdf->importpage($pdf,1,0);
-			&set_new_page;
-		}
 	}
 }
 #exit;
