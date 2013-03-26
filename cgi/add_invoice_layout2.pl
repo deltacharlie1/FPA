@@ -52,6 +52,8 @@ while (( $Key,$Value) = each %FORM) {
 	}
 }
 
+$FORM{layspace} = $FORM{layspace} || 25;
+
 $Settings{a008}->{source} =~ s/\%d-\%b-\%y/$FORM{laydateformat}/;
 $Settings{a009}->{source} =~ s/\%d-\%b-\%y/$FORM{laydateformat}/;
 
@@ -122,7 +124,7 @@ EOD
 		print IMG $Original;
 		close(IMG);
 
-		$Sts = $dbh->do("insert into invoice_layouts (acct_id,layfile,laydesc,laydateformat,layreversefile) values ('$COOKIE->{ACCT}','/projects/fpa_docs/$Company->{comdocsdir}/$FORM{Filename}','$FORM{laydesc}','$FORM{laydateformat}','$FORM{layreversefile}')");
+		$Sts = $dbh->do("insert into invoice_layouts (acct_id,layfile,laydesc,laydateformat,layreversefile,layspace) values ('$COOKIE->{ACCT}','/projects/fpa_docs/$Company->{comdocsdir}/$FORM{Filename}','$FORM{laydesc}','$FORM{laydateformat}','$FORM{layreversefile}',$FORM{layspace})");
 		$New_inv_id = $dbh->last_insert_id(undef, undef, qw(invoice_layouts undef));
 
 		while (($Key,$Value) = each %Settings) {
@@ -148,10 +150,10 @@ else {
 		print IMG $Original;
 		close(IMG);
 
-		$Sts = $dbh->do("update invoice_layouts set layfile='/projects/fpa_docs/$Company->{comdocsdir}/$FORM{Filename}',laydesc='$FORM{laydesc}',laydateformat='$FORM{laydateformat}',layreversefile='$FORM{layreversefile}' where acct_id='$COOKIE->{ACCT}' and id=$FORM{id}");
+		$Sts = $dbh->do("update invoice_layouts set layspace=$FORM{layspace},layfile='/projects/fpa_docs/$Company->{comdocsdir}/$FORM{Filename}',laydesc='$FORM{laydesc}',laydateformat='$FORM{laydateformat}',layreversefile='$FORM{layreversefile}' where acct_id='$COOKIE->{ACCT}' and id=$FORM{id}");
 	}
 	else {
-		$Sts = $dbh->do("update invoice_layouts set laydesc='$FORM{laydesc}',laydateformat='$FORM{laydateformat}',layreversefile='$FORM{layreversefile}' where acct_id='$COOKIE->{ACCT}' and id=$FORM{id}");
+		$Sts = $dbh->do("update invoice_layouts set layspace=$FORM{layspace},laydesc='$FORM{laydesc}',laydateformat='$FORM{laydateformat}',layreversefile='$FORM{layreversefile}' where acct_id='$COOKIE->{ACCT}' and id=$FORM{id}");
 	}
 
 	print<<EOD;

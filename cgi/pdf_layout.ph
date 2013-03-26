@@ -28,12 +28,12 @@ $LIs->finish;
 foreach $LI (@$LIT) {
 
 	if ($LI->{lifldcode} =~ /a013/i) {
-		$Yrmk = 842 - $LI->{lisize} - $LI->{litop};
+		$Yrmk = 842 - $LI->{lisize} - $LI->{litop} + 14;
 #		$Xrmk = $Item->{lileft};
 		$Xrmk = $LI->{lileft};
 	}
 	elsif ($LI->{lifldcode} =~ /a020/) {
-		$Litop = 842 - $LI->{lisize} - $LI->{litop};
+		$Litop = 842 - $LI->{lisize} - $LI->{litop} + 14;
 	}
 	if ($LI->{litable} =~ /companies/i) {
 		$C_sel .= $LI->{lisource}." as ".$LI->{lialias}.",";
@@ -171,7 +171,7 @@ for $Row (@Row) {
 
 	last if $Row =~ /\<\/table\>/i;
 
-	if ($Ypos < 842 - $Litop - $Layout->{descheight} + 20) {
+	if ($Ypos < 842 - $Litop - $Layout->{descheight} + 14) {
 
 #  Is there a reverse side?
 
@@ -227,7 +227,7 @@ for $Row (@Row) {
 			}
 		}
 
-		$Ypos = $New_Ypos - 25;
+		$Ypos = $New_Ypos - $Layout->{layspace};
 		$nettotal += $PCell[3];
 		$vattotal += $PCell[5];
 		$invtotal += $PCell[3] + $PCell[5];
@@ -273,7 +273,7 @@ $Line_len = 0;
 
 foreach $Item (@Items) {
 	if ($Item->{lialias} =~ /desc/i) {
-		$Ypos = 842 - $Item->{lisize} - $Item->{litop};
+		$Ypos = 842 - $Item->{lisize} - $Item->{litop} + 14;
 		$Xpos = $Item->{lileft};
 	}
 }

@@ -103,7 +103,7 @@ $(document).ready(function(){
 });
 function check_send() {
   if ($("#layid").val() == 0 && ($("#laydesc").val() == "" || $("#layfileQueue").html() == "")) {
-    alert("You must enter a description iand select a layout file when adding a new layout");
+    alert("You must enter a description and select a layout file when adding a new layout");
   }
   else {
     if ($("#layfileQueue").html() == "") {
@@ -125,6 +125,13 @@ function check_send() {
 }
 function setfocus() {
   eval("document.getElementById(\'" + errfocus + "\').focus();");
+}
+function check_val(obj) {
+  if (! /^\d+$/.test(obj.value)) {
+    errfocus = obj.name;
+    document.getElementById("dialog").innerHTML = "You must enter an integer value (default is 25)";
+    $("#dialog").dialog("open");
+  }
 }
 </script>',
 };

@@ -541,8 +541,17 @@ drop table if exists invoice_layouts;
 create table invoice_layouts (
   id int unsigned not null auto_increment primary key,
   acct_id varchar(50) not null default '',
-  layname varchar(20) not null default '' comment 'Name of the layout',
+  laydesc varchar(20) not null default '' comment 'Name of the layout',
+  laydateformat varchar(20) not null default '%d-%b-%y' comment 'Default date format',
+  layxoffset char(3) not null default '830' comment 'Default x offset of description',
+  layyoffset char(3) not null default '0' comment 'Default y offset of description',
   layfile varchar(100) not null default '' comment ' stored filename',
+  descwidth char(3) not null default '300' comment 'Default width of description',
+  descheight char(3) not null default '300' comment 'Default description height',
+  rmkwidth char(3) not null default '100' comment 'Default remark width',
+  rmkheight char(3) not null default '60' comment 'Default remark height',
+  layreversefile varchar(120) not null default '' comment 'URL of revese page file',
+  layspace int(11) not null default 25 comment 'Default inter item spacing',
   index lay1 (acct_id)
 );
 

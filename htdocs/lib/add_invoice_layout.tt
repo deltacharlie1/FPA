@@ -35,6 +35,11 @@
           </select>
       </td>
     </tr>
+    <tr>
+      <td><label>Inter-Item spacing (14 = 1 line)</label></td>
+      <td><input type="text" name="layspace" id="layspace" size="5" value="[%- layout.layspace -%]" onblur="check_val(this);"/></td>
+
+    </tr>
   </table>
 <input type="hidden" name="id" id="layid" value="[%- layout.id OR '0' -%]"/>
 </div>
