@@ -61,7 +61,7 @@
   [% END -%]
     </tr>
 [%- END -%]
-[%- ctr = ctr+1; ndx = ctr % 2 -%]
+[%- ctr = ctr+1; ndx = ctr % 2; credits = credits | format('%1.2f'); debits = debits | format('%1.2f') -%]
     <tr class="[%- class.$ndx -%]">
       <td>&nbsp;</td>
       <td>&nbsp;</td>
