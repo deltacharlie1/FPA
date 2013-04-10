@@ -45,7 +45,14 @@ sub process_pur_vat {
 #  Ignore if not registered for VAT
 
         return if ($COOKIE->{VAT} =~ /N/i);
-	return if ($COOKIE->{VAT} =~ /F/i && ($FORM{invcoa} !~ /^10/ || ($FORM{invcoa} =~ /^10/  && ($FORM{invtotal} + $FORM{invvat}) < 2000)));
+
+#  If Fixed Rate Scheme add VAT to net value
+
+	if ($COOKIE->{VAT} =~ /F/i && ($FORM{invcoa} !~ /^10/ || ($FORM{invcoa} =~ /^10/  && ($FORM{invtotal} + $FORM{invvat}) < 2000))) {
+		$FORM{invtotal} += $FORM{invvat};
+		$FORM{invvat} = '0.00';
+		return;
+	}
 
 #  Otherwise do any VAT
 
