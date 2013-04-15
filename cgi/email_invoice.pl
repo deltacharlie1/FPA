@@ -46,7 +46,7 @@ else {
 
         open(EMAIL,"| /usr/sbin/sendmail -t");
         print EMAIL<<EOD;
-From: $COOKIE->{TAG} <fpainvoices\@corunna.com>
+From: $COOKIE->{TAG} <fpainvoices\@corunnasystems.com>
 To: $FORM{invcusemail}
 Reply-To: $COOKIE->{TAG} <$COOKIE->{ID}>
 EOD
@@ -61,7 +61,7 @@ MIME-Version: 1.0
 Content-Type: multipart/mixed;
         boundary="----=_NextPart_000_001D_01C0B074.94357480"
 Message-Id: <$Checkid::Cookie{'fpa-cookie'}>
-From: $COOKIE->{TAG} <invoices\@corunna.com>
+From: $COOKIE->{TAG} <invoices\@corunnasystems.com>
 Reply-To: $COOKIE->{TAG} <$COOKIE->{ID}> 
 X-Priority: 3
 X-Mailer: Postfix v2.0
