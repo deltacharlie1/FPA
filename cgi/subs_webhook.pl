@@ -108,19 +108,14 @@ sub send_email {
 
         open(EMAIL,"| /usr/sbin/sendmail -t");
         print EMAIL<<EOD;
-From: FreePlus Accounts <fpainvoices\@corunna.com>
+From: FreePlus Accounts <fpainvoices\@corunnasystems.com>
 To: $Company->{regemail}
 Bcc: doug.conran\@corunna.com
 Subject: Your FreePlus Subscription Invoice
+Message-Id: <$bill->{id}>
 MIME-Version: 1.0
 Content-Type: multipart/mixed;
         boundary="----=_NextPart_000_001D_01C0B074.94357480"
-Message-Id: <$bill->{id}>
-From: FreePlus Accounts <fpainvoices\@corunna.com>
-X-Priority: 3
-X-Mailer: Postfix v2.0
-X-MimeOLE: Produced By Microsoft MimeOLE V5.50.4133.2400
-X-MSMail-Priority: Normal
 
 This is a multi-part message in MIME format.
 

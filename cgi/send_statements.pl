@@ -62,20 +62,15 @@ while ($aCustomer = $aCustomers->fetchrow_hashref) {
 
 		open(EMAIL,"| /usr/sbin/sendmail -t");
 	        print EMAIL<<EOD;
-From: $aCompany->{comcontact} <fpastatements\@corunna.com>
+From: $aCompany->{comcontact} <fpastatements\@corunnasystems.com>
 To: $aCustomer->{cusemail}
 cc: $aCompany->{comemail}
 Reply-To: $aCompany->{comcontact} <$aCompany->{comemail}>
 Subject: $aCompany->{comname} statement for $Stmt_period
+Message-Id: <$$-$Msg_id_suffix}>
 MIME-Version: 1.0
 Content-Type: multipart/mixed;
         boundary="----=_NextPart_000_001D_01C0B074.94357480"
-Message-Id: <$$-$Msg_id_suffix}>
-From: $aCompany->{comcontact} <$aCompany->{comemail}>
-X-Priority: 3
-X-Mailer: Postfix v2.0
-X-MimeOLE: Produced By Microsoft MimeOLE V5.50.4133.2400
-X-MSMail-Priority: Normal
 
 This is a multi-part message in MIME format.
  

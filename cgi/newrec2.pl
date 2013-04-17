@@ -161,7 +161,7 @@ $Last_Stmt = $Stmts->fetchrow_hashref;
 $Stmts->finish;
 
 if ($COOKIE->{ACCT} == '1+1') {
-	$GCcalc = '$("#stmtdiff").text($("#stmtdiff").text() - $("#gctot").val());';
+	$GCcalc = '$("#stmtdiff").text((($("#stmtdiff").text() * 1) - $("#gctot").val()).toFixed(2));';
 }
 use Template;
 $tt = Template->new({

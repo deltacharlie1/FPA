@@ -40,26 +40,25 @@ else {
 
 	open(EMAIL,"| /usr/sbin/sendmail -t");
         print EMAIL<<EOD;
-From: $COOKIE->{TAG} <fpastatements\@corunna.com>
-To: $FORM{cusemail}
-Reply-To: $COOKIE->{TAG} <$COOKIE->{ID}>
-EOD
-	if ($FORM{pdfcopy} =~ /Y/i) {
-		print EMAIL <<EOD;
-cc: $COOKIE->{ID}
-EOD
-	}
-	print EMAIL <<EOD;
-Subject: $FORM{pdfsubj}
-MIME-Version: 1.0
-Content-Type: multipart/mixed;
-        boundary="----=_NextPart_000_001D_01C0B074.94357480"
-Message-Id: <$Checkid::Cookie{'fpa-cookie'}>
-From: $COOKIE->{TAG} <$COOKIE->{ID}> 
 X-Priority: 3
 X-Mailer: Postfix v2.0
 X-MimeOLE: Produced By Microsoft MimeOLE V5.50.4133.2400
 X-MSMail-Priority: Normal
+Message-Id: <$Checkid::Cookie{'fpa-cookie'}>
+From: $COOKIE->{TAG} <fpastatements\@corunnasystems.com>
+To: $FORM{cusemail}
+Reply-To: $COOKIE->{TAG} <$COOKIE->{ID}>
+EOD
+        if ($FORM{pdfcopy} =~ /Y/i) {
+                print EMAIL <<EOD;
+cc: $COOKIE->{ID}
+EOD
+        }
+        print EMAIL <<EOD;
+Subject: $FORM{pdfsubj}
+MIME-Version: 1.0
+Content-Type: multipart/mixed;
+        boundary="----=_NextPart_000_001D_01C0B074.94357480"
 
 This is a multi-part message in MIME format.
  
