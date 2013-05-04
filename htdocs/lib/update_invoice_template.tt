@@ -30,12 +30,17 @@
       <td style="vertical-align:top;">
         <select name="invrepeatfreq" id="invrepeatfreq" size="1">
           <option value="1"[%- IF invoice.invrepeatfreq=='1' -%] selected = "selected"[%- END -%]>Weekly</option>
-          <option value="2"[%- IF invoice.invrepeatfreq=='2' -%] selected = "selected"[%- END -%]>Monthly</option>
-          <option value="3"[%- IF invoice.invrepeatfreq=='3' -%] selected = "selected"[%- END -%]>Monthly (Last Day)</option>
-          <option value="4"[%- IF invoice.invrepeatfreq=='4' -%] selected = "selected"[%- END -%]>Monthly (First Day)</option>
-          <option value="5"[%- IF invoice.invrepeatfreq=='5' -%] selected = "selected"[%- END -%]>Quarterly</option>
-          <option value="6"[%- IF invoice.invrepeatfreq=='6' -%] selected = "selected"[%- END -%]>Biannually</option>
-          <option value="7"[%- IF invoice.invrepeatfreq=='7' -%] selected = "selected"[%- END -%]>Annually</option>
+          <option value="2"[%- IF invoice.invrepeatfreq=='2' -%] selected = "selected"[%- END -%]>2 Weekly</option>
+          <option value="3"[%- IF invoice.invrepeatfreq=='3' -%] selected = "selected"[%- END -%]>4 Weekly</option>
+          <option value="4"[%- IF invoice.invrepeatfreq=='4' -%] selected = "selected"[%- END -%]>6 Weekly</option>
+          <option value="5"[%- IF invoice.invrepeatfreq=='5' -%] selected = "selected"[%- END -%]>8 Weekly</option>
+          <option value="6"[%- IF invoice.invrepeatfreq=='6' -%] selected = "selected"[%- END -%]>12 Weekly</option>
+          <option value="7"[%- IF invoice.invrepeatfreq=='7' -%] selected = "selected"[%- END -%]>Monthly</option>
+          <option value="8"[%- IF invoice.invrepeatfreq=='8' -%] selected = "selected"[%- END -%]>Monthly (Last Day)</option>
+          <option value="9"[%- IF invoice.invrepeatfreq=='9' -%] selected = "selected"[%- END -%]>Monthly (First Day)</option>
+          <option value="10"[%- IF invoice.invrepeatfreq=='10' -%] selected = "selected"[%- END -%]>Quarterly</option>
+          <option value="11"[%- IF invoice.invrepeatfreq=='11' -%] selected = "selected"[%- END -%]>6 Monthly</option>
+          <option value="12"[%- IF invoice.invrepeatfreq=='12' -%] selected = "selected"[%- END -%]>Annually</option>
 
       </td>
     </tr>

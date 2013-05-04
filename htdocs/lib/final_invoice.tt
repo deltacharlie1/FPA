@@ -221,6 +221,7 @@
         </a>
       </div>
     </li>
+[% IF cookie.ACCESS > 3 -%]
     <li>    
       <div>
         <a href="/cgi-bin/fpa/new_invoice_template.pl?[%- invoice.id -%]">
@@ -228,6 +229,7 @@
         </a>
       </div>  
     </li>
+[% END -%]
     <li>    
       <div>
         <a href="/cgi-bin/fpa/list_customer_invoices.pl?[%- invoice.cus_id -%]">

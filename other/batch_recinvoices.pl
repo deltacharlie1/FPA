@@ -2,9 +2,13 @@
 
 #  Script to run through all due recurring invoices
 
+$Dte = `date`;
+
+warn "Rec Invoices running at $Dte\n";
+
 require "/usr/local/git/fpa/cgi/process_invoice.ph";
 
-@RepeatFreq = ('','date_add(invprintdate,interval 7 day)','date_add(invprintdate,interval 1 month)','last_day(date_add(invprintdate,interval 1 month))','date_add(last_day(invprintdate),interval 1 day)','date_add(invprintdate,interval 3 month)','date_add(invprintdate,interval 6 month)','date_add(invprintdate,interval 1 year)');
+@RepeatFreq = ('','date_add(invprintdate,interval 7 day)','date_add(invprintdate,interval 14 day)','date_add(invprintdate,interval 28 day)','date_add(invprintdate,interval 42 day)','date_add(invprintdate,interval 56 day)','date_add(invprintdate,interval 84 day)','date_add(invprintdate,interval 1 month)','last_day(date_add(invprintdate,interval 1 month))','date_add(last_day(invprintdate),interval 1 day)','date_add(invprintdate,interval 3 month)','date_add(invprintdate,interval 6 month)','date_add(invprintdate,interval 1 year)');
 
 @Month = ('','January','February','March','April','May','June','July','August','September','October','November','December');
 
@@ -19,11 +23,13 @@ use MIME::Base64;
 require "/usr/local/httpd/cgi-bin/fpa/pdf_layout.ph";
 require "/usr/local/httpd/cgi-bin/fpa/pdf_invoice.ph";
 
-$dbh = DBI->connect("DBI:mysql:fpa");
+$dbh = DBI->connect("DBI:mysql:fpa3");
 
-$BCompanies = $dbh->prepare("select comname,comvatscheme,regmembership,regemail from companies left join registrations using (reg_id) where reg_id=? and id=?");
-$RecInvoices = $dbh->prepare("select *,date_format(invprintdate,'%d-%b-%y') as printdate,date_format(invprintdate,'%c') as invmonth,date_format(invprintdate,'%Y') as invyear from invoice_templates where not isnull(invprintdate) and invprintdate <= now()");
+$BCompanies = $dbh->prepare("select comname,comvatscheme,regmembership,regemail,datediff(comsubdue,now()) as datediff from companies left join registrations using (reg_id) where reg_id=? and id=?");
+$RecInvoices = $dbh->prepare("select *,date_format(invprintdate,'%d-%b-%y') as printdate,date_format(invprintdate,'%c') as invmonth,date_format(invprintdate,'%Y') as invyear from invoice_templates where acct_id='1+1' and not isnull(invprintdate) and invprintdate <= now()");
 $RecInvoices->execute;
+
+warn "No of invoices found = ".$RecInvoices->rows."\n";
 
 while ($RecInvoice = $RecInvoices->fetchrow_hashref) {
 	$Ctr++;
@@ -31,7 +37,7 @@ while ($RecInvoice = $RecInvoices->fetchrow_hashref) {
 #  Get new company's VAT scheme
 
 	if ($COOKIE->{ACCT} ne $RecInvoice->{acct_id}) {
-		if ($COOKIE->{ACCT}) {
+		if ($COOKIE->{ACCT} && $No_of_invoices > 0) {
 
         		open(SUMEMAIL,"| /usr/sbin/sendmail -t");
 		        print SUMEMAIL<<EOD;
@@ -60,7 +66,7 @@ EOD
 		$COOKIE->{PLAN} = $BCompany->{regmembership};
 	}
 
-	if ($COOKIE->{PLAN} > 3) {
+	if ($BCompany->{datediff} >= 0) {		#  make sure he is still subscribing
 
 		%FORM = %$RecInvoice;
 
@@ -114,12 +120,13 @@ EOD
 		}
 	}
 }
-if ($COOKIE->{ACCT}) {
 
+if ($COOKIE->{ACCT} && $No_of_Invoices > 0) {
 	open(SUMEMAIL,"| /usr/sbin/sendmail -t");
         print SUMEMAIL<<EOD;
 From: Auto-Invoices <fpainvoices\@corunna.com>
 To: $BCompany->{regemail}
+cc: doug.conran\@corunna.com
 Subject: $No_of_Invoices FreePlus Invoices have been generated for you
 
 The following invoices have been automatically generated for you today:-

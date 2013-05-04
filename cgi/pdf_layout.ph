@@ -154,7 +154,7 @@ $page = $pdf->openpage(1);
 $font = $pdf->corefont('Helvetica');
 $font_bold = $pdf->corefont('Helvetica Bold');
 
-$Overdue = $pdf->image_png('../cgi/overdue.png');
+$Overdue = $pdf->image_png('/usr/local/git/fpa/cgi/overdue.png');
 $Paid = $pdf->image_png('/usr/local/git/fpa/htdocs/icons/paid.png');
 $Testimg = $pdf->image_png('/usr/local/git/fpa/htdocs/icons/testonly.png');
 

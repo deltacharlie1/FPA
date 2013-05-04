@@ -2,7 +2,7 @@
 <div class="main" id="main">
 <h1>Invoice Template List</h1>
 [% INCLUDE page_select.tt -%]
-[% afreq = [ "None","Weekly","Monthly","Last Day of Month","First Day of Month","Quarterly","Biannually","Annually" ] -%]
+[% afreq = [ "None","Weekly","2 Weekly","4 Weekly","6 Weekly","8 Weekly","12 Weekly","Monthly","Last Day of Month","First Day of Month","Quarterly","6 Monthly","Annually" ] -%]
   <table width="660" border="0" cellpadding="0" cellspacing="0" class="listing">
     <tr>
       <th>Customer</th>
