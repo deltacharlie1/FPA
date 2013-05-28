@@ -27,9 +27,9 @@ foreach $pair (@pairs) {
 use DBI;
 $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
 
-$Incomes = $dbh->prepare("select coanominalcode,coadesc,coatype,sum(nomamount) as balance from coas left join nominals on (nominals.nomcode=coas.coanominalcode and nominals.acct_id=coas.acct_id) where coas.acct_id='$COOKIE->{ACCT}' and coatype='Income' and (isnull(nomdate) or (nomdate>=str_to_date('$FORM{tbstart}','%d-%b-%y') and nomdate<=str_to_date('$FORM{tbend}','%d-%b-%y'))) group by coanominalcode order by coanominalcode");
+$Incomes = $dbh->prepare("select coanominalcode,coadesc,coatype,sum(nomamount) as balance from coas left join nominals on (nominals.nomcode=coas.coanominalcode and nominals.acct_id=coas.acct_id) where coas.acct_id='$COOKIE->{ACCT}' and (isnull(nomye) or nomye='N') and coatype='Income' and (isnull(nomdate) or (nomdate>=str_to_date('$FORM{tbstart}','%d-%b-%y') and nomdate<=str_to_date('$FORM{tbend}','%d-%b-%y'))) group by coanominalcode order by coanominalcode");
 $Incomes->execute;
-$Expenses = $dbh->prepare("select coanominalcode,coadesc,coatype,sum(nomamount) as balance from coas left join nominals on (nominals.nomcode=coas.coanominalcode and nominals.acct_id=coas.acct_id) where coas.acct_id='$COOKIE->{ACCT}' and coatype='Expenses' and (isnull(nomdate) or (nomdate>=str_to_date('$FORM{tbstart}','%d-%b-%y') and nomdate<=str_to_date('$FORM{tbend}','%d-%b-%y'))) group by coanominalcode order by coanominalcode");
+$Expenses = $dbh->prepare("select coanominalcode,coadesc,coatype,sum(nomamount) as balance from coas left join nominals on (nominals.nomcode=coas.coanominalcode and nominals.acct_id=coas.acct_id) where coas.acct_id='$COOKIE->{ACCT}' and (isnull(nomye) or nomye='N') and coatype='Expenses' and (isnull(nomdate) or (nomdate>=str_to_date('$FORM{tbstart}','%d-%b-%y') and nomdate<=str_to_date('$FORM{tbend}','%d-%b-%y'))) group by coanominalcode order by coanominalcode");
 $Expenses->execute;
 
 use Template;

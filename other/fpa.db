@@ -154,6 +154,7 @@ create table nominals (
   nomamount decimal(20,2) not null default '0' comment 'amount for this coa entry',
   nomdate date comment 'date of this entry',
   old_id int unsigned,
+  nomye char(1) not null default 'N' comment 'Flag to denote that this nominal entry is a YE one',
   index nom1 (acct_id),
   index nom2 (link_id)
 );

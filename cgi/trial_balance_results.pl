@@ -28,7 +28,7 @@ foreach $pair (@pairs) {
 use DBI;
 $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
 
-$Coas = $dbh->prepare("select nomcode,coadesc,coatype,sum(nomamount) as balance from nominals left join coas on (nominals.nomcode=coas.coanominalcode and nominals.acct_id=coas.acct_id) where str_to_date('$FORM{tbstart}','%d-%b-%y')<=nomdate and str_to_date('$FORM{tbend}','%d-%b-%y')>=nomdate and nominals.acct_id='$COOKIE->{ACCT}' group by nomcode order by nomcode");
+$Coas = $dbh->prepare("select nomcode,coadesc,coatype,sum(nomamount) as balance from nominals left join coas on (nominals.nomcode=coas.coanominalcode and nominals.acct_id=coas.acct_id) where str_to_date('$FORM{tbstart}','%d-%b-%y')<=nomdate and str_to_date('$FORM{tbend}','%d-%b-%y')>=nomdate and nominals.acct_id='$COOKIE->{ACCT}' and nomye='N' group by nomcode order by nomcode");
 $Coas->execute;
 
 use Template;

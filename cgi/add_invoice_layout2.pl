@@ -4,6 +4,9 @@ $ACCESS_LEVEL = 1;
 
 #  script to upload an invoice layout
 
+use Checkid;
+$COOKIE = &checkid($ENV{HTTP_COOKIE},$ACCESS_LEVEL);
+
 use CGI;
 use DBI;
 

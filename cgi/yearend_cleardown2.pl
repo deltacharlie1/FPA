@@ -47,14 +47,14 @@ foreach $Coaitem (@$Coa) {
 
 #  Make minus entry for amount in nominals
 
-	$Sts = $dbh->do("insert into nominals (acct_id,link_id,journal_id,nomamount,nomdate,nomcode,nomtype) values ('$COOKIE->{ACCT}',$New_jnl_id,$New_jnl_id,'0'-'$Coaitem->{balance}','$Date->{tbend}','$Coaitem->{nominalcode}','J')");
+	$Sts = $dbh->do("insert into nominals (acct_id,link_id,journal_id,nomamount,nomdate,nomcode,nomtype,nomye) values ('$COOKIE->{ACCT}',$New_jnl_id,$New_jnl_id,'0'-'$Coaitem->{balance}','$Date->{tbend}','$Coaitem->{nominalcode}','J','Y')");
 
 	$Sts = $dbh->do("update coas set coabalance=coabalance-'$Coaitem->{balance}' where acct_id='$COOKIE->{ACCT}' and coanominalcode='$Coaitem->{nominalcode}'");
 }
 
 #  Now update Retained Earnings
 
-$Sts = $dbh->do("insert into nominals (acct_id,link_id,journal_id,nomamount,nomdate,nomcode,nomtype) values ('$COOKIE->{ACCT}',$New_jnl_id,$New_jnl_id,0-'$Balance','$Date->{tbend}','3100','J')");
+$Sts = $dbh->do("insert into nominals (acct_id,link_id,journal_id,nomamount,nomdate,nomcode,nomtype,nomye) values ('$COOKIE->{ACCT}',$New_jnl_id,$New_jnl_id,0-'$Balance','$Date->{tbend}','3100','J','Y')");
 
 $Sts = $dbh->do("update coas set coabalance=coabalance+'$Balance' where acct_id='$COOKIE->{ACCT}' and coanominalcode='3100'");
 
