@@ -23,7 +23,7 @@ use MIME::Base64;
 require "/usr/local/httpd/cgi-bin/fpa/pdf_layout.ph";
 require "/usr/local/httpd/cgi-bin/fpa/pdf_invoice.ph";
 
-$dbh = DBI->connect("DBI:mysql:fpa3");
+$dbh = DBI->connect("DBI:mysql:fpa");
 
 $BCompanies = $dbh->prepare("select comname,comvatscheme,regmembership,regemail,datediff(comsubdue,now()) as datediff from companies left join registrations using (reg_id) where reg_id=? and id=?");
 $RecInvoices = $dbh->prepare("select *,date_format(invprintdate,'%d-%b-%y') as printdate,date_format(invprintdate,'%c') as invmonth,date_format(invprintdate,'%Y') as invyear from invoice_templates where acct_id='1+1' and not isnull(invprintdate) and invprintdate <= now()");
