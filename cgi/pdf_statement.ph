@@ -8,10 +8,25 @@ use Image::Magick;
 #  Get the company name
 
 ($Reg_id,$Com_id) = split(/\+/,$COOKIE->{ACCT});
-$Companies= $dbh->prepare("select comname,comaddress,compostcode,comtel,comemail,comregno,comvatno,comlogo,date_format(curdate(),'%D %M %Y'),datediff(compt_logo,now()) from companies where reg_id=$Reg_id and id=$Com_id");
+$Companies= $dbh->prepare("select comname,comaddress,compostcode,comtel,comemail,comregno,comvatno,comlogo,date_format(curdate(),'%D %M %Y'),datediff(compt_logo,now()),last_day(curdate()),last_day(date_sub(curdate(),interval 1 month)) from companies where reg_id=$Reg_id and id=$Com_id");
 $Companies->execute;
 @Company = $Companies->fetchrow;
 $Companies->finish;
+
+#  Calculate the month
+
+
+@Date = ("January","February","March","April","May","June","July","August","September","October","November","December");
+
+@Today = localtime(time);
+
+$Uptodate = $Company[10];
+
+if ($Today[3] < 8) {
+        $Today[4]--;
+	$Uptodate = $Company[11];
+        if ($Today[4] < 0) { $Today[4] = 11; }
+}
 
 $Accts = $dbh->prepare("select accname,accsort,accacctno from accounts where acct_id='$COOKIE->{ACCT}' and acctype='1200'");
 $Accts->execute;
@@ -38,7 +53,7 @@ $Customers->finish;
 
 #  Now get the invoice data
 
-$Invoices = $dbh->prepare("select invinvoiceno,date_format(invprintdate,'%d-%b-%y'),to_days(curdate()) - to_days(invduedate),invcusterms,invtotal-invpaid,invvat - invpaidvat,invdesc from invoices where invtype='S' and invstatuscode > 2 and cus_id=$Cus_id and acct_id='$COOKIE->{ACCT}' order by invprintdate");
+$Invoices = $dbh->prepare("select invinvoiceno,date_format(invprintdate,'%d-%b-%y') as printdate,to_days(curdate()) - to_days(invduedate),invcusterms,invtotal-invpaid,invvat - invpaidvat,invdesc from invoices where invprintdate<='$Uptodate' and invtype='S' and invstatuscode > 2 and cus_id=$Cus_id and acct_id='$COOKIE->{ACCT}' order by invprintdate");
 
 $Invoices->execute;
 

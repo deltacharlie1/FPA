@@ -18,7 +18,7 @@
         opt = $.extend({}, $.fn.jqprint.defaults, options);
 
         var $element = (this instanceof jQuery) ? this : $(this);
-        
+       
         if (opt.operaSupport && $.browser.opera) 
         { 
             var tab = window.open("","jqPrint-preview");
@@ -28,7 +28,7 @@
         }
         else 
         {
-            var $iframe = $("<iframe  />");
+            var $iframe = $("<iframe style='font-size:10px;'  />");
         
             if (!opt.debug) { $iframe.css({ position: "absolute", width: "0px", height: "0px", left: "-600px", top: "-600px" }); }
 

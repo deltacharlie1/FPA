@@ -285,26 +285,20 @@ function set_logout() {
   $("#dialog").dialog("open");
 }
 function print_display(title) {
-  if ($("#print_listing").length > 0) {
-    $("#print_listing").printElement({printMode:'popup'});
-  }
-  else {
-    if ($("#results").length > 0) {
-      if ($(".listing").length > 0 ) {
-        $(".listing").printElement({printMode:'popup'});
-      }
-      else {
-        $("#results").printElement({printMode:'popup'});
-      }
+  if ($("#results").length > 0) {
+    if ($(".listing").length > 0 ) {
+      $(".listing").printElement({overrideElementCSS:['new-css.css',{href:'/css/new-css.css',media:'print'}]},{printMode:'popup'});
     }
     else {
-      if ($("#main").length > 0) {
-        $("#main").jqprint();
-        $("#main").printElement({printMode:'popup'});
-      }
-      else {
-        window.print();
-      }
+      $("#results").printElement({overrideElementCSS:['new-css.css',{href:'/css/new-css.css',media:'print'}]},{printMode:'popup'});
+    }
+  }
+  else {
+    if ($("#main").length > 0) {
+      $("#main").printElement({overrideElementCSS:['new-css.css',{href:'/css/new-css.css',media:'print'}]},{printMode:'popup'});
+    }
+    else {
+      window.print();
     }
   }
 }
