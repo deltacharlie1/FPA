@@ -409,8 +409,9 @@ foreach (@Line) {
 $text->text($Customer[2]);
 $text->cr();
 $text->cr();
-$text->text("FAO: " . $Customer[3]);
-
+if ($Customer[3]) {
+	$text->text("FAO: " . $Customer[3]);
+}
 $text->font($font,10);
 }
 1;

@@ -351,7 +351,9 @@ foreach (@Line) {
 $text->text($Invoice[7]);
 $text->cr();
 $text->cr();
-$text->text("FAO: " . $Invoice[8]);
+if ($Invoice[8]) {
+	$text->text("FAO: " . $Invoice[8]);
+}
 
 #  Invoice header details
 
