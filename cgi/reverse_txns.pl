@@ -79,6 +79,27 @@ sub reverse_txn {
 
 			$Sts = $dbh->do("update invoices set invpaid=invpaid-'$Inv_txn->{itnet}',invpaidvat=invpaidvat-'$Inv_txn->{itvat}' where acct_id='$COOKIE->{ACCT}' and invtype='S' and id=$Inv_txn->{inv_id}");
 
+#  check to see how to adjust the status and paid date
+
+			warn "\$T_Invoices = \$dbh->prepare(\"select to_days(invprintdate),to_days(invduedate),to_days(now()),invpaid from invoices where acct_id='$COOKIE->{ACCT}' and invtype='S' and id=$Inv_txn->{inv_id}\")\n";
+			$T_Invoices = $dbh->prepare("select to_days(invprintdate),to_days(invduedate),to_days(now()),invpaid from invoices where acct_id='$COOKIE->{ACCT}' and invtype='S' and id=$Inv_txn->{inv_id}");
+			$T_Invoices->execute;
+			@T_Invoice = $T_Invoices->fetchrow;
+			$T_Invoices->finish;
+
+			if ($T_Invoice[3] =~ /0.00/) {
+				$Sts = $dbh->do("update invoices set invpaiddate=NULL where acct_id='$COOKIE->{ACCT}' and invtype='S' and id=$Inv_txn->{inv_id}");
+			}
+			if ($T_Invoice[1] < $T_Invoice[2]) {
+				$Sts = $dbh->do("update invoices set invstatus='Overdue',invstatuscode='9' where acct_id='$COOKIE->{ACCT}' and invtype='S' and id=$Inv_txn->{inv_id}");
+			}
+			elsif (($T_Invoice[1] - $T_Invoice[2]) < (T_$Invoice[1] - $T_Invoice[0]) * 0.7) {
+				$Sts = $dbh->do("update invoices set invstatus='Due',invstatuscode='6' where acct_id='$COOKIE->{ACCT}' and invtype='S' and id=$Inv_txn->{inv_id}");
+			}
+			else {
+				$Sts = $dbh->do("update invoices set invstatus='Printed',invstatuscode='3' where acct_id='$COOKIE->{ACCT}' and invtype='S' and id=$Inv_txn->{inv_id}");
+			}
+
 #  Adjust any cusbalance
 
 			$Sts = $dbh->do("update customers set cusbalance=cusbalance+'$Txn->{txnamount}' where acct_id='$COOKIE->{ACCT}' and id=$Invoice->{cus_id}");
@@ -157,7 +178,7 @@ sub reverse_txn {
 
 #  Write an audit trail comment
 
-	$Sts = $dbh->do("insert into audit_trails (acct_id,link_id,audtype,audaction,audtext,auduser) values ('$COOKIE->{ACCT}',$Txn->{id},'reverse_txns.pl','adj','$Txn->{txncusname} ($Txn->{txnremarks}) deleted','$COOKIE->{USER}')");
+	$Sts = $dbh->do("insert into audit_trails (acct_id,link_id,audtype,audaction,audtext,auduser) values ('$COOKIE->{ACCT}',$Txn->{id},'reverse_txns.pl','adj','TXN: $Txn->{txntxnno} [$Txn->{txncusname} ($Txn->{txnremarks})] deleted','$COOKIE->{USER}')");
 
 #  Decrement all higher Transaction nos
 
