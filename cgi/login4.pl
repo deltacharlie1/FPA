@@ -67,6 +67,18 @@ unless ($Company->{comsublevel} > 0 && $Company->{subdue} >= 0) {
 	$ACCESS = '1';
 }
 
+#  Check to get the length of any remaining trial period
+
+$Regs = $dbh->prepare("select to_days(date_add(regregdate,interval 3 month))-to_days(curdate()) as trialperiod,to_days(curdate())-to_days('2014-01-01') as daystostart from registrations where reg_id=$COOKIE->{REG}");
+$Regs->execute;
+$Reg = $Regs->fetchrow_hashref;
+$Regs->finish;
+
+$Trial = "N";
+if ($Reg->{trialperiod} > 0 || $Reg->{daystostart} > 0 || $ACCESS > 2) {
+	$Trial = "Y";
+}
+
 #############  Similar processing for Year End   ######################
 
 if ($Company->{diffyearenddue} < 0) {
@@ -117,7 +129,7 @@ $Cookie = $SHA1_hash->hexdigest;
 
 $IP_Addr = $ENV{'REMOTE_ADDR'};
 open(COOKIE,">/projects/tmp/$Cookie");
-print COOKIE "IP\t$IP_Addr\nACCT\t$Reg_com[0]+$Reg_com[1]\nBACCT\t$Reg_com[0]+$Reg_com[1]\nID\t$COOKIE->{ID}\nPWD\t$COOKIE->{PWD}\nPLAN\t$ACCESS\nVAT\t$Company->{comvatscheme}\nYEAREND\t$Company->{comyearend}\nUSER\t$User\nEXP\t$Company->{comexpid}\nFRS\t$Company->{comfrsrate}\nMIN\t$Company->{comvatstart}\nMENU\t$COOKIE->{MENU}\nTAG\t$Company->{comname}\nBTAG\t$Company->{comname}\nACCESS\t$ACCESS\nUPLDS\t$Company->{comuplds}\nPT_LOGO\t$Company->{pt_logo}\nCOOKIE\t$Cookie\nDB\t$DB\nADDU\t$Company->{comadd_user}\nPREFS\t$COOKIE->{PREFS}\nCIS\t$Company->{comcis}\nBUS\t$Company->{combusiness}\n1000\t$Opt{'1000'}\n1500\t$Opt{'1500'}\n3100\t$Opt{'3100'}\n4300\t$Opt{'4300'}\n5000\t$Opt{'5000'}\n6000\t$Opt{'6000'}\n7000\t$Opt{'7000'}\n";
+print COOKIE "IP\t$IP_Addr\nACCT\t$Reg_com[0]+$Reg_com[1]\nBACCT\t$Reg_com[0]+$Reg_com[1]\nID\t$COOKIE->{ID}\nPWD\t$COOKIE->{PWD}\nPLAN\t$ACCESS\nVAT\t$Company->{comvatscheme}\nYEAREND\t$Company->{comyearend}\nUSER\t$User\nEXP\t$Company->{comexpid}\nFRS\t$Company->{comfrsrate}\nMIN\t$Company->{comvatstart}\nMENU\t$COOKIE->{MENU}\nTAG\t$Company->{comname}\nBTAG\t$Company->{comname}\nACCESS\t$ACCESS\nUPLDS\t$Company->{comuplds}\nPT_LOGO\t$Company->{pt_logo}\nCOOKIE\t$Cookie\nDB\t$DB\nADDU\t$Company->{comadd_user}\nPREFS\t$COOKIE->{PREFS}\nCIS\t$Company->{comcis}\nBUS\t$Company->{combusiness}\n1000\t$Opt{'1000'}\n1500\t$Opt{'1500'}\n3100\t$Opt{'3100'}\n4300\t$Opt{'4300'}\n5000\t$Opt{'5000'}\n6000\t$Opt{'6000'}\n7000\t$Opt{'7000'}\nTRIAL\t$Trial\n";
 
 if ($ACCESS > 4 && substr($COOKIE->{PREFS},5,1) =~ /N/i) {
 	print COOKIE "NO_ADS\t1\n";
