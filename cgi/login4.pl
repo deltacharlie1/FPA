@@ -69,13 +69,13 @@ unless ($Company->{comsublevel} > 0 && $Company->{subdue} >= 0) {
 
 #  Check to get the length of any remaining trial period
 
-$Regs = $dbh->prepare("select to_days(date_add(regregdate,interval 3 month))-to_days(curdate()) as trialperiod,to_days(curdate())-to_days('2014-01-01') as daystostart from registrations where reg_id=$COOKIE->{REG}");
+$Regs = $dbh->prepare("select to_days(date_add(regregdate,interval 3 month))-to_days(curdate()) as trialperiod from registrations where reg_id=$COOKIE->{REG}");
 $Regs->execute;
 $Reg = $Regs->fetchrow_hashref;
 $Regs->finish;
 
 $Trial = "N";
-if ($Reg->{trialperiod} > 0 || $Reg->{daystostart} > 0 || $ACCESS > 2) {
+if ($Reg->{trialperiod} > 0 || $ACCESS > 2) {
 	$Trial = "Y";
 }
 

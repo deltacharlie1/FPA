@@ -201,12 +201,14 @@ $(document).ready(function(){
           </ul>
         </li>
 [% UNLESS cookie.VAT == "N" -%]
+  [%- IF cookie.TRIAL == "Y" -%]
         <li class="vat"><a href="#"><span>VAT</span></a>
           <ul>
             <li><a href="/cgi-bin/fpa/list_vatreturns.pl">List VAT Returns</a></li>
             <li><a href="/cgi-bin/fpa/vatreturn.pl">VAT Form 100</a></li>
           </ul>
         </li>
+  [%- END -%]
 [% END -%]
         <li class="reports"><a href="#"><span>Reports</span></a>
           <ul>

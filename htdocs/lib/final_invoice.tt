@@ -171,6 +171,7 @@
       </div>  
     </li>   
   [% END -%]
+  [%- IF cookie.TRIAL == "Y" -%]
     <li>    
       <div>
         <a href="/cgi-bin/fpa/print_invoice.pl?[%- invoice.id -%]">
@@ -178,7 +179,8 @@
         </a>
       </div>  
     </li>   
-[% END -%]
+  [% END -%]
+[%- END -%]
     <li>    
       <div>   
         <a href="/cgi-bin/fpa/copy_invoice.pl?[%- invoice.id -%]">
