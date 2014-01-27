@@ -40,7 +40,7 @@
     </tr>
     <tr>
       <td nowrap="nowrap"><label>Balance Brought Forward</label></td>
-      <td colspan="2"><span id="thisbf">[%- IF  acct.staclosebal AND acct.staclosebal>0; acct.staclosebal; ELSE -%]0.00[%- END -%]</span><input type="hidden" name="thatbf" id="thatbf" value="[%- IF  acct.staclosebal AND acct.staclosebal>0; acct.staclosebal; ELSE -%]0.00[%- END -%]"/></td>
+      <td colspan="2"><span id="thisbf">[%- acct.staclosebal -%]</span><input type="hidden" name="thatbf" id="thatbf" value="[%- acct.staclosebal -%]"/></td>
     </tr>
     <tr>
       <td><label>Balance Carried Forward</label></td>

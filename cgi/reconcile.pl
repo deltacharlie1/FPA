@@ -17,6 +17,10 @@ $Accts->execute;
 $Acct = $Accts->fetchrow_hashref;
 $Accts->finish;
 
+unless ($Acct->{staclosebal}) {
+	$Acct->{staclosebal} = '0.00';
+}
+
 $TSs = $dbh->prepare("select f1,f2,f3 from tempstacks where acct_id='$COOKIE->{ACCT}' and caller='reconciliation'");
 $TSs->execute;
 $TS = $TSs->fetchrow_hashref;
