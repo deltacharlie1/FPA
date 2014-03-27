@@ -24,9 +24,6 @@
                   <tr>
                     <td style="text-align:center;padding: 15px 0px;"><input type="submit" name="submit" id="submit" value="Go to Step 2"/></td>
                   </tr>
-                  <tr>
-                    <td width="300" align="center">Please note that,as stated in our Newsletter of 26th November 2013, we have now implemented restricted access to the Invoice emailing and VAT returns functionality to those users with subscriptions.&nbsp;&nbsp;If you are not already a subscriber you may use these features at any time by upgrading your account.</td>
-                  </tr>
                 </table>
               </td>
             </tr>
