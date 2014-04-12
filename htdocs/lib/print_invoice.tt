@@ -7,6 +7,7 @@
   <tr>
     <td colspan="2"><h3>[%- IF invoice.invtype == "C" -%]CREDIT NOTE - [%- ELSE -%]INVOICE - [%- END; invoice.invinvoiceno -%]</h3><td>
   </tr>
+[%- IF cookie.TRIAL == "Y" -%]
   <tr>
     <td colspan="2" id="pdf"><ul>The above invoice is ready to be printed and/or Emailed
     <li>To <b>print</b> the invoice click on the print button below.</li>
@@ -57,16 +58,26 @@
   [% END -%]
   </tr>
 [% END -%]
+[%- ELSE -%]
+  <tr>
+    <td colspan="2">The above invoice has been saved.&nbsp;&nbsp;If you wish to view this invoice in a pdf format suitable for emailing to your customer you will first need to upgrade to one of the subscription levels.</td>
+  </tr>
+  <tr>
+   <td colspan="2">To do this click on <b>'Admin'->'My Account'</b> from the main menu and select the subscription level you wish to purchase.</td>
+  </tr>
+[% END -%]
 </table>
 </div>
 <div id="sidebar">
   <ul>
 [%- IF invoice.invstatuscode > 1 -%]
+  [% IF cookie.TRIAL == "Y" -%]
     <li>
       <div>
         <input type="submit" name="email" id="email" value="Email Invoice"/>
       </div>
     </li>
+  [%- END -%]
 [% ELSIF invoice.invinvoiceno.match('^QT\d+$') -%]
     <li>
       <div>
