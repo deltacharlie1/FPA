@@ -59,24 +59,24 @@ if ($Company->{comvatscheme} !~ /N/i) {
 	}
 }
 
-if ($Reg_com[0] eq '1989') {
-	open(SHARPE,">/tmp/$Cookie{'fpa-cookie'}.sharpe");
-	%Doug = %{$COOKIE};
-	while (($Key,$Value) = each %Doug) {
-		print SHARPE "$Key = $Value\n";
-	}
-	close(SHARPE);
+#if ($Reg_com[0] eq '1989') {
+#	open(SHARPE,">/tmp/$Cookie{'fpa-cookie'}.sharpe");
+#	%Doug = %{$COOKIE};
+#	while (($Key,$Value) = each %Doug) {
+#		print SHARPE "$Key = $Value\n";
+#	}
+#	close(SHARPE);
 
-	$ACCESS = '4';
-}
-else {
+#	$ACCESS = '4';
+#}
+#else {
 $ACCESS = $COOKIE->{PLAN};
 unless ($Company->{comsublevel} > 0 && $Company->{subdue} >= 0) {
 	if ($ACCESS > 1) {
 		$Sts = $dbh->do("update registrations set regmembership='1' where reg_id=$Reg_com[0]");
 	}
 	$ACCESS = '1';
-}
+#}
 }
 
 #  Check to get the length of any remaining trial period
