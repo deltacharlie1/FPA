@@ -38,7 +38,7 @@
         </a>
       </div>
     </li>
-[% IF cookie.ACCESS > 3 -%]
+[% IF cookie.ACCESS > 13 -%]
     <li>
       <div>
         <a href="#" onclick="send_statements();">
