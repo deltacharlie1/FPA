@@ -71,7 +71,7 @@ if ($Company->{comvatscheme} !~ /N/i) {
 #}
 #else {
 $ACCESS = $COOKIE->{PLAN};
-unless ($Company->{comsublevel} > 0 && $Company->{subdue} >= 0) {
+unless ($Company->{comsublevel} > 0 && $Company->{subdue} >= -5) {
 	if ($ACCESS > 1) {
 		$Sts = $dbh->do("update registrations set regmembership='1' where reg_id=$Reg_com[0]");
 	}
