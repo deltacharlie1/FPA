@@ -142,7 +142,7 @@
         </a>    
       </div>  
     </li>
-[% IF cookie.ACCESS > 13 -%]
+[% IF cookie.ACCESS > 3 -%]
     <li>    
       <div>   
         <a href="/cgi-bin/fpa/print_statement.pl?[%- cus.id -%]">
