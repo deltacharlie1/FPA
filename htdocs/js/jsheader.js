@@ -276,6 +276,14 @@ function gen_redisplay(action) {
 }
 
 function set_logout() {
+  $("#dialog").dialog("option","title","W A R N I N G");
+  $("#dialog").html("<h2>About to Auto Logout</h2><p>You will be automatically logged in 5 minutes unless you refresh or change this screen.</p><p>Please click \'OK\' to refresh</p>");
+  $("#dialog").dialog("option", "height", "260");
+  $("#dialog").dialog("option", "buttons", { "OK": function() { window.location.reload(true); } });
+  $("#dialog").dialog("open");
+  setTimeout("set_logout2()",300000);
+}
+function set_logout2() {
   document.cookie="fpa-cookie=; path=/;";
   $(".main").html("&nbsp;");
   $("#dialog").dialog("option","title","Information");

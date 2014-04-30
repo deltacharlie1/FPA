@@ -85,7 +85,7 @@ $(document).ready(function(){
   });
 [% END -%]
 [% IF cookie.PREFS.substr(1,1) == 'Y' -%]
-  setTimeout("set_logout()",1500000);
+  setTimeout("set_logout()",1200000);
 [% END -%]
 [% IF cookie.BACCT == '1+1' -%]
   $("#getadd").dialog({
