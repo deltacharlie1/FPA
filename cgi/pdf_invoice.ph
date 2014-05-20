@@ -219,7 +219,12 @@ else {
 	$text->text_right(sprintf("%1.2f",$Vat));
 	$text->cr();
 	$text->font($font_bold,12);
-	$text->text_right(sprintf("%1.2f",$Total));
+	if ($COOKIE->{ACCT} eq '1+1') {
+		$text->text_right(sprintf("%1.2f (GBP)",$Total));
+	}
+	else {
+		$text->text_right(sprintf("%1.2f",$Total));
+	}
 }
 
 #  See if we need an overdue stamp

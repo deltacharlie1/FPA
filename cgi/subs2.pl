@@ -142,6 +142,7 @@ $Url = "connect/subscriptions/new";
 	chomp($timestamp);
 	$timestamp =~ s/:/\%3A/g;
 
+	warn "\$Sub_text = \"client_id=$Client_id&nonce=$nonce&state=$State&subscription%5Bamount%5D=$Sub_amt[$FORM{sub}]&subscription%5Binterval_length%5D=1&subscription%5Binterval_unit%5D=month&subscription%5Bmerchant_id%5D=$Merchant_id&subscription%5Bname%5D=$Sub_name[$FORM{sub}]&subscription%5Bstart_at%5D=$Start_date&subscription%5Buser%5D%5Bemail%5D=$Company->{regemail}&subscription%5Buser%5D%5Bfirst_name%5D=$First_name&subscription%5Buser%5D%5Blast_name%5D=$Last_name&timestamp=$timestamp\"\n\n";
 	$Sub_text = "client_id=$Client_id&nonce=$nonce&state=$State&subscription%5Bamount%5D=$Sub_amt[$FORM{sub}]&subscription%5Binterval_length%5D=1&subscription%5Binterval_unit%5D=month&subscription%5Bmerchant_id%5D=$Merchant_id&subscription%5Bname%5D=$Sub_name[$FORM{sub}]&subscription%5Bstart_at%5D=$Start_date&subscription%5Buser%5D%5Bemail%5D=$Company->{regemail}&subscription%5Buser%5D%5Bfirst_name%5D=$First_name&subscription%5Buser%5D%5Blast_name%5D=$Last_name&timestamp=$timestamp";
 
 	$Signature = hmac_sha256_hex( $Sub_text, $App_key );
