@@ -50,12 +50,17 @@ function checkcode(id) {
     var oldsub = oldcode.substring(0,1);
     var newsub = newcode.substring(0,1);
 
-    if (oldsub > 4 && newsub < 5) {
-      errs = errs + " - New Code must be ian Expenses Code\\n";
+    if (newsub < 4) {
+      errs = errs + " - New Code must be 4000 or higher (a P & L item)\\n";
     }
     else {
-      if (oldsub < 5 && newsub > 4) {
-        errs = errs + " - New Code must be an Income code\\n";
+      if (oldsub > 4 && newsub < 5) {
+        errs = errs + " - New Code must be an Expenses Code\\n";
+      }
+      else {
+        if (oldsub < 5 && newsub > 4) {
+          errs = errs + " - New Code must be an Income code\\n";
+        }
       }
     }
   }

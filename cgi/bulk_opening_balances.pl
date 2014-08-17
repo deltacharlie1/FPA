@@ -62,7 +62,7 @@ function process_balance() {
     if (this.value.length < 1) { errs = errs + "<li>Empty " + this.title + "</li>"; }
   });
   $(".curr2").each(function() {
-    if (! /^\d+?\.?\d?\d$/.test(this.value)) { errs = errs + "<li>Invalid Currency Field</li>"; }
+    if (! /^-?\d+?\.?\d?\d$/.test(this.value)) { errs = errs + "<li>Invalid Currency Field</li>"; }
   });
   if ($("#blk_nomcode").val() == "0") {
     errs = errs + "<li>Nominal Account not selected</li>";
