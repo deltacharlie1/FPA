@@ -171,6 +171,12 @@ function print_list() {
      $("#printtab").show();
    });
 }
+function vat_download() {
+  location.href="/cgi-bin/fpa/csv_vatrep1.pl?"+$("form#form1").serialize();
+}
+function vatreturn_download() {
+  location.href="/cgi-bin/fpa/csv_vatrep2.pl?"+$("form#form1").serialize();
+}
 </script>'
 };
 

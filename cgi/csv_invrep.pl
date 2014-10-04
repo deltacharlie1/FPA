@@ -70,7 +70,7 @@ if ($FORM{invstatuscode}) {
 }
 $SQL .= "invoices.acct_id='$COOKIE->{ACCT}'";
 	
-$Invoices = $dbh->prepare("select cus_id,invoices.id as invid,invinvoiceno,invcusname,invtype,invdesc as description,date_format(invprintdate,'%d-%b-%y') as printdate,(invtotal+invvat) as invamount,invtotal,invvat,invstatus,(invpaid+invpaidvat) as invpaid from invoices where $SQL and invinvoiceno<>'unlisted' order by invprintdate");
+$Invoices = $dbh->prepare("select cus_id,invoices.id as invid,invinvoiceno,invcusname,invcoa,invtype,invdesc as description,date_format(invprintdate,'%d-%b-%y') as printdate,(invtotal+invvat) as invamount,invtotal,invvat,invstatus,(invpaid+invpaidvat) as invpaid from invoices where $SQL and invinvoiceno<>'unlisted' order by invprintdate");
 
 $Invoices->execute;
 print<<EOD;
@@ -80,20 +80,20 @@ Content-Disposition: attachment; filename=fpainvoices.csv
 EOD
 
 if ($COOKIE->{VAT} =~ /N/) {
-	print "\"Date\",\"Invoice\",\"Type\",\"Customer\",\"Description\",\"Total\",\"Status\",\"Paid\"\n";
+	print "\"Date\",\"Invoice\",\"Type\",\"Nom Code\",\"Customer\",\"Description\",\"Total\",\"Status\",\"Paid\"\n";
 
 	while ($Invoice = $Invoices->fetchrow_hashref) {
 		print<<EOD;
-"$Invoice->{printdate}","$Invoice->{invinvoiceno}","$Invoice->{invtype}","$Invoice->{invcusname}","$Invoice->{description}",$Invoice->{invamount},"$Invoice->{invstatus}",$Invoice->{invpaid}
+"$Invoice->{printdate}","$Invoice->{invinvoiceno}","$Invoice->{invtype}","$Invoice->{invcoa}","$Invoice->{invcusname}","$Invoice->{description}",$Invoice->{invamount},"$Invoice->{invstatus}",$Invoice->{invpaid}
 EOD
 	}
 }
 else {
-	print "\"Date\",\"Invoice\",\"Type\",\"Customer\",\"Description\",\"Net\",\"VAT\",\"Gross\",\"Status\",\"Paid\"\n";
+	print "\"Date\",\"Invoice\",\"Type\",\"Nom Code\",\"Customer\",\"Description\",\"Net\",\"VAT\",\"Gross\",\"Status\",\"Paid\"\n";
 
 	while ($Invoice = $Invoices->fetchrow_hashref) {
 		print<<EOD;
-"$Invoice->{printdate}","$Invoice->{invinvoiceno}","$Invoice->{invtype}","$Invoice->{invcusname}","$Invoice->{description}",$Invoice->{invtotal},$Invoice->{invvat},$Invoice->{invamount},"$Invoice->{invstatus}",$Invoice->{invpaid}
+"$Invoice->{printdate}","$Invoice->{invinvoiceno}","$Invoice->{invtype}","$Invoice->{invcoa}","$Invoice->{invcusname}","$Invoice->{description}",$Invoice->{invtotal},$Invoice->{invvat},$Invoice->{invamount},"$Invoice->{invstatus}",$Invoice->{invpaid}
 EOD
 	}
 }

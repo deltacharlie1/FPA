@@ -38,6 +38,16 @@
           <input type="button" name="save" id="list" value="List VAT Entries" onclick="print_list();"/>
       </div>
     </li>
+    <li>
+      <div>
+          <input type="button" name="csv" id="csv" value="Download as CSV" onclick="vat_download();"/>
+      </div>
+    </li>
+    <li>
+      <div>
+          <input type="button" name="return" id="return" value="Download Returns" onclick="vatreturn_download();"/>
+      </div>
+    </li>
   </ul>
   <ul id="printtab" style="display:none;">
     <li>

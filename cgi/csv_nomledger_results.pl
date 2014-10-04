@@ -53,7 +53,7 @@ foreach $Coaitem (@$Coa) {
 	else {
 		$Coadescr = $Coaitem->{invdescr};
 	}
-
+	$Coadescr =~ tr/\,/ \,/;
 	if ($Coaitem->{coatype} =~ /Assets|Expenses/i) {
 		if ($Coaitem->{balance} >= 0) {
 			$Debit = $Coaitem->{balance};
