@@ -420,7 +420,7 @@ sub pay_purchase {
 
 #  Create an inv_txn record
 
-		$Sts = $dbh->do("insert into inv_txns (acct_id,txn_id,inv_id,itnet,itvat,itdate,itmethod,itinvoiceno,ittxnno) values ('$COOKIE->{ACCT}',$New_txn_id,$FORM{id},'$FORM{invtotal}','$FORM{invvat}',now(),'$FORM{txnmethod}','$Invoice[6]','$FORM{txnno}')");
+		$Sts = $dbh->do("insert into inv_txns (acct_id,txn_id,inv_id,itnet,itvat,itdate,itmethod,itinvoiceno,ittxnno) values ('$COOKIE->{ACCT}',$New_txn_id,$FORM{id},'$FORM{invtotal}','$FORM{invvat}',str_to_date('$FORM{invprintdate}''$FORM{txnmethod}','$Invoice[6]','$FORM{txnno}')");
 		$New_inv_txn_id = $dbh->last_insert_id(undef, undef, qw(inv_txns undef));
 
 #  deal with any VAT payments

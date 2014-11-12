@@ -72,7 +72,7 @@ $Curcus
 .
 format STDOUT = 
          @>>>>>>>>>>>>  @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<    @>>>>>>>>>>>>
-$Invoice->{printdate},$Invoice->{descr},$Amtoverdue
+$Invoice->[$i]->{printdate},$Invoice->[$i]->{descr},$Amtoverdue
 .
 
 format FOOTER =
@@ -98,12 +98,32 @@ $Sl3 = "";
 $Sl4 = "";
 $Sl5 = "";
 
-$Invoices = $dbh->prepare("select invoices.id as invid,invcusname,invtotal+invvat as amtdue,date_format(invprintdate,'%d-%b-%y') as printdate,concat('Invoice ',invinvoiceno,' (',invdesc,')') as descr,datediff(str_to_date('$FORM{tbend}','%d-%b-%y'),invprintdate) as overdue,sum(itnet+itvat) as amtpaid,invtotal+invvat-sum(itnet+itvat) as amtoverdue from invoices left join inv_txns on (invoices.id=inv_txns.inv_id and invoices.acct_id=inv_txns.acct_id) where invprintdate<=str_to_date('$FORM{tbend}','%d-%b-%y') and invstatuscode>'1' and invtype in ('S','R') and invoices.acct_id='$COOKIE->{ACCT}' group by invoices.id having amtpaid<amtdue or isnull(amtpaid) order by invcusname");
+$Invoices = $dbh->prepare("select id as invid,invcusname,invtotal+invvat as amtdue,date_format(invprintdate,'%d-%b-%y') as printdate,concat('Invoice ',invinvoiceno,' (',invdesc,')') as descr,datediff(str_to_date('$FORM{tbend}','%d-%b-%y'),invprintdate) as overdue,'0' as amtpaid,'0' as amtoverdue from invoices where acct_id='$COOKIE->{ACCT}' and invprintdate>=str_to_date('$FORM{tbstart}','%d-%b-%y') and invprintdate <=str_to_date('$FORM{tbend}','%d-%b-%y') and invstatuscode>'1' and invtype='S' order by invcusname,invinvoiceno");
 $Invoices->execute;
+$Invoice = $Invoices->fetchall_arrayref({});
 
-for ($i = 0; $i<1; $i++) {
-while ($Invoice = $Invoices->fetchrow_hashref) {
-	if ($Curcus !~ /$Invoice->{invcusname}/) {
+foreach $i (0..@{$Invoice} - 1) {
+        $Inv_txns = $dbh->prepare("select sum(itnet+itvat) as amtpaid from inv_txns where acct_id='$COOKIE->{ACCT}' and itdate<=str_to_date('$FORM{tbend}','%d-%b-%y') and $Invoice->[$i]->{invid}=inv_id");
+        $Inv_txns->execute;
+        $Inv_txn = $Inv_txns->fetchrow_hashref;
+        $Amtowed = $Invoice->[$i]->{amtdue} - $Inv_txn->{amtpaid};
+
+        $Invoice->[$i]->{amtpaid} = $Inv_txn->{amtpaid};
+        $Invoice->[$i]->{amtoverdue} = $Amtowed;
+}
+
+$i = 0;
+while ($i < @{$Invoice}) {
+        if ($Invoice->[$i]->{amtoverdue} == 0) {
+                splice(@{$Invoice},$i,1);
+        }
+        else {
+                $i++;
+        }
+}
+
+foreach $i (0..@{$Invoice}) {
+	if ($Curcus !~ /$Invoice->[$i]->{invcusname}/) {
 		if ($Curcus) {
 
 #  print customer summary and zeroise summary totals
@@ -117,7 +137,7 @@ while ($Invoice = $Invoices->fetchrow_hashref) {
 		$Tl4 += $Sl4;
 		$Tl5 += $Sl5;
 
-		$Curcus = $Invoice->{invcusname};
+		$Curcus = $Invoice->[$i]->{invcusname};
 		$Sl1 = "";
 		$Sl2 = "";
 		$Sl3 = "";
@@ -129,13 +149,13 @@ while ($Invoice = $Invoices->fetchrow_hashref) {
 
 #  Now print the invoice
 
-	$Amtoverdue = $Invoice->{amtoverdue} || $Invoice->{amtdue};
+	$Amtoverdue = $Invoice->[$i]->{amtoverdue} || $Invoice->[$i]->{amtdue};
 
-	if ($Invoice->{overdue} > 120) { $Sl5 += $Amtoverdue; }
-	elsif ($Invoice->{overdue} > 90) { $Sl4 += $Amtoverdue; }
-	elsif ($Invoice->{overdue} > 60) { $Sl3 += $Amtoverdue; }
-	elsif ($Invoice->{overdue} > 30) { $Sl2 += $Amtoverdue; }
-	elsif ($Invoice->{overdue} > 0) { $Sl1 += $Amtoverdue; }
+	if ($Invoice->[$i]->{overdue} > 120) { $Sl5 += $Amtoverdue; }
+	elsif ($Invoice->[$i]->{overdue} > 90) { $Sl4 += $Amtoverdue; }
+	elsif ($Invoice->[$i]->{overdue} > 60) { $Sl3 += $Amtoverdue; }
+	elsif ($Invoice->[$i]->{overdue} > 30) { $Sl2 += $Amtoverdue; }
+	elsif ($Invoice->[$i]->{overdue} > 0) { $Sl1 += $Amtoverdue; }
 
 	write;
 }
@@ -152,7 +172,8 @@ $Amtoverdue="";
 write;
 
 print "</pre></div>\n";
-}
+
+$Inv_txns->finish;
 $Invoices->finish;
 $dbh->disconnect;
 exit;

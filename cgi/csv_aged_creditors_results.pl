@@ -11,6 +11,8 @@ $Buffer = $ENV{QUERY_STRING};
 
 @pairs = split(/&/,$Buffer);
 
+# print "Content-Type: text/plain\n\n";
+
 foreach $pair (@pairs) {
 
         ($Name, $Value) = split(/=/, $pair);
@@ -24,11 +26,9 @@ foreach $pair (@pairs) {
 use DBI;
 $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
 
-#  Save the current filter settings
+#  List VAT entries in simple text format
 
-$Sts = $dbh->do("update tempstacks set f1='$FORM{tbselect}',f2='$FORM{tbstart}',f3='$FORM{tbend}' where acct_id='$COOKIE->{ACCT}' and caller='report'");
-
-$Invoices = $dbh->prepare("select id as invid,invcusname,invtotal+invvat as amtdue,date_format(invprintdate,'%d-%b-%y') as printdate,concat('Invoice ',invinvoiceno,' (',invdesc,')') as descr,datediff(str_to_date('$FORM{tbend}','%d-%b-%y'),invprintdate) as overdue,'0' as amtpaid,'0' as amtoverdue from invoices where acct_id='$COOKIE->{ACCT}' and invprintdate>=str_to_date('$FORM{tbstart}','%d-%b-%y') and invprintdate <=str_to_date('$FORM{tbend}','%d-%b-%y') and invstatuscode>'1' and invtype='P' order by invcusname,invinvoiceno");
+$Invoices = $dbh->prepare("select id as invid,invcusname,invtotal+invvat as amtdue,date_format(invprintdate,'%d-%b-%y') as printdate,invinvoiceno,invdesc as descr,datediff(str_to_date('$FORM{tbend}','%d-%b-%y'),invprintdate) as overdue,'0' as amtpaid,'0' as amtoverdue from invoices where acct_id='$COOKIE->{ACCT}' and invprintdate>=str_to_date('$FORM{tbstart}','%d-%b-%y') and invprintdate <=str_to_date('$FORM{tbend}','%d-%b-%y') and invstatuscode>'1' and invtype='P' order by invcusname,invinvoiceno");
 $Invoices->execute;
 $Invoice = $Invoices->fetchall_arrayref({});
 
@@ -52,26 +52,19 @@ while ($i < @{$Invoice}) {
         }
 }
 
-use Template;
-$tt = Template->new({
-        INCLUDE_PATH => ['.','/usr/local/httpd/htdocs/fpa/lib'],
-});
+$Report_date = `date +%d-%b-%y`;
+chomp($Report_date);
 
-$Vars = {
-	 ads => $Adverts,
-	cookie => $COOKIE,
-	tbstart => $FORM{tbstart},
-	tbend => $FORM{tbend},
-	suppress => $FORM{suppress},
-	numrows => $Invoices->rows,
-	curcus => "",
-	colheader => "Creditor",
-        entries => $Invoice
-};
+print<<EOD;
+Content-type: text/plain
+Content-Disposition: attachment; filename=aged_creditors.csv
 
-print "Content-Type: text/html\n\n";
-$tt->process('aged_debtors_results.tt',$Vars);
+EOD
 
+print "\"Creditor\",\"Invoice #\",\"Invoice Date\",\"Description\",\"Amount Overdue\",\"Days Overdue\"\n";
+foreach $i  (0..@{$Invoice}) {
+	print "\"$Invoice->[$i]->{invcusname}\",\"$Invoice->[$i]->{invinvoiceno}\",\"$Invoice->[$i]->{printdate}\",\"$Invoice->[$i]->{descr}\",\"$Invoice->[$i]->{amtoverdue}\",$Invoice->[$i]->{overdue}\n";
+}
 $Inv_txns->finish;
 $Invoices->finish;
 $dbh->disconnect;

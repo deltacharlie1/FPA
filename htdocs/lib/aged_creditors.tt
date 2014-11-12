@@ -47,6 +47,11 @@
           <input type="button" name="save" id="list" value="List Ledger Entries" onclick="print_list();"/>
       </div>
     </li>
+    <li>
+      <div>
+          <input type="button" name="csv" id="csv" value="Download CSV" onclick='location.href="/cgi-bin/fpa/csv_aged_creditors_results.pl?"+$("form#form1").serialize();'/>
+      </div>
+    </li>
   </ul>
   <ul id="printtab" style="display:none;">
     <li>
