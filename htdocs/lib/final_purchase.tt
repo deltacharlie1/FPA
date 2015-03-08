@@ -139,10 +139,25 @@
           List Invoices
         </a>
       </div>  
-    </li>   
+    </li>  
+    <li>
+      <div>
+        <a href="#" onclick="cancel_invoice('[%- invoice.id -%]');">
+          Void Purchase Invoice
+        </a>
+      </div>
+    </li>
   </ul>   
   <div id="sidebar-ad">
 [% INCLUDE adverts.tt -%]
   </div>
 </div>
+<div id="cancelreason" title="Void Invoice" style="display:none;">
+  <form id="fcancelreason" name="fcancelreason">
+    <input type="hidden" name="id" id="f_id" value="[%- invoice.id -%]"/>
+    <h3>Reason for Voiding</h3>
+    <textarea title="Voiding Reason" name="cancelmsg" id="voidmsg" rows="2" cols="40" class="mandatory"></textarea>
+  </form
+</div>
+</form>
 

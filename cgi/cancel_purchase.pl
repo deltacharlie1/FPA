@@ -23,6 +23,7 @@ $Errs = "";
 
 unless ($Invoices->rows > 0) { $Errs .= "<li>Invoice cannot be found</li>\n"; }
 if ($Invoice[6] > 1 && $Invoice[8] > 0) { $Errs .= "<li>Only Purchase Invoices created today can be cancelled</li>\n"; }
+if ($Invoice[5] > 0) { $Errs .= "<li>Purchase Invoice is at least part-paid. Please first cancel the related transaction/li>\n"; }
 
 if ($Errs) {
 	print<<EOD;

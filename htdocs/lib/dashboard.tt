@@ -39,15 +39,15 @@
           </tr>
           <tr class="hilite" onclick="location.href='/cgi-bin/fpa/coa_drill_down.pl?filter=1100';">
             <td><label>Total Debtors</label></td>
-            <td>[%- coa.1100.coabalance -%]</td>
+            <td>[%- debtors -%]</td>
           </tr>
           <tr class="hilite" onclick="location.href='/cgi-bin/fpa/coa_drill_down.pl?filter=2000';">
             <td><label>Total Creditors</label></td>
-            <td>[%- coa.2000.coabalance | format('%1.2f') -%]</td>
+            <td>[%- credits | format('%1.2f') -%]</td>
           </tr>
-          <tr class="hilite" onclick="location.href='/cgi-bin/fpa/hmrc_drill_down.pl?vattotal=[%- company.comvatcontrol -%]&boxno=box5&vrid=0';">
+          <tr class="hilite" onclick="location.href='/cgi-bin/fpa/hmrc_drill_down.pl?vattotal=[%- vat -%]&boxno=box5&vrid=0';">
             <td><label>VAT due this quarter</label></td>
-            <td>[%- company.comvatcontrol -%]</td>
+            <td>[%- vat -%]</td>
           </tr>
         </table><br/>
           <h2>Overdue Invoices</h2>

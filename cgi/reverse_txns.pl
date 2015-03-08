@@ -46,6 +46,7 @@ if ($Txns->rows > 0) {
 		&reverse_txn();
 	}
 }
+$Invoices->finish;
 $Txns->finish;
 $dbh->disconnect;
 
@@ -67,103 +68,64 @@ sub reverse_txn {
 	if ($Inv_txns->rows > 0) {
 		$Inv_txn = $Inv_txns->fetchrow_hashref;
 
-#  Get details of the invoice to be deleted
+#  Get details of the invoice to be voided
 
 		$Invoices = $dbh->prepare("select * from invoices where acct_id='$COOKIE->{ACCT}' and id=$Inv_txn->{inv_id}");
 		$Invoices->execute;
 		$Invoice = $Invoices->fetchrow_hashref;
 
-		if ($Invoice->{invtype} =~ /S/i) {
+#  We don't need this test!!		if ($Invoice->{invtype} =~ /S/i) {
 
 #  Adjust the invpaid and invpaidvat
 
-			$Sts = $dbh->do("update invoices set invpaid=invpaid-'$Inv_txn->{itnet}',invpaidvat=invpaidvat-'$Inv_txn->{itvat}' where acct_id='$COOKIE->{ACCT}' and invtype='S' and id=$Inv_txn->{inv_id}");
+		$Sts = $dbh->do("update invoices set invpaid=invpaid-'$Inv_txn->{itnet}',invpaidvat=invpaidvat-'$Inv_txn->{itvat}' where acct_id='$COOKIE->{ACCT}' and id=$Inv_txn->{inv_id}");
 
 #  check to see how to adjust the status and paid date
 
-			warn "\$T_Invoices = \$dbh->prepare(\"select to_days(invprintdate),to_days(invduedate),to_days(now()),invpaid from invoices where acct_id='$COOKIE->{ACCT}' and invtype='S' and id=$Inv_txn->{inv_id}\")\n";
-			$T_Invoices = $dbh->prepare("select to_days(invprintdate),to_days(invduedate),to_days(now()),invpaid from invoices where acct_id='$COOKIE->{ACCT}' and invtype='S' and id=$Inv_txn->{inv_id}");
-			$T_Invoices->execute;
-			@T_Invoice = $T_Invoices->fetchrow;
-			$T_Invoices->finish;
+		$T_Invoices = $dbh->prepare("select to_days(invprintdate),to_days(invduedate),to_days(now()),invpaid from invoices where acct_id='$COOKIE->{ACCT}' and id=$Inv_txn->{inv_id}");
+		$T_Invoices->execute;
+		@T_Invoice = $T_Invoices->fetchrow;
+		$T_Invoices->finish;
 
-			if ($T_Invoice[3] =~ /0.00/) {
-				$Sts = $dbh->do("update invoices set invpaiddate=NULL where acct_id='$COOKIE->{ACCT}' and invtype='S' and id=$Inv_txn->{inv_id}");
-			}
-			if ($T_Invoice[1] < $T_Invoice[2]) {
-				$Sts = $dbh->do("update invoices set invstatus='Overdue',invstatuscode='9' where acct_id='$COOKIE->{ACCT}' and invtype='S' and id=$Inv_txn->{inv_id}");
-			}
-			elsif (($T_Invoice[1] - $T_Invoice[2]) < (T_$Invoice[1] - $T_Invoice[0]) * 0.7) {
-				$Sts = $dbh->do("update invoices set invstatus='Due',invstatuscode='6' where acct_id='$COOKIE->{ACCT}' and invtype='S' and id=$Inv_txn->{inv_id}");
-			}
-			else {
-				$Sts = $dbh->do("update invoices set invstatus='Printed',invstatuscode='3' where acct_id='$COOKIE->{ACCT}' and invtype='S' and id=$Inv_txn->{inv_id}");
-			}
-
-#  Adjust any cusbalance
-
-			$Sts = $dbh->do("update customers set cusbalance=cusbalance+'$Txn->{txnamount}' where acct_id='$COOKIE->{ACCT}' and id=$Invoice->{cus_id}");
+		if ($T_Invoice[3] =~ /0.00/) {
+			$Sts = $dbh->do("update invoices set invpaiddate=NULL where acct_id='$COOKIE->{ACCT}' and id=$Inv_txn->{inv_id}");
 		}
-		elsif ($Invoice->{invtype} =~ /P/i) {		#  Only interested in Purchase invoices
-
-#  Decrement all higher Purchase Invoice nos
-
-			$Sts = $dbh->do("update invoices set invinvoiceno=cast(invinvoiceno as unsigned)-1 where acct_id='$COOKIE->{ACCT}' and invtype='P' and cast(invinvoiceno as unsigned) > $Invoice->{invinvoiceno}");
-
-#  Decrement the comnextpi
-
-			$Sts = $dbh->do("update companies set comnextpi=cast(comnextpi as unsigned) - 1 where reg_id=$Reg_id and id=$Com_id");
-
-#  Find nominals for this invoice
-
-			$Nominals = $dbh->prepare("select * from nominals where acct_id='$COOKIE->{ACCT}' and nomtype='S' and link_id=$Invoice->{id}");
-			$Nominals->execute;
-			while ($Nominal = $Nominals->fetchrow_hashref) {
-
-#  Subtract amount from the relevant coa
-
-				$Sts = $dbh->do("update coas set coabalance=coabalance-'$Nominal->{nomamount}' where acct_id='$COOKIE->{ACCT}' and coanominalcode='$Nominal->{nomcode}'");
-
-#  Delete the nominalcode
-
-				$Sts = $dbh->do("delete from nominals where acct_id='$COOKIE->{ACCT}' and id=$Nominal->{id}");
-			}
-
-#  Delete the invoice
-
-			$Sts = $dbh->do("delete from invoices where acct_id='$COOKIE->{ACCT}' and id=$Inv_txn->{inv_id}");
-			$Invoices->finish;
-
-#  Delete any Invoice Items
-
-			$Sts = $dbh->do("delete from items where acct_id='$COOKIE->{ACCT}' and inv_id=$Invoice->{id}");
-
-#  Write an audit trail comment
-
-			$Sts = $dbh->do("insert into audit_trails (acct_id,link_id,audtype,audaction,audtext,auduser) values ('$COOKIE->{ACCT}',$Invoice->{id},'reverse_txns.pl','adj','$Invoice->{invinvoiceno} deleted','$COOKIE->{USER}')");
-
-#  Only adjust any cusbalance if the invoice is not paid
-
-			if ($Invoice->{invstatuscode} > 2) {
-				$Sts = $dbh->do("update customers set cusbalance=cusbalance-'$Txn->{txnamount}' where acct_id='$COOKIE->{ACCT}' and id=$Invoice->{cus_id}");
-			}
+		if ($T_Invoice[1] < $T_Invoice[2]) {
+			$Sts = $dbh->do("update invoices set invstatus='Overdue',invstatuscode='9' where acct_id='$COOKIE->{ACCT}' and id=$Inv_txn->{inv_id}");
+		}
+		elsif (($T_Invoice[1] - $T_Invoice[2]) < ($T_Invoice[1] - $T_Invoice[0]) * 0.7) {
+			$Sts = $dbh->do("update invoices set invstatus='Due',invstatuscode='6' where acct_id='$COOKIE->{ACCT}' and id=$Inv_txn->{inv_id}");
 		}
 		else {
-
-#  Just delete the invoice
-
-			$Sts = $dbh->do("delete from invoices where acct_id='$COOKIE->{ACCT}' and id=$Inv_txn->{inv_id}");
+			$Sts = $dbh->do("update invoices set invstatus='Printed',invstatuscode='3' where acct_id='$COOKIE->{ACCT}' and id=$Inv_txn->{inv_id}");
 		}
+#  Deal with VAT accruals if this is a Cash scheme
+
+		if ($COOKIE->{VAT}=~ /C/i) {
 
 #  Delete any vataccruals that have been added (we assume that they have not yet been allocated to a VAT Return!)
 
-		$Sts = $dbh->do("delete from vataccruals where acct_id='$COOKIE->{ACCT}' and id=$Inv_txn->{id}");
+			$Sts = $dbh->do("delete from vataccruals where acct_id='$COOKIE->{ACCT}' and acrtxn_id=$Inv_txn->{id}");
+		}
+	}
+	$Inv_txns->finish;
 
 #  Delete inv_txns
 
-		$Sts = $dbh->do("delete from inv_txns where acct_id='$COOKIE->{ACCT}' and id=$Inv_txn->{id}");
+	$Sts = $dbh->do("delete from inv_txns where acct_id='$COOKIE->{ACCT}' and txn_id=$Txn->{id}");
+
+#  Revert coas based on nominal entries
+
+	$Noms = $dbh->prepare("select * from nominals where acct_id='$COOKIE->{ACCT}' and link_id=$Txn->{id}");
+	$Noms->execute;
+	while ($Nom = $Noms->fetchrow_hashref) {
+		$Sts = $dbh->do("update coas set coabalance=coabalance - '$Nom->{nomamount}' where acct_id='$COOKIE->{ACCT}' and coanominalcode='$Nom->{nomcode}'");
 	}
-	$Inv_txns->finish;
+	$Noms->finish;
+
+#  Delete the nominal ledger entries
+
+	$Sts = $dbh->do("delete from nominals where acct_id='$COOKIE->{ACCT}' and nomtype='T' and link_id=$Txn->{id}");
 
 #  Delete the transaction
 
@@ -187,22 +149,4 @@ sub reverse_txn {
 #  Decrement the comnexttxn
 
 	$Sts = $dbh->do("update companies set comnexttxn=cast(comnexttxn as unsigned) - 1 where reg_id=$Reg_id and id=$Com_id");
-
-#  Finally delete the transaction nominal codes and adjust the coa
-
-#  Find nominals for this transaction
-
-	$Nominals = $dbh->prepare("select * from nominals where acct_id='$COOKIE->{ACCT}' and nomtype='T' and link_id=$Txn->{id}");
-	$Nominals->execute;
-	while ($Nominal = $Nominals->fetchrow_hashref) {
-
-#  Subtract amount from the relevant coa
-
-		$Sts = $dbh->do("update coas set coabalance=coabalance-'$Nominal->{nomamount}' where acct_id='$COOKIE->{ACCT}' and coanominalcode='$Nominal->{nomcode}'");
-
-#  Delete the nominalcode
-
-		$Sts = $dbh->do("delete from nominals where acct_id='$COOKIE->{ACCT}' and id=$Nominal->{id}");
-	}
-	$Nominals->finish;
 }

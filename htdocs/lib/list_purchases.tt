@@ -4,6 +4,7 @@
   <form id="payform" name="payform" method="post" action="/cgi-bin/fpa/make_purchase_payment.pl">
     <input type="hidden" name="cus_id" id="i_cus_id" value="[%- cus.id -%]"/>
     <input type="hidden" name="id" id="i_id" value=""/>
+    <input type="hidden" name="invcoa" id="i_invcoa" value="2000"/>
     <table width="100%" border="0" cellspacing="0" cellpadding="0" class="formtable">
       <tr>
         <td><label>Invoice No</label></td>
@@ -24,18 +25,6 @@
             <option value="1300">Cash</option>
             <option value="1200">Bank Transfer</option>
             <option value="2010">Credit Card</option>
-          </select>
-        </td>
-      </tr>
-      <tr>
-        <td><label>Allocatee To</label></td>
-        <td>
-          <select name="invcoa" id="i_invcoa">
-            [% cookie.5000 -%]
-            [% cookie.6000 -%]
-            [% cookie.7000 -%]
-            <option value="1000">Fixed Assets</option>
-            <option value="1500">Other Current Assets</option>
           </select>
         </td>
       </tr>

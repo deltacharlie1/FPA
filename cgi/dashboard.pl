@@ -31,9 +31,25 @@ $Coas->execute;
 $Coa = $Coas->fetchall_hashref('coanominalcode');
 $Coas->finish;
 
-$Vataccruals = $dbh->prepare("select sum(acrvat) from vataccruals where vr_id=0 and acct_id='$COOKIE->{ACCT}'");
+#  Get current Debtors
+
+$Debtors = $dbh->prepare("select sum(invtotal+invvat-invpaid-invpaidvat) as debts from invoices where acct_id='$COOKIE->{ACCT}' and invtype='S' and invstatuscode > 2");
+$Debtors->execute;
+$Debts = $Debtors->fetchrow_hashref;
+$Debtors->finish;
+
+#  Get current Creditors
+
+$Creditors = $dbh->prepare("select sum(invtotal+invvat-invpaid-invpaidvat) as credits from invoices where acct_id='$COOKIE->{ACCT}' and invtype='P' and invstatuscode > 2");
+$Creditors->execute;
+$Credits = $Creditors->fetchrow_hashref;
+$Creditors->finish;
+
+#  Get outstanding VAT
+
+$Vataccruals = $dbh->prepare("select sum(acrvat) as vat from vataccruals where vr_id=0 and acct_id='$COOKIE->{ACCT}'");
 $Vataccruals->execute;
-($Company->{comvatcontrol}) = $Vataccruals->fetchrow;
+$VAT = $Vataccruals->fetchrow_hashref;
 $Vataccruals->finish;
  
 #  Update the status of any invoices
@@ -72,6 +88,9 @@ $Vars = {
 	cookie => $COOKIE,
         invoices => $Invoices->fetchall_arrayref({}),
 	coa => $Coa,
+	debtors => $Debts->{debts},
+	creditors => $Credits->{credits},
+	vat => $VAT->{vat},
 	company => $Company,
 	reminders => $Reminder,
         javascript => '<style type="text/css">

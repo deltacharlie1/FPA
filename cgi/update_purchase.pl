@@ -75,6 +75,37 @@ $(document).ready(function(){
       },
     "auto"           : true
   });
+  $("#cancelreason").dialog({
+    bgiframe: true,
+    autoOpen: false,
+    position: [200,100],
+    height: 200,
+    width: 400,
+    modal: true,
+    buttons: {
+      "Void Invoice": function() {
+        if(document.getElementById("voidmsg").value == "") {
+          $("#dialog").html("You must enter a reason for voiding this invoice");
+          $("#dialog").dialog("open");
+        }
+        else {
+          $.post("/cgi-bin/fpa/cancel_purchase_invoice.pl", $("form#fcancelreason").serialize(),function(data) {
+            if (/OK/.test(data)) {
+              location.href = "/cgi-bin/fpa/list_purchases.pl?' . $Invoice->{cus_id} . '";
+            }
+            else {
+              responseText = data;
+              $("#dialog").html(responseText);
+              $("#dialog").dialog("open");
+            }
+          });
+        }
+      },
+      Cancel: function() {
+        $(this).dialog("close");
+      }
+    }
+  });
   $("#invprintdate").datepicker();
   var options = {
     beforeSubmit: validate,
@@ -82,6 +113,16 @@ $(document).ready(function(){
   };
   $("#form1").ajaxForm(options);
 });
+function cancel_invoice(invid) {
+  if ('.$Invoice->{totpaid}.' != 0) {
+    $("#dialog").html("This purchase invoice is at least part-paid.<p>You must first cancel the payment (go to <b>\'Money\'->\'List Transactions\'</b> and double click on the elevant entry)");
+    $("#dialog").dialog("open");
+  }
+  else {
+    $("#cancelreason").dialog("open");
+    document.getElementById("cancelmsg").focus();
+  }
+}
 function showResponse(responseText, statusText) {
   if (/OK/i.test(responseText)) {
     var href = responseText.split("-");
