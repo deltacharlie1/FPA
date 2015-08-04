@@ -183,21 +183,21 @@ EOD
 
 #  add to the mailing list
 
-		my $apikey = 'a94017b54d91fe7fe1ac9166712e62c2-us2';
-		my $list_id = 'b4d31d6294';
-		use LWP::UserAgent;
+#		my $apikey = 'a94017b54d91fe7fe1ac9166712e62c2-us2';
+#		my $list_id = 'b4d31d6294';
+#		use LWP::UserAgent;
 
-		my $content = "method=listSubscribe&apikey=$apikey&id=$list_id&email_address=$FORM{email}&merge_vars[FNAME]=$FORM{name}&double_optin=false&send_welcome=false&output=json";
+#		my $content = "method=listSubscribe&apikey=$apikey&id=$list_id&email_address=$FORM{email}&merge_vars[FNAME]=$FORM{name}&double_optin=false&send_welcome=false&output=json";
 
-		my $ua = LWP::UserAgent->new;
-		$ua->agent("FPA/0.1 ");
+#		my $ua = LWP::UserAgent->new;
+#		$ua->agent("FPA/0.1 ");
 
 # Create a request
-		my $req = HTTP::Request->new(POST => "http://us2.api.mailchimp.com/1.3/?$content");
-		$req->content_type('application/x-www-form-urlencoded');
+#		my $req = HTTP::Request->new(POST => "http://us2.api.mailchimp.com/1.3/?$content");
+#		$req->content_type('application/x-www-form-urlencoded');
 
 # Pass request to the user agent and get a response back
-		my $res = $ua->request($req);
+#		my $res = $ua->request($req);
 
 
 #  Send the email
