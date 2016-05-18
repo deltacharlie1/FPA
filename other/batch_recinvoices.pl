@@ -41,7 +41,7 @@ while ($RecInvoice = $RecInvoices->fetchrow_hashref) {
 
         		open(SUMEMAIL,"| /usr/sbin/sendmail -t");
 		        print SUMEMAIL<<EOD;
-From: Auto-Invoices <fpainvoices\@corunna.com>
+From: Auto-Invoices <fpainvoices\@corunnasystems.co.uk>
 To: $BCompany->{regemail}
 Subject: $No_of_Invoices FreePlus Invoices have been generated for you
 
@@ -124,9 +124,8 @@ EOD
 if ($COOKIE->{ACCT} && $No_of_Invoices > 0) {
 	open(SUMEMAIL,"| /usr/sbin/sendmail -t");
         print SUMEMAIL<<EOD;
-From: Auto-Invoices <fpainvoices\@corunna.com>
+From: Auto-Invoices <fpainvoices\@corunnasystems.co.uk>
 To: $BCompany->{regemail}
-cc: doug.conran\@corunna.com
 Subject: $No_of_Invoices FreePlus Invoices have been generated for you
 
 The following invoices have been automatically generated for you today:-
@@ -206,7 +205,7 @@ sub send_email {
 
         open(EMAIL,"| /usr/sbin/sendmail -t");
         print EMAIL<<EOD;
-From: $BCompany->{comname} <fpainvoices\@corunna.com>
+From: $BCompany->{comname} <fpainvoices\@corunnasystems.co.uk>
 To: $FORM{invcusemail}
 Reply-To: $BCompany->{comname} <$BCompany->{regemail}>
 EOD
@@ -221,7 +220,7 @@ MIME-Version: 1.0
 Content-Type: multipart/mixed;
         boundary="----=_NextPart_000_001D_01C0B074.94357480"
 Message-Id: <$$.$Ctr>
-From: $BCompany->{comname} <$BCompany->{regemail}> 
+From: $BCompany->{comname} <fpainvoices\@corunnasystems.co.uk> 
 X-Priority: 3
 X-Mailer: Postfix v2.0
 X-MimeOLE: Produced By Microsoft MimeOLE V5.50.4133.2400

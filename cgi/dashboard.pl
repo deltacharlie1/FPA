@@ -18,6 +18,8 @@ if ($ENV{QUERY_STRING} =~ /INV/) {
 EOD
 }
 
+warn "Hi Doug\n";
+
 use DBI;
 $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
 ($Reg_id,$Com_id) = split(/\+/,$COOKIE->{ACCT});

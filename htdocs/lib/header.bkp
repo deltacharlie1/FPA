@@ -1,0 +1,512 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+[%- USE date -%]
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="description" />
+<meta name="keywords" content="keywords" />
+<link href="/css/new-css.css" rel="stylesheet" type="text/css" />
+<link rel="shortcut icon" href="/favicon.ico"/>
+<link rel="stylesheet" href="/css/jquery-ui.css" type="text/css"/>
+<script src="/js/jquery.js" type="text/javascript"></script>
+<script src="/js/jquery-ui.min.js" type="text/javascript"></script>
+<link rel="stylesheet" href="/css/jcarousel.css" type="text/css"/>
+<script type="text/javascript" src="/js/jquery.carouFredSel-6.0.6.js"></script>
+<script src="/js/jquery.watermark.js" type="text/javascript"></script>
+<link rel="stylesheet" href="/css/uploadify.css" type="text/css"/>
+<script type="text/javascript" src="/js/swfobject.js"></script>
+<script type="text/javascript" src="/js/jqprint.js"></script>
+<script type="text/javascript" src="/js/jquery.uploadify.v2.1.4.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/printel.js"></script>
+<script type="text/javascript" src="/js/jsheader.js"></script>
+<title>[% title -%]</title>
+<script type="text/javascript">
+$(document).ready(function(){
+  var advert = $.cookie('fpa-next_advert') * 1;
+  var last = $.cookie('fpa-last_advert') * 1;
+  if (advert >= last) {
+    advert = 1;
+  }
+  else {
+    advert = advert + 1;
+  }
+  $.cookie('fpa-next_advert',advert, { path: '/' });
+  $("#searchcus").watermark("Search");
+  $("#ulvads").carouFredSel({
+    direction: "up",
+    items: 8,
+    auto: {
+      duration: 2000,
+      timeoutDuration: 8000,
+      easing: "easeOutBounce",
+      items: 2,
+      pauseOnHover: true
+    },
+    align: "left",
+    start: 0,
+    height: 590,
+    width: 158 
+  
+});
+  $("#lhads").carouFredSel({
+      synchonise: ["#ulvads"],
+      width: 630,
+      items: {
+        visible: 6,
+        start: 0
+      },
+      auto: {
+        items: 2,
+        duration: 2000,
+        timeoutDuration: 8000,
+        easing: "easeOutBounce",
+        pauseOnHover: true
+      }
+  });
+[% IF cookie.PLAN > 5 AND cookie.PREFS.substr(4,1) == 'Y' -%]
+  $("#pifile").uploadify ({
+    "uploader"       : "/js/uploadify.swf",
+    "script"         : "/cgi-bin/fpa/uploadify.pl",
+    "cancelImg"      : "/js/cancel.png",
+    "buttonText"     : "Attach Document",
+    "fileExt"        : "*.pdf;*.jpg;*.png",
+    "fileDesc"       : "PDF or Image Files (*.pdf,*.jpg,*.png)",
+    "sizeLimit"      : [%- cookie.UPLDS -%],
+    "expressInstall" : "/js/expressInstall.swf",
+    "auto"           : false,
+    "onError"	     : function(event, ID, fileObj, errorObj) {
+	 alert(errorObj.type+"::"+errorObj.info);
+      },
+    "onAllComplete"  : function() {
+                         window.location.reload(true);
+                         $(this).dialog("close");
+                       }
+  });
+[% END -%]
+[% IF cookie.PREFS.substr(1,1) == 'Y' -%]
+  setTimeout("set_logout()",1200000);
+[% END -%]
+[% IF cookie.BACCT == '1+1' -%]
+  $("#getadd").dialog({
+    bgiframe: true,
+    autoOpen: false,
+    position: [200,100],
+    height: 200,
+    width: 400,
+    modal: true,
+  });
+[% END -%]
+});
+</script>
+[% javascript %]
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-1352036-2']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</head>
+<body [%- IF focus -%][%- IF focus.search('location') -%] onload="[%- focus; -%]"[%- ELSE -%] onload="document.getElementById('[%- focus -%]').focus();"[%- END -%][%- END -%]>
+  <div id="wrapper">
+    <div id="top"[%- IF cookie.DB == 'fpa3' -%] style="background-color:#ee8888;"[%- END -%]>
+      <div class="company-name">
+        <div[%- IF cookie.DB == 'fpa3' -%] style="border:3px solid #880000;padding:0px 10px;background-color:white;">TEST - [%- ELSE -%]>[%- END; cookie.TAG -%]</div>
+[% IF cookie.PLAN > 3 AND cookie.NO_ADS == '1' -%]
+        <div style="height:78px;width:630px;"></div>
+[% ELSE -%]
+        <div id="hads" style='height:78px;width:630px;padding-top:6px;overflow:hidden;border:1px solid #330000;background-color:#eaeadc;'>
+          <div id="lhads">
+  [%- hadfile='adverts/horiz/Advert' _ cookie.NEXT_AD _ '.tt'; PROCESS $hadfile -%]
+          </div>
+          <div style="float:none;clear:both;"></div>
+        </div>
+[% END -%]
+      </div>
+        <a href="/cgi-bin/fpa/logout.pl"><div id="logout"></div></a>
+    </div><!-- END top -->
+
+    <div class="clear"></div>
+    <div id="navigation">
+      <ul>
+        <li class="company"><a href="#"><span>Company</span></a>
+          <ul>
+[% UNLESS cookie.ACCT == "3+2" -%]
+            <li><a href="/cgi-bin/fpa/reregister.pl">Registration Details</a></li>
+            <li><a href="/cgi-bin/fpa/company_details.pl">Company Details</a></li>
+  [% IF cookie.ADDU > 0 -%]
+            <li><a href="/cgi-bin/fpa/adduser.pl">Add New User</a></li>
+  [% END -%]
+[%- END -%]
+[%- IF cookie.PLAN > 3 AND cookie.BUS !="1" -%]
+            <li><a href="/cgi-bin/fpa/bulk_journals.pl">Journal Adjustments</a></li>
+[% END -%]
+[%- IF cookie.PLAN > 5 -%]
+            <li><a href="/cgi-bin/fpa/docsrep1.pl">List Documents</a></li>
+[% END -%]
+            <li><a href="/cgi-bin/fpa/list_coas.pl">Chart of Accounts</a></li>
+            <li><a href="/cgi-bin/fpa/adjustments.pl?I">Adjustments In (<b> + </b>)</a></li>
+            <li><a href="/cgi-bin/fpa/adjustments.pl?O">Adjustments Out (<b> - </b>)</a></li>
+            <li><a href="/cgi-bin/fpa/bulk_opening_balances.pl">Adjust Balances</a></li>
+[% UNLESS cookie.ACCT == "3+2" -%]
+            <li><a href="/cgi-bin/fpa/wipe_clean.pl">Delete All Data</a></li>
+[% END -%]
+          </ul>
+        </li>
+        <li class="sales"><a href="#"><span>Sales</span></a>
+          <ul>
+            <li><a href="/cgi-bin/fpa/list_invoices.pl?listorder=O">List Unpaid Invoices</a></li>
+            <li><a href="/cgi-bin/fpa/list_invoices.pl?listorder=N">List Invoices</a></li>
+            <li><a href="/cgi-bin/fpa/new_invoice.pl?S">Create New Invoice</a></li>
+            <li><a href="/cgi-bin/fpa/new_invoice.pl?C">Create New Credit Note</a></li>
+        [% IF cookie.ACCESS > 3 -%]
+            <li><a href="/cgi-bin/fpa/list_invoice_layouts.pl">List Invoice Layouts</a></li>
+            <li><a href="/cgi-bin/fpa/list_invoice_templates.pl">List Invoice Templates</a></li> 
+        [% END -%]
+            <li><a href="#" onclick="display_form('I');">Record Money In</a></li>
+            <li><a href="/cgi-bin/fpa/list_customers.pl">List Customers</a></li>
+            <li><a href="/cgi-bin/fpa/add_address.pl?C">Add New Customer</a></li>
+          </ul>
+        </li>
+        <li class="purchases"><a href="#"><span>Purchases</span></a>
+          <ul>
+            <li><a href="/cgi-bin/fpa/list_purchases.pl?listorder=O">List Unpaid Purchases</a></li>
+            <li><a href="/cgi-bin/fpa/list_purchases.pl?listorder=N">List Purchases</a></li>
+            <li><a href="/cgi-bin/fpa/new_purchase.pl">New Purchase Invoice</a></li>
+            <li><a href="#" onclick="display_form('P');">Record Money Out</a></li>
+            <li><a href="/cgi-bin/fpa/list_suppliers.pl">List Suppliers</a></li>
+            <li><a href="/cgi-bin/fpa/add_address.pl?S">Add New Supplier</a></li>
+            <li><a href="#" onclick="display_form('E');">Record Expense</a></li>
+            <li><a href="/cgi-bin/fpa/multi_purchases.pl?[%- cookie.EXP -%]">Pay Expenses</a></li>
+[% IF cookie.ACCESS > 3 -%]
+            <li><a href="/cgi-bin/fpa/recpayments.pl">Recurring Payments</a></li>
+[% END -%]
+          </ul>
+        </li>
+        <li class="accounts"><a href="#"><span>Money</span></a>
+          <ul>
+            <li><a href="/cgi-bin/fpa/list_txns.pl">List Transactions</a></li>
+            <li><a href="/cgi-bin/fpa/list_accounts.pl">List Accounts</a></li>
+            <li><a href="/cgi-bin/fpa/list_stmts.pl">List Statements</a></li>
+            <li><a href="/cgi-bin/fpa/cashtobank.pl">Put Money In</a></li>
+            <li><a href="/cgi-bin/fpa/transfer.pl?O">Get money Out</a></li>
+            <li><a href="/cgi-bin/fpa/transfer.pl?T">Transfer Money</a></li>
+          </ul>
+        </li>
+[% UNLESS cookie.VAT == "N" -%]
+  [%- IF cookie.TRIAL == "Y" -%]
+        <li class="vat"><a href="#"><span>VAT</span></a>
+          <ul>
+            <li><a href="/cgi-bin/fpa/list_vatreturns.pl">List VAT Returns</a></li>
+            <li><a href="/cgi-bin/fpa/vatreturn.pl">VAT Form 100</a></li>
+          </ul>
+        </li>
+  [%- END -%]
+[% END -%]
+        <li class="reports"><a href="#"><span>Reports</span></a>
+          <ul>
+            <li><a href="/cgi-bin/fpa/dashboard.pl">Front Page</a></li>
+            <li><a href="/cgi-bin/fpa/invrep1.pl?F">Invoice Analysis</a></li>
+            <li><a href="/cgi-bin/fpa/txnrep1.pl?F">Transaction Analysis</a>
+[%- IF cookie.PLAN > 3 AND cookie.BUS !="1" -%]
+            <li><a href="/cgi-bin/fpa/jnlrep1.pl">Journal Analysis</a></li>
+[% END -%]
+            <li><a href="/cgi-bin/fpa/trial_balance.pl?F">Trial Balance</a></li>
+            <li><a href="#">Year End Reports<div style="float:right;padding-bottom:5px;"><img src="/icons/submenu_pointer.gif"/></div></a>
+              <ul>
+                <li><a href="/cgi-bin/fpa/pandl.pl?F">Profit &amp; Loss</a></li>
+                <li><a href="/cgi-bin/fpa/nomledger.pl?F">Nominal Ledger</a></li>
+                <li><a href="/cgi-bin/fpa/aged_debtors.pl?F">Aged Debtors</a></li>
+                <li><a href="/cgi-bin/fpa/aged_creditors.pl?F">Aged Creditors</a></li>
+[% UNLESS cookie.VAT == "N" -%]
+                <li><a href="/cgi-bin/fpa/vatreport.pl?F">VAT Report</a></li>
+[% END -%]
+                <li><a href="/cgi-bin/fpa/nom_invoices.pl?F">Invoice Report</a></li>
+                <li><a href="/cgi-bin/fpa/nom_txns.pl?F">Transactions Report</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li class="reminders"><a href="#"><span>Reminders</span></a>
+          <ul>
+            <li><a href="#" onclick="view_reminders();">View Reminders</a></li>
+            <li><a href="#" onclick="$('#vreminder').dialog('open');">Add Reminder</a></li>
+          </ul>
+        </li>
+        <li class="admin"><a href="#"><span>Admin</span></a>
+          <ul>
+            <li><a href="/cgi-bin/fpa/subs.pl">My Account</a></li>
+            <li><a href="/cgi-bin/fpa/preferences.pl">Preferences</a></li>
+            <li><a href="#" onclick="view_comments();">View Feedback</a></li>
+            <li><a href="#" onclick="$('#vcomment').dialog('open');">Add New Feedback</a></li>
+            <li><a href="/cgi-bin/fpa/assign_invoices.pl">Assign Unlisted Invoices</a></li>
+            <li><a href="/cgi-bin/fpa/switch_systems.pl">Switch to [%- IF cookie.DB == 'fpa3' -%]Live System[%- ELSE -%]Testbed[%- END -%]</a></li>
+            <li><a href="/cgi-bin/fpa/list_audit_trails.pl">Audit Trail</a></li>
+          </ul>
+        </li>
+        <li class="print"><a href="#" onclick="print_display('[%- cookie.TAG -%]');"><span>Print</span></a>
+        </li>
+        <li class="help"><a href="#"><span>Help</span></a>
+          <ul>
+            <li><a href="/usermanual.pdf">Help Manual</a></li>
+[% IF cookie.BUS == '1' -%]
+            <li><a href="/bkprmanual.pdf">Bookkeeper Additions Manual</a></li>
+[% END -%]
+            <li><a href="#" onclick="window.open('/cgi-bin/fpa/help_tutorials.pl','tutorials','width=700 height=900 top=50 left=200 scrollbars=yes');">Video Tutorials</a></li>
+          </ul>
+        </li>
+[% IF cookie.BUS == "1" AND cookie.ACCESS > 1 -%]
+        <li class="bookkeeper"><a href="#"><span>Bookkeeper</span></a>
+          <ul>
+  [% IF cookie.BACCT == '1+1' -%]
+            <li><a href="#" onclick='$("#getadd").dialog("open");'>List Companies</a></li>
+  [% ELSE -%]
+            <li><a href="/cgi-bin/fpa/list_companies.pl">List Companies</a></li>
+  [% END -%]
+            <li><a href="/cgi-bin/fpa/bulk_add_invoices.pl">Bulk Add Invoices</a></li>
+            <li><a href="/cgi-bin/fpa/bulk_add_purchases.pl">Bulk Add Purchases</a></li>
+            <li><a href="/cgi-bin/fpa/add_companies.pl">Add Companies</a></li>
+            <li><a href="/cgi-bin/fpa/invite_existing_user.pl">Invite Existing User</a></li>
+            <li><a href="/cgi-bin/fpa/bulk_opening_balances.pl">Add Opening Balances</a></li>
+            <li><a href="/cgi-bin/fpa/bulk_journals.pl">Journal Adjustments</a></li>
+            <li><a href="/cgi-bin/fpa/jnlrep1.pl">Journal Analysis</a></li>
+  [% IF cookie.BACCT == '4+3' -%]
+            <li><a href="/demo/index.html" target="_new">Demo Reconciliation</a></li>
+  [% END -%]
+          </ul>
+[% END -%]
+        </li>
+        <li class="search"><span><input id="searchcus" /></span>
+        </li>
+      </ul>
+    </div>
+    <div class="clear"></div>
+      <div class="clear"></div>
+<div id="dialog" style="text-align:left;z-index:10100;" title="Errors!"></div>
+<div id="vcomments" style="text-align:left;z-index:10100;" title="Feedback"></div>
+<div id="vcomment" style="display:none;" title="Add a Comment">
+  <form id="fcomment" name="fcomment" method="post" action="/cgi-bin/fpa/comment.pl">
+    <table width="100%" cellpadding="4" cellspacing="0" border="0" class="formtable">
+      <tr>
+        <td style="vertical-align:top;"><label>Comment</label></td>
+        <td><textarea name="comtext" id="comtext" cols="30" rows="3"></textarea></td>
+      </tr>
+      <tr>
+        <td><label>Priority</label></td>
+        <td>
+          <select name="comgrade" id="comgrade">
+            <option value="N">Normal</option>
+            <option value="H">Important</option>
+          </select>
+        </td>
+      </tr>
+    </table>
+  </form>
+</div>
+<div id="vreminders" style="text-align:left;z-index:10100;" title="Reminders"></div>
+<div id="vreminder" style="display:none;" title="Add a Reminder">
+  <form id="freminder" name="freminder" method="post" action="/cgi-bin/fpa/reminder.pl">
+    <table width="100%" cellpadding="4" cellspacing="0" border="0" class="formtable">
+      <tr>
+        <td style="vertical-align:top;"><label>Message</label></td>
+        <td><textarea name="remtext" id="remtext" cols="30" rows="3"></textarea></td>
+      </tr>
+      <tr>
+        <td><label>Priority</label></td>
+        <td>
+          <select name="remgrade" id="remgrade">
+            <option value="N">Normal</option>
+            <option value="H">Important</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td><label>Show from</label></td>
+        <td><input type="text" name="remstartdate" id="remstartdate" size="9" readonly="readonly"/></td>
+      </tr>
+      <tr>
+        <td><label>Show to</label></td>
+        <td><input type="text" name="remenddate" id="remenddate" size="9" readonly="readonly"/></td>
+      </tr>
+    </table>
+  </form>
+</div>
+<div id="container">
+[% content %]
+</div>
+<img style="padding:0;margin:0;" src="/images/container-bottom.gif"/>
+</div>  <!-- end of wrapper  //-->
+<div id="receipt2" title="Receive Money In" style="width:520px;">
+  <form id="recform2" name="recform2" method="post" action="/cgi-bin/fpa/process_txn.pl">
+    <input type="hidden" name="invtype" id="rec_invtype" value="I"/>
+    <input type="hidden" name="searchtype" id="rec_searchtype" value="Customers"/>
+    <input type="hidden" name="amtcusid" id="rec_amtcusid" value="0"/>
+    <input type="hidden" name="cuscis" id="rec_cuscis" value="N"/>
+    <table width="100%" cellpadding="4" cellspacing="0" border="0" class="formtable">
+      <tr>
+        <td><label>Received From</label></td>
+        <td nowrap="nowrap"><div><input type="hidden" name="invcusname" id="rec_invcusname" value=""/><input id="rec_cus_id" title="Received From" class="mandatory"/>[%- IF cookie.CIS == 'Y' -%]&nbsp;<span id="cistext" style="display:none;">(CIS)</span>[%- END -%]</div></td>
+      </tr>
+      <tr>
+        <td><label>Payment Method</label></td>
+        <td>
+          <select name="txnmethod" id="rec_txnmethod">
+            <option value="1300">Cash</option>
+            <option value="1310">Cheque</option>
+            <option value="1200" selected="selected">Bank Transfer</option>
+          </select>
+        </td>
+      </tr>
+[% IF cookie.CIS == 'Y' -%]
+      <tr>
+        <td><label>Amount Paid</label></td>
+        <td><span><input type="text" name="txnpaid" id="rec_txnpaid" value="" size="10" title="Amount Paid" class="mandatory currency" onchange="calc_owed();[%- UNLESS cookie.VAT == 'N' -%] calc_vat(document.getElementById('rec_txnamount'));[%- END -%]"/></span></td>
+      </tr>
+      <tbody id="cisamount" style="display:none;">
+      <tr>
+        <td><label>Total Amount Owed</label></td>
+        <td><span><input type="text" name="txnamount" id="rec_txnamount" value="" size="10" title="Total Amount Owed" class="mandatory currency"[%- UNLESS cookie.VAT == "N" -%] onchange="calc_vat(this);"[%- END -%]/></span></td>
+      </tr>
+      </tbody>
+[% ELSE -%]
+      <tr>
+        <td><label>Total Amount Received</label></td>
+        <td><span><input type="text" name="txnamount" id="rec_txnamount" value="" size="10" title="Total Amount Received" class="mandatory currency"[%- UNLESS cookie.VAT == "N" -%] onchange="calc_vat(this);"[%- END -%]/></span></td>
+      </tr>
+[% END -%]
+[% IF cookie.PREFS.substr(3,1) == 'Y' -%]
+      <tr>
+        <td><label>Category</label></td>
+        <td><span><input type="text" name="item_cat" id="rec_item_cat" value="" size="20" title="Category"/></span></td>
+      </tr>
+[% END -%]
+[% UNLESS cookie.VAT == "N" -%]
+      <tr>
+        <td><label>VAT Rate</label></td>
+        <td>
+          <select name="vatrate" id="rec_vatrate" onchange="calc_vat(this);">
+[% INCLUDE vatrates -%]
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td><label>VAT Amount</label></td>
+        <td><span><input type="text" name="invvat" id="rec_invvat" value="" size="10" title="VAT Amount Received" class="currency"/></span>&nbsp;<span id="rec_netamt"></span></td>
+      </tr>
+[% END -%]
+      <tr>
+        <td><label>Allocate to</label></td>
+        <td>
+          <select name="invcoa" id="rec_invcoa" size="1">
+            <option value="4000" selected="selected">UK Sales</option>
+            <option value="4100">EU Sales</option>
+            <option value="4200">Export Sales</option>
+            [% cookie.4300 -%]
+          </select>
+        </td> 
+      </tr>
+      <tr>
+        <td><label>Transaction Date</label></td>
+        <td><input type="text" name="invprintdate" id="rec_invprintdate" value="[%- date.format(date.now, '%d-%b-%y') -%]" size="10" readonly="readonly"/></td>
+      </tr>
+      <tr>
+        <td colspan="2"><label style="text-align:left;padding-bottom:5px;">Description</label><textarea name="invdesc" id="rec_invdesc" cols="30" rows="2" title="Description of the receipt" class="mandatory"></textarea></td>
+      </tr>
+    </table>
+  </form>
+</div>
+<div id="payment2" title="Pay Money Out" style="width:520px;">
+  <form id="payform2" name="payform2" method="post" action="/cgi-bin/fpa/process_txn.pl">
+    <input type="hidden" name="invtype" id="pay_invtype" value="P"/>
+    <input type="hidden" name="searchtype" id="pay_searchtype" value="Customers"/>
+    <input type="hidden" name="amtcusid" id="pay_amtcusid" value="0"/>
+    <input type="hidden" name="expid" id="expid" value="[%- cookie.EXP -%]"/>
+    <table width="100%" cellpadding="4" cellspacing="0" border="0" class="formtable">
+      <tr class="notexpenses">
+        <td><label>Paid To</label></td>
+        <td><div><input type="hidden" name="invcusname" id="pay_invcusname" value=""/><input id="pay_cus_id" title="Paid To" class="mandatory"/></div></td>
+      </tr>
+      <tr class="notexpenses">
+        <td><label>Payment Method</label></td>
+        <td>
+          <select name="txnmethod" id="pay_txnmethod">
+            <option value="1300">Cash</option>
+            <option value="1200" selected="selected">Bank Transfer</option>
+            <option value="2010">Credit Card</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td><label>Total Amount Paid</label></td>
+        <td><span><input type="text" name="txnamount" id="pay_txnamount" value="" size="10" title="Total Amount Paid" class="mandatory currency"[%- UNLESS cookie.VAT == "N" -%] onchange="calc_vat(this);"[%- END -%]/></span></td>
+      </tr>
+[% IF cookie.PREFS.substr(3,1) == 'Y' -%]
+      <tr>
+        <td><label>Category</label></td>
+        <td><span><input type="text" name="item_cat" id="pay_item_cat" value="" size="20" title="Category"/></span></td>
+      </tr>
+[% END -%]
+[%- UNLESS cookie.VAT == "N" -%]
+      <tr>
+        <td><label>VAT Rate</label></td>
+        <td>
+          <select name="vatrate" id="pay_vatrate" onchange="calc_vat(this);">
+[% INCLUDE vatrates -%]
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td><label>VAT Amount</label></td>
+        <td><input type="text" name="invvat" id="pay_invvat" value="" size="10" title="VAT Amount Paid" class="currency"/>&nbsp;<span id="pay_netamt"></span></td>
+      </tr>
+[% END -%]
+      <tr>
+        <td><label>Allocate to</label></td>
+        <td>
+          <select name="invcoa" id="pay_invcoa" size="1">
+            [% cookie.1000 -%]
+            [% cookie.1500 -%]
+            [% cookie.5000 -%]
+            [% cookie.6000 -%]
+            [% cookie.7000 -%]
+          </select>
+        </td> 
+      </tr>
+      <tr>
+        <td><label>Transaction Date</label></td>
+        <td><input type="text" name="invprintdate" id="pay_invprintdate" value="[%- date.format(date.now, '%d-%b-%y') -%]" size="10" readonly="readonly"/></td>
+      </tr>
+      <tr>
+        <td><label>Supplier Reference</label></td>
+        <td><span><input type="text" name="invcusref" id="pay_invcusref" value="" title="Supplier Reference"/></span></td>
+      </tr>
+      <tr>
+        <td colspan="2"><label style="text-align:left;padding-bottom:5px;">Description</label><textarea name="invdesc" id="pay_invdesc" cols="30" rows="2" title="Description of the payment" class="mandatory"></textarea>[%- IF cookie.PLAN > 5 AND cookie.PREFS.substr(4,1) == 'Y' -%]&nbsp;&nbsp;<input id="pifile" name="pifile" type="file"/>[%- END -%]</td>
+      </tr>
+    </table>
+  </form>
+</div>
+[% IF cookie.BACCT == '1+1' -%]
+<div id="getadd" title="Get Email">
+  <form id="fgetadd" name="fgetadd" method="post" action="/cgi-bin/fpa/list_companies.pl">
+    <table width="100%" cellpadding="4" cellspacing="0" border="0" class="formtable">
+      <tr class="notexpenses">
+        <td><label>Reg Email</label></td>
+        <td><input id="regemail" name="regemail"/></td>
+      </tr>
+      <tr>
+        <td align="center" colspan="2"><input type="submit" name="submit" value="Submit"/></td>
+      </tr>
+    </table>
+  </form>
+</div>
+[% END -%]
+</body>
+</html>

@@ -108,7 +108,7 @@ sub send_email {
 
         open(EMAIL,"| /usr/sbin/sendmail -t");
         print EMAIL<<EOD;
-From: FreePlus Accounts <fpainvoices\@corunnasystems.com>
+From: FreePlus Accounts <fpainvoices\@corunnasystems.co.uk>
 To: $Company->{regemail}
 Bcc: doug.conran\@corunna.com
 Subject: Your FreePlus Subscription Invoice

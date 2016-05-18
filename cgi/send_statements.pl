@@ -62,7 +62,7 @@ while ($aCustomer = $aCustomers->fetchrow_hashref) {
 
 		open(EMAIL,"| /usr/sbin/sendmail -t");
 	        print EMAIL<<EOD;
-From: $aCompany->{comcontact} <fpastatements\@corunnasystems.com>
+From: $aCompany->{comcontact} <fpastatements\@corunnasystems.co.uk>
 To: $aCustomer->{cusemail}
 cc: $aCompany->{comemail}
 Reply-To: $aCompany->{comcontact} <$aCompany->{comemail}>

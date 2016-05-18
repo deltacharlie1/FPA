@@ -51,7 +51,7 @@ X-Mailer: Postfix v2.0
 X-MimeOLE: Produced By Microsoft MimeOLE V5.50.4133.2400
 X-MSMail-Priority: Normal
 Message-Id: <$Checkid::Cookie{'fpa-cookie'}>
-From: $COOKIE->{TAG} <fpainvoices\@corunnasystems.com>
+From: $COOKIE->{TAG} <fpainvoices\@corunnasystems.co.uk>
 To: $FORM{invcusemail}
 Reply-To: $COOKIE->{TAG} <$COOKIE->{ID}>
 EOD
