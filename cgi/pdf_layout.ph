@@ -148,6 +148,8 @@ if ($Layout->{layreversefile}) {
 	$Revs->execute;
 	$Rev = $Revs->fetchrow_hashref;
 	$Revs->finish;
+#	$Rev->{layfile} =~ s/\&/\\\&/g;
+#	$Rev->{layfile} =~ s/\$/\\\$/g;
 	$Rev_pdf = PDF::API2->open("$Rev->{layfile}");
 }
 $page = $pdf->openpage(1);

@@ -1,0 +1,1015 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bills>
+  <bill>
+    <id>PM000BDRW6YQYB</id>
+    <amount>6.0</amount>
+    <amount-minus-fees>5.94</amount-minus-fees>
+    <gocardless-fees>0.06</gocardless-fees>
+    <partner-fees>0.0</partner-fees>
+    <currency>GBP</currency>
+    <name>FreePlus Standard</name>
+    <status>paid</status>
+    <description nil="true"/>
+    <created-at>2016-05-19T04:31:02Z</created-at>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>CU0001ZWTAWKJ2</user-id>
+    <paid-at>2016-05-25T10:31:28Z</paid-at>
+    <source-type>subscription</source-type>
+    <source-id>SB0000594YHD46</source-id>
+    <uri>https://gocardless.com/api/v1/bills/PM000BDRW6YQYB</uri>
+    <can-be-retried nil="true"/>
+    <can-be-cancelled nil="true"/>
+    <payout-id nil="true"/>
+    <is-setup-fee>false</is-setup-fee>
+    <charge-customer-at>2016-05-24</charge-customer-at>
+  </bill>
+  <bill>
+    <id>PM000BBAPE2T5F</id>
+    <amount>6.0</amount>
+    <amount-minus-fees>5.94</amount-minus-fees>
+    <gocardless-fees>0.06</gocardless-fees>
+    <partner-fees>0.0</partner-fees>
+    <currency>GBP</currency>
+    <name>FreePlus Standard</name>
+    <status>withdrawn</status>
+    <description nil="true"/>
+    <created-at>2016-05-17T04:30:45Z</created-at>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0M43R778ZA</user-id>
+    <paid-at>2016-05-23T10:13:02Z</paid-at>
+    <source-type>subscription</source-type>
+    <source-id>0M43DZ5SF8</source-id>
+    <uri>https://gocardless.com/api/v1/bills/PM000BBAPE2T5F</uri>
+    <can-be-retried nil="true"/>
+    <can-be-cancelled nil="true"/>
+    <payout-id>PO0001B5Q530A7</payout-id>
+    <is-setup-fee>false</is-setup-fee>
+    <charge-customer-at>2016-05-20</charge-customer-at>
+  </bill>
+  <bill>
+    <id>PM000BBAP500RD</id>
+    <amount>6.0</amount>
+    <amount-minus-fees>5.94</amount-minus-fees>
+    <gocardless-fees>0.06</gocardless-fees>
+    <partner-fees>0.0</partner-fees>
+    <currency>GBP</currency>
+    <name>FreePlus Standard</name>
+    <status>withdrawn</status>
+    <description nil="true"/>
+    <created-at>2016-05-17T04:30:45Z</created-at>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0BW20D716M</user-id>
+    <paid-at>2016-05-23T10:13:02Z</paid-at>
+    <source-type>subscription</source-type>
+    <source-id>0M42XW1MFF</source-id>
+    <uri>https://gocardless.com/api/v1/bills/PM000BBAP500RD</uri>
+    <can-be-retried nil="true"/>
+    <can-be-cancelled nil="true"/>
+    <payout-id>PO0001B5Q530A7</payout-id>
+    <is-setup-fee>false</is-setup-fee>
+    <charge-customer-at>2016-05-20</charge-customer-at>
+  </bill>
+  <bill>
+    <id>PM000BB9QRTY9P</id>
+    <amount>6.0</amount>
+    <amount-minus-fees>5.94</amount-minus-fees>
+    <gocardless-fees>0.06</gocardless-fees>
+    <partner-fees>0.0</partner-fees>
+    <currency>GBP</currency>
+    <name>FreePlus Standard</name>
+    <status>withdrawn</status>
+    <description nil="true"/>
+    <created-at>2016-05-17T04:30:24Z</created-at>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0558N8V38K</user-id>
+    <paid-at>2016-05-23T10:12:34Z</paid-at>
+    <source-type>subscription</source-type>
+    <source-id>05589JECVN</source-id>
+    <uri>https://gocardless.com/api/v1/bills/PM000BB9QRTY9P</uri>
+    <can-be-retried nil="true"/>
+    <can-be-cancelled nil="true"/>
+    <payout-id>PO0001B5Q530A7</payout-id>
+    <is-setup-fee>false</is-setup-fee>
+    <charge-customer-at>2016-05-20</charge-customer-at>
+  </bill>
+  <bill>
+    <id>PM000BAEZMJXG0</id>
+    <amount>6.0</amount>
+    <amount-minus-fees>5.94</amount-minus-fees>
+    <gocardless-fees>0.06</gocardless-fees>
+    <partner-fees>0.0</partner-fees>
+    <currency>GBP</currency>
+    <name>FreePlus Standard</name>
+    <status>withdrawn</status>
+    <description nil="true"/>
+    <created-at>2016-05-16T04:31:11Z</created-at>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>CU0001P63Y6R2C</user-id>
+    <paid-at>2016-05-20T10:14:25Z</paid-at>
+    <source-type>subscription</source-type>
+    <source-id>12CMF0M1K3</source-id>
+    <uri>https://gocardless.com/api/v1/bills/PM000BAEZMJXG0</uri>
+    <can-be-retried nil="true"/>
+    <can-be-cancelled nil="true"/>
+    <payout-id>PO0001B1SKF9Y5</payout-id>
+    <is-setup-fee>false</is-setup-fee>
+    <charge-customer-at>2016-05-19</charge-customer-at>
+  </bill>
+  <bill>
+    <id>PM000B83RP3HM1</id>
+    <amount>6.0</amount>
+    <amount-minus-fees>5.94</amount-minus-fees>
+    <gocardless-fees>0.06</gocardless-fees>
+    <partner-fees>0.0</partner-fees>
+    <currency>GBP</currency>
+    <name>FreePlus Standard</name>
+    <status>withdrawn</status>
+    <description nil="true"/>
+    <created-at>2016-05-13T04:31:24Z</created-at>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0Y1XWZY88Q</user-id>
+    <paid-at>2016-05-19T12:27:48Z</paid-at>
+    <source-type>subscription</source-type>
+    <source-id>0Y1XRNB97V</source-id>
+    <uri>https://gocardless.com/api/v1/bills/PM000B83RP3HM1</uri>
+    <can-be-retried nil="true"/>
+    <can-be-cancelled nil="true"/>
+    <payout-id>PO0001AY0T8WEN</payout-id>
+    <is-setup-fee>false</is-setup-fee>
+    <charge-customer-at>2016-05-18</charge-customer-at>
+  </bill>
+  <bill>
+    <id>PM000B60HFSPM0</id>
+    <amount>6.0</amount>
+    <amount-minus-fees>5.94</amount-minus-fees>
+    <gocardless-fees>0.06</gocardless-fees>
+    <partner-fees>0.0</partner-fees>
+    <currency>GBP</currency>
+    <name>FreePlus Standard</name>
+    <status>withdrawn</status>
+    <description nil="true"/>
+    <created-at>2016-05-11T04:40:21Z</created-at>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0MPX482GP0</user-id>
+    <paid-at>2016-05-17T10:26:02Z</paid-at>
+    <source-type>subscription</source-type>
+    <source-id>0MPXY5WDW2</source-id>
+    <uri>https://gocardless.com/api/v1/bills/PM000B60HFSPM0</uri>
+    <can-be-retried nil="true"/>
+    <can-be-cancelled nil="true"/>
+    <payout-id>PO0001AME1SWE2</payout-id>
+    <is-setup-fee>false</is-setup-fee>
+    <charge-customer-at>2016-05-16</charge-customer-at>
+  </bill>
+  <bill>
+    <id>PM000B5NYGRYCW</id>
+    <amount>6.0</amount>
+    <amount-minus-fees>5.94</amount-minus-fees>
+    <gocardless-fees>0.06</gocardless-fees>
+    <partner-fees>0.0</partner-fees>
+    <currency>GBP</currency>
+    <name>FreePlus Standard</name>
+    <status>withdrawn</status>
+    <description nil="true"/>
+    <created-at>2016-05-11T04:35:46Z</created-at>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>CU0001T5AC13BG</user-id>
+    <paid-at>2016-05-17T10:20:50Z</paid-at>
+    <source-type>subscription</source-type>
+    <source-id>MD0001DK0JCCWX</source-id>
+    <uri>https://gocardless.com/api/v1/bills/PM000B5NYGRYCW</uri>
+    <can-be-retried nil="true"/>
+    <can-be-cancelled nil="true"/>
+    <payout-id>PO0001AME1SWE2</payout-id>
+    <is-setup-fee>false</is-setup-fee>
+    <charge-customer-at>2016-05-16</charge-customer-at>
+  </bill>
+  <bill>
+    <id>PM000B5NEDCXAR</id>
+    <amount>6.0</amount>
+    <amount-minus-fees>5.94</amount-minus-fees>
+    <gocardless-fees>0.06</gocardless-fees>
+    <partner-fees>0.0</partner-fees>
+    <currency>GBP</currency>
+    <name>FreePlus Standard</name>
+    <status>withdrawn</status>
+    <description nil="true"/>
+    <created-at>2016-05-11T04:35:35Z</created-at>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0NDXM5JD7Y</user-id>
+    <paid-at>2016-05-17T10:20:35Z</paid-at>
+    <source-type>subscription</source-type>
+    <source-id>0NDXS5WN34</source-id>
+    <uri>https://gocardless.com/api/v1/bills/PM000B5NEDCXAR</uri>
+    <can-be-retried nil="true"/>
+    <can-be-cancelled nil="true"/>
+    <payout-id>PO0001AME1SWE2</payout-id>
+    <is-setup-fee>false</is-setup-fee>
+    <charge-customer-at>2016-05-16</charge-customer-at>
+  </bill>
+  <bill>
+    <id>PM000B5M5T6J9Y</id>
+    <amount>6.0</amount>
+    <amount-minus-fees>5.94</amount-minus-fees>
+    <gocardless-fees>0.06</gocardless-fees>
+    <partner-fees>0.0</partner-fees>
+    <currency>GBP</currency>
+    <name>FreePlus Standard</name>
+    <status>withdrawn</status>
+    <description nil="true"/>
+    <created-at>2016-05-11T04:35:09Z</created-at>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0HXHRDFPVJ</user-id>
+    <paid-at>2016-05-17T10:19:58Z</paid-at>
+    <source-type>subscription</source-type>
+    <source-id>0HXHXCPDCX</source-id>
+    <uri>https://gocardless.com/api/v1/bills/PM000B5M5T6J9Y</uri>
+    <can-be-retried nil="true"/>
+    <can-be-cancelled nil="true"/>
+    <payout-id>PO0001AME1SWE2</payout-id>
+    <is-setup-fee>false</is-setup-fee>
+    <charge-customer-at>2016-05-16</charge-customer-at>
+  </bill>
+  <bill>
+    <id>PM000B5JVR5S8R</id>
+    <amount>6.0</amount>
+    <amount-minus-fees>5.94</amount-minus-fees>
+    <gocardless-fees>0.06</gocardless-fees>
+    <partner-fees>0.0</partner-fees>
+    <currency>GBP</currency>
+    <name>FreePlus Standard</name>
+    <status>withdrawn</status>
+    <description nil="true"/>
+    <created-at>2016-05-11T04:34:40Z</created-at>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>05SQV0F1MG</user-id>
+    <paid-at>2016-05-17T10:19:20Z</paid-at>
+    <source-type>subscription</source-type>
+    <source-id>05SQRW5PE1</source-id>
+    <uri>https://gocardless.com/api/v1/bills/PM000B5JVR5S8R</uri>
+    <can-be-retried nil="true"/>
+    <can-be-cancelled nil="true"/>
+    <payout-id>PO0001AME1SWE2</payout-id>
+    <is-setup-fee>false</is-setup-fee>
+    <charge-customer-at>2016-05-16</charge-customer-at>
+  </bill>
+  <bill>
+    <id>PM000B498QVYTE</id>
+    <amount>6.0</amount>
+    <amount-minus-fees>5.94</amount-minus-fees>
+    <gocardless-fees>0.06</gocardless-fees>
+    <partner-fees>0.0</partner-fees>
+    <currency>GBP</currency>
+    <name>FreePlus Standard</name>
+    <status>withdrawn</status>
+    <description nil="true"/>
+    <created-at>2016-05-10T04:30:34Z</created-at>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0KYGKWWSZX</user-id>
+    <paid-at>2016-05-16T10:13:49Z</paid-at>
+    <source-type>subscription</source-type>
+    <source-id>0KYGQ4V4GE</source-id>
+    <uri>https://gocardless.com/api/v1/bills/PM000B498QVYTE</uri>
+    <can-be-retried nil="true"/>
+    <can-be-cancelled nil="true"/>
+    <payout-id>PO0001AFPGC9R1</payout-id>
+    <is-setup-fee>false</is-setup-fee>
+    <charge-customer-at>2016-05-13</charge-customer-at>
+  </bill>
+  <bill>
+    <id>PM000B3BPP55P2</id>
+    <amount>6.0</amount>
+    <amount-minus-fees>5.94</amount-minus-fees>
+    <gocardless-fees>0.06</gocardless-fees>
+    <partner-fees>0.0</partner-fees>
+    <currency>GBP</currency>
+    <name>FreePlus Standard</name>
+    <status>withdrawn</status>
+    <description nil="true"/>
+    <created-at>2016-05-09T04:30:38Z</created-at>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0NBPAACN6E</user-id>
+    <paid-at>2016-05-13T10:12:51Z</paid-at>
+    <source-type>subscription</source-type>
+    <source-id>0NBPWK0W85</source-id>
+    <uri>https://gocardless.com/api/v1/bills/PM000B3BPP55P2</uri>
+    <can-be-retried nil="true"/>
+    <can-be-cancelled nil="true"/>
+    <payout-id>PO0001ABKWZ5N5</payout-id>
+    <is-setup-fee>false</is-setup-fee>
+    <charge-customer-at>2016-05-12</charge-customer-at>
+  </bill>
+  <bill>
+    <id>PM000B1ZXEVN67</id>
+    <amount>6.0</amount>
+    <amount-minus-fees>5.94</amount-minus-fees>
+    <gocardless-fees>0.06</gocardless-fees>
+    <partner-fees>0.0</partner-fees>
+    <currency>GBP</currency>
+    <name>FreePlus Standard</name>
+    <status>withdrawn</status>
+    <description nil="true"/>
+    <created-at>2016-05-06T04:33:26Z</created-at>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>CU00028EBH4CCN</user-id>
+    <paid-at>2016-05-12T10:12:03Z</paid-at>
+    <source-type>subscription</source-type>
+    <source-id>SB0000P2YJ1CPE</source-id>
+    <uri>https://gocardless.com/api/v1/bills/PM000B1ZXEVN67</uri>
+    <can-be-retried nil="true"/>
+    <can-be-cancelled nil="true"/>
+    <payout-id>PO0001A72DW5HS</payout-id>
+    <is-setup-fee>false</is-setup-fee>
+    <charge-customer-at>2016-05-11</charge-customer-at>
+  </bill>
+  <bill>
+    <id>PM000AZSSSWVJ4</id>
+    <amount>6.0</amount>
+    <amount-minus-fees>5.94</amount-minus-fees>
+    <gocardless-fees>0.06</gocardless-fees>
+    <partner-fees>0.0</partner-fees>
+    <currency>GBP</currency>
+    <name>FreePlus Standard</name>
+    <status>withdrawn</status>
+    <description nil="true"/>
+    <created-at>2016-05-04T04:35:39Z</created-at>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0KVN4BP378</user-id>
+    <paid-at>2016-05-10T10:21:14Z</paid-at>
+    <source-type>subscription</source-type>
+    <source-id>0KVNE49R98</source-id>
+    <uri>https://gocardless.com/api/v1/bills/PM000AZSSSWVJ4</uri>
+    <can-be-retried nil="true"/>
+    <can-be-cancelled nil="true"/>
+    <payout-id>PO00019XQQBNEW</payout-id>
+    <is-setup-fee>false</is-setup-fee>
+    <charge-customer-at>2016-05-09</charge-customer-at>
+  </bill>
+  <bill>
+    <id>PM000AZMTVEQPW</id>
+    <amount>12.0</amount>
+    <amount-minus-fees>11.88</amount-minus-fees>
+    <gocardless-fees>0.12</gocardless-fees>
+    <partner-fees>0.0</partner-fees>
+    <currency>GBP</currency>
+    <name>FreePlus Premium</name>
+    <status>withdrawn</status>
+    <description nil="true"/>
+    <created-at>2016-05-04T04:33:12Z</created-at>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0HKJDQAWV2</user-id>
+    <paid-at>2016-05-10T10:18:50Z</paid-at>
+    <source-type>subscription</source-type>
+    <source-id>0V8F23KRPT</source-id>
+    <uri>https://gocardless.com/api/v1/bills/PM000AZMTVEQPW</uri>
+    <can-be-retried nil="true"/>
+    <can-be-cancelled nil="true"/>
+    <payout-id>PO00019XQQBNEW</payout-id>
+    <is-setup-fee>false</is-setup-fee>
+    <charge-customer-at>2016-05-09</charge-customer-at>
+  </bill>
+  <bill>
+    <id>PM000AZDQV0VN8</id>
+    <amount>6.0</amount>
+    <amount-minus-fees>5.94</amount-minus-fees>
+    <gocardless-fees>0.06</gocardless-fees>
+    <partner-fees>0.0</partner-fees>
+    <currency>GBP</currency>
+    <name>FreePlus Standard</name>
+    <status>withdrawn</status>
+    <description nil="true"/>
+    <created-at>2016-05-04T04:30:32Z</created-at>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>09TW4GMSX5</user-id>
+    <paid-at>2016-05-10T10:15:44Z</paid-at>
+    <source-type>subscription</source-type>
+    <source-id>09TWN7P1HT</source-id>
+    <uri>https://gocardless.com/api/v1/bills/PM000AZDQV0VN8</uri>
+    <can-be-retried nil="true"/>
+    <can-be-cancelled nil="true"/>
+    <payout-id>PO00019XQQBNEW</payout-id>
+    <is-setup-fee>false</is-setup-fee>
+    <charge-customer-at>2016-05-09</charge-customer-at>
+  </bill>
+  <bill>
+    <id>PM000APXAYDKYQ</id>
+    <amount>6.0</amount>
+    <amount-minus-fees>5.94</amount-minus-fees>
+    <gocardless-fees>0.06</gocardless-fees>
+    <partner-fees>0.0</partner-fees>
+    <currency>GBP</currency>
+    <name>FreePlus Standard</name>
+    <status>withdrawn</status>
+    <description nil="true"/>
+    <created-at>2016-04-27T04:43:53Z</created-at>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0NBPAACN6E</user-id>
+    <paid-at>2016-05-04T10:40:36Z</paid-at>
+    <source-type>subscription</source-type>
+    <source-id>0T765HJR8K</source-id>
+    <uri>https://gocardless.com/api/v1/bills/PM000APXAYDKYQ</uri>
+    <can-be-retried nil="true"/>
+    <can-be-cancelled nil="true"/>
+    <payout-id>PO000197N8ERKJ</payout-id>
+    <is-setup-fee>false</is-setup-fee>
+    <charge-customer-at>2016-05-03</charge-customer-at>
+  </bill>
+  <bill>
+    <id>PM000APVV86WP6</id>
+    <amount>6.0</amount>
+    <amount-minus-fees>5.94</amount-minus-fees>
+    <gocardless-fees>0.06</gocardless-fees>
+    <partner-fees>0.0</partner-fees>
+    <currency>GBP</currency>
+    <name>FreePlus Standard</name>
+    <status>withdrawn</status>
+    <description nil="true"/>
+    <created-at>2016-04-27T04:43:08Z</created-at>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0KQDSJC3HJ</user-id>
+    <paid-at>2016-05-04T10:39:53Z</paid-at>
+    <source-type>subscription</source-type>
+    <source-id>0KQDJ71GT9</source-id>
+    <uri>https://gocardless.com/api/v1/bills/PM000APVV86WP6</uri>
+    <can-be-retried nil="true"/>
+    <can-be-cancelled nil="true"/>
+    <payout-id>PO000197N8ERKJ</payout-id>
+    <is-setup-fee>false</is-setup-fee>
+    <charge-customer-at>2016-05-03</charge-customer-at>
+  </bill>
+  <bill>
+    <id>PM000APVBVB92K</id>
+    <amount>6.0</amount>
+    <amount-minus-fees>5.94</amount-minus-fees>
+    <gocardless-fees>0.06</gocardless-fees>
+    <partner-fees>0.0</partner-fees>
+    <currency>GBP</currency>
+    <name>FreePlus Standard</name>
+    <status>withdrawn</status>
+    <description nil="true"/>
+    <created-at>2016-04-27T04:42:59Z</created-at>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0HK3DKYF9S</user-id>
+    <paid-at>2016-05-04T10:39:39Z</paid-at>
+    <source-type>subscription</source-type>
+    <source-id>0HK3P14SX2</source-id>
+    <uri>https://gocardless.com/api/v1/bills/PM000APVBVB92K</uri>
+    <can-be-retried nil="true"/>
+    <can-be-cancelled nil="true"/>
+    <payout-id>PO000197N8ERKJ</payout-id>
+    <is-setup-fee>false</is-setup-fee>
+    <charge-customer-at>2016-05-03</charge-customer-at>
+  </bill>
+  <bill>
+    <id>PM000APSPSNT8M</id>
+    <amount>6.0</amount>
+    <amount-minus-fees>5.94</amount-minus-fees>
+    <gocardless-fees>0.06</gocardless-fees>
+    <partner-fees>0.0</partner-fees>
+    <currency>GBP</currency>
+    <name>FreePlus Standard</name>
+    <status>withdrawn</status>
+    <description nil="true"/>
+    <created-at>2016-04-27T04:42:17Z</created-at>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>03BMJRB1JY</user-id>
+    <paid-at>2016-05-04T10:38:50Z</paid-at>
+    <source-type>subscription</source-type>
+    <source-id>03BMCT63HB</source-id>
+    <uri>https://gocardless.com/api/v1/bills/PM000APSPSNT8M</uri>
+    <can-be-retried nil="true"/>
+    <can-be-cancelled nil="true"/>
+    <payout-id>PO000197N8ERKJ</payout-id>
+    <is-setup-fee>false</is-setup-fee>
+    <charge-customer-at>2016-05-03</charge-customer-at>
+  </bill>
+  <bill>
+    <id>PM000AK2KJW5VX</id>
+    <amount>6.0</amount>
+    <amount-minus-fees>5.94</amount-minus-fees>
+    <gocardless-fees>0.06</gocardless-fees>
+    <partner-fees>0.0</partner-fees>
+    <currency>GBP</currency>
+    <name>FreePlus Standard</name>
+    <status>withdrawn</status>
+    <description nil="true"/>
+    <created-at>2016-04-25T04:36:18Z</created-at>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>CU0001QQ21GP9F</user-id>
+    <paid-at>2016-04-29T10:23:39Z</paid-at>
+    <source-type>subscription</source-type>
+    <source-id>12MD2XP7AK</source-id>
+    <uri>https://gocardless.com/api/v1/bills/PM000AK2KJW5VX</uri>
+    <can-be-retried nil="true"/>
+    <can-be-cancelled nil="true"/>
+    <payout-id>PO00018XH093CY</payout-id>
+    <is-setup-fee>false</is-setup-fee>
+    <charge-customer-at>2016-04-28</charge-customer-at>
+  </bill>
+  <bill>
+    <id>PM000AJZ33G94K</id>
+    <amount>6.0</amount>
+    <amount-minus-fees>5.94</amount-minus-fees>
+    <gocardless-fees>0.06</gocardless-fees>
+    <partner-fees>0.0</partner-fees>
+    <currency>GBP</currency>
+    <name>FreePlus Standard</name>
+    <status>withdrawn</status>
+    <description nil="true"/>
+    <created-at>2016-04-25T04:35:04Z</created-at>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0KJKH3C6PM</user-id>
+    <paid-at>2016-04-29T10:21:54Z</paid-at>
+    <source-type>subscription</source-type>
+    <source-id>10EF2FTB5X</source-id>
+    <uri>https://gocardless.com/api/v1/bills/PM000AJZ33G94K</uri>
+    <can-be-retried nil="true"/>
+    <can-be-cancelled nil="true"/>
+    <payout-id>PO00018XH093CY</payout-id>
+    <is-setup-fee>false</is-setup-fee>
+    <charge-customer-at>2016-04-28</charge-customer-at>
+  </bill>
+  <bill>
+    <id>PM000AJYEC5T6D</id>
+    <amount>6.0</amount>
+    <amount-minus-fees>5.94</amount-minus-fees>
+    <gocardless-fees>0.06</gocardless-fees>
+    <partner-fees>0.0</partner-fees>
+    <currency>GBP</currency>
+    <name>FreePlus Standard</name>
+    <status>withdrawn</status>
+    <description nil="true"/>
+    <created-at>2016-04-25T04:34:52Z</created-at>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0KM33989Z6</user-id>
+    <paid-at>2016-04-29T10:21:35Z</paid-at>
+    <source-type>subscription</source-type>
+    <source-id>0KM3ZHXCMV</source-id>
+    <uri>https://gocardless.com/api/v1/bills/PM000AJYEC5T6D</uri>
+    <can-be-retried nil="true"/>
+    <can-be-cancelled nil="true"/>
+    <payout-id>PO00018XH093CY</payout-id>
+    <is-setup-fee>false</is-setup-fee>
+    <charge-customer-at>2016-04-28</charge-customer-at>
+  </bill>
+  <bill>
+    <id>PM000AJYE4AM8Z</id>
+    <amount>12.0</amount>
+    <amount-minus-fees>11.88</amount-minus-fees>
+    <gocardless-fees>0.12</gocardless-fees>
+    <partner-fees>0.0</partner-fees>
+    <currency>GBP</currency>
+    <name>FreePlus Premium</name>
+    <status>withdrawn</status>
+    <description nil="true"/>
+    <created-at>2016-04-25T04:34:52Z</created-at>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0KKJD2G9E5</user-id>
+    <paid-at>2016-04-29T10:21:35Z</paid-at>
+    <source-type>subscription</source-type>
+    <source-id>0KKJREBMGH</source-id>
+    <uri>https://gocardless.com/api/v1/bills/PM000AJYE4AM8Z</uri>
+    <can-be-retried nil="true"/>
+    <can-be-cancelled nil="true"/>
+    <payout-id>PO00018XH093CY</payout-id>
+    <is-setup-fee>false</is-setup-fee>
+    <charge-customer-at>2016-04-28</charge-customer-at>
+  </bill>
+  <bill>
+    <id>PM000AJYDV22MW</id>
+    <amount>6.0</amount>
+    <amount-minus-fees>5.94</amount-minus-fees>
+    <gocardless-fees>0.06</gocardless-fees>
+    <partner-fees>0.0</partner-fees>
+    <currency>GBP</currency>
+    <name>FreePlus Standard</name>
+    <status>withdrawn</status>
+    <description nil="true"/>
+    <created-at>2016-04-25T04:34:52Z</created-at>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0KKA3NXXVG</user-id>
+    <paid-at>2016-04-29T10:21:35Z</paid-at>
+    <source-type>subscription</source-type>
+    <source-id>0KKACGD8BZ</source-id>
+    <uri>https://gocardless.com/api/v1/bills/PM000AJYDV22MW</uri>
+    <can-be-retried nil="true"/>
+    <can-be-cancelled nil="true"/>
+    <payout-id>PO00018XH093CY</payout-id>
+    <is-setup-fee>false</is-setup-fee>
+    <charge-customer-at>2016-04-28</charge-customer-at>
+  </bill>
+  <bill>
+    <id>PM000AJYDGSJQY</id>
+    <amount>6.0</amount>
+    <amount-minus-fees>5.94</amount-minus-fees>
+    <gocardless-fees>0.06</gocardless-fees>
+    <partner-fees>0.0</partner-fees>
+    <currency>GBP</currency>
+    <name>FreePlus Standard</name>
+    <status>withdrawn</status>
+    <description nil="true"/>
+    <created-at>2016-04-25T04:34:51Z</created-at>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0KK8188DRA</user-id>
+    <paid-at>2016-04-29T10:21:35Z</paid-at>
+    <source-type>subscription</source-type>
+    <source-id>0KK8DPQHJC</source-id>
+    <uri>https://gocardless.com/api/v1/bills/PM000AJYDGSJQY</uri>
+    <can-be-retried nil="true"/>
+    <can-be-cancelled nil="true"/>
+    <payout-id>PO00018XH093CY</payout-id>
+    <is-setup-fee>false</is-setup-fee>
+    <charge-customer-at>2016-04-28</charge-customer-at>
+  </bill>
+  <bill>
+    <id>PM000AFR49SZZJ</id>
+    <amount>6.0</amount>
+    <amount-minus-fees>5.94</amount-minus-fees>
+    <gocardless-fees>0.06</gocardless-fees>
+    <partner-fees>0.0</partner-fees>
+    <currency>GBP</currency>
+    <name>FreePlus Standard</name>
+    <status>withdrawn</status>
+    <description nil="true"/>
+    <created-at>2016-04-21T04:31:36Z</created-at>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0KQSPTPDBP</user-id>
+    <paid-at>2016-04-27T10:13:33Z</paid-at>
+    <source-type>subscription</source-type>
+    <source-id>0W3SPDXQ47</source-id>
+    <uri>https://gocardless.com/api/v1/bills/PM000AFR49SZZJ</uri>
+    <can-be-retried nil="true"/>
+    <can-be-cancelled nil="true"/>
+    <payout-id>PO00018NK1EMPE</payout-id>
+    <is-setup-fee>false</is-setup-fee>
+    <charge-customer-at>2016-04-26</charge-customer-at>
+  </bill>
+  <bill>
+    <id>PM000AFPXSS4HB</id>
+    <amount>6.0</amount>
+    <amount-minus-fees>5.94</amount-minus-fees>
+    <gocardless-fees>0.06</gocardless-fees>
+    <partner-fees>0.0</partner-fees>
+    <currency>GBP</currency>
+    <name>FreePlus Standard</name>
+    <status>withdrawn</status>
+    <description nil="true"/>
+    <created-at>2016-04-21T04:31:10Z</created-at>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0RJAT899EZ</user-id>
+    <paid-at>2016-04-27T10:12:59Z</paid-at>
+    <source-type>subscription</source-type>
+    <source-id>0RJARQCXYE</source-id>
+    <uri>https://gocardless.com/api/v1/bills/PM000AFPXSS4HB</uri>
+    <can-be-retried nil="true"/>
+    <can-be-cancelled nil="true"/>
+    <payout-id>PO00018NK1EMPE</payout-id>
+    <is-setup-fee>false</is-setup-fee>
+    <charge-customer-at>2016-04-26</charge-customer-at>
+  </bill>
+  <bill>
+    <id>PM000AFNXA67GN</id>
+    <amount>6.0</amount>
+    <amount-minus-fees>5.94</amount-minus-fees>
+    <gocardless-fees>0.06</gocardless-fees>
+    <partner-fees>0.0</partner-fees>
+    <currency>GBP</currency>
+    <name>FreePlus Standard</name>
+    <status>withdrawn</status>
+    <description nil="true"/>
+    <created-at>2016-04-21T04:30:47Z</created-at>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0KHVSS0Q16</user-id>
+    <paid-at>2016-04-27T10:12:30Z</paid-at>
+    <source-type>subscription</source-type>
+    <source-id>0KHV61S1DH</source-id>
+    <uri>https://gocardless.com/api/v1/bills/PM000AFNXA67GN</uri>
+    <can-be-retried nil="true"/>
+    <can-be-cancelled nil="true"/>
+    <payout-id>PO00018NK1EMPE</payout-id>
+    <is-setup-fee>false</is-setup-fee>
+    <charge-customer-at>2016-04-26</charge-customer-at>
+  </bill>
+  <bill>
+    <id>PM000AEK330X6A</id>
+    <amount>6.0</amount>
+    <amount-minus-fees>5.94</amount-minus-fees>
+    <gocardless-fees>0.06</gocardless-fees>
+    <partner-fees>0.0</partner-fees>
+    <currency>GBP</currency>
+    <name>FreePlus Standard</name>
+    <status>withdrawn</status>
+    <description nil="true"/>
+    <created-at>2016-04-20T04:31:31Z</created-at>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>CU0001ZWTAWKJ2</user-id>
+    <paid-at>2016-04-26T10:10:24Z</paid-at>
+    <source-type>subscription</source-type>
+    <source-id>SB0000594YHD46</source-id>
+    <uri>https://gocardless.com/api/v1/bills/PM000AEK330X6A</uri>
+    <can-be-retried nil="true"/>
+    <can-be-cancelled nil="true"/>
+    <payout-id>PO00018GV6NF5B</payout-id>
+    <is-setup-fee>false</is-setup-fee>
+    <charge-customer-at>2016-04-25</charge-customer-at>
+  </bill>
+  <bill>
+    <id>PM000AEGKKQK0H</id>
+    <amount>6.0</amount>
+    <amount-minus-fees>5.94</amount-minus-fees>
+    <gocardless-fees>0.06</gocardless-fees>
+    <partner-fees>0.0</partner-fees>
+    <currency>GBP</currency>
+    <name>FreePlus Standard</name>
+    <status>withdrawn</status>
+    <description nil="true"/>
+    <created-at>2016-04-20T04:30:42Z</created-at>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0KH399V91Y</user-id>
+    <paid-at>2016-04-26T10:09:24Z</paid-at>
+    <source-type>subscription</source-type>
+    <source-id>0KH3J48JFM</source-id>
+    <uri>https://gocardless.com/api/v1/bills/PM000AEGKKQK0H</uri>
+    <can-be-retried nil="true"/>
+    <can-be-cancelled nil="true"/>
+    <payout-id>PO00018GV6NF5B</payout-id>
+    <is-setup-fee>false</is-setup-fee>
+    <charge-customer-at>2016-04-25</charge-customer-at>
+  </bill>
+  <bill>
+    <id>PM000AA83HGH9Q</id>
+    <amount>6.0</amount>
+    <amount-minus-fees>5.94</amount-minus-fees>
+    <gocardless-fees>0.06</gocardless-fees>
+    <partner-fees>0.0</partner-fees>
+    <currency>GBP</currency>
+    <name>FreePlus Standard</name>
+    <status>withdrawn</status>
+    <description nil="true"/>
+    <created-at>2016-04-15T04:30:46Z</created-at>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0M43R778ZA</user-id>
+    <paid-at>2016-04-21T10:10:51Z</paid-at>
+    <source-type>subscription</source-type>
+    <source-id>0M43DZ5SF8</source-id>
+    <uri>https://gocardless.com/api/v1/bills/PM000AA83HGH9Q</uri>
+    <can-be-retried nil="true"/>
+    <can-be-cancelled nil="true"/>
+    <payout-id>PO0001843G775A</payout-id>
+    <is-setup-fee>false</is-setup-fee>
+    <charge-customer-at>2016-04-20</charge-customer-at>
+  </bill>
+  <bill>
+    <id>PM000AA83879M7</id>
+    <amount>6.0</amount>
+    <amount-minus-fees>5.94</amount-minus-fees>
+    <gocardless-fees>0.06</gocardless-fees>
+    <partner-fees>0.0</partner-fees>
+    <currency>GBP</currency>
+    <name>FreePlus Standard</name>
+    <status>withdrawn</status>
+    <description nil="true"/>
+    <created-at>2016-04-15T04:30:46Z</created-at>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0BW20D716M</user-id>
+    <paid-at>2016-04-21T10:10:51Z</paid-at>
+    <source-type>subscription</source-type>
+    <source-id>0M42XW1MFF</source-id>
+    <uri>https://gocardless.com/api/v1/bills/PM000AA83879M7</uri>
+    <can-be-retried nil="true"/>
+    <can-be-cancelled nil="true"/>
+    <payout-id>PO0001843G775A</payout-id>
+    <is-setup-fee>false</is-setup-fee>
+    <charge-customer-at>2016-04-20</charge-customer-at>
+  </bill>
+  <bill>
+    <id>PM000AA6SG1FAR</id>
+    <amount>6.0</amount>
+    <amount-minus-fees>5.94</amount-minus-fees>
+    <gocardless-fees>0.06</gocardless-fees>
+    <partner-fees>0.0</partner-fees>
+    <currency>GBP</currency>
+    <name>FreePlus Standard</name>
+    <status>withdrawn</status>
+    <description nil="true"/>
+    <created-at>2016-04-15T04:30:20Z</created-at>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0558N8V38K</user-id>
+    <paid-at>2016-04-21T10:10:12Z</paid-at>
+    <source-type>subscription</source-type>
+    <source-id>05589JECVN</source-id>
+    <uri>https://gocardless.com/api/v1/bills/PM000AA6SG1FAR</uri>
+    <can-be-retried nil="true"/>
+    <can-be-cancelled nil="true"/>
+    <payout-id>PO0001843G775A</payout-id>
+    <is-setup-fee>false</is-setup-fee>
+    <charge-customer-at>2016-04-20</charge-customer-at>
+  </bill>
+  <bill>
+    <id>PM000A9HDTV4ZN</id>
+    <amount>6.0</amount>
+    <amount-minus-fees>5.94</amount-minus-fees>
+    <gocardless-fees>0.06</gocardless-fees>
+    <partner-fees>0.0</partner-fees>
+    <currency>GBP</currency>
+    <name>FreePlus Standard</name>
+    <status>withdrawn</status>
+    <description nil="true"/>
+    <created-at>2016-04-14T04:31:15Z</created-at>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>CU0001P63Y6R2C</user-id>
+    <paid-at>2016-04-20T10:13:22Z</paid-at>
+    <source-type>subscription</source-type>
+    <source-id>12CMF0M1K3</source-id>
+    <uri>https://gocardless.com/api/v1/bills/PM000A9HDTV4ZN</uri>
+    <can-be-retried nil="true"/>
+    <can-be-cancelled nil="true"/>
+    <payout-id>PO000180ECKHYR</payout-id>
+    <is-setup-fee>false</is-setup-fee>
+    <charge-customer-at>2016-04-19</charge-customer-at>
+  </bill>
+  <bill>
+    <id>PM000A8E016JX5</id>
+    <amount>6.0</amount>
+    <amount-minus-fees>5.94</amount-minus-fees>
+    <gocardless-fees>0.06</gocardless-fees>
+    <partner-fees>0.0</partner-fees>
+    <currency>GBP</currency>
+    <name>FreePlus Standard</name>
+    <status>withdrawn</status>
+    <description nil="true"/>
+    <created-at>2016-04-13T04:31:53Z</created-at>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0Y1XWZY88Q</user-id>
+    <paid-at>2016-04-19T10:14:21Z</paid-at>
+    <source-type>subscription</source-type>
+    <source-id>0Y1XRNB97V</source-id>
+    <uri>https://gocardless.com/api/v1/bills/PM000A8E016JX5</uri>
+    <can-be-retried nil="true"/>
+    <can-be-cancelled nil="true"/>
+    <payout-id>PO00017VSDQV03</payout-id>
+    <is-setup-fee>false</is-setup-fee>
+    <charge-customer-at>2016-04-18</charge-customer-at>
+  </bill>
+  <bill>
+    <id>PM000A5PG96GZC</id>
+    <amount>6.0</amount>
+    <amount-minus-fees>5.94</amount-minus-fees>
+    <gocardless-fees>0.06</gocardless-fees>
+    <partner-fees>0.0</partner-fees>
+    <currency>GBP</currency>
+    <name>FreePlus Standard</name>
+    <status>withdrawn</status>
+    <description nil="true"/>
+    <created-at>2016-04-11T04:32:03Z</created-at>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0MPX482GP0</user-id>
+    <paid-at>2016-04-15T10:15:11Z</paid-at>
+    <source-type>subscription</source-type>
+    <source-id>0MPXY5WDW2</source-id>
+    <uri>https://gocardless.com/api/v1/bills/PM000A5PG96GZC</uri>
+    <can-be-retried nil="true"/>
+    <can-be-cancelled nil="true"/>
+    <payout-id>PO00017HNEFC2E</payout-id>
+    <is-setup-fee>false</is-setup-fee>
+    <charge-customer-at>2016-04-14</charge-customer-at>
+  </bill>
+  <bill>
+    <id>PM000A5N9QVXPD</id>
+    <amount>6.0</amount>
+    <amount-minus-fees>5.94</amount-minus-fees>
+    <gocardless-fees>0.06</gocardless-fees>
+    <partner-fees>0.0</partner-fees>
+    <currency>GBP</currency>
+    <name>FreePlus Standard</name>
+    <status>withdrawn</status>
+    <description nil="true"/>
+    <created-at>2016-04-11T04:31:32Z</created-at>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>CU0001T5AC13BG</user-id>
+    <paid-at>2016-04-15T10:14:37Z</paid-at>
+    <source-type>subscription</source-type>
+    <source-id>MD0001DK0JCCWX</source-id>
+    <uri>https://gocardless.com/api/v1/bills/PM000A5N9QVXPD</uri>
+    <can-be-retried nil="true"/>
+    <can-be-cancelled nil="true"/>
+    <payout-id>PO00017HNEFC2E</payout-id>
+    <is-setup-fee>false</is-setup-fee>
+    <charge-customer-at>2016-04-14</charge-customer-at>
+  </bill>
+  <bill>
+    <id>PM000A5N0M3PR6</id>
+    <amount>6.0</amount>
+    <amount-minus-fees>5.94</amount-minus-fees>
+    <gocardless-fees>0.06</gocardless-fees>
+    <partner-fees>0.0</partner-fees>
+    <currency>GBP</currency>
+    <name>FreePlus Standard</name>
+    <status>withdrawn</status>
+    <description nil="true"/>
+    <created-at>2016-04-11T04:31:21Z</created-at>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0HXHRDFPVJ</user-id>
+    <paid-at>2016-04-15T10:14:28Z</paid-at>
+    <source-type>subscription</source-type>
+    <source-id>0HXHXCPDCX</source-id>
+    <uri>https://gocardless.com/api/v1/bills/PM000A5N0M3PR6</uri>
+    <can-be-retried nil="true"/>
+    <can-be-cancelled nil="true"/>
+    <payout-id>PO00017HNEFC2E</payout-id>
+    <is-setup-fee>false</is-setup-fee>
+    <charge-customer-at>2016-04-14</charge-customer-at>
+  </bill>
+  <bill>
+    <id>PM000A5JJQG7XE</id>
+    <amount>6.0</amount>
+    <amount-minus-fees>5.94</amount-minus-fees>
+    <gocardless-fees>0.06</gocardless-fees>
+    <partner-fees>0.0</partner-fees>
+    <currency>GBP</currency>
+    <name>FreePlus Standard</name>
+    <status>withdrawn</status>
+    <description nil="true"/>
+    <created-at>2016-04-11T04:30:20Z</created-at>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>05SQV0F1MG</user-id>
+    <paid-at>2016-04-15T10:13:19Z</paid-at>
+    <source-type>subscription</source-type>
+    <source-id>05SQRW5PE1</source-id>
+    <uri>https://gocardless.com/api/v1/bills/PM000A5JJQG7XE</uri>
+    <can-be-retried nil="true"/>
+    <can-be-cancelled nil="true"/>
+    <payout-id>PO00017HNEFC2E</payout-id>
+    <is-setup-fee>false</is-setup-fee>
+    <charge-customer-at>2016-04-14</charge-customer-at>
+  </bill>
+  <bill>
+    <id>PM000A5JG4PDGP</id>
+    <amount>6.0</amount>
+    <amount-minus-fees>5.94</amount-minus-fees>
+    <gocardless-fees>0.06</gocardless-fees>
+    <partner-fees>0.0</partner-fees>
+    <currency>GBP</currency>
+    <name>FreePlus Standard</name>
+    <status>withdrawn</status>
+    <description nil="true"/>
+    <created-at>2016-04-11T04:30:19Z</created-at>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0NDXM5JD7Y</user-id>
+    <paid-at>2016-04-15T10:13:17Z</paid-at>
+    <source-type>subscription</source-type>
+    <source-id>0NDXS5WN34</source-id>
+    <uri>https://gocardless.com/api/v1/bills/PM000A5JG4PDGP</uri>
+    <can-be-retried nil="true"/>
+    <can-be-cancelled nil="true"/>
+    <payout-id>PO00017HNEFC2E</payout-id>
+    <is-setup-fee>false</is-setup-fee>
+    <charge-customer-at>2016-04-14</charge-customer-at>
+  </bill>
+  <bill>
+    <id>PM000A49ZEAAKF</id>
+    <amount>6.0</amount>
+    <amount-minus-fees>5.94</amount-minus-fees>
+    <gocardless-fees>0.06</gocardless-fees>
+    <partner-fees>0.0</partner-fees>
+    <currency>GBP</currency>
+    <name>FreePlus Standard</name>
+    <status>withdrawn</status>
+    <description nil="true"/>
+    <created-at>2016-04-08T04:30:48Z</created-at>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0KYGKWWSZX</user-id>
+    <paid-at>2016-04-14T10:11:27Z</paid-at>
+    <source-type>subscription</source-type>
+    <source-id>0KYGQ4V4GE</source-id>
+    <uri>https://gocardless.com/api/v1/bills/PM000A49ZEAAKF</uri>
+    <can-be-retried nil="true"/>
+    <can-be-cancelled nil="true"/>
+    <payout-id>PO00017E7AYM43</payout-id>
+    <is-setup-fee>false</is-setup-fee>
+    <charge-customer-at>2016-04-13</charge-customer-at>
+  </bill>
+  <bill>
+    <id>PM000A2C6DB6MH</id>
+    <amount>6.0</amount>
+    <amount-minus-fees>5.94</amount-minus-fees>
+    <gocardless-fees>0.06</gocardless-fees>
+    <partner-fees>0.0</partner-fees>
+    <currency>GBP</currency>
+    <name>FreePlus Standard</name>
+    <status>withdrawn</status>
+    <description nil="true"/>
+    <created-at>2016-04-07T04:31:08Z</created-at>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0NBPAACN6E</user-id>
+    <paid-at>2016-04-13T10:12:21Z</paid-at>
+    <source-type>subscription</source-type>
+    <source-id>0NBPWK0W85</source-id>
+    <uri>https://gocardless.com/api/v1/bills/PM000A2C6DB6MH</uri>
+    <can-be-retried nil="true"/>
+    <can-be-cancelled nil="true"/>
+    <payout-id>PO00017AHG630W</payout-id>
+    <is-setup-fee>false</is-setup-fee>
+    <charge-customer-at>2016-04-12</charge-customer-at>
+  </bill>
+</bills>

@@ -1,0 +1,50 @@
+[?1049h[?1h=[1;40r[?12;25h[?12l[?25h[27m[m[H[2J[?25l[40;1H"get_subscriptions.pl" 36L, 1600C[1;1H[35m#!/usr/bin/perl[m
+
+[36m$Facility[m = [33m`[m[31mcat /usr/local/git/fpa/other/.gocardless[m[33m`[m;
+[33mchomp[m([36m$Facility[m);
+[33mif[m ([36m$Facility[m =~ [33m/[m[31mlive[m[33m/i[m) {[6;9H[36m$Client_id[m = [31m'L4s4jrtE8p0B9X2LOTxR_aE4V_rBNjyZEkkhBFlVV9Lhv2MYIISOuFGDhL6z2baD'[m;[16C[34m#  App identifiee[7;1Hf[m[8;9H[36m$App_key[m = [31m'eTzWcFjDjsPpd_GhwWBH4ovB_MyYQJDr5snpHOeEohF6uamIVWMnLUE2yJ_Cfl_A'[m;[18C[34m#  App secret[m[9;9H[36m$Authorization[m = [31m'bearer 7koL7/6N7eexnQeYyZz24/r7pevUuO1tA6ZH+A0SjX0pDV42z/YXodG5KuIUdKfm'[m;     [34m#  Merchant accee[10;1Hss token[m[11;9H[36m$Merchant_id[m = [31m'0265HC17QC'[m;[68C[34m#  Merchant id[m[12;9H[36m$Dom[m = [31m''[m;
+}
+[33melse[m {[15;9H[36m$Client_id[m = [31m'sRjngasG1PNtIT06u33yZMu7ftXDaDe4ARaXFY2U8FYaDc_bGLmV7UAIme9KZczj'[m;[16C[34m#  App identifiee[16;1Hr[m[17;9H[36m$App_key[m = [31m'5hs3wSzzMuUarQFy_5Z2frezxymWhZK9dLEtkpDUBHBnjE7DjqJH1Js94MmR_6Fe'[m;[18C[34m#  App secret[m[18;9H[36m$Authorization[m = [31m'bearer 8bztbuIDFtSTNPZTgQ1ELVa/XCRQqc04tldN/8L4PpvfT4SK4GS93vKw4hkj6tCM'[m;     [34m#  Merchant accee[19;1Hss token[m[20;9H[36m$Merchant_id[m = [31m'0205HPKCHY'[m;[68C[34m#  Merchant Id[m[21;9H[36m$Dom[m = [31m'sandbox.'[m;
+}
+
+[33muse [mLWP::UserAgent;
+[33muse [mLWP::Protocol::https;
+
+[33mmy[m [36m$ua[m = LWP::UserAgent->new;
+[34m#my $req = HTTP::Request->new(GET => "https://gocardless.com/api/v1/merchants/$Merchant_id/bills?paid=true&after=2016-055[29;1H-06T12:00:00Z");[m
+[33mmy[m [36m$req[m = HTTP::Request->new([31mGET[m => [31m"https://gocardless.com/api/v1/merchants/[m[36m$Merchant_id[m[31m/user_id=CU00038A5F5JM9"[m);
+[34m#my $req = HTTP::Request->new(GET => "https://gocardless.com/api/v1/merchants/$Merchant_id/subscriptions");[m
+[36m$req->header[m([31m'Content-Type'[m => [31m'text/plain'[m);
+[36m$req->header[m([31m'Content-Length'[m => [31m'0'[m);
+[36m$req->header[m([31m'Accept'[m => [31m'application/xml'[m);
+[36m$req->header[m([31m'Authorization'[m => [36m$Authorization[m);
+
+[33mmy[m [36m$res[m = [36m$ua->request[m([36m$req[m);
+
+[36m$Res_content[m = [36m$res->content[m;[40;103H25,1[10CTop[30;1H[?12l[?25h[?25l[40;1HType  :quit<Enter>  to exit Vim[40;32H[K[40;103H25,1[10CTop[30;1H[?12l[?25h[?25l[40;103H[K[40;103H25,1[10CTop[30;1H[?12l[?25h[?25l[40;103H[K[40;103H25,1[10CTop[30;1H[?12l[?25h[?25l[40;104H6[31;1H[?12l[?25h[40;1H
+[?1l>[?1049l[?1049h[?1h=[?12;25h[?12l[?25h[27m[m[H[2J[?25l[1;1H[35m#!/usr/bin/perl[m
+
+[36m$Facility[m = [33m`[m[31mcat /usr/local/git/fpa/other/.gocardless[m[33m`[m;
+[33mchomp[m([36m$Facility[m);
+[33mif[m ([36m$Facility[m =~ [33m/[m[31mlive[m[33m/i[m) {[6;9H[36m$Client_id[m = [31m'L4s4jrtE8p0B9X2LOTxR_aE4V_rBNjyZEkkhBFlVV9Lhv2MYIISOuFGDhL6z2baD'[m;[16C[34m#  App identifiee[7;1Hf[m[8;9H[36m$App_key[m = [31m'eTzWcFjDjsPpd_GhwWBH4ovB_MyYQJDr5snpHOeEohF6uamIVWMnLUE2yJ_Cfl_A'[m;[18C[34m#  App secret[m[9;9H[36m$Authorization[m = [31m'bearer 7koL7/6N7eexnQeYyZz24/r7pevUuO1tA6ZH+A0SjX0pDV42z/YXodG5KuIUdKfm'[m;     [34m#  Merchant accee[10;1Hss token[m[11;9H[36m$Merchant_id[m = [31m'0265HC17QC'[m;[68C[34m#  Merchant id[m[12;9H[36m$Dom[m = [31m''[m;
+}
+[33melse[m {[15;9H[36m$Client_id[m = [31m'sRjngasG1PNtIT06u33yZMu7ftXDaDe4ARaXFY2U8FYaDc_bGLmV7UAIme9KZczj'[m;[16C[34m#  App identifiee[16;1Hr[m[17;9H[36m$App_key[m = [31m'5hs3wSzzMuUarQFy_5Z2frezxymWhZK9dLEtkpDUBHBnjE7DjqJH1Js94MmR_6Fe'[m;[18C[34m#  App secret[m[18;9H[36m$Authorization[m = [31m'bearer 8bztbuIDFtSTNPZTgQ1ELVa/XCRQqc04tldN/8L4PpvfT4SK4GS93vKw4hkj6tCM'[m;     [34m#  Merchant accee[19;1Hss token[m[20;9H[36m$Merchant_id[m = [31m'0205HPKCHY'[m;[68C[34m#  Merchant Id[m[21;9H[36m$Dom[m = [31m'sandbox.'[m;
+}
+
+[33muse [mLWP::UserAgent;
+[33muse [mLWP::Protocol::https;
+
+[33mmy[m [36m$ua[m = LWP::UserAgent->new;
+[34m#my $req = HTTP::Request->new(GET => "https://gocardless.com/api/v1/merchants/$Merchant_id/bills?paid=true&after=2016-055[29;1H-06T12:00:00Z");[m
+[33mmy[m [36m$req[m = HTTP::Request->new([31mGET[m => [31m"https://gocardless.com/api/v1/merchants/[m[36m$Merchant_id[m[31m/user_id=CU00038A5F5JM9"[m);
+[34m#my $req = HTTP::Request->new(GET => "https://gocardless.com/api/v1/merchants/$Merchant_id/subscriptions");[m
+[36m$req->header[m([31m'Content-Type'[m => [31m'text/plain'[m);
+[36m$req->header[m([31m'Content-Length'[m => [31m'0'[m);
+[36m$req->header[m([31m'Accept'[m => [31m'application/xml'[m);
+[36m$req->header[m([31m'Authorization'[m => [36m$Authorization[m);
+
+[33mmy[m [36m$res[m = [36m$ua->request[m([36m$req[m);
+
+[36m$Res_content[m = [36m$res->content[m;[40;103H26,1[10CTop[31;1H[?12l[?25h[40;1H[?1l>[?1049lVim: Caught deadly signal TERM
+Vim: Finished.
+[40;1H

@@ -1,0 +1,14 @@
+drop table if exists gcls;
+create table gcls (
+  id int(10) unsigned not null auto_increment primary key,
+  acct_id varchar(50) not null default '',
+  gclflow varchar(255) not null default '',
+  gclcusid varchar(200) not null default '',
+  gclmanid varchar(200) not null default '',
+  gclsubid varchar(200) not null default '',
+  gclpayid varchar(200) not null default '',
+  gclsubdate date,
+  gclpaydate date,
+  index gcl1 (acct_id),
+  index gcl2 (gclflow)
+);

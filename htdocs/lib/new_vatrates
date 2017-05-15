@@ -1,0 +1,4 @@
+  <option value="0.2"[%- IF cusdefvatrate == '0.2' OR cusdefvatrate == "" -%] selected="selected"[%- END -%]>Standard (20%)</option>
+  <option value="0.21"[%- IF cusdefvatrate == '0.21' -%] selected="selected"[%- END -%]>New Standard (21%)</option>
+  <option value="0.05"[%- IF cusdefvatrate == '0.05' -%] selected="selected"[%- END -%]>Reduced (5%)</option>
+  <option value="0"[%- IF cusdefvatrate == '0' -%] selected="selected"[%- END -%]>Zero (0%)</option>

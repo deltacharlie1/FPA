@@ -42,7 +42,7 @@ if ($Payload->{payload}->{action} =~ /paid/i && $Payload->{payload}->{resource_t
 
 			$bill->{paid_at} = $bill->{paid_at} || $Today;
 
-                        $bill->{paid_at} =~ s/T*$//;
+                        $bill->{paid_at} =~ s/T.*$//;
 
 #  Calculate the Net and VAT
 

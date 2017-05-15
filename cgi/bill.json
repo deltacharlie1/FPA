@@ -1,0 +1,19 @@
+{
+  "payload": {
+    "bills": [
+      {
+        "id": "PM000BBAP500RD",
+        "status": "paid",
+        "uri": "https://gocardless.com/api/v1/bills/PM000BBAP500RD",
+        "amount": "6.0",
+        "amount_minus_fees": "5.94",
+        "source_type": "subscription",
+        "source_id": "0M42XW1MFF",
+        "paid_at": "2016-05-23T10:13:02Z"
+      }
+    ],
+    "resource_type": "bill",
+    "action": "paid",
+    "signature": "461ece7ca429041f74b141f6dbe020e9258b9fcdfc797f29f62ff3d24d9ee500"
+  }
+}

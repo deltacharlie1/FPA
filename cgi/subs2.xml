@@ -1,0 +1,2040 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<subscriptions>
+  <subscription>
+    <id>SB00014HZNZMV2</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>active</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start>2016-12-19T00:00:00Z</next-interval-start>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>CU0003M59C8R9T</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/SB00014HZNZMV2</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=SB00014HZNZMV2</bills>
+    </sub-resource-uris>
+    <start-at>2016-11-15T20:28:04Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2016-11-08T20:30:58Z</created-at>
+  </subscription>
+  <subscription>
+    <id>SB00013T26DWGM</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>active</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start>2017-01-10T00:00:00Z</next-interval-start>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>CU0003HQTV56RX</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/SB00013T26DWGM</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=SB00013T26DWGM</bills>
+    </sub-resource-uris>
+    <start-at>2016-11-05T13:19:25Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2016-10-29T13:20:26Z</created-at>
+  </subscription>
+  <subscription>
+    <id>SB000105F86AWF</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>active</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start>2017-01-03T00:00:00Z</next-interval-start>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>CU00038A5F5JM9</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/SB000105F86AWF</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=SB000105F86AWF</bills>
+    </sub-resource-uris>
+    <start-at>2016-09-28T16:08:24Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2016-09-21T16:08:57Z</created-at>
+  </subscription>
+  <subscription>
+    <id>SB0000Z8FB82WV</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>active</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start>2016-12-22T00:00:00Z</next-interval-start>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>CU00035Y1VQWR4</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/SB0000Z8FB82WV</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=SB0000Z8FB82WV</bills>
+    </sub-resource-uris>
+    <start-at>2016-09-18T06:20:43Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2016-09-11T06:25:02Z</created-at>
+  </subscription>
+  <subscription>
+    <id>SB0000SKTFN3HA</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>active</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start>2016-12-13T00:00:00Z</next-interval-start>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>CU0002KKZMDV0T</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/SB0000SKTFN3HA</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=SB0000SKTFN3HA</bills>
+    </sub-resource-uris>
+    <start-at>2016-07-08T10:44:04Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2016-07-01T10:44:28Z</created-at>
+  </subscription>
+  <subscription>
+    <id>SB0000RAH3DBCP</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>CU0002F5SAJRA8</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/SB0000RAH3DBCP</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=SB0000RAH3DBCP</bills>
+    </sub-resource-uris>
+    <start-at>2016-06-17T21:39:27Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2016-06-10T21:40:43Z</created-at>
+  </subscription>
+  <subscription>
+    <id>SB0000QP3TT4T6</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>active</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start>2017-01-10T00:00:00Z</next-interval-start>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>CU0002D46CAB9S</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/SB0000QP3TT4T6</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=SB0000QP3TT4T6</bills>
+    </sub-resource-uris>
+    <start-at>2016-06-07T09:12:46Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2016-05-31T09:15:40Z</created-at>
+  </subscription>
+  <subscription>
+    <id>SB0000P8NG3D5G</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>CU000291PET2A6</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/SB0000P8NG3D5G</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=SB0000P8NG3D5G</bills>
+    </sub-resource-uris>
+    <start-at>2016-05-11T06:44:56Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2016-05-04T06:55:29Z</created-at>
+  </subscription>
+  <subscription>
+    <id>SB0000P2YJ1CPE</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>CU00028EBH4CCN</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/SB0000P2YJ1CPE</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=SB0000P2YJ1CPE</bills>
+    </sub-resource-uris>
+    <start-at>2016-05-06T13:50:00Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2016-04-29T14:00:51Z</created-at>
+  </subscription>
+  <subscription>
+    <id>SB00005KBAZ17Z</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>CU00021ZBHSNBB</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/SB00005KBAZ17Z</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=SB00005KBAZ17Z</bills>
+    </sub-resource-uris>
+    <start-at>2016-04-06T07:11:38Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2016-03-30T07:21:55Z</created-at>
+  </subscription>
+  <subscription>
+    <id>SB0000594YHD46</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>CU0001ZWTAWKJ2</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/SB0000594YHD46</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=SB0000594YHD46</bills>
+    </sub-resource-uris>
+    <start-at>2016-03-21T13:53:43Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2016-03-14T14:04:37Z</created-at>
+  </subscription>
+  <subscription>
+    <id>MD0001FQXKTT47</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>CU0001WB0N6EBB</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/MD0001FQXKTT47</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=MD0001FQXKTT47</bills>
+    </sub-resource-uris>
+    <start-at>2016-02-26T20:00:26Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2016-02-19T20:10:29Z</created-at>
+  </subscription>
+  <subscription>
+    <id>MD0001DK0JCCWX</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>active</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start>2016-12-14T00:00:00Z</next-interval-start>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>CU0001T5AC13BG</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/MD0001DK0JCCWX</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=MD0001DK0JCCWX</bills>
+    </sub-resource-uris>
+    <start-at>2016-02-11T09:00:45Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2016-02-04T09:11:06Z</created-at>
+  </subscription>
+  <subscription>
+    <id>12MD2XP7AK</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>CU0001QQ21GP9F</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/12MD2XP7AK</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=12MD2XP7AK</bills>
+    </sub-resource-uris>
+    <start-at>2016-01-24T21:34:58Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2016-01-17T21:45:12Z</created-at>
+  </subscription>
+  <subscription>
+    <id>12CMF0M1K3</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>active</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start>2016-12-19T00:00:00Z</next-interval-start>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>CU0001P63Y6R2C</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/12CMF0M1K3</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=12CMF0M1K3</bills>
+    </sub-resource-uris>
+    <start-at>2016-01-14T11:57:02Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2016-01-07T12:07:02Z</created-at>
+  </subscription>
+  <subscription>
+    <id>10EF2FTB5X</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>active</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start>2016-12-28T00:00:00Z</next-interval-start>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0KJKH3C6PM</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/10EF2FTB5X</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=10EF2FTB5X</bills>
+    </sub-resource-uris>
+    <start-at>2015-10-23T15:34:12Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2015-10-16T15:42:39Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0ZEXZB8PDZ</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0SWDKP8NF7</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0ZEXZB8PDZ</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0ZEXZB8PDZ</bills>
+    </sub-resource-uris>
+    <start-at>2015-09-11T13:43:21Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2015-09-04T13:51:24Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0Z6J6844XQ</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0KJKH3C6PM</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0Z6J6844XQ</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0Z6J6844XQ</bills>
+    </sub-resource-uris>
+    <start-at>2015-08-31T09:58:28Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2015-08-24T10:06:10Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0YPTPZXFQ2</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0KJKH3C6PM</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0YPTPZXFQ2</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0YPTPZXFQ2</bills>
+    </sub-resource-uris>
+    <start-at>2015-08-10T10:08:11Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2015-08-03T10:15:47Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0Y4YDW3XD9</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0SWDKP8NF7</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0Y4YDW3XD9</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0Y4YDW3XD9</bills>
+    </sub-resource-uris>
+    <start-at>2015-07-17T14:00:34Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2015-07-10T14:08:09Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0Y1XRNB97V</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0Y1XWZY88Q</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0Y1XRNB97V</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0Y1XRNB97V</bills>
+    </sub-resource-uris>
+    <start-at>2015-07-13T13:14:47Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2015-07-06T13:24:22Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0XN57EKABG</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0SWDKP8NF7</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0XN57EKABG</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0XN57EKABG</bills>
+    </sub-resource-uris>
+    <start-at>2015-06-26T12:58:14Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2015-06-19T13:05:35Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0W3SPDXQ47</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>active</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start>2016-12-28T00:00:00Z</next-interval-start>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0KQSPTPDBP</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0W3SPDXQ47</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0W3SPDXQ47</bills>
+    </sub-resource-uris>
+    <start-at>2015-04-21T16:17:19Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2015-04-14T17:10:06Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0VP62MRKVA</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0SWDKP8NF7</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0VP62MRKVA</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0VP62MRKVA</bills>
+    </sub-resource-uris>
+    <start-at>2015-04-03T14:01:40Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2015-03-27T14:08:18Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0V8F23KRPT</id>
+    <name>FreePlus Premium</name>
+    <description nil="true"/>
+    <status>active</status>
+    <amount>12.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start>2017-01-09T00:00:00Z</next-interval-start>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0HKJDQAWV2</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0V8F23KRPT</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0V8F23KRPT</bills>
+    </sub-resource-uris>
+    <start-at>2015-04-03T07:48:49Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2015-03-09T07:55:22Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0V6E2PRNEZ</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0SWDKP8NF7</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0V6E2PRNEZ</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0V6E2PRNEZ</bills>
+    </sub-resource-uris>
+    <start-at>2015-03-13T14:41:03Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2015-03-06T14:47:49Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0T765HJR8K</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>active</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start>2017-01-03T00:00:00Z</next-interval-start>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0NBPAACN6E</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0T765HJR8K</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0T765HJR8K</bills>
+    </sub-resource-uris>
+    <start-at>2015-01-30T22:28:29Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2015-01-23T22:35:12Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0T017APKE3</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0KJKH3C6PM</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0T017APKE3</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0T017APKE3</bills>
+    </sub-resource-uris>
+    <start-at>2015-01-21T08:57:55Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2015-01-14T09:03:51Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0SWDH98655</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0SWDKP8NF7</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0SWDH98655</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0SWDH98655</bills>
+    </sub-resource-uris>
+    <start-at>2015-01-16T13:51:02Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2015-01-09T13:57:26Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0SWDYC9J3T</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0SWDKP8NF7</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0SWDYC9J3T</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0SWDYC9J3T</bills>
+    </sub-resource-uris>
+    <start-at>2015-01-16T13:36:31Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2015-01-09T13:43:45Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0SKJCSEYGJ</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0SKJQB51RT</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0SKJCSEYGJ</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0SKJCSEYGJ</bills>
+    </sub-resource-uris>
+    <start-at>2015-01-04T18:51:53Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2014-12-28T18:59:41Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0S7CC43KCC</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0S7CQG27TV</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0S7CC43KCC</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0S7CC43KCC</bills>
+    </sub-resource-uris>
+    <start-at>2014-12-19T12:46:30Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2014-12-12T12:54:00Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0S4HB1Z2NX</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0S4HQQKWAZ</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0S4HB1Z2NX</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0S4HB1Z2NX</bills>
+    </sub-resource-uris>
+    <start-at>2014-12-15T17:22:58Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2014-12-08T17:34:11Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0RJARQCXYE</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0RJAT899EZ</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0RJARQCXYE</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0RJARQCXYE</bills>
+    </sub-resource-uris>
+    <start-at>2014-11-21T10:48:15Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2014-11-14T10:59:44Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0RB5XP5B0N</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0RB5JQWKVT</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0RB5XP5B0N</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0RB5XP5B0N</bills>
+    </sub-resource-uris>
+    <start-at>2014-11-11T20:58:07Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2014-11-04T21:05:26Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0QZGFKASR6</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0KJKH3C6PM</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0QZGFKASR6</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0QZGFKASR6</bills>
+    </sub-resource-uris>
+    <start-at>2014-10-27T08:18:23Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2014-10-20T08:23:39Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0QFR5P8QYE</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0KJKH3C6PM</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0QFR5P8QYE</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0QFR5P8QYE</bills>
+    </sub-resource-uris>
+    <start-at>2014-10-06T08:09:43Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2014-09-29T08:15:01Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0Q1Q7MVVS9</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0KJKH3C6PM</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0Q1Q7MVVS9</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0Q1Q7MVVS9</bills>
+    </sub-resource-uris>
+    <start-at>2014-09-17T15:13:31Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2014-09-10T15:18:40Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0PQDM0MJQT</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0PQD1V7HA7</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0PQDM0MJQT</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0PQDM0MJQT</bills>
+    </sub-resource-uris>
+    <start-at>2014-09-03T21:02:53Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2014-08-27T21:15:00Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0PKAMQ11JX</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0KJKH3C6PM</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0PKAMQ11JX</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0PKAMQ11JX</bills>
+    </sub-resource-uris>
+    <start-at>2014-08-29T10:40:22Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2014-08-22T10:45:18Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0P1A9NTYYF</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0P1A9XSB2R</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0P1A9NTYYF</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0P1A9NTYYF</bills>
+    </sub-resource-uris>
+    <start-at>2014-08-05T10:50:48Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2014-07-29T10:56:40Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0NVPTFFH94</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0NVP28YMZA</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0NVPTFFH94</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0NVPTFFH94</bills>
+    </sub-resource-uris>
+    <start-at>2014-07-28T22:27:23Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2014-07-21T22:32:31Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0NDXS5WN34</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>active</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start>2016-12-14T00:00:00Z</next-interval-start>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0NDXM5JD7Y</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0NDXS5WN34</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0NDXS5WN34</bills>
+    </sub-resource-uris>
+    <start-at>2014-07-10T13:19:12Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2014-07-03T13:24:53Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0NBPWK0W85</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0NBPAACN6E</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0NBPWK0W85</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0NBPWK0W85</bills>
+    </sub-resource-uris>
+    <start-at>2014-07-07T14:26:30Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2014-06-30T14:33:08Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0N7XXP3H87</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0KJKH3C6PM</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0N7XXP3H87</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0N7XXP3H87</bills>
+    </sub-resource-uris>
+    <start-at>2014-07-02T13:19:14Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2014-06-25T13:23:46Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0N7P84EW65</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0N7P3R3D8Y</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0N7P84EW65</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0N7P84EW65</bills>
+    </sub-resource-uris>
+    <start-at>2014-07-02T06:51:36Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2014-06-25T06:59:27Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0MRVG5M9VD</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0KJKH3C6PM</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0MRVG5M9VD</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0MRVG5M9VD</bills>
+    </sub-resource-uris>
+    <start-at>2014-06-12T11:01:48Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2014-06-05T11:06:27Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0MPXY5WDW2</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>active</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start>2016-12-14T00:00:00Z</next-interval-start>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0MPX482GP0</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0MPXY5WDW2</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0MPXY5WDW2</bills>
+    </sub-resource-uris>
+    <start-at>2014-06-09T21:11:51Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2014-06-02T21:19:17Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0MPNZ6KCZD</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0MPNCFTJ8G</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0MPNZ6KCZD</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0MPNZ6KCZD</bills>
+    </sub-resource-uris>
+    <start-at>2014-06-09T13:42:00Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2014-06-02T13:48:11Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0M43DZ5SF8</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>active</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start>2016-12-20T00:00:00Z</next-interval-start>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0M43R778ZA</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0M43DZ5SF8</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0M43DZ5SF8</bills>
+    </sub-resource-uris>
+    <start-at>2014-05-15T18:53:12Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2014-05-08T19:01:19Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0M42XW1MFF</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>active</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start>2016-12-20T00:00:00Z</next-interval-start>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0BW20D716M</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0M42XW1MFF</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0M42XW1MFF</bills>
+    </sub-resource-uris>
+    <start-at>2014-05-15T18:42:41Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2014-05-08T18:46:38Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0KYGQ4V4GE</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>active</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start>2016-12-13T00:00:00Z</next-interval-start>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0KYGKWWSZX</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0KYGQ4V4GE</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0KYGQ4V4GE</bills>
+    </sub-resource-uris>
+    <start-at>2014-05-08T08:51:09Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2014-05-01T08:56:36Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0KVNE49R98</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0KVN4BP378</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0KVNE49R98</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0KVNE49R98</bills>
+    </sub-resource-uris>
+    <start-at>2014-05-04T13:19:58Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2014-04-27T13:25:47Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0KQSE7M7ZM</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0KQSPTPDBP</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0KQSE7M7ZM</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0KQSE7M7ZM</bills>
+    </sub-resource-uris>
+    <start-at>2014-04-29T08:59:02Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2014-04-22T09:04:17Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0KQDJ71GT9</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>active</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start>2017-01-03T00:00:00Z</next-interval-start>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0KQDSJC3HJ</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0KQDJ71GT9</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0KQDJ71GT9</bills>
+    </sub-resource-uris>
+    <start-at>2014-04-28T20:54:45Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2014-04-21T21:01:52Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0KN2NPJA0Y</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0HK3DKYF9S</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0KN2NPJA0Y</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0KN2NPJA0Y</bills>
+    </sub-resource-uris>
+    <start-at>2014-04-25T18:50:04Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2014-04-18T18:53:52Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0KM9NYVA77</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0KM925TXBD</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0KM9NYVA77</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0KM9NYVA77</bills>
+    </sub-resource-uris>
+    <start-at>2014-04-24T17:29:37Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2014-04-17T17:39:59Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0KM3ZHXCMV</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>active</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start>2016-12-28T00:00:00Z</next-interval-start>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0KM33989Z6</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0KM3ZHXCMV</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0KM3ZHXCMV</bills>
+    </sub-resource-uris>
+    <start-at>2014-04-24T11:01:22Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2014-04-17T11:08:53Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0KKJREBMGH</id>
+    <name>FreePlus Premium</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>12.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0KKJD2G9E5</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0KKJREBMGH</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0KKJREBMGH</bills>
+    </sub-resource-uris>
+    <start-at>2014-04-23T18:17:37Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2014-04-16T18:23:30Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0KKACGD8BZ</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>active</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start>2016-12-28T00:00:00Z</next-interval-start>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0KKA3NXXVG</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0KKACGD8BZ</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0KKACGD8BZ</bills>
+    </sub-resource-uris>
+    <start-at>2014-04-23T10:00:05Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2014-04-16T10:06:36Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0KK8DPQHJC</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>active</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start>2016-12-28T00:00:00Z</next-interval-start>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0KK8188DRA</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0KK8DPQHJC</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0KK8DPQHJC</bills>
+    </sub-resource-uris>
+    <start-at>2014-04-23T08:49:02Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2014-04-16T08:54:27Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0KJRH7D789</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0KJR31392V</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0KJRH7D789</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0KJRH7D789</bills>
+    </sub-resource-uris>
+    <start-at>2014-04-22T16:08:13Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2014-04-15T16:13:46Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0KJKQ7GHE1</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0KJKH3C6PM</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0KJKQ7GHE1</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0KJKQ7GHE1</bills>
+    </sub-resource-uris>
+    <start-at>2014-04-22T11:18:07Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2014-04-15T11:23:19Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0KHV61S1DH</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0KHVSS0Q16</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0KHV61S1DH</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0KHV61S1DH</bills>
+    </sub-resource-uris>
+    <start-at>2014-04-21T11:03:55Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2014-04-14T11:45:18Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0KHTFR38B5</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0KHTM3YRNF</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0KHTFR38B5</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0KHTFR38B5</bills>
+    </sub-resource-uris>
+    <start-at>2014-04-21T10:00:55Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2014-04-14T10:05:40Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0KH3J48JFM</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>active</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start>2016-12-28T00:00:00Z</next-interval-start>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0KH399V91Y</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0KH3J48JFM</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0KH3J48JFM</bills>
+    </sub-resource-uris>
+    <start-at>2014-04-20T10:47:29Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2014-04-13T11:01:30Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0HXHXCPDCX</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>active</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start>2016-12-14T00:00:00Z</next-interval-start>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0HXHRDFPVJ</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0HXHXCPDCX</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0HXHXCPDCX</bills>
+    </sub-resource-uris>
+    <start-at>2014-02-10T16:54:45Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2014-02-03T17:00:47Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0HKJXSRNE2</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0HKJDQAWV2</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0HKJXSRNE2</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0HKJXSRNE2</bills>
+    </sub-resource-uris>
+    <start-at>2014-01-28T10:34:52Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2014-01-21T10:39:33Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0HK3P14SX2</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>active</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start>2017-01-03T00:00:00Z</next-interval-start>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0HK3DKYF9S</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0HK3P14SX2</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0HK3P14SX2</bills>
+    </sub-resource-uris>
+    <start-at>2014-01-27T19:19:34Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2014-01-20T19:24:42Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0HDPRK70AN</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0HDPGNY5JT</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0HDPRK70AN</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0HDPRK70AN</bills>
+    </sub-resource-uris>
+    <start-at>2014-01-20T14:08:38Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2014-01-13T14:13:21Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0HA5YVMWFY</id>
+    <name>Bookkeeper Basic</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0HA5AXJX15</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0HA5YVMWFY</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0HA5YVMWFY</bills>
+    </sub-resource-uris>
+    <start-at>2014-01-15T21:12:58Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2014-01-08T21:19:11Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0F9C63E7FJ</id>
+    <name>FreePlus Premium</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>12.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0F9C38AHM7</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0F9C63E7FJ</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0F9C63E7FJ</bills>
+    </sub-resource-uris>
+    <start-at>2013-10-21T12:36:58Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2013-10-14T12:43:40Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0EVCTYQTP1</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0EVC1A4KT5</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0EVCTYQTP1</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0EVCTYQTP1</bills>
+    </sub-resource-uris>
+    <start-at>2013-10-02T21:32:58Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2013-09-25T20:36:10Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0EPTP8JWGX</id>
+    <name>Bookkeeper Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>12.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0ENQWSQPBQ</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0EPTP8JWGX</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0EPTP8JWGX</bills>
+    </sub-resource-uris>
+    <start-at>2013-09-26T19:17:17Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2013-09-19T18:20:46Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0ENQ1HJ50T</id>
+    <name>FreePlus Premium</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>12.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0ENQWSQPBQ</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0ENQ1HJ50T</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0ENQ1HJ50T</bills>
+    </sub-resource-uris>
+    <start-at>2013-09-25T08:20:09Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2013-09-18T07:36:39Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0C7E3Y8FTH</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0C7EY9B9S1</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0C7E3Y8FTH</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0C7E3Y8FTH</bills>
+    </sub-resource-uris>
+    <start-at>2013-06-12T22:36:10Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2013-06-05T22:04:47Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0BXJ7CMG35</id>
+    <name>FreePlus Premium</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>12.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0BW20D716M</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0BXJ7CMG35</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0BXJ7CMG35</bills>
+    </sub-resource-uris>
+    <start-at>2013-06-03T19:49:35Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2013-05-23T18:53:23Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0BW2CBYD84</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0BW20D716M</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0BW2CBYD84</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0BW2CBYD84</bills>
+    </sub-resource-uris>
+    <start-at>2013-05-28T19:51:35Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2013-05-21T18:55:26Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0BV7YK3RBC</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0BV7H7VWAG</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0BV7YK3RBC</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0BV7YK3RBC</bills>
+    </sub-resource-uris>
+    <start-at>2013-05-27T16:17:51Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2013-05-20T15:22:20Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0BTETS5387</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0BTE6NN4NK</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0BTETS5387</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0BTETS5387</bills>
+    </sub-resource-uris>
+    <start-at>2013-05-26T15:00:49Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2013-05-19T14:06:45Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0AXEVGST2N</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0AXDGQASF8</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0AXEVGST2N</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0AXEVGST2N</bills>
+    </sub-resource-uris>
+    <start-at>2013-04-17T23:22:26Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2013-04-10T22:24:02Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0AXDJ8065S</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0AXDGQASF8</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0AXDJ8065S</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0AXDJ8065S</bills>
+    </sub-resource-uris>
+    <start-at>2013-04-17T22:10:57Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2013-04-10T21:16:20Z</created-at>
+  </subscription>
+  <subscription>
+    <id>0AFHJDJVDY</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0AFHSNBDWQ</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/0AFHJDJVDY</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=0AFHJDJVDY</bills>
+    </sub-resource-uris>
+    <start-at>2013-03-30T09:05:48Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2013-03-23T09:08:23Z</created-at>
+  </subscription>
+  <subscription>
+    <id>09TWN7P1HT</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>active</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start>2017-01-09T00:00:00Z</next-interval-start>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>09TW4GMSX5</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/09TWN7P1HT</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=09TWN7P1HT</bills>
+    </sub-resource-uris>
+    <start-at>2013-03-02T20:22:04Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2013-02-23T20:25:14Z</created-at>
+  </subscription>
+  <subscription>
+    <id>09HM9BYJ5W</id>
+    <name>Bookkeeper Premium</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>24.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>09HKK8FAJN</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/09HM9BYJ5W</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=09HM9BYJ5W</bills>
+    </sub-resource-uris>
+    <start-at>2013-02-18T12:24:48Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2013-02-11T12:26:09Z</created-at>
+  </subscription>
+  <subscription>
+    <id>09HKPDNG2D</id>
+    <name>Bookkeeper Premium</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>24.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>09HKK8FAJN</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/09HKPDNG2D</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=09HKPDNG2D</bills>
+    </sub-resource-uris>
+    <start-at>2013-02-18T11:27:02Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2013-02-11T11:38:18Z</created-at>
+  </subscription>
+  <subscription>
+    <id>09E1BJP6PK</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>07MEWCJP67</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/09E1BJP6PK</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=09E1BJP6PK</bills>
+    </sub-resource-uris>
+    <start-at>2013-02-13T17:53:58Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2013-02-06T17:56:44Z</created-at>
+  </subscription>
+  <subscription>
+    <id>094YH651TG</id>
+    <name>Bookkeeper Basic</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>094YPJAZYZ</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/094YH651TG</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=094YH651TG</bills>
+    </sub-resource-uris>
+    <start-at>2013-02-01T14:22:27Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2013-01-25T14:25:20Z</created-at>
+  </subscription>
+  <subscription>
+    <id>07YRAB78WR</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>07YRKMASG0</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/07YRAB78WR</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=07YRAB78WR</bills>
+    </sub-resource-uris>
+    <start-at>2012-12-12T16:07:43Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2012-12-05T16:23:23Z</created-at>
+  </subscription>
+  <subscription>
+    <id>05SQRW5PE1</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>active</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start>2016-12-14T00:00:00Z</next-interval-start>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>05SQV0F1MG</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/05SQRW5PE1</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=05SQRW5PE1</bills>
+    </sub-resource-uris>
+    <start-at>2012-09-11T16:01:54Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2012-09-04T15:17:49Z</created-at>
+  </subscription>
+  <subscription>
+    <id>05NXPQE7D5</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>05NX8KJ2RX</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/05NXPQE7D5</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=05NXPQE7D5</bills>
+    </sub-resource-uris>
+    <start-at>2012-09-06T14:30:10Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2012-08-30T13:44:32Z</created-at>
+  </subscription>
+  <subscription>
+    <id>05589JECVN</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>active</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start>2016-12-20T00:00:00Z</next-interval-start>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>0558N8V38K</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/05589JECVN</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=05589JECVN</bills>
+    </sub-resource-uris>
+    <start-at>2012-08-15T09:39:24Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2012-08-08T08:57:16Z</created-at>
+  </subscription>
+  <subscription>
+    <id>047FFGYR3T</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>047FTGQYHN</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/047FFGYR3T</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=047FFGYR3T</bills>
+    </sub-resource-uris>
+    <start-at>2012-07-06T15:56:53Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2012-06-29T15:13:38Z</created-at>
+  </subscription>
+  <subscription>
+    <id>03BMCT63HB</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>active</status>
+    <amount>6.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start>2017-01-03T00:00:00Z</next-interval-start>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>03BMJRB1JY</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/03BMCT63HB</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=03BMCT63HB</bills>
+    </sub-resource-uris>
+    <start-at>2012-05-30T13:02:09Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2012-05-23T12:16:11Z</created-at>
+  </subscription>
+  <subscription>
+    <id>02G3Q6PBCF</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>5.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>02G2X2F7QB</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/02G3Q6PBCF</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=02G3Q6PBCF</bills>
+    </sub-resource-uris>
+    <start-at>2012-04-23T20:19:19Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2012-04-16T19:31:47Z</created-at>
+  </subscription>
+  <subscription>
+    <id>02G2HA847Z</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>5.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>02G2X2F7QB</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/02G2HA847Z</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=02G2HA847Z</bills>
+    </sub-resource-uris>
+    <start-at>2012-04-23T19:40:50Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2012-04-16T18:54:59Z</created-at>
+  </subscription>
+  <subscription>
+    <id>026BBB78P2</id>
+    <name>FreePlus Standard</name>
+    <description nil="true"/>
+    <status>cancelled</status>
+    <amount>5.0</amount>
+    <currency>GBP</currency>
+    <interval-length>1</interval-length>
+    <interval-unit>month</interval-unit>
+    <next-interval-start nil="true"/>
+    <setup-fee>0.0</setup-fee>
+    <merchant-id>0265HC17QC</merchant-id>
+    <user-id>026BA503GR</user-id>
+    <uri>https://gocardless.com/api/v1/subscriptions/026BBB78P2</uri>
+    <sub-resource-uris>
+      <bills>https://gocardless.com/api/v1/merchants/0265HC17QC/bills?source_id=026BBB78P2</bills>
+    </sub-resource-uris>
+    <start-at>2012-04-10T20:22:14Z</start-at>
+    <expires-at nil="true"/>
+    <created-at>2012-04-03T19:34:52Z</created-at>
+  </subscription>
+</subscriptions>
