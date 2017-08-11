@@ -184,7 +184,7 @@ elsif ($FORM{subaction} =~ /C/i) {
 	$Res_content = $res->content;
 	if ($Res_content =~ /<status.*>cancelled<\/status>/is) {
         	$Status = "cancelled";
-		$Sts = $dbh->do("update companies set comsublevel='00',comsubtype='',comsubref='',commerchantref='',comcardref='',compt_logo='2010-01-01',comuplds=0,comno_ads='2010-01-01' where reg_id=$Reg_id and id=$Com_id");
+		$Sts = $dbh->do("update companies set comsublevel='00',comsubtype='',comsubref='',commandateref='',compayref='',compt_logo='2010-01-01',comuplds=0,comno_ads='2010-01-01' where reg_id=$Reg_id and id=$Com_id");
 		$Sts = $dbh->do("update registrations set regmembership='1' where reg_id=$Reg_id");
 
 		$Vars = {

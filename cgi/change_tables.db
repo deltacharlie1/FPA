@@ -1,0 +1,5 @@
+alter table companies change commerchantref commandateref varchar(100) not null default '';
+alter table companies change comcardref compayref varchar(100) not null default '';
+alter table companies change comsubref comsubref varchar(100) not null default '';
+alter table companies add column comcusref varchar(100) not null default '' after comsubtype;
+alter table companies add column comflowsref varchar(100) not null default '' after comsubtype;

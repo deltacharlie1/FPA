@@ -123,7 +123,7 @@ EOD
 			$Original = $Img->ImageToBlob(magick=>'pdf');
 		}
 
-		open(IMG,">/projects/fpa_docs/".$Company->{comdocsdir}."/".$FORM{Filename}) || warn "unable to open file\n";
+		open(IMG,">/projects/fpa_docs/".$Company->{comdocsdir}."/".$FORM{Filename}) || warn "unable to open file - /projects/fpa_docs/$Company->{comdocsdir}/$FORM{Filename}\n";
 		print IMG $Original;
 		close(IMG);
 
@@ -131,6 +131,8 @@ EOD
 		$New_inv_id = $dbh->last_insert_id(undef, undef, qw(invoice_layouts undef));
 
 		while (($Key,$Value) = each %Settings) {
+
+			$Value->{top} =~ s/(.*)\..*/$1/;
 			$Sts = $dbh->do("insert into invoice_layout_items (acct_id,link_id,lifldcode,lidispname,litable,lisource,lialias,litop,lileft,lisize,libold,lidisplay,lijust) values ('$COOKIE->{ACCT}',$New_inv_id,'$Key','$Value->{name}','$Value->{table}','$Value->{source}','$Value->{alias}','$Value->{top}','$Value->{left}','$Value->{size}','$Value->{bold}','$Value->{display}','$Value->{just}')");
 		}
 

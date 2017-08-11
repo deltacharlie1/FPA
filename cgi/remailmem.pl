@@ -32,7 +32,7 @@ if ($Cookie) {
 		print EMAIL <<EOD;
 From: Registrations <fparegistrations\@corunna.com>
 To: $Addressees
-bcc: doug.conran\@corunna.com
+bcc: doug.conran49\@googlemail.com
 Subject: Your FreePlus Accounts Memorable Word
 
 Thank you for using FreePlus Accounts.
@@ -59,7 +59,7 @@ EOD
 		print EMAIL <<EOD;
 From: Registrations <fparegistrations\@corunna.com>
 To: $Addressees
-bcc: doug.conran\@corunna.com
+bcc: doug.conran49\@googlemail.com
 Subject: Your Request to FreePlus Accounts
 
 Unfortunately we are unable to find your account.

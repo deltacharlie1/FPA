@@ -31,6 +31,8 @@ foreach $Row (@Rows) {
 
 	@Col = split('-',$Row);
 
+	$Col[1] =~ s/(.*)\..*$/$1/;
+
 	if ($Col[5] =~ /bold/i) {
 		$Col[5] = "Y";
 	}

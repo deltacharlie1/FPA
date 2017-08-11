@@ -20,12 +20,15 @@ else {
 use LWP::UserAgent;
 use LWP::Protocol::https;
 use JSON;
+use DBI;
+
+my $dbh = DBI->connect("DBI:mysql:fpa3");
 	
 my $ua = LWP::UserAgent->new;
 #my $req = HTTP::Request->new(GET => "https://gocardless.com/api/v1/merchants/$Merchant_id/bills?paid=true&after=2016-05-06T12:00:00Z");
 #my $req = HTTP::Request->new(GET => "https://gocardless.com/api/v1/merchants/$Merchant_id/subscriptions?user_id=CU0002KKZMDV0T");
-#my $req = HTTP::Request->new(GET => "https://gocardless.com/api/v1/merchants/$Merchant_id/subscriptions?status=active");
-my $req = HTTP::Request->new(GET => "https://gocardless.com/api/v1/merchants/$Merchant_id/users?id=CU0001P63Y6R2C");
+my $req = HTTP::Request->new(GET => "https://gocardless.com/api/v1/merchants/$Merchant_id/subscriptions?status=active");
+#my $req = HTTP::Request->new(GET => "https://gocardless.com/api/v1/merchants/$Merchant_id/users");
 $req->header('Content-Type' => 'text/plain');
 $req->header('Content-Length' => '0');
 $req->header('Accept' => 'application/json');
@@ -40,6 +43,14 @@ $users_scalar = $json->decode($Res_content);
 #print $Res_content;
 
 for $User (@{$users_scalar}) {
-	print "ID : $User->{id}\tEmail : $User->{email}\t$User->{first_name}\t$User->{last_name}\n";
+	$Sts = $dbh->do("update companies set comsubref='$User->{id}' where comcusref='$User->{user_id}'");
+
+	if ($Sts < 1) {
+		print "No update - $User->{user_id}\t: $User->{id}\n";
+	}
+	else {
+		print "Updated   - $User->{user_id}\t: $User->{id}\n";
+	}
 }
+$dbh->disconnect();
 exit;

@@ -74,6 +74,7 @@ $ACCESS = $COOKIE->{PLAN};
 unless ($Company->{comsublevel} > 0 && $Company->{subdue} >= -5) {
 	if ($ACCESS > 1) {
 		$Sts = $dbh->do("update registrations set regmembership='1' where reg_id=$Reg_com[0]");
+		$Sts = $dbh->do("update companies set comsublevel='00',comsubtype='00' where id=$Reg_com[1]");
 	}
 	$ACCESS = '1';
 #}

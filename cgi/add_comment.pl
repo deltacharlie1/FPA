@@ -32,8 +32,8 @@ $New_txn_id = $dbh->last_insert_id(undef, undef, qw(comments undef));
 
 open(EMAIL,"| /usr/sbin/sendmail -t");
 print EMAIL <<EOD;
-From: FreePlus <doug.conran\@corunna.com>
-To: doug.conran\@corunna.com
+From: FreePlus <doug.conran49\@googlemail.com>
+To: doug.conran49\@googlemail.com
 Subject: A FreePlus Comment has been added
 
 The following comment has been added by $COOKIE->{ID}

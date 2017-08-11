@@ -173,7 +173,7 @@ sub send_email {
         open(EMAIL,"| /usr/sbin/sendmail -t");
         print EMAIL<<EOD;
 From: FreePlus Accounts <fpainvoices\@corunna.com>
-Bcc: doug.conran\@corunna.com
+Bcc: doug.conran49\@googlemail.com
 Subject: Your FreePlus Subscription Invoice
 MIME-Version: 1.0
 Content-Type: multipart/mixed;

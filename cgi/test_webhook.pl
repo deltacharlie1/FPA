@@ -6,31 +6,49 @@
 #  We can safely ignore any cancelled subscriptions because the sub will effectively lapse if the subdue field
 #  has not been updated.
 
-read(STDIN, $Buffer, $ENV{'CONTENT_LENGTH'});
+###############  GoCardless API V2  #######################
+#
+#  We are interssted in 2 types of event:-
+#
+#  1.  Payment Created (payment_created)  (at which point we need to store the Payment ID against the Subscription
+#  2.  Payment Confirmed (confirmed) at which point we get the acct_id of the subscription from gcls using payment ID
+#
 
-while ( ($key, $value) = each %ENV )
-{
-  $Headers .=  "key: $key, value: $ENV{$key}\n";
+################ read(STDIN, $Buffer, $ENV{'CONTENT_LENGTH'});
+
+while (<>) {
+	$Buffer .= $_;
 }
+
+print "Content-Type: text/plain\n";
+print "Status 200 OK\n\n";
+
+#while ( ($key, $value) = each %ENV )
+#{
+#  $Headers .=  "key: $key, value: $ENV{$key}\n";
+#}
+
+$Now = `date`;
+
+use JSON;
+$json = JSON->new->allow_nonref;
+
+$events_scalar = $json->decode( $Buffer );
+$PP =  $json->pretty->encode( $events_scalar );
+
+chomp($Now);
 
 open(FILE,'>>/tmp/gcl.txt');
 
-print FILE <<EOD;
+print FILE<<EOD;
 
-==============  Headers  ==================
-$Headers
-
-==============  Content  ==================
-$Buffer
+============== $Now  ==================
+$PP
 EOD
 
 close(FILE);
 
-print "Content-Type: text/plain\n";
-print "Status 200 OK\n\n";
-exit;
-
-use JSON;
+#use JSON;
 use DBI;
 use MIME::Base64;
 
@@ -54,34 +72,45 @@ $Pound = chr(163);
 @Sub_amt = ("0.00","5.00","5.00","10.00","10.00","20.00");
 @Sub_vat = ("0.00","1.00","1.00","2.00","2.00","4.00");
 
-$Payload = decode_json($Buffer);
+#$json = JSON->new->allow_nonref;
+#$events_scalar = $json->decode($Buffer);
+$Events = $events_scalar->{events};
+for $Event ( @{$Events} ) {
+	if ($Event->{'resource_type'} =~ /subscriptions/ && $Event->{'action'} =~ /payment_created/i) {
 
-if ($Payload->{payload}->{action} =~ /paid/i && $Payload->{payload}->{resource_type} =~ /bill/i) {
+#  Find the gcl record for this subscription and update the payment ID
 
-        foreach $bill (@{$Payload->{payload}->{bills}}) {
-		if ($bill->{source_type} =~ /subscription/i) {
-			$Sts = $dbh->do("update companies set comsubdue=date_add(comsubdue,interval 1 month) where comsubref='$bill->{source_id}'");
+		$Sts = $dbh->do("update companies set compayref='$Event->{links}->{payment}' where comsubref='$Event->{links}->{subscription}'");
+print " Created Status : $Sts\n";
+	} elsif ($Event->{'resource_type'} =~ /payments/ && $Event->{'action'} =~ /confirmed/i) {
 
-			$bill->{paid_at} = $bill->{paid_at} || $Today;
+		$Event->{created_at} =~ s/T.*//;
+		$Sts = $dbh->do("update companies set comsubdue=date_add('$Event->{created_at}',interval 1 month) where compayref='$Event->{links}->{payment}'");
+		if ($Sts < 1) {
 
-                        $bill->{paid_at} =~ s/T.*$//;
+        		open(EMAIL,"| /usr/sbin/sendmail -t");
+		        print EMAIL<<EOD;
+From: FreePlus Accounts <fpainvoices\@corunnasystems.co.uk>
+To: doug.conran49i\@googlemail.com
+Subject: Failed Payment Allocation for $Event->{links}->{payment}
+Message-Id: <$$vent->{links}->{payment}>
 
-#  Calculate the Net and VAT
-
-			$Net = sprintf('%1.2f',($bill->{amount} * 100) / 120);
-			$Vat = sprintf('%1.2f',$bill->{amount} - $Net);
-			$Fee = sprintf('%1.2f',$bill->{amount} - $bill->{amount_minus_fees});
+Failed payment for $Event->{links}->{payment}
+EOD
+			close(EMAIL);
+		}
+		else {
 
 #  Add a subscription invoice
 
-                        $Companies = $dbh->prepare("select reg_id,id,comsublevel,comname,comaddress,compostcode,regemail,date_format('$bill->{paid_at}','%D %M %Y') as datepaid from companies left join registrations using (reg_id) where comsubref='$bill->{source_id}'");
-                        $Companies->execute;
-                        $Company = $Companies->fetchrow_hashref;
-                        $Companies->finish;
+	                $Companies = $dbh->prepare("select reg_id,id,comsublevel,comname,comaddress,compostcode,regemail,date_format('$Event->{created_at}','%D %M %Y') as datepaid from companies left join registrations using (reg_id) where comsubref='$Event->{links}->{payment}'");
+        	        $Companies->execute;
+                	$Company = $Companies->fetchrow_hashref;
+	                $Companies->finish;
 
-                        $Sts = $dbh->do("insert into subscriptions (acct_id,subdateraised,subinvoiceno,subdescription,subnet,subvat,subfee,subauthcode,substatus,submerchantref,subdatepaid) values ('$Company->{reg_id}+$Company->{id}','$bill->{paid_at}','$Subinvno','$Sub_name[$Company->{comsublevel}]','$Net','$Vat','$Fee','$bill->{id}','Paid','$bill->{source_id}','$bill->{paid_at}')");
+        	        $Sts = $dbh->do("insert into subscriptions (acct_id,subdateraised,subinvoiceno,subdescription,subnet,subvat,subfee,subauthcode,substatus,submerchantref,subdatepaid) values ('$Company->{reg_id}+$Company->{id}','$Event->{created_at}','$Subinvno','$Sub_name[$Company->{comsublevel}]','$Sub_amt[$Company->{comsublevel}]','$Sub_vat[$Company->{comsublevel}]','','$Event->{links}->{payment}','Paid','$Event->{id}','$Event->{created_at}')");
 
-                        $Email_msg = sprintf<<EOD;
+                	$Email_msg = sprintf<<EOD;
 FreePlus Accounts Invoice/Receipt
 =================================
 
@@ -94,24 +123,23 @@ Subscription Details
 
     Invoice No:  $Subinvno
      Date Paid:  $Company->{datepaid}
-        Amount:  $Net
-           VAT:  $Vat
-     Reference:  $bill->{id}
+        Amount:  $Sub_amt[$Company->{comsublevel}]
+           VAT:  $Sub_vat[$Company->{comsublevel}]
+     Reference:  $Event->{links}->{payment}
 
 Your invoice is attached to this email message and may also be accessed by logging in to FreePlus Accounts and selecting 'Admin' -> 'My Account'
 EOD
 
-                        $Inv_invoice_no = $Subinvno;
-                        $Subinvno++;
-                        $Inv_date = $Company->{datepaid};
-                        $Inv_desc = $Sub_name[$Company->{comsublevel}];
-                        $Inv_authcode = $bill->{id};
-                        $Inv_address = $Company->{comname}."\n".$Company->{comaddress}."  ".$Company->{compostcode};
-                        $Inv_net = $Net;
-                        $Inv_vat = $Vat;
-                        $Inv_status = "Paid";
-                        &send_email();
-
+	                $Inv_invoice_no = $Subinvno;
+        	        $Subinvno++;
+                	$Inv_date = $Company->{datepaid};
+	                $Inv_desc = $Sub_name[$Company->{comsublevel}];
+        	        $Inv_authcode = $Event->{links}->{payment};
+                	$Inv_address = $Company->{comname}."\n".$Company->{comaddress}."  ".$Company->{compostcode};
+	                $Inv_net = $Sub_amt[$Company->{comsublevel}];
+        	        $Inv_vat = $Sub_vat[$Company->{comsublevel}];
+                	$Inv_status = "Paid";
+	                &send_email();
 		}
         }
 }
@@ -127,14 +155,15 @@ sub send_email {
         ($PDF_data) = &pdf_invoice();
 
         $Encoded_msg = encode_base64($PDF_data);
+# To: $Company->{regemail}
 
         open(EMAIL,"| /usr/sbin/sendmail -t");
         print EMAIL<<EOD;
 From: FreePlus Accounts <fpainvoices\@corunnasystems.co.uk>
-To: $Company->{regemail}
+To: doug.conran49i\@googlemail.com
 Bcc: doug.conran\@corunna.com
-Subject: Your FreePlus Subscription Invoice
-Message-Id: <$bill->{id}>
+Subject: Your FreePlus Subscription Invoice (Test)
+Message-Id: <$$vent->{links}->{payment}>
 MIME-Version: 1.0
 Content-Type: multipart/mixed;
         boundary="----=_NextPart_000_001D_01C0B074.94357480"
@@ -145,6 +174,8 @@ This is a multi-part message in MIME format.
 Content-Type: text/plain;
         charset="iso-8859-1"
 
+Message To: $Company->{regemail}
+ 
 $Email_msg
 
 EOD

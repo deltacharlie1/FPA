@@ -6,10 +6,10 @@ $ACCESS_LEVEL = 0;
 
 #  Terminology buster!
 
-#  1 - commerchantref			=  the Secure Card Merchant Ref (this is an identifier for the card owner)
-#  2 - comcardref			=  the reference of the card (this is a reference of the card within the card owner group)
+#  1 - commandateref			=  the Secure Card Merchant Ref (this is an identifier for the card owner)
+#  2 - compayref			=  the reference of the card (this is a reference of the card within the card owner group)
 #  3 - comsubtype			=  the subscription being taken out / in operation
-#  5 - comsubtype.commerchantref	=  the identifier of a specific subscription for the card owner (not this is MERCHANTREF for
+#  5 - comsubtype.commandateref	=  the identifier of a specific subscription for the card owner (not this is MERCHANTREF for
 #					   the <ADDSUBSCRIPTION> xml input!!
 
 use Checkid;
@@ -19,27 +19,20 @@ $COOKIE = &checkid($ENV{HTTP_COOKIE},$ACCESS_LEVEL);
 use DBI;
 $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
 
-open(XML,'</usr/local/git/fpa/other/cashflows') || warn "Could not open cashflos file\n";
-@Xmlstr = <XML>;
-close(XML);
-
-($Termid,$Secret,$URL) = @Xmlstr;
-chomp($Termid);
-chomp($Secret);
-chomp($URL);
-
-$Companies = $dbh->prepare("select comsublevel,comsubtype,commerchantref,comcardref,date_format(comsubdue,'%d-%b-%y') as subdue from companies where reg_id=$Reg_id and id=$Com_id");
+$Companies = $dbh->prepare("select comsublevel,comsubtype,commandateref,compayref,date_format(comsubdue,'%d-%b-%y') as subdue from companies where reg_id=$Reg_id and id=$Com_id");
 $Companies->execute;
 $Company = $Companies->fetchrow_hashref;
-$Companies->finish;
-$dbh->disconnect;
 
-$Membership[1] = 'FreePlus Startup (FREE)';
-$Membership[3] = 'FreePlus Bookkeeper Basic (&pound;5.00pm)';
-$Membership[4] = 'FreePlus Standard (&pound;5.00pm)';
-$Membership[5] = 'FreePlus Bookkeeper Standard (&pound;10.00pm)';
-$Membership[6] = 'FreePlus Premium (&pound;10.00pm)';
-$Membership[8] = 'FreePlus BookkeepersPremium (&pound;20.00pm)';
+$Membership[0] = 'FreePlus Startup (FREE)';
+$Membership[1] = 'FreePlus Bookkeeper Basic (&pound;5.00pm)';
+$Membership[2] = 'FreePlus Standard (&pound;5.00pm)';
+$Membership[3] = 'FreePlus Bookkeeper Standard (&pound;10.00pm)';
+$Membership[4] = 'FreePlus Premium (&pound;10.00pm)';
+$Membership[5] = 'FreePlus BookkeepersPremium (&pound;20.00pm)';
+
+if ($Company->{comsubtype} eq '00') {
+	$COOKIE->{ACCESS} = '1';
+}
 
 use Template;
 $tt = Template->new({
@@ -50,17 +43,30 @@ $tt = Template->new({
 $Vars = {
 	 ads => $Adverts, cookie => $COOKIE,
 	  title => 'Subscriptions',
-	  membership => $Membership[$COOKIE->{ACCESS}],
+	  membership => $Membership[$Company->{comsubtype}],
 	  company => $Company,
-	  termid => $Termid,
 	  javascript => '<script type="text/javascript">
 function check_select(button) {
   if (button == "S" && ! $("input[@name=sub]:checked").val()) {
     alert("You have not selected any subscription option!");
   }
   else {
-    $("#subaction").val(button);
-    document.forms["subs_form"].submit();;
+    if (button == "T") {
+        $("#subaction").val(button);
+        $("#subs_form").attr("action","/cgi-bin/fpa/gclv2subs.pl");
+        document.forms["subs_form"].submit();
+    }
+    else {
+      if (button == "X") {
+        $("#subaction").val(button);
+        $("#subs_form").attr("action","/cgi-bin/fpa/gclv2subs.pl");
+        document.forms["subs_form"].submit();
+      }
+      else {
+        $("#subaction").val(button);
+        document.forms["subs_form"].submit();
+      }
+    }
  }
 }
 </script>
@@ -71,6 +77,7 @@ function check_select(button) {
 
 print "Content-Type: text/html\n\n";
 $tt->process('subs.tt',$Vars);
+$Companies->finish;
 $dbh->disconnect;
 exit;
 

@@ -110,7 +110,7 @@ sub send_email {
         print EMAIL<<EOD;
 From: FreePlus Accounts <fpainvoices\@corunnasystems.co.uk>
 To: $Company->{regemail}
-Bcc: doug.conran\@corunna.com
+Bcc: doug.conran49\@googlemail.com
 Subject: Your FreePlus Subscription Invoice
 Message-Id: <$bill->{id}>
 MIME-Version: 1.0
@@ -150,7 +150,7 @@ EOD
         open(DOUGMAIL,"| /usr/sbin/sendmail -t");
         print DOUGMAIL<<EOD;
 From: FreePlus Accounts <fpainvoices\@corunna.com>
-To: doug.conran\@corunna.com
+To: doug.conran49\@googlemail.com
 Subject: JSON subscription
 
 $Buffer

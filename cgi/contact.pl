@@ -31,7 +31,9 @@ $Errs = "";
 # 	$Errs .= "<li>This is not a recognised email address</li>\n";
 # }
 unless ($FORM{message}) { $Errs .= "<li>There is no text in the Message section</li>\n"; }
-
+unless ($FORM{subject}) { $Errs .= "<li>Please enter a subject heading summarising your reason for contact</li>\n"; }
+if ($FORM{subject} =~ /^\d+$/) { $Errs .= "<li>Invalid subject, please be more explicit</li>\n"; }
+unless ($FORM{recipient}) { $Errs .= "<li>Please select which department you wish to contact, thank you</li>\n"; }
 if ($Errs) {
 
 	$Errs = sprintf<<EOD;
@@ -62,7 +64,7 @@ else {
 	open(EMAIL,"| /usr/sbin/sendmail -F \"FreePlus Accounts\" -f \"freeplus\@corunna.com\" -t");
 
 	print EMAIL <<EOD;
-To: doug.conran\@corunna.com
+To: doug.conran49\@googlemail.com
 Subject: $FORM{subject} (for $FORM{recipient})
 
 From $FORM{name} <$FORM{email}>

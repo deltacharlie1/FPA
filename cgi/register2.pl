@@ -224,7 +224,7 @@ sub post_email {
 	print EMAIL <<EOD;
 From: "FreePlus Registrations" <fparegistrations\@corunna.com>
 To: $Addressees
-bcc: doug.conran\@corunna.com
+bcc: doug.conran49\@googlemail.com
 Subject: Your FreePlus Accounts Registration was successful!
 Content-Type: multipart/alternative;
  boundary="=_NextPart_2rfkindysadvnqw3nerasdf";

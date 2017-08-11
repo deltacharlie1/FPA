@@ -38,7 +38,7 @@ if ($ENV{QUERY_STRING}) {
 		print EMAIL <<EOD;
 From: Registrations <fparegistrations\@corunna.com>
 To: $Addressees
-bcc: doug.conran\@corunna.com
+bcc: doug.conran49\@googlemail.com
 Subject: Your New FreePlus Accounts Password
 
 Thank you for using FreePlus Accounts.  A new, temporary, password has been generated for you.
@@ -65,7 +65,7 @@ EOD
 		print EMAIL <<EOD;
 From: Registrations <fparegistrations\@corunna.com>
 To: $Addressees
-bcc: doug.conran\@corunna.com
+bcc: doug.conran49\@googlemail.com
 Subject: Your Request to FreePlus Accounts
 
 Unfortunately the email address you supplied has not been recognised.

@@ -1,0 +1,46 @@
+<div id="main" class="main">
+  <h2>Thank you for your subscription</h2>
+[% IF success == '1' -%]
+  <table style="padding:10px;" width="500" cellspacing="0" cellpadding="0" border="0" class="formtable">
+    <tr>
+      <td style="text-align:right;font-size:14px;" width="45%">New Subscription Level:</td>
+      <td width="55%"><span style="font-size:14px;font-weight:bold;">[%- subtitle -%]</span></td>
+    </tr>
+  </table>
+  <br/>
+  <h2>Subscription Details</h2>
+  <table style="padding:15px 30px;align:center;height:200px;" width="500" cellspacing="0" cellpadding="0" border="0" class="formtable">
+    <tr class="subblock">
+      <td width="180"><label>Subscription Type</label></td>
+      <td>[%- subtitle -%]</td>
+    </tr>
+    <tr class="subblock">
+      <td width="180"><label>Monthly Fee (incl VAT)</label></td>
+      <td>£[%- subamt -%]</td>
+    </tr>
+    <tr class="subblock">
+      <td width="180"><label>First Payment</label></td>
+      <td>[%- firstpayment -%]</td>
+    </tr>
+    <tr class="subblock">
+      <td width="180"><label>and thereafter</label></td>
+      <td>on or about the [%- recpayment -%] day of each month</td>
+    </tr>
+    <tr class="subblock">
+      <td colspan="2"><label>Please log out and then log back in to enable your subscription features.</label></td>
+    </tr>
+  </table>
+[% ELSE -%]
+  <table style="padding:10px;" width="500" cellspacing="0" cellpadding="0" border="0" class="formtable">
+    <tr>
+<td style="text-align:left;weight:bold;font-size:14px;">Unfortunately your bank has refused our request to set up the subscription payments.&nbsp;&nbsp;Please check for the reason with your bank and then try again later</td>
+    </tr>
+  </table>
+[% END -%]
+</div>
+<div id="sidebar">
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+  </div>
+</div>
+</form>
