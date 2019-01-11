@@ -101,6 +101,7 @@ $(document).ready(function(){
     "removeCompleted" : true
   });
 });
+
 function check_send() {
   if ($("#layid").val() == 0 && ($("#laydesc").val() == "" || $("#layfileQueue").html() == "")) {
     alert("You must enter a description and select a layout file when adding a new layout");

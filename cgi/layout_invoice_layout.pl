@@ -11,12 +11,26 @@ $COOKIE = &checkid($ENV{HTTP_COOKIE},$ACCESS_LEVEL);
 
 use DBI;
 $dbh = DBI->connect("DBI:mysql:$COOKIE->{DB}");
-$Layouts = $dbh->prepare("select * from invoice_layouts where acct_id='$COOKIE->{ACCT}' and id=$ENV{QUERY_STRING}");
+
+$Form_id = $ENV{QUERY_STRING};
+
+if ($Form_id < 1) {
+
+#  It must be a new one so find the last saved layout
+
+	$Layouts = $dbh->prepare("select id from invoice_layouts where acct_id='$COOKIE->{ACCT}' order by id desc limit 1");
+	$Layouts->execute;
+	@Layout = $Layouts->fetchrow;
+	$Layouts->finish;
+	$Form_id = $Layout[0];
+}
+
+$Layouts = $dbh->prepare("select * from invoice_layouts where acct_id='$COOKIE->{ACCT}' and id=$Form_id");
 $Layouts->execute;
 $Layout = $Layouts->fetchrow_hashref;
 $Layouts->finish;
 
-$LIs = $dbh->prepare("select * from invoice_layout_items where acct_id='$COOKIE->{ACCT}' and link_id=$ENV{QUERY_STRING} order by lifldcode");
+$LIs = $dbh->prepare("select * from invoice_layout_items where acct_id='$COOKIE->{ACCT}' and link_id=$Form_id order by lifldcode");
 $LIs->execute;
 $Next_item = $LIs->rows;
 $Next_item++;

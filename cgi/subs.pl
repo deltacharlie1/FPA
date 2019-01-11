@@ -51,22 +51,8 @@ function check_select(button) {
     alert("You have not selected any subscription option!");
   }
   else {
-    if (button == "T") {
-        $("#subaction").val(button);
-        $("#subs_form").attr("action","/cgi-bin/fpa/gclv2subs.pl");
-        document.forms["subs_form"].submit();
-    }
-    else {
-      if (button == "X") {
-        $("#subaction").val(button);
-        $("#subs_form").attr("action","/cgi-bin/fpa/gclv2subs.pl");
-        document.forms["subs_form"].submit();
-      }
-      else {
-        $("#subaction").val(button);
-        document.forms["subs_form"].submit();
-      }
-    }
+    $("#subaction").val(button);
+    document.forms["subs_form"].submit();
  }
 }
 </script>

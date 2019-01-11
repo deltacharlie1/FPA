@@ -14,7 +14,7 @@
 </tr>
 <tr>
 <td width="25%" align="right">To</td>
-<td width="75%"><select name="recipient"><option selected="selected">Sales</option><option>Customer Service</option><option>Technical Support</option></select></td>
+<td width="75%"><select name="recipient"><option selected="selected">Sales</option><option>Customer Service</option><option>Technical Support</option><option>Spam only</option></select></td>
 </tr>
 <tr>
 <td width="25%" align="right">Subject</td>

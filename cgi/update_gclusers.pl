@@ -22,13 +22,13 @@ use LWP::Protocol::https;
 use JSON;
 use DBI;
 
-my $dbh = DBI->connect("DBI:mysql:fpa3");
+my $dbh = DBI->connect("DBI:mysql:fpa");
 	
 my $ua = LWP::UserAgent->new;
 #my $req = HTTP::Request->new(GET => "https://gocardless.com/api/v1/merchants/$Merchant_id/bills?paid=true&after=2016-05-06T12:00:00Z");
 #my $req = HTTP::Request->new(GET => "https://gocardless.com/api/v1/merchants/$Merchant_id/subscriptions?user_id=CU0002KKZMDV0T");
 #my $req = HTTP::Request->new(GET => "https://gocardless.com/api/v1/merchants/$Merchant_id/subscriptions?status=active");
-my $req = HTTP::Request->new(GET => "https://gocardless.com/api/v1/merchants/$Merchant_id/users");
+my $req = HTTP::Request->new(GET => "https://gocardless.com/api/v1/merchants/$Merchant_id/users?status=active");
 $req->header('Content-Type' => 'text/plain');
 $req->header('Content-Length' => '0');
 $req->header('Accept' => 'application/json');
@@ -39,10 +39,16 @@ my $res = $ua->request($req);
 $Res_content = $res->content;
 $json = JSON->new->allow_nonref;
 $users_scalar = $json->decode($Res_content);
-
+$Count = 0;
 #print $Res_content;
 
 for $User (@{$users_scalar}) {
+	$Count++;
+
+	if ($User->{email} =~ /fowlersite/) {
+		$User->{email} = 'carol.fowler@hotmail.com';
+	}
+
 	$Sts = $dbh->do("update companies join registrations on companies.reg_id=registrations.reg_id set companies.comcusref='$User->{id}' where registrations.regemail='$User->{email}'");
 
 	if ($Sts < 1) {
@@ -53,4 +59,6 @@ for $User (@{$users_scalar}) {
 	}
 }
 $dbh->disconnect();
+
+print "\n\nNumber of customers found = $Count\n";
 exit;

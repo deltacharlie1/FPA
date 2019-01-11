@@ -26,7 +26,7 @@
 [%- FOREACH entry IN entries -%]
   [%- ndx = loop.count % 2 -%]
     <tr class="[%- class.$ndx -%]">
-  [% IF entry.datediff < 0 OR entry.stmt_id > 0 -%]
+  [% IF entry.datediff < 0 OR entry.stmt_id != "" -%]
       <td>[%- entry.txntxnno -%]</td>
       <td>[%- entry.tdate -%]</td>
       <td>[%- entry.coadesc -%]</td>

@@ -8,6 +8,9 @@ use DBI;
 my $dbh = DBI->connect("DBI:mysql:fpa");
 
 my $Authorization = 'Bearer sandbox_IGUCdnZP_2i58W518rZnAmQmGwiBwrGAqGQRnhSU';
+my $live_auth = 'Bearer live_m2elMSXaTSObKqlTGBGTmy3aMivybF94fROuZCej';
+
+
 my $Acct_id = "1444+5678";
 
 $Text = sprintf<<EOD;

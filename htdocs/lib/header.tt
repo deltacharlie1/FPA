@@ -166,6 +166,9 @@ $(document).ready(function(){
             <li><a href="/cgi-bin/fpa/list_invoices.pl?listorder=N">List Invoices</a></li>
             <li><a href="/cgi-bin/fpa/new_invoice.pl?S">Create New Invoice</a></li>
             <li><a href="/cgi-bin/fpa/new_invoice.pl?C">Create New Credit Note</a></li>
+        [% IF cookie.BACCT == '1+1' -%]
+            <li><a href="/cgi-bin/fpa/test_invoice_layouts.pl">Test Invoice Layouts</a></li>
+        [% END -%]
         [% IF cookie.ACCESS > 3 -%]
             <li><a href="/cgi-bin/fpa/list_invoice_layouts.pl">List Invoice Layouts</a></li>
             <li><a href="/cgi-bin/fpa/list_invoice_templates.pl">List Invoice Templates</a></li> 

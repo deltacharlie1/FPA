@@ -8,6 +8,10 @@
       <td><input type="text" name="laydesc" id="laydesc" size="30" value="[%- layout.laydesc -%]" class="mandatory"/></td>
     </tr>
     <tr>
+      <td>File to upload</td>
+      <td><input type="file" name="upld"/></td>
+    </tr>
+    <tr>
       <td style="vertical-align:middle;"><label>Select Invoice Layout File (up to 60k pdf)</label></td>
       <td><div style="vertical-align:middle;float:left;"><input name="layfile" id="layfile" type="file" size="30"/></div>[%- IF layout.layfile -%]<div style="float:left;height:20px;;padding:10px 0 0 15px;">([%- layout.layfile.remove('^.*/') -%])</div>[%- END -%]</td>
     </tr>

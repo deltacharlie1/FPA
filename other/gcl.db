@@ -7,6 +7,8 @@ create table gcls (
   gclmanid varchar(200) not null default '',
   gclsubid varchar(200) not null default '',
   gclpayid varchar(200) not null default '',
+  gclsub varchar(50) not null default '',
+  gclamt varchar(5) not null default '',
   gclsubdate date,
   gclpaydate date,
   index gcl1 (acct_id),

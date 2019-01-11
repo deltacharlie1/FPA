@@ -1,5 +1,5 @@
     <div class="leftcol largecol">
-<!--<center><div style="border:1px solid #d2944e;color:#87441c;background-color:#ffd9a6;margin:5px;font-size:18px;font-weight:normal;padding:10px;z-index:2;text-align:center;width:600px;">The system will be unavailable from 8pm Wednesday, 11th September until 8am Thursday, 12th September whilst we carry out Server Maintenance.&nbsp;&nbsp;Please ensure that you log off by then to avoid potential data corruption.</div></center>//-->
+<!-- <center><div style="border:1px solid #d2944e;color:#87441c;background-color:#ffd9a6;margin:5px;font-size:18px;font-weight:normal;padding:10px;z-index:2;text-align:center;width:600px;">GDPR and FreePlus Accounts - All data entered into FreePlus Accounts is for your use only.  Neither FreePlus Accounts nor Corunna Systems Ltd use any of this data (other than your email address) in any way either for our purposes or to sell to third parties.  The only time that we use your email address is, at your request, to send you a new password or memorable word.<br/><br/>Your data is yours and only yours.</div></center>  //-->
       <div id="frmlogin">
         <form action="/cgi-bin/fpa/login2.pl" method="post" name="form1" id="form1">
           <table width="100%" border="0" cellspacing="0" cellpadding="4">

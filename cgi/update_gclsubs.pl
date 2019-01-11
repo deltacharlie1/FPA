@@ -22,7 +22,7 @@ use LWP::Protocol::https;
 use JSON;
 use DBI;
 
-my $dbh = DBI->connect("DBI:mysql:fpa3");
+my $dbh = DBI->connect("DBI:mysql:fpa");
 	
 my $ua = LWP::UserAgent->new;
 #my $req = HTTP::Request->new(GET => "https://gocardless.com/api/v1/merchants/$Merchant_id/bills?paid=true&after=2016-05-06T12:00:00Z");
@@ -42,7 +42,10 @@ $users_scalar = $json->decode($Res_content);
 
 #print $Res_content;
 
+$Count = 0;
+
 for $User (@{$users_scalar}) {
+	$Count++;
 	$Sts = $dbh->do("update companies set comsubref='$User->{id}' where comcusref='$User->{user_id}'");
 
 	if ($Sts < 1) {
@@ -53,4 +56,5 @@ for $User (@{$users_scalar}) {
 	}
 }
 $dbh->disconnect();
+print "\n\nNumber of subs updated = $Count\n";
 exit;

@@ -28,7 +28,7 @@ my $ua = LWP::UserAgent->new;
 my $req = HTTP::Request->new(GET => "https://gocardless.com/api/v1/merchants/$Merchant_id/users?id=CU0001P63Y6R2C");
 $req->header('Content-Type' => 'text/plain');
 $req->header('Content-Length' => '0');
-$req->header('Accept' => 'application/json');
+$re->header('Accept' => 'application/json');
 $req->header('Authorization' => $Authorization);
 
 my $res = $ua->request($req);

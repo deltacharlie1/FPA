@@ -24,6 +24,7 @@ use DBI;
 $Success = 0;
 
 my $Authorization = 'Bearer sandbox_IGUCdnZP_2i58W518rZnAmQmGwiBwrGAqGQRnhSU';
+my $Live_Auth = 'Bearer live_m2elMSXaTSObKqlTGBGTmy3aMivybF94fROuZCej';
 
 $dbh = DBI->connect("DBI:mysql:fpa");
 $Companies = $dbh->prepare("select id,reg_id,comflowsref,comsubtype from companies where comflowsref='$Flow'");
@@ -46,12 +47,12 @@ EOD
 $Text_length = length($Text);
 
 my $ua1 = LWP::UserAgent->new;
-my $req1 = HTTP::Request->new(POST => "https://api-sandbox.gocardless.com/redirect_flows/$Flow/actions/complete");
+my $req1 = HTTP::Request->new(POST => "https://api.gocardless.com/redirect_flows/$Flow/actions/complete");
 
 $req1->header('Content-Type' => 'application/json');
 $req1->header('Content-Length' => $Text_length);
 $req1->header('Accept' => 'application/json');
-$req1->header('Authorization' => $Authorization);
+$req1->header('Authorization' => $Live_Auth);
 $req1->header('GoCardless-Version' => '2015-07-06');
 $req1->content($Text);
 
@@ -85,12 +86,12 @@ $Subtext = sprintf<<EOD;
 EOD
 $Subtext_length = length($Subtext);
 my $ua2 = LWP::UserAgent->new;
-my $req2 = HTTP::Request->new(POST => "https://api-sandbox.gocardless.com/subscriptions");
+my $req2 = HTTP::Request->new(POST => "https://api.gocardless.com/subscriptions");
 
 $req2->header('Content-Type' => 'application/json');
 $req2->header('Content-Length' => $Subtext_length);
 $req2->header('Accept' => 'application/json');
-$req2->header('Authorization' => $Authorization);
+$req2->header('Authorization' => $Live_Auth);
 $req2->header('GoCardless-Version' => '2015-07-06');
 $req2->content($Subtext);
 
@@ -129,12 +130,12 @@ EOD
 		$Mantext_length = length($Mantext);
 
 		my $ua4 = LWP::UserAgent->new;
-		my $req4 = HTTP::Request->new(POST => "https://api-sandbox.gocardless.com/mandates/$Company->{commandateref}/actions/cancel");
+		my $req4 = HTTP::Request->new(POST => "https://api.gocardless.com/mandates/$Company->{commandateref}/actions/cancel");
 
 		$req4->header('Content-Type' => 'application/json');
 		$req4->header('Content-Length' => $Mantext_length);
 		$req4->header('Accept' => 'application/json');
-		$req4->header('Authorization' => $Authorization);
+		$req4->header('Authorization' => $Live_Auth);
 		$req4->header('GoCardless-Version' => '2015-07-06');
 		$req4->content($Mantext);
 		my $res4 = $ua4->request($req4);
@@ -163,12 +164,12 @@ EOD
 
 	$Paytext_length = length($Paytext);
 	my $ua3 = LWP::UserAgent->new;
-	my $req3 = HTTP::Request->new(POST => "https://api-sandbox.gocardless.com/payments");
+	my $req3 = HTTP::Request->new(POST => "https://api.gocardless.com/payments");
 
 	$req3->header('Content-Type' => 'application/json');
 	$req3->header('Content-Length' => $Paytext_length);
 	$req3->header('Accept' => 'application/json');
-	$req3->header('Authorization' => $Authorization);
+	$req3->header('Authorization' => $Live_Auth);
 	$req3->header('GoCardless-Version' => '2015-07-06');
 	$req3->content($Paytext);
 

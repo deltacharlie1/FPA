@@ -59,25 +59,30 @@ EOD
 }
 else {
 
+	unless ($FORM{recipient} =~ /Spam/i || $FORM{email} =~ /yandex/i || $FORM{message} =~ /http/i) {
 #  First send the message to FreePlus Accounts (me ;-)
 
-	open(EMAIL,"| /usr/sbin/sendmail -F \"FreePlus Accounts\" -f \"freeplus\@corunna.com\" -t");
+		if ($FORM{message} =~ /http/i) {
+			 $Spam = " ###  SPAM!  ### ";
+		}
 
-	print EMAIL <<EOD;
+		open(EMAIL,"| /usr/sbin/sendmail -F \"FreePlus Accounts\" -f \"freeplus\@corunna.com\" -t");
+
+		print EMAIL <<EOD;
 To: doug.conran49\@googlemail.com
-Subject: $FORM{subject} (for $FORM{recipient})
+Subject: $FORM{subject} (for $FORM{recipient}$Spam)
 
 From $FORM{name} <$FORM{email}>
 
 $FORM{message}
 EOD
-	close(EMAIL);
+		close(EMAIL);
 
-	if ($FORM{copy}) {
+		if ($FORM{copy}) {
 
-		open(EMAIL,"| /usr/sbin/sendmail -F \"FreePlus Accounts Auto Responder\" -f \"freeplus\@corunna.com\" -t");
+			open(EMAIL,"| /usr/sbin/sendmail -F \"FreePlus Accounts Auto Responder\" -f \"freeplus\@corunna.com\" -t");
 
-		print EMAIL <<EOD;
+			print EMAIL <<EOD;
 To: $FORM{email}
 Subject:$FORM{subject}
 
@@ -89,9 +94,9 @@ $FORM{message}
 
 ----------  Message End   ------------
 EOD
+		}
+		close(EMAIL);
 	}
-	close(EMAIL);
-
 #  re configure the To field
 
 	if ($FORM{recipient} =~ /sales/) {

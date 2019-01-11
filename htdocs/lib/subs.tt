@@ -1,5 +1,5 @@
 <div id="main" class="main">
-  <form name="subs_form" id="subs_form" method="POST" action="/cgi-bin/fpa/subs2.pl">
+  <form name="subs_form" id="subs_form" method="POST" action="/cgi-bin/fpa/gclv2subs.pl">
   <input type="hidden" name="subaction" id="subaction" value=""/>
   <table style="padding:10px;" width="660" cellspacing="0" cellpadding="0" border="0" class="formtable">
     <tr>

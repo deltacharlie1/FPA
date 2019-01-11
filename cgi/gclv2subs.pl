@@ -28,6 +28,7 @@ use Checkid;
 my $dbh = DBI->connect("DBI:mysql:fpa");
 
 my $Authorization = 'Bearer sandbox_IGUCdnZP_2i58W518rZnAmQmGwiBwrGAqGQRnhSU';
+my $Live_Auth = 'Bearer live_m2elMSXaTSObKqlTGBGTmy3aMivybF94fROuZCej';
 
 $ACCESS_LEVEL = 1;
 
@@ -64,7 +65,7 @@ $Companies->finish;
 
 ($First_name,$Last_name) = split(/\s+/,$Company->{regusername});
 
-if ($FORM{subaction} =~ /T/i) {
+if ($FORM{subaction} =~ /S/i) {
 
 #  Set up JSON input
 
@@ -88,12 +89,12 @@ EOD
 	$Text_length = length($Text);
 
 	my $ua = LWP::UserAgent->new;
-	my $req = HTTP::Request->new(POST => "https://api-sandbox.gocardless.com/redirect_flows");
+	my $req = HTTP::Request->new(POST => "https://api.gocardless.com/redirect_flows");
 
 	$req->header('Content-Type' => 'application/json');
 	$req->header('Content-Length' => $Text_length);
 	$req->header('Accept' => 'application/json');
-	$req->header('Authorization' => $Authorization);
+	$req->header('Authorization' => $Live_Auth);
 	$req->header('GoCardless-Version' => '2015-07-06');
 	$req->content($Text);
 
@@ -114,7 +115,12 @@ Location: $Url
 
 EOD
 }
-elsif ($FORM{subaction} =~ /X/i) {
+
+#  Else it is a cancellation
+
+elsif ($FORM{subaction} =~ /C/i) {
+
+warn "Reg id = $Reg_id\tCom id = $Com_id\n";
 
 	$Mantext = sprintf<<EOD;
 {
@@ -131,16 +137,20 @@ EOD
 	$Sts = $dbh->do("update companies set comsubtype='00' where id=$Com_id");
 
 	my $ua4 = LWP::UserAgent->new;
-	my $req4 = HTTP::Request->new(POST => "https://api-sandbox.gocardless.com/mandates/$Company->{commandateref}/actions/cancel");
+warn "URL = https://api.gocardless.com/mandates/$Company->{commandateref}/actions/cancel\n";
+
+	my $req4 = HTTP::Request->new(POST => "https://api.gocardless.com/mandates/$Company->{commandateref}/actions/cancel");
 
 	$req4->header('Content-Type' => 'application/json');
 	$req4->header('Content-Length' => $Mantext_length);
 	$req4->header('Accept' => 'application/json');
-	$req4->header('Authorization' => $Authorization);
+	$req4->header('Authorization' => $Live_Auth);
 	$req4->header('GoCardless-Version' => '2015-07-06');
 	$req4->content($Mantext);
 	my $res4 = $ua4->request($req4);
 	$Res4_content = from_json($res4->content);
+
+warn "res4 = $res4_content\n";
 
 	$Vars = {
 	 ads => $Adverts, cookie => $COOKIE,

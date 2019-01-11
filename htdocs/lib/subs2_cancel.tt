@@ -2,17 +2,17 @@
   <table style="padding:10px;" width="660" cellspacing="0" cellpadding="0" border="0" class="formtable">
     <tr>
       <td style="text-align:right;font-size:14px;" width="45%">Current Subscription Level:</td>
-      <td width="55%"><span style="font-size:14px;font-weight:bold;">[%- membership -%]</span></td>
+      <td width="55%"><span style="font-size:14px;font-weight:bold;">[%- cursub -%]</span></td>
     </tr>
   </table>
   <br/>
-  <h2>Your Subscription</h2>
+  <h2>Your Subscription - [%- status -%]</h2>
   <table style="padding:15px 30px;" width="660" cellspacing="0" cellpadding="0" border="0" class="formtable">
     <tr>
 [% IF status == 'cancelled' -%]
-      <td>Your subscription has been cancelled and you will revert to [%- membership -%] on [%- company.comsubdue -%].</td>
+      <td>We're sorry to see you go and you may, of course, renew your subscription at any time<p>Your subscription has been cancelled and you will revert to [%- membership -%] on [%- subdue -%].</td>
 [% ELSE -%]
-      <td>Your subscription has been NOT been cancelled.</td>
+      <td>We have been unable to cancel your subscription, would you please do this directly with your bank.&nbsp;&nbsp;You will revert to [%- membership -%] on [%- subdue -%].</td>
 [% END -%]
     </tr>
   </table>

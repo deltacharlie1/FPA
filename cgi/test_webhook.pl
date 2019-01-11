@@ -38,11 +38,11 @@ $PP =  $json->pretty->encode( $events_scalar );
 
 chomp($Now);
 
-open(FILE,'>>/tmp/gcl.txt');
+open(FILE,'>>/tmp/gcl2.txt');
 
 print FILE<<EOD;
 
-============== $Now  ==================
+============== $Now (sandbox)n ==================
 $PP
 EOD
 
@@ -54,7 +54,7 @@ use MIME::Base64;
 
 require "/usr/local/git/fpa/cgi/pdf_sub_invoice.ph";
 
-$dbh = DBI->connect("DBI:mysql:fpa");
+$dbh = DBI->connect("DBI:mysql:fpa3");
 
 $Today = `date +%Y-%m-%d`;
 chomp($Today);
@@ -71,6 +71,8 @@ $Pound = chr(163);
 @Sub_name = ("FreePlus Free Edition \@ FREE","FreePlus Bookkeeper Basic \@ ${Pound}5.00pm","FreePlus Standard \@ ${Pound}5.00pm","FreePlus Bookkeeper Standard \@ ${Pound}10.00pm","FreePlus Premium \@ ${Pound}10.00pm","FreePlus Bookkeeper Premium \@ ${Pound}20.00pm");
 @Sub_amt = ("0.00","5.00","5.00","10.00","10.00","20.00");
 @Sub_vat = ("0.00","1.00","1.00","2.00","2.00","4.00");
+my $Events_summary = "Status\t\tAction\t\tSub\t\t\tPayment\n";
+$Events_summary .=   "======\t\t======\t\t=========\t========\n";
 
 #$json = JSON->new->allow_nonref;
 #$events_scalar = $json->decode($Buffer);
@@ -81,29 +83,17 @@ for $Event ( @{$Events} ) {
 #  Find the gcl record for this subscription and update the payment ID
 
 		$Sts = $dbh->do("update companies set compayref='$Event->{links}->{payment}' where comsubref='$Event->{links}->{subscription}'");
-print " Created Status : $Sts\n";
+		$Events_summary .= "$Sts\t\tCreated\t\t$Event->{links}->{subscription}\t\t$Event->{links}->{payment}\n";
 	} elsif ($Event->{'resource_type'} =~ /payments/ && $Event->{'action'} =~ /confirmed/i) {
 
 		$Event->{created_at} =~ s/T.*//;
 		$Sts = $dbh->do("update companies set comsubdue=date_add('$Event->{created_at}',interval 1 month) where compayref='$Event->{links}->{payment}'");
-		if ($Sts < 1) {
-
-        		open(EMAIL,"| /usr/sbin/sendmail -t");
-		        print EMAIL<<EOD;
-From: FreePlus Accounts <fpainvoices\@corunnasystems.co.uk>
-To: doug.conran49i\@googlemail.com
-Subject: Failed Payment Allocation for $Event->{links}->{payment}
-Message-Id: <$$vent->{links}->{payment}>
-
-Failed payment for $Event->{links}->{payment}
-EOD
-			close(EMAIL);
-		}
-		else {
+		$Events_summary .= "$Sts\t\tSubmitted\t$Event->{links}->{subscription}\t\t$Event->{links}->{payment}\n";
+		if ($Sts > 0) {
 
 #  Add a subscription invoice
 
-	                $Companies = $dbh->prepare("select reg_id,id,comsublevel,comname,comaddress,compostcode,regemail,date_format('$Event->{created_at}','%D %M %Y') as datepaid from companies left join registrations using (reg_id) where comsubref='$Event->{links}->{payment}'");
+	                $Companies = $dbh->prepare("select reg_id,id,comsublevel,comname,comaddress,compostcode,regemail,date_format('$Event->{created_at}','%D %M %Y') as datepaid from companies left join registrations using (reg_id) where compayref='$Event->{links}->{payment}'");
         	        $Companies->execute;
                 	$Company = $Companies->fetchrow_hashref;
 	                $Companies->finish;
@@ -150,6 +140,21 @@ Status: 200 OK
 
 EOD
 
+open(DOUGMAIL,"| /usr/sbin/sendmail -t");
+print DOUGMAIL<<EOD;
+From: FreePlus Accounts <fpainvoices\@corunna.com>
+To: doug.conran\@corunna.com
+Subject: GoCardless Webhook Summary
+
+Event Summary:-
+
+$Events_summary
+
+=================  JSON  ============
+$Buffer
+EOD
+close(DOUGMAIL);
+
 exit;
 sub send_email {
         ($PDF_data) = &pdf_invoice();
@@ -163,7 +168,7 @@ From: FreePlus Accounts <fpainvoices\@corunnasystems.co.uk>
 To: doug.conran49i\@googlemail.com
 Bcc: doug.conran\@corunna.com
 Subject: Your FreePlus Subscription Invoice (Test)
-Message-Id: <$$vent->{links}->{payment}>
+Message-Id: <$Event->{links}->{payment}>
 MIME-Version: 1.0
 Content-Type: multipart/mixed;
         boundary="----=_NextPart_000_001D_01C0B074.94357480"
@@ -199,16 +204,6 @@ EOD
 
 EOD
         close(EMAIL);
-
-        open(DOUGMAIL,"| /usr/sbin/sendmail -t");
-        print DOUGMAIL<<EOD;
-From: FreePlus Accounts <fpainvoices\@corunna.com>
-To: doug.conran\@corunna.com
-Subject: JSON subscription
-
-$Buffer
-EOD
-close(DOUGMAIL);
 }
 
 
