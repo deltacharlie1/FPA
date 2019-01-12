@@ -1,5 +1,6 @@
 <div class="main" id="main">
 <form action="/cgi-bin/fpa/company_details2.pl" method="post" enctype="multipart/form-data" name="form1" id="form1" autocomplete="off">
+<input type="hidden" name="session" id="session" value="[%- cookie.COOKIE -%]"/>
 <h1>Company Details</h1>
   <table width="660" border="0" cellpadding="0" cellspacing="0" class="formtable">
 [%- UNLESS client.comcompleted -%]
@@ -150,8 +151,8 @@
     </tr>
 [% IF cookie.PLAN > 3 OR client.pt_logo > 0 -%]
     <tr>
-      <td style="vertical-align:middle;"><label>Company Logo (up to 64k jpg or png, max size 280 x 95)</label></td>
-      <td><div style="vertical-align:middle;float:left;"><input name="comlogo" id="comlogo" type="file" size="30"/></div><div style="vertical-align:middle;float:left;padding-left:10px;">[%- IF client.comlogo != NULL -%]<img src="/cgi-bin/fpa/display_logo.pl"/>[%- END -%]</div></td>
+      <td style="vertical-align:middle;"><label>Company Logo (up to 64k jpg, max size 280 x 95)</label></td>
+      <td><div style="vertical-align:middle;float:left;"><input name="comlogo" id="comlogo" type="file" size="30"/></div><div style="vertical-align:middle;float:left;padding-left:10px;" name="logoimg" id="logoimg">[%- IF client.comlogo != NULL -%]<img src="/cgi-bin/fpa/display_logo.pl"/>[%- END -%]</div></td>
     </tr>
 [% END -%]
 [% IF cookie.PLAN > 3 -%]

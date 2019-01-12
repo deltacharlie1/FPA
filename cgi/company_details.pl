@@ -61,18 +61,28 @@ $Layouts->finish;
 
 $Loadify = "";
 if ($COOKIE->{ACCESS} > 3 || $COOKIE->{PT_LOGO} =~ /1/) {
+	$Loadify0 = sprintf<<EOD;
+<link rel="stylesheet" href="/css/pekeupload.css" type="text/css"/>
+<script type="text/javascript" src="/js/pekeUpload.js"></script>
+EOD
 	$Loadify1 = sprintf<<EOD;
-  \$("#comlogo").uploadify({
-    "uploader"    : "/js/uploadify.swf",
-    "script"      : "/cgi-bin/fpa/uploadify.pl",
-    "cancelImg"   : "/js/cancel.png",
-    "scriptData"  : {"cookie" : "$COOKIE->{COOKIE}", "doc_type" : "LOGO" },
-    "onComplete"  : function() { window.location.reload(true); },
-    "buttonText"  : "Select Logo",
-    "fileExt"     : "*.jpg;*.png",
-    "fileDesc"    : "Image Files (JPG,PNG)",
-    "sizeLimit"   : 65536,
-    "auto"        : true
+  \$("#comlogo").pekeUpload({
+    url                : "/cgi-bin/fpa/add_logo.pl",
+    form               : "#form1",
+    btnText            : "Select Logo",
+    onSubmit           : false,
+    invalidExtError    : "Invalid file type.  Must be JPG",
+    sizeError          : "File is too large - must be 60k or less",
+    allowedExtensions  : "jpg",
+    maxSize            : 0.064,
+    limit              : 1,
+    limitError         : "Only one logo can be uploaded",
+    onFileError        : function(file,data) {
+      \$("#logoimg").html("<img src=\'/cgi-bin/fpa/display_logo.pl\'>");
+    },
+    onFileSuccess      : function(file,data) {
+      \$("#logoimg").html("<img src=\'/cgi-bin/fpa/gen_logo.pl?"+\$("#session").val()+"\'>");
+    }
   });
 EOD
 }
@@ -96,7 +106,7 @@ $Vars = {
         dep => $Acct->{1210},
         card => $Acct->{2010},
 	invoice => $Invoice,
-        javascript => '<script type="text/javascript"> 
+        javascript => $Loadify0.'<script type="text/javascript"> 
 var errfocus = "";
 $(document).ready(function(){
 '.$Loadify1.'

@@ -62,6 +62,12 @@ else {
 
 }
 
+$Layout_Text = "Add New Layout";
+if ($Layout->{id} > 0) {
+	$Layout->{layfile} =~ s/^.*\/(.*)$/$1/;
+	$Layout_Text = "Select --> ".$Layout->{layfile};
+}
+	
 use Template;
 $tt = Template->new({
         INCLUDE_PATH => ['.','/usr/local/httpd/htdocs/fpa/lib'],
@@ -76,53 +82,31 @@ $Vars = {
 	layout => $Layout,
 	revs => $Rev,
 	lis => $LI,
-        javascript => '<script type="text/javascript"> 
+        javascript => '<link rel="stylesheet" href="/css/pekeupload.css" type="text/css"/>
+<script type="text/javascript" src="/js/pekeUpload.js"></script>
+<script type="text/javascript"> 
 var errfocus = "";
 var uploadparms = "";
 $(document).ready(function(){
-  $("#layfile").uploadify({
-    "uploader"    : "/js/uploadify.swf",
-    "script"      : "/cgi-bin/fpa/add_invoice_layout2.pl",
-    "cancelImg"   : "/js/cancel.png",
-    "scriptData"  : {"cookie" : "'.$COOKIE->{COOKIE}.'", "doc_type" : "LAYOUT" },
-    "buttonText"  : "Select Layout",
-    "fileExt"     : "*.pdf;*.jpg;*.png",
-    "fileDesc"    : "Invoice Layout Files (PDF,JPG,PNG)",
-    "sizeLimit"   : 102400,
-    "auto"        : false,
-    "onComplete" : function(a,b,c,d,e) {
-                     if (/Error/i.test(d)) {
-                       alert(d);
-                     }
-                     else {
-                       location.href="/cgi-bin/fpa/layout_invoice_layout.pl?" + d;
-                     }
-                   },
-    "removeCompleted" : true
+  $("#layfile").pekeUpload({
+    url                : "/cgi-bin/fpa/add_invoice_layout2c.pl",
+    form               : "#layform",
+    btnText            : "Select Layout to Upload and Use",
+    onSubmit           : true,
+    invalidExtError    : "Invalid file type.  Must be PDF, JPG or PNG",
+    sizeError          : "File is too large - must be 60k or less",
+    allowedExtensions  : "pdf|jpg|png",
+    maxSize            : 20,
+    limit              : 1,
+    limitError         : "Only one layout can be uploaded at a time",
+    onFileSuccess      : function(file,error) {
+      location.href="/cgi-bin/fpa/layout_invoice_layout.pl?"+$("#layid").val();
+    }
   });
 });
 
 function check_send() {
-  if ($("#layid").val() == 0 && ($("#laydesc").val() == "" || $("#layfileQueue").html() == "")) {
-    alert("You must enter a description and select a layout file when adding a new layout");
-  }
-  else {
-    if ($("#layfileQueue").html() == "") {
-        $.post("/cgi-bin/fpa/add_invoice_layout2.pl", "cookie='.$COOKIE->{COOKIE}.'&doc_type=LAYOUT&"+$("#layform").serialize(),function(data) {
-          if (/Error/i.test(data)) {
-            alert(data);
-          }
-          else {
-            location.href="/cgi-bin/fpa/layout_invoice_layout.pl?" + data;
-          }
-        },"text");
-
-    }
-    else {
-      $("#layfile").uploadifySettings( "scriptData",{ "uploadparms" : $("#layform").serialize() });
-      $("#layfile").uploadifyUpload();
-    }
-  }
+  alert("Check Send Called");
 }
 function setfocus() {
   eval("document.getElementById(\'" + errfocus + "\').focus();");
