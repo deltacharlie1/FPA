@@ -59,7 +59,7 @@ EOD
 }
 else {
 
-	unless ($FORM{recipient} =~ /Spam/i || $FORM{email} =~ /yandex/i || $FORM{message} =~ /http/i) {
+	unless ($FORM{recipient} =~ /Spam/i || $FORM{email} =~ /yandex/i || $FORM{message} =~ /http/i || $FORM{message} =~ /bitcoin/i) {
 #  First send the message to FreePlus Accounts (me ;-)
 
 		if ($FORM{message} =~ /http/i) {

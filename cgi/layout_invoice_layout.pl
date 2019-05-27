@@ -110,10 +110,10 @@ $(document).ready(function(){
     drag       : function (event,ui) {
                    $("#notifier").css({ "top":ui.position.top + 2, "left":ui.position.left + itemwidth });
                    if (/53/.test($(this).css("border-right-color"))) {
-                     $("#notifier").html((ui.position.left+itemwidth) + " x " + ui.position.top);
+                     $("#notifier").html((ui.position.left+itemwidth) + " x " + parseInt(ui.position.top));
                    }
                    else {
-                     $("#notifier").html(ui.position.left + " x " + ui.position.top);
+                     $("#notifier").html(ui.position.left + " x " + parseInt(ui.position.top));
                    }
                  }
   });
