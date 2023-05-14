@@ -3,6 +3,7 @@ sub pdf_invoice {
 use PDF::API2;
 
 my $pdf = PDF::API2->open('/usr/local/git/fpa/htdocs/images/sub_invoice_template.pdf');
+#########  my $pdf = PDF::API2->open('/usr/local/git/fpa/htdocs/images/sub_invoice_template_edited.pdf');
 my $font = $pdf->corefont('Helvetica');
 my $font_bold = $pdf->corefont('Helvetica Bold');
 
@@ -38,10 +39,13 @@ foreach (@Line) {
 	$text->cr(-14);
 }
 
+my $Total = sprintf('%1.2f',$Inv_net + $Inv_vat);
+
 $text->translate(70,455);	#  Description
 $text->text($Inv_desc);
 $text->translate(529,455);	#  Net Amount
-$text->text_right($Inv_net);
+###########$text->text_right($Inv_net);
+$text->text_right($Total);
 
 if ($Inv_status =~ /^Due/i) {
 	$text->translate(70,415);	#  Due Remark
@@ -49,12 +53,12 @@ if ($Inv_status =~ /^Due/i) {
 }
 
 $text->translate(529,197);
-$text->text_right($Inv_net);
+############$text->text_right($Inv_net);
+$text->text_right($Total);
 
-$text->translate(529,163);
-$text->text_right($Inv_vat);
-
-my $Total = sprintf('%1.2f',$Inv_net + $Inv_vat);
+##############  Remove next 2 lines
+###$text->translate(529,163);
+###$text->text_right($Inv_vat);
 
 $text->font($font_bold,14);
 $text->translate(531,132);

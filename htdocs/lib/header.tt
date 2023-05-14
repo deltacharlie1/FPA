@@ -172,6 +172,7 @@ $(document).ready(function(){
         [% END -%]
             <li><a href="#" onclick="display_form('I');">Record Money In</a></li>
             <li><a href="/cgi-bin/fpa/list_customers.pl">List Customers</a></li>
+            <li><a href="/cgi-bin/fpa/list_debtors.pl">List Debtors</a></li>
             <li><a href="/cgi-bin/fpa/add_address.pl?C">Add New Customer</a></li>
           </ul>
         </li>

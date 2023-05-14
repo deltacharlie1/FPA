@@ -4,8 +4,12 @@
 
 $ACCESS_LEVEL = 0;
 
+warn "About to call Checkid\n";
+
 use Checkid;
 $COOKIE = &checkid($ENV{HTTP_COOKIE},$ACCESS_LEVEL);
+
+warn "Past Checkid\n";
 
 use DBI;
 

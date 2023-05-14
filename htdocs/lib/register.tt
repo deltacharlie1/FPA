@@ -9,84 +9,10 @@
         <td><h1>FreePlus Accounts Registration</h1></td>
       </tr>
       <tr>
-        <td style="text-align:left;"><p>Thank you for trying FreePlus Accounts.&nbsp;&nbsp;To get started we first need to collect a few details so as to ensure that only you have access to the account you are about to set up.&nbsp;&nbsp;We take security very seriously indeed (you can read our Privacy Policy <a href="/privacypolicy.html">here</a> for full details) and you can be assured that none of your details are <b><i>ever</i></b> passed on to any third parties.&nbsp;&nbsp;What is private remains private.</p>
-            <p>Please note that throughout this system input fields that have a <span style="background-color:#f8e8c8;padding:2px 5px;border:1px solid #a77743;">beige</span> coloured background (also marked by a red asterisk [<span style="font-size:20px;font-weight:bold;color:red;vertical-align:bottom;">*</span>]) are mandatory fields and have to be completed</p>
-            <p>You must complete <b>ALL</b> fields</p>
-          <form action="/cgi-bin/fpa/register2.pl" method="post" name="form1" id="form1">
-          <input type="hidden" name="react" id="react" value="N"/>
-          <div style="position:relative;">
-<!--          <div style="position:absolute;left:460px;top:-60px"><img src="/images/bonus.png" onclick="do_bonusfeatures();"/></div>  -->
-          <table border="0" cellpadding="0" cellspacing="0" id="registertable">
-            <tr>
-              <td>&nbsp;</td>
-            </tr>
-            <tr>
-              <td><label>Your Email Address<br />
-                <span class="subnote" style="text-align:right;">(used as your login id)</span></label>
-              </td>
-              <td><span><input name="email" type="text" id="email" size="25" class="mandatory" title="Email Address"/></span></td>
-            </tr>
-            <tr>
-              <td><label>Password<br/><span class="subnote">(at least 6 characters [other than apostrophe])</span></label></td>
-              <td><span><input name="pwd1" type="password" id="pwd1" size="25" class="mandatory" title="Password"/></span></td>
-            </tr>
-            <tr>
-              <td><label>Confirm your Password</label></td>
-              <td><span><input name="pwd2" type="password" id="pwd2" size="25" class="mandatory" title="Password confirmation"/></span></td>
-            </tr>
-            <tr>
-              <td><label>Choose a memorable word<br />
-                <span class="subnote">(at least 8 letters,numbers or spaces)</span></label>
-              </td>
-              <td><span><input name="mem1" type="password" id="mem1" size="25" class="mandatory" title="Memorable Word"/></span>&nbsp;<a href="#" class="extra" style="padding-right:20px;float:right;color:#0175c6;font-weight:bold;" rel="#memwd" rev="Memorable Word">What is this for?</a></td>
-            </tr>
-            <tr>
-              <td><label>Confirm your memorable word</label></td>
-              <td ><span><input name="mem2" type="password" id="mem2" size="25" class="mandatory" title="Memorable Word Confirmation"/></span></td>
-            </tr>
-            <tr>
-              <td><label>Your Name</label></td>
-              <td><span><input name="name" type="text" id="name" size="25" class="mandatory" title="Your Name"/></span></td>
-            </tr>
-            <tr>
-              <td><label>Company Name</label></td>
-              <td ><span><input name="company" type="text" id="company" size="25" class="mandatory" title="company Name"/></span></td>
-            </tr>
-            <tr>
-              <td valign="top"><label>How did you hear of Us?</label></td>
-              <td style="padding-left:15px;"><textarea style="background-color:#fff;border-top:2px solid #999999; border-left:2px solid #999999;border-bottom:1px solid #ffffff;border-right:1px solid #ffffff;" name="referer" id="referer" cols="25" rows="2" title="How did you hear about us?"></textarea></br><span style="color:#999999;font-size:10px;">(up to 200 characters)</td>
-            </tr>
-            <tr>
-              <td><label>Promotional Code</label></td>
-              <td><input name="promo" type="text" id="promo" size="10" title="Any Promotional Code you may have been given"/></td>
-            </tr>
-            <tr>
-              <td colspan="2" align="center" ><span><input name="tc" type="checkbox" id="tc" value="checkbox" class="mandatory" title="Terms and Conditions" onclick="document.getElementById('but2').disabled = ! document.getElementById('but2').disabled;"/></span>
-                    Confirm that you have read and accept our <a href="#" onclick="window.open('/https://www.freeplusaccounts.co.uk/terms-conditions','legal','scrollbars=1,resizable=1,height=800,width=1000');">Terms &amp; Conditions </a>
-              </td>
-            </tr>
-            <tr>
-              <td style="text-align:center;font-size:120%;font-weight:bold;">- OR -</td>
-              <td><a href="#" onclick="reactivate();">Just resend my activation email</a><br/>(Please enter your registered email address)</td>
-            </tr>
-            <tr>
-              <td colspan="2" style="text-align:center;height:40px;">
-                <input name="but2" type="button" id="but2" value="Sign Up!" disabled="disabled" onclick="validate();"/>
-              </td>
-            </tr>
-          </table></div>
-          </form>
-        </tr>
-      </table>
+        <td style="text-align:left;"><p>Thank you for your interest in FreePlus Accounts, unfortunately we are not accepting any new registrations at this time. Thank you for oyur understandiong.</p>
     </td>
   </tr>
 </table>
 <p>&nbsp;</p>
-<div style="display:none;">
-  <div id="memwd"><p>Your memorable word is used for additional security.&nbsp;&nbsp;When you log in, as well as your password, you will be asked for 3 random characters from your memorable word.&nbsp;&nbsp;These random characters will change each time you log in.</p>
-  </div>
-  <div id="memplan"><p>Use of <b><i>FreePlus Accounts</i></b> is free as long as you agree to receive our newsletter and allow adverts on the application pages.&nbsp;&nbsp;You may elect to stop receiving the newsletter and/or adverts at any time, once registered, by unchecking the appropriate checkbox in the Registration Details page.&nbsp;&nbsp;However, if you choose to do this you will no longer be able to use the free system.</p>
-  </div>
-</div>
 </div>
 </div>

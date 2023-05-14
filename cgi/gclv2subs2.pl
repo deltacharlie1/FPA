@@ -10,8 +10,8 @@ use LWP::UserAgent;
 use DBI;
 
 #  0  -  FreePlus Free (£0pm)
-#  1  -  Freeplus Basic (Bookeeper) (£5)
-#  2  -  Freeplus Standard (£5)
+#  1  -  Freeplus Basic (Bookeeper) (£5.50)
+#  2  -  Freeplus Standard (£5.5-)
 #  3  -  Freeplus Standard Bookkeeper (£10)
 #  4  -  Freeplus Premium  (£10)
 #  5  -  Freeplus Premium Bookkeeper  (£20)
@@ -19,7 +19,7 @@ use DBI;
 #  Set up strings to send to GCL
 
 @Sub_name=("FreePlus Free Edition","Bookkeeper Basic","FreePlus Standard","Bookkeeper Standard","FreePlus Premium","Bookkeeper Premium");
-@Sub_amt = ("000","600","600","1200","1200","2400");
+@Sub_amt = ("000","660","660","1200","1200","2400");
 @Sub_mem=("1","3","4","5","6","8");
 $Success = 0;
 

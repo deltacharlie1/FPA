@@ -1,0 +1,64 @@
+<form method="post" name="layform" id="layform">
+<div class="main" id="main">
+<h1>Invoice Layout Details</h1>
+  <input type="hidden" name="dummy" id="dummy value=""/>
+  <table width="660" border="0" cellpadding="0" cellspacing="0" class="formtable">
+    <tr>
+      <td><label>Layout Description</label></td>
+      <td><input type="text" name="laydesc" id="laydesc" size="30" value="[%- layout.laydesc -%]" class="mandatory"/></td>
+    </tr>
+    <tr>
+      <td style="vertical-align:middle;"><label>Select Invoice Layout File (up to 60k pdf)</label></td>
+      <td><div style="vertical-align:middle;float:left;"><input name="layfile" id="layfile" type="file" size="30"/></div>[%- IF layout.layfile -%]<div style="float:left;height:20px;;padding:10px 0 0 15px;">([%- layout.layfile.remove('^.*/') -%])</div>[%- END -%]</td>
+    </tr>
+    <tr>
+      <td><label>Date Format</label></td>
+      <td><select name="laydateformat" id="laydateformat" size="1">
+            <option value="%d-%b-%y"[%- IF layout.laydateformat=='%d-%b-%y' -%] selected="selected"[%- END -%]>dd-mmm-yy (01-Dec-11)</option>
+            <option value="%D %M %Y"[%- IF layout.laydateformat=='%D %M %Y' -%] selected="selected"[%- END -%]>DDnn Month Year ( 1st December 2011)</option>
+            <option value="%d/%m/%y"[%- IF layout.laydateformat=='%d/%m/%y' -%] selected="selected"[%- END -%]>dd/mm/yy (01/12/11)</option>
+            <option value="%d/%m/%Y"[%- IF layout.laydateformat=='%d/%m/%Y' -%] selected="selected"[%- END -%]>dd/mm/YYYY (01/12/2011)</option>
+            <option value="%M %D, %Y"[%- IF layout.laydateformat=='%M %D, %Y' -%] selected="selected"[%- END -%]>Month DDnn, Year (December 1st, 2011)</option>
+            <option value="%m/%d/%y"[%- IF layout.laydateformat=='%m/%d/%y' -%] selected="selected"[%- END -%]>mm/dd/yy (12/01/11)</option>
+            <option value="%m/%d/%Y"[%- IF layout.laydateformat=='%m/%d/%Y' -%] selected="selected"[%- END -%]>mm/dd/YYYY (12/01/2011)</option>
+            <option value="%y-%m-%d"[%- IF layout.laydateformat=='%y-%m-%d' -%] selected="selected"[%- END -%]>yy-mm-dd (11-12-01)</option>
+          </select>
+      </td>
+    </tr>
+    <tr>
+      <td><label>Reverse Side Layout</label></td>
+      <td><select name="layreversefile" id="layreversefile" size="1">
+            <option value=""[%- IF layout.layreversefile=='' -%] selected="selected"[%- END -%]>None</option>
+[% FOREACH rev IN revs -%]
+            <option value="[%- rev.id -%]"[%- IF layout.layreversefile==rev.id -%] selected="selected"[%- END -%]>[%- rev.laydesc -%]</option>
+[% END -%]
+          </select>
+      </td>
+    </tr>
+    <tr>
+      <td><label>Inter-Item spacing (14 = 1 line)</label></td>
+      <td><input type="text" name="layspace" id="layspace" size="5" value="[%- layout.layspace -%]" onblur="check_val(this);"/></td>
+
+    </tr>
+  </table>
+<input type="hidden" name="id" id="layid" value="[%- layout.id OR '0' -%]"/>
+</div>
+<div id="sidebar">
+  <ul>
+    <li>
+      <div>
+        <input type="button" name="save" id="save" value="Save Layout" onclick="check_send();"/>
+      </div>
+    </li>
+    <li>
+      <div>
+        <a href="/cgi-bin/fpa/delete_invoice_layout.pl?[%- layout.id -%]">Delete Layout</a>
+      </div>
+    </li>
+  </ul>
+  <div id="sidebar-ad">
+[% INCLUDE adverts.tt -%]
+  </div>
+</div>
+</form>
+</div>

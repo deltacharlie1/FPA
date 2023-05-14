@@ -91,7 +91,7 @@ else {
         $Vataccs->execute;
         ($Vatreturn->{perbox2}) = $Vataccs->fetchrow;
 
-        $Vataccs = $dbh->prepare("select sum(acrvat) from vataccruals where acct_id='$COOKIE->{ACCT}' and $Date_Range and vr_id < 1 and (acrnominalcode like '10%' or (acrnominalcode>='5000' and acrnominalcode<'7500'))");
+        $Vataccs = $dbh->prepare("select sum(acrvat) from vataccruals where acct_id='$COOKIE->{ACCT}' and $Date_Range and vr_id < 1 and (acrnominalcode like '10%' or acrnominalcode like '15%' or (acrnominalcode>='5000' and acrnominalcode<'7500'))");
         $Vataccs->execute;
         ($Vatreturn->{perbox4}) = $Vataccs->fetchrow;
 	$Vatreturn->{perbox4} = 0 - $Vatreturn->{perbox4};	#  because it is already a negative number
@@ -112,7 +112,7 @@ else {
         $Vataccs->execute;
         ($Vatreturn->{perbox6}) = $Vataccs->fetchrow;
 
-        $Vataccs = $dbh->prepare("select sum(acrtotal) from vataccruals where acct_id='$COOKIE->{ACCT}' and $Date_Range and vr_id < 1 and (acrnominalcode like '10%' or (acrnominalcode>='5000' and acrnominalcode<'7500'))");
+        $Vataccs = $dbh->prepare("select sum(acrtotal) from vataccruals where acct_id='$COOKIE->{ACCT}' and $Date_Range and vr_id < 1 and (acrnominalcode like '10%' or acrnominalcode like '15%' or (acrnominalcode>='5000' and acrnominalcode<'7500'))");
         $Vataccs->execute;
         ($Vatreturn->{perbox7}) = $Vataccs->fetchrow;
         $Vatreturn->{perbox7} =~ tr/-//d;

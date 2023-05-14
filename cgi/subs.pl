@@ -24,8 +24,8 @@ $Companies->execute;
 $Company = $Companies->fetchrow_hashref;
 
 $Membership[0] = 'FreePlus Startup (FREE)';
-$Membership[1] = 'FreePlus Bookkeeper Basic (&pound;5.00pm)';
-$Membership[2] = 'FreePlus Standard (&pound;5.00pm)';
+$Membership[1] = 'FreePlus Bookkeeper Basic (&pound;5.50pm)';
+$Membership[2] = 'FreePlus Standard (&pound;5.50pm)';
 $Membership[3] = 'FreePlus Bookkeeper Standard (&pound;10.00pm)';
 $Membership[4] = 'FreePlus Premium (&pound;10.00pm)';
 $Membership[5] = 'FreePlus BookkeepersPremium (&pound;20.00pm)';

@@ -17,7 +17,7 @@
 [% END -%]
 [% IF cookie.ACCESS != 4 -%]
     <tr class="subblock">
-      <td width="180" valign="top"><label>Standard (&pound;5.00 per month)</label></td>
+      <td width="180" valign="top"><label>Standard (&pound;5.50 per month)</label></td>
       <td width="30" valign="top"><input type="radio" name="sub" id="subb" value="2"/></td>
       <td>Includes:-
         <ul>
@@ -50,7 +50,7 @@
     <tr>
   [% IF cookie.ACCESS != 3 -%]
     <tr class="subblock">
-      <td width="180" valign="top"><label>Basic (&pound;5.00 per month)</label></td>
+      <td width="180" valign="top"><label>Basic (&pound;5.50 per month)</label></td>
       <td width="30" valign="top"><input type="radio" name="sub" id="subc" value="1"/></td>
       <td>Includes:-
         <ul>
@@ -99,11 +99,6 @@
     <li>
       <div>
         <input type="button" name="list" id="listinvoices" value="List Invoices" onclick="location.href='/cgi-bin/fpa/list_sub_invoices.pl';"/>
-      </div>
-    </li>
-    <li>
-      <div>
-        <input type="button" name="subscribe" id="subscribe" value="Update Subscription" onclick="check_select('S');"/>
       </div>
     </li>
 [% IF cookie.PLAN > 1 -%]

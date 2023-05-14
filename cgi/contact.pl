@@ -65,7 +65,17 @@ else {
 		if ($FORM{message} =~ /http/i) {
 			 $Spam = " ###  SPAM!  ### ";
 		}
+		$eName = "FreePlus Accounts";
+		$eAddr = "freeplus\@corunna.com";
 
+		use DBI;
+		$dbh = DBI->connect("DBI:mysql:fpa");
+		$Regs = $dbh->prepare("select * from registrations where regemail='$FORM{email}'");
+		$Regs->execute;
+		if ($Regs->rows > 0) {
+			$Reg = $Regs->fetchrow_hashref;
+			$Spam = " -- USER --";
+		
 		open(EMAIL,"| /usr/sbin/sendmail -F \"FreePlus Accounts\" -f \"freeplus\@corunna.com\" -t");
 
 		print EMAIL <<EOD;
@@ -96,6 +106,9 @@ $FORM{message}
 EOD
 		}
 		close(EMAIL);
+		}
+		$Regs->finish;
+		$dbh->disconnect;
 	}
 #  re configure the To field
 

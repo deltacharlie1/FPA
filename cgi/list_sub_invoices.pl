@@ -31,7 +31,7 @@ unless ($FORM{rows}) {
         $FORM{rows} = 24;
 }
 
-$Invoices = $dbh->prepare("select subinvoiceno,date_format(subdatepaid,'%d-%b-%y') as datepaid,subdescription,subnet,subvat,subauthcode,substatus,date_format(subdateraised,'%d-%b-%y') as dateraised from subscriptions where acct_id='$COOKIE->{ACCT}' order by subdateraised desc limit $FORM{offset},$FORM{rows}");
+$Invoices = $dbh->prepare("select id,subinvoiceno,date_format(subdatepaid,'%d-%b-%y') as datepaid,subdescription,subnet,subvat,subauthcode,substatus,date_format(subdateraised,'%d-%b-%y') as dateraised from subscriptions where acct_id='$COOKIE->{ACCT}' order by subdateraised desc limit $FORM{offset},$FORM{rows}");
 $Invoices->execute;
 
 use Template;

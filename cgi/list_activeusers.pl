@@ -28,6 +28,8 @@ $Mandates = $mandates_scalar->{mandates};
 @Month = ('','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec');
 $Count = 0;
 $Total_value = 0;
+$Total_net = 0;
+
 print<<EOF;
 Content-Type: text/html
 
@@ -123,6 +125,8 @@ tr:nth-child(even) {
     <th>Email</th>
     <th>Subscription</th>
     <th>Amount</th>
+    <th>net1</th>
+    <th>Net2</th>
     <th>Next Due</th>
     <th style="display:none;">Next Due</th>
   </tr>
@@ -158,17 +162,23 @@ for $Mandate ( @{$Mandates} ) {
         		$Cus = $json->decode( $res3->content );
 			$Count++;
 			$Total_value += $Sub->{amount};
+			$Net1 = sprintf("%.2f",$Sub->{amount} * 0.99/100);
+			$Net2 = sprintf("%.2f",(($Sub->{amount} * 0.99) - 20))/100;
+			$Total_net += ($Sub->{amount}*0.99) - 20;
 			$Sub->{amount} =~ s/(\d+)(\d\d)/$1\.$2/;
 
 			($Yr,$Mth,$Day) = $Mandate->{created_at} =~ /^\d\d(\d\d)-(\d\d)-(\d\d)T.*/;
 			($sYr,$sMth,$sDay) = $Sub->{upcoming_payments}->[0]->{charge_date} =~ /^\d\d(\d\d)-(\d\d)-(\d\d)*/;
-			print "<tr><td>$Count</td><td>$Cus->{customers}->{id}</td><td>$Day-$Month[$Mth]-$Yr</td><td style='display:none;'>$Yr$Mth$Day</td><td>$Cus->{customers}->{given_name} $Cus->{customers}->{family_name}</td><td>$Cus->{customers}->{email}</td><td>$Sub->{name}</td><td>$Sub->{amount}</td><td>$sDay-$Month[$sMth]-$sYr</td><td style='display:none;'>$sYr$sMth$sDay</td></tr>\n";
+			print "<tr><td>$Count</td><td>$Cus->{customers}->{id}</td><td>$Day-$Month[$Mth]-$Yr</td><td style='display:none;'>$Yr$Mth$Day</td><td>$Cus->{customers}->{given_name} $Cus->{customers}->{family_name}</td><td>$Cus->{customers}->{email}</td><td>$Sub->{name}</td><td>$Sub->{amount}</td><td>$Net1</td><td>$Net2</td><td>$sDay-$Month[$sMth]-$sYr</td><td style='display:none;'>$sYr$sMth$sDay</td></tr>\n";
 		}
 	}
 }
 $Net_value = $Total_value * 0.99;
 $Net_value =~ s/(\d+)(\d\d)/$1\.$2/;
 $Total_value =~ s/(\d+)(\d\d)/$1\.$2/;
-print "</table></br></br>$Count Customers - Total Monthly Subs : $Total_value (net $Net_value)</body></html>\n";
+$Total_net =~ s/(\d+)(\d\d)/$1\.$2/;
+$Com1 = $Total_value - $Net_value;
+$Com2 = $Total_value - $Total_net;
+print "</table></br></br>$Count Customers - Total Monthly Subs : $Total_value (net $Net_value - Commission $Com1) </br>(new net = $Total_net - Commission $Com2)</body></html>\n";
 exit;
 
